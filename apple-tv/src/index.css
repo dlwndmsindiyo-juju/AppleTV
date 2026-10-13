@@ -14,3 +14,7 @@ img {
   vertical-align: middle;
   width: 100%;
 }
+body{
+    max-width: 1789px;
+    width: 100%;
+}

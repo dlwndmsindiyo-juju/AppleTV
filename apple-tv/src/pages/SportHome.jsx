@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MyList = () => {
+const SportHome = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const MyList = () => {
   )
 }
 
-export default MyList
+export default SportHome
