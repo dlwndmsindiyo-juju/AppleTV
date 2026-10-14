@@ -2,19 +2,24 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-li {
-  list-style: none;
-}
-a {
-  text-decoration: none;
-  color: inherit;
-}
-img {
-  vertical-align: middle;
-  width: 100%;
-}
-body{
-    max-width: 1789px;
+  font-family: 'SF Pro Text', 'SF Pro Display', Consolas, 'Courier New', monospace;
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  img {
+    vertical-align: middle;
     width: 100%;
+  }
+
+  body {
+    max-width: 1680px;
+    width: 100%;
+  }
 }
