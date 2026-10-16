@@ -4,8 +4,8 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import "./App.scss";
 import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
 import { Route, Router, Routes } from "react-router-dom";
-import { Footer } from "./components/layout/Footer";
 import Home from "./pages/Home";
 import SportHome from "./pages/SportHome";
 
