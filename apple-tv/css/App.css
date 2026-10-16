@@ -65,7 +65,7 @@ header .inner nav .gnb-center-toggle button {
   border: none;
   color: #86868b;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 6px 18px;
   border-radius: 9999px;
   cursor: pointer;
@@ -77,7 +77,7 @@ header .inner nav .gnb-center-toggle button:hover {
 header .inner nav .gnb-center-toggle button.active {
   background-color: #ffffff;
   color: #000000;
-  font-weight: 600;
+  font-weight: 900;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 header .inner nav .gnb-right {
