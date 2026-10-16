@@ -1,10 +1,10 @@
 import React from 'react';
-import { footerMainLinks, footerSubLinks } from '../../../data/footerData';
+import { footerMainLinks, footerSubLinks } from '../../data/footerData';
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="footer-container">
+      <div className="inner">
 
         {/* 1. 상단 로고 영역 */}
         <div className="footer-logo">

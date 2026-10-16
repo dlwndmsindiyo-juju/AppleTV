@@ -19,10 +19,9 @@ header {
   justify-content: center; // 화면 전체 기준 중앙 정렬
   box-sizing: border-box;
 
-  // 전체 콘텐츠를 감싸는 1680px 제한 컨테이너
+
+
   .inner {
-    width: 100%;
-    max-width: 1680px;
     height: 100%;
     padding: 0 40px;
     display: flex;
@@ -194,10 +193,14 @@ main {
   color: #88888b;
   padding: 40px 24px;
   font-size: 12px;
+  width: 100%;
+  box-sizing: border-box;
 
-  .footer-container {
-    max-width: 1024px;
+
+  .inner {
     margin: 0 auto;
+    padding: 0 40px; // 헤더 .inner와 동일한 좌우 패딩
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 20px;

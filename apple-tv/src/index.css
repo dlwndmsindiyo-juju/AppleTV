@@ -145,7 +145,7 @@
     width: 100%;
   }
 
-  body {
+  .inner {
     max-width: 1680px;
     width: 100%;
   }
