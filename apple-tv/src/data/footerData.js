@@ -1,3 +1,4 @@
+
 export const footerMainLinks = [
     { label: "계정 및 설정", path: "/account" },
     { label: "구독 관리", path: "/subscription" },
