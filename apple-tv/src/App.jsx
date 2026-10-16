@@ -10,7 +10,7 @@ import LandingHome from "./pages/LandingHome";
 import SportHome from "./pages/SportHome";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
-import useAuthStore from "./store/useAuthStore";
+import {useAuthStore} from "./store/useAuthStore";
 
 function App() {
   // 새로고침 시에도 세션 동안 딱 한번만 보게 하려면 sessionStorage 활용 가능
