@@ -1,9 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
 
   return (
-    <main>
+    <main className='appleTv-home'>
+      <h2><Link to="/apple-tv">애플티비 홈</Link></h2>
       {/* hero */}
       <div className="inner">
         {/* 시청중 리스트 */}

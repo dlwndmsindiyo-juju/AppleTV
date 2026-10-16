@@ -19,10 +19,9 @@ header {
   justify-content: center; // 화면 전체 기준 중앙 정렬
   box-sizing: border-box;
 
-  // 전체 콘텐츠를 감싸는 1680px 제한 컨테이너
+
+
   .inner {
-    width: 100%;
-    max-width: 1680px;
     height: 100%;
     padding: 0 40px;
     display: flex;
@@ -179,5 +178,98 @@ header {
         }
       }
     }
+  }
+}
+
+main {
+  h2 {
+    padding-top: 200px;
+
+  }
+}
+
+.footer {
+  background-color: #161617;
+  color: #88888b;
+  padding: 40px 24px;
+  font-size: 12px;
+  width: 100%;
+  box-sizing: border-box;
+
+
+  .inner {
+    margin: 0 auto;
+    padding: 0 40px; // 헤더 .inner와 동일한 좌우 패딩
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    width: 24px;
+    filter: invert(1);
+  }
+
+  .footer-main-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+
+    a {
+      color: #f5f5f7;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .arrow {
+      font-size: 10px;
+      color: #88888b;
+    }
+  }
+
+  .footer-sub-nav {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid #333336;
+    padding-bottom: 20px;
+
+    .footer-policy-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+
+      a {
+        color: #88888b;
+        text-decoration: none;
+
+        &:hover {
+          color: #f5f5f7;
+        }
+      }
+    }
+
+    .footer-region {
+      color: #88888b;
+    }
+  }
+
+  .footer-copyright {
+    color: #6e6e73;
+    font-size: 11px;
   }
 }
