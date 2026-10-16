@@ -1,0 +1,183 @@
+// 변수 설정 (Apple TV 다크 테마)
+$bg-color: #000000;
+$text-primary: #ffffff;
+$text-secondary: #86868b;
+$toggle-active-bg: #ffffff;
+$toggle-active-text: #000000;
+$input-bg: rgba(255, 255, 255, 0.1);
+$input-focus-bg: rgba(255, 255, 255, 0.2);
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background-color: $bg-color;
+  z-index: 1000;
+  display: flex;
+  justify-content: center; // 화면 전체 기준 중앙 정렬
+  box-sizing: border-box;
+
+  // 전체 콘텐츠를 감싸는 1680px 제한 컨테이너
+  .inner {
+    width: 100%;
+    max-width: 1680px;
+    height: 100%;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; // 내부 absolute 요소를 잡기 위한 기준점
+    box-sizing: border-box;
+
+    // 1. 로고 영역 (<h1 className="logo">)
+    .logo {
+      margin: 0;
+      z-index: 10;
+
+      a {
+        display: flex;
+        align-items: center;
+
+        img {
+          height: 20px;
+          display: block;
+          filter: brightness(0) invert(1); // 흰색 로고로 변환
+        }
+      }
+    }
+
+    // 2. 내비게이션 영역 (<nav>)
+    nav {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0 40px;
+      pointer-events: none; // 빈 공간 클릭 시 로고나 링크 방해 방지
+      box-sizing: border-box;
+
+      // 내비게이션 내부 요소들은 클릭 가능하도록 설정 복구
+      >* {
+        pointer-events: auto;
+      }
+
+      // [중앙 토글 버튼 그룹] (<div className="gnb-center-toggle">)
+      .gnb-center-toggle {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        background-color: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(20px);
+        border-radius: 9999px;
+        padding: 3px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+
+        button {
+          background: transparent;
+          border: none;
+          color: $text-secondary;
+          font-size: 14px;
+          font-weight: 600;
+          padding: 6px 18px;
+          border-radius: 9999px;
+          cursor: pointer;
+          transition: all 0.25s ease;
+
+
+          &:hover {
+            color: $text-primary;
+          }
+
+          // 활성화(선택된) 상태 스타일 (<button className="active">)
+          &.active {
+            background-color: $toggle-active-bg;
+            color: $toggle-active-text;
+            font-weight: 900;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+
+      // [우측 영역] (<div className="gnb-right">)
+      .gnb-right {
+        margin-left: auto; // 우측 끝으로 밀어내기
+
+        ul {
+          display: flex;
+          align-items: center;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          gap: 16px;
+
+          // 검색창 (<li className="search-box">)
+          .search-box {
+            display: flex;
+            align-items: center;
+            background-color: $input-bg;
+            border-radius: 8px;
+            padding: 6px 12px;
+            width: 200px;
+            transition: background-color 0.2s ease, width 0.3s ease;
+
+            &:focus-within {
+              background-color: $input-focus-bg;
+              width: 240px; // 포커스 시 확장
+            }
+
+            img {
+              width: 16px;
+              height: 16px;
+              filter: invert(0.7);
+              margin-right: 8px;
+              flex-shrink: 0;
+            }
+
+            input {
+              background: transparent;
+              border: none;
+              outline: none;
+              color: $text-primary;
+              font-size: 13px;
+              width: 100%;
+
+              &::placeholder {
+                color: rgba(255, 255, 255, 0.4);
+              }
+            }
+          }
+
+          // 프로필 아이콘 (<li className="profile-box">)
+          .profile-box {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: background-color 0.2s ease;
+
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            img {
+              width: 16px;
+              height: 16px;
+              filter: invert(1);
+            }
+          }
+        }
+      }
+    }
+  }
+}
