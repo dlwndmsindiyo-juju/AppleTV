@@ -1,0 +1,288 @@
+@use '/src/variables' as *;
+
+// ===== 공통 =====
+.landing {
+  background: $bg-color;
+  color: $text-primary;
+
+  .l-container {
+    max-width: $container-width;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  a:focus-visible {
+    outline: 2px solid $accent-color;
+    outline-offset: 3px;
+  }
+}
+
+// 랜딩 전용 버튼 (common/Button.jsx 와 클래스 충돌 방지를 위해 l-btn 사용)
+.landing .l-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: $radius-control;
+  border: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &--sm { height: 34px; padding: 0 16px; font-size: 13px; }
+
+  &--primary {
+    background: $toggle-active-bg;
+    color: $toggle-active-text;
+    &:hover { background: darken($toggle-active-bg, 12%); }
+  }
+
+  &--ghost {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: $text-primary;
+    &:hover { background: $input-bg; }
+  }
+
+  &--accent {
+    background: $accent-color;
+    color: $text-primary;
+    &:hover { background: lighten($accent-color, 6%); }
+  }
+}
+
+// 섹션 공통
+.landing-section {
+  padding: 56px 0 0;
+  scroll-margin-top: $header-height; // #top10 앵커 이동 시 fixed header 가림 방지
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  &__title { font-size: 28px; font-weight: 700; line-height: 1.25; }
+  &__desc { margin-top: 6px; font-size: 16px; color: $text-secondary; }
+  &__aside { font-size: 13px; color: $text-secondary; flex-shrink: 0; }
+  a.section-header__aside:hover { color: $text-primary; }
+}
+
+// 포스터
+.poster {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: $radius-card;
+  background: $raised-color;
+
+  &--portrait { aspect-ratio: 2 / 3; }
+  &--landscape { aspect-ratio: 16 / 10; }
+
+  img { position: absolute; inset: 0; height: 100%; object-fit: cover; }
+  &__empty { position: absolute; inset: 0; background: $raised-color; }
+}
+
+// ===== 1. 히어로 =====
+.landing-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 600px;
+  padding-top: $header-height; // fixed header 만큼 비워 줌
+  background: $surface-color center / cover no-repeat;
+
+  &::before { // 텍스트 가독성용 어두운 그라데이션
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba($bg-color, 0.92) 0%, rgba($bg-color, 0.15) 75%);
+  }
+
+  &__content { position: relative; width: 100%; }
+  &__label { font-size: 13px; color: $text-secondary; margin-bottom: 12px; }
+  &__title { max-width: 14em; font-size: clamp(36px, 5.5vw, 68px); font-weight: 700; line-height: 1.12; }
+  &__desc { max-width: 32em; margin-top: 16px; font-size: 18px; color: $text-secondary; }
+  &__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  &__note { margin-top: 14px; font-size: 12px; color: $text-secondary; }
+}
+
+// ===== 2. 안내 3열 =====
+.info-strip {
+  background: $surface-color;
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+
+    li { display: flex; flex-direction: column; gap: 4px; }
+  }
+  &__title { font-size: 15px; font-weight: 600; }
+  &__desc { font-size: 13px; color: $text-secondary; }
+}
+
+// ===== 3. 인기 TOP 10 =====
+.top10-list {
+  display: flex;
+  gap: 24px;
+  padding-bottom: 20px; // 숫자가 카드 아래로 살짝 내려오는 공간
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+
+  li {
+    flex: 0 0 calc((100% - 4 * 24px) / 5);
+    scroll-snap-align: start;
+  }
+}
+
+.top10-card {
+  position: relative;
+  display: block;
+
+  &__rank {
+    position: absolute;
+    left: 10px;
+    bottom: -18px;
+    font-size: clamp(72px, 9vw, 116px);
+    font-weight: 800;
+    line-height: 1;
+    color: $text-primary;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+  }
+}
+
+// ===== 4. 공개 예정작 =====
+.upcoming-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.upcoming-card {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: $radius-card;
+  background: $surface-color;
+
+  &__thumb { flex: 0 0 38%; }
+  &__body { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; min-width: 0; }
+  &__caption { font-size: 12px; color: $text-secondary; }
+  &__title { font-size: 20px; font-weight: 700; }
+  &__desc { font-size: 15px; color: $text-secondary; margin-bottom: 8px; }
+}
+
+// ===== 5. 오리지널스 =====
+.originals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.original-card {
+  display: block;
+
+  .poster { margin-bottom: 12px; }
+  &__title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  &__line { font-size: 13px; color: $text-secondary; line-height: 1.5; }
+  &__meta { margin-top: 6px; font-size: 12px; color: rgba($text-secondary, 0.7); }
+}
+
+// ===== 6. 홍보배너 + AI =====
+.promo-banner {
+  margin-top: 64px;
+  background: $surface-color;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    align-items: center;
+    gap: 40px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+  &__title { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+  &__desc { font-size: 16px; color: $text-secondary; line-height: 1.6; }
+}
+
+.promo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 24px;
+  border-radius: 16px;
+  background: $raised-color;
+
+  &__title { font-size: 20px; font-weight: 700; }
+  &__desc { font-size: 13px; color: $text-secondary; margin-bottom: 4px; }
+  &__note { font-size: 12px; color: rgba($text-secondary, 0.7); }
+}
+
+// ===== 7. Apple TV 안내 =====
+.device-guide {
+  margin-top: 24px;
+  background: $surface-color;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  &__title { font-size: 24px; font-weight: 700; line-height: 1.35; }
+  &__desc { margin-top: 8px; font-size: 13px; color: $text-secondary; }
+  &__points {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+  }
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: $accent-color;
+
+    a:hover { text-decoration: underline; }
+  }
+}
+
+// ===== 반응형 =====
+@media (max-width: 960px) {
+  .landing .l-container { padding: 0 24px; }
+  .top10-list li { flex-basis: 38%; }
+  .upcoming-grid { grid-template-columns: 1fr; }
+  .originals-grid { grid-template-columns: repeat(2, 1fr); }
+  .promo-banner__inner,
+  .device-guide__inner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .info-strip__list { grid-template-columns: 1fr; }
+  .section-header__title { font-size: 24px; }
+  .upcoming-card { flex-direction: column; }
+  .upcoming-card__thumb { flex-basis: auto; }
+}
