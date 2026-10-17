@@ -1,37 +1,29 @@
-// 변수 설정 (Apple TV 다크 테마)
-$bg-color: #000000;
-$text-primary: #ffffff;
-$text-secondary: #86868b;
-$toggle-active-bg: #ffffff;
-$toggle-active-text: #000000;
-$input-bg: rgba(255, 255, 255, 0.1);
-$input-focus-bg: rgba(255, 255, 255, 0.2);
+@use "./variables" as *;
 
+// ===== Header (Desktop 시안: 좌우 64 / 상하 14) =====
 header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 64px;
-  background-color: $bg-color;
+  height: $header-height;
+  background-color: $gnb-bg;
   z-index: 1000;
   display: flex;
-  justify-content: center; // 화면 전체 기준 중앙 정렬
+  justify-content: center;
   box-sizing: border-box;
 
-  // 전체 콘텐츠를 감싸는 1680px 제한 컨테이너
   .inner {
     width: 100%;
-    max-width: 1680px;
     height: 100%;
-    padding: 0 40px;
+    padding: $header-pad-y $header-pad-x;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative; // 내부 absolute 요소를 잡기 위한 기준점
+    position: relative;
     box-sizing: border-box;
 
-    // 1. 로고 영역 (<h1 className="logo">)
+    // 1. 로고
     .logo {
       margin: 0;
       z-index: 10;
@@ -41,14 +33,30 @@ header {
         align-items: center;
 
         img {
-          height: 20px;
+          height: 24px;
           display: block;
-          filter: brightness(0) invert(1); // 흰색 로고로 변환
+          filter: brightness(0) invert(1);
         }
       }
     }
 
-    // 2. 내비게이션 영역 (<nav>)
+    // 로그인 전 헤더의 로그인 버튼
+    .header-login {
+      z-index: 10;
+      padding: 8px 20px;
+      border-radius: $radius-control;
+      background-color: $toggle-active-bg;
+      color: $toggle-active-text;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: darken($toggle-active-bg, 12%);
+      }
+    }
+
+    // 2. 내비게이션
     nav {
       display: flex;
       align-items: center;
@@ -57,57 +65,81 @@ header {
       position: absolute;
       top: 0;
       left: 0;
-      padding: 0 40px;
-      pointer-events: none; // 빈 공간 클릭 시 로고나 링크 방해 방지
+      padding: $header-pad-y $header-pad-x;
+      pointer-events: none;
       box-sizing: border-box;
 
-      // 내비게이션 내부 요소들은 클릭 가능하도록 설정 복구
-      >* {
+      > * {
         pointer-events: auto;
       }
 
-      // [중앙 토글 버튼 그룹] (<div className="gnb-center-toggle">)
+      // [중앙 토글] 슬라이딩 인디케이터 방식
       .gnb-center-toggle {
         position: absolute;
         left: 50%;
-        transform: translateX(-50%);
+        top: 50%;
+        transform: translate(-50%, -50%);
         display: flex;
-        background-color: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(20px);
         border-radius: 9999px;
-        padding: 3px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: $toggle-inactive-bg;
 
+        // 선택된 버튼 뒤에서 좌우로 미끄러지는 알약
+        .toggle-indicator {
+          position: absolute;
+          top: 0;
+          height: 100%;
+          border-radius: 9999px;
+          pointer-events: none;
+          background-color: $light-color-0; // Apple TV 선택 색상
+
+          &.sport {
+            background-color: $sports-color; // Sport 선택 색상
+          }
+
+          // 첫 렌더 이후에만 transition (처음엔 튀지 않게)
+          &.animated {
+            transition:
+              left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.4s ease;
+          }
+        }
 
         button {
-          background: transparent;
+          position: relative; // 인디케이터 위로 글자 올리기
+          z-index: 1;
+          height: 40px;
+          padding: 0 24px;
           border: none;
-          color: $text-secondary;
-          font-size: 14px;
-          font-weight: 600;
-          padding: 6px 18px;
           border-radius: 9999px;
+          background: transparent;
+          color: $text-primary;
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 1;
           cursor: pointer;
-          transition: all 0.25s ease;
-
+          transition: color 0.4s ease;
 
           &:hover {
-            color: $text-primary;
+            color: $neutral-color-300;
           }
 
-          // 활성화(선택된) 상태 스타일 (<button className="active">)
+          // 선택된 버튼: 텍스트는 항상 $dark-color-900
           &.active {
-            background-color: $toggle-active-bg;
-            color: $toggle-active-text;
-            font-weight: 900;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            color: $dark-color-900;
+            font-weight: 600; // 굵기 변화로 폭이 흔들리지 않게 고정
           }
+        }
+        
+        // Sport 선택 시 텍스트만 $light-color-0 (인디케이터가 .sport 일 때)
+        .toggle-indicator.sport ~ button.active {
+          color: $light-color-0;
         }
       }
 
-      // [우측 영역] (<div className="gnb-right">)
+      // [우측] 검색 + 프로필
       .gnb-right {
-        margin-left: auto; // 우측 끝으로 밀어내기
+        margin-left: auto;
 
         ul {
           display: flex;
@@ -117,67 +149,369 @@ header {
           padding: 0;
           gap: 16px;
 
-          // 검색창 (<li className="search-box">)
           .search-box {
             display: flex;
             align-items: center;
+            width: 248px;
+            height: 36px;
+            padding: 0 14px;
+            border-radius: 9999px;
             background-color: $input-bg;
-            border-radius: 8px;
-            padding: 6px 12px;
-            width: 200px;
-            transition: background-color 0.2s ease, width 0.3s ease;
+            box-sizing: border-box;
+            transition: background-color 0.2s ease;
 
             &:focus-within {
               background-color: $input-focus-bg;
-              width: 240px; // 포커스 시 확장
             }
 
             img {
-              width: 16px;
-              height: 16px;
-              filter: invert(0.7);
+              width: 14px;
+              height: 14px;
               margin-right: 8px;
               flex-shrink: 0;
+              filter: invert(0.7);
             }
 
             input {
-              background: transparent;
+              width: 100%;
               border: none;
               outline: none;
+              background: transparent;
               color: $text-primary;
               font-size: 13px;
-              width: 100%;
 
               &::placeholder {
-                color: rgba(255, 255, 255, 0.4);
+                color: $neutral-color-400;
               }
             }
           }
 
-          // 프로필 아이콘 (<li className="profile-box">)
+          // 프로필: 이니셜 원형 (44px)
           .profile-box {
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: $input-bg;
+            color: $text-primary;
+            font-size: 16px;
+            font-weight: 700;
             transition: background-color 0.2s ease;
 
             &:hover {
-              background-color: rgba(255, 255, 255, 0.2);
-            }
-
-            img {
-              width: 16px;
-              height: 16px;
-              filter: invert(1);
+              background-color: $input-focus-bg;
             }
           }
         }
       }
     }
+  }
+}
+
+
+// 히어로
+.hero-swiper-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; // 화면 전체 높이
+  background-color: $bg-color;
+
+  // Swiper 내부 요소까지 높이를 100% 로 이어줌
+  .swiper,
+  .swiper-wrapper,
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+  }
+
+  // Swiper 기본 버튼/페이지네이션 커스텀
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $light-color-0 !important;
+    width: 52px !important;
+    height: 52px !important;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 20;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.08);
+    }
+
+    &::after {
+      font-size: 20px !important;
+      font-weight: bold;
+    }
+  }
+
+  .swiper-pagination {
+    bottom: 24px !important;
+    z-index: 20;
+
+    .swiper-pagination-bullet {
+      background: rgba(255, 255, 255, 0.4) !important;
+      opacity: 1;
+      width: 8px;
+      height: 8px;
+      margin: 0 5px !important;
+      transition: all 0.3s ease;
+
+      &-active {
+        background: $light-color-0 !important;
+        width: 28px;
+        border-radius: 12px;
+      }
+    }
+  }
+
+  // 개별 슬라이드 아이템
+  .hero-slide-item {
+    position: relative;
+    width: 100%;
+    height: 100%; // .hero-swiper-container (100vh) 를 가득 채움
+    overflow: hidden;
+
+    .hero-media-bg {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        pointer-events: none;
+      }
+    }
+
+    // 하단 비넷/그라데이션 오버레이
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba($bg-color, 0.7) 0%, rgba($bg-color, 0) 60%),
+        linear-gradient(
+          to top,
+          $bg-color 0%,
+          rgba($bg-color, 0.5) 50%,
+          rgba($bg-color, 0) 100%
+        );
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    // 영화 정보 영역 (화면 가운데 정렬: 라벨 / 제목 / 본문 / 버튼)
+    .hero-info {
+      position: absolute;
+      top: 50%;
+      left: 2%;
+      transform: translateY(-50%); // 화면 정중앙
+      width: 100%;
+      max-width: 800px;
+      padding: 0 24px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items:flex-start;
+      color: $text-primary;
+      z-index: 10;
+
+      .hero-meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        color: $text-secondary;
+        font-size: 14px;
+
+        .age-rating {
+          border: 1px solid $text-secondary;
+          padding: 2px 6px;
+          border-radius: 4px;
+          font-size: 12px;
+        }
+      }
+
+      .hero-title {
+        @include display-M;
+        font-size: 64px;
+        font-weight: 700;
+        line-height: 1.15;
+        margin: 0 0 24px;
+        padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
+      }
+
+      .hero-overview {
+        @include body-large;
+        color: $neutral-color-300;
+        line-height: 1.6;
+        margin-bottom: 28px;
+        word-break: keep-all; // 한글이 단어 중간에서 끊기지 않게
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .hero-actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+
+        .hero-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          height: 40px;
+          padding: 0 20px;
+          border-radius: 9999px;
+          font-size: 14px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: background-color 0.25s ease, color 0.25s ease,
+            border-color 0.25s ease;
+
+          // CTA 버튼 (채움)
+          &.primary {
+            background-color: $light-color-0;
+            color: $dark-color-900;
+
+            &:hover {
+              background-color: $neutral-color-300;
+            }
+          }
+
+          // 서브 버튼 (외곽선)
+          &.secondary {
+            border: 1px solid $neutral-color-400;
+            color: $text-primary;
+
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.12);
+              border-color: $light-color-0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ===== 페이지 전환 (스르륵 페이드 인) =====
+.page-fade {
+  animation: page-fade-in 0.45s ease both;
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main {
+  h2 {
+    padding-top: 200px;
+  }
+}
+
+// ===== Footer (Desktop 시안: 좌우 40 / 상하 14) =====
+.footer {
+  background-color: $gnb-bg;
+  color: $neutral-color-400;
+  width: 100%;
+  margin-top: 120px;
+  padding: $footer-pad-y $footer-pad-x;
+  box-sizing: border-box;
+
+  .inner {
+    width: 100%;
+    padding: 26px 0; // 14 + 26 = 시안의 상하 여백
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    box-sizing: border-box;
+  }
+
+  // 1. 로고 (맨 위)
+  .footer-logo img {
+    width: auto;
+    height: 22px;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+
+  // 2. 주요 링크
+  .footer-main-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: $light-color-500;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+
+    .arrow {
+      font-size: 15px;
+      color: $light-color-500;
+    }
+  }
+
+  // 3. 정책 링크 + 국가/언어 (한 줄)
+  .footer-policy-menu {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+
+    a {
+      color: $neutral-color-400;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+  }
+
+  // 4. 저작권
+  .footer-copyright {
+    color: $neutral-color-400;
+    font-size: 12px;
   }
 }

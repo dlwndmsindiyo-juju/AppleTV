@@ -11,8 +11,6 @@ header {
   box-sizing: border-box;
 }
 header .inner {
-  width: 100%;
-  max-width: 1680px;
   height: 100%;
   padding: 0 40px;
   display: flex;
@@ -140,4 +138,81 @@ header .inner nav .gnb-right ul .profile-box img {
   width: 16px;
   height: 16px;
   filter: invert(1);
+}
+
+main h2 {
+  padding-top: 200px;
+}
+
+.footer {
+  background-color: #161617;
+  color: #88888b;
+  padding: 40px 24px;
+  font-size: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.footer .inner {
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.footer .footer-logo {
+  width: 24px;
+  filter: invert(1);
+}
+.footer .footer-main-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+}
+.footer .footer-main-menu a {
+  color: #f5f5f7;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.footer .footer-main-menu a:hover {
+  text-decoration: underline;
+}
+.footer .footer-main-menu .arrow {
+  font-size: 10px;
+  color: #88888b;
+}
+.footer .footer-sub-nav {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid #333336;
+  padding-bottom: 20px;
+}
+.footer .footer-sub-nav .footer-policy-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer .footer-sub-nav .footer-policy-menu a {
+  color: #88888b;
+  text-decoration: none;
+}
+.footer .footer-sub-nav .footer-policy-menu a:hover {
+  color: #f5f5f7;
+}
+.footer .footer-sub-nav .footer-region {
+  color: #88888b;
+}
+.footer .footer-copyright {
+  color: #6e6e73;
+  font-size: 11px;
 }
