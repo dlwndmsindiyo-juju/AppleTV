@@ -2,11 +2,9 @@ import { useState } from "react";
 import "./App.scss";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/layout/Header";
-import LandingHeader from "./components/layout/LandingHeader";
 import Footer from "./components/layout/Footer";
 import Intro from "./components/common/Intro";
 import Home from "./pages/Home";
-import LandingHome from "./pages/LandingHome";
 import SportHome from "./pages/SportHome";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
@@ -44,7 +42,6 @@ function App() {
             ) : (
               // 로그인 전
               <>
-                <Route path="/" element={<LandingHome />} />
                 <Route path="/login" element={<Login />} />
               </>
             )}
