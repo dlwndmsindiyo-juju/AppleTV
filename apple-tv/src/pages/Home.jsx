@@ -1,19 +1,29 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+// src/pages/Home.jsx 예시
+import React, { useEffect } from "react";
+import { useMovieStore } from "../store/useMovieStore";
+import HeroSection from "../components/landing/HeroSection";
+import MovieSlider from "../components/common/MovieSlider"; // 방금 만든 슬라이더
 
 const Home = () => {
+  const { popMovie, onFetchPopular, tvs, onFetchTv } = useMovieStore();
+
+  useEffect(() => {
+    onFetchPopular();
+    onFetchTv();
+  }, [onFetchPopular, onFetchTv]);
 
   return (
-    <main className='appleTv-home'>
-      <h2><Link to="/apple-tv">애플티비 홈</Link></h2>
-      {/* hero */}
-      <div className="inner">
-        {/* 시청중 리스트 */}
-        {/* 인기영화 리스트 */}
-        {/* tv 리스트 */}
-      </div>
-    </main>
-  )
-}
+    <main className="page-fade">
+      {/* 1. 상단 히어로 섹션 (이미 만드신 것) */}
+      <HeroSection />
 
-export default Home
+      {/* 2. 인기 영화 슬라이더 */}
+      <MovieSlider movies={popMovie} title="지금 뜨는 영화" />
+
+      {/* 3. 인기 TV 프로그램 슬라이더 */}
+      <MovieSlider movies={tvs} title="Apple TV+ 인기 시리즈" />
+    </main>
+  );
+};
+
+export default Home;
