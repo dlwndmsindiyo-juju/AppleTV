@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.scss";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Intro from "./components/common/Intro";
@@ -18,6 +18,7 @@ function App() {
 
   // 로그인 여부 (useAuthStore 의 user 필드 기준 – 실제 필드명에 맞게 수정)
   const user = useAuthStore((state) => state.user);
+  const location = useLocation(); // 페이지 전환 애니메이션용
 
   const handleIntroFinish = () => {
     sessionStorage.setItem("hasSeenIntro", "true");
@@ -30,7 +31,10 @@ function App() {
         <Intro onFinish={handleIntroFinish} />
       ) : (
         <>
-          {user ? <Header /> : <LandingHeader />}
+          {/* 로그인 후에만 헤더 노출 (랜딩 헤더 없음) */}
+          {user && <Header />}
+          {/* key 가 바뀔 때마다 페이지가 부드럽게 페이드 인 */}
+          <div className="page-fade" key={location.pathname}>
           <Routes>
             {user ? (
               // 로그인 후
@@ -42,12 +46,14 @@ function App() {
             ) : (
               // 로그인 전
               <>
+                <Route path="/" element={<Navigate to="/login" replace />} />
                 <Route path="/login" element={<Login />} />
               </>
             )}
             {/* 허용되지 않은 경로는 홈으로 */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          </div>
           <Footer />
         </>
       )}

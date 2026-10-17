@@ -10,6 +10,8 @@ $text-secondary: #b8bdc9;
 $radius-control: 28px;
 
 // color style
+$sports-color:#E91E1B;
+
 $dark-color-900: #171717;
 $dark-color-800: #1f1f1f;
 $dark-color-500:#242424;
@@ -47,7 +49,19 @@ $neutral-color-white:#FFFFFF;
 // landing 전용
 $radius-card: 12px;
 $container-width: 1200px;
-$header-height: 64px; // App.scss 의 fixed header 높이
+$header-height: 72px; // App.scss 의 fixed header 높이 (상하 14 + 프로필 44)
+
+// header / footer 시안 (Desktop)
+$gnb-bg: #141414;
+$header-pad-x: 64px;
+$header-pad-y: 14px;
+$footer-pad-x: 40px;
+$footer-pad-y: 14px;
+$toggle-active-bg: #f5f5f5;
+$toggle-active-text: #171717;
+$toggle-inactive-bg: #262626;
+$input-bg: #262626;
+$input-focus-bg: #2e2e2e;
 
 // text-크기
 @mixin display-xl {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 
@@ -26,6 +26,25 @@ const Header = () => {
     }
   }, [location.pathname]);
 
+  // 슬라이딩 인디케이터 위치 계산용
+  const toggleRefs = useRef({});
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, ready: false });
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = toggleRefs.current[activeTab];
+      if (!el) return;
+      setIndicator((prev) => ({
+        left: el.offsetLeft,
+        width: el.offsetWidth,
+        ready: prev.ready || prev.width > 0, // 첫 측정 땐 애니메이션 없이 배치
+      }));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [activeTab]);
+
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     if (tab === "sport") {
@@ -47,13 +66,22 @@ const Header = () => {
         <nav>
           {/* 중간 토글 버튼 */}
           <div className="gnb-center-toggle">
+            <span
+              className={`toggle-indicator ${activeTab === "sport" ? "sport" : "apple-tv"}${
+                indicator.ready ? " animated" : ""
+              }`}
+              style={{ left: indicator.left, width: indicator.width }}
+              aria-hidden="true"
+            />
             <button
+              ref={(el) => (toggleRefs.current["apple-tv"] = el)}
               className={activeTab === "apple-tv" ? "active" : ""}
               onClick={() => handleTabChange("apple-tv")}
             >
               Apple TV
             </button>
             <button
+              ref={(el) => (toggleRefs.current["sport"] = el)}
               className={activeTab === "sport" ? "active" : ""}
               onClick={() => handleTabChange("sport")}
             >
