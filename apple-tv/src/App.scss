@@ -311,18 +311,27 @@ header {
       z-index: 5;
     }
 
-    // 영화 정보 영역 (시안: 좌상단 정렬 → 라벨 / 제목 / 본문 / 버튼)
+    // 영화 정보 영역 (화면 가운데 정렬: 라벨 / 제목 / 본문 / 버튼)
     .hero-info {
       position: absolute;
-      top: 120px;
-      left: clamp($header-pad-x, 12.5vw, 240px); // 시안 1920px 기준 좌측 240
-      max-width: 560px;
+      top: 50%;
+      left: 2%;
+      transform: translateY(-50%); // 화면 정중앙
+      width: 100%;
+      max-width: 800px;
+      padding: 0 24px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items:flex-start;
       color: $text-primary;
       z-index: 10;
 
       .hero-meta {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 12px;
         margin-bottom: 20px;
         color: $text-secondary;
@@ -350,6 +359,7 @@ header {
         color: $neutral-color-300;
         line-height: 1.6;
         margin-bottom: 28px;
+        word-break: keep-all; // 한글이 단어 중간에서 끊기지 않게
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
@@ -358,6 +368,7 @@ header {
 
       .hero-actions {
         display: flex;
+        justify-content: center;
         gap: 12px;
 
         .hero-btn {

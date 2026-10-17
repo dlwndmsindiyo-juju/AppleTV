@@ -31,25 +31,20 @@ function App() {
         <Intro onFinish={handleIntroFinish} />
       ) : (
         <>
-          {/* 로그인 후에만 헤더 노출 (랜딩 헤더 없음) */}
-          {user && <Header />}
+          {/* 로그인 여부와 상관없이 헤더 노출 (랜딩 헤더 없음) */}
+          <Header />
           {/* key 가 바뀔 때마다 페이지가 부드럽게 페이드 인 */}
           <div className="page-fade" key={location.pathname}>
           <Routes>
-            {user ? (
-              // 로그인 후
-              <>
-                <Route path="/" element={<Home />} />
-                <Route path="/sport" element={<SportHome />} />
-                <Route path="/detail/:id" element={<Detail />} />
-              </>
-            ) : (
-              // 로그인 전
-              <>
-                <Route path="/" element={<Navigate to="/login" replace />} />
-                <Route path="/login" element={<Login />} />
-              </>
-            )}
+            {/* 홈은 로그인 여부와 상관없이 기본 페이지 */}
+            <Route path="/" element={<Home />} />
+            <Route path="/sport" element={<SportHome />} />
+            <Route path="/detail/:id" element={<Detail />} />
+            {/* 로그인 페이지: 이미 로그인했다면 홈으로 */}
+            <Route
+              path="/login"
+              element={user ? <Navigate to="/" replace /> : <Login />}
+            />
             {/* 허용되지 않은 경로는 홈으로 */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

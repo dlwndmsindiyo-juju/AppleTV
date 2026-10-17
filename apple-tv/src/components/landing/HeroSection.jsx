@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import { useMovieStore } from "../../store/useMovieStore";
@@ -65,12 +66,23 @@ const HeroItem = ({ movie, isSwiping }) => {
 
       {/* 영화 상세 정보 */}
       <div className="hero-info">
-        <h2 className="hero-title">{movie.title}</h2>
+        {/* 상단 라벨 */}
         <div className="hero-meta">
           {releaseYear && <span className="release-year">{releaseYear}</span>}
           <span className="age-rating">15+</span>
         </div>
+        <h2 className="hero-title">{movie.title}</h2>
         <p className="hero-overview">{movie.overview}</p>
+
+        {/* CTA / 서브 버튼 */}
+        <div className="hero-actions">
+          <Link to={`/detail/${movie.id}`} className="hero-btn primary">
+            재생
+          </Link>
+          <Link to={`/detail/${movie.id}`} className="hero-btn secondary">
+            상세 정보
+          </Link>
+        </div>
       </div>
     </div>
   );
