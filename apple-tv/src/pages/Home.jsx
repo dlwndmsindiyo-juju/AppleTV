@@ -7,15 +7,17 @@ import Top10Section from "../components/landing/Top10Section";
 import UpcomingSection from "../components/landing/UpcomingSection";
 import AppleOriginals from "../components/landing/AppleOriginals";
 import SubscribeCTA from "../components/landing/SubscribeCTA";
-import MovieSlider from "../components/common/MovieSlider";
+import DeviceGuide from "../components/landing/DeviceGuide";
+// import MovieSlider from "../components/common/MovieSlider"; // 영화/TV 슬라이더 (임시 숨김)
 
 const Home = () => {
-  const { popMovie, onFetchPopular, tvs, onFetchTv } = useMovieStore();
+  // const { popMovie, onFetchPopular, tvs, onFetchTv } = useMovieStore();
+  const { onFetchPopular } = useMovieStore();
 
   useEffect(() => {
     onFetchPopular();
-    onFetchTv();
-  }, [onFetchPopular, onFetchTv]);
+    // onFetchTv(); // 영화/TV 슬라이더 복구 시 함께 주석 해제
+  }, [onFetchPopular]);
 
   return (
     <main className="page-fade">
@@ -37,11 +39,16 @@ const Home = () => {
       {/* 6. 구독 유도 CTA */}
       <SubscribeCTA />
 
-      {/* 7. 인기 영화 슬라이더 */}
-      <MovieSlider movies={popMovie} title="지금 뜨는 영화" />
+      {/* 7. 기기 안내 (마지막 섹션, 아래는 푸터) */}
+      <DeviceGuide />
 
-      {/* 8. 인기 TV 프로그램 슬라이더 */}
+      {/* 인기 영화 슬라이더 (임시 숨김)
+      <MovieSlider movies={popMovie} title="지금 뜨는 영화" />
+      */}
+
+      {/* 인기 TV 프로그램 슬라이더 (임시 숨김)
       <MovieSlider movies={tvs} title="Apple TV+ 인기 시리즈" />
+      */}
     </main>
   );
 };

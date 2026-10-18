@@ -320,7 +320,7 @@ header {
       left: 8%; // 왼쪽 배치
       transform: translateY(-50%); // 세로만 가운데
       width: 100%;
-      max-width: 630px;
+      max-width: 700px;
       box-sizing: border-box;
       text-align: left; // 텍스트 전부 왼쪽 정렬
       color: $text-primary;
@@ -816,6 +816,74 @@ header {
   }
 }
 
+// ===== 기기 안내 =====
+.device-guide {
+  background-color: $gnb-bg;
+  padding: 56px 0;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .device-guide-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 40px;
+  }
+
+  .device-guide-title {
+    @include display-M;
+    font-weight: 600; // 시안 제목은 굵게
+    color: $text-primary;
+    margin: 0 0 12px;
+    word-break: keep-all;
+  }
+
+  .device-guide-sub {
+    @include body-small; // - body small
+    color: $neutral-color-400;
+    margin: 0;
+  }
+
+  .device-guide-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+
+    li {
+      @include body-default;
+      color: $light-color-500;
+    }
+  }
+
+  .device-guide-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+      @include body-small;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: $light-color-500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+  }
+}
+
 // ===== 공통 영화 슬라이더 =====
 .movie-slider-section {
   background-color: $gnb-bg;
@@ -852,7 +920,6 @@ main {
   background-color: $gnb-bg;
   color: $neutral-color-400;
   width: 100%;
-  margin-top: 120px;
   padding: $footer-pad-y $footer-pad-x;
   box-sizing: border-box;
 
