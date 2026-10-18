@@ -4,6 +4,9 @@ import { useMovieStore } from "../store/useMovieStore";
 import HeroSection from "../components/landing/HeroSection";
 import ValueProps from "../components/landing/ValueProps";
 import Top10Section from "../components/landing/Top10Section";
+import UpcomingSection from "../components/landing/UpcomingSection";
+import AppleOriginals from "../components/landing/AppleOriginals";
+import SubscribeCTA from "../components/landing/SubscribeCTA";
 import MovieSlider from "../components/common/MovieSlider";
 
 const Home = () => {
@@ -25,10 +28,19 @@ const Home = () => {
       {/* 3. 인기 영화 TOP 10 (호버 시 제목/평점) */}
       <Top10Section />
 
-      {/* 4. 인기 영화 슬라이더 */}
+      {/* 4. 새로운 개봉 예정작 */}
+      <UpcomingSection />
+
+      {/* 5. Apple 오리지널 */}
+      <AppleOriginals />
+
+      {/* 6. 구독 유도 CTA */}
+      <SubscribeCTA />
+
+      {/* 7. 인기 영화 슬라이더 */}
       <MovieSlider movies={popMovie} title="지금 뜨는 영화" />
 
-      {/* 5. 인기 TV 프로그램 슬라이더 */}
+      {/* 8. 인기 TV 프로그램 슬라이더 */}
       <MovieSlider movies={tvs} title="Apple TV+ 인기 시리즈" />
     </main>
   );

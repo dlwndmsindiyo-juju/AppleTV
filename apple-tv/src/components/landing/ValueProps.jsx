@@ -10,7 +10,7 @@ const valueProps = [
 const ValueProps = () => {
   return (
     <section className="value-props">
-      <div className="value-props-inner">
+      <div className="inner value-props-inner">
         {valueProps.map((item) => (
           <div className="value-prop-item" key={item.title}>
             <span className="value-prop-title">{item.title}</span>

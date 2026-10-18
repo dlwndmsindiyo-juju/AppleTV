@@ -17,6 +17,7 @@ const Top10Section = ({ title = "오늘의 인기 영화 TOP 10" }) => {
 
   return (
     <section className="top10-section">
+      <div className="inner">
       <h3 className="top10-title">{title}</h3>
 
       <Swiper
@@ -58,6 +59,7 @@ const Top10Section = ({ title = "오늘의 인기 영화 TOP 10" }) => {
           </SwiperSlide>
         ))}
       </Swiper>
+      </div>
     </section>
   );
 };

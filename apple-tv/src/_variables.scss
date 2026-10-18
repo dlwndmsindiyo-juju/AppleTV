@@ -51,6 +51,17 @@ $radius-card: 12px;
 $container-width: 1200px;
 $header-height: 72px; // App.scss 의 fixed header 높이 (상하 14 + 프로필 44)
 
+// 이너 (히어로 제외 공통 콘텐츠 폭)
+$inner-width: 1920px;
+@mixin inner-wrap {
+  width: 100%;
+  max-width: $inner-width;
+  margin: 0 auto;
+  padding-left: $header-pad-x;
+  padding-right: $header-pad-x;
+  box-sizing: border-box;
+}
+
 // header / footer 시안 (Desktop)
 $gnb-bg: #141414;
 $header-pad-x: 64px;

@@ -11,7 +11,8 @@ export default function MovieSlider({ movies = [], title = "인기 콘텐츠" })
   if (!movies || movies.length === 0) return null;
 
   return (
-    <div className="movie-slider-section" style={{ padding: '20px 40px' }}>
+    <div className="movie-slider-section" style={{ padding: '20px 0' }}>
+      <div className="inner">
       <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '24px' }}>{title}</h3>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
@@ -43,6 +44,7 @@ export default function MovieSlider({ movies = [], title = "인기 콘텐츠" })
           </SwiperSlide>
         ))}
       </Swiper>
+      </div>
     </div>
   );
 }
