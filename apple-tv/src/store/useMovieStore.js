@@ -15,6 +15,42 @@ export const useMovieStore = create((set, get) => ({
     console.log(data);
     set({ popMovie: data.results });
   },
+  // 개봉 예정작을 저장할 배열
+  upcoming: [],
+  // 개봉 예정작을 불러올 메서드
+  onFetchUpcoming: async () => {
+    const { upcoming } = get();
+    if (upcoming.length > 0) return;
+ 
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${TMDB_KEY}&language=ko-KR&region=KR&page=1`,
+      );
+      if (!res.ok) throw new Error("개봉 예정작을 불러오지 못했습니다.");
+      const data = await res.json();
+      set({ upcoming: data.results || [] });
+    } catch (error) {
+      console.error("개봉 예정작 조회 실패:", error);
+    }
+  },
+   // Apple 오리지널(애플 TV+ 방송사 id 2552)을 저장할 배열
+  appleOriginals: [],
+  // Apple 오리지널 TV 시리즈를 불러올 메서드
+  onFetchAppleOriginals: async () => {
+    const { appleOriginals } = get();
+    if (appleOriginals.length > 0) return;
+ 
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/discover/tv?api_key=${TMDB_KEY}&language=ko-KR&with_networks=2552&sort_by=popularity.desc&page=1`,
+      );
+      if (!res.ok) throw new Error("Apple 오리지널을 불러오지 못했습니다.");
+      const data = await res.json();
+      set({ appleOriginals: data.results || [] });
+    } catch (error) {
+      console.error("Apple 오리지널 조회 실패:", error);
+    }
+  },
   // 영화의 비디오를 저장할 변수
   popVideo: {},
   // 영화의 비디오를 불러오는 메서드
