@@ -8,6 +8,7 @@ import UpcomingSection from "../components/landing/UpcomingSection";
 import AppleOriginals from "../components/landing/AppleOriginals";
 import SubscribeCTA from "../components/landing/SubscribeCTA";
 import DeviceGuide from "../components/landing/DeviceGuide";
+import PromoBanner from "../components/landing/PromoBanner";
 // import MovieSlider from "../components/common/MovieSlider"; // 영화/TV 슬라이더 (임시 숨김)
 
 const Home = () => {
@@ -41,6 +42,9 @@ const Home = () => {
 
       {/* 7. 기기 안내 (마지막 섹션, 아래는 푸터) */}
       <DeviceGuide />
+
+      {/* 8. 구독 전 프로모션 배너 (첫 스크롤 후 하단에 떠 있음, 로그인하면 사라짐) */}
+      <PromoBanner />
 
       {/* 인기 영화 슬라이더 (임시 숨김)
       <MovieSlider movies={popMovie} title="지금 뜨는 영화" />

@@ -884,6 +884,94 @@ header {
   }
 }
 
+// ===== 구독 전 프로모션 배너 (하단 플로팅) =====
+.promo-banner {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 999; // 헤더(1000) 바로 아래
+  background-color: $accent-color;
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .promo-banner-inner {
+    @include inner-wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .promo-banner-text {
+    min-width: 0;
+  }
+
+  .promo-banner-title {
+    @include heading-h3;
+    font-weight: 700;
+    display: block;
+    color: $text-primary;
+    margin-bottom: 8px;
+  }
+
+  .promo-banner-desc {
+    @include body-large;
+    color: rgba($text-primary, 0.75);
+    margin: 0;
+  }
+
+  .promo-banner-action {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .promo-banner-btn {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 250px;
+    height: 48px;
+    padding: 0 32px;
+    border-radius: 9999px;
+    background-color: $light-color-0;
+    color: $dark-color-900;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: $light-color-300;
+    }
+  }
+
+  .promo-banner-note {
+    @include body-small;
+    color: rgba($text-primary, 0.75);
+    text-align: center;
+    margin: 0;
+  }
+}
+
+// 배너가 떠 있는 동안 푸터 문구가 가려지지 않도록 하단 여백 확보
+body.has-promo-banner .footer {
+  padding-bottom: 130px;
+}
+
 // ===== 공통 영화 슬라이더 =====
 .movie-slider-section {
   background-color: $gnb-bg;
