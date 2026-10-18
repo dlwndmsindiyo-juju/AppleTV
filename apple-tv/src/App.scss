@@ -15,6 +15,8 @@ header {
 
   .inner {
     width: 100%;
+    max-width: $inner-width; // 이너 1920px
+    margin: 0 auto;
     height: 100%;
     padding: $header-pad-y $header-pad-x;
     display: flex;
@@ -311,27 +313,23 @@ header {
       z-index: 5;
     }
 
-    // 영화 정보 영역 (화면 가운데 정렬: 라벨 / 제목 / 본문 / 버튼)
+    // 영화 정보 영역 (왼쪽 배치·왼쪽 정렬: 라벨 / 제목 / 본문 / 버튼)
     .hero-info {
       position: absolute;
       top: 50%;
-      left: 2%;
-      transform: translateY(-50%); // 화면 정중앙
+      left: 8%; // 왼쪽 배치
+      transform: translateY(-50%); // 세로만 가운데
       width: 100%;
-      max-width: 800px;
-      padding: 0 24px;
+      max-width: 700px;
       box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items:flex-start;
+      text-align: left; // 텍스트 전부 왼쪽 정렬
       color: $text-primary;
       z-index: 10;
 
       .hero-meta {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 12px;
         margin-bottom: 20px;
         color: $text-secondary;
@@ -368,7 +366,7 @@ header {
 
       .hero-actions {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 12px;
 
         .hero-btn {
@@ -410,6 +408,579 @@ header {
   }
 }
 
+// ===== 히어로 아래: 핵심 혜택 (Value Props) =====
+.value-props {
+  background-color: $gnb-bg;
+  padding: 22px 0 24px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .value-props-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .value-prop-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .value-prop-title {
+    @include body-large; // 시안 제목 크기 (17px)
+    color: $text-primary;
+  }
+
+  .value-prop-desc {
+    @include body-small; // Body Small 13
+    color: $neutral-color-400;
+  }
+}
+
+// ===== 인기 영화 TOP 10 =====
+.top10-section {
+  background-color: $gnb-bg;
+  padding: 40px 0 56px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .top10-title {
+    @include heading-h2;
+    color: $text-primary;
+    margin: 0 0 20px;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $text-primary;
+  }
+
+  .top10-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: $text-primary;
+  }
+
+  .top10-poster {
+    position: relative;
+    aspect-ratio: 282 / 400;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: $surface-color;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    // 호버 오버레이
+    .top10-hover {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px;
+      text-align: center;
+      background: rgba($bg-color, 0.7);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+
+      .top10-movie-title {
+        @include heading-h4;
+        color: $text-primary;
+        word-break: keep-all;
+      }
+
+      .top10-rating {
+        @include body-default;
+        color: $light-color-0;
+      }
+    }
+  }
+
+  .top10-card:hover {
+    .top10-hover {
+      opacity: 1;
+    }
+
+    .top10-poster img {
+      transform: scale(1.05);
+    }
+  }
+
+  // 포스터 왼쪽 아래에 겹치는 큰 순위 숫자
+  .top10-rank {
+    position: absolute;
+    left: 8px;
+    bottom: -12px;
+    z-index: 2;
+    font-family: "SF Pro", sans-serif;
+    font-size: 140px;
+    font-weight: 800;
+    line-height: 1;
+    color: $text-primary;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+  }
+}
+
+// ===== 새로운 개봉 예정작 =====
+.upcoming-section {
+  background-color: $gnb-bg;
+  padding: 40px 0 56px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .upcoming-title {
+    @include heading-h2;
+    color: $text-primary;
+    margin: 0 0 8px;
+  }
+
+  .upcoming-desc {
+    @include body-large;
+    color: $neutral-color-400;
+    margin: 0 0 24px;
+  }
+
+  .upcoming-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .upcoming-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: $radius-card;
+    background-color: $dark-color-800;
+    min-width: 0;
+  }
+
+  .upcoming-thumb {
+    flex-shrink: 0;
+    width: 150px;
+    height: 96px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: $surface-color;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .upcoming-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .upcoming-date {
+    @include body-small;
+    color: $neutral-color-400;
+  }
+
+  .upcoming-movie-title {
+    @include heading-h3;
+    color: $text-primary;
+    margin: 0;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .upcoming-overview {
+    @include body-large;
+    color: $neutral-color-400;
+    margin: 0;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .upcoming-btn {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    margin-top: 6px;
+    padding: 0 16px;
+    border: 1px solid $neutral-color-400;
+    border-radius: 9999px;
+    color: $text-primary;
+    text-decoration: none;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-color: $light-color-0;
+    }
+  }
+}
+
+// ===== Apple 오리지널 =====
+.apple-originals {
+  background-color: $gnb-bg;
+  padding: 40px 0 56px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .apple-originals-title {
+    @include heading-h2;
+    color: $text-primary;
+    margin: 0 0 8px;
+  }
+
+  .apple-originals-desc {
+    @include body-large;
+    color: $neutral-color-400;
+    margin: 0 0 24px;
+  }
+
+  .apple-originals-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .apple-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-decoration: none;
+    color: $text-primary;
+  }
+
+  .apple-card-poster {
+    aspect-ratio: 282 / 400;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: $surface-color;
+    margin-bottom: 12px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  .apple-card:hover .apple-card-poster img {
+    transform: scale(1.05);
+  }
+
+  .apple-card-title {
+    @include heading-h3;
+    color: $text-primary;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .apple-card-meta {
+    @include body-small; // body small 1
+    color: $neutral-color-400;
+  }
+
+  .apple-card-badge {
+    @include body-small; // body small 2
+    color: $text-primary;
+    margin-top: 4px;
+  }
+}
+
+// ===== 구독 유도 CTA =====
+.subscribe-cta {
+  background-color: $gnb-bg;
+  padding: 40px 0 72px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .subscribe-banner {
+    position: relative;
+    height: 415px;
+    border-radius: 24px;
+    overflow: hidden;
+    background-color: $dark-color-800;
+    border: 1px solid $dark-color-300;
+  }
+
+  // 배경 이미지
+  .subscribe-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  // 텍스트 가독성용 왼쪽 어두운 그라데이션 (이미지 위, 텍스트 아래)
+  .subscribe-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to right,
+      rgba($dark-color-900, 0.92) 0%,
+      rgba($dark-color-900, 0.75) 25%,
+      rgba($dark-color-900, 0) 60%
+    );
+    pointer-events: none;
+  }
+
+  .subscribe-content {
+    position: absolute;
+    left: 4%;
+    bottom: 50%;
+    transform: translateY(50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 16px;
+  }
+
+  .subscribe-logo {
+    height: 28px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+
+  .subscribe-title {
+    @include heading-h3; // H3
+    color: $text-primary;
+    margin: 0;
+    word-break: keep-all;
+  }
+
+  .subscribe-btn {
+    @include body-default; // Body Default
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 36px;
+    border-radius: 9999px;
+    background-color: $light-color-100;
+    color: $dark-color-900;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: $light-color-400;
+    }
+  }
+
+  .subscribe-note {
+    @include body-small; // body small
+    color: $neutral-color-400;
+    margin: 0;
+  }
+}
+
+// ===== 기기 안내 =====
+.device-guide {
+  background-color: $gnb-bg;
+  padding: 56px 0;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .device-guide-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 40px;
+  }
+
+  .device-guide-title {
+    @include display-M;
+    font-weight: 600; // 시안 제목은 굵게
+    color: $text-primary;
+    margin: 0 0 12px;
+    word-break: keep-all;
+  }
+
+  .device-guide-sub {
+    @include body-small; // - body small
+    color: $neutral-color-400;
+    margin: 0;
+  }
+
+  .device-guide-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+
+    li {
+      @include body-default;
+      color: $light-color-500;
+    }
+  }
+
+  .device-guide-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+      @include body-small;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: $light-color-500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+  }
+}
+
+// ===== 구독 전 프로모션 배너 (하단 플로팅) =====
+.promo-banner {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 999; // 헤더(1000) 바로 아래
+  background-color: $accent-color;
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .promo-banner-inner {
+    @include inner-wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .promo-banner-text {
+    min-width: 0;
+  }
+
+  .promo-banner-title {
+    @include heading-h3;
+    font-weight: 700;
+    display: block;
+    color: $text-primary;
+    margin-bottom: 8px;
+  }
+
+  .promo-banner-desc {
+    @include body-large;
+    color: rgba($text-primary, 0.75);
+    margin: 0;
+  }
+
+  .promo-banner-action {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .promo-banner-btn {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 250px;
+    height: 48px;
+    padding: 0 32px;
+    border-radius: 9999px;
+    background-color: $light-color-0;
+    color: $dark-color-900;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: $light-color-300;
+    }
+  }
+
+  .promo-banner-note {
+    @include body-small;
+    color: rgba($text-primary, 0.75);
+    text-align: center;
+    margin: 0;
+  }
+}
+
+// 배너가 떠 있는 동안 푸터 문구가 가려지지 않도록 하단 여백 확보
+body.has-promo-banner .footer {
+  padding-bottom: 130px;
+}
+
+// ===== 공통 영화 슬라이더 =====
+.movie-slider-section {
+  background-color: $gnb-bg;
+
+  .inner {
+    @include inner-wrap;
+  }
+}
+
 // ===== 페이지 전환 (스르륵 페이드 인) =====
 .page-fade {
   animation: page-fade-in 0.45s ease both;
@@ -437,12 +1008,13 @@ main {
   background-color: $gnb-bg;
   color: $neutral-color-400;
   width: 100%;
-  margin-top: 120px;
   padding: $footer-pad-y $footer-pad-x;
   box-sizing: border-box;
 
   .inner {
     width: 100%;
+    max-width: $inner-width; // 이너 1920px
+    margin: 0 auto;
     padding: 26px 0; // 14 + 26 = 시안의 상하 여백
     display: flex;
     flex-direction: column;
