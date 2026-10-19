@@ -67,9 +67,8 @@ const Header = () => {
           {/* 중간 토글 버튼 */}
           <div className="gnb-center-toggle">
             <span
-              className={`toggle-indicator ${activeTab === "sport" ? "sport" : "apple-tv"}${
-                indicator.ready ? " animated" : ""
-              }`}
+              className={`toggle-indicator ${activeTab === "sport" ? "sport" : "apple-tv"}${indicator.ready ? " animated" : ""
+                }`}
               style={{ left: indicator.left, width: indicator.width }}
               aria-hidden="true"
             />
@@ -97,7 +96,8 @@ const Header = () => {
                 <input type="text" name="search" placeholder="작품·인물·장르" />
               </li>
               <li className="profile-box">
-                <span aria-label="유저 프로필">{initial}</span>
+                <span aria-label="유저 프로필">
+                  <Link to="/login">{initial}</Link></span>
               </li>
             </ul>
           </div>
