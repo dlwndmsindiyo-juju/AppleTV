@@ -177,3 +177,11 @@ $input-focus-bg: #2e2e2e;
   line-height: 125px;
   letter-spacing: 0;
 }
+
+// 반응형 브레이크포인트
+$breakpoint-tablet: 1024px; // 태블릿 시안 1024 (이하 적용)
+$breakpoint-mobile: 767px; // 모바일 (mobile.scss 에서 사용)
+
+// 태블릿 시안: 본문 좌우 여백 (1024 기준 약 134px ≒ 13%)
+$tablet-gutter: 13%;
+$tablet-edge: 40px; // 헤더·푸터·스포츠 섹션 좌우 여백
