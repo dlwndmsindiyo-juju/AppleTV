@@ -38,7 +38,7 @@ const Home = () => {
       <AppleOriginals />
 
       {/* 6. 구독 유도 CTA */}
-      <SubscribeCTA />
+      <SubscribeCTA type="tv" />
 
       {/* 7. 기기 안내 (마지막 섹션, 아래는 푸터) */}
       <DeviceGuide />

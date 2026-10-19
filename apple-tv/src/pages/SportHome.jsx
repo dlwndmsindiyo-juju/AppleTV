@@ -10,8 +10,9 @@ import SportTeams from "../components/sport/SportTeams";
 import SportLeague from "../components/sport/SportLeague";
 import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
-import SportNotify from "../components/sport/SportNotify";
 import DeviceGuide from "../components/landing/DeviceGuide";
+import PromoBanner from "../components/landing/PromoBanner";
+import SubscribeCTA from "../components/landing/SubscribeCTA";
 
 const SportHome = () => {
   const {
@@ -70,10 +71,13 @@ const SportHome = () => {
       <SportHighlights />
 
       {/* 9. 알림 설정 배너 */}
-      <SportNotify />
+      <SubscribeCTA type="sport" />
 
       {/* 10. 디바이스 가이드 (마지막) */}
       <DeviceGuide />
+
+      {/* 11. 구독 전 프로모션 배너 (첫 스크롤 후 하단에 떠 있음, 로그인하면 사라짐) */}
+      <PromoBanner />
     </main>
   );
 };

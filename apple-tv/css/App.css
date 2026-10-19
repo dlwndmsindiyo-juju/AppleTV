@@ -711,13 +711,18 @@ header .inner nav .gnb-right ul .profile-box:hover {
 }
 .subscribe-cta .subscribe-banner {
   position: relative;
-  height: 415px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 360px;
+  padding: 48px 64px;
   border-radius: 24px;
   overflow: hidden;
   background-color: #1f1f1f;
   border: 1px solid #3A3A3A;
+  box-sizing: border-box;
 }
-.subscribe-cta .subscribe-bg {
+.subscribe-cta .subscribe-banner .subscribe-bg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -725,44 +730,75 @@ header .inner nav .gnb-right ul .profile-box:hover {
   object-fit: cover;
   object-position: center;
   display: block;
+  z-index: 0;
 }
 .subscribe-cta .subscribe-banner::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(to right, rgba(23, 23, 23, 0.92) 0%, rgba(23, 23, 23, 0.75) 25%, rgba(23, 23, 23, 0) 60%);
+  background: linear-gradient(to right, rgba(23, 23, 23, 0.9) 0%, rgba(23, 23, 23, 0.6) 50%, rgba(23, 23, 23, 0.3) 100%);
   pointer-events: none;
 }
-.subscribe-cta .subscribe-content {
-  position: absolute;
-  left: 4%;
-  bottom: 50%;
-  transform: translateY(50%);
+.subscribe-cta .subscribe-banner .subscribe-left {
+  position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
   gap: 16px;
+  max-width: 500px;
 }
-.subscribe-cta .subscribe-logo {
+.subscribe-cta .subscribe-banner .subscribe-left .subscribe-logo {
   height: 28px;
   width: auto;
   display: block;
   filter: brightness(0) invert(1);
 }
-.subscribe-cta .subscribe-title {
+.subscribe-cta .subscribe-banner .subscribe-left .subscribe-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #ffffff;
+  margin: 0;
+  word-break: keep-all;
+  line-height: 1.35;
+}
+.subscribe-cta .subscribe-banner .subscribe-card {
+  position: relative;
+  z-index: 2;
+  width: 320px;
+  padding: 32px 24px;
+  border-radius: 16px;
+  background-color: rgba(23, 23, 23, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+.subscribe-cta .subscribe-banner .subscribe-card .card-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 25px;
   letter-spacing: 0;
   color: #ffffff;
-  margin: 0;
-  word-break: keep-all;
+  margin: 0 0 6px 0;
 }
-.subscribe-cta .subscribe-btn {
+.subscribe-cta .subscribe-banner .subscribe-card .card-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #D4D4D4;
+  margin: 0 0 20px 0;
+}
+.subscribe-cta .subscribe-banner .subscribe-card .subscribe-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 15px;
@@ -770,23 +806,29 @@ header .inner nav .gnb-right ul .profile-box:hover {
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  height: 48px;
-  padding: 0 36px;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  padding: 0 20px;
   border-radius: 9999px;
   background-color: #F5F5F5;
   color: #171717;
+  font-weight: 600;
   text-decoration: none;
   transition: background-color 0.25s ease;
+  box-sizing: border-box;
+  margin-bottom: 12px;
 }
-.subscribe-cta .subscribe-btn:hover {
+.subscribe-cta .subscribe-banner .subscribe-card .subscribe-btn:hover {
   background-color: #D5D5D5;
 }
-.subscribe-cta .subscribe-note {
+.subscribe-cta .subscribe-banner .subscribe-card .subscribe-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
+  font-size: 12px;
   color: #A3A3A3;
   margin: 0;
 }
@@ -1282,7 +1324,7 @@ body.has-promo-banner .footer {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: rgba(255, 255, 255, 0.55);
   color: #ffffff;
   font-size: 18px;
   padding-left: 3px;
@@ -1351,6 +1393,401 @@ body.has-promo-banner .footer {
   line-height: 34px;
   letter-spacing: 0;
   color: #A3A3A3;
+}
+
+.sport-teams {
+  background-color: #171717;
+  padding: 48px 0;
+}
+.sport-teams .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+.sport-teams .sport-teams-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  margin: 0 0 6px;
+  color: #ffffff;
+}
+.sport-teams .sport-teams-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  margin: 0 0 24px;
+  color: #A3A3A3;
+}
+.sport-teams .sport-team-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sport-teams .sport-team-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background-color: #242424;
+  min-width: 0;
+}
+.sport-teams .sport-team-logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background-color: #3A3A3A;
+  overflow: hidden;
+}
+.sport-teams .sport-team-logo img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+}
+.sport-teams .sport-team-name {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  flex: 1;
+  min-width: 0;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sport-teams .sport-team-add {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.sport-teams .sport-team-add:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+.sport-teams .sport-team-add.on {
+  background-color: #E91E1B;
+  font-size: 16px;
+}
+
+.sport-league {
+  background-color: #141414;
+  padding: 56px 0 72px;
+}
+.sport-league .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+.sport-league .sport-league-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sport-league .sport-league-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #1f1f1f;
+  text-decoration: none;
+  color: #ffffff;
+  transition: background-color 0.25s ease;
+}
+.sport-league .sport-league-card:hover {
+  background-color: #2E2E2E;
+}
+.sport-league .sport-league-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  color: #171717;
+  font-size: 20px;
+  padding-left: 2px;
+  box-sizing: border-box;
+}
+.sport-league .sport-league-label {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  flex: 1;
+  min-width: 0;
+  color: #ffffff;
+}
+.sport-league .sport-league-arrow {
+  flex-shrink: 0;
+  color: #A3A3A3;
+  font-size: 18px;
+}
+
+.sport-replay {
+  background-color: #141414;
+  padding: 56px 0 32px;
+}
+.sport-replay .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+.sport-replay .sport-replay-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sport-replay .sport-replay-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #1f1f1f;
+  text-decoration: none;
+  color: #ffffff;
+  transition: background-color 0.25s ease;
+}
+.sport-replay .sport-replay-card:hover {
+  background-color: #2E2E2E;
+}
+.sport-replay .sport-replay-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  aspect-ratio: 206/104;
+  border-radius: 10px;
+  background-color: #242424;
+  overflow: hidden;
+}
+.sport-replay .sport-replay-thumb img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  display: block;
+}
+.sport-replay .sport-replay-score {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: #ffffff;
+}
+.sport-replay .sport-replay-name {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  padding: 0 4px;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sport-replay .sport-replay-date {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  padding: 0 4px 4px;
+  color: #A3A3A3;
+  margin-top: -8px;
+}
+
+.sport-highlights {
+  background-color: #141414;
+  padding: 56px 0 72px;
+}
+.sport-highlights .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+.sport-highlights .sport-highlight-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sport-highlights .sport-highlight-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-decoration: none;
+  color: #ffffff;
+}
+.sport-highlights .sport-highlight-thumb {
+  position: relative;
+  aspect-ratio: 286/160;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #1f1f1f;
+  margin-bottom: 8px;
+}
+.sport-highlights .sport-highlight-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.sport-highlights .sport-highlight-card:hover .sport-highlight-thumb img {
+  transform: scale(1.05);
+}
+.sport-highlights .sport-highlight-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  font-size: 14px;
+  padding-left: 2px;
+  box-sizing: border-box;
+}
+.sport-highlights .sport-highlight-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  margin: 0;
+  color: #ffffff;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.sport-highlights .sport-highlight-meta {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #A3A3A3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sport-notify {
+  background-color: #141414;
+  padding: 0 0 72px;
+}
+.sport-notify .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+.sport-notify .sport-notify-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px;
+  border-radius: 16px;
+  background-color: #1f1f1f;
+}
+.sport-notify .sport-notify-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: #ffffff;
+  word-break: keep-all;
+}
+.sport-notify .sport-notify-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  margin: 0;
+  color: #A3A3A3;
+}
+.sport-notify .sport-notify-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 32px;
+  border-radius: 9999px;
+  background-color: #FFFFFF;
+  color: #171717;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.25s ease;
+}
+.sport-notify .sport-notify-btn:hover {
+  background-color: #E0E0E0;
 }
 
 .movie-slider-section {
