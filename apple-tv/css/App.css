@@ -968,6 +968,340 @@ body.has-promo-banner .footer {
   padding-bottom: 130px;
 }
 
+.sport-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #08090d;
+}
+.sport-hero .sport-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #1f1f1f;
+}
+.sport-hero .sport-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #08090d 0%, rgba(8, 9, 13, 0.4) 40%, rgba(8, 9, 13, 0) 100%);
+}
+.sport-hero .sport-hero-card {
+  position: absolute;
+  left: 8%;
+  bottom: 64px;
+  z-index: 2;
+  width: 100%;
+  max-width: 435px;
+  box-sizing: border-box;
+  padding: 24px;
+  border-radius: 12px;
+  background-color: rgba(23, 23, 23, 0.92);
+  color: #ffffff;
+}
+.sport-hero .sport-hero-label {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  color: #ffffff;
+}
+.sport-hero .sport-hero-label strong {
+  font-weight: 700;
+}
+.sport-hero .sport-hero-label .sport-hero-divider {
+  color: #A3A3A3;
+}
+.sport-hero .sport-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #E91E1B;
+  animation: sport-live-blink 1.4s ease-in-out infinite;
+}
+.sport-hero .sport-hero-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding-top: 0;
+  color: #ffffff;
+}
+.sport-hero .sport-hero-score {
+  color: #ffffff;
+}
+.sport-hero .sport-hero-sub {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  margin: 0 0 20px;
+  color: #A3A3A3;
+}
+.sport-hero .sport-hero-actions {
+  display: flex;
+  gap: 12px;
+}
+
+@keyframes sport-live-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+.sport-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.25s ease, opacity 0.25s ease;
+}
+.sport-btn.primary {
+  background-color: #FFFFFF;
+  color: #171717;
+}
+.sport-btn.primary:hover {
+  background-color: #E0E0E0;
+}
+.sport-btn.primary.disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+.sport-btn.secondary {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+.sport-btn.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.28);
+}
+
+.sport-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.sport-section-head .sport-section-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  margin: 0;
+  color: #ffffff;
+}
+.sport-section-head .sport-more {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #A3A3A3;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.sport-section-head .sport-more:hover {
+  color: #ffffff;
+}
+
+.sport-upcoming {
+  background-color: #141414;
+  padding: 56px 0 32px;
+}
+.sport-upcoming .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+.sport-upcoming .sport-match-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sport-upcoming .sport-match-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #1f1f1f;
+  min-width: 0;
+}
+.sport-upcoming .sport-match-status {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #A3A3A3;
+}
+.sport-upcoming .sport-match-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sport-upcoming .sport-match-teams {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.sport-upcoming .sport-match-team {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.sport-upcoming .sport-match-team img,
+.sport-upcoming .sport-match-team .sport-crest-empty {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  object-fit: contain;
+  border-radius: 50%;
+  background-color: #181a21;
+}
+.sport-upcoming .sport-match-team-name {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sport-upcoming .sport-match-score {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: #ffffff;
+}
+
+.sport-shorts {
+  background-color: #141414;
+  padding: 32px 0 72px;
+}
+.sport-shorts .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+.sport-shorts .swiper-button-next,
+.sport-shorts .swiper-button-prev {
+  color: #ffffff;
+}
+.sport-shorts .sport-short-slide {
+  width: 210px;
+}
+.sport-shorts .sport-short-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-decoration: none;
+  color: #ffffff;
+}
+.sport-shorts .sport-short-thumb {
+  position: relative;
+  aspect-ratio: 175/190;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #1f1f1f;
+  margin-bottom: 6px;
+}
+.sport-shorts .sport-short-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.sport-shorts .sport-short-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.55);
+  color: #ffffff;
+  font-size: 18px;
+  padding-left: 3px;
+  box-sizing: border-box;
+}
+.sport-shorts .sport-short-card:hover .sport-short-thumb img {
+  transform: scale(1.05);
+}
+.sport-shorts .sport-short-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  margin: 0;
+  color: #ffffff;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.sport-shorts .sport-short-meta {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #A3A3A3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .movie-slider-section {
   background-color: #141414;
 }

@@ -981,6 +981,340 @@ body.has-promo-banner .footer {
   padding-bottom: 130px;
 }
 
+
+// ===== 스포츠 홈 =====
+// 히어로
+.sport-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: $bg-color;
+
+  .sport-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-color: $dark-color-800;
+  }
+
+  .sport-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+        $bg-color 0%,
+        rgba($bg-color, 0.4) 40%,
+        rgba($bg-color, 0) 100%);
+  }
+
+  // 하단 좌측 경기 카드
+  .sport-hero-card {
+    position: absolute;
+    left: 8%;
+    bottom: 64px;
+    z-index: 2;
+    width: 100%;
+    max-width: 435px;
+    box-sizing: border-box;
+    padding: 24px;
+    border-radius: 12px;
+    background-color: rgba($dark-color-900, 0.92);
+    color: $text-primary;
+  }
+
+  .sport-hero-label {
+    @include body-small;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 12px;
+    color: $text-primary;
+
+    strong {
+      font-weight: 700;
+    }
+
+    .sport-hero-divider {
+      color: $neutral-color-400;
+    }
+  }
+
+  .sport-live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $sports-color;
+    animation: sport-live-blink 1.4s ease-in-out infinite;
+  }
+
+  .sport-hero-title {
+    @include heading-h2;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 12px;
+    padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
+    color: $text-primary;
+  }
+
+  .sport-hero-score {
+    color: $text-primary;
+  }
+
+  .sport-hero-sub {
+    @include body-small;
+    margin: 0 0 20px;
+    color: $neutral-color-400;
+  }
+
+  .sport-hero-actions {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+@keyframes sport-live-blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+// 스포츠 공통 버튼
+.sport-btn {
+  @include body-small;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.25s ease, opacity 0.25s ease;
+
+  &.primary {
+    background-color: $light-color-0;
+    color: $dark-color-900;
+
+    &:hover {
+      background-color: $light-color-300;
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+
+  &.secondary {
+    background-color: rgba(255, 255, 255, 0.16);
+    color: $text-primary;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.28);
+    }
+  }
+}
+
+// 섹션 공통 헤더 (제목 + 전체 보기)
+.sport-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  .sport-section-title {
+    @include heading-h2;
+    margin: 0;
+    color: $text-primary;
+  }
+
+  .sport-more {
+    @include body-small;
+    color: $neutral-color-400;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+}
+
+// 예정된 경기
+.sport-upcoming {
+  background-color: $gnb-bg;
+  padding: 56px 0 32px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .sport-match-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sport-match-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: $dark-color-800;
+    min-width: 0;
+  }
+
+  .sport-match-status {
+    @include body-small;
+    color: $neutral-color-400;
+  }
+
+  .sport-match-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .sport-match-teams {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .sport-match-team {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+
+    img,
+    .sport-crest-empty {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      object-fit: contain;
+      border-radius: 50%;
+      background-color: $surface-color;
+    }
+  }
+
+  .sport-match-team-name {
+    @include body-default;
+    color: $text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sport-match-score {
+    @include heading-h3;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: $text-primary;
+  }
+}
+
+// 숏츠
+.sport-shorts {
+  background-color: $gnb-bg;
+  padding: 32px 0 72px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $text-primary;
+  }
+
+  .sport-short-slide {
+    width: 210px; // 카드 폭 고정 (slidesPerView: auto)
+  }
+
+  .sport-short-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-decoration: none;
+    color: $text-primary;
+  }
+
+  .sport-short-thumb {
+    position: relative;
+    aspect-ratio: 175 / 190;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: $dark-color-800;
+    margin-bottom: 6px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  .sport-short-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.55);
+    color: $text-primary;
+    font-size: 18px;
+    padding-left: 3px;
+    box-sizing: border-box;
+  }
+
+  .sport-short-card:hover .sport-short-thumb img {
+    transform: scale(1.05);
+  }
+
+  .sport-short-title {
+    @include heading-h4;
+    margin: 0;
+    color: $text-primary;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .sport-short-meta {
+    @include body-small;
+    color: $neutral-color-400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 // ===== 공통 영화 슬라이더 =====
 .movie-slider-section {
   background-color: $gnb-bg;
