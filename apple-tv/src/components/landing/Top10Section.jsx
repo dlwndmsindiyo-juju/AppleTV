@@ -23,12 +23,12 @@ const Top10Section = ({ title = "오늘의 인기 영화 TOP 10" }) => {
       <Swiper
         modules={[Navigation]}
         navigation
-        spaceBetween={24}
-        slidesPerView={2}
+        spaceBetween={16}
+        slidesPerView={1.7} // 모바일
         breakpoints={{
-          640: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 },
-          1280: { slidesPerView: 5 },
+          768: { slidesPerView: 2.9, spaceBetween: 48 }, // 태블릿 (시안: 간격 48)
+          1025: { slidesPerView: 4, spaceBetween: 24 }, // 데스크톱
+          1280: { slidesPerView: 5, spaceBetween: 24 },
         }}
       >
         {top10.map((movie, index) => (
