@@ -14,7 +14,7 @@ const Header = () => {
 
   // 현재 URL이 '/sport'로 시작하면 'sport', 아니면 'apple-tv'로 초기값 설정
   const [activeTab, setActiveTab] = useState(
-    location.pathname.startsWith("/sport") ? "sport" : "apple-tv"
+    location.pathname.startsWith("/sport") ? "sport" : "apple-tv",
   );
 
   // 페이지가 이동(URL 변경)되었을 때 토글 버튼 상태를 동기화
@@ -28,7 +28,11 @@ const Header = () => {
 
   // 슬라이딩 인디케이터 위치 계산용
   const toggleRefs = useRef({});
-  const [indicator, setIndicator] = useState({ left: 0, width: 0, ready: false });
+  const [indicator, setIndicator] = useState({
+    left: 0,
+    width: 0,
+    ready: false,
+  });
 
   useLayoutEffect(() => {
     const measure = () => {
@@ -67,8 +71,9 @@ const Header = () => {
           {/* 중간 토글 버튼 */}
           <div className="gnb-center-toggle">
             <span
-              className={`toggle-indicator ${activeTab === "sport" ? "sport" : "apple-tv"}${indicator.ready ? " animated" : ""
-                }`}
+              className={`toggle-indicator ${activeTab === "sport" ? "sport" : "apple-tv"}${
+                indicator.ready ? " animated" : ""
+              }`}
               style={{ left: indicator.left, width: indicator.width }}
               aria-hidden="true"
             />
@@ -87,8 +92,7 @@ const Header = () => {
               Sport
             </button>
           </div>
-
-          {/* 우측 검색 및 프로필 */}
+          {/* // Header.jsx 내 gnb-right 부분 */}
           <div className="gnb-right">
             <ul>
               <li className="search-box">
@@ -97,7 +101,8 @@ const Header = () => {
               </li>
               <li className="profile-box">
                 <span aria-label="유저 프로필">
-                  <Link to="/login">{initial}</Link></span>
+                  <Link to="/login">{initial}</Link>
+                </span>
               </li>
             </ul>
           </div>
