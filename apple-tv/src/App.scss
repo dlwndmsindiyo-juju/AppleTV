@@ -71,7 +71,7 @@ header {
       pointer-events: none;
       box-sizing: border-box;
 
-      > * {
+      >* {
         pointer-events: auto;
       }
 
@@ -132,9 +132,9 @@ header {
             font-weight: 600; // 굵기 변화로 폭이 흔들리지 않게 고정
           }
         }
-        
+
         // Sport 선택 시 텍스트만 $light-color-0 (인디케이터가 .sport 일 때)
-        .toggle-indicator.sport ~ button.active {
+        .toggle-indicator.sport~button.active {
           color: $light-color-0;
         }
       }
@@ -303,12 +303,10 @@ header {
       inset: 0;
       background:
         linear-gradient(to right, rgba($bg-color, 0.7) 0%, rgba($bg-color, 0) 60%),
-        linear-gradient(
-          to top,
+        linear-gradient(to top,
           $bg-color 0%,
           rgba($bg-color, 0.5) 50%,
-          rgba($bg-color, 0) 100%
-        );
+          rgba($bg-color, 0) 100%);
       pointer-events: none;
       z-index: 5;
     }
@@ -320,7 +318,7 @@ header {
       left: 8%; // 왼쪽 배치
       transform: translateY(-50%); // 세로만 가운데
       width: 100%;
-      max-width: 700px;
+      max-width: 750px;
       box-sizing: border-box;
       text-align: left; // 텍스트 전부 왼쪽 정렬
       color: $text-primary;
@@ -756,12 +754,10 @@ header {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(
-      to right,
-      rgba($dark-color-900, 0.92) 0%,
-      rgba($dark-color-900, 0.75) 25%,
-      rgba($dark-color-900, 0) 60%
-    );
+    background: linear-gradient(to right,
+        rgba($dark-color-900, 0.92) 0%,
+        rgba($dark-color-900, 0.75) 25%,
+        rgba($dark-color-900, 0) 60%);
     pointer-events: none;
   }
 
@@ -991,6 +987,7 @@ body.has-promo-banner .footer {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
