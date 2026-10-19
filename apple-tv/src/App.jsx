@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.scss";
+import "./mobile.scss";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";

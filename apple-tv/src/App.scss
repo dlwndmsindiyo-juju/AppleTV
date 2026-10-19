@@ -1970,3 +1970,198 @@ main {
     font-size: 12px;
   }
 }
+
+// =====================================================================
+// 태블릿 (1024px 이하) — 시안: 1024 x 3304
+// 모바일(767px 이하)은 mobile.scss 에서 이어서 덮어씀
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  // ---------- 헤더 (좌우 40 / 상하 14) ----------
+  header .inner {
+    padding: $header-pad-y $tablet-edge;
+
+    nav {
+      padding: $header-pad-y $tablet-edge;
+
+      .gnb-center-toggle button {
+        padding: 0 20px;
+        font-size: 16px;
+      }
+
+      .gnb-right ul {
+        gap: 12px;
+
+        .search-box {
+          width: 141px; // 시안 검색창 폭
+        }
+      }
+    }
+  }
+
+  // ---------- 푸터 (좌우 40 / 상하 14) ----------
+  .footer {
+    padding: $footer-pad-y $tablet-edge;
+  }
+
+  // ---------- 히어로 (높이 520, 텍스트는 본문 시작선) ----------
+  .hero-swiper-container {
+    height: 520px;
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none; // 터치 환경이라 화살표 숨김
+    }
+
+    .hero-slide-item .hero-info {
+      left: $tablet-gutter;
+      max-width: 60%;
+
+      .hero-title {
+        font-size: 48px;
+      }
+    }
+  }
+
+  // ---------- 홈 섹션 공통: 본문 좌우 13% ----------
+  .value-props .inner,
+  .top10-section .inner,
+  .upcoming-section .inner,
+  .apple-originals .inner,
+  .subscribe-cta .inner,
+  .device-guide .inner,
+  .movie-slider-section .inner {
+    padding-left: $tablet-gutter;
+    padding-right: $tablet-gutter;
+  }
+
+  // ---------- 핵심 혜택: 3칸 유지 ----------
+  .value-props {
+    .value-props-inner {
+      gap: 24px;
+    }
+  }
+
+  // ---------- TOP 10: 오른쪽 끝까지 이어지는 슬라이더 (포스터 간격 48) ----------
+  .top10-section {
+    overflow: hidden;
+
+    .inner {
+      padding-right: 0; // 슬라이더가 화면 오른쪽으로 잘려 나가게
+    }
+
+    .top10-title {
+      padding-right: $tablet-gutter;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none;
+    }
+  }
+
+  // ---------- 개봉 예정작: 카드 세로 1열 ----------
+  .upcoming-section {
+    .upcoming-list {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  // ---------- Apple 오리지널: 가로 스크롤 (오른쪽 끝까지) ----------
+  .apple-originals {
+    overflow: hidden;
+
+    .inner {
+      padding-right: 0;
+    }
+
+    .apple-originals-list {
+      display: grid;
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 240px;
+      gap: 24px;
+      overflow-x: auto;
+      padding-right: $tablet-gutter;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      > li {
+        scroll-snap-align: start;
+      }
+    }
+  }
+
+  // ---------- 구독 CTA ----------
+  .subscribe-cta {
+    .subscribe-banner {
+      height: 340px;
+    }
+
+    .subscribe-content {
+      left: 6%;
+    }
+  }
+
+  // ---------- 기기 안내: 세로로 쌓기 ----------
+  .device-guide {
+    .device-guide-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  // ---------- 하단 플로팅 프로모션 배너 ----------
+  .promo-banner {
+    .promo-banner-inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+      gap: 24px;
+    }
+
+    .promo-banner-desc {
+      @include body-small;
+      color: rgba($text-primary, 0.75);
+    }
+
+    .promo-banner-btn {
+      min-width: 200px;
+    }
+  }
+
+  // ---------- 스포츠 ----------
+  .sport-hero .sport-hero-card {
+    left: $tablet-edge;
+  }
+
+  .sport-upcoming .inner,
+  .sport-shorts .inner,
+  .sport-promo .inner,
+  .sport-teams .inner,
+  .sport-league .inner,
+  .sport-replay .inner,
+  .sport-highlights .inner,
+  .sport-notify .inner {
+    padding-left: $tablet-edge;
+    padding-right: $tablet-edge;
+  }
+
+  .sport-upcoming .sport-match-list,
+  .sport-teams .sport-team-list,
+  .sport-league .sport-league-list,
+  .sport-highlights .sport-highlight-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sport-replay .sport-replay-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sport-notify .sport-notify-banner {
+    padding: 32px;
+  }
+}
