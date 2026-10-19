@@ -1674,6 +1674,60 @@ body.has-promo-banner .footer {
   }
 }
 
+// 알림 설정 배너 (스포츠 마지막 영역)
+.sport-notify {
+  background-color: $gnb-bg;
+  padding: 0 0 72px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .sport-notify-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 48px;
+    border-radius: 16px;
+    background-color: $dark-color-800;
+  }
+
+  .sport-notify-title {
+    @include heading-h2;
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: $text-primary;
+    word-break: keep-all;
+  }
+
+  .sport-notify-desc {
+    @include body-small;
+    margin: 0;
+    color: $neutral-color-400;
+  }
+
+  .sport-notify-btn {
+    @include body-default;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 32px;
+    border-radius: 9999px;
+    background-color: $light-color-0;
+    color: $dark-color-900;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: $light-color-300;
+    }
+  }
+}
+
 // ===== 공통 영화 슬라이더 =====
 .movie-slider-section {
   background-color: $gnb-bg;

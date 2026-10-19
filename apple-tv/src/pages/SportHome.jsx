@@ -10,6 +10,7 @@ import SportTeams from "../components/sport/SportTeams";
 import SportLeague from "../components/sport/SportLeague";
 import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
+import SportNotify from "../components/sport/SportNotify";
 
 const SportHome = () => {
   const {
@@ -66,6 +67,9 @@ const SportHome = () => {
 
       {/* 8. 하이라이트 */}
       <SportHighlights />
+
+      {/* 9. 알림 설정 배너 (마지막) */}
+      <SportNotify />
     </main>
   );
 };
