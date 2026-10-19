@@ -982,14 +982,14 @@ header {
     border: 1px solid $dark-color-300;
   }
 
-  // 배경 이미지
+  // 배경 webp 이미지: 크기가 줄어들어도 비율을 유지하며 자연스럽게 축소
   .subscribe-bg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
+    object-fit: cover;       // 영역에 꽉 차게 유지하되 비율 보존
+    object-position: 70% center; // 이미지가 줄어들 때 핵심 피사체가 잘리지 않도록 정렬 조절 가능
     display: block;
   }
 
