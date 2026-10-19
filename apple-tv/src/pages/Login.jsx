@@ -35,6 +35,7 @@ const Login = () => {
   };
 
   // 6자리 입력 칸 제어 (자동 포커스 이동)
+  // ※ 주의: 여기서는 절대 자동으로 다음 스텝으로 넘어가는 코드를 넣지 않습니다.
   const handleCodeChange = (index, value) => {
     if (!/^\d*$/.test(value)) return;
     const newCode = [...code];
@@ -53,7 +54,7 @@ const Login = () => {
     }
   };
 
-  // 2단계: 인증번호 확인 후 3단계(인증 완료)로 이동
+  // 2단계: 반드시 사용자가 "인증하고 계속" 버튼을 클릭할 때만 실행
   const handleVerifySubmit = async (e) => {
     e.preventDefault();
     const fullCode = code.join("");
@@ -64,13 +65,13 @@ const Login = () => {
 
     const result = await onVerifyCode(fullCode);
     
-    // result가 정상적으로 반환되면 확실하게 confirm 단계로 전환
+    // 검증이 성공적으로 끝나면 사용자가 명시적으로 버튼을 누른 시점에 3단계(인증 완료)로 진입
     if (result !== false) {
       setStep("confirm");
     }
   };
 
-  // 3단계: 무료 구독 시작하기 클릭 시 멤버 선택 페이지로 이동
+  // 3단계: 사용자가 "7일 무료구독 시작하기" 버튼을 직접 클릭할 때만 멤버 선택 페이지로 이동
   const handleStartSubscribe = () => {
     navigate("/selectMember");
   };
@@ -189,6 +190,7 @@ const Login = () => {
                 ))}
               </div>
 
+              {/* 사용자가 버튼을 눌러야만 handleVerifySubmit이 실행됨 */}
               <button type="submit" className="login-btn">
                 인증하고 계속
               </button>
@@ -213,7 +215,7 @@ const Login = () => {
           </>
         )}
 
-        {/* ================= STEP 3: 인증 완료 (확실하게 출력) ================= */}
+        {/* ================= STEP 3: 인증 완료 (머물러 있는 화면) ================= */}
         {step === "confirm" && (
           <>
             <h2 className="login-title">인증 완료</h2>
@@ -224,6 +226,7 @@ const Login = () => {
             </p>
 
             <div className="login-form">
+              {/* 사용자가 직접 클릭할 때만 다음 페이지로 이동 */}
               <button
                 type="button"
                 className="login-btn"
