@@ -121,6 +121,40 @@ export const useSportStore = create((set, get) => ({
         }
     },
 
+    // [추가] 종료된 경기 (영상 다시보기용) - 최근 경기 순
+    finishedMatches: [],
+    onFetchFinishedMatches: async (competition = "PL") => {
+        try {
+            const res = await fetch(`https://api.football-data.org/v4/competitions/${competition}/matches?status=FINISHED`, {
+                headers: { 'X-Auth-Token': FOOTBALL_KEY }
+            });
+            const data = await res.json();
+            const list = (data.matches || [])
+                .slice()
+                .sort((a, b) => new Date(b.utcDate) - new Date(a.utcDate));
+            set({ finishedMatches: list });
+        } catch (error) {
+            console.error("종료된 경기 조회 실패:", error);
+        }
+    },
+
+    // [추가] 하이라이트 영상 목록 (홈 "하이라이트" 섹션용, 검색 1회로 4개)
+    highlightList: [],
+    onFetchHighlightList: async (query = "축구 경기 하이라이트") => {
+        const { highlightList } = get();
+        if (highlightList.length > 0) return;
+        if (!YOUTUBE_KEY) return;
+        try {
+            const res = await fetch(
+                `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=4&key=${YOUTUBE_KEY}`
+            );
+            const data = await res.json();
+            set({ highlightList: data.items || [] });
+        } catch (error) {
+            console.error("하이라이트 목록 조회 실패:", error);
+        }
+    },
+
     // 7. 숏츠 영상 저장 (축구 쇼츠/릴스 형태, 유튜브 API)
     shortsVideos: [],
     onFetchShorts: async (query = "축구 명장면 shorts") => {

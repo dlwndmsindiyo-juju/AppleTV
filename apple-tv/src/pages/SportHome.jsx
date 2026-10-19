@@ -6,19 +6,40 @@ import SportHero from "../components/sport/SportHero";
 import SportUpcoming from "../components/sport/SportUpcoming";
 import SportShorts from "../components/sport/SportShorts";
 import SportPromo from "../components/sport/SportPromo";
+import SportTeams from "../components/sport/SportTeams";
+import SportLeague from "../components/sport/SportLeague";
+import SportReplay from "../components/sport/SportReplay";
+import SportHighlights from "../components/sport/SportHighlights";
 
 const SportHome = () => {
-  const { onFetchUpcomingMatches, onFetchLiveVideos, onFetchShorts } =
-    useSportStore();
+  const {
+    onFetchUpcomingMatches,
+    onFetchLiveVideos,
+    onFetchShorts,
+    onFetchStandings,
+    onFetchHighlightList,
+    onFetchFinishedMatches,
+  } = useSportStore();
 
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     onFetchUpcomingMatches(); // 예정된 경기
     onFetchShorts(); // 숏츠
+    onFetchStandings(); // 관심있는 구단 (리그 순위표의 팀)
+    onFetchHighlightList(); // 하이라이트
+    onFetchFinishedMatches(); // 영상 다시보기 (종료된 경기)
     // 라이브 영상은 로그인 후 히어로에서만 사용 (로그인 전엔 요청 안 함)
     if (user) onFetchLiveVideos();
-  }, [user, onFetchUpcomingMatches, onFetchLiveVideos, onFetchShorts]);
+  }, [
+    user,
+    onFetchUpcomingMatches,
+    onFetchLiveVideos,
+    onFetchShorts,
+    onFetchStandings,
+    onFetchHighlightList,
+    onFetchFinishedMatches,
+  ]);
 
   return (
     <main className="page-fade">
@@ -33,6 +54,18 @@ const SportHome = () => {
 
       {/* 4. 홍보 배너 */}
       <SportPromo />
+
+      {/* 5. 관심있는 구단 */}
+      <SportTeams />
+
+      {/* 6. 리그 순위 */}
+      <SportLeague />
+
+      {/* 7. 영상 다시보기 */}
+      <SportReplay />
+
+      {/* 8. 하이라이트 */}
+      <SportHighlights />
     </main>
   );
 };
