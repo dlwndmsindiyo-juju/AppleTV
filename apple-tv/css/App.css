@@ -791,6 +791,112 @@ header .inner nav .gnb-right ul .profile-box:hover {
   margin: 0;
 }
 
+.sport-upcoming {
+  background-color: #141414;
+  padding: 56px 0 32px;
+}
+.sport-upcoming .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.sport-upcoming .sport-upcoming-swiper {
+  width: 100%;
+  overflow: visible;
+}
+.sport-upcoming .sport-upcoming-slide {
+  width: 310px !important;
+  flex-shrink: 0;
+}
+.sport-upcoming .sport-match-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 310px;
+  height: 200px;
+  padding: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #1f1f1f;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.sport-upcoming .sport-match-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.sport-upcoming .sport-match-card .sport-match-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+.sport-upcoming .sport-match-card .sport-match-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.75) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+.sport-upcoming .sport-match-card .sport-match-status {
+  position: relative;
+  z-index: 2;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #D4D4D4;
+  font-weight: 600;
+}
+.sport-upcoming .sport-match-card .sport-match-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+.sport-upcoming .sport-match-card .sport-team {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sport-upcoming .sport-match-card .sport-team img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.75));
+}
+.sport-upcoming .sport-match-card .sport-match-divider {
+  position: absolute;
+  width: 1px;
+  height: 70px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+  transform: rotate(25deg);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+}
+.sport-upcoming .swiper-button-next,
+.sport-upcoming .swiper-button-prev {
+  color: #ffffff;
+}
+
 .device-guide {
   background-color: #141414;
   padding: 56px 0;

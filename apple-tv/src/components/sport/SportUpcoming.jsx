@@ -1,12 +1,14 @@
 import React from "react";
-import { useSportStore } from "../../store/useSportStore";
-import { isLive, formatKickoff, getScore } from "./sportUtils";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
-// 예정된 경기 (4개 카드)
+import { upcomingMatchesData } from "../../data/mockMatches";
+import { isLive } from "./sportUtils";
+
 const SportUpcoming = ({ title = "예정된 경기" }) => {
-  const { upcomingMatches } = useSportStore();
-
-  const matches = (upcomingMatches || []).slice(0, 4);
+  const matches = upcomingMatchesData;
 
   return (
     <section className="sport-upcoming" id="sport-upcoming">
@@ -21,41 +23,68 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
         {matches.length === 0 ? (
           <p className="sport-empty">예정된 경기가 없습니다.</p>
         ) : (
-        <ul className="sport-match-list">
-          {matches.map((match) => {
-            const live = isLive(match);
-            const score = getScore(match);
+          <Swiper
+            modules={[Navigation]}
+            navigation
+            spaceBetween={20}
+            slidesPerView="auto"
+            className="sport-upcoming-swiper"
+          >
+            {matches.map((match) => {
+              const live = isLive(match);
 
-            return (
-              <li className="sport-match-card" key={match.id}>
-                <span className="sport-match-status">
-                  {live ? "LIVE" : formatKickoff(match.utcDate)}
-                </span>
+              return (
+                <SwiperSlide key={match.id} className="sport-upcoming-slide">
+                  <div className="sport-match-card">
+                    {/* 카드 전체 배경 경기장 이미지 */}
+                    <img
+                      className="sport-match-bg"
+                      src="/images/matches/matches-bg.png"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    {/* 어두운 오버레이 섀도우 */}
+                    <div className="sport-match-overlay" />
 
-                <div className="sport-match-body">
-                  <div className="sport-match-teams">
-                    {[match.homeTeam, match.awayTeam].map((team, i) => (
-                      <div className="sport-match-team" key={i}>
-                        {team?.crest ? (
-                          <img src={team.crest} alt="" />
+                    {/* 상단 상태 (LIVE 또는 경기 시간) */}
+                    <span className="sport-match-status">
+                      {live ? "LIVE" : match.status}
+                    </span>
+
+                    {/* 중앙 팀 로고 & 얇은 대각선 분할선 */}
+                    <div className="sport-match-content">
+                      {/* 홈 팀 로고 */}
+                      <div className="sport-team">
+                        {match.homeTeam?.crest ? (
+                          <img
+                            src={match.homeTeam.crest}
+                            alt={match.homeTeam.name}
+                          />
                         ) : (
                           <span className="sport-crest-empty" />
                         )}
-                        <span className="sport-match-team-name">
-                          {team?.shortName || team?.name}
-                        </span>
                       </div>
-                    ))}
-                  </div>
 
-                  <span className="sport-match-score">
-                    {score ? `${score.home} : ${score.away}` : "VS"}
-                  </span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+                      {/* 얇은 대각선 선 */}
+                      <div className="sport-match-divider" />
+
+                      {/* 원정 팀 로고 */}
+                      <div className="sport-team">
+                        {match.awayTeam?.crest ? (
+                          <img
+                            src={match.awayTeam.crest}
+                            alt={match.awayTeam.name}
+                          />
+                        ) : (
+                          <span className="sport-crest-empty" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
         )}
       </div>
     </section>

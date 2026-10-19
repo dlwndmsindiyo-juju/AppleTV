@@ -825,6 +825,132 @@ header {
   }
 }
 
+.sport-upcoming {
+  background-color: $gnb-bg;
+  padding: 56px 0 32px;
+
+  .inner {
+    @include inner-wrap;
+    overflow: hidden; // .inner 밖으로 넘치는 슬라이드 영역 숨기기
+  }
+
+  // Swiper 슬라이더 컨테이너
+  .sport-upcoming-swiper {
+    width: 100%;
+    // overflow: hidden이 inner에 걸려있으므로, 내부 슬라이드들이 정상 작동하도록 설정
+    overflow: visible;
+  }
+
+  // 슬라이드 하나의 고정 크기 (너비 310px)
+  .sport-upcoming-slide {
+    width: 310px !important;
+    flex-shrink: 0;
+  }
+
+  // 개별 카드 크기 (310px x 200px)
+  .sport-match-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 310px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: $dark-color-800;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    // 전체 배경 이미지
+    .sport-match-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+
+    // 어두운 오버레이 그라데이션
+    .sport-match-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0.35) 0%,
+          rgba(0, 0, 0, 0.75) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    // 상단 상태 텍스트
+    .sport-match-status {
+      position: relative;
+      z-index: 2;
+      @include body-small;
+      color: $neutral-color-300;
+      font-weight: 600;
+    }
+
+    // 중앙 팀 로고 & 대각선 선 영역
+    .sport-match-content {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+    }
+
+    // 팀 로고 크기
+    .sport-team {
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.75));
+      }
+    }
+
+    // 가운데 얇은 대각선 선
+    .sport-match-divider {
+      position: absolute;
+      width: 1px;
+      height: 70px;
+      background: linear-gradient(to bottom,
+          rgba(255, 255, 255, 0),
+          rgba(255, 255, 255, 0.35),
+          rgba(255, 255, 255, 0));
+      transform: rotate(25deg);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+    }
+  }
+
+  // Swiper 화살표 버튼 커스텀
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $text-primary;
+  }
+}
+
 // ===== 기기 안내 =====
 .device-guide {
   background-color: $gnb-bg;
