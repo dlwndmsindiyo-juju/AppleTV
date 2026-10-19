@@ -11,6 +11,7 @@ import SportLeague from "../components/sport/SportLeague";
 import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
 import SportNotify from "../components/sport/SportNotify";
+import DeviceGuide from "../components/landing/DeviceGuide";
 
 const SportHome = () => {
   const {
@@ -68,8 +69,11 @@ const SportHome = () => {
       {/* 8. 하이라이트 */}
       <SportHighlights />
 
-      {/* 9. 알림 설정 배너 (마지막) */}
+      {/* 9. 알림 설정 배너 */}
       <SportNotify />
+
+      {/* 10. 디바이스 가이드 (마지막) */}
+      <DeviceGuide />
     </main>
   );
 };

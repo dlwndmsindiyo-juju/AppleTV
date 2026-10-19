@@ -3,7 +3,7 @@ import { useSportStore } from "../../store/useSportStore";
 import { getScore } from "./sportUtils";
 
 // 영상 다시보기 (최근 종료된 경기 5개 → 누르면 해당 경기 다시보기 검색)
-const SportReplay = ({ title = "영상 다시보기" }) => {
+const SportReplay = ({ title = "경기 다시보기" }) => {
   const { finishedMatches } = useSportStore();
 
   const matches = (finishedMatches || []).slice(0, 5);

@@ -1,28 +1,45 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-// 마지막 배너: 경기 알림 설정 유도
-const SportNotify = () => {
+// 구독 유도 CTA 배너 (배경은 이미지 사용: public/images/subscribe-cta.webp)
+const SubscribeCTA = () => {
   return (
-    <section className="sport-notify">
+    <section className="subscribe-cta">
       <div className="inner">
-        <div className="sport-notify-banner">
-          <div className="sport-notify-text">
-            <h3 className="sport-notify-title">
-              다음 경기, 알림으로 만나보세요.
+        <div className="subscribe-banner">
+          <img
+            className="subscribe-bg"
+            src="/images/sport-subscribe-cta.webp"
+            alt=""
+            aria-hidden="true"
+          />
+
+          <div className="subscribe-content">
+            <img
+              className="subscribe-logo"
+              src="/icons/header-icon.svg"
+              alt="Apple TV"
+            />
+            <h3 className="subscribe-title">
+              재구독하고 매주 새롭게
+              <br />
+              추가되는 콘텐츠를 만나보세요.
             </h3>
-            <p className="sport-notify-desc">
-              선택한 팀과 리그의 경기 시작 알림을 설정할 수 있어요.
+            <a
+              className="subscribe-btn"
+              href="https://tv.apple.com/kr"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Apple TV 구독 갱신
+            </a>
+            <p className="subscribe-note">
+              취소할 때까지 ₩6,500/개월입니다.
             </p>
           </div>
-
-          <Link to="/login" className="sport-notify-btn">
-            알림 설정
-          </Link>
         </div>
       </div>
     </section>
   );
 };
 
-export default SportNotify;
+export default SubscribeCTA;
