@@ -1,9 +1,16 @@
 import React from "react";
 import { useSportStore } from "../../store/useSportStore";
+import { useAuthStore } from "../../store/useAuthStore";
 import { isLive, formatKickoff, getScore } from "./sportUtils";
 
-// 스포츠 히어로: 배경(라이브 영상 썸네일) + 하단 좌측 경기 카드
+// 로그인 전 히어로에 보여줄 메인 이미지 (public/images/sport/main-1.jpg)
+const SPORT_MAIN_IMAGE = "/images/sport/main-1.jpg";
+
+// 스포츠 히어로
+// - 로그인 전: 메인 이미지 1장만 노출
+// - 로그인 후: 라이브 영상 썸네일 배경 + 하단 좌측 경기 카드
 const SportHero = () => {
+  const user = useAuthStore((state) => state.user);
   const { upcomingMatches, liveVideos } = useSportStore();
 
   // 진행 중인 경기가 있으면 우선, 없으면 가장 가까운 예정 경기
@@ -21,15 +28,19 @@ const SportHero = () => {
     ? `https://www.youtube.com/watch?v=${video.id.videoId}`
     : null;
 
+  // 로그인 전에는 메인 이미지, 로그인 후에는 라이브 썸네일(없으면 메인 이미지)
+  const bgImage = user && thumb ? thumb : SPORT_MAIN_IMAGE;
+
   return (
     <section className="sport-hero">
       <div
         className="sport-hero-bg"
-        style={thumb ? { backgroundImage: `url(${thumb})` } : undefined}
+        style={{ backgroundImage: `url(${bgImage})` }}
       />
       <div className="sport-hero-overlay" />
 
-      {match && (
+      {/* 경기 카드는 로그인 후에만 */}
+      {user && match && (
         <div className="sport-hero-card">
           <p className="sport-hero-label">
             {live ? (

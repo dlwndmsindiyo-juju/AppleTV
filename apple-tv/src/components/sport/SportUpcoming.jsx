@@ -7,7 +7,6 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
   const { upcomingMatches } = useSportStore();
 
   const matches = (upcomingMatches || []).slice(0, 4);
-  if (matches.length === 0) return null;
 
   return (
     <section className="sport-upcoming" id="sport-upcoming">
@@ -19,6 +18,9 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
           </a>
         </div>
 
+        {matches.length === 0 ? (
+          <p className="sport-empty">예정된 경기가 없습니다.</p>
+        ) : (
         <ul className="sport-match-list">
           {matches.map((match) => {
             const live = isLive(match);
@@ -54,6 +56,7 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
             );
           })}
         </ul>
+        )}
       </div>
     </section>
   );

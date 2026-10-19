@@ -12,7 +12,6 @@ const SportShorts = ({ title = "숏츠" }) => {
   const { shortsVideos } = useSportStore();
 
   const items = (shortsVideos || []).filter((v) => v?.id?.videoId);
-  if (items.length === 0) return null;
 
   return (
     <section className="sport-shorts">
@@ -24,6 +23,9 @@ const SportShorts = ({ title = "숏츠" }) => {
           </a>
         </div>
 
+        {items.length === 0 ? (
+          <p className="sport-empty">숏츠가 없습니다.</p>
+        ) : (
         <Swiper
           modules={[Navigation]}
           navigation
@@ -60,6 +62,7 @@ const SportShorts = ({ title = "숏츠" }) => {
             );
           })}
         </Swiper>
+        )}
       </div>
     </section>
   );
