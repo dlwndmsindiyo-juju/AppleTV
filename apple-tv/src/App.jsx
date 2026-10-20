@@ -10,6 +10,7 @@ import SportHome from "./pages/SportHome";
 import { MovieDetail } from "./pages/MovieDetail";
 import Login from "./pages/Login";
 import { useAuthStore } from "./store/useAuthStore";
+import SportTeamsPage from "./pages/SportTeamsPage";
 
 function App() {
   const [showIntro, setShowIntro] = useState(() => {
@@ -39,6 +40,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/sport" element={<SportHome />} />
               <Route path="/detail/:id" element={<MovieDetail />} />
+              <Route path="/sport/teams" element={<SportTeamsPage />} />
               <Route
                 path="/login"
                 element={user ? <Navigate to="/" replace /> : <Login />}

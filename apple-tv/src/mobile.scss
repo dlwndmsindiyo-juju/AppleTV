@@ -576,17 +576,115 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 }
 
 // =====================================================================
-// 스포츠 — 관심있는 구단 (구독) 태블릿 / 모바일
+// 스포츠 — 관심있는 구단 (홈 슬라이드) + 구단 전체 페이지  태블릿 / 모바일
 // =====================================================================
 @media (max-width: $breakpoint-tablet) {
-  .sport-teams .sport-team-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  // 카드 공용
+  .sport-team-card {
+    height: 96px;
+    gap: 16px;
+    padding: 0 20px 0 16px;
+
+    .sport-team-logo {
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  // 홈 슬라이드
+  .sport-teams {
+    padding: 56px 0;
+
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .sport-team-slide {
+      width: 320px;
+    }
+  }
+
+  // 구단 전체 페이지
+  .sport-teams-page {
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .sport-teams-page-title {
+      @include display-l;
+      font-weight: 700;
+    }
+
+    .sport-teams-toolbar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .sport-team-search {
+      width: 100%;
+    }
+
+    .sport-team-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
   }
 }
 
 @media (max-width: $breakpoint-mobile) {
+  // 카드 공용
+  .sport-team-card {
+    height: 80px;
+    gap: 12px;
+    padding: 0 12px;
+
+    .sport-team-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+    }
+
+    .sport-team-name {
+      @include heading-h4;
+    }
+
+    .sport-team-meta {
+      @include label-default;
+    }
+  }
+
+  // 탭 공용: 화면 오른쪽 끝까지 가로 스크롤
+  .sport-team-filter {
+    overflow-x: auto;
+    margin-right: -$mobile-edge;
+    padding-right: $mobile-edge;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    li {
+      flex-shrink: 0;
+    }
+
+    button {
+      @include body-small;
+      height: 34px;
+      padding: 0 14px;
+    }
+  }
+
+  // 홈 슬라이드
   .sport-teams {
     padding: 40px 0;
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
 
     .sport-teams-head {
       flex-direction: column;
@@ -594,40 +692,67 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       gap: 8px;
     }
 
-    // 탭은 화면 오른쪽 끝까지 가로 스크롤
-    .sport-team-filter {
-      overflow-x: auto;
-      margin-right: -$mobile-edge;
+    .sport-teams-title {
+      @include heading-h2;
+      font-weight: 700;
+    }
+
+    .sport-teams-desc,
+    .sport-teams-count {
+      @include body-small;
+    }
+
+    .sport-team-slide {
+      width: 260px;
+    }
+
+    .sport-team-more {
+      @include body-small;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  // 구단 전체 페이지
+  .sport-teams-page {
+    .inner {
+      padding-left: $mobile-edge;
       padding-right: $mobile-edge;
-      scrollbar-width: none;
+    }
 
-      &::-webkit-scrollbar {
-        display: none;
-      }
+    .sport-teams-hero {
+      padding: 24px 0 32px;
+    }
 
-      li {
-        flex-shrink: 0;
-      }
+    .sport-teams-page-title {
+      @include display-M;
+      font-weight: 700;
+    }
+
+    .sport-teams-page-desc {
+      @include body-small;
+    }
+
+    .sport-teams-body {
+      padding-top: 24px;
+    }
+
+    .sport-teams-toolbar {
+      margin-bottom: 24px;
+    }
+
+    .sport-team-group + .sport-team-group {
+      margin-top: 32px;
+    }
+
+    .sport-team-group-title {
+      @include heading-h4;
+      margin-bottom: 12px;
     }
 
     .sport-team-list {
       grid-template-columns: minmax(0, 1fr);
       gap: 12px;
-    }
-
-    .sport-team-card {
-      padding: 10px 12px;
-      gap: 12px;
-    }
-
-    .sport-team-logo {
-      width: 40px;
-      height: 40px;
-    }
-
-    .sport-team-more {
-      width: 100%;
-      justify-content: center;
     }
   }
 }

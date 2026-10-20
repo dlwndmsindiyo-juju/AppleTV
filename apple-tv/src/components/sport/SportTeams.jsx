@@ -1,38 +1,20 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { SPORT_TEAMS, CONFERENCES } from "../../data/sportTeams";
+import React, { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/free-mode";
+import { SPORT_TEAMS } from "../../data/sportTeams";
+import { useTeamStore } from "../../store/useTeamStore";
+import SportTeamCard from "./SportTeamCard";
 
-// 구독한 구단은 새로고침해도 유지되도록 localStorage 에 저장
-const STORAGE_KEY = "sportFavoriteTeams";
-const PREVIEW_COUNT = 8; // 처음에 보여줄 카드 수 (PC 4개 × 2줄)
+// 구단 전체 페이지 경로 (라우터에 등록한 경로와 맞춰 주세요)
+export const SPORT_TEAMS_PATH = "/sport/teams";
 
-const loadFavorites = () => {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return Array.isArray(saved) ? saved : [];
-  } catch {
-    return [];
-  }
-};
-
-// 관심있는 구단 (구독 방식)
+// 스포츠 홈 > 관심있는 구단 (슬라이드 + 구독)
 const SportTeams = ({ title = "관심있는 구단" }) => {
-  const [favorites, setFavorites] = useState(loadFavorites); // 구독한 팀 id
+  const favorites = useTeamStore((s) => s.favorites);
   const [filter, setFilter] = useState("all"); // all | east | west | mine
-  const [expanded, setExpanded] = useState(false); // 전체 보기 여부
-
-  // 구독 목록이 바뀔 때마다 저장
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
-    } catch {
-      // 저장 실패(사생활 보호 모드 등)는 무시
-    }
-  }, [favorites]);
-
-  const toggle = (id) =>
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
-    );
 
   // 필터 탭 (개수 표시용)
   const filters = useMemo(
@@ -52,16 +34,10 @@ const SportTeams = ({ title = "관심있는 구단" }) => {
     return SPORT_TEAMS.filter((t) => t.conference === filter);
   }, [filter, favorites]);
 
-  const visible = expanded ? filtered : filtered.slice(0, PREVIEW_COUNT);
-
-  const handleFilter = (key) => {
-    setFilter(key);
-    setExpanded(false);
-  };
-
   return (
     <section className="sport-teams">
       <div className="inner">
+        {/* 제목 + 구독 수 */}
         <div className="sport-teams-head">
           <div>
             <h3 className="sport-teams-title">{title}</h3>
@@ -83,7 +59,7 @@ const SportTeams = ({ title = "관심있는 구단" }) => {
                 role="tab"
                 aria-selected={filter === f.key}
                 className={filter === f.key ? "active" : ""}
-                onClick={() => handleFilter(f.key)}
+                onClick={() => setFilter(f.key)}
               >
                 {f.label}
                 <span className="count">{f.count}</span>
@@ -93,50 +69,32 @@ const SportTeams = ({ title = "관심있는 구단" }) => {
         </ul>
 
         {filtered.length === 0 ? (
-          <p className="sport-empty">
+          <p className="sport-team-empty">
             아직 구독한 구단이 없어요. + 버튼으로 관심 구단을 추가해 보세요.
           </p>
         ) : (
-          <>
-            <ul className="sport-team-list">
-              {visible.map((team) => {
-                const on = favorites.includes(team.id);
-                return (
-                  <li className={`sport-team-card${on ? " on" : ""}`} key={team.id}>
-                    <div className="sport-team-logo">
-                      <img src={team.logo} alt="" loading="lazy" />
-                    </div>
-                    <div className="sport-team-info">
-                      <span className="sport-team-name">{team.name}</span>
-                      <span className="sport-team-meta">
-                        {CONFERENCES[team.conference]}
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      className={`sport-team-add${on ? " on" : ""}`}
-                      onClick={() => toggle(team.id)}
-                      aria-pressed={on}
-                      aria-label={`${team.name} 관심 구단 ${on ? "해제" : "등록"}`}
-                    >
-                      {on ? "✓" : "+"}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-
-            {filtered.length > PREVIEW_COUNT && (
-              <button
-                type="button"
-                className="sport-team-more"
-                onClick={() => setExpanded((v) => !v)}
-              >
-                {expanded ? "접기" : `전체 구단 보기 (${filtered.length})`}
-              </button>
-            )}
-          </>
+          // 가로 슬라이드 (이너 폭에서 잘림 / 탭이 바뀌면 처음 위치로)
+          <Swiper
+            key={filter}
+            className="sport-team-swiper"
+            modules={[FreeMode]}
+            slidesPerView="auto"
+            spaceBetween={36}
+            freeMode
+            grabCursor
+          >
+            {filtered.map((team) => (
+              <SwiperSlide key={team.id} className="sport-team-slide">
+                <SportTeamCard team={team} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         )}
+
+        {/* 구단 전체 페이지로 이동 */}
+        <Link to={SPORT_TEAMS_PATH} className="sport-team-more">
+          전체 구단 보기 ({SPORT_TEAMS.length})
+        </Link>
       </div>
     </section>
   );
