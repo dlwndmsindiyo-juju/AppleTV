@@ -5,7 +5,6 @@ import { useAuthStore } from "../store/useAuthStore";
 import SportHero from "../components/sport/SportHero";
 import SportUpcoming from "../components/sport/SportUpcoming";
 import SportShorts from "../components/sport/SportShorts";
-import SportPromo from "../components/sport/SportPromo";
 import SportTeams from "../components/sport/SportTeams";
 import SportLeague from "../components/sport/SportLeague";
 import SportReplay from "../components/sport/SportReplay";
@@ -56,7 +55,7 @@ const SportHome = () => {
       <SportShorts />
 
       {/* 4. 홍보 배너 */}
-      <SportPromo />
+      <SubscribeCTA type="sport" />
 
       {/* 5. 관심있는 구단 */}
       <SportTeams />
@@ -70,13 +69,10 @@ const SportHome = () => {
       {/* 8. 하이라이트 */}
       <SportHighlights />
 
-      {/* 9. 알림 설정 배너 */}
-      <SubscribeCTA type="sport" />
-
-      {/* 10. 디바이스 가이드 (마지막) */}
+      {/* 9. 디바이스 가이드 (마지막) */}
       <DeviceGuide />
 
-      {/* 11. 구독 전 프로모션 배너 (첫 스크롤 후 하단에 떠 있음, 로그인하면 사라짐) */}
+      {/* 10. 구독 전 프로모션 배너 (첫 스크롤 후 하단에 떠 있음, 로그인하면 사라짐) */}
       <PromoBanner />
     </main>
   );
