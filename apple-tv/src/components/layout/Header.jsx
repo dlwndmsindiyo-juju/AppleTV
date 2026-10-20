@@ -6,12 +6,6 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation(); // 현재 경로를 파악하기 위해 추가
 
-  // 프로필 이니셜 (user 필드명에 맞게 수정, 없으면 "A")
-  const user = useAuthStore((state) => state.user);
-  const initial = (user?.name || user?.nickname || user?.email || "A")
-    .charAt(0)
-    .toUpperCase();
-
   // 현재 URL이 '/sport'로 시작하면 'sport', 아니면 'apple-tv'로 초기값 설정
   const [activeTab, setActiveTab] = useState(
     location.pathname.startsWith("/sport") ? "sport" : "apple-tv",
@@ -71,9 +65,8 @@ const Header = () => {
           {/* 중간 토글 버튼 */}
           <div className="gnb-center-toggle">
             <span
-              className={`toggle-indicator ${activeTab === "sport" ? "sport" : "apple-tv"}${
-                indicator.ready ? " animated" : ""
-              }`}
+              className={`toggle-indicator ${activeTab === "sport" ? "sport" : "apple-tv"}${indicator.ready ? " animated" : ""
+                }`}
               style={{ left: indicator.left, width: indicator.width }}
               aria-hidden="true"
             />
@@ -101,7 +94,9 @@ const Header = () => {
               </li>
               <li className="profile-box">
                 <span aria-label="유저 프로필">
-                  <Link to="/login">{initial}</Link>
+                  <Link to="/login">
+                    <img src="/icons/profile.svg" alt="프로필 기본 이미지" />
+                  </Link>
                 </span>
               </li>
             </ul>
