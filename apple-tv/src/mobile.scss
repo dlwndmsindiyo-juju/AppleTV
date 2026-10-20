@@ -756,3 +756,70 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     }
   }
 }
+
+// =====================================================================
+// 하단 LIVE 배너 (로그인 후 스포츠) — 태블릿 / 모바일
+// 높이는 PC 와 동일 (97px)
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .promo-banner.is-live {
+    .live-title {
+      @include heading-h4;
+      gap: 10px;
+    }
+
+    .live-dot {
+      width: 14px;
+      height: 14px;
+    }
+
+    .promo-banner-btn {
+      min-width: 140px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .promo-banner.is-live {
+    .promo-banner-inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+      gap: 12px;
+    }
+
+    .live-title {
+      @include body-default;
+      font-weight: 700;
+      gap: 8px;
+    }
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+    }
+
+    .live-score {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .promo-banner-desc {
+      @include label-default;
+      white-space: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .promo-banner-btn {
+      @include body-small;
+      min-width: 0;
+      height: 32px;
+      padding: 0 14px;
+    }
+
+    .promo-banner-note {
+      @include caption-default;
+    }
+  }
+}

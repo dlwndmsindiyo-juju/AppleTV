@@ -2011,6 +2011,98 @@ header {
   }
 }
 
+// ===== 로그인 후 스포츠: LIVE 경기 배너 (.promo-banner 와 같은 크기, 디자인만 변경) =====
+.promo-banner.is-live {
+  background-color: $dark-color-500;
+  border-top: 1px solid $dark-color-300;
+
+  .promo-banner-text {
+    gap: 8px;
+  }
+
+  // LIVE ● + 팀 + 스코어 한 줄
+  .live-title {
+    @include heading-h3;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    color: $sports-color;
+
+    // 경기 전 (예정)
+    &.upcoming {
+      color: $neutral-color-400;
+    }
+  }
+
+  .live-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: $sports-color;
+    animation: sport-live-blink 1.4s ease-in-out infinite;
+  }
+
+  .live-team {
+    color: $text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .live-score {
+    flex-shrink: 0;
+    margin: 0 4px;
+    color: $text-primary;
+    letter-spacing: 2px;
+  }
+
+  .promo-banner-desc {
+    @include body-small;
+    color: $neutral-color-400;
+  }
+
+  // 경기 시청 버튼 (빨간 알약)
+  .promo-banner-btn {
+    @include body-default;
+    gap: 6px;
+    min-width: 164px;
+    height: 36px;
+    background-color: $sports-color;
+    color: $text-primary;
+    font-weight: 700;
+
+    &:hover {
+      background-color: darken($sports-color, 6%);
+    }
+
+    .play-icon {
+      @include label-default;
+    }
+  }
+
+  // 후반 87분 · 진행 중
+  .promo-banner-note {
+    @include label-default;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: $light-color-300;
+
+    .dot-sep {
+      color: $neutral-color-400;
+    }
+  }
+}
+
 // 푸터 하단 여백 확보
 body.has-promo-banner .footer {
   padding-bottom: 115px;
