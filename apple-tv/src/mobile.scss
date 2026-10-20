@@ -893,7 +893,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 // =====================================================================
 @media (max-width: $breakpoint-tablet) {
   .ecosystem-page {
-    padding-bottom: 80px;
+    padding: calc(#{$header-height} + 56px) 0 80px;
 
     .inner {
       padding-left: $tablet-edge;
@@ -930,7 +930,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
 @media (max-width: $breakpoint-mobile) {
   .ecosystem-page {
-    padding-top: calc(#{$header-height} + 24px);
+    padding: calc(#{$header-height} + 40px) 0 64px;
 
     .inner {
       padding-left: $mobile-edge;

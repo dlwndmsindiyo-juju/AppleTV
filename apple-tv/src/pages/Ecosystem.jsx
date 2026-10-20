@@ -32,8 +32,8 @@ const Ecosystem = () => {
           ‹ 홈으로 돌아가기
         </Link>
 
-        {/* 상단 타이틀 */}
-        <header className="ecosystem-head">
+        {/* 상단 타이틀 (전역 header 스타일과 겹치지 않도록 div 사용) */}
+        <div className="ecosystem-head">
           <p className="ecosystem-eyebrow">APPLE TV ECOSYSTEM</p>
           <h2 className="ecosystem-title">비슷한 이름. 다른 역할.</h2>
           <p className="ecosystem-lead">함께 연결되는 하나의 경험입니다.</p>
@@ -41,7 +41,7 @@ const Ecosystem = () => {
             앱은 시청하는 공간, Apple TV는 콘텐츠 구독, Apple TV 4K는 TV에 연결하는
             기기입니다.
           </p>
-        </header>
+        </div>
 
         {/* 3단 비교 카드 */}
         <div className="ecosystem-grid">

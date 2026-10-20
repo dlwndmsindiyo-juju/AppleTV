@@ -29,7 +29,7 @@ export const ECOSYSTEM_PRODUCTS = [
     name: "Apple TV app",
     category: "앱 / 플랫폼",
     desc: ["다양한 콘텐츠를 한곳에서", "탐색하고 시청하는 앱."],
-    image: `${IMG}apple-tv-app.png`,
+    image: `${IMG}tvapp.svg`,
     imageAlt: "iPad와 iPhone에서 실행 중인 Apple TV 앱",
     rows: {
       what: "Apple TV와 지원되는 외부 서비스의 콘텐츠를 탐색하는 시청 허브.",
@@ -47,7 +47,7 @@ export const ECOSYSTEM_PRODUCTS = [
     name: "Apple TV",
     category: "구독 서비스",
     desc: ["Apple이 만드는 오리지널을", "즐기는 스트리밍 서비스."],
-    image: `${IMG}apple-tv.png`,
+    image: `${IMG}tvos.svg`,
     imageAlt: "TV 화면에 표시된 Apple TV 홈 화면",
     rows: {
       what: "Apple Original 영화와 시리즈를 제공하는 구독 서비스.",
@@ -65,7 +65,7 @@ export const ECOSYSTEM_PRODUCTS = [
     name: "Apple TV 4K",
     category: "하드웨어",
     desc: ["TV에 연결해 더 큰 화면에서", "즐기는 스트리밍 기기."],
-    image: `${IMG}apple-tv-4k.png`,
+    image: `${IMG}tv4k.svg`,
     imageAlt: "Apple TV 4K 본체와 Siri Remote",
     rows: {
       what: "TV의 HDMI에 연결하는 Apple의 스트리밍 기기.",

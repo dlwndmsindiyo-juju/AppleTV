@@ -1983,10 +1983,13 @@ header {
 
 // ===== Apple TV 에코시스템 비교 페이지 (/ecosystem) =====
 .ecosystem-page {
-  min-height: 100vh;
-  padding: calc(#{$header-height} + 40px) 0 120px;
-  background-color: $gnb-bg;
-  color: $text-primary; 
+  // 로그인 페이지처럼 헤더 · 본문 · 푸터 영역이 확실히 구분되도록
+  // 배경을 한 톤 어둡게($bg-color) 하고 위아래 여백을 넉넉하게
+  min-height: calc(100vh - #{$header-height});
+  padding: calc(#{$header-height} + 80px) 0 120px;
+  box-sizing: border-box;
+  background-color: $bg-color;
+  color: $text-primary;
 
   .inner {
     @include inner-wrap;
@@ -2007,7 +2010,7 @@ header {
 
   // ---------- 상단 타이틀 ----------
   .ecosystem-head {
-    margin: 48px 0 56px;
+    margin: 48px 0 64px;
     text-align: center;
   }
 
@@ -2221,7 +2224,7 @@ header {
     }
 
     &:disabled {
-      opacity: 0.5;
+      opacity: 1;
       cursor: default;
     }
   }
