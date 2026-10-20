@@ -11,6 +11,7 @@ import { MovieDetail } from "./pages/MovieDetail";
 import Login from "./pages/Login";
 import { useAuthStore } from "./store/useAuthStore";
 import SportTeamsPage from "./pages/SportTeamsPage";
+import PromoBanner from "./components/landing/PromoBanner";
 
 function App() {
   const [showIntro, setShowIntro] = useState(() => {
@@ -51,6 +52,9 @@ function App() {
 
           {/* 3. 푸터 */}
           <Footer />
+
+          {/* 프로모션 배너 */}
+          <PromoBanner />
         </>
       )}
     </>

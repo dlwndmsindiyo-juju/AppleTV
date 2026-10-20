@@ -9,6 +9,8 @@ import { isLive, getScore, formatKickoff } from "../sport/sportUtils";
 // 스포츠 화면 경로 / 경기 시청 경로 (라우터와 맞춰 주세요)
 const SPORT_PATH = "/sport";
 const watchPath = (match) => `${SPORT_PATH}/match/${match.id}`;
+// 기본 경기일 때 '경기 시청' 이동 경로 (스포츠 홈)
+const fallbackPath = SPORT_PATH;
 
 // 영문 구단명 → 한글 짧은 이름 (data/sportTeams.js), 없으면 원래 이름
 const teamLabel = (team) => {
@@ -17,6 +19,18 @@ const teamLabel = (team) => {
     (t) => t.enName === team.name || t.enName === team.shortName
   );
   return found?.shortName || team.shortName || team.name;
+};
+
+// 경기 정보를 못 받았을 때 띄우는 기본 경기 (시안과 동일, 디자인 확인용)
+// 실제 데이터(liveMatches / upcomingMatches)가 들어오면 자동으로 그쪽을 보여줌
+const FALLBACK_MATCH = {
+  id: "sample",
+  status: "IN_PLAY",
+  minute: 87,
+  utcDate: new Date().toISOString(),
+  homeTeam: { name: "Nashville SC", shortName: "Nashville" },
+  awayTeam: { name: "Toronto FC", shortName: "Toronto" },
+  score: { fullTime: { home: 3, away: 3 } },
 };
 
 // 진행 시간 라벨: 전반 32분 / 후반 87분 / 하프타임
@@ -53,17 +67,26 @@ const PromoBanner = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isSport]);
 
-  // 라이브 경기 우선, 없으면 가장 가까운 예정 경기
-  const nextMatch =
+  // 라이브 경기 우선 → 가장 가까운 예정 경기 → 둘 다 없으면 기본 경기
+  const realMatch =
     liveMatches.find(isLive) ||
     [...upcomingMatches].sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate))[0];
+  const nextMatch = realMatch || FALLBACK_MATCH;
+  const isFallback = !realMatch;
 
   // 어떤 배너를 보여줄지: promo | live | null
   // - 로그인 전: TV 홈(/) · 스포츠(/sport…) 에서 프로모션
-  // - 로그인 후: 스포츠에서만 LIVE (경기 정보가 있을 때)
+  // - 로그인 후: 스포츠에서만 LIVE (경기 정보가 없으면 기본 경기로 표시)
   let mode = null;
   if (!user && (isHome || isSport)) mode = "promo";
-  else if (user && isSport && nextMatch) mode = "live";
+  else if (user && isSport) mode = "live";
+
+  // 기본 경기로 표시 중인지 콘솔에서 확인
+  useEffect(() => {
+    if (mode === "live" && isFallback) {
+      console.info("[PromoBanner] 경기 정보가 없어 기본 경기(내슈빌 vs 토론토)로 표시 중");
+    }
+  }, [mode, isFallback]);
 
   // 첫 스크롤 감지 (한 번 나타나면 계속 유지)
   useEffect(() => {
@@ -98,6 +121,7 @@ const PromoBanner = () => {
     <aside
       className={`promo-banner${mode === "live" ? " is-live" : ""}${scrolled ? " show" : ""}`}
       aria-hidden={!scrolled}
+      data-fallback={mode === "live" && isFallback ? "true" : undefined}
     >
       <div className="inner promo-banner-inner">
         {mode === "promo" ? (
@@ -125,7 +149,7 @@ const PromoBanner = () => {
             </div>
           </>
         ) : (
-          <LiveContent match={nextMatch} tabIndex={tabIndex} />
+          <LiveContent match={nextMatch} tabIndex={tabIndex} isFallback={isFallback} />
         )}
       </div>
     </aside>,
@@ -134,7 +158,7 @@ const PromoBanner = () => {
 };
 
 // ===== 로그인 후 스포츠: LIVE 경기 배너 =====
-const LiveContent = ({ match, tabIndex }) => {
+const LiveContent = ({ match, tabIndex, isFallback }) => {
   const live = isLive(match);
   const score = getScore(match);
   const home = teamLabel(match.homeTeam);
@@ -168,7 +192,7 @@ const LiveContent = ({ match, tabIndex }) => {
       </div>
 
       <div className="promo-banner-action">
-        <Link to={watchPath(match)} className="promo-banner-btn" tabIndex={tabIndex}>
+        <Link to={isFallback ? fallbackPath : watchPath(match)} className="promo-banner-btn" tabIndex={tabIndex}>
           <span className="play-icon" aria-hidden="true">▶</span>
           {live ? "경기 시청" : "경기 보기"}
         </Link>
