@@ -1,0 +1,582 @@
+@use "./variables" as *;
+
+// =====================================================================
+// 로그인 후 메인 (Desktop.pdf 시안) — 신규 섹션 전용 스타일
+// - .member-home 안에서만 적용되므로 기존 스타일에 영향 없음
+// - App.jsx 의 import 순서와 무관하게 MemberHome.jsx 에서 직접 불러옴
+// =====================================================================
+$mobile-edge: 20px;
+
+.member-home {
+  // ---------- 섹션 공통 ----------
+  .member-section {
+    background-color: $gnb-bg;
+    padding: 40px 0 56px;
+
+    .inner {
+      @include inner-wrap;
+    }
+
+    // 회색 띠 구간 (찜한 콘텐츠 / 에코시스템)
+    &.band {
+      background-color: $dark-color-900;
+    }
+  }
+
+  .member-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  // main h2 { padding-top: 200px } 영향 제거
+  .member-title {
+    @include heading-h2;
+    color: $text-primary;
+    margin: 0 0 8px;
+    padding-top: 0;
+  }
+
+  .member-desc {
+    @include body-large;
+    color: $neutral-color-400;
+    margin: 0;
+
+    &.small {
+      @include body-small;
+    }
+  }
+
+  .member-more {
+    @include body-small;
+    flex-shrink: 0;
+    color: $neutral-color-400;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+
+  // ---------- 가로 슬라이드 (Swiper) ----------
+  // 이너 폭 안에서 잘리도록 overflow hidden (히어로 제외 공통 콘텐츠 폭)
+  .member-continue .inner,
+  .member-wishlist .inner,
+  .member-recommend .inner,
+  .member-mood .inner {
+    overflow: hidden;
+  }
+
+  .member-slider {
+    width: 100%;
+
+    // 카드 폭은 --rail-col 로 지정 (slidesPerView: auto)
+    .swiper-slide {
+      width: var(--rail-col, 280px);
+      height: auto;
+      min-width: 0;
+    }
+  }
+
+  // 찜한 콘텐츠: 한 화면에 최대 3개 (나머지는 슬라이드)
+  .rail-wish {
+    --rail-col: calc((100% - 48px) / 3);
+    --nav-top: 50%;
+  }
+
+  .rail-continue {
+    --rail-col: calc((100% - 72px) / 3.5);
+  }
+
+  .rail-poster {
+    --rail-col: calc((100% - 96px) / 5.5);
+  }
+
+  .rail-mood {
+    --rail-col: calc((100% - 96px) / 5.2);
+  }
+
+  // ---------- 카드 공통 ----------
+  .member-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-decoration: none;
+    color: $text-primary;
+  }
+
+  .member-thumb {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: $surface-color;
+    margin-bottom: 12px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    &.landscape {
+      aspect-ratio: 16 / 9;
+    }
+
+    &.portrait {
+      aspect-ratio: 282 / 400;
+    }
+
+    // 로딩 자리표시 (시안의 체크무늬)
+    &.skeleton {
+      background: repeating-conic-gradient($dark-color-800 0% 25%, $dark-color-500 0% 50%) 50% / 24px 24px;
+    }
+  }
+
+  .member-card:hover .member-thumb img {
+    transform: scale(1.05);
+  }
+
+  .member-card-title {
+    @include heading-h3;
+    color: $text-primary;
+    margin: 0;
+    padding-top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-card-meta {
+    @include body-small;
+    color: $neutral-color-400;
+  }
+
+  .member-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: keep-all;
+  }
+
+  .member-card-link {
+    @include body-small;
+    color: $text-primary;
+    margin-top: 4px;
+  }
+
+  // 이어보기 진행 바
+  .member-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+
+    span {
+      display: block;
+      height: 100%;
+      background-color: $light-color-0;
+    }
+  }
+
+  // ---------- 버튼 ----------
+  .member-btn {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    height: 36px;
+    margin-top: 6px;
+    padding: 0 16px;
+    border: 1px solid $neutral-color-400;
+    border-radius: 9999px;
+    background: transparent;
+    color: $text-primary;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-color: $light-color-0;
+    }
+
+    // 설정 완료 상태
+    &.filled {
+      background-color: $light-color-0;
+      border-color: $light-color-0;
+      color: $dark-color-900;
+      font-weight: 600;
+
+      &:hover {
+        background-color: $light-color-300;
+      }
+    }
+  }
+
+  // 추천작 찜 버튼 (포스터 우상단)
+  .member-heart {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.55);
+    color: $text-primary;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    &.on {
+      color: $live-color;
+    }
+  }
+
+  // ---------- 내가 찜한 콘텐츠 ----------
+
+  .member-wish-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    border-radius: $radius-card;
+    background-color: $dark-color-500;
+    text-decoration: none;
+    color: $text-primary;
+    min-width: 0;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: $dark-color-400;
+    }
+  }
+
+  .member-wish-thumb {
+    flex-shrink: 0;
+    width: 52px;
+    height: 72px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: $dark-color-300;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .member-wish-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .member-wish-name {
+    @include heading-h4;
+    color: $text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // ---------- AI 어시스턴트 ----------
+  .member-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .member-chip {
+    @include body-small;
+    height: 32px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 9999px;
+    background-color: $toggle-inactive-bg;
+    color: $text-primary;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      background-color: $dark-color-300;
+    }
+
+    &.active {
+      background-color: $toggle-active-bg;
+      color: $toggle-active-text;
+      font-weight: 600;
+    }
+  }
+
+  .member-notice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 12px 20px;
+    border-radius: $radius-card;
+    background-color: $dark-color-800;
+
+    p {
+      @include body-small;
+      margin: 0;
+      color: $neutral-color-300;
+    }
+
+    .member-btn {
+      margin-top: 0;
+      height: 32px;
+      @include body-small;
+    }
+  }
+
+  // ---------- 신규 출시 / 공개예정작 (2열 카드) ----------
+  .member-pair {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .member-wide-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: $radius-card;
+    background-color: $dark-color-800;
+    min-width: 0;
+
+    &.tall {
+      align-items: stretch;
+    }
+  }
+
+  .member-wide-thumb {
+    flex-shrink: 0;
+    display: block;
+    width: 150px;
+    height: 96px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: $surface-color;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    &.poster {
+      width: 120px;
+      height: auto;
+      aspect-ratio: 2 / 3;
+    }
+  }
+
+  .member-wide-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  // ---------- 에코시스템 ----------
+  .member-ecosystem {
+    padding: 48px 0;
+  }
+
+  // ---------- 키보드 포커스 ----------
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid $accent-color;
+    outline-offset: 2px;
+  }
+}
+
+// ---------------------------------------------------------------------
+// 태블릿 (1024px 이하) — 시안 1024 x 3304
+// 좌우 여백 13%, 카드 레일은 오른쪽 끝까지 이어짐 (카드 간격 24)
+// 모바일(767px 이하)은 mobile.scss 에서 이어서 덮어씀
+// ---------------------------------------------------------------------
+@media (max-width: $breakpoint-tablet) {
+  .member-home {
+    .member-section {
+      overflow: hidden;
+
+      .inner {
+        padding-left: $tablet-gutter;
+        padding-right: $tablet-gutter;
+      }
+    }
+
+    // ---------- 레일 섹션: 오른쪽 끝까지 이어지는 슬라이더 ----------
+    .member-continue .inner,
+    .member-recommend .inner,
+    .member-mood .inner {
+      padding-right: 0;
+    }
+
+    .member-continue,
+    .member-recommend,
+    .member-mood {
+      .member-head,
+      .member-chips,
+      .member-notice {
+        margin-right: $tablet-gutter;
+      }
+    }
+
+    .rail-continue {
+      --rail-col: 286px;
+    }
+
+    .rail-wish {
+      --rail-col: calc((100% - 24px) / 2);
+    }
+
+    .rail-poster {
+      --rail-col: 200px;
+    }
+
+    // 기분별 추천: 가로형 카드 3장 (시안)
+    .rail-mood {
+      --rail-col: 286px;
+
+      .member-thumb.portrait {
+        aspect-ratio: 16 / 9;
+      }
+    }
+
+    // ---------- 칩 / 안내 바 ----------
+    .member-chips {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .member-chip {
+        flex-shrink: 0;
+      }
+    }
+
+    // ---------- 찜 / 신규 출시 / 공개예정작 ----------
+
+    .member-pair {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    // ---------- 에코시스템 ----------
+    .member-ecosystem {
+      padding: 48px 0;
+    }
+  }
+}
+
+
+// =====================================================================
+// 가로 슬라이드 좌우 네비게이터 (Swiper 기본 버튼 커스텀)
+// - 슬라이드가 모자라 Swiper 가 버튼을 숨기려 해도(lock) 항상 보이게 함
+// =====================================================================
+.member-home {
+  // 썸네일 중앙 높이쯤에 오도록 슬라이드별로 위치 조정
+  .rail-continue {
+    --nav-top: 30%;
+  }
+
+  .rail-poster,
+  .rail-mood {
+    --nav-top: 34%;
+  }
+
+  .member-slider {
+    --swiper-navigation-size: 18px;
+    --swiper-navigation-color: #{$text-primary};
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      top: var(--nav-top, 35%);
+      margin-top: 0;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      transition: background-color 0.25s ease, opacity 0.25s ease;
+
+      &::after {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.85);
+      }
+    }
+
+    .swiper-button-prev {
+      left: 8px;
+    }
+
+    .swiper-button-next {
+      right: 8px;
+    }
+
+    // 끝에 도달 / 슬라이드가 적을 때: 숨기지 않고 흐리게
+    .swiper-button-disabled,
+    .swiper-button-lock {
+      display: flex;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .member-home {
+    // 태블릿 기분별 추천은 가로형 카드라 버튼 위치가 더 위쪽
+    .rail-mood {
+      --nav-top: 30%;
+    }
+
+    // 기존 랜딩 슬라이더(히어로 / TOP 10)의 태블릿 화살표 숨김 규칙을
+    // 로그인 후 메인에서는 덮어써서 항상 보이게 함 (App.scss 는 수정하지 않음)
+    .hero-swiper-container .swiper-button-next,
+    .hero-swiper-container .swiper-button-prev,
+    .top10-section .swiper-button-next,
+    .top10-section .swiper-button-prev {
+      display: flex;
+    }
+  }
+}

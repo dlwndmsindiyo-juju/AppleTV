@@ -35,6 +35,20 @@ export const useSportStore = create((set, get) => ({
         }
     },
 
+    // [추가] 진행 중인 경기 (하단 LIVE 배너용) - IN_PLAY: 경기 중 / PAUSED: 하프타임
+    liveMatches: [],
+    onFetchLiveMatches: async (competition = "PL") => {
+        try {
+            const res = await fetch(`https://api.football-data.org/v4/competitions/${competition}/matches?status=IN_PLAY,PAUSED`, {
+                headers: { 'X-Auth-Token': FOOTBALL_KEY }
+            });
+            const data = await res.json();
+            set({ liveMatches: data.matches || [] });
+        } catch (error) {
+            console.error("라이브 경기 조회 실패:", error);
+        }
+    },
+
     // 3. [추가] 팀별 선수 정보(스쿼드) 저장 오브젝트 (팀 ID별 캐싱)
     teamSquads: {},
     onFetchTeamSquad: async (teamId) => {
