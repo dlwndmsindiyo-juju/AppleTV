@@ -3,9 +3,9 @@
 
 const IMG = `${import.meta.env.BASE_URL}images/ecosystem/`;
 
-// =====================================================================
+// 
 // 🔗 공식 링크 
-// =====================================================================
+// 
 export const ECOSYSTEM_LINKS = {
   appPlan: "https://www.apple.com/kr/apple-one/", // Apple TV App 구독 플랜 보기
   tvPlan: "https://www.apple.com/kr/apple-tv/", // Apple TV 구독 플랜 보기

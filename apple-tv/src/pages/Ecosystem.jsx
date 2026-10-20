@@ -7,7 +7,7 @@ import {
   ECOSYSTEM_DEVICES,
 } from "../data/ecosystemData";
 
-// 공식 링크 버튼 (링크가 비어 있으면 비활성 버튼)
+// 공식 링크 버튼 (링크가 비어 있으면 비활성화 버튼)
 const ExternalButton = ({ href, className, children }) =>
   href ? (
     <a className={className} href={href} target="_blank" rel="noopener noreferrer">
