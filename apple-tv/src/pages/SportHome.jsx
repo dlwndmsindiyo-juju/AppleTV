@@ -5,7 +5,6 @@ import { useAuthStore } from "../store/useAuthStore";
 import SportHero from "../components/sport/SportHero";
 import SportUpcoming from "../components/sport/SportUpcoming";
 import SportShorts from "../components/sport/SportShorts";
-import SportPromo from "../components/sport/SportPromo";
 import SportTeams from "../components/sport/SportTeams";
 import SportLeague from "../components/sport/SportLeague";
 import SportReplay from "../components/sport/SportReplay";
