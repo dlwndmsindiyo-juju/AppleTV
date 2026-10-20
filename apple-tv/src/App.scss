@@ -1916,70 +1916,67 @@ header {
   }
 }
 
-// ===== 기기 안내 =====
+// ===== 기기 안내 (좌우 2단, 기존 다크 톤 유지) =====
 .device-guide {
   background-color: $gnb-bg;
-  padding: 56px 0;
+  padding: 80px 0;
 
   .inner {
     @include inner-wrap;
   }
 
-  .device-guide-inner {
+  // 콘텐츠 영역 (1920 기준 좌우 240 여백 = 최대 1440, 배경 없음)
+  .device-guide-card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
     align-items: start;
-    gap: 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 68px 120px;
+    box-sizing: border-box;
   }
 
+  // 좌측: 제목 + 설명
   .device-guide-title {
-    @include display-M;
-    font-weight: 600; // 시안 제목은 굵게
+    @include display-l;
+    font-weight: 600;
+    margin: 0 0 24px;
+    padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
     color: $text-primary;
-    margin: 0 0 12px;
     word-break: keep-all;
   }
 
   .device-guide-sub {
-    @include body-small; // - body small
-    color: $neutral-color-400;
+    @include body-large;
     margin: 0;
+    color: $neutral-color-600;
+    word-break: keep-all;
   }
 
+  // 우측: 세 가지 구분
   .device-guide-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
     list-style: none;
-    margin: 0 0 20px;
+    margin: 0 0 36px;
     padding: 0;
 
     li {
-      @include body-default;
+      @include body-large;
       color: $light-color-500;
     }
   }
 
-  .device-guide-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 24px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  // 세 가지 차이 보기 ›
+  .device-guide-link {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: $accent-color;
+    text-decoration: none;
+    transition: color 0.2s ease;
 
-    a {
-      @include body-small;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: $light-color-500;
-      text-decoration: none;
-      transition: color 0.2s ease;
-
-      &:hover {
-        color: $text-primary;
-      }
+    &:hover {
+      font-weight: 600;
     }
   }
 }
@@ -3423,7 +3420,6 @@ main {
   .upcoming-section .inner,
   .apple-originals .inner,
   .subscribe-cta .inner,
-  .device-guide .inner,
   .movie-slider-section .inner {
     padding-left: $tablet-gutter;
     padding-right: $tablet-gutter;
@@ -3507,14 +3503,6 @@ main {
 
     .subscribe-content {
       left: 6%;
-    }
-  }
-
-  // ---------- 기기 안내: 세로로 쌓기 ----------
-  .device-guide {
-    .device-guide-inner {
-      grid-template-columns: 1fr;
-      gap: 32px;
     }
   }
 

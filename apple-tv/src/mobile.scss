@@ -79,7 +79,6 @@ $mobile-edge: 20px; // 모바일 좌우 여백
   .upcoming-section .inner,
   .apple-originals .inner,
   .subscribe-cta .inner,
-  .device-guide .inner,
   .movie-slider-section .inner {
     padding-left: $mobile-edge;
     padding-right: $mobile-edge;
@@ -189,15 +188,6 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     }
   }
  
-  // ---------- 기기 안내 ----------
-  .device-guide {
-    padding: 40px 0;
- 
-    .device-guide-title {
-      font-size: 22px;
-      line-height: 28px;
-    }
-  }
  
  
   // ---------- 스포츠 ----------
@@ -820,6 +810,79 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .promo-banner-note {
       @include caption-default;
+    }
+  }
+}
+
+// =====================================================================
+// 기기 안내 (DeviceGuide) — 태블릿 / 모바일
+// PC 스타일은 App.scss 의 .device-guide
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .device-guide {
+    padding: 56px 0;
+
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    // 좌우 2단 → 위아래로 쌓기
+    .device-guide-card {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+      padding: 0;
+    }
+
+    .device-guide-title {
+      @include display-M;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .device-guide-list {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .device-guide {
+    padding: 40px 0;
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .device-guide-card {
+      gap: 24px;
+      padding: 0;
+    }
+
+    .device-guide-title {
+      @include heading-h2;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .device-guide-sub {
+      @include body-small;
+    }
+
+    .device-guide-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+
+      li {
+        @include body-default;
+      }
+    }
+
+    .device-guide-link {
+      @include body-small;
     }
   }
 }
