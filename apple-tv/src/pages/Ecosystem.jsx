@@ -98,9 +98,6 @@ const Ecosystem = () => {
                 <li key={d}>{d}</li>
               ))}
             </ul>
-            <ExternalButton className="ecosystem-link" href={ECOSYSTEM_LINKS.devices}>
-              내 기기에서 보는 방법 <span aria-hidden="true">›</span>
-            </ExternalButton>
           </div>
         </section>
       </div>

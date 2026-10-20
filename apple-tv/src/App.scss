@@ -2191,7 +2191,7 @@ header {
     flex-wrap: wrap;
     align-items: center;
     list-style: none;
-    margin: 12px 0 20px;
+    margin: 12px 0 0;
     padding: 0;
 
     li {
@@ -2207,27 +2207,6 @@ header {
     }
   }
 
-  .ecosystem-link {
-    @include body-default;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 0;
-    border: none;
-    background: none;
-    color: $accent-color;
-    text-decoration: none;
-    cursor: pointer;
-
-    &:hover {
-      font-weight: 600;
-    }
-
-    &:disabled {
-      opacity: 1;
-      cursor: default;
-    }
-  }
 }
 
 // ===== 구독 전 프로모션 배너 (하단 플로팅) =====
