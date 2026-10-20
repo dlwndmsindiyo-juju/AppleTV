@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useMovieStore } from "../../store/useMovieStore";
+import { SwiperSlide } from "swiper/react";
+import Rail from "../common/Rail";
 import { img, genreText, detailPath } from "./memberUtils";
 
 const RecommendSection = () => {
@@ -21,11 +23,11 @@ const RecommendSection = () => {
           <Link to="/recommend" className="member-more">추천 더 보기 ›</Link>
         </div>
 
-        <ul className="member-rail rail-poster">
+        <Rail stack className="rail-poster" label="추천작">
           {recommended.slice(0, 10).map((tv) => {
             const saved = wishlist.some((w) => w.id === tv.id && w.type === "tv");
             return (
-              <li key={tv.id} className="member-poster-item">
+              <SwiperSlide key={tv.id} className="member-poster-item">
                 <Link to={detailPath("tv", tv.id)} className="member-card">
                   <div className="member-thumb portrait">
                     <img src={img(tv.poster_path, "w500")} alt={tv.name} loading="lazy" />
@@ -55,10 +57,10 @@ const RecommendSection = () => {
                 >
                   {saved ? "♥" : "♡"}
                 </button>
-              </li>
+              </SwiperSlide>
             );
           })}
-        </ul>
+        </Rail>
       </div>
     </section>
   );

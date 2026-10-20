@@ -62,28 +62,30 @@ $mobile-edge: 20px;
     }
   }
 
-  // ---------- 가로 스크롤 레일 (오른쪽이 살짝 잘리는 시안) ----------
-  .member-rail {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: var(--rail-col, 280px);
-    gap: 24px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
+  // ---------- 가로 슬라이드 (Swiper) ----------
+  // 이너 폭 안에서 잘리도록 overflow hidden (히어로 제외 공통 콘텐츠 폭)
+  .member-continue .inner,
+  .member-wishlist .inner,
+  .member-recommend .inner,
+  .member-mood .inner {
+    overflow: hidden;
+  }
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
+  .member-slider {
+    width: 100%;
 
-    > li {
-      position: relative;
+    // 카드 폭은 --rail-col 로 지정 (slidesPerView: auto)
+    .swiper-slide {
+      width: var(--rail-col, 280px);
+      height: auto;
       min-width: 0;
-      scroll-snap-align: start;
     }
+  }
+
+  // 찜한 콘텐츠: 한 화면에 최대 3개 (나머지는 슬라이드)
+  .rail-wish {
+    --rail-col: calc((100% - 48px) / 3);
+    --nav-top: 50%;
   }
 
   .rail-continue {
@@ -247,14 +249,6 @@ $mobile-edge: 20px;
   }
 
   // ---------- 내가 찜한 콘텐츠 ----------
-  .member-wish-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
 
   .member-wish-card {
     display: flex;
@@ -427,86 +421,162 @@ $mobile-edge: 20px;
 }
 
 // ---------------------------------------------------------------------
-// 태블릿 (1024px 이하)
+// 태블릿 (1024px 이하) — 시안 1024 x 3304
+// 좌우 여백 13%, 카드 레일은 오른쪽 끝까지 이어짐 (카드 간격 24)
+// 모바일(767px 이하)은 mobile.scss 에서 이어서 덮어씀
 // ---------------------------------------------------------------------
 @media (max-width: $breakpoint-tablet) {
   .member-home {
-    .member-section .inner {
-      padding-left: $tablet-gutter;
-      padding-right: $tablet-gutter;
+    .member-section {
+      overflow: hidden;
+
+      .inner {
+        padding-left: $tablet-gutter;
+        padding-right: $tablet-gutter;
+      }
+    }
+
+    // ---------- 레일 섹션: 오른쪽 끝까지 이어지는 슬라이더 ----------
+    .member-continue .inner,
+    .member-recommend .inner,
+    .member-mood .inner {
+      padding-right: 0;
+    }
+
+    .member-continue,
+    .member-recommend,
+    .member-mood {
+      .member-head,
+      .member-chips,
+      .member-notice {
+        margin-right: $tablet-gutter;
+      }
     }
 
     .rail-continue {
-      --rail-col: 280px;
+      --rail-col: 286px;
+    }
+
+    .rail-wish {
+      --rail-col: calc((100% - 24px) / 2);
     }
 
     .rail-poster {
       --rail-col: 200px;
     }
 
+    // 기분별 추천: 가로형 카드 3장 (시안)
     .rail-mood {
-      --rail-col: 200px;
+      --rail-col: 286px;
+
+      .member-thumb.portrait {
+        aspect-ratio: 16 / 9;
+      }
     }
 
-    .member-wish-list {
-      grid-template-columns: repeat(2, 1fr);
+    // ---------- 칩 / 안내 바 ----------
+    .member-chips {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .member-chip {
+        flex-shrink: 0;
+      }
     }
+
+    // ---------- 찜 / 신규 출시 / 공개예정작 ----------
 
     .member-pair {
       grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    // ---------- 에코시스템 ----------
+    .member-ecosystem {
+      padding: 48px 0;
     }
   }
 }
 
-// ---------------------------------------------------------------------
-// 모바일 (767px 이하)
-// ---------------------------------------------------------------------
-@media (max-width: $breakpoint-mobile) {
+
+// =====================================================================
+// 가로 슬라이드 좌우 네비게이터 (Swiper 기본 버튼 커스텀)
+// - 슬라이드가 모자라 Swiper 가 버튼을 숨기려 해도(lock) 항상 보이게 함
+// =====================================================================
+.member-home {
+  // 썸네일 중앙 높이쯤에 오도록 슬라이드별로 위치 조정
+  .rail-continue {
+    --nav-top: 30%;
+  }
+
+  .rail-poster,
+  .rail-mood {
+    --nav-top: 34%;
+  }
+
+  .member-slider {
+    --swiper-navigation-size: 18px;
+    --swiper-navigation-color: #{$text-primary};
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      top: var(--nav-top, 35%);
+      margin-top: 0;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      transition: background-color 0.25s ease, opacity 0.25s ease;
+
+      &::after {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.85);
+      }
+    }
+
+    .swiper-button-prev {
+      left: 8px;
+    }
+
+    .swiper-button-next {
+      right: 8px;
+    }
+
+    // 끝에 도달 / 슬라이드가 적을 때: 숨기지 않고 흐리게
+    .swiper-button-disabled,
+    .swiper-button-lock {
+      display: flex;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
   .member-home {
-    .member-section {
-      padding: 32px 0 40px;
-
-      .inner {
-        padding-left: $mobile-edge;
-        padding-right: $mobile-edge;
-      }
-    }
-
-    .rail-continue {
-      --rail-col: 240px;
-    }
-
-    .rail-poster,
+    // 태블릿 기분별 추천은 가로형 카드라 버튼 위치가 더 위쪽
     .rail-mood {
-      --rail-col: 160px;
+      --nav-top: 30%;
     }
 
-    .member-rail {
-      gap: 16px;
-    }
-
-    .member-wish-list {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .member-notice {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .member-wide-thumb {
-      width: 110px;
-      height: 70px;
-
-      &.poster {
-        width: 90px;
-        height: auto;
-      }
-    }
-
-    .member-ecosystem {
-      padding: 40px 0;
+    // 기존 랜딩 슬라이더(히어로 / TOP 10)의 태블릿 화살표 숨김 규칙을
+    // 로그인 후 메인에서는 덮어써서 항상 보이게 함 (App.scss 는 수정하지 않음)
+    .hero-swiper-container .swiper-button-next,
+    .hero-swiper-container .swiper-button-prev,
+    .top10-section .swiper-button-next,
+    .top10-section .swiper-button-prev {
+      display: flex;
     }
   }
 }

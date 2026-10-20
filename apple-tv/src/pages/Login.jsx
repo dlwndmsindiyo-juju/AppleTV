@@ -19,7 +19,11 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     const user = await onGoogleLogin();
     if (user) {
-      navigate("/selectMember");
+      navigate("/", { replace: true }); // [수정] 로그인 후 메인(홈)으로
+    } else {
+      // [추가] 실패 사유가 있으면 화면에 안내
+      const { loginError } = useAuthStore.getState();
+      if (loginError) alert(loginError);
     }
   };
 
@@ -77,7 +81,7 @@ const Login = () => {
 
   // 3단계: "7일 무료구독 시작하기" 버튼 클릭 시 멤버 선택 페이지로 이동
   const handleStartSubscribe = () => {
-    navigate("/selectMember");
+    navigate("/", { replace: true }); // [수정] 로그인 후 메인(홈)으로
   };
 
   const handleClose = () => {

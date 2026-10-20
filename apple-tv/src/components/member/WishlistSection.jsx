@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { SwiperSlide } from "swiper/react";
 import { useMovieStore } from "../../store/useMovieStore";
+import Rail from "../common/Rail";
 import { img, detailPath } from "./memberUtils";
 
 const WishlistSection = () => {
@@ -17,7 +19,7 @@ const WishlistSection = () => {
           poster_path: tv.poster_path,
           type: "tv",
         }))
-  ).slice(0, 4);
+  ).slice(0, 10);
 
   if (items.length === 0) return null;
 
@@ -32,9 +34,9 @@ const WishlistSection = () => {
           <Link to="/wishlist" className="member-more">더보기</Link>
         </div>
 
-        <ul className="member-wish-list">
+        <Rail bleed={false} className="rail-wish" label="찜한 콘텐츠">
           {items.map((item) => (
-            <li key={`${item.type}_${item.id}`}>
+            <SwiperSlide key={`${item.type}_${item.id}`}>
               <Link to={detailPath(item.type, item.id)} className="member-wish-card">
                 <span className="member-wish-thumb">
                   <img src={img(item.poster_path, "w154")} alt="" loading="lazy" />
@@ -45,9 +47,9 @@ const WishlistSection = () => {
                   <span className="member-card-link">작품 보기 ›</span>
                 </span>
               </Link>
-            </li>
+            </SwiperSlide>
           ))}
-        </ul>
+        </Rail>
       </div>
     </section>
   );

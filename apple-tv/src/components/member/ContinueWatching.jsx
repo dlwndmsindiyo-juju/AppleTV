@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useMovieStore } from "../../store/useMovieStore";
+import { SwiperSlide } from "swiper/react";
+import Rail from "../common/Rail";
 import { img, genreText, detailPath } from "./memberUtils";
 
 // 실제 시청 기록 API 연결 전까지 쓰는 임시 진행 값
@@ -27,11 +29,11 @@ const ContinueWatching = () => {
           </div>
         </div>
 
-        <ul className="member-rail rail-continue">
+        <Rail className="rail-continue" label="이어보기">
           {items.map((tv, i) => {
             const p = SAMPLE_PROGRESS[i % SAMPLE_PROGRESS.length];
             return (
-              <li key={tv.id}>
+              <SwiperSlide key={tv.id}>
                 <Link to={detailPath("tv", tv.id)} className="member-card">
                   <div className="member-thumb landscape">
                     <img
@@ -52,10 +54,10 @@ const ContinueWatching = () => {
                   </span>
                   <span className="member-card-link">이어보기 ›</span>
                 </Link>
-              </li>
+              </SwiperSlide>
             );
           })}
-        </ul>
+        </Rail>
       </div>
     </section>
   );

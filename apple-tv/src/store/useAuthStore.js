@@ -7,6 +7,7 @@ export const useAuthStore = create((set, get) => ({
     user: null,
     currentMember: null,
     pendingEmail: null,
+    loginError: null, // [추가] 로그인 실패 사유 (화면 안내용)
 
     onSetMember: (member) => {
         set({ currentMember: member });
@@ -73,37 +74,73 @@ export const useAuthStore = create((set, get) => ({
 
     // 구글 로그인
     onGoogleLogin: async () => {
+        set({ loginError: null });
+
+        // 1. 구글 팝업 인증 (여기서 실패하면 로그인 실패)
+        let gUser;
         try {
             const result = await signInWithPopup(auth, googleProvider);
-            const user = result.user;
-
-            const userRef = doc(db, "users", user.uid);
-            const userDoc = await getDoc(userRef);
-
-            if (!userDoc.exists()) {
-                const userInfo = {
-                    uid: user.uid,
-                    email: user.email,
-                    name: user.displayName,
-                    photoURL: user.photoURL,
-                    phone: user.phoneNumber,
-                    familyMembers: {
-                        아빠: { likes: [], watchHistory: [] },
-                        엄마: { likes: [], watchHistory: [] },
-                        아들: { likes: [], watchHistory: [] },
-                        딸: { likes: [], watchHistory: [] },
-                    }
-                };
-                await setDoc(userRef, userInfo);
-                set({ user: userInfo });
-                return userInfo;
-            } else {
-                set({ user: userDoc.data() });
-                return userDoc.data();
-            }
+            gUser = result.user;
         } catch (err) {
-            console.log("구글 로그인 에러:", err.message);
+            console.log("구글 로그인 에러:", err.code, err.message);
+
+            // 사용자가 직접 팝업을 닫은 경우는 안내 없이 종료
+            if (
+                err.code === "auth/popup-closed-by-user" ||
+                err.code === "auth/cancelled-popup-request"
+            ) {
+                return null;
+            }
+
+            const messages = {
+                "auth/unauthorized-domain":
+                    "승인되지 않은 도메인입니다. Firebase 콘솔 > Authentication > 설정 > 승인된 도메인에 현재 주소(localhost 등)를 추가하세요.",
+                "auth/operation-not-allowed":
+                    "Google 로그인이 꺼져 있습니다. Firebase 콘솔 > Authentication > 로그인 방법에서 Google 을 사용 설정하세요.",
+                "auth/popup-blocked":
+                    "브라우저가 팝업을 차단했습니다. 팝업을 허용한 뒤 다시 시도하세요.",
+                "auth/network-request-failed":
+                    "네트워크 연결을 확인한 뒤 다시 시도하세요.",
+            };
+            set({
+                loginError:
+                    messages[err.code] ||
+                    `구글 로그인에 실패했습니다. (${err.code || err.message})`,
+            });
+            return null;
         }
+
+        // 2. 기본 사용자 정보 (undefined 값은 Firestore 저장 시 에러라서 null 로 대체)
+        const userInfo = {
+            uid: gUser.uid,
+            email: gUser.email ?? null,
+            name: gUser.displayName ?? "Apple 사용자",
+            photoURL: gUser.photoURL ?? null,
+            phone: gUser.phoneNumber ?? null,
+            familyMembers: {
+                아빠: { likes: [], watchHistory: [] },
+                엄마: { likes: [], watchHistory: [] },
+                아들: { likes: [], watchHistory: [] },
+                딸: { likes: [], watchHistory: [] },
+            },
+        };
+
+        // 3. Firestore 동기화 — 실패해도 로그인은 유지 (규칙/설정 문제로 막히지 않게)
+        let finalUser = userInfo;
+        try {
+            const userRef = doc(db, "users", gUser.uid);
+            const userDoc = await getDoc(userRef);
+            if (userDoc.exists()) {
+                finalUser = userDoc.data();
+            } else {
+                await setDoc(userRef, userInfo);
+            }
+        } catch (fbErr) {
+            console.log("Firestore 경고 (로그인은 계속 진행):", fbErr.code, fbErr.message);
+        }
+
+        set({ user: finalUser });
+        return finalUser;
     },
 
     // 로그아웃

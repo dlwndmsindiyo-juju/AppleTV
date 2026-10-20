@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMovieStore } from "../../store/useMovieStore";
+import { SwiperSlide } from "swiper/react";
+import Rail from "../common/Rail";
 import { img, genreText, detailPath } from "./memberUtils";
 
 // useMovieStore 의 MOOD_GENRES 키와 동일해야 함
@@ -45,27 +47,36 @@ const MoodAssistant = ({ userName = "회원" }) => {
           <button type="button" className="member-btn">취향 더 반영하기</button>
         </div>
 
-        <ul className="member-rail rail-mood">
+        <Rail stack className="rail-mood" label="기분별 추천">
           {(list ? list.slice(0, 10) : Array.from({ length: 5 })).map((tv, i) =>
             tv ? (
-              <li key={tv.id}>
+              <SwiperSlide key={tv.id}>
                 <Link to={detailPath("tv", tv.id)} className="member-card">
                   <div className="member-thumb portrait">
-                    <img src={img(tv.poster_path, "w500")} alt={tv.name} loading="lazy" />
+                    {/* 태블릿·모바일은 가로형 카드라 backdrop 이미지 사용 */}
+                    <picture>
+                      {tv.backdrop_path && (
+                        <source
+                          media="(max-width: 1024px)"
+                          srcSet={img(tv.backdrop_path, "w780")}
+                        />
+                      )}
+                      <img src={img(tv.poster_path, "w500")} alt={tv.name} loading="lazy" />
+                    </picture>
                   </div>
                   <h3 className="member-card-title">{tv.name}</h3>
                   <span className="member-card-meta">{genreText(tv.genre_ids)}</span>
                   <span className="member-card-meta member-clamp">{tv.overview}</span>
                   <span className="member-card-link">상세보기 ›</span>
                 </Link>
-              </li>
+              </SwiperSlide>
             ) : (
-              <li key={`sk_${i}`} aria-hidden="true">
+              <SwiperSlide key={`sk_${i}`} aria-hidden="true">
                 <div className="member-thumb portrait skeleton" />
-              </li>
+              </SwiperSlide>
             ),
           )}
-        </ul>
+        </Rail>
       </div>
     </section>
   );

@@ -255,3 +255,180 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     width: 100%;
   }
 }
+
+// =====================================================================
+// [추가] 로그인 후 메인 (member) 모바일 — 시안: Mobile.pdf (390 폭)
+// - member.scss 의 태블릿 규칙을 덮어쓰므로 main.member-home 으로 우선순위를 높임
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  main.member-home {
+    .member-section {
+      padding: 32px 0 40px;
+
+      .inner {
+        padding-left: $mobile-edge;
+        padding-right: $mobile-edge;
+      }
+    }
+
+    // 세로로 쌓이는 섹션(기분별 추천 / 추천작)은 좌우 여백 유지
+    .member-mood .inner,
+    .member-recommend .inner {
+      padding-right: $mobile-edge;
+    }
+
+    // 이어보기는 슬라이드: 오른쪽 끝까지 이어지고 이너 안에서 잘림
+    .member-continue .inner {
+      padding-right: 0;
+    }
+
+    .member-continue .member-head {
+      margin-right: $mobile-edge;
+    }
+
+    .member-head {
+      margin-right: 0;
+    }
+
+    .member-title {
+      @include heading-h1;
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    .member-desc {
+      @include body-small;
+    }
+
+    // ---------- 이어보기 / 찜: 가로 스크롤 유지 ----------
+    .rail-continue {
+      --rail-col: 240px;
+    }
+
+    // 찜한 콘텐츠: 카드 1장 + 다음 카드 살짝 보이게 (슬라이드)
+    .rail-wish {
+      --rail-col: calc((100% - 16px) / 1.15);
+    }
+
+    // ---------- AI 어시스턴트 (시안: 칩 → 안내 → 카드 세로 나열) ----------
+    .member-mood {
+      .member-chips {
+        margin-right: -$mobile-edge; // 칩이 화면 오른쪽으로 이어짐
+        padding-right: $mobile-edge;
+      }
+
+      .member-notice {
+        margin-right: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 16px;
+        text-align: center;
+
+        p {
+          @include body-default;
+        }
+
+        .member-btn {
+          align-self: center;
+          height: 40px;
+          padding: 0 24px;
+          @include body-default;
+        }
+      }
+
+      .member-thumb.portrait {
+        aspect-ratio: 427 / 190; // 시안: 가로로 긴 카드
+        margin-bottom: 16px;
+      }
+
+      .member-card {
+        gap: 6px;
+      }
+
+      .member-card-title {
+        @include heading-h4;
+      }
+    }
+
+    // ---------- 추천작 (시안: 큰 이미지 세로 나열) ----------
+    .member-recommend {
+      .member-head {
+        align-items: flex-end;
+      }
+
+      .member-thumb.portrait {
+        aspect-ratio: 427 / 485;
+        margin-bottom: 16px;
+      }
+
+      .member-card-title {
+        @include heading-h4;
+      }
+    }
+
+    // ---------- 신규 출시 / 공개예정작 (시안: 이미지 위, 글 아래) ----------
+    .member-pair {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .member-wide-card {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 16px;
+
+      &.tall {
+        align-items: center;
+      }
+    }
+
+    .member-wide-thumb {
+      width: min(100%, 260px);
+      height: auto;
+      aspect-ratio: 3 / 2;
+
+      &.poster {
+        width: 160px;
+        aspect-ratio: 2 / 3;
+      }
+    }
+
+    .member-wide-info {
+      width: min(100%, 260px);
+    }
+
+    // 모바일에서 세로로 쌓이는 섹션(기분별 추천 / 추천작): Swiper 를 끄고(enabled: false)
+    // 카드를 세로로 나열, 슬라이드가 아니므로 네비게이터도 숨김
+    .member-mood .member-slider,
+    .member-recommend .member-slider {
+      .swiper-wrapper {
+        display: block;
+        transform: none !important;
+      }
+
+      .swiper-slide {
+        width: 100%;
+        margin-right: 0 !important;
+        margin-bottom: 32px;
+      }
+
+      .swiper-button-prev,
+      .swiper-button-next {
+        display: none;
+      }
+    }
+
+    // ---------- 에코시스템 ----------
+    .member-ecosystem {
+      padding: 40px 0;
+
+      .member-title {
+        font-size: 22px;
+        line-height: 28px;
+        word-break: keep-all;
+      }
+    }
+  }
+}
