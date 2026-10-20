@@ -7,9 +7,9 @@ const IMG = `${import.meta.env.BASE_URL}images/ecosystem/`;
 // 🔗 공식 링크 — 여기만 채우면 버튼에 연결돼요 (비워두면 버튼 비활성)
 // =====================================================================
 export const ECOSYSTEM_LINKS = {
-  appPlan: "", // Apple TV App 구독 플랜 보기
-  tvPlan: "", // Apple TV 구독 플랜 보기
-  tv4kPlan: "", // Apple TV 4K 구독 플랜 보기
+  appPlan: "https://www.apple.com/kr/apple-one/", // Apple TV App 구독 플랜 보기
+  tvPlan: "https://www.apple.com/kr/apple-tv/", // Apple TV 구독 플랜 보기
+  tv4kPlan: "https://www.apple.com/kr/apple-tv-4k/", // Apple TV 4K 구독 플랜 보기
   devices: "", // 내 기기에서 보는 방법
 };
 
