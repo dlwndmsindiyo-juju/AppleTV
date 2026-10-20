@@ -188,23 +188,40 @@ header {
             }
           }
 
-          // 프로필: 이니셜 원형 (44px)
+          // 프로필: 이미지 원형 (40px)
           .profile-box {
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 36px; // 크기를 40px로 조정합니다.
+            height: 36px; // 크기를 40px로 조정합니다.
             border-radius: 50%;
+            overflow: hidden; // 이미지가 원형 밖으로 나가지 않도록 합니다.
             background-color: $input-bg;
-            color: $text-primary;
-            font-size: 16px;
-            font-weight: 700;
             transition: background-color 0.2s ease;
 
             &:hover {
               background-color: $input-focus-bg;
+            }
+
+            // 프로필 내부 이미지 스타일
+            span {
+              display: flex;
+              width: 100%;
+              height: 100%;
+
+              a {
+                display: flex;
+                width: 100%;
+                height: 100%;
+
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover; // 이미지가 비율을 유지하며 꽉 차게 합니다.
+                }
+              }
             }
           }
         }
@@ -275,7 +292,7 @@ header {
 
     // 타이틀: @mixin display-M 또는 커스텀 크기 활용
     .login-title {
-      @include display-M; 
+      @include display-M;
       font-weight: 600;
       color: $neutral-color-900; // #171717
       margin: 0 0 8px;
@@ -358,6 +375,7 @@ header {
     }
   }
 }
+
 // ===== 6자리 인증번호 입력 화면용 스타일 (추가) =====
 .login-page {
   .login-card {
@@ -420,6 +438,7 @@ header {
     }
   }
 }
+
 // 히어로
 .hero-swiper-container {
   position: relative;
@@ -988,7 +1007,7 @@ header {
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;       // 영역에 꽉 차게 유지하되 비율 보존
+    object-fit: cover; // 영역에 꽉 차게 유지하되 비율 보존
     object-position: 70% center; // 이미지가 줄어들 때 핵심 피사체가 잘리지 않도록 정렬 조절 가능
     display: block;
   }
@@ -2231,6 +2250,7 @@ main {
 // 모바일(767px 이하)은 mobile.scss 에서 이어서 덮어씀
 // =====================================================================
 @media (max-width: $breakpoint-tablet) {
+
   // ---------- 헤더 (좌우 40 / 상하 14) ----------
   header .inner {
     padding: $header-pad-y $tablet-edge;
@@ -2353,7 +2373,7 @@ main {
         display: none;
       }
 
-      > li {
+      >li {
         scroll-snap-align: start;
       }
     }

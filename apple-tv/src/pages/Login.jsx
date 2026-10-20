@@ -54,7 +54,6 @@ const Login = () => {
     }
   };
 
-  // 2단계: 반드시 사용자가 "인증하고 계속" 버튼을 클릭할 때만 실행
   const handleVerifySubmit = async (e) => {
     e.preventDefault();
     const fullCode = code.join("");
@@ -64,7 +63,7 @@ const Login = () => {
     }
 
     const result = await onVerifyCode(fullCode);
-    
+
     // 검증이 성공적으로 끝나면 사용자가 명시적으로 버튼을 누른 시점에 3단계(인증 완료)로 진입
     if (result !== false) {
       setStep("confirm");
