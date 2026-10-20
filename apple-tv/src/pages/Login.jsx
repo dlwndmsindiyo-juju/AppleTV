@@ -35,7 +35,6 @@ const Login = () => {
   };
 
   // 6자리 입력 칸 제어 (자동 포커스 이동)
-  // ※ 주의: 여기서는 절대 자동으로 다음 스텝으로 넘어가는 코드를 넣지 않습니다.
   const handleCodeChange = (index, value) => {
     if (!/^\d*$/.test(value)) return;
     const newCode = [...code];
@@ -57,20 +56,26 @@ const Login = () => {
   const handleVerifySubmit = async (e) => {
     e.preventDefault();
     const fullCode = code.join("");
+
+    // 6자리 코드가 모두 입력되지 않았으면 진행하지 않음
     if (fullCode.length < 6) {
       alert("6자리 인증번호를 모두 입력해주세요.");
       return;
     }
 
+    // 비동기 검증이 끝날 때까지 대기
     const result = await onVerifyCode(fullCode);
+    console.log("onVerifyCode 결과:", result);
 
-    // 검증이 성공적으로 끝나면 사용자가 명시적으로 버튼을 누른 시점에 3단계(인증 완료)로 진입
-    if (result !== false) {
+    // 검증 결과가 성공적일 때만 3단계("confirm")로 이동
+    if (result && result !== false) {
       setStep("confirm");
+    } else {
+      alert("인증번호가 올바르지 않습니다. 다시 확인해주세요.");
     }
   };
 
-  // 3단계: 사용자가 "7일 무료구독 시작하기" 버튼을 직접 클릭할 때만 멤버 선택 페이지로 이동
+  // 3단계: "7일 무료구독 시작하기" 버튼 클릭 시 멤버 선택 페이지로 이동
   const handleStartSubscribe = () => {
     navigate("/selectMember");
   };
@@ -189,7 +194,6 @@ const Login = () => {
                 ))}
               </div>
 
-              {/* 사용자가 버튼을 눌러야만 handleVerifySubmit이 실행됨 */}
               <button type="submit" className="login-btn">
                 인증하고 계속
               </button>
@@ -214,7 +218,7 @@ const Login = () => {
           </>
         )}
 
-        {/* ================= STEP 3: 인증 완료 (머물러 있는 화면) ================= */}
+        {/* ================= STEP 3: 인증 완료 및 무료구독 유도 ================= */}
         {step === "confirm" && (
           <>
             <h2 className="login-title">인증 완료</h2>
@@ -225,7 +229,7 @@ const Login = () => {
             </p>
 
             <div className="login-form">
-              {/* 사용자가 직접 클릭할 때만 다음 페이지로 이동 */}
+              {/* 이미지와 동일한 '7일 무료구독 시작하기' 파란색 CTA 버튼 */}
               <button
                 type="button"
                 className="login-btn"
@@ -235,6 +239,7 @@ const Login = () => {
               </button>
             </div>
 
+            {/* 이미지 하단 좌우 배치된 서브 링크 ('문제가 있나요?', '나중에') */}
             <div className="login-links row-links">
               <button
                 type="button"

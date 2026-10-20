@@ -24,17 +24,21 @@ export const useAuthStore = create((set, get) => ({
         }
     },
 
-   // 2단계: 인증번호 검증
+    // 2단계: 인증번호 검증
     onVerifyCode: async (code) => {
         try {
             const { pendingEmail } = get();
             console.log("인증번호 검증 시작:", code, pendingEmail);
 
+            // 6자리 코드가 들어왔을 때 검증 로직 (필요시 특정 번호 체크 가능, 현재는 통과 처리)
+            if (!code || code.length < 6) {
+                return false;
+            }
+
             const mockUid = "email-user-" + Date.now();
             const userRef = doc(db, "users", mockUid);
-            
-            // 파이어베이스 통신에 실패하더라도 UI 플랜이 끊기지 않도록 예외 처리 보완
-            let userInfo = {
+
+            const userInfo = {
                 uid: mockUid,
                 email: pendingEmail || "Apple@apple.com",
                 name: "Apple 사용자",
@@ -46,6 +50,7 @@ export const useAuthStore = create((set, get) => ({
                 }
             };
 
+            // Firestore 저장 (실패하더라도 흐름이 끊기지 않도록 방어 코드 유지)
             try {
                 const userDoc = await getDoc(userRef);
                 if (!userDoc.exists()) {
@@ -57,12 +62,12 @@ export const useAuthStore = create((set, get) => ({
                 console.log("Firebase 통신 경고 (오프라인 모드 진행):", fbErr.message);
             }
 
+            // 상태 저장 후 정상 객체 반환
             set({ user: userInfo, pendingEmail: null });
-            return userInfo; // 무조건 성공 객체 반환
+            return userInfo;
         } catch (err) {
             console.log("인증번호 확인 에러:", err.message);
-            // 에러가 나더라도 UI 테스트를 위해 임시로 성공 처리하거나 true 반환 가능
-            return { email: "Apple@apple.com" }; 
+            return false; // 에러 발생 시에는 false를 반환하여 3단계로 넘어가지 않도록 함
         }
     },
 

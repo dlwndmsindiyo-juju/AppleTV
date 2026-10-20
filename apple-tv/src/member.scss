@@ -1,0 +1,512 @@
+@use "./variables" as *;
+
+// =====================================================================
+// 로그인 후 메인 (Desktop.pdf 시안) — 신규 섹션 전용 스타일
+// - .member-home 안에서만 적용되므로 기존 스타일에 영향 없음
+// - App.jsx 의 import 순서와 무관하게 MemberHome.jsx 에서 직접 불러옴
+// =====================================================================
+$mobile-edge: 20px;
+
+.member-home {
+  // ---------- 섹션 공통 ----------
+  .member-section {
+    background-color: $gnb-bg;
+    padding: 40px 0 56px;
+
+    .inner {
+      @include inner-wrap;
+    }
+
+    // 회색 띠 구간 (찜한 콘텐츠 / 에코시스템)
+    &.band {
+      background-color: $dark-color-900;
+    }
+  }
+
+  .member-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  // main h2 { padding-top: 200px } 영향 제거
+  .member-title {
+    @include heading-h2;
+    color: $text-primary;
+    margin: 0 0 8px;
+    padding-top: 0;
+  }
+
+  .member-desc {
+    @include body-large;
+    color: $neutral-color-400;
+    margin: 0;
+
+    &.small {
+      @include body-small;
+    }
+  }
+
+  .member-more {
+    @include body-small;
+    flex-shrink: 0;
+    color: $neutral-color-400;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+
+  // ---------- 가로 스크롤 레일 (오른쪽이 살짝 잘리는 시안) ----------
+  .member-rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--rail-col, 280px);
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > li {
+      position: relative;
+      min-width: 0;
+      scroll-snap-align: start;
+    }
+  }
+
+  .rail-continue {
+    --rail-col: calc((100% - 72px) / 3.5);
+  }
+
+  .rail-poster {
+    --rail-col: calc((100% - 96px) / 5.5);
+  }
+
+  .rail-mood {
+    --rail-col: calc((100% - 96px) / 5.2);
+  }
+
+  // ---------- 카드 공통 ----------
+  .member-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-decoration: none;
+    color: $text-primary;
+  }
+
+  .member-thumb {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: $surface-color;
+    margin-bottom: 12px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    &.landscape {
+      aspect-ratio: 16 / 9;
+    }
+
+    &.portrait {
+      aspect-ratio: 282 / 400;
+    }
+
+    // 로딩 자리표시 (시안의 체크무늬)
+    &.skeleton {
+      background: repeating-conic-gradient($dark-color-800 0% 25%, $dark-color-500 0% 50%) 50% / 24px 24px;
+    }
+  }
+
+  .member-card:hover .member-thumb img {
+    transform: scale(1.05);
+  }
+
+  .member-card-title {
+    @include heading-h3;
+    color: $text-primary;
+    margin: 0;
+    padding-top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-card-meta {
+    @include body-small;
+    color: $neutral-color-400;
+  }
+
+  .member-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: keep-all;
+  }
+
+  .member-card-link {
+    @include body-small;
+    color: $text-primary;
+    margin-top: 4px;
+  }
+
+  // 이어보기 진행 바
+  .member-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+
+    span {
+      display: block;
+      height: 100%;
+      background-color: $light-color-0;
+    }
+  }
+
+  // ---------- 버튼 ----------
+  .member-btn {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    height: 36px;
+    margin-top: 6px;
+    padding: 0 16px;
+    border: 1px solid $neutral-color-400;
+    border-radius: 9999px;
+    background: transparent;
+    color: $text-primary;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-color: $light-color-0;
+    }
+
+    // 설정 완료 상태
+    &.filled {
+      background-color: $light-color-0;
+      border-color: $light-color-0;
+      color: $dark-color-900;
+      font-weight: 600;
+
+      &:hover {
+        background-color: $light-color-300;
+      }
+    }
+  }
+
+  // 추천작 찜 버튼 (포스터 우상단)
+  .member-heart {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.55);
+    color: $text-primary;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    &.on {
+      color: $live-color;
+    }
+  }
+
+  // ---------- 내가 찜한 콘텐츠 ----------
+  .member-wish-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .member-wish-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    border-radius: $radius-card;
+    background-color: $dark-color-500;
+    text-decoration: none;
+    color: $text-primary;
+    min-width: 0;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: $dark-color-400;
+    }
+  }
+
+  .member-wish-thumb {
+    flex-shrink: 0;
+    width: 52px;
+    height: 72px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: $dark-color-300;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .member-wish-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .member-wish-name {
+    @include heading-h4;
+    color: $text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // ---------- AI 어시스턴트 ----------
+  .member-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .member-chip {
+    @include body-small;
+    height: 32px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 9999px;
+    background-color: $toggle-inactive-bg;
+    color: $text-primary;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      background-color: $dark-color-300;
+    }
+
+    &.active {
+      background-color: $toggle-active-bg;
+      color: $toggle-active-text;
+      font-weight: 600;
+    }
+  }
+
+  .member-notice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 12px 20px;
+    border-radius: $radius-card;
+    background-color: $dark-color-800;
+
+    p {
+      @include body-small;
+      margin: 0;
+      color: $neutral-color-300;
+    }
+
+    .member-btn {
+      margin-top: 0;
+      height: 32px;
+      @include body-small;
+    }
+  }
+
+  // ---------- 신규 출시 / 공개예정작 (2열 카드) ----------
+  .member-pair {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .member-wide-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: $radius-card;
+    background-color: $dark-color-800;
+    min-width: 0;
+
+    &.tall {
+      align-items: stretch;
+    }
+  }
+
+  .member-wide-thumb {
+    flex-shrink: 0;
+    display: block;
+    width: 150px;
+    height: 96px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: $surface-color;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    &.poster {
+      width: 120px;
+      height: auto;
+      aspect-ratio: 2 / 3;
+    }
+  }
+
+  .member-wide-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  // ---------- 에코시스템 ----------
+  .member-ecosystem {
+    padding: 48px 0;
+  }
+
+  // ---------- 키보드 포커스 ----------
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid $accent-color;
+    outline-offset: 2px;
+  }
+}
+
+// ---------------------------------------------------------------------
+// 태블릿 (1024px 이하)
+// ---------------------------------------------------------------------
+@media (max-width: $breakpoint-tablet) {
+  .member-home {
+    .member-section .inner {
+      padding-left: $tablet-gutter;
+      padding-right: $tablet-gutter;
+    }
+
+    .rail-continue {
+      --rail-col: 280px;
+    }
+
+    .rail-poster {
+      --rail-col: 200px;
+    }
+
+    .rail-mood {
+      --rail-col: 200px;
+    }
+
+    .member-wish-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .member-pair {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+// 모바일 (767px 이하)
+// ---------------------------------------------------------------------
+@media (max-width: $breakpoint-mobile) {
+  .member-home {
+    .member-section {
+      padding: 32px 0 40px;
+
+      .inner {
+        padding-left: $mobile-edge;
+        padding-right: $mobile-edge;
+      }
+    }
+
+    .rail-continue {
+      --rail-col: 240px;
+    }
+
+    .rail-poster,
+    .rail-mood {
+      --rail-col: 160px;
+    }
+
+    .member-rail {
+      gap: 16px;
+    }
+
+    .member-wish-list {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .member-notice {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .member-wide-thumb {
+      width: 110px;
+      height: 70px;
+
+      &.poster {
+        width: 90px;
+        height: auto;
+      }
+    }
+
+    .member-ecosystem {
+      padding: 40px 0;
+    }
+  }
+}

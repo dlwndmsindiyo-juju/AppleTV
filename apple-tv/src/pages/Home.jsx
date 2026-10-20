@@ -9,6 +9,7 @@ import AppleOriginals from "../components/landing/AppleOriginals";
 import SubscribeCTA from "../components/landing/SubscribeCTA";
 import DeviceGuide from "../components/landing/DeviceGuide";
 import PromoBanner from "../components/landing/PromoBanner";
+import MemberHome from "../components/member/MemberHome"; // [추가] 로그인 후 메인
 // import MovieSlider from "../components/common/MovieSlider"; // 영화/TV 슬라이더 (임시 숨김)
 
 const Home = () => {
@@ -19,6 +20,11 @@ const Home = () => {
     onFetchPopular();
     // onFetchTv(); // 영화/TV 슬라이더 복구 시 함께 주석 해제
   }, [onFetchPopular]);
+
+  // [추가] 로그인 상태면 로그인 후 메인(MemberHome)을 보여줌
+  // TODO: 아래 false 를 프로젝트의 실제 로그인 상태값으로 교체하세요 (예: useAuthStore)
+  const isLoggedIn = false;
+  if (isLoggedIn) return <MemberHome />;
 
   return (
     <main className="page-fade">
