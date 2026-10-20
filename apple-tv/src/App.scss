@@ -908,7 +908,7 @@ header {
 .movie-detail-page {
   background-color: $gnb-bg;
   color: $light-color-0;
-  min-height: 100%;
+  min-height: 100vh;
   padding-top: calc(#{$header-height} + 24px); // 헤더 아래 24px
   padding-bottom: 80px;
 
@@ -931,7 +931,7 @@ header {
   .content-layout {
     display: flex;
     align-items: flex-start;
-    gap: 32px;
+    gap: 24px;
     width: 100%;
   }
 
@@ -1447,7 +1447,7 @@ header {
       margin: 0;
       padding: 4px 0 16px;
 
-      >li {
+      > li {
         min-width: 0;
       }
     }
@@ -2394,7 +2394,7 @@ body.has-promo-banner .footer {
   }
 }
 
-// 관심있는 구단 (배경이 살짝 다른 띠)
+// 관심있는 구단 (구독 방식, 배경이 살짝 다른 띠)
 .sport-teams {
   background-color: $dark-color-900;
   padding: 48px 0;
@@ -2403,22 +2403,86 @@ body.has-promo-banner .footer {
     @include inner-wrap;
   }
 
+  // 제목 + 구독 수
+  .sport-teams-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
   .sport-teams-title {
     @include heading-h2;
     margin: 0 0 6px;
+    padding-top: 0;
     color: $text-primary;
   }
 
   .sport-teams-desc {
     @include body-small;
-    margin: 0 0 24px;
+    margin: 0;
     color: $neutral-color-400;
   }
 
+  .sport-teams-count {
+    @include body-small;
+    flex-shrink: 0;
+    margin: 0;
+    color: $neutral-color-400;
+
+    strong {
+      font-weight: 600;
+      color: $text-primary;
+    }
+  }
+
+  // 필터 탭 (전체 / 동부 / 서부 / 내 구단)
+  .sport-team-filter {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+
+    button {
+      @include body-small;
+      height: 32px;
+      padding: 0 14px;
+      border: none;
+      border-radius: 9999px;
+      background-color: $dark-color-500;
+      color: $light-color-500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.2s ease, color 0.2s ease;
+
+      .count {
+        margin-left: 4px;
+        color: $neutral-color-400;
+      }
+
+      &:hover {
+        background-color: $dark-color-400;
+      }
+
+      &.active {
+        background-color: $light-color-0;
+        color: $dark-color-900;
+        font-weight: 600;
+
+        .count {
+          color: $neutral-color-600;
+        }
+      }
+    }
+  }
+
+  // 구단 카드 목록
   .sport-team-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -2427,13 +2491,26 @@ body.has-promo-banner .footer {
   .sport-team-card {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 12px 16px;
-    border-radius: 12px;
+    gap: 14px;
+    padding: 12px 14px;
+    border-radius: $radius-card;
+    border: 1px solid transparent;
     background-color: $dark-color-500;
     min-width: 0;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      background-color: $dark-color-400;
+    }
+
+    // 구독한 구단
+    &.on {
+      border-color: rgba($sports-color, 0.6);
+      background-color: rgba($sports-color, 0.08);
+    }
   }
 
+  // 구단 엠블럼 (chip svg)
   .sport-team-logo {
     flex-shrink: 0;
     display: flex;
@@ -2441,48 +2518,81 @@ body.has-promo-banner .footer {
     justify-content: center;
     width: 46px;
     height: 46px;
-    border-radius: 10px;
-    background-color: $dark-color-300;
-    overflow: hidden;
 
     img {
-      width: 32px;
-      height: 32px;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
       display: block;
     }
   }
 
-  .sport-team-name {
-    @include heading-h4;
+  .sport-team-info {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sport-team-name {
+    @include heading-h4;
     color: $text-primary;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
+  .sport-team-meta {
+    @include label-default;
+    color: $neutral-color-400;
+  }
+
+  // 구독 버튼 (+ / ✓)
   .sport-team-add {
+    @include heading-h5;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 32px;
     height: 32px;
-    border: none;
+    border: 1px solid $dark-color-200;
     border-radius: 50%;
     background: transparent;
     color: $text-primary;
-    font-size: 22px;
     line-height: 1;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.12);
+      background-color: rgba($light-color-0, 0.12);
     }
 
     &.on {
       background-color: $sports-color;
-      font-size: 16px;
+      border-color: $sports-color;
+    }
+  }
+
+  // 전체 구단 보기 / 접기
+  .sport-team-more {
+    @include body-small;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    margin: 20px auto 0;
+    padding: 0 24px;
+    border: 1px solid $dark-color-200;
+    border-radius: 9999px;
+    background: transparent;
+    color: $light-color-500;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      color: $text-primary;
+      border-color: $neutral-color-400;
     }
   }
 }

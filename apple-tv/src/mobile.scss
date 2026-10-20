@@ -574,3 +574,60 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     }
   }
 }
+
+// =====================================================================
+// 스포츠 — 관심있는 구단 (구독) 태블릿 / 모바일
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .sport-teams .sport-team-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .sport-teams {
+    padding: 40px 0;
+
+    .sport-teams-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    // 탭은 화면 오른쪽 끝까지 가로 스크롤
+    .sport-team-filter {
+      overflow-x: auto;
+      margin-right: -$mobile-edge;
+      padding-right: $mobile-edge;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      li {
+        flex-shrink: 0;
+      }
+    }
+
+    .sport-team-list {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .sport-team-card {
+      padding: 10px 12px;
+      gap: 12px;
+    }
+
+    .sport-team-logo {
+      width: 40px;
+      height: 40px;
+    }
+
+    .sport-team-more {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
