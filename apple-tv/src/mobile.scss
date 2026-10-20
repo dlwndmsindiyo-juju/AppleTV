@@ -886,3 +886,124 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     }
   }
 }
+
+// =====================================================================
+// Apple TV 에코시스템 비교 페이지 — 태블릿 / 모바일
+// PC 스타일은 App.scss 의 .ecosystem-page
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .ecosystem-page {
+    padding-bottom: 80px;
+
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .ecosystem-title {
+      @include display-l;
+      font-weight: 700;
+    }
+
+    // 3단 → 1단 (카드 세로 나열)
+    .ecosystem-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .ecosystem-row,
+    .ecosystem-row:last-child {
+      min-height: 0;
+    }
+
+    .ecosystem-row dd {
+      max-width: none;
+    }
+
+    .ecosystem-footer {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+      padding: 0;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .ecosystem-page {
+    padding-top: calc(#{$header-height} + 24px);
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .ecosystem-head {
+      margin: 32px 0 40px;
+    }
+
+    .ecosystem-title {
+      @include display-M;
+      font-weight: 700;
+    }
+
+    .ecosystem-lead,
+    .ecosystem-desc {
+      @include body-small;
+    }
+
+    .ecosystem-card {
+      padding: 16px 16px 20px;
+      border-radius: $radius-card;
+    }
+
+    .ecosystem-card-name {
+      @include display-M;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .ecosystem-card-category {
+      margin-bottom: 12px;
+    }
+
+    .ecosystem-card-desc {
+      @include body-default;
+    }
+
+    .ecosystem-card-image {
+      height: 160px;
+      margin: 20px 0;
+    }
+
+    .ecosystem-rows {
+      gap: 10px;
+    }
+
+    .ecosystem-row {
+      padding: 14px 12px;
+
+      dt,
+      dd {
+        @include body-small;
+      }
+
+      dt {
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+    }
+
+    .ecosystem-footer-title {
+      @include heading-h4;
+      margin-bottom: 12px;
+    }
+
+    .ecosystem-devices li {
+      @include body-default;
+
+      & + li::before {
+        margin: 0 6px;
+      }
+    }
+  }
+}

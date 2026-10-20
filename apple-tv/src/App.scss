@@ -1981,6 +1981,252 @@ header {
   }
 }
 
+// ===== Apple TV 에코시스템 비교 페이지 (/ecosystem) =====
+.ecosystem-page {
+  min-height: 100vh;
+  padding: calc(#{$header-height} + 40px) 0 120px;
+  background-color: $gnb-bg;
+  color: $text-primary; 
+
+  .inner {
+    @include inner-wrap;
+    max-width: calc(1440px + #{$header-pad-x} * 2); // 콘텐츠 폭 최대 1440
+  }
+
+  // ‹ 홈으로 돌아가기
+  .ecosystem-back {
+    @include label-default;
+    display: inline-block;
+    color: $accent-color;
+    text-decoration: none;
+
+    &:hover {
+      font-weight: 600;
+    }
+  }
+
+  // ---------- 상단 타이틀 ----------
+  .ecosystem-head {
+    margin: 48px 0 56px;
+    text-align: center;
+  }
+
+  .ecosystem-eyebrow {
+    @include label-default;
+    margin: 0 0 12px;
+    color: $neutral-color-400;
+    letter-spacing: 0.04em;
+  }
+
+  .ecosystem-title {
+    @include heading-h1;
+    font-weight: 700;
+    margin: 0 0 16px;
+    padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
+    color: $text-primary;
+  }
+
+  .ecosystem-lead {
+    @include body-large;
+    margin: 0 0 16px;
+    color: $light-color-500;
+  }
+
+  .ecosystem-desc {
+    @include body-large;
+    margin: 0;
+    color: $neutral-color-400;
+    word-break: keep-all;
+  }
+
+  // ---------- 3단 비교 카드 ----------
+  .ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .ecosystem-card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 24px;
+    border-radius: 20px;
+    background-color: $dark-color-800;
+    min-width: 0;
+  }
+
+  .ecosystem-card-name {
+    @include display-l;
+    font-weight: 600;
+    margin: 0 0 16px;
+    color: $text-primary;
+  }
+
+  .ecosystem-card-category {
+    @include body-small;
+    font-weight: 600;
+    margin: 0 0 20px;
+    color: $neutral-color-400;
+  }
+
+  .ecosystem-card-desc {
+    @include body-large;
+    margin: 0;
+    color: $light-color-300;
+    word-break: keep-all;
+  }
+
+  // 기기 이미지 (시안의 선 아이콘 자리)
+  .ecosystem-card-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    margin: 24px 0;
+
+    img {
+      max-width: 72%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+  }
+
+  // 항목 6개 (카드끼리 높이 맞춤)
+  .ecosystem-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 0 16px;
+  }
+
+  .ecosystem-row {
+    min-height: 110px;
+    padding: 18px 12px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: $dark-color-500;
+
+    dt {
+      @include body-default;
+      font-weight: 700;
+      margin: 0 0 10px;
+      color: $text-primary;
+    }
+
+    dd {
+      @include body-default;
+      margin: 0;
+      max-width: 320px;
+      color: $light-color-500;
+      word-break: keep-all;
+    }
+
+    // 마지막 항목(이용 범위 / 제한)은 문장이 길어 조금 더 높게
+    &:last-child {
+      min-height: 140px;
+    }
+  }
+
+  // 공식 링크 버튼
+  .ecosystem-btn {
+    @include body-default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    margin-top: auto;
+    border: none;
+    border-radius: 6px;
+    background-color: $accent-color;
+    color: $text-primary;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: darken($accent-color, 6%);
+    }
+
+    // 링크 연결 전
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  .ecosystem-card-note {
+    @include label-default;
+    margin: 18px 0 0;
+    color: $neutral-color-400;
+  }
+
+  // ---------- 하단: 하나의 Apple 계정 ----------
+  .ecosystem-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    margin-top: 56px;
+    padding: 0 20px;
+  }
+
+  .ecosystem-footer-title {
+    @include heading-h2;
+    margin: 0 0 24px;
+    color: $text-primary;
+  }
+
+  .ecosystem-footer-note {
+    @include label-default;
+    margin: 0;
+    color: $neutral-color-400;
+  }
+
+  .ecosystem-devices {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style: none;
+    margin: 12px 0 20px;
+    padding: 0;
+
+    li {
+      @include body-large;
+      color: $light-color-300;
+
+      // 기기 사이 · 구분점
+      & + li::before {
+        content: "·";
+        margin: 0 10px;
+        color: $neutral-color-400;
+      }
+    }
+  }
+
+  .ecosystem-link {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: $accent-color;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      font-weight: 600;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}
+
 // ===== 구독 전 프로모션 배너 (하단 플로팅) =====
 .promo-banner {
   position: fixed;
