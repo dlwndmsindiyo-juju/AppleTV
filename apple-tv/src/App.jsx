@@ -7,9 +7,11 @@ import Footer from "./components/layout/Footer";
 import Intro from "./components/common/Intro";
 import Home from "./pages/Home";
 import SportHome from "./pages/SportHome";
-import Detail from "./pages/Detail";
+import { MovieDetail } from "./pages/MovieDetail";
 import Login from "./pages/Login";
 import { useAuthStore } from "./store/useAuthStore";
+import SportTeamsPage from "./pages/SportTeamsPage";
+import PromoBanner from "./components/landing/PromoBanner";
 
 function App() {
   const [showIntro, setShowIntro] = useState(() => {
@@ -38,7 +40,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/sport" element={<SportHome />} />
-              <Route path="/detail/:id" element={<Detail />} />
+              <Route path="/detail/:id" element={<MovieDetail />} />
+              <Route path="/sport/teams" element={<SportTeamsPage />} />
               <Route
                 path="/login"
                 element={user ? <Navigate to="/" replace /> : <Login />}
@@ -49,6 +52,9 @@ function App() {
 
           {/* 3. 푸터 */}
           <Footer />
+
+          {/* 프로모션 배너 */}
+          <PromoBanner />
         </>
       )}
     </>

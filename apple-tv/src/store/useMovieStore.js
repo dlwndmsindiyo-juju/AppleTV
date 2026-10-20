@@ -84,6 +84,26 @@ export const useMovieStore = create((set, get) => ({
     }));
   },
 
+  // 영화 상세 (장르·러닝타임 + 출연진 + 비슷한 영화 + 타이틀 로고) 를 저장할 오브젝트
+  movieDetails: {},
+  onFetchMovieDetail: async (id) => {
+    const { movieDetails } = get();
+    if (movieDetails[id]) return;
+
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_KEY}&language=ko-KR&append_to_response=credits,similar,images&include_image_language=ko,en,null`,
+      );
+      if (!res.ok) throw new Error("영화 상세 정보를 불러오지 못했습니다.");
+      const data = await res.json();
+      set((state) => ({
+        movieDetails: { ...state.movieDetails, [id]: data },
+      }));
+    } catch (error) {
+      console.error("영화 상세 조회 실패:", error);
+    }
+  },
+
   // -----------티비시리즈(인기)------------
   // 인기 티비프로그램을 저장할 배열
   tvs: [],
@@ -229,4 +249,106 @@ export const useMovieStore = create((set, get) => ({
         }));
     },
   
+  // =====================================================================
+  // [추가] 로그인 후 메인 페이지용 (기존 코드는 수정하지 않음)
+  // =====================================================================
+
+  // 추천작 (이번 주 인기 TV)
+  recommended: [],
+  onFetchRecommended: async () => {
+    const { recommended } = get();
+    if (recommended.length > 0) return;
+
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/trending/tv/week?api_key=${TMDB_KEY}&language=ko-KR`,
+      );
+      if (!res.ok) throw new Error("추천작을 불러오지 못했습니다.");
+      const data = await res.json();
+      set({ recommended: data.results || [] });
+    } catch (error) {
+      console.error("추천작 조회 실패:", error);
+    }
+  },
+
+  // 기분별 추천 { [기분]: 작품배열 }
+  moodList: {},
+  onFetchMood: async (mood) => {
+    const { moodList } = get();
+    if (moodList[mood]) return;
+
+    const genres = MOOD_GENRES[mood];
+    if (!genres) return;
+
+    try {
+      const base = `https://api.themoviedb.org/3/discover/tv?api_key=${TMDB_KEY}&language=ko-KR&with_genres=${genres}&sort_by=popularity.desc&page=1`;
+
+      // 1. Apple TV+ 작품 우선
+      let res = await fetch(`${base}&with_networks=2552`);
+      let data = await res.json();
+      let list = data.results || [];
+
+      // 2. 작품이 부족하면 전체 TV 에서 보충
+      if (list.length < 5) {
+        res = await fetch(base);
+        data = await res.json();
+        list = data.results || [];
+      }
+
+      set((state) => ({
+        moodList: { ...state.moodList, [mood]: list.slice(0, 10) },
+      }));
+    } catch (error) {
+      console.error("기분별 추천 조회 실패:", error);
+    }
+  },
+
+  // 내가 찜한 콘텐츠 (localStorage 에 유지)
+  wishlist: loadLocal("wishlist"),
+  onToggleWishlist: (item) => {
+    const { wishlist } = get();
+    const exists = wishlist.some((w) => w.id === item.id && w.type === item.type);
+    const next = exists
+      ? wishlist.filter((w) => !(w.id === item.id && w.type === item.type))
+      : [...wishlist, item];
+    saveLocal("wishlist", next);
+    set({ wishlist: next });
+  },
+
+  // 공개 알림 설정 (키: "tv_123" / "movie_456")
+  alarms: loadLocal("alarms"),
+  onToggleAlarm: (key) => {
+    const { alarms } = get();
+    const next = alarms.includes(key)
+      ? alarms.filter((k) => k !== key)
+      : [...alarms, key];
+    saveLocal("alarms", next);
+    set({ alarms: next });
+  },
 }));
+
+
+// [추가] 로그인 후 메인 페이지용 헬퍼 (function 은 호이스팅되어 위쪽 store 에서 사용 가능)
+function loadLocal(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) || [];
+  } catch {
+    return [];
+  }
+}
+function saveLocal(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // 저장 실패는 무시 (사생활 보호 모드 등)
+  }
+}
+
+// 기분 → TMDB TV 장르 id ("|" 는 OR, URL 인코딩 %7C)
+const MOOD_GENRES = {
+  심심한: "10765%7C10759",
+  힘든: "35%7C10751",
+  슬픈: "18",
+  즐거움: "35",
+  화남: "10759%7C80",
+};
