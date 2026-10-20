@@ -84,6 +84,26 @@ export const useMovieStore = create((set, get) => ({
     }));
   },
 
+  // 영화 상세 (장르·러닝타임 + 출연진 + 비슷한 영화 + 타이틀 로고) 를 저장할 오브젝트
+  movieDetails: {},
+  onFetchMovieDetail: async (id) => {
+    const { movieDetails } = get();
+    if (movieDetails[id]) return;
+
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_KEY}&language=ko-KR&append_to_response=credits,similar,images&include_image_language=ko,en,null`,
+      );
+      if (!res.ok) throw new Error("영화 상세 정보를 불러오지 못했습니다.");
+      const data = await res.json();
+      set((state) => ({
+        movieDetails: { ...state.movieDetails, [id]: data },
+      }));
+    } catch (error) {
+      console.error("영화 상세 조회 실패:", error);
+    }
+  },
+
   // -----------티비시리즈(인기)------------
   // 인기 티비프로그램을 저장할 배열
   tvs: [],

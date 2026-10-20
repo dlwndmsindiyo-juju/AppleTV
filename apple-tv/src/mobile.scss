@@ -432,3 +432,145 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     }
   }
 }
+
+// =====================================================================
+// 영화 상세페이지 (MovieDetail) — 태블릿 / 모바일
+// PC 스타일은 App.scss 의 .movie-detail-page
+// =====================================================================
+
+// ---------- 태블릿 (1024px 이하): 좌우 2단 → 위아래로 쌓기 ----------
+@media (max-width: $breakpoint-tablet) {
+  .movie-detail-page {
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .content-layout {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 32px;
+    }
+
+    .left-section,
+    .right-section {
+      width: 100%;
+      flex: none;
+    }
+
+    .player-box .title {
+      @include display-M;
+      font-weight: 700;
+    }
+
+    // 오른쪽 패널: 고정(sticky) 해제, 높이 고정
+    .right-section {
+      position: static;
+      height: 640px;
+      min-height: 0;
+      max-height: none;
+    }
+  }
+}
+
+// ---------- 모바일 (767px 이하) ----------
+@media (max-width: $breakpoint-mobile) {
+  .movie-detail-page {
+    padding-top: calc(#{$header-height} + 16px);
+    padding-bottom: 56px;
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .content-layout {
+      gap: 24px;
+    }
+
+    // 정보 바: 글 → 버튼 순으로 세로 배치
+    .player-box {
+      .player-info {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 16px;
+      }
+
+      .title-logo {
+        max-width: 160px;
+        max-height: 44px;
+      }
+
+      .title {
+        @include heading-h2;
+        font-weight: 700;
+      }
+
+      .original-title {
+        @include body-small;
+      }
+
+      .overview {
+        -webkit-line-clamp: 4;
+      }
+
+      // 재생하기(가득) + 찜/공유 아이콘 한 줄
+      .info-actions {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .btn-play {
+        width: auto;
+        flex: 1;
+      }
+    }
+
+    // 작품 평점
+    .rating-section {
+      padding: 0;
+
+      .rating-header h3 {
+        @include heading-h4;
+      }
+
+      .rating-desc {
+        @include body-small;
+      }
+
+      .star-picker {
+        gap: 4px;
+      }
+    }
+
+    // 탭 패널
+    .right-section {
+      height: 560px;
+      padding: 16px;
+
+      .tabs .tab-btn {
+        @include body-default;
+      }
+
+      .filter-bar {
+        gap: 8px;
+      }
+
+      .season-label {
+        @include body-small;
+      }
+
+      .episode-card .thumb {
+        width: 128px;
+      }
+
+      .cast-photo {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+}
