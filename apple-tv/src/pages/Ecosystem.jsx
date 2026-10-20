@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { loadLastTab } from "../components/layout/Header";
 import {
   ECOSYSTEM_LINKS,
   ECOSYSTEM_ROWS,
@@ -7,7 +8,7 @@ import {
   ECOSYSTEM_DEVICES,
 } from "../data/ecosystemData";
 
-// 공식 링크 버튼 (링크가 비어 있으면 비활성화 버튼)
+// 공식 링크 버튼 (링크가 비어 있으면 비활성 버튼)
 const ExternalButton = ({ href, className, children }) =>
   href ? (
     <a className={className} href={href} target="_blank" rel="noopener noreferrer">
@@ -21,6 +22,9 @@ const ExternalButton = ({ href, className, children }) =>
 
 // Apple TV 에코시스템 비교 페이지 (기기 안내 > 세 가지 차이 보기)
 const Ecosystem = () => {
+  // 들어오기 전 토글(Apple TV / Sport) 기준으로 돌아갈 홈 결정
+  const homePath = loadLastTab() === "sport" ? "/sport" : "/";
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -28,7 +32,7 @@ const Ecosystem = () => {
   return (
     <main className="ecosystem-page page-fade">
       <div className="inner">
-        <Link to="/" className="ecosystem-back">
+        <Link to={homePath} className="ecosystem-back">
           ‹ 홈으로 돌아가기
         </Link>
 

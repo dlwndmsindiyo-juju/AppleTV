@@ -2,23 +2,52 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 
+// TV · 스포츠 양쪽에서 함께 쓰는 페이지 (들어가도 토글이 바뀌지 않음)
+const SHARED_PATHS = ["/ecosystem", "/login"];
+
+const TAB_KEY = "headerTab";
+export const loadLastTab = () => {
+  try {
+    return sessionStorage.getItem(TAB_KEY) === "sport" ? "sport" : "apple-tv";
+  } catch {
+    return "apple-tv";
+  }
+};
+const saveLastTab = (tab) => {
+  try {
+    sessionStorage.setItem(TAB_KEY, tab);
+  } catch {
+    // 저장 실패는 무시
+  }
+};
+
+// 경로 → 토글 (공용 페이지는 null = 유지)
+const getTabForPath = (pathname) => {
+  if (SHARED_PATHS.some((p) => pathname.startsWith(p))) return null;
+  return pathname.startsWith("/sport") ? "sport" : "apple-tv";
+};
+
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation(); // 현재 경로를 파악하기 위해 추가
 
-  // 현재 URL이 '/sport'로 시작하면 'sport', 아니면 'apple-tv'로 초기값 설정
-  const [activeTab, setActiveTab] = useState(
-    location.pathname.startsWith("/sport") ? "sport" : "apple-tv",
+  // 토글 상태 결정
+  // - /sport… → sport, 그 외 TV 페이지 → apple-tv
+  // - 공용 페이지(SHARED_PATHS) → 바로 전 토글 상태를 그대로 유지
+  const [activeTab, setActiveTab] = useState(() =>
+    getTabForPath(location.pathname) ?? loadLastTab(),
   );
 
   // 페이지가 이동(URL 변경)되었을 때 토글 버튼 상태를 동기화
   useEffect(() => {
-    if (location.pathname.startsWith("/sport")) {
-      setActiveTab("sport");
-    } else {
-      setActiveTab("apple-tv");
-    }
+    const tab = getTabForPath(location.pathname);
+    if (tab) setActiveTab(tab); // 공용 페이지면 그대로 유지
   }, [location.pathname]);
+
+  // 마지막 토글 상태 저장 (공용 페이지에서 새로고침해도 유지)
+  useEffect(() => {
+    saveLastTab(activeTab);
+  }, [activeTab]);
 
   // 슬라이딩 인디케이터 위치 계산용
   const toggleRefs = useRef({});
@@ -107,4 +136,4 @@ const Header = () => {
   );
 };
 
-export default Header;        
+export default Header;

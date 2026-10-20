@@ -8,7 +8,8 @@ const deviceItems = [
   { name: "Apple TV 4K", desc: "TV에 연결하는 스트리밍 기기" },
 ];
 
-// 세 가지 차이 보기 → 에코시스템 비교 페이지 (App.jsx 라우트와 맞춰 주세요)
+// 세 가지 차이 보기 → 에코시스템 비교 페이지
+// (TV · 스포츠 공용 페이지: 헤더 토글은 들어오기 전 상태 그대로 유지)
 const deviceLink = { label: "세 가지 차이 보기", path: "/ecosystem" };
 
 const DeviceGuide = () => {
