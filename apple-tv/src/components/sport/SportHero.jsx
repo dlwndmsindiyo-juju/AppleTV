@@ -1,26 +1,29 @@
-import React from "react";
 import { useSportStore } from "../../store/useSportStore";
 import { useAuthStore } from "../../store/useAuthStore";
-import { isLive, formatKickoff, getScore } from "./sportUtils";
+import { isLive, getScore } from "./sportUtils";
 
 // 로그인 전 히어로에 보여줄 메인 이미지 (public/images/sport/main-1.jpg)
-const SPORT_MAIN_IMAGE = "/images/sport/main-1.jpg";
+const SPORT_MAIN_IMAGE = "/images/sport-subscribe-cta.webp";
 
 // 스포츠 히어로
 // - 로그인 전: 메인 이미지 1장만 노출
 // - 로그인 후: 라이브 영상 썸네일 배경 + 하단 좌측 경기 카드
 const SportHero = () => {
   const user = useAuthStore((state) => state.user);
-  const { upcomingMatches, liveVideos } = useSportStore();
+  const { liveMatches, liveVideos } = useSportStore();
 
   // 진행 중인 경기가 있으면 우선, 없으면 가장 가까운 예정 경기
   const match =
-    (upcomingMatches || []).find(isLive) || (upcomingMatches || [])[0];
-  const live = match ? isLive(match) : false;
+    (liveMatches || []).find(isLive);
+  const live = Boolean(match);
   const score = match ? getScore(match) : null;
 
   // 라이브 영상 (있으면 배경 썸네일 + 시청 링크)
-  const video = (liveVideos || [])[0];
+  const video = match && (liveVideos || []).find((item) => {
+    const title = item.snippet?.title?.toLowerCase() || "";
+    return item.snippet?.liveBroadcastContent === "live" && item.id?.videoId &&
+      [match.homeTeam?.name, match.awayTeam?.name].some((name) => name && title.includes(name.toLowerCase()));
+  });
   const thumb =
     video?.snippet?.thumbnails?.high?.url ||
     video?.snippet?.thumbnails?.medium?.url;
@@ -39,6 +42,9 @@ const SportHero = () => {
       />
       <div className="sport-hero-overlay" />
 
+      {user && !match && (
+        <div className="sport-hero-card"><p className="sport-empty" role="status">진행 중인 라이브가 없습니다</p></div>
+      )}
       {/* 경기 카드는 로그인 후에만 */}
       {user && match && (
         <div className="sport-hero-card">
@@ -68,7 +74,7 @@ const SportHero = () => {
           </h2>
 
           <p className="sport-hero-sub">
-            {live ? "진행 중" : `${formatKickoff(match.utcDate)} 킥오프`}
+            {match.status === "PAUSED" ? "하프타임" : match.minute ? `${match.minute > 45 ? "후반" : "전반"} ${match.minute}분 · 진행 중` : "진행 중"}
           </p>
 
           <div className="sport-hero-actions">
@@ -84,7 +90,7 @@ const SportHero = () => {
             ) : (
               <span className="sport-btn primary disabled">▶ 경기 시청</span>
             )}
-            <a className="sport-btn secondary" href="#sport-upcoming">
+            <a className="sport-btn secondary" href="#sport-live">
               경기 정보
             </a>
           </div>

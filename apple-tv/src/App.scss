@@ -3489,3 +3489,67 @@ main {
     padding: 32px;
   }
 }
+// 로그인 후 스포츠 홈: 섹션 사이 여백과 콘텐츠 폭을 한 곳에서 관리합니다.
+.sport-home-member {
+  display: flex;
+  flex-direction: column;
+  gap: 128px;
+  padding-bottom: 128px;
+  background: #161615;
+
+  > section {
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+
+  > section:not(.sport-hero):not(.sport-teams):not(.sport-league) > .inner {
+    @include inner-wrap;
+    max-width: $container-width;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .sport-hero {
+    height: min(720px, 80vw);
+    min-height: 480px;
+
+    .sport-hero-overlay { background: linear-gradient(0deg, rgba(0, 0, 0, .25), transparent 65%); }
+    .sport-hero-card { left: 3%; bottom: 42px; max-width: 566px; padding: 26px; background: #20201f; }
+    .sport-hero-title { font-size: clamp(22px, 2.1vw, 32px); }
+    .sport-live-dot { background: white; }
+    .sport-hero-actions { gap: 20px; margin-top: 26px; }
+    .sport-btn { min-height: 50px; padding: 0 32px; }
+    .sport-btn.primary { background: #ed1418; color: white; }
+    .sport-btn.secondary { background: #f1f1f1; color: #20201f; }
+    .sport-empty { margin: 0; color: white; }
+  }
+
+  .sport-teams, .sport-league { padding: 56px 0; }
+  .sport-live-slide, .sport-series-slide { width: 312px; max-width: 85%; }
+  .sport-live-card {
+    display: block;
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #292929;
+    color: white;
+    img { width: 100%; height: 100%; object-fit: cover; }
+    &::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent, rgba(0, 0, 0, .55)); pointer-events: none; }
+  }
+  .sport-live-badge, .sport-live-watch { position: absolute; z-index: 1; left: 14px; font-size: 12px; padding: 5px 12px; }
+  .sport-live-badge { top: 14px; background: #ed1418; border-radius: 30px; }
+  .sport-live-watch { bottom: 14px; background: rgba(255, 255, 255, .25); border-radius: 3px; }
+  .sport-series-card {
+    display: block;
+    color: white;
+    text-decoration: none;
+    img, .sport-series-placeholder { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; background: #292929; }
+    h4 { margin: 12px 0 0; }
+  }
+  @media (max-width: 768px) {
+    > section:not(.sport-hero):not(.sport-teams):not(.sport-league) > .inner { padding-left: 20px; padding-right: 20px; }
+    .sport-hero .sport-hero-card { left: 20px; right: 20px; bottom: 24px; width: auto; padding: 20px; }
+  }
+}
