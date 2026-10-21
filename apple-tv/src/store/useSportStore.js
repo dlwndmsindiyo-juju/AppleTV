@@ -4,6 +4,9 @@ import { isLiveFootballVideo } from "../components/sport/liveFootball";
 // Football data 키 변수로 저장
 const FOOTBALL_KEY = import.meta.env.VITE_FOOTBALL_API_KEY;
 
+// 스포츠db api 키 환경변수
+const SPORTSDB_KEY = import.meta.env.VITE_SPORTS_API_KEY;
+
 // 유튜브 API 키 환경변수
 const YOUTUBE_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
