@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSportStore } from "../../store/useSportStore";
 import { getScore, decodeHtml } from "./sportUtils";
 
@@ -39,6 +40,8 @@ const SportReplay = ({ title = "경기 다시보기" }) => {
         const date = new Date(match.utcDate);
         return {
           key: match.id,
+          // 같은 경기 영상이 있으면 상세(/sport/replay)로, 없으면 YouTube 검색
+          detailId: video?.id?.videoId,
           home, away,
           homeCrest: match.homeTeam?.crest,
           awayCrest: match.awayTeam?.crest,
@@ -56,6 +59,7 @@ const SportReplay = ({ title = "경기 다시보기" }) => {
         const hasScore = ev.homeScore !== null && ev.homeScore !== undefined && ev.awayScore !== null && ev.awayScore !== undefined;
         return {
           key: video.id.videoId,
+          detailId: video.id.videoId,
           home: ev.home,
           away: ev.away,
           title: decodeHtml(video.snippet?.title),
@@ -73,18 +77,18 @@ const SportReplay = ({ title = "경기 다시보기" }) => {
       <div className="inner">
         <div className="sport-section-head">
           <h3 className="sport-section-title">{title}</h3>
-          <a className="sport-more" href="#">
+          <Link className="sport-more" to="/sport/replay">
             전체 보기 <span aria-hidden="true">→</span>
-          </a>
+          </Link>
         </div>
 
         {cards.length === 0 ? (
           <p className="sport-empty">다시볼 경기가 없습니다.</p>
         ) : (
           <ul className="sport-replay-list">
-            {cards.map((card) => (
-              <li key={card.key}>
-                <a className="sport-replay-card" href={card.href} target="_blank" rel="noreferrer">
+            {cards.map((card) => {
+              const body = (
+                <>
                   <div
                     className="sport-replay-thumb"
                     style={card.thumb ? { backgroundImage: `url(${card.thumb})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
@@ -99,9 +103,18 @@ const SportReplay = ({ title = "경기 다시보기" }) => {
                     {card.home && card.away ? `${card.home} vs ${card.away}` : card.title}
                   </span>
                   <span className="sport-replay-date">{card.date}</span>
-                </a>
-              </li>
-            ))}
+                </>
+              );
+              return (
+                <li key={card.key}>
+                  {card.detailId ? (
+                    <Link className="sport-replay-card" to={`/sport/replay?id=${card.detailId}`}>{body}</Link>
+                  ) : (
+                    <a className="sport-replay-card" href={card.href} target="_blank" rel="noreferrer">{body}</a>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>

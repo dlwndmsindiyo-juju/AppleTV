@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSportStore } from "../../store/useSportStore";
 import { decodeHtml } from "./sportUtils";
 
@@ -29,9 +30,9 @@ const SportHighlights = ({ title = "하이라이트" }) => {
       <div className="inner">
         <div className="sport-section-head">
           <h3 className="sport-section-title">{title}</h3>
-          <a className="sport-more" href="#">
+          <Link className="sport-more" to="/sport/highlights">
             전체 보기 <span aria-hidden="true">→</span>
-          </a>
+          </Link>
         </div>
 
         {items.length === 0 ? (
@@ -44,11 +45,9 @@ const SportHighlights = ({ title = "하이라이트" }) => {
 
               return (
                 <li key={key}>
-                  <a
+                  <Link
                     className="sport-highlight-card"
-                    href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-                    target="_blank"
-                    rel="noreferrer"
+                    to={`/sport/highlights?id=${video.id.videoId}`}
                   >
                     <div className="sport-highlight-thumb">
                       {thumb && <img src={thumb} alt="" />}
@@ -58,7 +57,7 @@ const SportHighlights = ({ title = "하이라이트" }) => {
                     </div>
                     <h4 className="sport-highlight-title">{label}</h4>
                     <span className="sport-highlight-meta">{decodeHtml(sn.title)}</span>
-                  </a>
+                  </Link>
                 </li>
               );
             })}

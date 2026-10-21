@@ -3763,13 +3763,12 @@ main {
 main.sport-home {
   display: flex;
   flex-direction: column;
-  gap: 128px;
-  padding-bottom: 128px;
+  // 섹션 사이 간격은 sport-member.scss 의 "섹션 간격" 규칙(margin-top)으로 관리
+  gap: 0;
   background: #161615;
 
   // 관심있는 구단(.sport-teams)은 그라데이션 띠 안쪽 여백이 필요해서 패딩 초기화에서 제외
   > section:not(.subscribe-cta):not(.device-guide):not(.sport-teams) {
-    margin: 0;
     padding: 0;
     min-width: 0;
   }
@@ -3781,7 +3780,7 @@ main.sport-home {
     padding-right: 16px;
   }
 
-  .sport-teams, .sport-league { padding: 56px 0; }
+  .sport-teams { padding: 56px 0; }
   .sport-live-slide, .sport-series-slide { width: 312px; max-width: 85%; }
   .sport-live-card {
     display: block;

@@ -7,6 +7,8 @@ import Footer from "./components/layout/Footer";
 import Intro from "./components/common/Intro";
 import Home from "./pages/Home";
 import SportHome from "./pages/SportHome";
+import SportStandingsPage from "./components/sport/SportStandingsPage";
+import SportDetail from "./components/sport/SportDetail";
 import { MovieDetail } from "./pages/MovieDetail";
 import Login from "./pages/Login";
 import { useAuthStore } from "./store/useAuthStore";
@@ -43,6 +45,8 @@ function App() {
               <Route path="/sport" element={<SportHome />} />
               <Route path="/detail/:id" element={<MovieDetail />} />
               <Route path="/sport/teams" element={<SportTeamsPage />} />
+              <Route path="/sport/standings" element={<SportStandingsPage />} />
+              <Route path="/sport/:type" element={<SportDetail />} />
               <Route path="/ecosystem" element={<Ecosystem />} />
               <Route
                 path="/login"
