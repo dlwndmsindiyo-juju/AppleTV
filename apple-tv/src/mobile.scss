@@ -53,7 +53,9 @@ $mobile-edge: 20px; // 모바일 좌우 여백
  
   // ---------- 히어로 ----------
   .hero-swiper-container {
-    height: 480px;
+    // 화면이 줄어도 히어로는 화면 높이 그대로
+    height: 100vh;
+    height: 100svh;
  
     .hero-slide-item .hero-info {
       left: $mobile-edge;
@@ -79,7 +81,6 @@ $mobile-edge: 20px; // 모바일 좌우 여백
   .upcoming-section .inner,
   .apple-originals .inner,
   .subscribe-cta .inner,
-  .device-guide .inner,
   .movie-slider-section .inner {
     padding-left: $mobile-edge;
     padding-right: $mobile-edge;
@@ -188,72 +189,9 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       );
     }
   }
- 
-  // ---------- 기기 안내 ----------
-  .device-guide {
-    padding: 40px 0;
- 
-    .device-guide-title {
-      font-size: 22px;
-      line-height: 28px;
-    }
-  }
- 
- 
-  // ---------- 스포츠 ----------
-  .sport-hero {
-    .sport-hero-card {
-      left: $mobile-edge;
-      right: $mobile-edge;
-      bottom: 32px;
-      width: auto;
-      max-width: none;
-      padding: 20px;
-    }
- 
-    .sport-hero-title {
-      font-size: 20px;
-    }
-  }
- 
-  .sport-upcoming .inner,
-  .sport-shorts .inner,
-  .sport-promo .inner,
-  .sport-teams .inner,
-  .sport-league .inner,
-  .sport-replay .inner,
-  .sport-highlights .inner,
-  .sport-notify .inner {
-    padding-left: $mobile-edge;
-    padding-right: $mobile-edge;
-  }
- 
-  .sport-upcoming .sport-match-list,
-  .sport-teams .sport-team-list,
-  .sport-league .sport-league-list,
-  .sport-highlights .sport-highlight-list {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
- 
-  .sport-replay .sport-replay-list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
- 
-  .sport-shorts .sport-short-slide {
-    width: 160px;
-  }
- 
-  .sport-notify .sport-notify-banner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 24px;
-  }
- 
-  .sport-notify .sport-notify-btn {
-    width: 100%;
-  }
+
+  // 스포츠 홈 반응형은 sport-member.scss 에서 관리
+
 }
 
 // =====================================================================
@@ -820,6 +758,200 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .promo-banner-note {
       @include caption-default;
+    }
+  }
+}
+
+// =====================================================================
+// 기기 안내 (DeviceGuide) — 태블릿 / 모바일
+// PC 스타일은 App.scss 의 .device-guide
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .device-guide {
+    padding: 56px 0;
+
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    // 좌우 2단 → 위아래로 쌓기
+    .device-guide-card {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+      padding: 0;
+    }
+
+    .device-guide-title {
+      @include display-M;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .device-guide-list {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .device-guide {
+    padding: 40px 0;
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .device-guide-card {
+      gap: 24px;
+      padding: 0;
+    }
+
+    .device-guide-title {
+      @include heading-h2;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .device-guide-sub {
+      @include body-small;
+    }
+
+    .device-guide-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+
+      li {
+        @include body-default;
+      }
+    }
+
+    .device-guide-link {
+      @include body-small;
+    }
+  }
+}
+
+// =====================================================================
+// Apple TV 에코시스템 비교 페이지 — 태블릿 / 모바일
+// PC 스타일은 App.scss 의 .ecosystem-page
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .ecosystem-page {
+    padding: calc(#{$header-height} + 56px) 0 80px;
+
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .ecosystem-title {
+      @include display-l;
+      font-weight: 700;
+    }
+
+    // 3단 → 1단 (카드 세로 나열)
+    .ecosystem-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .ecosystem-row,
+    .ecosystem-row:last-child {
+      min-height: 0;
+    }
+
+    .ecosystem-row dd {
+      max-width: none;
+    }
+
+    .ecosystem-footer {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+      padding: 0;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .ecosystem-page {
+    padding: calc(#{$header-height} + 40px) 0 64px;
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .ecosystem-head {
+      margin: 32px 0 40px;
+    }
+
+    .ecosystem-title {
+      @include display-M;
+      font-weight: 700;
+    }
+
+    .ecosystem-lead,
+    .ecosystem-desc {
+      @include body-small;
+    }
+
+    .ecosystem-card {
+      padding: 16px 16px 20px;
+      border-radius: $radius-card;
+    }
+
+    .ecosystem-card-name {
+      @include display-M;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .ecosystem-card-category {
+      margin-bottom: 12px;
+    }
+
+    .ecosystem-card-desc {
+      @include body-default;
+    }
+
+    .ecosystem-card-image {
+      height: 160px;
+      margin: 20px 0;
+    }
+
+    .ecosystem-rows {
+      gap: 10px;
+    }
+
+    .ecosystem-row {
+      padding: 14px 12px;
+
+      dt,
+      dd {
+        @include body-small;
+      }
+
+      dt {
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+    }
+
+    .ecosystem-footer-title {
+      @include heading-h4;
+      margin-bottom: 12px;
+    }
+
+    .ecosystem-devices li {
+      @include body-default;
+
+      & + li::before {
+        margin: 0 6px;
+      }
     }
   }
 }

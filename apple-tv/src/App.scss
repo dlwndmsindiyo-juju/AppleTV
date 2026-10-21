@@ -438,12 +438,92 @@ header {
     }
   }
 }
+// ===== 3단계: 인증 완료 (시안 맞춤) =====
+.login-page {
+  .login-card.login-card--confirm {
+    max-width: 800px;
+    min-height: 560px;
+    padding: 80px 56px 40px;
+    background-color: #f5f5f7;
+    border-radius: 12px;
+    box-shadow: none;
 
+    // 닫기 버튼: 흰 원형 42px
+    .login-card-close {
+      top: 26px;
+      left: 26px;
+      width: 42px;
+      height: 42px;
+      background-color: #fff;
+      color: #000;
+
+      svg { width: 20px; height: 20px; }
+      &:hover { background-color: #ececf0; }
+    }
+
+    // 로고 플레이스홀더 50px
+    .login-logo-area {
+      margin-bottom: 0;
+      .login-app-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background-color: #d9d9d9;
+      }
+    }
+
+    // 로고 ↔ 타이틀 사이 큰 여백
+    .login-title {
+      margin: 84px 0 12px;
+      font-size: 34px;
+      line-height: 41px;
+      font-weight: 500;
+      color: #111;
+    }
+
+    // 연한 회색 설명
+    .login-desc {
+      margin: 0 0 84px;
+      font-size: 22px;
+      line-height: 29px;
+      color: #a1a1a6;
+    }
+
+    .login-form {
+      max-width: 428px;
+      gap: 0;
+
+      .login-btn {
+        height: 48px;
+        margin-top: 0;
+        border-radius: 6px;
+        background-color: #007aff;
+        font-size: 17px;
+        font-weight: 700;
+
+        &:hover { background-color: #0070eb; }
+      }
+    }
+
+    // '문제가 있나요?' / '나중에'
+    .login-links.row-links {
+      margin-top: 14px;
+      gap: 112px;
+
+      .login-link-btn {
+        font-size: 12px;
+        font-weight: 500;
+        color: #007aff;
+      }
+    }
+  }
+}
 // 히어로
 .hero-swiper-container {
   position: relative;
   width: 100%;
   height: 100vh; // 화면 전체 높이
+  height: 100svh; // 모바일 주소창을 뺀 화면 높이 (지원 안 하면 위 100vh 사용)
   background-color: $bg-color;
 
   // Swiper 내부 요소까지 높이를 100% 로 이어줌
@@ -1837,72 +1917,297 @@ header {
   }
 }
 
-// ===== 기기 안내 =====
+// ===== 기기 안내 (좌우 2단, 기존 다크 톤 유지) =====
 .device-guide {
   background-color: $gnb-bg;
-  padding: 56px 0;
+  padding: 80px 0;
 
   .inner {
     @include inner-wrap;
   }
 
-  .device-guide-inner {
+  // 콘텐츠 영역 (1920 기준 좌우 240 여백 = 최대 1440, 배경 없음)
+  .device-guide-card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
     align-items: start;
-    gap: 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 68px 120px;
+    box-sizing: border-box;
   }
 
+  // 좌측: 제목 + 설명
   .device-guide-title {
-    @include display-M;
-    font-weight: 600; // 시안 제목은 굵게
+    @include display-l;
+    font-weight: 600;
+    margin: 0 0 24px;
+    padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
     color: $text-primary;
-    margin: 0 0 12px;
     word-break: keep-all;
   }
 
   .device-guide-sub {
-    @include body-small; // - body small
-    color: $neutral-color-400;
+    @include body-large;
     margin: 0;
+    color: $neutral-color-600;
+    word-break: keep-all;
   }
 
+  // 우측: 세 가지 구분
   .device-guide-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
     list-style: none;
-    margin: 0 0 20px;
+    margin: 0 0 36px;
     padding: 0;
 
     li {
-      @include body-default;
+      @include body-large;
       color: $light-color-500;
     }
   }
 
-  .device-guide-links {
+  // 세 가지 차이 보기 ›
+  .device-guide-link {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: $accent-color;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      font-weight: 600;
+    }
+  }
+}
+
+// ===== Apple TV 에코시스템 비교 페이지 (/ecosystem) =====
+.ecosystem-page {
+  // 로그인 페이지처럼 헤더 · 본문 · 푸터 영역이 확실히 구분되도록
+  // 배경을 한 톤 어둡게($bg-color) 하고 위아래 여백을 넉넉하게
+  min-height: calc(100vh - #{$header-height});
+  padding: calc(#{$header-height} + 80px) 0 120px;
+  box-sizing: border-box;
+  background-color: $bg-color;
+  color: $text-primary;
+
+  .inner {
+    @include inner-wrap;
+    max-width: calc(1440px + #{$header-pad-x} * 2); // 콘텐츠 폭 최대 1440
+  }
+
+  // ‹ 홈으로 돌아가기
+  .ecosystem-back {
+    @include label-default;
+    display: inline-block;
+    color: $accent-color;
+    text-decoration: none;
+
+    &:hover {
+      font-weight: 600;
+    }
+  }
+
+  // ---------- 상단 타이틀 ----------
+  .ecosystem-head {
+    margin: 48px 0 64px;
+    text-align: center;
+  }
+
+  .ecosystem-eyebrow {
+    @include label-default;
+    margin: 0 0 12px;
+    color: $neutral-color-400;
+    letter-spacing: 0.04em;
+  }
+
+  .ecosystem-title {
+    @include heading-h1;
+    font-weight: 700;
+    margin: 0 0 16px;
+    padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
+    color: $text-primary;
+  }
+
+  .ecosystem-lead {
+    @include body-large;
+    margin: 0 0 16px;
+    color: $light-color-500;
+  }
+
+  .ecosystem-desc {
+    @include body-large;
+    margin: 0;
+    color: $neutral-color-400;
+    word-break: keep-all;
+  }
+
+  // ---------- 3단 비교 카드 ----------
+  .ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .ecosystem-card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 24px;
+    border-radius: 20px;
+    background-color: $dark-color-800;
+    min-width: 0;
+  }
+
+  .ecosystem-card-name {
+    @include display-l;
+    font-weight: 600;
+    margin: 0 0 16px;
+    color: $text-primary;
+  }
+
+  .ecosystem-card-category {
+    @include body-small;
+    font-weight: 600;
+    margin: 0 0 20px;
+    color: $neutral-color-400;
+  }
+
+  .ecosystem-card-desc {
+    @include body-large;
+    margin: 0;
+    color: $light-color-300;
+    word-break: keep-all;
+  }
+
+  // 기기 이미지 (시안의 선 아이콘 자리)
+  .ecosystem-card-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    margin: 24px 0;
+
+    img {
+      max-width: 72%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+  }
+
+  // 항목 6개 (카드끼리 높이 맞춤)
+  .ecosystem-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 0 16px;
+  }
+
+  .ecosystem-row {
+    min-height: 110px;
+    padding: 18px 12px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: $dark-color-500;
+
+    dt {
+      @include body-default;
+      font-weight: 700;
+      margin: 0 0 10px;
+      color: $text-primary;
+    }
+
+    dd {
+      @include body-default;
+      margin: 0;
+      max-width: 320px;
+      color: $light-color-500;
+      word-break: keep-all;
+    }
+
+    // 마지막 항목(이용 범위 / 제한)은 문장이 길어 조금 더 높게
+    &:last-child {
+      min-height: 140px;
+    }
+  }
+
+  // 공식 링크 버튼
+  .ecosystem-btn {
+    @include body-default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    margin-top: auto;
+    border: none;
+    border-radius: 6px;
+    background-color: $accent-color;
+    color: $text-primary;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: darken($accent-color, 6%);
+    }
+
+    // 링크 연결 전
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  .ecosystem-card-note {
+    @include label-default;
+    margin: 18px 0 0;
+    color: $neutral-color-400;
+  }
+
+  // ---------- 하단: 하나의 Apple 계정 ----------
+  .ecosystem-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    margin-top: 56px;
+    padding: 0 20px;
+  }
+
+  .ecosystem-footer-title {
+    @include heading-h2;
+    margin: 0 0 24px;
+    color: $text-primary;
+  }
+
+  .ecosystem-footer-note {
+    @include label-default;
+    margin: 0;
+    color: $neutral-color-400;
+  }
+
+  .ecosystem-devices {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px 24px;
+    align-items: center;
     list-style: none;
-    margin: 0;
+    margin: 12px 0 0;
     padding: 0;
 
-    a {
-      @include body-small;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: $light-color-500;
-      text-decoration: none;
-      transition: color 0.2s ease;
+    li {
+      @include body-large;
+      color: $light-color-300;
 
-      &:hover {
-        color: $text-primary;
+      // 기기 사이 · 구분점
+      & + li::before {
+        content: "·";
+        margin: 0 10px;
+        color: $neutral-color-400;
       }
     }
   }
+
 }
 
 // ===== 구독 전 프로모션 배너 (하단 플로팅) =====
@@ -3319,9 +3624,10 @@ main {
     padding: $footer-pad-y $tablet-edge;
   }
 
-  // ---------- 히어로 (높이 520, 텍스트는 본문 시작선) ----------
+  // ---------- 히어로 (화면 높이 100vh 유지, 텍스트는 본문 시작선) ----------
   .hero-swiper-container {
-    height: 520px;
+    height: 100vh;
+    height: 100svh; // 모바일 브라우저 주소창을 뺀 화면 높이 (지원 안 하면 위 100vh 사용)
 
     .swiper-button-next,
     .swiper-button-prev {
@@ -3344,7 +3650,6 @@ main {
   .upcoming-section .inner,
   .apple-originals .inner,
   .subscribe-cta .inner,
-  .device-guide .inner,
   .movie-slider-section .inner {
     padding-left: $tablet-gutter;
     padding-right: $tablet-gutter;
@@ -3431,14 +3736,6 @@ main {
     }
   }
 
-  // ---------- 기기 안내: 세로로 쌓기 ----------
-  .device-guide {
-    .device-guide-inner {
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
-  }
-
   // ---------- 하단 플로팅 프로모션 배너 ----------
   .promo-banner {
     .promo-banner-inner {
@@ -3457,35 +3754,53 @@ main {
     }
   }
 
-  // ---------- 스포츠 ----------
-  .sport-hero .sport-hero-card {
-    left: $tablet-edge;
+}
+// 스포츠 홈 (로그인 전 / 후 공통): 섹션 사이 여백과 콘텐츠 폭을 한 곳에서 관리합니다.
+// - 기존 .sport-home-member(로그인 후 전용) → .sport-home 으로 바꿔 같은 영역은 똑같이 보이게 함
+// - 로그인 전 전용 섹션(구독 CTA · 기기 안내)은 원래 디자인 유지를 위해 여백 · 폭 규칙에서 제외
+// - 히어로 스타일은 sport-member.scss 의 section.sport-hero 한 곳에서 관리
+// - main.sport-home: 태블릿 · 모바일 공통 규칙과 우선순위가 겹치지 않도록 태그를 붙임
+main.sport-home {
+  display: flex;
+  flex-direction: column;
+  // 섹션 사이 간격은 sport-member.scss 의 "섹션 간격" 규칙(margin-top)으로 관리
+  gap: 0;
+  background: #161615;
+
+  // 관심있는 구단(.sport-teams)은 그라데이션 띠 안쪽 여백이 필요해서 패딩 초기화에서 제외
+  > section:not(.subscribe-cta):not(.device-guide):not(.sport-teams) {
+    padding: 0;
+    min-width: 0;
   }
 
-  .sport-upcoming .inner,
-  .sport-shorts .inner,
-  .sport-promo .inner,
-  .sport-teams .inner,
-  .sport-league .inner,
-  .sport-replay .inner,
-  .sport-highlights .inner,
-  .sport-notify .inner {
-    padding-left: $tablet-edge;
-    padding-right: $tablet-edge;
+  > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
+    @include inner-wrap;
+    max-width: $container-width;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  .sport-upcoming .sport-match-list,
-  .sport-teams .sport-team-list,
-  .sport-league .sport-league-list,
-  .sport-highlights .sport-highlight-list {
-    grid-template-columns: repeat(2, 1fr);
+  .sport-teams { padding: 56px 0; }
+  .sport-live-slide, .sport-series-slide { width: 312px; max-width: 85%; }
+  .sport-live-card {
+    display: block;
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #292929;
+    color: white;
+    img { width: 100%; height: 100%; object-fit: cover; }
+    &::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent, rgba(0, 0, 0, .55)); pointer-events: none; }
   }
-
-  .sport-replay .sport-replay-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .sport-notify .sport-notify-banner {
-    padding: 32px;
+  .sport-live-badge, .sport-live-watch { position: absolute; z-index: 1; left: 14px; font-size: 12px; padding: 5px 12px; }
+  .sport-live-badge { top: 14px; background: #ed1418; border-radius: 30px; }
+  .sport-live-watch { bottom: 14px; background: rgba(255, 255, 255, .25); border-radius: 3px; }
+  .sport-series-card {
+    display: block;
+    color: white;
+    text-decoration: none;
+    img, .sport-series-placeholder { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; background: #292929; }
+    h4 { margin: 12px 0 0; }
   }
 }
