@@ -1,5 +1,6 @@
 import { useSportStore } from "../../store/useSportStore";
 import { useAuthStore } from "../../store/useAuthStore";
+import { isLiveFootballVideo } from "./liveFootball";
 import { isLive, getScore } from "./sportUtils";
 
 // 로그인 전 히어로에 보여줄 메인 이미지 (public/images/sport/main-1.jpg)
@@ -12,7 +13,7 @@ const SportHero = () => {
   const user = useAuthStore((state) => state.user);
   const { liveMatches, liveVideos } = useSportStore();
 
-  // 진행 중인 경기가 있으면 우선, 없으면 가장 가까운 예정 경기
+  // 실제 진행 중인 축구 경기만 사용합니다.
   const match =
     (liveMatches || []).find(isLive);
   const live = Boolean(match);
@@ -21,7 +22,7 @@ const SportHero = () => {
   // 라이브 영상 (있으면 배경 썸네일 + 시청 링크)
   const video = match && (liveVideos || []).find((item) => {
     const title = item.snippet?.title?.toLowerCase() || "";
-    return item.snippet?.liveBroadcastContent === "live" && item.id?.videoId &&
+    return isLiveFootballVideo(item) &&
       [match.homeTeam?.name, match.awayTeam?.name].some((name) => name && title.includes(name.toLowerCase()));
   });
   const thumb =
