@@ -3,20 +3,11 @@ import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useSportStore } from "../../store/useSportStore";
-import { SPORT_TEAMS } from "../../data/sportTeams";
+import { getPresentationMatch, sportTeamLabel } from "../sport/sportPresentation";
 import { isLive, getScore, formatKickoff } from "../sport/sportUtils";
 
 // 스포츠 화면 경로 / 경기 시청 경로 (라우터와 맞춰 주세요)
 const SPORT_PATH = "/sport";
-
-// 영문 구단명 → 한글 짧은 이름 (data/sportTeams.js), 없으면 원래 이름
-const teamLabel = (team) => {
-  if (!team) return "";
-  const found = SPORT_TEAMS.find(
-    (t) => t.enName === team.name || t.enName === team.shortName
-  );
-  return found?.shortName || team.shortName || team.name;
-};
 
 // 진행 시간 라벨: 전반 32분 / 후반 87분 / 하프타임
 const liveTimeLabel = (match) => {
@@ -52,8 +43,8 @@ const PromoBanner = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isSport]);
 
-  // 실제 진행 중인 경기만 표시합니다. 예정/샘플 경기를 LIVE로 대체하지 않습니다.
-  const nextMatch = liveMatches.find(isLive);
+  // 히어로와 같은 실제 경기 또는 시안용 샘플 경기를 사용합니다.
+  const nextMatch = getPresentationMatch(liveMatches);
   let mode = null;
   if (!user && (isHome || isSport)) mode = "promo";
   else if (user && isSport) mode = "live";
@@ -128,30 +119,10 @@ const PromoBanner = () => {
 
 // ===== 로그인 후 스포츠: LIVE 경기 배너 =====
 const LiveContent = ({ match, tabIndex }) => {
-  if (!match) {
-    return (
-      <>
-        <div className="promo-banner-text">
-          <strong className="promo-banner-title live-title" role="status">
-            진행 중인 라이브가 없습니다
-          </strong>
-          <p className="promo-banner-desc">
-            예정된 경기를 확인하고 다음 라이브를 기다려 주세요.
-          </p>
-        </div>
-        <div className="promo-banner-action">
-          <a href="/sport#sport-upcoming" className="promo-banner-btn" tabIndex={tabIndex}>
-            예정된 경기 보기
-          </a>
-        </div>
-      </>
-    );
-  }
-
   const live = isLive(match);
   const score = getScore(match);
-  const home = teamLabel(match.homeTeam);
-  const away = teamLabel(match.awayTeam);
+  const home = sportTeamLabel(match.homeTeam);
+  const away = sportTeamLabel(match.awayTeam);
 
   const meta = live
     ? [liveTimeLabel(match), "진행 중"].filter(Boolean)

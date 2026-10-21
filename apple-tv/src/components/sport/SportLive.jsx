@@ -1,12 +1,12 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { useSportStore } from "../../store/useSportStore";
-import { isLiveFootballVideo } from "./liveFootball";
 import { decodeHtml } from "./sportUtils";
 
 export default function SportLive() {
-  const videos = useSportStore((state) => state.liveVideos);
-  const items = videos.filter(isLiveFootballVideo);
+  // 시안 요청에 따라 하이라이트 영상을 LIVE 카드 형태로 표시합니다.
+  const videos = useSportStore((state) => state.highlightList);
+  const items = videos.filter((video) => video.id?.videoId).slice(0, 4);
 
   return (
     <section className="sport-live" id="sport-live" aria-labelledby="sport-live-title">
@@ -15,7 +15,7 @@ export default function SportLive() {
           <h3 className="sport-section-title" id="sport-live-title">라이브 <span aria-hidden="true">🔴</span></h3>
         </div>
         {items.length === 0 ? (
-          <p className="sport-empty" role="status">진행 중인 라이브가 없습니다</p>
+          <p className="sport-empty" role="status">표시할 영상이 없습니다</p>
         ) : (
           <Swiper modules={[Navigation]} navigation slidesPerView="auto" spaceBetween={20}>
             {items.map(({ id, snippet }) => (

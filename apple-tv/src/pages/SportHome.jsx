@@ -19,7 +19,6 @@ import SubscribeCTA from "../components/landing/SubscribeCTA";
 const SportHome = () => {
   const {
     onFetchUpcomingMatches,
-    onFetchLiveVideos,
     onFetchLiveMatches,
     onFetchShorts,
     onFetchStandings,
@@ -35,12 +34,10 @@ const SportHome = () => {
     onFetchStandings(); // 관심있는 구단 (리그 순위표의 팀)
     onFetchHighlightList(); // 하이라이트
     onFetchFinishedMatches(); // 영상 다시보기 (종료된 경기)
-    // 로그인 후 히어로와 라이브 목록은 1분마다 갱신합니다.
+    // 경기 정보는 1분마다 갱신하고 LIVE 카드에는 위에서 받은 하이라이트를 사용합니다.
     if (user) {
-      onFetchLiveVideos();
       onFetchLiveMatches();
       const timer = setInterval(() => {
-        onFetchLiveVideos();
         onFetchLiveMatches();
       }, 60000);
       return () => clearInterval(timer);
@@ -48,7 +45,6 @@ const SportHome = () => {
   }, [
     user,
     onFetchUpcomingMatches,
-    onFetchLiveVideos,
     onFetchLiveMatches,
     onFetchShorts,
     onFetchStandings,
