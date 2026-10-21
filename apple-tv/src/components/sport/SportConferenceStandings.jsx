@@ -1,47 +1,90 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useSportStore } from "../../store/useSportStore";
-import { SPORT_TEAMS, CONFERENCES } from "../../data/sportTeams";
+import { CONFERENCES } from "../../data/sportTeams";
+import { conferenceRows, clubOf } from "./standingsUtils";
 
-// 제공된 실제 순위만 사용하며, PDF의 예시 승점을 실시간 데이터로 표시하지 않습니다.
-const teamInfo = (team) => SPORT_TEAMS.find((item) =>
-  [item.enName, item.name, item.shortName].some((name) =>
-    [team?.name, team?.shortName].includes(name)
-  )
-);
+// MLS 로고 (public/images/sport-team/mls-logo.svg 를 넣으면 이미지로, 없으면 텍스트 배지로 표시)
+const MLS_LOGO = `${import.meta.env.BASE_URL}images/sport-team/mls-logo.svg`;
 
+const COLUMNS = ["경기", "승", "무", "패", "승점"];
+
+// 컨퍼런스 로고 (이미지가 없으면 텍스트 배지)
+export const LeagueLogo = () => {
+  const [failed, setFailed] = useState(false);
+  return failed ? (
+    <span className="sport-conference-badge" aria-hidden="true">MLS</span>
+  ) : (
+    <img className="sport-conference-logo" src={MLS_LOGO} alt="" onError={() => setFailed(true)} />
+  );
+};
+
+// 리그 순위 (MLS 동부 / 서부 컨퍼런스 상위 5팀)
 export default function SportConferenceStandings() {
   const standings = useSportStore((state) => state.standings);
-  const groups = useSportStore((state) => state.standingsGroups);
+  const fetchStandings = useSportStore((state) => state.onFetchStandings);
+  useEffect(() => { fetchStandings(); }, [fetchStandings]);
+
+  // 컨퍼런스별 상위 5팀 (승점 → 원래 순위 순, 전체 순위는 /sport/standings)
+  const rowsOf = (key) => conferenceRows(standings, key, 5);
 
   return (
     <section className="sport-league sport-conferences" aria-labelledby="sport-standings-title">
       <div className="inner">
         <div className="sport-section-head">
           <h3 className="sport-section-title" id="sport-standings-title">리그 순위</h3>
-          <a className="sport-more" href="https://www.mlssoccer.com/standings/" target="_blank" rel="noreferrer">전체 보기 →</a>
+          <Link className="sport-more" to="/sport/standings">
+            전체 보기 <span aria-hidden="true">→</span>
+          </Link>
         </div>
+
         <div className="sport-conference-grid">
           {Object.entries(CONFERENCES).map(([key, label]) => {
-            const group = (groups || []).find((item) =>
-              item.type === "TOTAL" && (key === "east" ? /east/i : /west/i).test(item.group || "")
-            );
-            const rows = (group?.table || standings.filter((row) => teamInfo(row.team)?.conference === key))
-              .slice().sort((a, b) => a.position - b.position).slice(0, 5);
+            const rows = rowsOf(key);
             return (
               <div className="sport-conference-card" key={key}>
-                <h4><span className="sport-conference-badge" aria-hidden="true">MLS</span>{label}</h4>
+                <h4 className="sport-conference-title">
+                  <LeagueLogo />
+                  {label}
+                </h4>
+
                 <div className="sport-conference-scroll">
-                  <table>
+                  <table className="sport-conference-table">
                     <caption className="sport-sr-only">{label} 상위 5개 구단 순위</caption>
-                    <thead><tr><th scope="col"><span className="sport-sr-only">순위</span></th><th scope="col">클럽</th><th scope="col">경기</th><th scope="col">승</th><th scope="col">무</th><th scope="col">패</th><th scope="col">승점</th></tr></thead>
+                    <colgroup>
+                      <col className="col-rank" />
+                      <col className="col-club" />
+                      {COLUMNS.map((c) => <col key={c} className="col-stat" />)}
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col"><span className="sport-sr-only">순위</span></th>
+                        <th scope="col">클럽</th>
+                        {COLUMNS.map((c) => <th scope="col" key={c}>{c}</th>)}
+                      </tr>
+                    </thead>
                     <tbody>
-                      {rows.length === 0 ? <tr><td colSpan={7} className="sport-conference-empty">순위 정보를 불러올 수 없습니다.</td></tr> : rows.map((row) => {
-                        const info = teamInfo(row.team);
-                        const logo = row.team?.crest || info?.logo;
+                      {rows.length === 0 ? (
+                        <tr>
+                          <td colSpan={7} className="sport-conference-empty">순위 정보를 불러오는 중입니다.</td>
+                        </tr>
+                      ) : rows.map((item, index) => {
+                        const { row } = item;
+                        const { key: clubKey, logo, name } = clubOf(item);
                         return (
-                          <tr key={row.team?.id || row.team?.name}>
-                            <td>{row.position}</td>
-                            <th scope="row"><span className="sport-conference-club">{logo && <img src={logo} alt="" loading="lazy" />}<span>{info?.shortName || row.team?.shortName || row.team?.name}</span></span></th>
-                            <td>{row.playedGames ?? "—"}</td><td>{row.won ?? "—"}</td><td>{row.draw ?? "—"}</td><td>{row.lost ?? "—"}</td><td><strong>{row.points ?? "—"}</strong></td>
+                          <tr key={clubKey}>
+                            <td className="rank">{index + 1}</td>
+                            <th scope="row">
+                              <span className="sport-conference-club">
+                                {logo && <img src={logo} alt="" loading="lazy" />}
+                                <span>{name}</span>
+                              </span>
+                            </th>
+                            <td>{row.playedGames ?? "—"}</td>
+                            <td>{row.won ?? "—"}</td>
+                            <td>{row.draw ?? "—"}</td>
+                            <td>{row.lost ?? "—"}</td>
+                            <td className="points">{row.points ?? "—"}</td>
                           </tr>
                         );
                       })}
