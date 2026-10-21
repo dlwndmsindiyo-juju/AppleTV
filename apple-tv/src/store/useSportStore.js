@@ -10,13 +10,14 @@ const YOUTUBE_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 export const useSportStore = create((set, get) => ({
     // 1. 리그 순위 데이터 저장 (Football-Data.org)
     standings: [],
+    standingsGroups: [],
     onFetchStandings: async (competition = "PL") => {
         try {
             const res = await fetch(`https://api.football-data.org/v4/competitions/${competition}/standings`, {
                 headers: { 'X-Auth-Token': FOOTBALL_KEY }
             });
             const data = await res.json();
-            set({ standings: data.standings?.[0]?.table || [] });
+            set({ standings: data.standings?.[0]?.table || [], standingsGroups: data.standings || [] });
         } catch (error) {
             console.error("리그 순위 조회 실패:", error);
         }

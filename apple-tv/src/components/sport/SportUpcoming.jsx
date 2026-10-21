@@ -1,4 +1,3 @@
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -6,6 +5,15 @@ import "swiper/css/navigation";
 
 import { upcomingMatchesData } from "../../data/mockMatches";
 import { isLive } from "./sportUtils";
+
+// 구단별 색은 회원 홈의 카드 배경에만 사용합니다. 기존 일정과 게스트 화면은 유지합니다.
+const teamColors = {
+  atlanta: "#800d24", miami: "#edb5ca", redbull: "#d12235", toronto: "#a6192e",
+  minnesota: "#8bc5e8", "st-louis": "#c8102e", sanjose: "#0065a8", nashville: "#ece83a",
+  seattle: "#4d9f38", montreal: "#00539b", cincinnati: "#fa641c", columbus: "#f5d329",
+  orlando: "#6331a8", newYork: "#74b8e5", LA: "#101820", dallas: "#c8102e",
+};
+const teamColor = (team) => teamColors[team?.crest?.split("/").pop()?.replace(".svg", "")] || "#233b57";
 
 const SportUpcoming = ({ title = "예정된 경기" }) => {
   const matches = upcomingMatchesData;
@@ -35,7 +43,7 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
 
               return (
                 <SwiperSlide key={match.id} className="sport-upcoming-slide">
-                  <div className="sport-match-card">
+                  <div className="sport-match-card" style={{ "--sport-home-color": teamColor(match.homeTeam), "--sport-away-color": teamColor(match.awayTeam) }}>
                     {/* 카드 전체 배경 경기장 이미지 */}
                     <img
                       className="sport-match-bg"
