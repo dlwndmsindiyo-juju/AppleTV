@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { isLiveFootballVideo } from "../components/sport/liveFootball";
+import { CONFERENCE_STANDINGS } from "../data/mockStandings";
 
 // Football data 키 변수로 저장
 const FOOTBALL_KEY = import.meta.env.VITE_FOOTBALL_API_KEY;
@@ -121,6 +122,9 @@ const youtubeIdFromUrl = (url = "") => {
 // lookuptable 한 줄 → football-data 순위 행 모양 (SportConferenceStandings 가 그대로 사용)
 const toStandingRow = (r) => ({
     position: Number(r.intRank) || 0,
+    // MLS 는 동부 / 서부 컨퍼런스로 나뉨 (응답에 그룹 정보가 있으면 사용, 없으면 컴포넌트에서 팀 이름으로 판별)
+    conference: /east/i.test(`${r.strGroup || ""} ${r.strDescription || ""}`) ? "east"
+        : /west/i.test(`${r.strGroup || ""} ${r.strDescription || ""}`) ? "west" : undefined,
     team: { id: r.idTeam, name: r.strTeam, shortName: r.strTeam, crest: r.strBadge },
     playedGames: Number(r.intPlayed),
     won: Number(r.intWin),
@@ -199,8 +203,14 @@ export const useSportStore = create((set, get) => ({
     // 1. 리그 순위 데이터 저장 (Football-Data.org)
     standings: [],
     standingsGroups: [],
-    onFetchStandings: async (competition = "PL") => {
-        // 1) TheSportsDB MLS 순위 (프리미엄 V1 lookuptable, 30분 캐시). 성공하면 football-data 호출은 생략
+    // 리그 순위 (MLS 동부 / 서부 컨퍼런스)
+    // 1) TheSportsDB MLS 순위 (키가 있을 때, 30분 캐시)
+    // 2) 실패하거나 키가 없으면 data/mockStandings.js 목업 사용
+    // ※ football-data 무료 플랜에는 MLS 가 없어서(PL 등 유럽 리그만) 컨퍼런스 순위표에는 쓰지 않음
+    //   → 예전에는 PL 순위가 들어와 동부/서부 어디에도 해당 팀이 없어 "순위 정보를 불러올 수 없습니다" 로 보였음
+    onFetchStandings: async () => {
+        if (get().standings.length > 0) return;
+
         if (SPORTSDB_KEY) {
             try {
                 const rows = await withCache("sport-sdb-table", async () => {
@@ -210,19 +220,14 @@ export const useSportStore = create((set, get) => ({
                 }, 30 * 60 * 1000);
                 if (rows.length > 0) { set({ standings: rows, standingsGroups: [] }); return; }
             } catch (error) {
-                console.error("TheSportsDB 순위 조회 실패 (football-data 로 대체):", error);
+                console.error("TheSportsDB 순위 조회 실패 (목업으로 대체):", error);
             }
         }
-        // 2) football-data (무료 플랜에는 MLS 가 없어 PL 등 유럽 리그만 가능)
-        try {
-            const res = await fetch(`${FOOTBALL_BASE}/v4/competitions/${competition}/standings`, {
-                headers: { 'X-Auth-Token': FOOTBALL_KEY }
-            });
-            const data = await res.json();
-            set({ standings: data.standings?.[0]?.table || [], standingsGroups: data.standings || [] });
-        } catch (error) {
-            console.error("리그 순위 조회 실패:", error);
-        }
+
+        set({
+            standings: [...CONFERENCE_STANDINGS.east, ...CONFERENCE_STANDINGS.west],
+            standingsGroups: [],
+        });
     },
 
     // 2. 예정된 경기 일정 저장 (Football-Data.org)

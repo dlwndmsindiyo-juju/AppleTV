@@ -70,29 +70,93 @@ main.sport-home {
     .sport-team-more { margin: 40px 0 0 auto; height: auto; padding: 0; border: 0; background: transparent; @include body-small; font-family: inherit; }
   }
 
+  // ---------- 리그 순위 (MLS 동부 / 서부 컨퍼런스) ----------
   .sport-conferences {
     padding: 0;
-    > .inner { width: calc(100% - 240px); max-width: 1680px; padding: 0; }
+    > .inner { width: 75%; max-width: var(--sport-content-width); padding: 0; }
   }
-  .sport-conference-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .sport-conference-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sport-card-gap); }
+
+  // 밝은 카드
   .sport-conference-card {
     min-width: 0;
-    padding: 28px 24px;
+    padding: 24px 32px 28px;
     border-radius: $radius-card;
     background: $neutral-color-100;
     color: $dark-color-900;
-    h4 { display: flex; align-items: center; gap: 20px; margin: 0 0 24px; @include heading-h4; font-family: inherit; }
-    table { width: 100%; border-collapse: collapse; table-layout: fixed; @include body-default; font-family: inherit; }
-    th, td { height: 62px; text-align: center; padding: 4px; box-sizing: border-box; }
-    thead th { @include body-small; font-family: inherit; font-weight: 600; }
-    th:first-child { width: 7%; }
-    th:nth-child(2) { width: 41%; }
-    tbody th { text-align: left; font-weight: 400; }
-    .sport-conference-empty { height: 310px; color: $neutral-color-600; }
   }
-  .sport-conference-badge { display: grid; place-items: center; width: 48px; height: 56px; border: 2px solid $sports-color; border-radius: 4px 4px 18px 18px; color: $sports-color; font-size: 13px; font-weight: 700; }
-  .sport-conference-club { display: flex; align-items: center; gap: 12px; min-width: 0; img { width: 30px; height: 30px; object-fit: contain; } span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+
+  // 로고 + 컨퍼런스 이름
+  .sport-conference-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 20px;
+    @include body-default;
+    font-family: inherit;
+    font-weight: 600;
+    color: $dark-color-900;
+  }
+  .sport-conference-logo { width: 32px; height: 40px; object-fit: contain; display: block; }
+  // 로고 이미지가 없을 때 쓰는 방패 모양 배지
+  .sport-conference-badge {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 38px;
+    border-radius: 4px 4px 16px 16px;
+    background: $sports-color;
+    color: $light-color-0;
+    @include caption-default;
+    font-family: inherit;
+    font-weight: 700;
+  }
+
   .sport-conference-scroll { overflow-x: auto; }
+
+  .sport-conference-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    color: $dark-color-900;
+
+    .col-rank { width: 10%; }
+    .col-club { width: 35%; }
+    .col-stat { width: 11%; }
+
+    th, td { height: 34px; padding: 0 4px; text-align: center; box-sizing: border-box; }
+
+    // 머리글: 클럽 경기 승 무 패 승점
+    thead th {
+      height: 40px;
+      @include label-default;
+      font-family: inherit;
+      font-weight: 600;
+      color: $dark-color-900;
+    }
+    thead th:nth-child(2) { text-align: center; }
+
+    tbody td, tbody th {
+      @include body-small;
+      font-family: inherit;
+      font-weight: 700;
+    }
+    tbody th { text-align: left; }
+    .rank { font-weight: 700; }
+    .points { font-weight: 700; }
+  }
+
+  .sport-conference-club {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    img { width: 22px; height: 22px; flex-shrink: 0; border-radius: 4px; object-fit: cover; }
+    span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; @include label-default; font-family: inherit; font-weight: 600; }
+  }
+
+  .sport-conference-empty { height: 170px; color: $neutral-color-600; @include body-small; font-family: inherit; font-weight: 400; }
   .sport-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
   .sport-replay-list { display: flex; gap: var(--sport-card-gap); overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
@@ -109,12 +173,46 @@ main.sport-home {
   .sport-highlight-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .sport-highlight-title, .sport-highlight-meta { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sport-highlight-play { background: rgba(0, 0, 0, .6); }
+  // ---------- 추천 시리즈 (카드 슬라이드) ----------
   .sport-series-card {
-    position: relative;
-    img, .sport-series-placeholder { aspect-ratio: 280 / 304; }
-    h4 { padding: 0; }
+    display: flex;
+    flex-direction: column;
+    color: $text-primary;
+    cursor: pointer;
+    h4 { padding: 0; margin: 4px 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    &:hover .sport-series-thumb img { transform: scale(1.04); }
   }
-  .sport-series-play { position: absolute; top: 0; left: 0; width: 100%; aspect-ratio: 280 / 304; display: grid; place-items: center; font-size: 28px; pointer-events: none; color: white; text-shadow: 0 2px 12px #000; }
+  .sport-series-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 280 / 304;
+    border-radius: $radius-card;
+    overflow: hidden;
+    background: $dark-color-500;
+    margin-bottom: 12px;
+    img, .sport-series-placeholder { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; display: block; border-radius: 0; transition: transform 0.4s ease; }
+  }
+  // 재생 버튼: 하이라이트(.sport-highlight-play)와 같은 가운데 원형 버튼 (항상 표시)
+  .sport-series-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding-left: 2px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .6);
+    color: $text-primary;
+    font-size: 14px;
+    text-shadow: none;
+    pointer-events: none;
+  }
+  .sport-series-category { @include label-default; font-family: inherit; font-weight: 600; color: $sports-color; }
   .sport-series-description { margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
   // ---------- 태블릿 (로그인 전 / 후 동일) ----------
@@ -126,6 +224,7 @@ main.sport-home {
     .sport-teams .sport-team-slide { width: 300px; min-width: 0; }
     .sport-conferences > .inner { width: calc(100% - 80px); }
     .sport-conference-grid { grid-template-columns: 1fr; }
+    .sport-conference-card { padding: 20px 24px 24px; }
     .sport-highlight-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     // 다시보기: 가로 스크롤 유지 (App.scss 태블릿 3칸 그리드 규칙 무시)
     .sport-replay-list { display: flex; grid-template-columns: none; }
@@ -170,7 +269,9 @@ main.sport-home {
     .sport-highlight-meta { @include label-default; }
 
     .sport-conferences > .inner { width: calc(100% - 40px); }
-    .sport-conference-card { padding: 20px 12px; table { min-width: 400px; } }
+    .sport-conference-card { padding: 16px 12px 20px; }
+    .sport-conference-title { margin-bottom: 12px; gap: 12px; @include body-small; font-weight: 600; }
+    .sport-conference-table { min-width: 340px; .col-rank { width: 9%; } .col-club { width: 36%; } }
   }
 }
 
