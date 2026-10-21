@@ -56,7 +56,7 @@ const PromoBanner = () => {
   const nextMatch = liveMatches.find(isLive);
   let mode = null;
   if (!user && (isHome || isSport)) mode = "promo";
-  else if (user && isSport && nextMatch) mode = "live";
+  else if (user && isSport) mode = "live";
 
   // 첫 스크롤 감지 (한 번 나타나면 계속 유지)
   useEffect(() => {
@@ -128,6 +128,26 @@ const PromoBanner = () => {
 
 // ===== 로그인 후 스포츠: LIVE 경기 배너 =====
 const LiveContent = ({ match, tabIndex }) => {
+  if (!match) {
+    return (
+      <>
+        <div className="promo-banner-text">
+          <strong className="promo-banner-title live-title" role="status">
+            진행 중인 라이브가 없습니다
+          </strong>
+          <p className="promo-banner-desc">
+            예정된 경기를 확인하고 다음 라이브를 기다려 주세요.
+          </p>
+        </div>
+        <div className="promo-banner-action">
+          <a href="/sport#sport-upcoming" className="promo-banner-btn" tabIndex={tabIndex}>
+            예정된 경기 보기
+          </a>
+        </div>
+      </>
+    );
+  }
+
   const live = isLive(match);
   const score = getScore(match);
   const home = teamLabel(match.homeTeam);
