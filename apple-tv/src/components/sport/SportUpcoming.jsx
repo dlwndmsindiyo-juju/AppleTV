@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -15,9 +15,9 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
       <div className="inner">
         <div className="sport-section-head">
           <h3 className="sport-section-title">{title}</h3>
-          <a className="sport-more" href="#">
+          <Link className="sport-more" to="/sport/upcoming">
             전체 보기 <span aria-hidden="true">→</span>
-          </a>
+          </Link>
         </div>
 
         {matches.length === 0 ? (
@@ -35,7 +35,7 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
 
               return (
                 <SwiperSlide key={match.id} className="sport-upcoming-slide">
-                  <div className="sport-match-card">
+                  <Link className="sport-match-card" to={`/sport/upcoming?id=${match.id}`}>
                     {/* 카드 전체 배경 경기장 이미지 */}
                     <img
                       className="sport-match-bg"
@@ -80,7 +80,7 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
                         )}
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </SwiperSlide>
               );
             })}

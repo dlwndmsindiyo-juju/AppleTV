@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 사용자 문서: 본인만 읽기/쓰기.
+    // 단, subscription / emailCodeVerified 는 Cloud Functions(Admin SDK)만 변경 가능
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      allow create: if request.auth != null && request.auth.uid == uid
+        && !('subscription' in request.resource.data)
+        && !('emailCodeVerified' in request.resource.data)
+        && !('emailVerifiedAt' in request.resource.data);
+
+      allow update: if request.auth != null && request.auth.uid == uid
+        && !request.resource.data.diff(resource.data).affectedKeys()
+             .hasAny(['subscription', 'emailCodeVerified', 'emailVerifiedAt']);
+
+      allow delete: if false;
+    }
+
+    // 인증번호 / 메일 큐: 클라이언트 접근 전면 차단 (서버 전용)
+    match /emailCodes/{id} { allow read, write: if false; }
+    match /mail/{id}       { allow read, write: if false; }
+  }
+}

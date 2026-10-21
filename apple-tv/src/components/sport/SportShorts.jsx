@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { useSportStore } from "../../store/useSportStore";
@@ -8,8 +8,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 // 숏츠 (가로 스크롤 카드)
+// - YouTube #shorts 검색 → 길이 3분 이하만 (6시간 캐시)
+// - TheSportsDB 에는 세로 숏폼 영상이 없어서 YouTube 키가 필요해요
 const SportShorts = ({ title = "숏츠" }) => {
-  const { shortsVideos } = useSportStore();
+  const shortsVideos = useSportStore((state) => state.shortsVideos);
+  const fetchShorts = useSportStore((state) => state.onFetchShorts);
+  useEffect(() => { fetchShorts(); }, [fetchShorts]);
 
   const items = (shortsVideos || []).filter((v) => v?.id?.videoId);
 
