@@ -3754,37 +3754,6 @@ main {
     }
   }
 
-  // ---------- 스포츠 ----------
-  .sport-hero .sport-hero-card {
-    left: $tablet-edge;
-  }
-
-  .sport-upcoming .inner,
-  .sport-shorts .inner,
-  .sport-promo .inner,
-  .sport-teams .inner,
-  .sport-league .inner,
-  .sport-replay .inner,
-  .sport-highlights .inner,
-  .sport-notify .inner {
-    padding-left: $tablet-edge;
-    padding-right: $tablet-edge;
-  }
-
-  .sport-upcoming .sport-match-list,
-  .sport-teams .sport-team-list,
-  .sport-league .sport-league-list,
-  .sport-highlights .sport-highlight-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .sport-replay .sport-replay-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .sport-notify .sport-notify-banner {
-    padding: 32px;
-  }
 }
 // 스포츠 홈 (로그인 전 / 후 공통): 섹션 사이 여백과 콘텐츠 폭을 한 곳에서 관리합니다.
 // - 기존 .sport-home-member(로그인 후 전용) → .sport-home 으로 바꿔 같은 영역은 똑같이 보이게 함
@@ -3834,8 +3803,5 @@ main.sport-home {
     text-decoration: none;
     img, .sport-series-placeholder { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; background: #292929; }
     h4 { margin: 12px 0 0; }
-  }
-  @media (max-width: 768px) {
-    > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner { padding-left: 20px; padding-right: 20px; }
   }
 }

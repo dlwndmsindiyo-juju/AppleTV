@@ -189,65 +189,9 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       );
     }
   }
- 
- 
- 
-  // ---------- 스포츠 ----------
-  // ※ 스포츠 홈(main.sport-home) 안에서는 sport-member.scss 의 모바일 규칙이 우선 적용돼요.
-  //   (로그인 전 / 후가 같은 화면이 되도록 sport-member.scss 한 곳에서 관리)
-  .sport-hero {
-    .sport-hero-card {
-      left: $mobile-edge;
-      right: $mobile-edge;
-      bottom: 32px;
-      width: auto;
-      max-width: none;
-      padding: 20px;
-    }
- 
-    .sport-hero-title {
-      font-size: 20px;
-    }
-  }
- 
-  .sport-upcoming .inner,
-  .sport-shorts .inner,
-  .sport-promo .inner,
-  .sport-teams .inner,
-  .sport-league .inner,
-  .sport-replay .inner,
-  .sport-highlights .inner,
-  .sport-notify .inner {
-    padding-left: $mobile-edge;
-    padding-right: $mobile-edge;
-  }
- 
-  .sport-upcoming .sport-match-list,
-  .sport-teams .sport-team-list,
-  .sport-league .sport-league-list,
-  .sport-highlights .sport-highlight-list {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
- 
-  .sport-replay .sport-replay-list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
- 
-  .sport-shorts .sport-short-slide {
-    width: 160px;
-  }
- 
-  .sport-notify .sport-notify-banner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 24px;
-  }
- 
-  .sport-notify .sport-notify-btn {
-    width: 100%;
-  }
+
+  // 스포츠 홈 반응형은 sport-member.scss 에서 관리
+
 }
 
 // =====================================================================
