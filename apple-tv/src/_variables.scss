@@ -80,10 +80,10 @@ $toggle-inactive-bg: #262626;
 $input-bg: #262626;
 $input-focus-bg: #2e2e2e;
 
-// text-크기
+// text-크기 (PDF 사양 반영)
 @mixin display-xl {
   font-family: "SF Pro", sans-serif;
-  font-weight: 700; // Bold
+  font-weight: 700; // Bold (700)
   font-size: 76px;
   line-height: 96px;
   letter-spacing: 0;
@@ -91,56 +91,56 @@ $input-focus-bg: #2e2e2e;
 
 @mixin display-l {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
+  font-weight: 500; // Medium (500)
   font-size: 34px;
   line-height: 41px;
   letter-spacing: 0;
 }
 @mixin display-M {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
+  font-weight: 400; // Regular (400)
   font-size: 28px;
   line-height: 34px;
   letter-spacing: 0;
 }
 @mixin heading-h1 {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500; // medium
+  font-weight: 500; // Medium (500)
   font-size: 48px;
   line-height: 56px;
   letter-spacing: 0;
 }
 @mixin heading-h2 {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
+  font-weight: 400; // Regular (400)
   font-size: 22px;
   line-height: 28px;
   letter-spacing: 0;
 }
 @mixin heading-h3 {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
+  font-weight: 400; // Regular (400)
   font-size: 20px;
   line-height: 25px;
   letter-spacing: 0;
 }
 @mixin heading-h4 {
   font-family: "SF Pro", sans-serif;
-  font-weight: 600; // semiBold
+  font-weight: 600; // SemiBold (600)
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
 }
 @mixin heading-h5 {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
+  font-weight: 400; // Regular (400)
   font-size: 16px;
   line-height: 21px;
   letter-spacing: 0;
 }
 @mixin body-large {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
+  font-weight: 400; // Regular (400)
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
@@ -148,46 +148,8 @@ $input-focus-bg: #2e2e2e;
 
 @mixin body-default {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
+  font-weight: 400; // Regular (400)
   font-size: 15px;
   line-height: 20px;
   letter-spacing: 0;
 }
-
-@mixin body-small {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: 0;
-}
-@mixin label-default {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0;
-}
-@mixin caption-default {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // regular
-  font-size: 11px;
-  line-height: 13px;
-  letter-spacing: 0;
-}
-
-@mixin tv-control {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 600; // semiBold
-  font-size: 20px;
-  line-height: 125px;
-  letter-spacing: 0;
-}
-
-// 반응형 브레이크포인트
-$breakpoint-tablet: 1024px; // 태블릿 시안 1024 (이하 적용)
-$breakpoint-mobile: 767px; // 모바일 (mobile.scss 에서 사용)
-
-// 태블릿 시안: 본문 좌우 여백 (1024 기준 약 134px ≒ 13%)
-$tablet-gutter: 13%;
-$tablet-edge: 40px; // 헤더·푸터·스포츠 섹션 좌우 여백
