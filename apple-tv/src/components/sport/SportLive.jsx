@@ -1,11 +1,15 @@
+import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { useSportStore } from "../../store/useSportStore";
 import { decodeHtml } from "./sportUtils";
 
 export default function SportLive() {
-  // 프로젝트용 가짜 라이브: YouTube 축구 하이라이트를 LIVE 카드 형태로 표시합니다. (영상 길이는 시간 배지로 표시)
+  // 프로젝트용 가짜 라이브: 축구 하이라이트를 LIVE 카드 형태로 표시합니다.
+  // - 영상: TheSportsDB 최신 경기 하이라이트 (영상 길이는 YouTube 키가 있을 때만 시간 배지로 표시)
   const videos = useSportStore((state) => state.highlightList);
+  const fetchHighlightList = useSportStore((state) => state.onFetchHighlightList);
+  useEffect(() => { fetchHighlightList(); }, [fetchHighlightList]);
   const items = videos.filter((video) => video.id?.videoId).slice(0, 4);
 
   return (

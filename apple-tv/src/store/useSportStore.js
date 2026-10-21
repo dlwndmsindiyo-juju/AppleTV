@@ -106,9 +106,21 @@ const toStandingRow = (r) => ({
 const normalizeSportsDbHighlight = (item) => {
     const videoId = youtubeIdFromUrl(item?.strVideo);
     if (!videoId) return null;
+    const num = (v) => (v === null || v === undefined || v === "" || Number.isNaN(Number(v)) ? null : Number(v));
     return {
         id: { videoId },
         source: "thesportsdb",
+        // 경기 다시보기 카드에서 쓰는 경기 정보 (응답에 없는 값은 null)
+        event: {
+            id: item.idEvent || videoId,
+            home: item.strHomeTeam || null,
+            away: item.strAwayTeam || null,
+            homeScore: num(item.intHomeScore),
+            awayScore: num(item.intAwayScore),
+            homeBadge: item.strHomeTeamBadge || null,
+            awayBadge: item.strAwayTeamBadge || null,
+            date: item.dateEvent || null,
+        },
         snippet: {
             title: item.strEvent || [item.strHomeTeam, item.strAwayTeam].filter(Boolean).join(" vs "),
             channelTitle: item.strLeague || "",
@@ -334,6 +346,8 @@ export const useSportStore = create((set, get) => ({
     // [추가] 종료된 경기 (영상 다시보기용) - 최근 경기 순
     finishedMatches: [],
     onFetchFinishedMatches: async (competition = "PL") => {
+        if (get().finishedMatches.length > 0) return;
+        if (!FOOTBALL_KEY) return; // 키 없이 요청하면 403 → SportReplay 가 TheSportsDB 영상으로 대체
         try {
             const res = await fetch(`https://api.football-data.org/v4/competitions/${competition}/matches?status=FINISHED`, {
                 headers: { 'X-Auth-Token': FOOTBALL_KEY }
@@ -370,34 +384,26 @@ export const useSportStore = create((set, get) => ({
         }
     },
 
-    // [추가] 가짜 LIVE 카드용 영상 목록: YouTube 축구 하이라이트(4~20분) + 길이 배지
-    // 검색 100유닛 + 길이 조회 1유닛, 6시간 캐시. 실패하면 TheSportsDB 하이라이트로 대체
+    // [추가] 가짜 LIVE 카드용 영상 목록 — TheSportsDB 최신 경기 하이라이트(eventshighlights) 전용
+    // - 영상 길이 배지: YouTube 키가 있으면 videos API(1유닛, 검색 아님)로 길이만 조회, 없으면 배지 생략
     highlightList: [],
-    onFetchHighlightList: async (query = "축구 경기 하이라이트") => {
+    onFetchHighlightList: async () => {
         if (get().highlightList.length > 0) return;
+
+        const pool = await get().onFetchSportsDbHighlights();
+        if (pool.length === 0) return;
+
+        const picks = pool.slice(0, 6);
+        let seconds = {};
         if (YOUTUBE_KEY) {
             try {
-                const items = await withCache(`sport-yt-list:${query}`, async () => {
-                    const search = await youtubeGet("search", {
-                        part: "snippet", q: query, type: "video", maxResults: "6",
-                        videoCategoryId: "17", videoDuration: "medium", relevanceLanguage: "ko", regionCode: "KR",
-                    });
-                    const list = (search.items || []).filter((v) => v.id?.videoId);
-                    if (!list.length) return [];
-                    let seconds = {};
-                    try {
-                        const details = await youtubeGet("videos", { part: "contentDetails", id: list.map((v) => v.id.videoId).join(",") });
-                        seconds = Object.fromEntries((details.items || []).map((v) => [v.id, durationToSeconds(v.contentDetails?.duration)]));
-                    } catch { /* 길이 배지만 생략 */ }
-                    return list.map((v) => ({ ...v, durationText: formatDuration(seconds[v.id.videoId]) }));
+                seconds = await withCache(`sport-sdb-durations:${picks.map((v) => v.id.videoId).join(",")}`, async () => {
+                    const details = await youtubeGet("videos", { part: "contentDetails", id: picks.map((v) => v.id.videoId).join(",") });
+                    return Object.fromEntries((details.items || []).map((v) => [v.id, durationToSeconds(v.contentDetails?.duration)]));
                 });
-                if (items.length > 0) { set({ highlightList: items }); return; }
-            } catch (error) {
-                console.error("YouTube 하이라이트 조회 실패 (TheSportsDB 로 대체):", error);
-            }
+            } catch { /* 길이 배지만 생략 */ }
         }
-        const pool = await get().onFetchSportsDbHighlights();
-        if (pool.length > 0) set({ highlightList: pool.slice(0, 6) });
+        set({ highlightList: picks.map((v) => ({ ...v, durationText: formatDuration(seconds[v.id.videoId]) })) });
     },
 
     // [추가] 홈 "하이라이트" 섹션: 시안의 고정 카테고리 4개 × 영상 1개
@@ -410,14 +416,11 @@ export const useSportStore = create((set, get) => ({
             const home = latestMatch?.homeTeam?.shortName || latestMatch?.homeTeam?.name;
             const away = latestMatch?.awayTeam?.shortName || latestMatch?.awayTeam?.name;
             const matchQuery = home && away ? `${home} vs ${away} 하이라이트` : null;
-            const sdbPool = await get().onFetchSportsDbHighlights();
-            const cacheKey = `sport-yt-categories:${matchQuery || "default"}:${sdbPool.length > 4 ? "sdb" : "yt"}`;
 
-            const rows = await withCache(cacheKey, async () => {
+            const rows = await withCache(`sport-yt-categories:${matchQuery || "default"}`, async () => {
+                // 위 LIVE 카드(TheSportsDB)와 같은 영상은 제외
                 const used = new Set(get().highlightList.map((v) => v.id?.videoId));
-                const sdbPick = sdbPool.find((v) => !used.has(v.id.videoId));
                 const results = await Promise.all(HIGHLIGHT_CATEGORIES.map(async (cat, i) => {
-                    if (i === 0 && sdbPick) return { cat, items: [sdbPick] };
                     const q = i === 0 && matchQuery ? matchQuery : cat.query;
                     const data = await youtubeGet("search", { part: "snippet", q, type: "video", maxResults: "5" });
                     return { cat, items: data.items || [] };
@@ -430,7 +433,7 @@ export const useSportStore = create((set, get) => ({
             });
             set({ highlightCategories: rows });
         } catch (error) {
-            console.error("하이라이트 카테고리 조회 실패:", error);
+            console.error("하이라이트(YouTube) 조회 실패:", error);
         }
     },
 
