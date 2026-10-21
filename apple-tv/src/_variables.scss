@@ -153,3 +153,41 @@ $input-focus-bg: #2e2e2e;
   line-height: 20px;
   letter-spacing: 0;
 }
+
+@mixin body-small {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500; // Medium (500)
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+@mixin label-default {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400; // Regular (400)
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+}
+@mixin caption-default {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400; // Regular (400)
+  font-size: 11px;
+  line-height: 13px;
+  letter-spacing: 0;
+}
+
+@mixin tv-control {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 600; // SemiBold (600)
+  font-size: 20px;
+  line-height: 125px;
+  letter-spacing: 0;
+}
+
+// 반응형 브레이크포인트
+$breakpoint-tablet: 1024px; // 태블릿 시안 1024 (이하 적용)
+$breakpoint-mobile: 767px; // 모바일 (mobile.scss 에서 사용)
+
+// 태블릿 시안: 본문 좌우 여백 (1024 기준 약 134px ≒ 13%)
+$tablet-gutter: 13%;
+$tablet-edge: 40px; // 헤더·푸터·스포츠 섹션 좌우 여백
