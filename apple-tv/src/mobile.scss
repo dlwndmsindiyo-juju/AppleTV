@@ -53,7 +53,9 @@ $mobile-edge: 20px; // 모바일 좌우 여백
  
   // ---------- 히어로 ----------
   .hero-swiper-container {
-    height: 480px;
+    // 화면이 줄어도 히어로는 화면 높이 그대로
+    height: 100vh;
+    height: 100svh;
  
     .hero-slide-item .hero-info {
       left: $mobile-edge;
@@ -191,6 +193,8 @@ $mobile-edge: 20px; // 모바일 좌우 여백
  
  
   // ---------- 스포츠 ----------
+  // ※ 스포츠 홈(main.sport-home) 안에서는 sport-member.scss 의 모바일 규칙이 우선 적용돼요.
+  //   (로그인 전 / 후가 같은 화면이 되도록 sport-member.scss 한 곳에서 관리)
   .sport-hero {
     .sport-hero-card {
       left: $mobile-edge;

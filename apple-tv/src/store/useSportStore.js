@@ -4,6 +4,11 @@ import { isLiveFootballVideo } from "../components/sport/liveFootball";
 // Football data 키 변수로 저장
 const FOOTBALL_KEY = import.meta.env.VITE_FOOTBALL_API_KEY;
 
+// football-data.org 는 CORS 허용 주소가 http://localhost (포트 없음) 하나뿐이라
+// Vite 개발 서버(localhost:5173)에서 직접 부르면 CORS 로 막힘
+// → 개발 중에는 vite.config.js 의 프록시("/football")를 거쳐서 같은 주소로 요청
+const FOOTBALL_BASE = import.meta.env.VITE_FOOTBALL_BASE || (import.meta.env.DEV ? "/football" : "https://api.football-data.org");
+
 // 유튜브 API 키 환경변수
 const YOUTUBE_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
@@ -39,18 +44,39 @@ const youtubeGet = async (path, params) => {
 };
 
 // 캐시가 신선하면 그대로, 아니면 loader 실행. 실패하면 오래된 캐시라도 사용
+// 같은 key 를 동시에 요청하면 한 번만 호출 (개발 모드 StrictMode 에서 useEffect 가 두 번 실행돼
+// YouTube 검색(100유닛)이 두 배로 나가던 문제 방지)
+const inflight = new Map();
 const withCache = async (key, loader, ttl = CACHE_TTL) => {
     const cached = readCache(key, ttl);
     if (cached?.fresh) return cached.data;
-    try {
-        const data = await loader();
-        if (!(Array.isArray(data) && data.length === 0)) writeCache(key, data); // 빈 결과는 캐싱하지 않음
-        return data;
-    } catch (error) {
-        if (cached) return cached.data;
-        throw error;
-    }
+    if (inflight.has(key)) return inflight.get(key);
+
+    const task = (async () => {
+        try {
+            const data = await loader();
+            if (!(Array.isArray(data) && data.length === 0)) writeCache(key, data); // 빈 결과는 캐싱하지 않음
+            return data;
+        } catch (error) {
+            if (cached) return cached.data;
+            throw error;
+        } finally {
+            inflight.delete(key);
+        }
+    })();
+    inflight.set(key, task);
+    return task;
 };
+
+// [개발용] 키가 들어왔는지 콘솔에 표시 (값은 출력하지 않음)
+// 키가 없으면 YouTube / TheSportsDB 함수가 에러 없이 조용히 끝나서 원인을 찾기 어렵기 때문
+if (import.meta.env.DEV) {
+    console.info("[useSportStore] API 키 확인", {
+        VITE_YOUTUBE_API_KEY: YOUTUBE_KEY ? "있음" : "없음 → 숏츠 · 하이라이트 안 나옴",
+        VITE_SPORTS_API_KEY: SPORTSDB_KEY ? "있음" : "없음 → 라이브 안 나옴",
+        VITE_FOOTBALL_API_KEY: FOOTBALL_KEY ? "있음" : "없음 → 경기 · 순위 데이터 없음",
+    });
+}
 
 // ISO8601 길이(PT1M5S) → 초
 const durationToSeconds = (iso = "") => {
@@ -189,7 +215,7 @@ export const useSportStore = create((set, get) => ({
         }
         // 2) football-data (무료 플랜에는 MLS 가 없어 PL 등 유럽 리그만 가능)
         try {
-            const res = await fetch(`https://api.football-data.org/v4/competitions/${competition}/standings`, {
+            const res = await fetch(`${FOOTBALL_BASE}/v4/competitions/${competition}/standings`, {
                 headers: { 'X-Auth-Token': FOOTBALL_KEY }
             });
             const data = await res.json();
@@ -203,7 +229,7 @@ export const useSportStore = create((set, get) => ({
     upcomingMatches: [],
     onFetchUpcomingMatches: async (competition = "PL") => {
         try {
-            const res = await fetch(`https://api.football-data.org/v4/competitions/${competition}/matches?status=SCHEDULED`, {
+            const res = await fetch(`${FOOTBALL_BASE}/v4/competitions/${competition}/matches?status=SCHEDULED`, {
                 headers: { 'X-Auth-Token': FOOTBALL_KEY }
             });
             const data = await res.json();
@@ -232,7 +258,7 @@ export const useSportStore = create((set, get) => ({
         }
         // 2) football-data (무료 플랜은 지연/제한이 있음)
         try {
-            const res = await fetch(`https://api.football-data.org/v4/competitions/${competition}/matches?status=IN_PLAY,PAUSED`, {
+            const res = await fetch(`${FOOTBALL_BASE}/v4/competitions/${competition}/matches?status=IN_PLAY,PAUSED`, {
                 headers: { 'X-Auth-Token': FOOTBALL_KEY }
             });
             const data = await res.json();
@@ -249,7 +275,7 @@ export const useSportStore = create((set, get) => ({
         if (teamSquads[teamId]) return;
 
         try {
-            const res = await fetch(`https://api.football-data.org/v4/teams/${teamId}`, {
+            const res = await fetch(`${FOOTBALL_BASE}/v4/teams/${teamId}`, {
                 headers: { 'X-Auth-Token': FOOTBALL_KEY }
             });
             const data = await res.json();
@@ -349,7 +375,7 @@ export const useSportStore = create((set, get) => ({
         if (get().finishedMatches.length > 0) return;
         if (!FOOTBALL_KEY) return; // 키 없이 요청하면 403 → SportReplay 가 TheSportsDB 영상으로 대체
         try {
-            const res = await fetch(`https://api.football-data.org/v4/competitions/${competition}/matches?status=FINISHED`, {
+            const res = await fetch(`${FOOTBALL_BASE}/v4/competitions/${competition}/matches?status=FINISHED`, {
                 headers: { 'X-Auth-Token': FOOTBALL_KEY }
             });
             const data = await res.json();
@@ -367,19 +393,41 @@ export const useSportStore = create((set, get) => ({
     onFetchSportsDbHighlights: async () => {
         const loaded = get().sportsDbHighlights;
         if (loaded.length > 0) return loaded;
-        if (!SPORTSDB_KEY) return [];
+        if (!SPORTSDB_KEY) {
+            console.warn("[TheSportsDB] VITE_SPORTS_API_KEY 가 없어 하이라이트를 불러오지 않습니다. (.env 확인 후 개발 서버 재시작)");
+            return [];
+        }
         try {
             const pool = await withCache("sport-sdb-highlights", async () => {
-                const data = await sportsDbV1("eventshighlights.php?s=Soccer");
-                const rows = data.tvhighlights || data.highlights || data.events || [];
+                // eventshighlights 는 조건에 따라 빈 값이 올 수 있어 순서대로 시도
+                // 1) 축구 최신  2) 전체 최신  3) 오늘 · 어제 · 그제 날짜별 축구
+                const ymd = (offset) => new Date(Date.now() - offset * 86400000).toISOString().slice(0, 10);
+                const attempts = [
+                    "eventshighlights.php?s=Soccer",
+                    "eventshighlights.php",
+                    `eventshighlights.php?d=${ymd(0)}&s=Soccer`,
+                    `eventshighlights.php?d=${ymd(1)}&s=Soccer`,
+                    `eventshighlights.php?d=${ymd(2)}&s=Soccer`,
+                ];
                 const seen = new Set();
-                return rows.map(normalizeSportsDbHighlight)
-                    .filter((v) => v && !seen.has(v.id.videoId) && seen.add(v.id.videoId));
+                for (const path of attempts) {
+                    const data = await sportsDbV1(path);
+                    const rows = data?.tvhighlights || data?.highlights || data?.events || [];
+                    if (import.meta.env.DEV) {
+                        console.info(`[TheSportsDB] ${path} → ${rows.length}건`, rows.length ? "" : data);
+                    }
+                    const list = rows
+                        .filter((r) => !r.strSport || r.strSport === "Soccer")
+                        .map(normalizeSportsDbHighlight)
+                        .filter((v) => v && !seen.has(v.id.videoId) && seen.add(v.id.videoId));
+                    if (list.length > 0) return list;
+                }
+                return [];
             }, 60 * 60 * 1000);
             set({ sportsDbHighlights: pool });
             return pool;
         } catch (error) {
-            console.error("TheSportsDB 하이라이트 조회 실패 (YouTube 로 대체):", error);
+            console.error("TheSportsDB 하이라이트 조회 실패:", error);
             return [];
         }
     },
