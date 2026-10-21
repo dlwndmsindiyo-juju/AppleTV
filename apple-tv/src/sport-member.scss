@@ -59,21 +59,11 @@
     .sport-btn.secondary { background: $neutral-color-100; color: $dark-color-900; }
   }
 
-  .sport-live-slide, .sport-upcoming-slide { width: clamp(280px, 20.1vw, 386px); max-width: 90%; }
+  .sport-live-slide { width: clamp(280px, 20.1vw, 386px); max-width: 90%; }
   .sport-live-card { aspect-ratio: 3 / 2; border-radius: $radius-card; }
   .sport-live-badge { background: $sports-color; }
   .sport-live-badge, .sport-live-watch { @include label-default; font-family: inherit; }
-  // 기존 공통 슬라이드의 고정 !important 폭은 회원 화면에서만 보완합니다.
-  .sport-upcoming-slide { width: clamp(280px, 20.1vw, 386px) !important; }
-  .sport-match-card {
-    width: 100%; height: auto; aspect-ratio: 386 / 200;
-    background: linear-gradient(110deg, var(--sport-home-color, #192d4f) 0%, var(--sport-home-color, #192d4f) 50%, var(--sport-away-color, #6b2635) 50%, var(--sport-away-color, #6b2635) 100%);
-  }
-  .sport-match-bg, .sport-match-divider { display: none; }
-  .sport-match-overlay { background: linear-gradient(115deg, transparent, rgba(255, 255, 255, .12) 40%, transparent 65%); }
-  .sport-match-card .sport-team { width: 84px; height: 84px; }
-  .sport-match-status { position: absolute; left: 16px; bottom: 12px; font-size: 12px; }
-  .sport-match-content { height: 100%; }
+
 
   .sport-short-slide, .sport-series-slide { width: clamp(190px, 14.58vw, 280px); max-width: 85%; }
   .sport-short-thumb { aspect-ratio: 280 / 304; }
