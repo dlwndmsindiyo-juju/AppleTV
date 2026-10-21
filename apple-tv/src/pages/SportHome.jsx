@@ -8,6 +8,8 @@ import SportHero from "../components/sport/SportHero";
 import SportUpcoming from "../components/sport/SportUpcoming";
 import SportShorts from "../components/sport/SportShorts";
 import SportTeams from "../components/sport/SportTeams";
+import "../sport-member.scss";
+import SportConferenceStandings from "../components/sport/SportConferenceStandings";
 import SportLeague from "../components/sport/SportLeague";
 import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
@@ -73,7 +75,7 @@ const SportHome = () => {
       <SportTeams />
 
       {/* 6. 리그 순위 */}
-      <SportLeague />
+      {user ? <SportConferenceStandings /> : <SportLeague />}
 
       {/* 7. 영상 다시보기 */}
       <SportReplay title="영상 다시보기" />

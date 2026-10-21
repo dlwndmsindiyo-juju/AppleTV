@@ -1,38 +1,36 @@
 import { useSportStore } from "../../store/useSportStore";
 import { useAuthStore } from "../../store/useAuthStore";
+import { isLiveFootballVideo } from "./liveFootball";
 import { isLive, getScore } from "./sportUtils";
 
-// 로그인 전 히어로에 보여줄 메인 이미지 (public/images/sport/main-1.jpg)
+// 로그인 전 히어로의 기존 스포츠 이미지
 const SPORT_MAIN_IMAGE = "/images/sport-subscribe-cta.webp";
 
 // 스포츠 히어로
 // - 로그인 전: 메인 이미지 1장만 노출
-// - 로그인 후: 라이브 영상 썸네일 배경 + 하단 좌측 경기 카드
+// - 로그인 후: PDF 히어로 이미지 + 하단 좌측 경기 카드
 const SportHero = () => {
   const user = useAuthStore((state) => state.user);
   const { liveMatches, liveVideos } = useSportStore();
 
-  // 진행 중인 경기가 있으면 우선, 없으면 가장 가까운 예정 경기
+  // 실제 진행 중인 축구 경기만 사용합니다.
   const match =
     (liveMatches || []).find(isLive);
   const live = Boolean(match);
   const score = match ? getScore(match) : null;
 
-  // 라이브 영상 (있으면 배경 썸네일 + 시청 링크)
+  // 경기 팀과 일치하는 라이브 영상이 있을 때만 시청 링크를 제공합니다.
   const video = match && (liveVideos || []).find((item) => {
     const title = item.snippet?.title?.toLowerCase() || "";
-    return item.snippet?.liveBroadcastContent === "live" && item.id?.videoId &&
+    return isLiveFootballVideo(item) &&
       [match.homeTeam?.name, match.awayTeam?.name].some((name) => name && title.includes(name.toLowerCase()));
   });
-  const thumb =
-    video?.snippet?.thumbnails?.high?.url ||
-    video?.snippet?.thumbnails?.medium?.url;
   const watchUrl = video?.id?.videoId
     ? `https://www.youtube.com/watch?v=${video.id.videoId}`
     : null;
 
-  // 로그인 전에는 메인 이미지, 로그인 후에는 라이브 썸네일(없으면 메인 이미지)
-  const bgImage = user && thumb ? thumb : SPORT_MAIN_IMAGE;
+  // 로그인 후에는 제공된 PDF의 Player Profiles 이미지를 사용합니다.
+  const bgImage = user ? "/images/sport/player-profiles.jpeg" : SPORT_MAIN_IMAGE;
 
   return (
     <section className="sport-hero">

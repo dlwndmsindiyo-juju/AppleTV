@@ -1,13 +1,12 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { useSportStore } from "../../store/useSportStore";
+import { isLiveFootballVideo } from "./liveFootball";
 import { decodeHtml } from "./sportUtils";
 
 export default function SportLive() {
   const videos = useSportStore((state) => state.liveVideos);
-  const items = videos.filter((video) =>
-    video.id?.videoId && video.snippet?.liveBroadcastContent === "live"
-  );
+  const items = videos.filter(isLiveFootballVideo);
 
   return (
     <section className="sport-live" id="sport-live" aria-labelledby="sport-live-title">

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { isLiveFootballVideo } from "../components/sport/liveFootball";
 
 // Football data 키 변수로 저장
 const FOOTBALL_KEY = import.meta.env.VITE_FOOTBALL_API_KEY;
@@ -9,13 +10,14 @@ const YOUTUBE_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 export const useSportStore = create((set, get) => ({
     // 1. 리그 순위 데이터 저장 (Football-Data.org)
     standings: [],
+    standingsGroups: [],
     onFetchStandings: async (competition = "PL") => {
         try {
             const res = await fetch(`https://api.football-data.org/v4/competitions/${competition}/standings`, {
                 headers: { 'X-Auth-Token': FOOTBALL_KEY }
             });
             const data = await res.json();
-            set({ standings: data.standings?.[0]?.table || [] });
+            set({ standings: data.standings?.[0]?.table || [], standingsGroups: data.standings || [] });
         } catch (error) {
             console.error("리그 순위 조회 실패:", error);
         }
@@ -71,18 +73,34 @@ export const useSportStore = create((set, get) => ({
         }
     },
 
-    // 4. 라이브 / 실시간 경기 관련 영상 (YouTube API 활용)
+    // 4. 현재 진행 중인 실제 축구 경기 중계만 노출합니다.
     liveVideos: [],
-    onFetchLiveVideos: async (query = "축구 생중계 라이브") => {
+    onFetchLiveVideos: async () => {
         if (!YOUTUBE_KEY) return;
         try {
-            const res = await fetch(
-                `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&eventType=live&type=video&maxResults=5&key=${YOUTUBE_KEY}`
-            );
+            const search = new URLSearchParams({
+                part: "snippet", q: "축구 경기 생중계|soccer match live",
+                eventType: "live", type: "video", videoCategoryId: "17",
+                topicId: "/m/02vx4", maxResults: "25", key: YOUTUBE_KEY,
+            });
+            const res = await fetch(`https://www.googleapis.com/youtube/v3/search?${search}`);
+            if (!res.ok) throw new Error(`YouTube search HTTP ${res.status}`);
             const data = await res.json();
-            set({ liveVideos: data.items || [] });
+            const ids = (data.items || []).map((item) => item.id?.videoId).filter(Boolean);
+            if (!ids.length) { set({ liveVideos: [] }); return; }
+
+            const params = new URLSearchParams({
+                part: "snippet,topicDetails,liveStreamingDetails", id: ids.join(","), key: YOUTUBE_KEY,
+            });
+            const details = await fetch(`https://www.googleapis.com/youtube/v3/videos?${params}`);
+            if (!details.ok) throw new Error(`YouTube videos HTTP ${details.status}`);
+            const videos = await details.json();
+            set({ liveVideos: (videos.items || [])
+                .map((video) => ({ ...video, id: { videoId: video.id } }))
+                .filter(isLiveFootballVideo) });
         } catch (error) {
-            console.error("라이브 영상 조회 실패:", error);
+            set({ liveVideos: [] });
+            console.error("축구 라이브 경기 조회 실패:", error);
         }
     },
 

@@ -1,0 +1,166 @@
+@use "./variables" as *;
+
+// PDF 전용 보완 스타일입니다. 기존 공통 스타일과 변수 파일은 유지합니다.
+@font-face {
+  font-family: "Sport SF Pro";
+  src: url("/wss/fonts/SF-Pro/SFPro.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+.sport-home.sport-home-member {
+  --sport-content-width: 1440px;
+  --sport-card-gap: 24px;
+  padding-top: $header-height;
+  background: $dark-color-900;
+  color: $text-primary;
+  font-family: "Sport SF Pro", "SF Pro", system-ui, sans-serif;
+
+  &, * { font-family: "Sport SF Pro", "SF Pro", system-ui, sans-serif; }
+  > section { background-color: transparent; }
+  > section:not(.sport-hero):not(.sport-teams):not(.sport-league) > .inner {
+    width: 75%;
+    max-width: var(--sport-content-width);
+    padding: 0;
+  }
+
+  .sport-section-head { margin-bottom: 24px; gap: 16px; }
+  .sport-section-title, .sport-teams-title { @include heading-h2; font-weight: 600; }
+  .sport-more, .sport-teams-desc { @include body-default; }
+  .sport-section-title, .sport-teams-title, .sport-more, .sport-teams-desc,
+  .sport-hero-label, .sport-hero-title, .sport-hero-sub, .sport-btn,
+  .sport-short-title, .sport-short-meta, .sport-highlight-title, .sport-highlight-meta,
+  .sport-replay-name, .sport-replay-date, .sport-series-card, .sport-team-name {
+    font-family: inherit;
+    letter-spacing: 0;
+  }
+
+  .sport-hero {
+    height: clamp(480px, 46.04vw, 884px);
+    min-height: 0;
+    .sport-hero-bg { background-position: center 36%; }
+    .sport-hero-overlay { background: linear-gradient(0deg, rgba(0, 0, 0, .15), transparent 65%); }
+    .sport-hero-card {
+      left: $header-pad-x;
+      bottom: 56px;
+      width: min(700px, calc(100% - 128px));
+      max-width: none;
+      padding: 32px;
+      border-radius: $radius-card;
+      background: $dark-color-800;
+    }
+    .sport-hero-label, .sport-hero-sub { @include body-large; font-family: inherit; }
+    .sport-hero-title { @include display-l; font-family: inherit; font-weight: 700; gap: 16px; }
+    .sport-hero-actions { margin-top: 32px; gap: 24px; }
+    .sport-btn { @include body-large; font-family: inherit; font-weight: 600; height: 60px; padding: 0 40px; }
+    .sport-btn.primary { background: $sports-color; }
+    .sport-btn.primary:hover { background: #cf1715; }
+    .sport-btn.secondary { background: $neutral-color-100; color: $dark-color-900; }
+  }
+
+  .sport-live-slide, .sport-upcoming-slide { width: clamp(280px, 20.1vw, 386px); max-width: 90%; }
+  .sport-live-card { aspect-ratio: 3 / 2; border-radius: $radius-card; }
+  .sport-live-badge { background: $sports-color; }
+  .sport-live-badge, .sport-live-watch { @include label-default; font-family: inherit; }
+  // 기존 공통 슬라이드의 고정 !important 폭은 회원 화면에서만 보완합니다.
+  .sport-upcoming-slide { width: clamp(280px, 20.1vw, 386px) !important; }
+  .sport-match-card {
+    width: 100%; height: auto; aspect-ratio: 386 / 200;
+    background: linear-gradient(110deg, var(--sport-home-color, #192d4f) 0%, var(--sport-home-color, #192d4f) 50%, var(--sport-away-color, #6b2635) 50%, var(--sport-away-color, #6b2635) 100%);
+  }
+  .sport-match-bg, .sport-match-divider { display: none; }
+  .sport-match-overlay { background: linear-gradient(115deg, transparent, rgba(255, 255, 255, .12) 40%, transparent 65%); }
+  .sport-match-card .sport-team { width: 84px; height: 84px; }
+  .sport-match-status { position: absolute; left: 16px; bottom: 12px; font-size: 12px; }
+  .sport-match-content { height: 100%; }
+
+  .sport-short-slide, .sport-series-slide { width: clamp(190px, 14.58vw, 280px); max-width: 85%; }
+  .sport-short-thumb { aspect-ratio: 280 / 304; }
+  .sport-short-play { width: 96px; height: 96px; font-size: 32px; }
+  .sport-short-title, .sport-highlight-title, .sport-series-card h4 { @include heading-h4; font-family: inherit; margin: 12px 0 6px; }
+  .sport-short-meta, .sport-highlight-meta, .sport-series-description { @include body-small; font-family: inherit; color: $neutral-color-400; }
+  .sport-short-meta { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .sport-teams {
+    padding: 56px 0;
+    .inner { max-width: $inner-width; padding: 0 104px; position: relative; }
+    .sport-teams-head { margin-bottom: 24px; }
+    .sport-teams-title { margin-bottom: 8px; }
+    .sport-team-filter, .sport-teams-count { display: none; }
+    .sport-team-slide { width: calc((100% - 108px) / 4); min-width: 260px; }
+    .sport-team-card { padding: 20px; gap: 16px; height: 108px; background: $dark-color-800; }
+    .sport-team-logo { width: 64px; height: 64px; }
+    .sport-team-name { @include body-default; font-family: inherit; }
+    .sport-team-more { margin: 24px 0 0 auto; height: auto; padding: 0; border: 0; background: transparent; @include body-small; font-family: inherit; }
+  }
+
+  .sport-conferences {
+    padding: 0;
+    > .inner { width: calc(100% - 240px); max-width: 1680px; padding: 0; }
+  }
+  .sport-conference-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .sport-conference-card {
+    min-width: 0;
+    padding: 28px 24px;
+    border-radius: $radius-card;
+    background: $neutral-color-100;
+    color: $dark-color-900;
+    h4 { display: flex; align-items: center; gap: 20px; margin: 0 0 24px; @include heading-h4; font-family: inherit; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; @include body-default; font-family: inherit; }
+    th, td { height: 62px; text-align: center; padding: 4px; box-sizing: border-box; }
+    thead th { @include body-small; font-family: inherit; font-weight: 600; }
+    th:first-child { width: 7%; }
+    th:nth-child(2) { width: 41%; }
+    tbody th { text-align: left; font-weight: 400; }
+    .sport-conference-empty { height: 310px; color: $neutral-color-600; }
+  }
+  .sport-conference-badge { display: grid; place-items: center; width: 48px; height: 56px; border: 2px solid $sports-color; border-radius: 4px 4px 18px 18px; color: $sports-color; font-size: 13px; font-weight: 700; }
+  .sport-conference-club { display: flex; align-items: center; gap: 12px; min-width: 0; img { width: 30px; height: 30px; object-fit: contain; } span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+  .sport-conference-scroll { overflow-x: auto; }
+  .sport-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+  .sport-replay-list { display: flex; gap: var(--sport-card-gap); overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
+  .sport-replay-list > li { flex: 0 0 clamp(280px, 20.1vw, 386px); max-width: 90%; scroll-snap-align: start; }
+  .sport-replay-card { padding: 16px; gap: 8px; background: $dark-color-500; }
+  .sport-replay-thumb { aspect-ratio: 16 / 9; }
+  .sport-replay-name { @include heading-h4; font-family: inherit; }
+  .sport-replay-date { @include body-small; font-family: inherit; margin: 0; }
+  .sport-highlight-list { display: flex; overflow-x: auto; gap: var(--sport-card-gap); padding-bottom: 8px; }
+  .sport-highlight-list > li { flex: 0 0 clamp(280px, 20.1vw, 386px); max-width: 90%; }
+  .sport-highlight-thumb { aspect-ratio: 16 / 9; }
+  .sport-highlight-play { background: rgba(0, 0, 0, .6); }
+  .sport-series-card {
+    position: relative;
+    img, .sport-series-placeholder { aspect-ratio: 280 / 304; }
+    h4 { padding: 0; }
+  }
+  .sport-series-play { position: absolute; top: 0; left: 0; width: 100%; aspect-ratio: 280 / 304; display: grid; place-items: center; font-size: 28px; pointer-events: none; color: white; text-shadow: 0 2px 12px #000; }
+  .sport-series-description { margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  @media (max-width: $breakpoint-tablet) {
+    > section:not(.sport-hero):not(.sport-teams):not(.sport-league) > .inner { width: calc(100% - 80px); }
+    .sport-hero .sport-hero-card { left: 40px; width: min(600px, calc(100% - 80px)); bottom: 32px; padding: 24px; }
+    .sport-hero .sport-hero-title { font-size: 28px; line-height: 34px; }
+    .sport-teams .inner { padding: 0 40px; }
+    .sport-conferences > .inner { width: calc(100% - 80px); }
+    .sport-conference-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: $breakpoint-mobile) {
+    > section:not(.sport-hero):not(.sport-teams):not(.sport-league) > .inner { width: calc(100% - 40px); padding: 0; }
+    .sport-hero { height: 540px; }
+    .sport-hero .sport-hero-card { left: 20px; width: calc(100% - 40px); padding: 20px; bottom: 24px; }
+    .sport-hero .sport-hero-title { font-size: 24px; line-height: 32px; gap: 8px; }
+    .sport-hero .sport-btn { height: 48px; min-height: 48px; padding: 0 20px; font-size: 15px; }
+    .sport-hero .sport-hero-actions { gap: 12px; margin-top: 24px; }
+    .sport-hero .sport-hero-bg { background-size: cover; background-position: center 40%; }
+    .sport-short-play { width: 64px; height: 64px; font-size: 24px; }
+    .sport-teams { padding: 32px 0; }
+    .sport-teams .inner { padding: 0 20px; }
+    .sport-teams .sport-team-slide { width: 280px; }
+    .sport-conferences > .inner { width: calc(100% - 40px); }
+    .sport-conference-card { padding: 20px 12px; table { min-width: 400px; } }
+    .sport-section-title, .sport-teams-title { font-size: 20px; }
+    .sport-more { flex-shrink: 0; font-size: 13px; }
+  }
+}
