@@ -1,22 +1,25 @@
 // src/pages/SportHome.jsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSportStore } from "../store/useSportStore";
 import { useAuthStore } from "../store/useAuthStore";
+import SportLive from "../components/sport/SportLive";
+import SportSeries from "../components/sport/SportSeries";
 import SportHero from "../components/sport/SportHero";
 import SportUpcoming from "../components/sport/SportUpcoming";
 import SportShorts from "../components/sport/SportShorts";
 import SportTeams from "../components/sport/SportTeams";
+import "../sport-member.scss";
+import SportConferenceStandings from "../components/sport/SportConferenceStandings";
 import SportLeague from "../components/sport/SportLeague";
 import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
 import DeviceGuide from "../components/landing/DeviceGuide";
-import PromoBanner from "../components/landing/PromoBanner";
 import SubscribeCTA from "../components/landing/SubscribeCTA";
 
 const SportHome = () => {
   const {
     onFetchUpcomingMatches,
-    onFetchLiveVideos,
+    onFetchLiveMatches,
     onFetchShorts,
     onFetchStandings,
     onFetchHighlightList,
@@ -31,12 +34,18 @@ const SportHome = () => {
     onFetchStandings(); // 관심있는 구단 (리그 순위표의 팀)
     onFetchHighlightList(); // 하이라이트
     onFetchFinishedMatches(); // 영상 다시보기 (종료된 경기)
-    // 라이브 영상은 로그인 후 히어로에서만 사용 (로그인 전엔 요청 안 함)
-    if (user) onFetchLiveVideos();
+    // 경기 정보는 1분마다 갱신하고 LIVE 카드에는 위에서 받은 하이라이트를 사용합니다.
+    if (user) {
+      onFetchLiveMatches();
+      const timer = setInterval(() => {
+        onFetchLiveMatches();
+      }, 60000);
+      return () => clearInterval(timer);
+    }
   }, [
     user,
     onFetchUpcomingMatches,
-    onFetchLiveVideos,
+    onFetchLiveMatches,
     onFetchShorts,
     onFetchStandings,
     onFetchHighlightList,
@@ -44,9 +53,10 @@ const SportHome = () => {
   ]);
 
   return (
-    <main className="page-fade">
+    <main className={`page-fade sport-home${user ? " sport-home-member" : ""}`}>
       {/* 1. 히어로 (로그인 전: 메인 이미지 / 로그인 후: 라이브 + 경기 카드) */}
       <SportHero />
+      {user && <SportLive />}
 
       {/* 2. 예정된 경기 */}
       <SportUpcoming />
@@ -55,25 +65,23 @@ const SportHome = () => {
       <SportShorts />
 
       {/* 4. 홍보 배너 */}
-      <SubscribeCTA type="sport" />
+      {!user && <SubscribeCTA type="sport" />}
 
       {/* 5. 관심있는 구단 */}
       <SportTeams />
 
       {/* 6. 리그 순위 */}
-      <SportLeague />
+      {user ? <SportConferenceStandings /> : <SportLeague />}
 
       {/* 7. 영상 다시보기 */}
-      <SportReplay />
+      <SportReplay title="영상 다시보기" />
 
       {/* 8. 하이라이트 */}
       <SportHighlights />
 
       {/* 9. 디바이스 가이드 (마지막) */}
-      <DeviceGuide />
+      {user ? <SportSeries /> : <DeviceGuide />}
 
-      {/* 10. 구독 전 프로모션 배너 (첫 스크롤 후 하단에 떠 있음, 로그인하면 사라짐) */}
-      <PromoBanner />
     </main>
   );
 };
