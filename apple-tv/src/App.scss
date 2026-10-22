@@ -188,6 +188,42 @@ header {
             }
           }
 
+          // 로그인 전: 파란 "로그인" 버튼 (사람 아이콘 + 글자)
+          .login-box {
+            display: flex;
+          }
+
+          .header-login-btn {
+            @include body-default;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 10px;
+            background-color: $accent-color;
+            color: $light-color-0;
+            font-weight: 700;
+            white-space: nowrap;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+
+            img {
+              width: 12px;
+              height: 13px;
+              display: block;
+            }
+
+            &:hover {
+              background-color: darken($accent-color, 8%);
+            }
+
+            &:focus-visible {
+              outline: 2px solid $light-color-0;
+              outline-offset: 2px;
+            }
+          }
+
           // 프로필: 이미지 원형 (40px)
           .profile-box {
             cursor: pointer;
