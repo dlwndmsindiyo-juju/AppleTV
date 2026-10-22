@@ -438,6 +438,7 @@ header {
     }
   }
 }
+
 // ===== 3단계: 인증 완료 (시안 맞춤) =====
 .login-page {
   .login-card.login-card--confirm {
@@ -457,13 +458,20 @@ header {
       background-color: #fff;
       color: #000;
 
-      svg { width: 20px; height: 20px; }
-      &:hover { background-color: #ececf0; }
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        background-color: #ececf0;
+      }
     }
 
     // 로고 플레이스홀더 50px
     .login-logo-area {
       margin-bottom: 0;
+
       .login-app-icon {
         width: 50px;
         height: 50px;
@@ -501,7 +509,9 @@ header {
         font-size: 17px;
         font-weight: 700;
 
-        &:hover { background-color: #0070eb; }
+        &:hover {
+          background-color: #0070eb;
+        }
       }
     }
 
@@ -518,6 +528,7 @@ header {
     }
   }
 }
+
 // 히어로
 .hero-swiper-container {
   position: relative;
@@ -1527,7 +1538,7 @@ header {
       margin: 0;
       padding: 4px 0 16px;
 
-      > li {
+      >li {
         min-width: 0;
       }
     }
@@ -2001,7 +2012,7 @@ header {
   .ecosystem-back {
     @include label-default;
     display: inline-block;
-    color: $accent-color;
+    color: $neutral-color-400;
     text-decoration: none;
 
     &:hover {
@@ -2200,7 +2211,7 @@ header {
       color: $light-color-300;
 
       // 기기 사이 · 구분점
-      & + li::before {
+      &+li::before {
         content: "·";
         margin: 0 10px;
         color: $neutral-color-400;
@@ -3167,7 +3178,7 @@ body.has-promo-banner .footer {
   }
 
   // 컨퍼런스 그룹
-  .sport-team-group + .sport-team-group {
+  .sport-team-group+.sport-team-group {
     margin-top: 48px;
   }
 
@@ -3755,6 +3766,7 @@ main {
   }
 
 }
+
 // 스포츠 홈 (로그인 전 / 후 공통): 섹션 사이 여백과 콘텐츠 폭을 한 곳에서 관리합니다.
 // - 기존 .sport-home-member(로그인 후 전용) → .sport-home 으로 바꿔 같은 영역은 똑같이 보이게 함
 // - 로그인 전 전용 섹션(구독 CTA · 기기 안내)은 원래 디자인 유지를 위해 여백 · 폭 규칙에서 제외
@@ -3768,20 +3780,28 @@ main.sport-home {
   background: #161615;
 
   // 관심있는 구단(.sport-teams)은 그라데이션 띠 안쪽 여백이 필요해서 패딩 초기화에서 제외
-  > section:not(.subscribe-cta):not(.device-guide):not(.sport-teams) {
+  >section:not(.subscribe-cta):not(.device-guide):not(.sport-teams) {
     padding: 0;
     min-width: 0;
   }
 
-  > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
+  >section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide)>.inner {
     @include inner-wrap;
     max-width: $container-width;
     padding-left: 16px;
     padding-right: 16px;
   }
 
-  .sport-teams { padding: 56px 0; }
-  .sport-live-slide, .sport-series-slide { width: 312px; max-width: 85%; }
+  .sport-teams {
+    padding: 56px 0;
+  }
+
+  .sport-live-slide,
+  .sport-series-slide {
+    width: 312px;
+    max-width: 85%;
+  }
+
   .sport-live-card {
     display: block;
     position: relative;
@@ -3790,17 +3810,59 @@ main.sport-home {
     border-radius: 12px;
     background: #292929;
     color: white;
-    img { width: 100%; height: 100%; object-fit: cover; }
-    &::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent, rgba(0, 0, 0, .55)); pointer-events: none; }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 40% 0 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, .55));
+      pointer-events: none;
+    }
   }
-  .sport-live-badge, .sport-live-watch { position: absolute; z-index: 1; left: 14px; font-size: 12px; padding: 5px 12px; }
-  .sport-live-badge { top: 14px; background: #ed1418; border-radius: 30px; }
-  .sport-live-watch { bottom: 14px; background: rgba(255, 255, 255, .25); border-radius: 3px; }
+
+  .sport-live-badge,
+  .sport-live-watch {
+    position: absolute;
+    z-index: 1;
+    left: 14px;
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  .sport-live-badge {
+    top: 14px;
+    background: #ed1418;
+    border-radius: 30px;
+  }
+
+  .sport-live-watch {
+    bottom: 14px;
+    background: rgba(255, 255, 255, .25);
+    border-radius: 3px;
+  }
+
   .sport-series-card {
     display: block;
     color: white;
     text-decoration: none;
-    img, .sport-series-placeholder { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; background: #292929; }
-    h4 { margin: 12px 0 0; }
+
+    img,
+    .sport-series-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 12px;
+      background: #292929;
+    }
+
+    h4 {
+      margin: 12px 0 0;
+    }
   }
 }
