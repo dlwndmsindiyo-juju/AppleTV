@@ -1,8 +1,12 @@
+import { useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import { useSportStore } from "../../store/useSportStore";
+import { useTeamStore, selectHeroTeam } from "../../store/useTeamStore";
+import { CONFERENCES, getTeamById } from "../../data/sportTeams";
 import { getPresentationMatch, sportTeamLabel } from "./sportPresentation";
 import { getScore } from "./sportUtils";
+import StarIcon from "./StarIcon";
 
 // Swiper 기본 스타일 (애플TV 홈 히어로와 동일)
 import "swiper/css";
@@ -20,9 +24,89 @@ const SPORT_HERO_SLIDES = [
   "/images/sport/sports-slide-6.webp",
 ];
 
-// 스포츠 히어로 (로그인 전 / 후 동일)
+// ---------------------------------------------------------------------
+// 팔로우한 구단 히어로 (배너 + 팀 뱃지)
+// - 보여줄 팀: 사용자가 고른 팀 → 없으면 처음 팔로우한 팀 (useTeamStore.selectHeroTeam)
+// - 여러 팀을 팔로우하면 아래 칩으로 팀 바꾸기
+// - 배너가 없는 구단은 대표색(color) 그라데이션
+// ---------------------------------------------------------------------
+const TeamHero = ({ team }) => {
+  const favorites = useTeamStore((state) => state.favorites);
+  const heroTeamId = team.id;
+  const setHeroTeam = useTeamStore((state) => state.setHeroTeam);
+  const toggleFavorite = useTeamStore((state) => state.toggleFavorite);
+
+  // 팔로우한 순서대로 (favorites 배열이 바뀔 때만 다시 계산)
+  const followed = useMemo(() => favorites.map(getTeamById).filter(Boolean), [favorites]);
+
+  const bgStyle = team.banner
+    ? { backgroundImage: `url(${team.banner})`, backgroundColor: team.color }
+    : { backgroundImage: `linear-gradient(135deg, ${team.color} 0%, rgba(0, 0, 0, 0.85) 100%)` };
+
+  return (
+    <section
+      className="sport-hero sport-hero--team"
+      style={{ "--team-color": team.color }}
+      aria-label={`${team.name} 팔로우 구단`}
+    >
+      {/* 팀이 바뀌면 key 로 다시 그려 페이드 인 */}
+      <div key={team.id} className="sport-team-hero-bg" style={bgStyle} role="img" aria-label={`${team.name} 배너`} />
+      <div className="sport-team-hero-overlay" aria-hidden="true" />
+
+      <div key={`${team.id}-body`} className="sport-team-hero-body">
+        <div className="sport-team-hero-badge">
+          <img src={team.logo} alt="" />
+        </div>
+        <p className="sport-team-hero-label">MY TEAM · {CONFERENCES[team.conference]}</p>
+        <h2 className="sport-team-hero-name">{team.name}</h2>
+        <p className="sport-team-hero-en">{team.enName}</p>
+
+        <div className="sport-team-hero-actions">
+          <a className="sport-btn primary" href="#sport-live">▶ 경기 시청</a>
+          <button
+            type="button"
+            className="sport-btn secondary sport-team-hero-follow"
+            onClick={() => toggleFavorite(team.id)}
+            aria-pressed="true"
+            aria-label={`${team.name} 팔로우 해제`}
+          >
+            <StarIcon filled size={18} />
+            팔로우 중
+          </button>
+        </div>
+      </div>
+
+      {/* 팔로우한 팀이 2개 이상이면 팀 선택 칩 */}
+      {followed.length > 1 && (
+        <div className="sport-team-hero-chips" role="tablist" aria-label="히어로에 보여줄 팔로우 구단">
+          {followed.map((item) => {
+            const active = item.id === heroTeamId;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                className={`sport-team-hero-chip${active ? " is-active" : ""}`}
+                onClick={() => setHeroTeam(item.id)}
+                title={item.name}
+              >
+                <img src={item.logo} alt="" />
+                <span>{item.shortName}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+};
+
+// ---------------------------------------------------------------------
+// 기본 히어로 (팔로우한 구단이 없을 때) — 기존 그대로
 // - 이미지 슬라이드(페이드 + 화살표 + 페이지네이션) 위에 경기 카드 고정
-const SportHero = () => {
+// ---------------------------------------------------------------------
+const MatchHero = () => {
   const liveMatches = useSportStore((state) => state.liveMatches);
   const match = getPresentationMatch(liveMatches);
   const score = getScore(match);
@@ -89,6 +173,13 @@ const SportHero = () => {
       </div>
     </section>
   );
+};
+
+// 스포츠 히어로 (로그인 전 / 후 동일)
+// - 팔로우한 구단이 있으면 구단 히어로, 없으면 기존 경기 히어로
+const SportHero = () => {
+  const heroTeam = useTeamStore(selectHeroTeam);
+  return heroTeam ? <TeamHero team={heroTeam} /> : <MatchHero />;
 };
 
 export default SportHero;

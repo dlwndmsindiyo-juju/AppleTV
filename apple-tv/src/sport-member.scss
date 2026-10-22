@@ -885,3 +885,383 @@ main.sport-home.sport-standings-page {
     .sport-detail-back { margin-top: -40px; }
   }
 }
+
+// =====================================================================
+// 숏폼 (SportShorts.jsx · 세로 카드 슬라이드)
+// - 가운데(활성) 카드만 밝게, 나머지는 어둡게 · 좌우 끝 카드는 이너에서 잘림
+// - 아이콘 파일: public/icons/shorts/logo_w.svg (좋아요 · 공유 · 소리는 JSX 안 SVG)
+// =====================================================================
+.sport-shorts.sport-shortform {
+  .inner { overflow: hidden; }
+
+  .sport-sf-swiper { overflow: visible; }
+
+  .sport-sf-slide {
+    width: clamp(170px, 14vw, 240px);
+    height: auto;
+  }
+
+  .sport-sf-card {
+    position: relative;
+    aspect-ratio: 200 / 330;
+    border-radius: $radius-card;
+    overflow: hidden;
+    background: $dark-color-400;
+    color: $neutral-color-white;
+    isolation: isolate;
+  }
+
+  .sport-sf-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  // 아래쪽 글 가독성 그라데이션 + 비활성 카드 어둡게
+  .sport-sf-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0) 22%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.75) 100%);
+    transition: background-color 0.3s ease;
+  }
+  .sport-sf-slide:not(.swiper-slide-active) {
+    .sport-sf-shade { background-color: rgba(0, 0, 0, 0.45); }
+    .sport-sf-card { cursor: pointer; }
+  }
+  .sport-sf-slide:not(.swiper-slide-active):hover .sport-sf-shade { background-color: rgba(0, 0, 0, 0.25); }
+  .sport-sf-card:hover img.sport-sf-media { transform: scale(1.04); }
+
+  // 재생 중이면 영상이 잘 보이도록 위쪽 그림자 제거
+  .is-playing .sport-sf-shade { background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.75) 100%); }
+
+  // ---------- 상단: 브랜드 / 소리 ----------
+  .sport-sf-top {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 8px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sport-sf-brand {
+    @include caption-default;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: $light-color-100;
+  }
+  .sport-sf-logo {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #000;
+
+    img { width: 14px; height: auto; display: block; }
+  }
+
+  .sport-sf-icon-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border: 0;
+    background: transparent;
+    color: $neutral-color-white;
+    cursor: pointer;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+
+    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: 2px; border-radius: 6px; }
+  }
+  .sport-sf-sound { width: 30px; height: 30px; justify-content: center; }
+
+  // ---------- 가운데 재생 ----------
+  .sport-sf-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    padding-left: 2px;
+    border: 0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.75);
+    color: $dark-color-900;
+    font-size: 13px;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+
+    &:hover { transform: translate(-50%, -50%) scale(1.08); background: $neutral-color-white; }
+    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: 3px; }
+  }
+  .is-playing .sport-sf-play { padding-left: 0; font-size: 11px; opacity: 0; }
+  .is-playing:hover .sport-sf-play, .is-playing .sport-sf-play:focus-visible { opacity: 1; }
+
+  // ---------- 오른쪽: 좋아요 · 공유 ----------
+  .sport-sf-side {
+    position: absolute;
+    right: 4px;
+    top: 58%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .sport-sf-like {
+    svg { width: 30px; height: 18px; }
+    &.is-on { color: $sports-color; }
+  }
+  .sport-sf-count { font-size: 9px; line-height: 12px; font-weight: 500; color: $neutral-color-white; }
+
+  // ---------- 하단 정보 ----------
+  .sport-sf-info {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 18px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .sport-sf-tag { @include caption-default; font-family: inherit; font-weight: 700; letter-spacing: 0.04em; color: $light-color-400; text-transform: uppercase; }
+  .sport-sf-title {
+    @include heading-h4;
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+    color: $neutral-color-white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sport-sf-meta { @include caption-default; font-family: inherit; color: $light-color-500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  // ---------- 진행 바 ----------
+  .sport-sf-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.25);
+
+    span { display: block; width: 0; height: 100%; background: $neutral-color-white; }
+  }
+  .is-playing .sport-sf-progress span { animation: sport-sf-progress linear infinite; }
+
+  // ---------- 태블릿 / 모바일 ----------
+  @media (max-width: $breakpoint-tablet) {
+    .sport-sf-slide { width: 200px; }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    .sport-sf-slide { width: 160px; }
+    .sport-sf-top { top: 8px; left: 8px; right: 4px; }
+    .sport-sf-play { width: 36px; height: 36px; font-size: 11px; }
+    .sport-sf-info { left: 10px; right: 10px; bottom: 14px; }
+    .sport-sf-title { @include body-small; font-family: inherit; font-weight: 700; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sport-sf-media, .sport-sf-play { transition: none; }
+    .is-playing .sport-sf-progress span { animation: none; width: 100%; opacity: 0.4; }
+  }
+}
+
+@keyframes sport-sf-progress {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+// =====================================================================
+// 팔로우한 구단 히어로 (SportHero.jsx · TeamHero)
+// - 배경: 구단 배너(public/images/sport-team/banners/{id}.png) / 없으면 대표색 그라데이션
+// - 가운데: 팀 뱃지 · 이름 · 버튼 / 아래: 팔로우한 팀이 2개 이상이면 팀 선택 칩
+// =====================================================================
+section.sport-hero.sport-hero--team {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--team-color, $dark-color-900);
+  isolation: isolate;
+
+  .sport-team-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    animation: sport-team-hero-in 0.5s ease both;
+  }
+
+  // 아래쪽은 페이지 배경으로 자연스럽게 이어지고, 가운데는 글이 잘 보이게 살짝 어둡게
+  .sport-team-hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 100%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0) 55%, $dark-color-900 100%);
+    pointer-events: none;
+  }
+
+  .sport-team-hero-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    animation: sport-team-hero-in 0.5s ease both;
+  }
+
+  // 팀 뱃지 (흰 원 + 그림자)
+  .sport-team-hero-badge {
+    display: grid;
+    place-items: center;
+    width: 180px;
+    height: 180px;
+    margin-bottom: 28px;
+    border-radius: 50%;
+    background: $neutral-color-white;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), 0 0 0 8px rgba(255, 255, 255, 0.18);
+
+    img { width: 62%; height: 62%; object-fit: contain; }
+  }
+
+  .sport-team-hero-label {
+    @include body-small;
+    font-family: inherit;
+    margin: 0 0 8px;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .sport-team-hero-name {
+    @include heading-h1;
+    font-family: inherit;
+    margin: 0;
+    padding: 0; // main h2 { padding-top: 200px } 영향 제거
+    font-weight: 700;
+    color: $neutral-color-white;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+    word-break: keep-all;
+  }
+  .sport-team-hero-en {
+    @include body-large;
+    font-family: inherit;
+    margin: 6px 0 0;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .sport-team-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .sport-btn { @include body-large; font-family: inherit; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; height: 56px; padding: 0 36px; border: 0; border-radius: 9999px; cursor: pointer; text-decoration: none; }
+  .sport-btn.primary { background: $sports-color; color: $neutral-color-white; }
+  .sport-btn.primary:hover { background: #cf1715; }
+  .sport-btn.secondary { background: $neutral-color-100; color: $dark-color-900; }
+  .sport-team-hero-follow { svg { color: $rating-color; } &:hover { background: $light-color-300; } }
+
+  // ---------- 팀 선택 칩 ----------
+  .sport-team-hero-chips {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    display: flex;
+    gap: 8px;
+    max-width: calc(100% - 40px);
+    padding: 6px;
+    overflow-x: auto;
+    border-radius: 9999px;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar { display: none; }
+  }
+  .sport-team-hero-chip {
+    @include body-small;
+    font-family: inherit;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 16px 0 6px;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    img { width: 28px; height: 28px; padding: 3px; border-radius: 50%; background: $neutral-color-white; object-fit: contain; box-sizing: border-box; }
+    &:hover { background: rgba(255, 255, 255, 0.12); color: $neutral-color-white; }
+    &.is-active { background: $neutral-color-white; color: $dark-color-900; font-weight: 700; }
+    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: 2px; }
+  }
+
+  // ---------- 태블릿 ----------
+  @media (max-width: $breakpoint-tablet) {
+    .sport-team-hero-badge { width: 140px; height: 140px; margin-bottom: 20px; }
+    .sport-team-hero-name { @include display-l; font-family: inherit; font-weight: 700; }
+    .sport-btn { height: 48px; padding: 0 28px; @include body-default; font-family: inherit; font-weight: 600; }
+    .sport-team-hero-chips { bottom: 28px; }
+  }
+
+  // ---------- 모바일 ----------
+  @media (max-width: $breakpoint-mobile) {
+    .sport-team-hero-badge { width: 112px; height: 112px; margin-bottom: 16px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 0 6px rgba(255, 255, 255, 0.18); }
+    .sport-team-hero-label { @include label-default; font-family: inherit; }
+    .sport-team-hero-name { @include display-M; font-family: inherit; font-weight: 700; }
+    .sport-team-hero-en { @include body-small; font-family: inherit; }
+    .sport-team-hero-actions { gap: 8px; margin-top: 20px; }
+    .sport-btn { height: 40px; padding: 0 18px; @include body-small; font-family: inherit; font-weight: 600; }
+    .sport-team-hero-chips { left: 20px; right: 20px; bottom: 20px; max-width: none; transform: none; }
+    .sport-team-hero-chip { height: 36px; padding: 0 4px; span { display: none; } }
+    .sport-team-hero-chip img { width: 28px; height: 28px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sport-team-hero-bg, .sport-team-hero-body { animation: none; }
+  }
+}
+
+@keyframes sport-team-hero-in {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: none; }
+}
+
+// 구단 카드 팔로우 버튼: 별 아이콘 (팔로우 중이면 채워진 별)
+.sport-team-card .sport-team-add {
+  svg { display: block; }
+  &.on { color: $neutral-color-white; }
+}

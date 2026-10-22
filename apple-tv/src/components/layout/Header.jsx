@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useAuthStore } from "../../store/useAuthStore";
 
 // TV · 스포츠 양쪽에서 함께 쓰는 페이지 (들어가도 토글이 바뀌지 않음)
 const SHARED_PATHS = ["/ecosystem", "/login"];
@@ -123,7 +122,7 @@ const Header = () => {
               </li>
               <li className="profile-box">
                 <span aria-label="유저 프로필">
-                  <Link to="/login">
+                  <Link to="/login" state={{ from: location.pathname }}>
                     <img src="/icons/profile.svg" alt="프로필 기본 이미지" />
                   </Link>
                 </span>
