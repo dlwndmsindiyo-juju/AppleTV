@@ -100,9 +100,19 @@ exports.verifyVerificationCode = onCall({ region: REGION }, async (req) => {
     return { ok: true };
 });
 
-// 3) 7일 무료구독 시작 (계정당 1회)
+// 3) 구독 시작 (결제 없는 UI 전용: subscription 필드만 기록)
+//    - 체험 이력이 없는 계정: 7일 무료 체험(trial)
+//    - 체험 이력이 있는 계정(재구독): 결제 없이 플랜 기간만큼 active 부여
+const PLAN_DAYS = { monthly: 30, yearly: 365 };
+
 exports.startTrial = onCall({ region: REGION }, async (req) => {
     const { uid, token } = requireAuth(req);
+
+    const plan = req.data?.plan;
+    if (!PLAN_DAYS[plan]) {
+        throw new HttpsError("invalid-argument", "올바른 플랜을 선택해주세요.");
+    }
+
     const ref = db.doc(`users/${uid}`);
     const snap = await ref.get();
     if (!snap.exists) throw new HttpsError("failed-precondition", "사용자 정보를 찾을 수 없습니다.");
@@ -112,17 +122,28 @@ exports.startTrial = onCall({ region: REGION }, async (req) => {
     if (isPasswordUser && !data.emailCodeVerified) {
         throw new HttpsError("permission-denied", "이메일 인증을 먼저 완료해주세요.");
     }
-    if (data.subscription) {
-        throw new HttpsError("already-exists", "이미 구독 이력이 있는 계정입니다.");
+
+    // 이미 구독/체험 중이면 중복 시작 방지
+    const sub = data.subscription;
+    const exp = sub?.expiresAt?.toMillis?.() ?? 0;
+    if (sub && ["active", "trial"].includes(sub.status) && exp > Date.now()) {
+        throw new HttpsError("already-exists", "이미 구독 중입니다.");
     }
 
+    // 이전 버전(trialUsed 필드 없음)으로 만든 구독 이력도 체험 사용으로 취급
+    const firstTime = !data.trialUsed && !sub;
+    const DAY = 24 * 60 * 60 * 1000;
     const now = Date.now();
+    const periodMs = firstTime ? TRIAL_DAYS * DAY : PLAN_DAYS[plan] * DAY;
+
     await ref.set(
         {
+            trialUsed: true,
             subscription: {
-                status: "trial",
+                status: firstTime ? "trial" : "active",
+                plan,
                 startedAt: Timestamp.fromMillis(now),
-                expiresAt: Timestamp.fromMillis(now + TRIAL_DAYS * 24 * 60 * 60 * 1000),
+                expiresAt: Timestamp.fromMillis(now + periodMs),
             },
         },
         { merge: true }
