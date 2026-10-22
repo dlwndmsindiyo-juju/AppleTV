@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.scss";
 import "./mobile.scss";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
@@ -11,7 +11,8 @@ import SportStandingsPage from "./components/sport/SportStandingsPage";
 import SportDetail from "./components/sport/SportDetail";
 import { MovieDetail } from "./pages/MovieDetail";
 import Login from "./pages/Login";
-import { useAuthStore } from "./store/useAuthStore";
+import Subscribe from "./pages/Subscribe";
+import { useAuthStore, isSubscribed } from "./store/useAuthStore";
 import SportTeamsPage from "./pages/SportTeamsPage";
 import PromoBanner from "./components/landing/PromoBanner";
 import Ecosystem from "./pages/Ecosystem";
@@ -22,7 +23,14 @@ function App() {
   });
 
   const user = useAuthStore((state) => state.user);
+  const initAuth = useAuthStore((state) => state.initAuth);
   const location = useLocation();
+
+  // 새로고침해도 로그인 유지 + authReady 를 true 로 만듦 (앱 시작 시 1회)
+  useEffect(() => {
+    const unsubscribe = initAuth();
+    return () => unsubscribe && unsubscribe();
+  }, [initAuth]);
 
   const handleIntroFinish = () => {
     sessionStorage.setItem("hasSeenIntro", "true");
@@ -43,6 +51,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/sport" element={<SportHome />} />
+              <Route path="/movie/:id" element={<MovieDetail />} />
+              <Route path="/tv/:id" element={<MovieDetail />} />
               <Route path="/detail/:id" element={<MovieDetail />} />
               <Route path="/sport/teams" element={<SportTeamsPage />} />
               <Route path="/sport/standings" element={<SportStandingsPage />} />
@@ -50,8 +60,9 @@ function App() {
               <Route path="/ecosystem" element={<Ecosystem />} />
               <Route
                 path="/login"
-                element={user ? <Navigate to="/" replace /> : <Login />}
+                element={isSubscribed(user) ? <Navigate to="/" replace /> : <Login />}
               />
+              <Route path="/subscribe" element={<Subscribe />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>

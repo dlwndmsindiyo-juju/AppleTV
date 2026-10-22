@@ -1,12 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../firebase/firebase";
 import { useAuthStore, isSubscribed } from "../store/useAuthStore";
 
 const RESEND_SECONDS = 60;
 const EMPTY_CODE = ["", "", "", "", "", ""];
 
+// 로그인 후 돌아갈 수 없는 경로 (로그인 / 구독 화면 자체)
+const AUTH_PATHS = ["/login", "/subscribe"];
+
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 로그인 → 구독 흐름 정보 (진입한 버튼에서 state 로 전달)
+  // - from: 로그인 전에 있던 화면 → 로그인/구독이 끝나면 그 화면으로 복귀
+  // - intent: "subscribe" → "무료 체험" 버튼으로 들어온 경우, 인증 완료 안내를 건너뛰고 바로 플랜 선택으로
+  const from = AUTH_PATHS.includes(location.state?.from) ? "/" : location.state?.from || "/";
+  const wantsSubscribe = location.state?.intent === "subscribe";
   const {
     user,
     authReady,
@@ -16,7 +28,6 @@ const Login = () => {
     onEmailAuth,
     onSendVerificationCode,
     onVerifyCode,
-    onStartTrial,
     onLogout,
     clearLoginError,
   } = useAuthStore();
@@ -37,10 +48,20 @@ const Login = () => {
 
   const errorText = localError || loginError;
 
-  // 로그인 완료 후 분기: 구독 중이면 홈, 아니면 3단계 표시
+  // 플랜 선택 화면으로 (뒤로 가기 시 로그인 화면이 다시 나오지 않도록 replace)
+  const goSubscribe = () => {
+    navigate("/subscribe", { replace: true, state: { from } });
+  };
+
+  // 로그인 완료 후 분기
+  // - 이미 구독 중: 원래 있던 화면으로 바로 복귀
+  // - 무료 체험 버튼으로 진입: 안내 단계 없이 바로 플랜 선택
+  // - 그 외: 3단계(인증 완료 · 무료구독 안내) 표시
   const routeAfterAuth = (u) => {
     if (isSubscribed(u)) {
-      navigate("/", { replace: true });
+      navigate(from, { replace: true });
+    } else if (wantsSubscribe) {
+      goSubscribe();
     } else {
       setStep("confirm");
     }
@@ -77,9 +98,18 @@ const Login = () => {
     if (busy) return;
     setBusy(true);
     setLocalError("");
-    const u = await onGoogleLogin();
+    const res = await onGoogleLogin();
     setBusy(false);
-    if (u) routeAfterAuth(u); // 실패 사유는 loginError 로 카드 안에 표시
+
+    if (res.status === "needCode") {
+      // 구글도 2단계(6자리) 화면을 거침 (UI 전용: 6자리 입력 시 통과)
+      resetCode();
+      setCooldown(RESEND_SECONDS);
+      setNotice("");
+      setStep("code");
+    } else if (res.status === "ok") {
+      routeAfterAuth(res.user);
+    } // cancel / error: 실패 사유는 loginError 로 카드 안에 표시
   };
 
   // 1단계: 이메일/비밀번호 로그인 또는 가입
@@ -99,6 +129,32 @@ const Login = () => {
     } else if (res.status === "ok") {
       routeAfterAuth(res.user);
     }
+  };
+
+  // 비밀번호 찾기: 입력한 이메일로 Firebase 재설정 메일 발송
+  const handleResetPassword = async () => {
+    if (busy) return;
+    clearLoginError();
+    if (!email.trim()) {
+      setNotice("");
+      setLocalError("비밀번호를 재설정할 이메일을 먼저 입력해주세요.");
+      return;
+    }
+    setBusy(true);
+    try {
+      await sendPasswordResetEmail(auth, email.trim());
+      setLocalError("");
+      setNotice("비밀번호 재설정 메일을 보냈습니다. 메일함을 확인해주세요.");
+    } catch (err) {
+      console.log("비밀번호 재설정 에러:", err.code, err.message);
+      setNotice("");
+      setLocalError(
+        err.code === "auth/invalid-email"
+          ? "이메일 형식이 올바르지 않습니다."
+          : "재설정 메일을 보내지 못했습니다. 잠시 후 다시 시도해주세요."
+      );
+    }
+    setBusy(false);
   };
 
   const toggleMode = () => {
@@ -186,22 +242,21 @@ const Login = () => {
     setStep("login");
   };
 
-  // 3단계: 7일 무료구독 시작 → 서버가 구독 정보를 기록한 뒤 홈으로
-  const handleStartSubscribe = async () => {
-    if (busy) return;
-    setBusy(true);
-    const u = await onStartTrial();
-    setBusy(false);
-    if (u) navigate("/", { replace: true });
+  // 3단계: 플랜 선택 페이지로 이동 (실제 구독 기록은 /subscribe 의 "계속"에서)
+  const handleStartSubscribe = () => {
+    goSubscribe();
   };
 
+  // 닫기 / 나중에: 로그인 전에 있던 화면으로
   const handleClose = () => {
-    navigate("/");
+    navigate(from, { replace: true });
   };
 
   return (
     <main className="login-page">
-      <div className={`login-card ${step === "confirm" ? "login-card--confirm" : ""}`}>
+      <div
+        className={`login-card ${step === "confirm" ? "login-card--confirm" : ""} ${step === "login" ? "login-card--signin" : ""}`}
+      >
         {/* 카드 안쪽 좌측 상단 닫기(X) 버튼 */}
         <button
           type="button"
@@ -231,7 +286,7 @@ const Login = () => {
 
         {/* ================= STEP 1: 로그인 / 가입 ================= */}
         {step === "login" && (
-          <>
+          <div className="login-step" key="login">
             <h2 className="login-title">
               {mode === "signin" ? "로그인" : "새 Apple 계정 만들기"}
             </h2>
@@ -269,34 +324,46 @@ const Login = () => {
               </button>
             </form>
 
-            <div className="login-google-wrap">
-              <button
-                type="button"
-                className="login-google-btn"
-                onClick={handleGoogleLogin}
-                disabled={busy}
-              >
-                구글로 간편 로그인
-              </button>
-            </div>
-
+            {notice && !errorText && <p className="login-notice">{notice}</p>}
             {errorText && (
               <p className="login-error" role="alert">
                 {errorText}
               </p>
             )}
 
+            {/* 하단 링크: [구글 간편 로그인 | 비밀번호를 잊으셨나요?] / 새 Apple 계정 만들기 */}
             <div className="login-links">
+              <div className="login-links-row">
+                <button
+                  type="button"
+                  className="login-link-btn login-google-btn"
+                  onClick={handleGoogleLogin}
+                  disabled={busy}
+                >
+                  <svg className="login-google-icon" viewBox="0 0 48 48" aria-hidden="true">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                  </svg>
+                  구글 계정으로 로그인
+                </button>
+                {mode === "signin" && (
+                  <button type="button" className="login-link-btn" onClick={handleResetPassword} disabled={busy}>
+                    비밀번호를 잊으셨나요?
+                  </button>
+                )}
+              </div>
               <button type="button" className="login-link-btn" onClick={toggleMode}>
                 {mode === "signin" ? "새 Apple 계정 만들기" : "이미 계정이 있나요? 로그인"}
               </button>
             </div>
-          </>
+          </div>
         )}
 
         {/* ================= STEP 2: 6자리 인증번호 ================= */}
         {step === "code" && (
-          <>
+          <div className="login-step" key="code">
             <h2 className="login-title">인증번호를 보냈습니다.</h2>
             <p className="login-desc">
               <strong>{pendingEmail || email}</strong> 으로 6자리 인증번호를 보냈습니다.
@@ -348,12 +415,12 @@ const Login = () => {
                 다른 이메일 사용
               </button>
             </div>
-          </>
+          </div>
         )}
 
         {/* ================= STEP 3: 구독 안내 (미구독 사용자에게만 표시) ================= */}
         {step === "confirm" && (
-          <>
+          <div className="login-step" key="confirm">
             <h2 className="login-title">인증 완료</h2>
             <p className="login-desc">
               로그인이 완료되었습니다.
@@ -366,9 +433,8 @@ const Login = () => {
                 type="button"
                 className="login-btn"
                 onClick={handleStartSubscribe}
-                disabled={busy}
               >
-                {busy ? "처리 중..." : "7일 무료구독 시작하기"}
+                7일 무료구독 시작하기
               </button>
             </div>
 
@@ -390,7 +456,7 @@ const Login = () => {
                 나중에
               </button>
             </div>
-          </>
+          </div>
         )}
       </div>
     </main>

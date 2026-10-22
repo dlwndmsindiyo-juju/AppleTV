@@ -495,18 +495,29 @@ export const useSportStore = create((set, get) => ({
     onFetchShorts: async (query = "축구 쇼츠 #shorts") => {
         if (get().shortsVideos.length > 0 || !YOUTUBE_KEY) return;
         try {
-            const items = await withCache(`sport-yt-shorts:${query}`, async () => {
+            // v2: 숏폼 카드에 쓰는 영상 길이(초 · "0:24") 와 좋아요 수(statistics)도 함께 저장
+            //     (videos API 의 part 만 늘린 것이라 추가 쿼터 없음)
+            const items = await withCache(`sport-yt-shorts-v2:${query}`, async () => {
                 const search = await youtubeGet("search", {
                     part: "snippet", q: query, type: "video", videoDuration: "short", maxResults: "25",
                     videoCategoryId: "17", relevanceLanguage: "ko", regionCode: "KR",
                 });
                 const ids = (search.items || []).map((v) => v.id?.videoId).filter(Boolean);
                 if (!ids.length) return [];
-                const details = await youtubeGet("videos", { part: "contentDetails", id: ids.join(",") });
-                const seconds = Object.fromEntries(
-                    (details.items || []).map((v) => [v.id, durationToSeconds(v.contentDetails?.duration)])
+                const details = await youtubeGet("videos", { part: "contentDetails,statistics", id: ids.join(",") });
+                const info = Object.fromEntries(
+                    (details.items || []).map((v) => [v.id, {
+                        seconds: durationToSeconds(v.contentDetails?.duration),
+                        likes: Number(v.statistics?.likeCount) || 0,
+                    }])
                 );
-                return (search.items || []).filter((v) => seconds[v.id?.videoId] <= 180).slice(0, 10);
+                return (search.items || [])
+                    .filter((v) => info[v.id?.videoId]?.seconds <= 180)
+                    .slice(0, 10)
+                    .map((v) => {
+                        const { seconds, likes } = info[v.id.videoId];
+                        return { ...v, seconds, durationText: formatDuration(seconds), likeCount: likes };
+                    });
             });
             set({ shortsVideos: items });
         } catch (error) {
