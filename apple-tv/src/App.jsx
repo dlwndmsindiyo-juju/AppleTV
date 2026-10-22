@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import SportHome from "./pages/SportHome";
 import SportStandingsPage from "./components/sport/SportStandingsPage";
 import SportDetail from "./components/sport/SportDetail";
+import SportLivePage from "./components/sport/SportLivePage";
 import { MovieDetail } from "./pages/MovieDetail";
 import Login from "./pages/Login";
 import Subscribe from "./pages/Subscribe";
@@ -57,6 +58,7 @@ function App() {
               <Route path="/sport/teams" element={<SportTeamsPage />} />
               <Route path="/sport/standings" element={<SportStandingsPage />} />
               <Route path="/sport/:type" element={<SportDetail />} />
+              <Route path="/sport/match/:id" element={<SportLivePage />} />
               <Route path="/ecosystem" element={<Ecosystem />} />
               <Route
                 path="/login"
