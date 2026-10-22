@@ -1,3 +1,4 @@
+@charset "UTF-8";
 header {
   position: fixed;
   top: 0;
@@ -377,10 +378,265 @@ header .inner nav .gnb-right ul .profile-box span a img {
   text-decoration: underline;
 }
 
+.login-page .login-card.login-card--confirm {
+  max-width: 800px;
+  min-height: 560px;
+  padding: 80px 56px 40px;
+  background-color: #f5f5f7;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.login-page .login-card.login-card--confirm .login-card-close {
+  top: 26px;
+  left: 26px;
+  width: 42px;
+  height: 42px;
+  background-color: #fff;
+  color: #000;
+}
+.login-page .login-card.login-card--confirm .login-card-close svg {
+  width: 20px;
+  height: 20px;
+}
+.login-page .login-card.login-card--confirm .login-card-close:hover {
+  background-color: #ececf0;
+}
+.login-page .login-card.login-card--confirm .login-logo-area {
+  margin-bottom: 0;
+}
+.login-page .login-card.login-card--confirm .login-logo-area .login-app-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background-color: #d9d9d9;
+}
+.login-page .login-card.login-card--confirm .login-title {
+  margin: 84px 0 12px;
+  font-size: 34px;
+  line-height: 41px;
+  font-weight: 500;
+  color: #111;
+}
+.login-page .login-card.login-card--confirm .login-desc {
+  margin: 0 0 84px;
+  font-size: 22px;
+  line-height: 29px;
+  color: #a1a1a6;
+}
+.login-page .login-card.login-card--confirm .login-form {
+  max-width: 428px;
+  gap: 0;
+}
+.login-page .login-card.login-card--confirm .login-form .login-btn {
+  height: 48px;
+  margin-top: 0;
+  border-radius: 6px;
+  background-color: #007aff;
+  font-size: 17px;
+  font-weight: 700;
+}
+.login-page .login-card.login-card--confirm .login-form .login-btn:hover {
+  background-color: #0070eb;
+}
+.login-page .login-card.login-card--confirm .login-links.row-links {
+  margin-top: 14px;
+  gap: 112px;
+}
+.login-page .login-card.login-card--confirm .login-links.row-links .login-link-btn {
+  font-size: 12px;
+  font-weight: 500;
+  color: #007aff;
+}
+
+.login-page .login-card.login-card--signin {
+  max-width: 668px;
+  min-height: 468px;
+  padding: 68px 56px 32px;
+  background-color: #F5F5F5;
+  border-radius: 12px;
+  box-shadow: none;
+  justify-content: flex-start;
+}
+.login-page .login-card.login-card--signin .login-card-close {
+  top: 22px;
+  left: 22px;
+  width: 36px;
+  height: 36px;
+  background-color: #FFFFFF;
+  color: #171717;
+}
+.login-page .login-card.login-card--signin .login-card-close svg {
+  width: 18px;
+  height: 18px;
+}
+.login-page .login-card.login-card--signin .login-card-close:hover {
+  background-color: #E0E0E0;
+}
+.login-page .login-card.login-card--signin .login-logo-area {
+  margin-bottom: 14px;
+}
+.login-page .login-card.login-card--signin .login-logo-area .login-app-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background-color: #D4D4D4;
+}
+.login-page .login-card.login-card--signin .login-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: #171717;
+  margin: 0 0 10px;
+}
+.login-page .login-card.login-card--signin .login-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  color: #A3A3A3;
+  margin: 0 0 22px;
+}
+.login-page .login-card.login-card--signin .login-form {
+  max-width: 440px;
+  align-items: center;
+  gap: 6px;
+}
+.login-page .login-card.login-card--signin .login-form .input-field {
+  width: 100%;
+}
+.login-page .login-card.login-card--signin .login-form .input-field input {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  height: 53px;
+  padding: 0 18px;
+  border-radius: 8px;
+  border: 1px solid #D4D4D4;
+  background-color: #F5F5F5;
+}
+.login-page .login-card.login-card--signin .login-form .input-field input::placeholder {
+  color: #525252;
+}
+.login-page .login-card.login-card--signin .login-form .input-field input:focus {
+  border-color: #0a84ff;
+  background-color: #FFFFFF;
+}
+.login-page .login-card.login-card--signin .login-form .login-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  width: 358px;
+  max-width: 100%;
+  height: 40px;
+  margin-top: 8px;
+  border-radius: 6px;
+  background-color: #0a84ff;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+.login-page .login-card.login-card--signin .login-form .login-btn:hover {
+  background-color: rgb(0, 116.7216326531, 234.4);
+}
+.login-page .login-card.login-card--signin .login-form .login-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.login-page .login-card.login-card--signin .login-notice,
+.login-page .login-card.login-card--signin .login-error {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  margin: 12px 0 0;
+}
+.login-page .login-card.login-card--signin .login-notice {
+  color: #525252;
+}
+.login-page .login-card.login-card--signin .login-error {
+  color: #ff453a;
+}
+.login-page .login-card.login-card--signin .login-links {
+  margin-top: 14px;
+  align-items: center;
+  gap: 6px;
+}
+.login-page .login-card.login-card--signin .login-links-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.login-page .login-card.login-card--signin .login-link-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #0a84ff;
+  cursor: pointer;
+}
+.login-page .login-card.login-card--signin .login-link-btn:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.login-page .login-card.login-card--signin .login-link-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.login-page .login-card.login-card--signin .login-google-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.login-page .login-card {
+  transition: max-width 0.35s ease, min-height 0.35s ease, padding 0.35s ease, background-color 0.35s ease;
+}
+.login-page .login-step {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: login-step-in 0.4s ease both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .login-page .login-card {
+    transition: none;
+  }
+  .login-page .login-step {
+    animation: none;
+  }
+}
+
+@keyframes login-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 .hero-swiper-container {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100svh;
   background-color: #08090d;
 }
 .hero-swiper-container .swiper,
@@ -507,6 +763,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   word-break: keep-all;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -575,7 +832,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .value-props .value-prop-desc {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -731,7 +988,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .upcoming-section .upcoming-more {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -781,7 +1038,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .upcoming-section .upcoming-date {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -838,7 +1095,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 .movie-detail-page {
   background-color: #141414;
   color: #FFFFFF;
-  min-height: 100%;
+  min-height: 100vh;
   padding-top: calc(72px + 24px);
   padding-bottom: 80px;
 }
@@ -862,7 +1119,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 .movie-detail-page .content-layout {
   display: flex;
   align-items: flex-start;
-  gap: 32px;
+  gap: 24px;
   width: 100%;
 }
 .movie-detail-page .left-section {
@@ -919,7 +1176,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .movie-detail-page .player-box .title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 34px;
   line-height: 41px;
   letter-spacing: 0;
@@ -945,7 +1202,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .movie-detail-page .player-box .overview {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -955,6 +1212,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   word-break: keep-all;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1315,6 +1573,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   color: #EBEBEB;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1437,7 +1696,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .movie-detail-page .right-section .empty-content {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1564,7 +1823,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .apple-originals .apple-card-meta {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1572,7 +1831,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .apple-originals .apple-card-badge {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1666,7 +1925,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .subscribe-cta .subscribe-note {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1735,7 +1994,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   position: relative;
   z-index: 2;
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1782,7 +2041,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 
 .device-guide {
   background-color: #141414;
-  padding: 56px 0;
+  padding: 80px 0;
 }
 .device-guide .inner {
   width: 100%;
@@ -1792,71 +2051,314 @@ header .inner nav .gnb-right ul .profile-box span a img {
   padding-right: 64px;
   box-sizing: border-box;
 }
-.device-guide .device-guide-inner {
+.device-guide .device-guide-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
   align-items: start;
-  gap: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 68px 120px;
+  box-sizing: border-box;
 }
 .device-guide .device-guide-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 34px;
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 41px;
   letter-spacing: 0;
   font-weight: 600;
+  margin: 0 0 24px;
+  padding-top: 0;
   color: #ffffff;
-  margin: 0 0 12px;
   word-break: keep-all;
 }
 .device-guide .device-guide-sub {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 17px;
+  line-height: 22px;
   letter-spacing: 0;
-  color: #A3A3A3;
   margin: 0;
+  color: #525252;
+  word-break: keep-all;
 }
 .device-guide .device-guide-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   list-style: none;
-  margin: 0 0 20px;
+  margin: 0 0 36px;
   padding: 0;
 }
 .device-guide .device-guide-list li {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  color: #C8C8C8;
+}
+.device-guide .device-guide-link {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
   font-size: 15px;
   line-height: 20px;
   letter-spacing: 0;
-  color: #C8C8C8;
-}
-.device-guide .device-guide-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.device-guide .device-guide-links a {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  color: #C8C8C8;
+  gap: 4px;
+  color: #0a84ff;
   text-decoration: none;
   transition: color 0.2s ease;
 }
-.device-guide .device-guide-links a:hover {
+.device-guide .device-guide-link:hover {
+  font-weight: 600;
+}
+
+.ecosystem-page {
+  min-height: calc(100vh - 72px);
+  padding: calc(72px + 80px) 0 120px;
+  box-sizing: border-box;
+  background-color: #08090d;
   color: #ffffff;
+}
+.ecosystem-page .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+  max-width: calc(1440px + 64px * 2);
+}
+.ecosystem-page .ecosystem-back {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  display: inline-block;
+  color: #A3A3A3;
+  text-decoration: none;
+}
+.ecosystem-page .ecosystem-back:hover {
+  font-weight: 600;
+}
+.ecosystem-page .ecosystem-head {
+  margin: 48px 0 64px;
+  text-align: center;
+}
+.ecosystem-page .ecosystem-eyebrow {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  margin: 0 0 12px;
+  color: #A3A3A3;
+  letter-spacing: 0.04em;
+}
+.ecosystem-page .ecosystem-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0;
+  font-weight: 700;
+  margin: 0 0 16px;
+  padding-top: 0;
+  color: #ffffff;
+}
+.ecosystem-page .ecosystem-lead {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  margin: 0 0 16px;
+  color: #C8C8C8;
+}
+.ecosystem-page .ecosystem-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  margin: 0;
+  color: #A3A3A3;
+  word-break: keep-all;
+}
+.ecosystem-page .ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.ecosystem-page .ecosystem-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 24px;
+  border-radius: 20px;
+  background-color: #1f1f1f;
+  min-width: 0;
+}
+.ecosystem-page .ecosystem-card-name {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 41px;
+  letter-spacing: 0;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: #ffffff;
+}
+.ecosystem-page .ecosystem-card-category {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  font-weight: 600;
+  margin: 0 0 20px;
+  color: #A3A3A3;
+}
+.ecosystem-page .ecosystem-card-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  margin: 0;
+  color: #E0E0E0;
+  word-break: keep-all;
+}
+.ecosystem-page .ecosystem-card-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  margin: 24px 0;
+}
+.ecosystem-page .ecosystem-card-image img {
+  max-width: 72%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.ecosystem-page .ecosystem-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 0 16px;
+}
+.ecosystem-page .ecosystem-row {
+  min-height: 110px;
+  padding: 18px 12px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  background-color: #242424;
+}
+.ecosystem-page .ecosystem-row dt {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: #ffffff;
+}
+.ecosystem-page .ecosystem-row dd {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  margin: 0;
+  max-width: 320px;
+  color: #C8C8C8;
+  word-break: keep-all;
+}
+.ecosystem-page .ecosystem-row:last-child {
+  min-height: 140px;
+}
+.ecosystem-page .ecosystem-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  margin-top: auto;
+  border: none;
+  border-radius: 6px;
+  background-color: #0a84ff;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.ecosystem-page .ecosystem-btn:hover {
+  background-color: rgb(0, 116.7216326531, 234.4);
+}
+.ecosystem-page .ecosystem-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.ecosystem-page .ecosystem-card-note {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  margin: 18px 0 0;
+  color: #A3A3A3;
+}
+.ecosystem-page .ecosystem-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  margin-top: 56px;
+  padding: 0 20px;
+}
+.ecosystem-page .ecosystem-footer-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  margin: 0 0 24px;
+  color: #ffffff;
+}
+.ecosystem-page .ecosystem-footer-note {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  margin: 0;
+  color: #A3A3A3;
+}
+.ecosystem-page .ecosystem-devices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+.ecosystem-page .ecosystem-devices li {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  color: #E0E0E0;
+}
+.ecosystem-page .ecosystem-devices li + li::before {
+  content: "·";
+  margin: 0 10px;
+  color: #A3A3A3;
 }
 
 .promo-banner {
@@ -1917,7 +2419,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .promo-banner .promo-banner-desc {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1938,7 +2440,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .promo-banner .promo-banner-btn {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1970,6 +2472,100 @@ header .inner nav .gnb-right ul .profile-box span a img {
   margin: 0;
   font-size: clamp(10px, 0.8vw, 11px);
   white-space: nowrap;
+}
+
+.promo-banner.is-live {
+  background-color: #242424;
+  border-top: 1px solid #3A3A3A;
+}
+.promo-banner.is-live .promo-banner-text {
+  gap: 8px;
+}
+.promo-banner.is-live .live-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+.promo-banner.is-live .live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  color: #E91E1B;
+}
+.promo-banner.is-live .live-badge.upcoming {
+  color: #A3A3A3;
+}
+.promo-banner.is-live .live-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #E91E1B;
+  animation: sport-live-blink 1.4s ease-in-out infinite;
+}
+.promo-banner.is-live .live-team {
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.promo-banner.is-live .live-score {
+  flex-shrink: 0;
+  margin: 0 4px;
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+.promo-banner.is-live .promo-banner-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #A3A3A3;
+}
+.promo-banner.is-live .promo-banner-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  gap: 6px;
+  min-width: 164px;
+  height: 36px;
+  background-color: #E91E1B;
+  color: #ffffff;
+  font-weight: 700;
+}
+.promo-banner.is-live .promo-banner-btn:hover {
+  background-color: rgb(209.2128, 22.94, 20.1872);
+}
+.promo-banner.is-live .promo-banner-btn .play-icon {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+}
+.promo-banner.is-live .promo-banner-note {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #E0E0E0;
+}
+.promo-banner.is-live .promo-banner-note .dot-sep {
+  color: #A3A3A3;
 }
 
 body.has-promo-banner .footer {
@@ -2010,7 +2606,7 @@ body.has-promo-banner .footer {
 }
 .sport-hero .sport-hero-label {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2053,7 +2649,7 @@ body.has-promo-banner .footer {
 }
 .sport-hero .sport-hero-sub {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2075,7 +2671,7 @@ body.has-promo-banner .footer {
 }
 .sport-btn {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2091,7 +2687,6 @@ body.has-promo-banner .footer {
 }
 .sport-btn.primary {
   background-color: #FFFFFF;
-  color: #171717;
 }
 .sport-btn.primary:hover {
   background-color: #E0E0E0;
@@ -2126,7 +2721,7 @@ body.has-promo-banner .footer {
 }
 .sport-section-head .sport-more {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2183,7 +2778,7 @@ body.has-promo-banner .footer {
 }
 .sport-upcoming .sport-match-status {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2309,12 +2904,13 @@ body.has-promo-banner .footer {
   color: #ffffff;
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .sport-shorts .sport-short-meta {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2361,9 +2957,158 @@ body.has-promo-banner .footer {
   color: #A3A3A3;
 }
 
+.sport-team-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 108px;
+  padding: 0 28px 0 18px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background-color: #242424;
+  min-width: 0;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.sport-team-card:hover {
+  background-color: #2E2E2E;
+}
+.sport-team-card.on {
+  border-color: #E91E1B;
+}
+.sport-team-card .sport-team-logo {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.sport-team-card .sport-team-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sport-team-card .sport-team-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sport-team-card .sport-team-name,
+.sport-team-card .sport-team-meta {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sport-team-card .sport-team-name {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: #ffffff;
+}
+.sport-team-card .sport-team-meta {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #A3A3A3;
+}
+.sport-team-card .sport-team-add {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #ffffff;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.sport-team-card .sport-team-add:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+.sport-team-card .sport-team-add.on {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  letter-spacing: 0;
+  font-weight: 700;
+  background-color: #E91E1B;
+}
+
+.sport-team-filter {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sport-team-filter button {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  height: 40px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 9999px;
+  background-color: rgba(23, 23, 23, 0.45);
+  color: #E0E0E0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.sport-team-filter button .count {
+  margin-left: 6px;
+  color: #A3A3A3;
+}
+.sport-team-filter button:hover {
+  background-color: rgba(23, 23, 23, 0.7);
+}
+.sport-team-filter button.active {
+  background-color: #FFFFFF;
+  color: #171717;
+  font-weight: 600;
+}
+.sport-team-filter button.active .count {
+  color: #525252;
+}
+
+.sport-team-empty {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  margin: 0;
+  padding: 40px 16px;
+  border-radius: 12px;
+  background-color: rgba(23, 23, 23, 0.45);
+  color: #E0E0E0;
+  text-align: center;
+}
+
 .sport-teams {
-  background-color: #171717;
-  padding: 48px 0;
+  background: linear-gradient(to right, #000590 0%, #000590 20%, #7A5585 55%, #FFAB78 100%);
+  padding: 64px 0;
 }
 .sport-teams .inner {
   width: 100%;
@@ -2372,91 +3117,257 @@ body.has-promo-banner .footer {
   padding-left: 64px;
   padding-right: 64px;
   box-sizing: border-box;
+  overflow: hidden;
+}
+.sport-teams .sport-teams-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 .sport-teams .sport-teams-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 22px;
-  line-height: 28px;
+  font-size: 28px;
+  line-height: 34px;
   letter-spacing: 0;
-  margin: 0 0 6px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  padding-top: 0;
   color: #ffffff;
 }
 .sport-teams .sport-teams-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+.sport-teams .sport-teams-count {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  flex-shrink: 0;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+.sport-teams .sport-teams-count strong {
+  font-weight: 700;
+  color: #ffffff;
+}
+.sport-teams .sport-team-filter {
+  margin-bottom: 24px;
+}
+.sport-teams .sport-team-swiper {
+  width: 100%;
+  overflow: hidden;
+}
+.sport-teams .sport-team-slide {
+  width: 400px;
+}
+.sport-teams .sport-team-more {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 44px;
+  margin: 32px auto 0;
+  padding: 0 28px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 9999px;
+  background-color: rgba(23, 23, 23, 0.25);
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.sport-teams .sport-team-more:hover {
+  background-color: rgba(23, 23, 23, 0.5);
+  border-color: #FFFFFF;
+}
+
+.sport-teams-page {
+  min-height: 100vh;
+  padding-top: 72px;
+  padding-bottom: 80px;
+  background-color: #141414;
+  color: #ffffff;
+}
+.sport-teams-page .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+.sport-teams-page .sport-teams-hero {
+  background: linear-gradient(to right, #000590 0%, #000590 20%, #7A5585 55%, #FFAB78 100%);
+  padding: 40px 0 48px;
+}
+.sport-teams-page .sport-teams-back {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
-  margin: 0 0 24px;
+  margin-bottom: 20px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+}
+.sport-teams-page .sport-teams-back:hover {
+  color: #ffffff;
+}
+.sport-teams-page .sport-teams-page-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0;
+  font-weight: 700;
+  margin: 0 0 8px;
+  padding-top: 0;
+  color: #ffffff;
+}
+.sport-teams-page .sport-teams-page-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  margin: 0 0 20px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.sport-teams-page .sport-teams-summary {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.sport-teams-page .sport-teams-summary strong {
+  font-weight: 700;
+  color: #ffffff;
+}
+.sport-teams-page .sport-teams-clear {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 9999px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+}
+.sport-teams-page .sport-teams-clear:hover {
+  background-color: rgba(23, 23, 23, 0.3);
+}
+.sport-teams-page .sport-teams-body {
+  padding-top: 32px;
+}
+.sport-teams-page .sport-teams-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.sport-teams-page .sport-team-filter button {
+  background-color: #242424;
+}
+.sport-teams-page .sport-team-filter button:hover {
+  background-color: #2E2E2E;
+}
+.sport-teams-page .sport-team-filter button.active {
+  background-color: #FFFFFF;
+}
+.sport-teams-page .sport-team-search {
+  display: flex;
+  align-items: center;
+  width: 280px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 9999px;
+  background-color: #262626;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+.sport-teams-page .sport-team-search:focus-within {
+  background-color: #2e2e2e;
+}
+.sport-teams-page .sport-team-search img {
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  filter: invert(0.7);
+}
+.sport-teams-page .sport-team-search input {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
+}
+.sport-teams-page .sport-team-search input::placeholder {
   color: #A3A3A3;
 }
-.sport-teams .sport-team-list {
+.sport-teams-page .sport-team-group + .sport-team-group {
+  margin-top: 48px;
+}
+.sport-teams-page .sport-team-group-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  font-weight: 700;
+  margin: 0 0 20px;
+  color: #ffffff;
+}
+.sport-teams-page .sport-team-group-title .count {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  margin-left: 8px;
+  color: #A3A3A3;
+}
+.sport-teams-page .sport-team-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.sport-teams .sport-team-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background-color: #242424;
-  min-width: 0;
-}
-.sport-teams .sport-team-logo {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 10px;
-  background-color: #3A3A3A;
-  overflow: hidden;
-}
-.sport-teams .sport-team-logo img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  display: block;
-}
-.sport-teams .sport-team-name {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 600;
-  font-size: 17px;
-  line-height: 22px;
-  letter-spacing: 0;
-  flex: 1;
-  min-width: 0;
-  color: #ffffff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.sport-teams .sport-team-add {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-  color: #ffffff;
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-.sport-teams .sport-team-add:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-}
-.sport-teams .sport-team-add.on {
-  background-color: #E91E1B;
-  font-size: 16px;
+.sport-teams-page .sport-team-empty {
+  background-color: #1f1f1f;
 }
 
 .sport-league {
@@ -2596,7 +3507,7 @@ body.has-promo-banner .footer {
 }
 .sport-replay .sport-replay-date {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2677,12 +3588,13 @@ body.has-promo-banner .footer {
   color: #ffffff;
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .sport-highlights .sport-highlight-meta {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2726,7 +3638,7 @@ body.has-promo-banner .footer {
 }
 .sport-notify .sport-notify-desc {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2877,7 +3789,8 @@ main h2 {
     padding: 14px 40px;
   }
   .hero-swiper-container {
-    height: 520px;
+    height: 100vh;
+    height: 100svh;
   }
   .hero-swiper-container .swiper-button-next,
   .hero-swiper-container .swiper-button-prev {
@@ -2895,7 +3808,6 @@ main h2 {
   .upcoming-section .inner,
   .apple-originals .inner,
   .subscribe-cta .inner,
-  .device-guide .inner,
   .movie-slider-section .inner {
     padding-left: 13%;
     padding-right: 13%;
@@ -2918,14 +3830,14 @@ main h2 {
   }
   .upcoming-section .upcoming-desc {
     font-family: "SF Pro", sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
   }
   .upcoming-section .upcoming-overview {
     font-family: "SF Pro", sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -2963,10 +3875,6 @@ main h2 {
   .subscribe-cta .subscribe-content {
     left: 6%;
   }
-  .device-guide .device-guide-inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
   .promo-banner .promo-banner-inner {
     padding-left: 40px;
     padding-right: 40px;
@@ -2974,7 +3882,7 @@ main h2 {
   }
   .promo-banner .promo-banner-desc {
     font-family: "SF Pro", sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -2983,30 +3891,88 @@ main h2 {
   .promo-banner .promo-banner-btn {
     min-width: 160px;
   }
-  .sport-hero .sport-hero-card {
-    left: 40px;
-  }
-  .sport-upcoming .inner,
-  .sport-shorts .inner,
-  .sport-promo .inner,
-  .sport-teams .inner,
-  .sport-league .inner,
-  .sport-replay .inner,
-  .sport-highlights .inner,
-  .sport-notify .inner {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-  .sport-upcoming .sport-match-list,
-  .sport-teams .sport-team-list,
-  .sport-league .sport-league-list,
-  .sport-highlights .sport-highlight-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .sport-replay .sport-replay-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .sport-notify .sport-notify-banner {
-    padding: 32px;
-  }
+}
+main.sport-home {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #161615;
+}
+main.sport-home > section:not(.subscribe-cta):not(.device-guide):not(.sport-teams) {
+  padding: 0;
+  min-width: 0;
+}
+main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+  max-width: 1200px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+main.sport-home .sport-teams {
+  padding: 56px 0;
+}
+main.sport-home .sport-live-slide,
+main.sport-home .sport-series-slide {
+  width: 312px;
+  max-width: 85%;
+}
+main.sport-home .sport-live-card {
+  display: block;
+  position: relative;
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #292929;
+  color: white;
+}
+main.sport-home .sport-live-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+main.sport-home .sport-live-card::after {
+  content: "";
+  position: absolute;
+  inset: 40% 0 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+  pointer-events: none;
+}
+main.sport-home .sport-live-badge,
+main.sport-home .sport-live-watch {
+  position: absolute;
+  z-index: 1;
+  left: 14px;
+  font-size: 12px;
+  padding: 5px 12px;
+}
+main.sport-home .sport-live-badge {
+  top: 14px;
+  background: #ed1418;
+  border-radius: 30px;
+}
+main.sport-home .sport-live-watch {
+  bottom: 14px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+}
+main.sport-home .sport-series-card {
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+main.sport-home .sport-series-card img,
+main.sport-home .sport-series-card .sport-series-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #292929;
+}
+main.sport-home .sport-series-card h4 {
+  margin: 12px 0 0;
 }
