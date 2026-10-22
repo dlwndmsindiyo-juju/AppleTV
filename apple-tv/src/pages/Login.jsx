@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useAuthStore, isSubscribed } from "../store/useAuthStore";
@@ -7,8 +7,18 @@ import { useAuthStore, isSubscribed } from "../store/useAuthStore";
 const RESEND_SECONDS = 60;
 const EMPTY_CODE = ["", "", "", "", "", ""];
 
+// 로그인 후 돌아갈 수 없는 경로 (로그인 / 구독 화면 자체)
+const AUTH_PATHS = ["/login", "/subscribe"];
+
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 로그인 → 구독 흐름 정보 (진입한 버튼에서 state 로 전달)
+  // - from: 로그인 전에 있던 화면 → 로그인/구독이 끝나면 그 화면으로 복귀
+  // - intent: "subscribe" → "무료 체험" 버튼으로 들어온 경우, 인증 완료 안내를 건너뛰고 바로 플랜 선택으로
+  const from = AUTH_PATHS.includes(location.state?.from) ? "/" : location.state?.from || "/";
+  const wantsSubscribe = location.state?.intent === "subscribe";
   const {
     user,
     authReady,
@@ -38,10 +48,20 @@ const Login = () => {
 
   const errorText = localError || loginError;
 
-  // 로그인 완료 후 분기: 구독 중이면 홈, 아니면 3단계 표시
+  // 플랜 선택 화면으로 (뒤로 가기 시 로그인 화면이 다시 나오지 않도록 replace)
+  const goSubscribe = () => {
+    navigate("/subscribe", { replace: true, state: { from } });
+  };
+
+  // 로그인 완료 후 분기
+  // - 이미 구독 중: 원래 있던 화면으로 바로 복귀
+  // - 무료 체험 버튼으로 진입: 안내 단계 없이 바로 플랜 선택
+  // - 그 외: 3단계(인증 완료 · 무료구독 안내) 표시
   const routeAfterAuth = (u) => {
     if (isSubscribed(u)) {
-      navigate("/", { replace: true });
+      navigate(from, { replace: true });
+    } else if (wantsSubscribe) {
+      goSubscribe();
     } else {
       setStep("confirm");
     }
@@ -224,11 +244,12 @@ const Login = () => {
 
   // 3단계: 플랜 선택 페이지로 이동 (실제 구독 기록은 /subscribe 의 "계속"에서)
   const handleStartSubscribe = () => {
-    navigate("/subscribe");
+    goSubscribe();
   };
 
+  // 닫기 / 나중에: 로그인 전에 있던 화면으로
   const handleClose = () => {
-    navigate("/");
+    navigate(from, { replace: true });
   };
 
   return (
@@ -265,7 +286,7 @@ const Login = () => {
 
         {/* ================= STEP 1: 로그인 / 가입 ================= */}
         {step === "login" && (
-          <>
+          <div className="login-step" key="login">
             <h2 className="login-title">
               {mode === "signin" ? "로그인" : "새 Apple 계정 만들기"}
             </h2>
@@ -337,12 +358,12 @@ const Login = () => {
                 {mode === "signin" ? "새 Apple 계정 만들기" : "이미 계정이 있나요? 로그인"}
               </button>
             </div>
-          </>
+          </div>
         )}
 
         {/* ================= STEP 2: 6자리 인증번호 ================= */}
         {step === "code" && (
-          <>
+          <div className="login-step" key="code">
             <h2 className="login-title">인증번호를 보냈습니다.</h2>
             <p className="login-desc">
               <strong>{pendingEmail || email}</strong> 으로 6자리 인증번호를 보냈습니다.
@@ -394,12 +415,12 @@ const Login = () => {
                 다른 이메일 사용
               </button>
             </div>
-          </>
+          </div>
         )}
 
         {/* ================= STEP 3: 구독 안내 (미구독 사용자에게만 표시) ================= */}
         {step === "confirm" && (
-          <>
+          <div className="login-step" key="confirm">
             <h2 className="login-title">인증 완료</h2>
             <p className="login-desc">
               로그인이 완료되었습니다.
@@ -435,7 +456,7 @@ const Login = () => {
                 나중에
               </button>
             </div>
-          </>
+          </div>
         )}
       </div>
     </main>
