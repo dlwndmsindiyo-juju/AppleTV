@@ -955,3 +955,47 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     }
   }
 }
+
+// =====================================================================
+// 로그인 카드 (1단계) — 모바일
+// PC 스타일은 App.scss 의 .login-card--signin
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .login-page .login-card.login-card--signin {
+    min-height: 0;
+    padding: 64px $mobile-edge 28px;
+
+    .login-card-close {
+      top: 16px;
+      left: 16px;
+    }
+
+    .login-title {
+      @include display-l;
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 32px;
+    }
+
+    .login-desc {
+      @include body-default;
+      word-break: keep-all;
+    }
+
+    .login-form .input-field input {
+      @include body-default;
+      height: 48px;
+    }
+
+    .login-form .login-btn {
+      width: 100%;
+      height: 44px;
+    }
+
+    // 링크가 좁으면 줄바꿈
+    .login-links-row {
+      flex-wrap: wrap;
+      gap: 6px 16px;
+    }
+  }
+}

@@ -81,11 +81,38 @@ const syncUserDoc = async (fbUser) => {
     return base;
 };
 
-// 이메일/비밀번호 계정은 6자리 코드로 이메일 인증을 마쳐야 로그인 완료
-// (구글 계정은 구글이 이메일을 이미 검증하므로 제외)
+// 이메일/비밀번호 계정 → 서버가 기록한 emailCodeVerified 로 판단 (실제 인증)
+// 구글 계정           → 2단계 화면은 똑같이 거치되, 6자리만 입력하면 통과 (UI 전용)
+//                       통과 여부는 이 브라우저(localStorage)에만 기록하고,
+//                       구글 로그인/로그아웃 때마다 초기화 → 로그인할 때마다 2단계가 나옴
+const isPasswordOnly = (fbUser) =>
+    fbUser.providerData.every((p) => p.providerId === "password");
+
+const demoKey = (uid) => `demoCodeVerified:${uid}`;
+const isDemoVerified = (uid) => {
+    try {
+        return localStorage.getItem(demoKey(uid)) === "1";
+    } catch {
+        return false;
+    }
+};
+const markDemoVerified = (uid) => {
+    try {
+        localStorage.setItem(demoKey(uid), "1");
+    } catch {
+        /* 저장 불가 환경이면 새로고침 시 다시 요구됨 */
+    }
+};
+const clearDemoVerified = (uid) => {
+    try {
+        localStorage.removeItem(demoKey(uid));
+    } catch {
+        /* noop */
+    }
+};
+
 const needsCode = (fbUser, data) =>
-    fbUser.providerData.every((p) => p.providerId === "password") &&
-    !data.emailCodeVerified;
+    isPasswordOnly(fbUser) ? !data.emailCodeVerified : !isDemoVerified(fbUser.uid);
 
 // 인증 세션 → 앱 상태 반영
 const applySession = async (fbUser, set) => {
@@ -97,6 +124,9 @@ const applySession = async (fbUser, set) => {
     set({ user: data, pendingEmail: null });
     return { status: "ok", user: data };
 };
+
+// 구글 팝업 로그인 진행 중에는 onAuthStateChanged 가 세션을 먼저 건드리지 않도록 막음
+let googleLoginInFlight = false;
 
 /* ------------------------------------------------------------------ */
 /* 스토어                                                              */
@@ -119,8 +149,14 @@ export const useAuthStore = create((set, get) => ({
                 set({ user: null, currentMember: null, pendingEmail: null, authReady: true });
                 return;
             }
+            if (googleLoginInFlight) return; // 방금 누른 구글 로그인은 onGoogleLogin 이 처리
             try {
-                await applySession(fbUser, set);
+                const session = await applySession(fbUser, set);
+                // 구글: 2단계(UI 전용)를 마치지 않은 세션은 복원하지 않고 로그인 화면부터 시작
+                if (session.status === "needCode" && !isPasswordOnly(fbUser)) {
+                    await signOut(auth).catch(() => { });
+                    set({ user: null, currentMember: null, pendingEmail: null });
+                }
             } catch (err) {
                 console.log("세션 복원 에러:", err.code, err.message);
                 set({ user: null });
@@ -155,7 +191,7 @@ export const useAuthStore = create((set, get) => ({
             session = await applySession(cred.user, set);
         } catch (err) {
             console.log("사용자 정보 동기화 에러:", err.code, err.message);
-            await signOut(auth).catch(() => {});
+            await signOut(auth).catch(() => { });
             set({
                 user: null,
                 loginError: "사용자 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.",
@@ -173,6 +209,11 @@ export const useAuthStore = create((set, get) => ({
 
     // 2단계-a: 6자리 코드 발송 (서버가 생성·메일 발송)
     onSendVerificationCode: async () => {
+        const cur = auth.currentUser;
+        if (cur && !isPasswordOnly(cur)) {
+            set({ loginError: null }); // 구글: UI 전용이라 메일을 보내지 않음
+            return true;
+        }
         try {
             await httpsCallable(functions, "sendVerificationCode")();
             set({ loginError: null });
@@ -188,7 +229,14 @@ export const useAuthStore = create((set, get) => ({
     onVerifyCode: async (code) => {
         set({ loginError: null });
         try {
-            await httpsCallable(functions, "verifyVerificationCode")({ code });
+            const cur = auth.currentUser;
+            if (cur && !isPasswordOnly(cur)) {
+                // 구글: 6자리 숫자면 통과 (UI 전용)
+                if (!/^\d{6}$/.test(code)) throw new Error("6자리 숫자를 입력해주세요.");
+                markDemoVerified(cur.uid);
+            } else {
+                await httpsCallable(functions, "verifyVerificationCode")({ code });
+            }
             const fbUser = auth.currentUser;
             if (!fbUser) throw new Error("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
             const data = await syncUserDoc(fbUser); // 서버가 쓴 emailCodeVerified 반영
@@ -222,7 +270,17 @@ export const useAuthStore = create((set, get) => ({
     },
 
     // 구글 로그인
+    // 반환: { status: "ok", user } | { status: "needCode" } | { status: "cancel" | "error" }
     onGoogleLogin: async () => {
+        googleLoginInFlight = true;
+        try {
+            return await get()._googleLogin();
+        } finally {
+            googleLoginInFlight = false;
+        }
+    },
+
+    _googleLogin: async () => {
         set({ loginError: null });
 
         let gUser;
@@ -235,30 +293,32 @@ export const useAuthStore = create((set, get) => ({
                 err.code === "auth/popup-closed-by-user" ||
                 err.code === "auth/cancelled-popup-request"
             ) {
-                return null;
+                return { status: "cancel" };
             }
             set({ loginError: authErrMsg(err, "구글 로그인에 실패했습니다.") });
-            return null;
+            return { status: "error" };
         }
 
+        clearDemoVerified(gUser.uid); // 구글 로그인할 때마다 2단계 인증을 거치도록 초기화
+
         try {
-            const session = await applySession(gUser, set);
-            return session.status === "ok" ? session.user : null;
+            return await applySession(gUser, set);
         } catch (err) {
             // 사용자 문서를 못 읽었는데 로그인 처리하면 빈 데이터로 덮어쓸 수 있음 → 로그아웃
             console.log("Firestore 동기화 에러:", err.code, err.message);
-            await signOut(auth).catch(() => {});
+            await signOut(auth).catch(() => { });
             set({
                 user: null,
                 loginError: "사용자 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.",
             });
-            return null;
+            return { status: "error" };
         }
     },
 
     // 로그아웃
     onLogout: async () => {
         try {
+            if (auth.currentUser) clearDemoVerified(auth.currentUser.uid);
             await signOut(auth);
         } catch (err) {
             console.log("로그아웃 에러:", err.message);

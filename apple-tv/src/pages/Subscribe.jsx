@@ -120,7 +120,7 @@ const Subscribe = () => {
   }
 
   const planObj = PLANS.find((p) => p.id === plan);
-  const trialEligible = !user.trialUsed; // 체험 이력이 없으면 7일 무료 체험
+  const trialEligible = !user.trialUsed && !user.subscription; // 서버(startTrial)와 같은 기준
   const goHome = () => navigate("/", { replace: true });
 
   const goConfirm = () => {
@@ -191,17 +191,17 @@ const Subscribe = () => {
     const endMs = Date.now() + (trialEligible ? TRIAL_DAYS : planObj.days) * DAY;
     const rows = trialEligible
       ? [
-          ["선택한 플랜", planObj.name],
-          ["오늘 결제 금액", "₩0"],
-          ["무료 체험 종료일", fmtDate(endMs)],
-          ["체험 후 요금", planObj.perUnit],
-        ]
+        ["선택한 플랜", planObj.name],
+        ["오늘 결제 금액", "₩0"],
+        ["무료 체험 종료일", fmtDate(endMs)],
+        ["체험 후 요금", planObj.perUnit],
+      ]
       : [
-          ["선택한 플랜", planObj.name],
-          ["오늘 결제 금액", planObj.amount],
-          ["다음 갱신일", fmtDate(endMs)],
-          ["갱신 요금", planObj.perUnit],
-        ];
+        ["선택한 플랜", planObj.name],
+        ["오늘 결제 금액", planObj.amount],
+        ["다음 갱신일", fmtDate(endMs)],
+        ["갱신 요금", planObj.perUnit],
+      ];
 
     return (
       <Shell step={step} onClose={goHome}>
