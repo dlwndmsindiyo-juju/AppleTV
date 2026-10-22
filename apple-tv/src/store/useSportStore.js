@@ -490,6 +490,36 @@ export const useSportStore = create((set, get) => ({
         }
     },
 
+    // [추가] 라이브 영상용 짧은 하이라이트 클립 (홈 "라이브" 카드 · 라이브 상세에서 사용)
+    // - YouTube 에서 MLS 하이라이트 · 짧은 경기 영상 검색 (4분 이하, 퍼가기 가능한 영상만)
+    // - 세로 숏츠(1분 미만)는 빼고 1~4분 영상만 남김 / 6시간 캐시 (검색 1회 = 100유닛)
+    // - 키가 없거나 실패하면 빈 배열 → 화면에서 TheSportsDB 하이라이트(highlightList)로 대체
+    liveClips: [],
+    onFetchLiveClips: async (query = "MLS 하이라이트 highlights") => {
+        if (get().liveClips.length > 0 || !YOUTUBE_KEY) return;
+        try {
+            const items = await withCache(`sport-yt-live-clips:${query}`, async () => {
+                const search = await youtubeGet("search", {
+                    part: "snippet", q: query, type: "video", videoDuration: "short",
+                    videoEmbeddable: "true", maxResults: "25", order: "date",
+                });
+                const ids = (search.items || []).map((v) => v.id?.videoId).filter(Boolean);
+                if (!ids.length) return [];
+                const details = await youtubeGet("videos", { part: "contentDetails", id: ids.join(",") });
+                const seconds = Object.fromEntries(
+                    (details.items || []).map((v) => [v.id, durationToSeconds(v.contentDetails?.duration)])
+                );
+                return (search.items || [])
+                    .filter((v) => seconds[v.id?.videoId] >= 60 && seconds[v.id?.videoId] <= 240)
+                    .slice(0, 12)
+                    .map((v) => ({ ...v, durationText: formatDuration(seconds[v.id.videoId]) }));
+            });
+            set({ liveClips: items });
+        } catch (error) {
+            console.error("라이브 클립(YouTube) 조회 실패:", error);
+        }
+    },
+
     // 7. 숏츠 영상 저장 (#shorts 검색 후 videos API 로 길이 3분 이하만 남김 / 6시간 캐시)
     shortsVideos: [],
     onFetchShorts: async (query = "축구 쇼츠 #shorts") => {
