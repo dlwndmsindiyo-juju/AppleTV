@@ -2,6 +2,11 @@ import { create } from "zustand";
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
+// 키가 없으면 개발자도구에서 바로 알 수 있게 안내 (키 없이 요청하면 401/403)
+if (!TMDB_KEY) {
+  console.warn("[useMovieStore] VITE_TMDB_API_KEY 가 없어 영화·TV 데이터를 불러오지 못합니다. (.env 확인)");
+}
+
 export const useMovieStore = create((set, get) => ({
   // 인기 영화 저장할 배열
   popMovie: [],
@@ -161,7 +166,7 @@ export const useMovieStore = create((set, get) => ({
   onFetchEpisode: async (id, seasonNumber) => {
     const key = `${id}_${seasonNumber}`;
     const { episodes } = get();
-    if (episodes[id]) return;
+    if (episodes[key]) return; // 시즌별로 캐싱 (기존: episodes[id] 로 확인해 다른 시즌이 안 불러와짐)
 
     const res = await fetch(
       `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${TMDB_KEY}&language=ko-KR`,
@@ -180,12 +185,7 @@ export const useMovieStore = create((set, get) => ({
   },
   // 에피소드별 비디오 정보
   episodeVideos: {},
-  onFetchEpisodeVideo: async (
-    tvId,
-    seasonNumber,
-    episodeNumber,
-    tvTitle = "",
-  ) => {
+  onFetchEpisodeVideo: async (tvId, seasonNumber, episodeNumber) => {
     const key = `${tvId}_${seasonNumber}_${episodeNumber}`;
     const { episodeVideos } = get();
 
@@ -193,12 +193,13 @@ export const useMovieStore = create((set, get) => ({
     if (episodeVideos[key] && episodeVideos[key].length > 0) return;
 
     try {
-      // 1. TMDB 에피소드 비디오 API 호출 (한국어)Apple TV+ 콘텐츠→ TMDB + Watch Provider 필터
-      const res = await fetch(
+      // 1. TMDB 에피소드 비디오 API 호출 (한국어)
+      // const → let: 아래 영어 fallback 에서 다시 대입하므로 (const 재할당 빌드 오류 수정)
+      let res = await fetch(
         `https://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}/episode/${episodeNumber}/videos?api_key=${TMDB_KEY}&language=ko-KR`,
       );
-      const data = await res.json();
-      const videoList = data.results || [];
+      let data = await res.json();
+      let videoList = data.results || [];
 
       // 2. 한국어 비디오가 없으면 영어로 fallback 재요청
       if (videoList.length === 0) {
@@ -209,8 +210,13 @@ export const useMovieStore = create((set, get) => ({
         videoList = data.results || [];
       }
 
-      // 3. TMDB에 영상이 여전히 없는 경우 -> 유튜브 데이터로 직접검색
-      // 상태 업데이트
+      // 3. 상태 업데이트 (기존: 저장하는 코드가 빠져 있었음)
+      set((state) => ({
+        episodeVideos: {
+          ...state.episodeVideos,
+          [key]: videoList,
+        },
+      }));
     } catch (error) {
       console.error("에피소드 비디오 조회 실패:", error);
     }
@@ -300,6 +306,27 @@ export const useMovieStore = create((set, get) => ({
       }));
     } catch (error) {
       console.error("기분별 추천 조회 실패:", error);
+    }
+  },
+
+  // [추가] 영화 / TV 공통 상세 (ContentDetail 에서 사용)
+  // - 한 번의 요청으로 상세 + 출연진 + 비슷한 작품 + 로고 이미지 + 영상(한국어·영어)까지 받음
+  // - 키: "movie_123" / "tv_456"
+  contentDetails: {},
+  onFetchContentDetail: async (type, id) => {
+    const key = `${type}_${id}`;
+    if (get().contentDetails[key]) return;
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/${type}/${id}?api_key=${TMDB_KEY}&language=ko-KR` +
+          `&append_to_response=credits,similar,images,videos` +
+          `&include_image_language=ko,en,null&include_video_language=ko,en,null`,
+      );
+      if (!res.ok) throw new Error(`TMDB ${type} 상세 HTTP ${res.status}`);
+      const data = await res.json();
+      set((state) => ({ contentDetails: { ...state.contentDetails, [key]: data } }));
+    } catch (error) {
+      console.error("상세 정보 조회 실패:", error);
     }
   },
 
