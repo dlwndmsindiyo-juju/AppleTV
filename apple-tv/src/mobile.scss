@@ -1,5 +1,5 @@
 @use "./variables" as *;
-
+ 
 // =====================================================================
 // 모바일 (767px 이하)
 // - App.scss 의 태블릿(1024px 이하) 규칙 위에 덮어쓰기 때문에
@@ -7,20 +7,19 @@
 // - 모바일 시안이 아직 없어 태블릿 시안을 1열 구조로 줄여서 작성했어요.
 // =====================================================================
 $mobile-edge: 20px; // 모바일 좌우 여백
-
+ 
 @media (max-width: $breakpoint-mobile) {
-
   // ---------- 헤더 ----------
   header .inner {
     padding: $header-pad-y $mobile-edge;
-
+ 
     .logo a img {
       height: 20px;
     }
-
+ 
     nav {
       padding: $header-pad-y $mobile-edge;
-
+ 
       .gnb-center-toggle {
         button {
           height: 34px;
@@ -28,54 +27,62 @@ $mobile-edge: 20px; // 모바일 좌우 여백
           font-size: 14px;
         }
       }
-
+ 
       .gnb-right ul {
         .search-box {
           display: none; // 모바일에서는 검색창 숨김
         }
-
+ 
         .profile-box {
           width: 36px;
           height: 36px;
           font-size: 14px;
         }
+
+        // 로그인 버튼: 모바일에서 조금 작게
+        .header-login-btn {
+          @include body-small;
+          height: 32px;
+          padding: 0 12px;
+          font-weight: 700;
+        }
       }
     }
   }
-
+ 
   // ---------- 푸터 ----------
   .footer {
     padding: $footer-pad-y $mobile-edge;
-
+ 
     .footer-main-menu {
       gap: 10px 20px;
     }
   }
-
+ 
   // ---------- 히어로 ----------
   .hero-swiper-container {
     // 화면이 줄어도 히어로는 화면 높이 그대로
     height: 100vh;
     height: 100svh;
-
+ 
     .hero-slide-item .hero-info {
       left: $mobile-edge;
       right: $mobile-edge;
       width: auto;
       max-width: none;
-
+ 
       .hero-title {
         font-size: 34px;
         margin-bottom: 16px;
       }
-
+ 
       .hero-overview {
         -webkit-line-clamp: 3;
         margin-bottom: 20px;
       }
     }
   }
-
+ 
   // ---------- 홈 섹션 공통 좌우 여백 ----------
   .value-props .inner,
   .top10-section .inner,
@@ -86,7 +93,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     padding-left: $mobile-edge;
     padding-right: $mobile-edge;
   }
-
+ 
   // ---------- 핵심 혜택: 1열 ----------
   .value-props {
     .value-props-inner {
@@ -94,50 +101,50 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       gap: 20px;
     }
   }
-
+ 
   // ---------- TOP 10 ----------
   .top10-section {
     padding: 32px 0 40px;
-
+ 
     .inner {
       padding-right: 0;
     }
-
+ 
     .top10-rank {
       font-size: 96px;
       bottom: -8px;
     }
   }
-
+ 
   // ---------- 개봉 예정작: 썸네일 왼쪽 + 글 오른쪽 (시안) ----------
   .upcoming-section {
     padding: 32px 0 24px;
-
+ 
     .upcoming-list {
       gap: 16px;
     }
-
+ 
     .upcoming-card {
       flex-direction: row;
       align-items: center;
       gap: 12px;
       padding: 12px;
     }
-
+ 
     .upcoming-thumb {
       width: 110px;
       height: 70px;
     }
-
+ 
     .upcoming-info {
       flex: 1;
       min-width: 0; // 글이 길어도 카드 폭 안에서 말줄임
     }
-
+ 
     .upcoming-movie-title {
       @include heading-h4;
     }
-
+ 
     .upcoming-btn {
       height: 32px;
       padding: 0 14px;
@@ -145,47 +152,49 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       @include body-small;
     }
   }
-
+ 
   // ---------- Apple 오리지널 ----------
   .apple-originals {
     padding: 32px 0 40px;
-
+ 
     .apple-originals-list {
       grid-auto-columns: 160px;
       gap: 16px;
     }
   }
-
+ 
   // ---------- 구독 CTA: 이미지 위에 텍스트 ----------
   .subscribe-cta {
     padding: 24px 0 48px;
-
+ 
     .subscribe-banner {
       height: 300px;
       border-radius: 16px;
     }
-
+ 
     .subscribe-content {
       left: 5%;
       right: 5%;
       gap: 12px;
     }
-
+ 
     .subscribe-title {
       font-size: 17px;
     }
-
+ 
     .subscribe-btn {
       height: 42px;
       padding: 0 24px;
     }
-
+ 
     // 모바일은 텍스트가 이미지 전체에 걸치므로 그라데이션을 더 넓게
     .subscribe-banner::after {
-      background: linear-gradient(to right,
-          rgba($dark-color-900, 0.92) 0%,
-          rgba($dark-color-900, 0.7) 60%,
-          rgba($dark-color-900, 0.2) 100%);
+      background: linear-gradient(
+        to right,
+        rgba($dark-color-900, 0.92) 0%,
+        rgba($dark-color-900, 0.7) 60%,
+        rgba($dark-color-900, 0.2) 100%
+      );
     }
   }
 
@@ -516,7 +525,6 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 // 스포츠 — 관심있는 구단 (홈 슬라이드) + 구단 전체 페이지  태블릿 / 모바일
 // =====================================================================
 @media (max-width: $breakpoint-tablet) {
-
   // 카드 공용
   .sport-team-card {
     height: 96px;
@@ -572,7 +580,6 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 }
 
 @media (max-width: $breakpoint-mobile) {
-
   // 카드 공용
   .sport-team-card {
     height: 80px;
@@ -680,7 +687,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       margin-bottom: 24px;
     }
 
-    .sport-team-group+.sport-team-group {
+    .sport-team-group + .sport-team-group {
       margin-top: 32px;
     }
 
@@ -950,7 +957,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     .ecosystem-devices li {
       @include body-default;
 
-      &+li::before {
+      & + li::before {
         margin: 0 6px;
       }
     }
@@ -1110,7 +1117,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
         height: auto;
         padding: 0;
 
-        &+.plan-option {
+        & + .plan-option {
           border-top: none;
         }
 
