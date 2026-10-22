@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import { useSportStore } from "../../store/useSportStore";
@@ -32,7 +33,7 @@ const SPORT_HERO_SLIDES = [
 // - 여러 팀을 팔로우하면 아래 칩으로 팀 바꾸기
 // - 배너가 없는 구단은 대표색(color) 그라데이션
 // ---------------------------------------------------------------------
-const TeamHero = ({ team }) => {
+export const TeamHero = ({ team }) => {
   const favorites = useTeamStore((state) => state.favorites);
   const setHeroTeam = useTeamStore((state) => state.setHeroTeam);
   const toggleFavorite = useTeamStore((state) => state.toggleFavorite);
@@ -157,7 +158,7 @@ const MatchHero = () => {
           <span className="sport-live-dot" aria-hidden="true" />
           <strong>LIVE</strong>
           <span className="sport-hero-divider">·</span>
-          <span>{match.competition?.name || "프리미어리그"}</span>
+          <span>{match.competition?.name || "MLS"}</span>
         </p>
 
         <h2 className="sport-hero-title">
@@ -177,10 +178,11 @@ const MatchHero = () => {
         </p>
 
         <div className="sport-hero-actions">
-          <a className="sport-btn primary" href="#sport-live">▶ 경기 시청</a>
-          <a className="sport-btn secondary" href="#sport-live">
+          {/* 하단 LIVE 배너와 같은 경기 → 라이브 상세 */}
+          <Link className="sport-btn primary" to={`/sport/match/${match.id}`}>▶ 경기 시청</Link>
+          <Link className="sport-btn secondary" to={`/sport/match/${match.id}`}>
             경기 정보
-          </a>
+          </Link>
         </div>
       </div>
     </section>
