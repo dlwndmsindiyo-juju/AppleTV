@@ -51,6 +51,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/sport" element={<SportHome />} />
+              <Route path="/movie/:id" element={<MovieDetail />} />
+              <Route path="/tv/:id" element={<MovieDetail />} />
               <Route path="/detail/:id" element={<MovieDetail />} />
               <Route path="/sport/teams" element={<SportTeamsPage />} />
               <Route path="/sport/standings" element={<SportStandingsPage />} />
