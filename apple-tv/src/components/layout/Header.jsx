@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuthStore } from "../../store/useAuthStore";
 
 // TV · 스포츠 양쪽에서 함께 쓰는 페이지 (들어가도 토글이 바뀌지 않음)
 const SHARED_PATHS = ["/ecosystem", "/login"];
@@ -29,6 +30,8 @@ const getTabForPath = (pathname) => {
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation(); // 현재 경로를 파악하기 위해 추가
+  // 로그인 여부: 로그인 전 → "로그인" 버튼 / 로그인 후 → 프로필 아이콘
+  const user = useAuthStore((state) => state.user);
 
   // 토글 상태 결정
   // - /sport… → sport, 그 외 TV 페이지 → apple-tv
@@ -120,13 +123,22 @@ const Header = () => {
                 <img src="/icons/search.svg" alt="검색 아이콘" />
                 <input type="text" name="search" placeholder="작품·인물·장르" />
               </li>
-              <li className="profile-box">
-                <span aria-label="유저 프로필">
-                  <Link to="/login" state={{ from: location.pathname }}>
-                    <img src="/icons/profile.svg" alt="프로필 기본 이미지" />
+              {user ? (
+                <li className="profile-box">
+                  <span aria-label="유저 프로필">
+                    <Link to="/login" state={{ from: location.pathname }}>
+                      <img src="/icons/profile.svg" alt="프로필 기본 이미지" />
+                    </Link>
+                  </span>
+                </li>
+              ) : (
+                <li className="login-box">
+                  <Link to="/login" state={{ from: location.pathname }} className="header-login-btn">
+                    <img src="/icons/User.svg" alt="" aria-hidden="true" />
+                    로그인
                   </Link>
-                </span>
-              </li>
+                </li>
+              )}
             </ul>
           </div>
         </nav>
