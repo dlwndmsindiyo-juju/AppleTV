@@ -16,7 +16,6 @@ const Login = () => {
     onEmailAuth,
     onSendVerificationCode,
     onVerifyCode,
-    onStartTrial,
     onLogout,
     clearLoginError,
   } = useAuthStore();
@@ -186,13 +185,9 @@ const Login = () => {
     setStep("login");
   };
 
-  // 3단계: 7일 무료구독 시작 → 서버가 구독 정보를 기록한 뒤 홈으로
-  const handleStartSubscribe = async () => {
-    if (busy) return;
-    setBusy(true);
-    const u = await onStartTrial();
-    setBusy(false);
-    if (u) navigate("/", { replace: true });
+  // 3단계: 플랜 선택 페이지로 이동 (실제 구독 기록은 /subscribe 의 "계속"에서)
+  const handleStartSubscribe = () => {
+    navigate("/subscribe");
   };
 
   const handleClose = () => {
@@ -366,9 +361,8 @@ const Login = () => {
                 type="button"
                 className="login-btn"
                 onClick={handleStartSubscribe}
-                disabled={busy}
               >
-                {busy ? "처리 중..." : "7일 무료구독 시작하기"}
+                7일 무료구독 시작하기
               </button>
             </div>
 

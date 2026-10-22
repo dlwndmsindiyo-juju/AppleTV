@@ -201,11 +201,15 @@ export const useAuthStore = create((set, get) => ({
         }
     },
 
-    // 3단계: 7일 무료구독 시작 (서버가 subscription 필드를 기록)
-    onStartTrial: async () => {
+    // 구독 시작 (서버가 subscription 필드를 기록) — plan: "monthly" | "yearly"
+    onStartTrial: async (plan) => {
         set({ loginError: null });
+        if (!["monthly", "yearly"].includes(plan)) {
+            set({ loginError: "플랜을 선택해주세요." });
+            return null;
+        }
         try {
-            await httpsCallable(functions, "startTrial")();
+            await httpsCallable(functions, "startTrial")({ plan });
             const fbUser = auth.currentUser;
             const data = await syncUserDoc(fbUser);
             set({ user: data });

@@ -1,0 +1,625 @@
+// 구독 플랜 선택 페이지 전용 (기존 SCSS 수정 없음)
+// _variables.scss 와 같은 폴더(App.scss 옆)에 두세요.
+@use "./variables" as *;
+
+$plan-line: #8e8e93;
+$plan-blue: #007aff;
+
+// 기존 .login-page / .login-card 껍데기를 재사용하고
+// .plan-card 로 한 단계 더 구체화해서 덮어씀 (로드 순서와 무관)
+.login-page {
+  .login-card.plan-card {
+    max-width: 800px;
+    padding: 54px 44px 52px;
+    background-color: #f5f5f7;
+    border-radius: 12px;
+    box-shadow: none;
+
+    .login-card-close {
+      top: 20px;
+      left: 24px;
+      width: 44px;
+      height: 44px;
+      background-color: #fff;
+      color: #000;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        background-color: #ececf0;
+      }
+    }
+
+    .login-logo-area {
+      margin-bottom: 0;
+
+      .login-app-icon {
+        width: 50px;
+        height: 50px;
+        background-color: #d9d9d9;
+      }
+    }
+
+    .login-title {
+      margin: 20px 0 10px;
+      font-size: 24px;
+      line-height: 30px;
+      font-weight: 500;
+      color: #111;
+    }
+
+    .login-desc {
+      margin: 0 0 28px;
+      font-weight: 600;
+      color: #6e6e73;
+    }
+
+    .plan-body {
+      width: 100%;
+      text-align: left;
+    }
+
+    // ---------- 플랜 선택 박스 ----------
+    .plan-list {
+      border: 1px solid $plan-line;
+      border-radius: 8px;
+      padding: 13px 20px;
+    }
+
+    .plan-option {
+      position: relative;
+      display: grid;
+      grid-template-columns: 196px 210px 1fr 20px;
+      align-items: center;
+      height: 46px;
+      cursor: pointer;
+
+      .plan-name {
+        @include heading-h3;
+        font-weight: 700;
+        color: #111;
+      }
+
+      .plan-price {
+        @include body-default;
+        color: #1d1d1f;
+      }
+
+      .plan-note {
+        @include label-default;
+        color: #86868b;
+      }
+
+      // 실제 라디오는 숨기고 접근성(키보드/스크린리더)만 유지
+      .plan-radio {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+        margin: 0;
+      }
+
+      .plan-radio-mark {
+        width: 20px;
+        height: 20px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 1px solid $plan-line;
+        background-color: #fff;
+        transition: background-color 0.15s ease, border-color 0.15s ease;
+      }
+
+      .plan-radio:checked ~ .plan-radio-mark {
+        background-color: $plan-blue;
+        border-color: $plan-blue;
+      }
+
+      .plan-radio:focus-visible ~ .plan-radio-mark {
+        outline: 2px solid $plan-blue;
+        outline-offset: 3px;
+      }
+    }
+
+    // ---------- 포함 혜택 ----------
+    .plan-section-title {
+      @include heading-h3;
+      font-weight: 700;
+      color: #111;
+      margin: 27px 0 10px;
+    }
+
+    .plan-benefits {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 12px;
+    }
+
+    .plan-benefit {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 22px 20px;
+      border: 1px solid $plan-line;
+      border-radius: 8px;
+      box-sizing: border-box;
+
+      strong {
+        @include body-default;
+        font-weight: 700;
+        color: #111;
+      }
+
+      span {
+        @include body-default;
+        color: #86868b;
+      }
+    }
+
+    // ---------- 에러 / 버튼 ----------
+    .plan-error {
+      @include label-default;
+      margin: 14px 0 0;
+      text-align: center;
+      color: #d70015;
+    }
+
+    .plan-submit {
+      @include body-default;
+      display: block;
+      width: 100%;
+      max-width: 428px;
+      height: 48px;
+      margin: 24px auto 0;
+      border: none;
+      border-radius: 6px;
+      background-color: $plan-blue;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover:not(:disabled) {
+        background-color: #0070eb;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
+    }
+  }
+}
+
+// ===== 반응형 (breakpoint 는 기존 변수 사용) =====
+@media (max-width: $breakpoint-tablet) {
+  .login-page .login-card.plan-card {
+    padding-left: 32px;
+    padding-right: 32px;
+
+    .plan-option {
+      grid-template-columns: 170px 1fr 20px;
+      grid-template-areas: "name price radio" "note note note";
+      height: auto;
+      row-gap: 2px;
+      padding: 6px 0;
+
+      .plan-name { grid-area: name; }
+      .plan-price { grid-area: price; }
+      .plan-radio-mark { grid-area: radio; }
+      .plan-note { grid-area: note; }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .login-page .login-card.plan-card {
+    padding: 76px 20px 32px;
+
+    .login-card-close {
+      top: 16px;
+      left: 16px;
+      width: 38px;
+      height: 38px;
+    }
+
+    .login-title {
+      font-size: 22px;
+      line-height: 28px;
+    }
+
+    .login-desc {
+      margin-bottom: 20px;
+      word-break: keep-all;
+    }
+
+    .plan-list {
+      padding: 4px 16px;
+    }
+
+    .plan-option {
+      grid-template-columns: 1fr 20px;
+      grid-template-areas: "name radio" "price price" "note note";
+      padding: 14px 0;
+
+      & + .plan-option {
+        border-top: 1px solid #d2d2d7;
+      }
+    }
+
+    .plan-benefits {
+      grid-template-columns: 1fr;
+    }
+
+    .plan-benefit {
+      padding: 16px;
+      gap: 6px;
+    }
+
+    .plan-submit {
+      max-width: none;
+    }
+  }
+}
+
+// =====================================================================
+// 2~4단계: 내용 확인 / 처리 중 / 완료  (+ 홈 상단 무료 체험 안내)
+// =====================================================================
+$plan-gray-box: #d9d9d9;
+
+.login-page {
+  .login-card.plan-card {
+    // ---------- 2. 내용 확인 ----------
+    &.plan-card--confirm {
+      padding-bottom: 38px;
+
+      .login-desc {
+        margin-bottom: 18px;
+      }
+    }
+
+    .plan-summary {
+      margin: 0;
+      padding: 14px 20px;
+      border-radius: 12px;
+      background-color: $plan-gray-box;
+    }
+
+    .plan-summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 34px;
+
+      dt {
+        @include body-default;
+        color: #86868b;
+      }
+
+      dd {
+        @include body-default;
+        margin: 0;
+        font-weight: 700;
+        color: #111;
+        text-align: right;
+      }
+    }
+
+    .plan-field {
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+      padding: 18px 16px 17px;
+      border: 1px solid $plan-line;
+      border-radius: 12px;
+      box-sizing: border-box;
+
+      &:first-of-type {
+        margin-top: 16px;
+      }
+
+      .plan-field-label {
+        @include label-default;
+        color: #86868b;
+      }
+
+      .plan-field-value {
+        margin-top: 13px;
+        font-size: 18px;
+        line-height: 24px;
+        color: #111;
+      }
+    }
+
+    .plan-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      margin: 30px 0 30px;
+      text-align: center;
+    }
+
+    .plan-link {
+      @include body-default;
+      justify-self: center;
+      padding: 0;
+      border: none;
+      background: none;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+
+      &--muted {
+        color: #6e6e73;
+      }
+
+      &--blue {
+        color: $plan-blue;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .plan-links + .plan-submit,
+    .plan-error + .plan-submit {
+      margin-top: 0;
+    }
+
+    // ---------- 3. 처리 중 / 4. 완료 공통 (큰 타이틀) ----------
+    &.plan-card--processing,
+    &.plan-card--done {
+      padding-top: 82px;
+
+      .login-title {
+        margin: 14px 0 24px;
+        font-size: 34px;
+        line-height: 41px;
+        font-weight: 500;
+        color: #111;
+      }
+
+      .login-desc {
+        margin: 0;
+        font-size: 22px;
+        line-height: 29px;
+        font-weight: 400;
+        color: #a1a1a6;
+      }
+    }
+
+    // ---------- 3. 처리 중 ----------
+    &.plan-card--processing {
+      min-height: 560px;
+      padding-bottom: 69px;
+
+      .plan-spinner {
+        width: 50px;
+        height: 50px;
+        margin: 24px 0 24px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 3px solid #d9d9d9;
+        border-top-color: #8e8e93;
+        animation: plan-spin 0.9s linear infinite;
+      }
+
+      .plan-proc-name {
+        margin: 0 0 27px;
+        font-size: 22px;
+        line-height: 29px;
+        font-weight: 700;
+        color: #111;
+      }
+
+      .plan-proc-note {
+        @include heading-h5;
+        margin: 0 0 26px;
+        color: #86868b;
+      }
+
+      .plan-submit--wait {
+        max-width: 330px;
+        margin: 0;
+        background-color: #8e8e93;
+        opacity: 1;
+      }
+    }
+
+    // ---------- 4. 완료 ----------
+    &.plan-card--done {
+      padding-bottom: 51px;
+
+      .login-title {
+        margin-top: 16px;
+      }
+
+      .login-desc {
+        margin-bottom: 17px;
+      }
+
+      .plan-done-box {
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+        border-radius: 12px;
+        background-color: $plan-gray-box;
+
+        strong {
+          @include heading-h5;
+          font-weight: 700;
+          line-height: 22px;
+          color: #111;
+        }
+
+        span {
+          @include body-default;
+          color: #86868b;
+        }
+
+        strong + span {
+          margin-top: 8px;
+        }
+
+        span + span {
+          margin-top: 3px;
+        }
+      }
+
+      .plan-done-note {
+        @include body-default;
+        margin: 18px 0 17px;
+        text-align: center;
+        color: #86868b;
+      }
+
+      .plan-submit {
+        margin-top: 0;
+      }
+
+      .plan-manage {
+        @include body-default;
+        display: block;
+        margin-top: 30px;
+        text-align: center;
+        font-weight: 700;
+        color: $plan-blue;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+@keyframes plan-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-page .login-card.plan-card.plan-card--processing .plan-spinner {
+    animation-duration: 3s;
+  }
+}
+
+// ===== 홈 상단: 무료 체험 중 안내 =====
+.trial-welcome {
+  background-color: $gnb-bg;
+  padding: ($header-height + 8px) 0 32px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .trial-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 96px;
+    padding: 0 72px 0 24px;
+    border-radius: 16px;
+    background-color: #f5f5f7;
+    box-sizing: border-box;
+  }
+
+  .trial-strip-title {
+    @include heading-h2;
+    margin: 0;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .trial-strip-link {
+    @include body-small;
+    font-weight: 700;
+    color: $plan-blue;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .trial-heading {
+    @include heading-h1;
+    margin: 28px 0 0;
+    font-weight: 700;
+    color: $text-primary;
+    word-break: keep-all;
+  }
+
+  .trial-sub {
+    @include body-large;
+    margin: 18px 0 0;
+    color: $text-secondary;
+  }
+}
+
+// ===== 반응형 (2~4단계, 홈 안내) =====
+@media (max-width: $breakpoint-mobile) {
+  .login-page .login-card.plan-card {
+    &.plan-card--processing,
+    &.plan-card--done {
+      padding-top: 76px;
+
+      .login-title {
+        font-size: 24px;
+        line-height: 30px;
+        word-break: keep-all;
+      }
+
+      .login-desc {
+        font-size: 17px;
+        line-height: 22px;
+      }
+    }
+
+    &.plan-card--processing {
+      min-height: 0;
+    }
+
+    .plan-summary-row dd {
+      max-width: 55%;
+    }
+
+    .plan-links {
+      grid-template-columns: 1fr;
+      row-gap: 16px;
+    }
+  }
+
+  .trial-welcome {
+    padding-bottom: 20px;
+
+    .trial-strip {
+      height: auto;
+      padding: 20px;
+    }
+
+    .trial-strip-title {
+      font-size: 17px;
+      line-height: 22px;
+    }
+
+    .trial-heading {
+      margin-top: 20px;
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    .trial-sub {
+      font-size: 15px;
+      line-height: 20px;
+    }
+  }
+}
