@@ -155,6 +155,40 @@ header .inner nav .gnb-right ul .search-box input {
 header .inner nav .gnb-right ul .search-box input::placeholder {
   color: #A3A3A3;
 }
+header .inner nav .gnb-right ul .login-box {
+  display: flex;
+}
+header .inner nav .gnb-right ul .header-login-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background-color: #0a84ff;
+  color: #FFFFFF;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+header .inner nav .gnb-right ul .header-login-btn img {
+  width: 12px;
+  height: 13px;
+  display: block;
+}
+header .inner nav .gnb-right ul .header-login-btn:hover {
+  background-color: rgb(0, 111.6424489796, 224.2);
+}
+header .inner nav .gnb-right ul .header-login-btn:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
 header .inner nav .gnb-right ul .profile-box {
   cursor: pointer;
   display: flex;
@@ -453,7 +487,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   min-height: 468px;
   padding: 68px 56px 32px;
   background-color: #F5F5F5;
-  border-radius: 12px;
+  border-radius: 20px;
   box-shadow: none;
   justify-content: flex-start;
 }
@@ -1011,7 +1045,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   align-items: center;
   gap: 16px;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 20px;
   background-color: #1f1f1f;
   min-width: 0;
 }
@@ -1130,7 +1164,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   gap: 24px;
 }
 .movie-detail-page .player-box {
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
   background-color: #08090d;
 }
@@ -1406,7 +1440,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   max-height: 920px;
   box-sizing: border-box;
   padding: 20px 24px 8px;
-  border-radius: 12px;
+  border-radius: 20px;
   background-color: #1f1f1f;
   display: flex;
   flex-direction: column;
@@ -2964,7 +2998,7 @@ body.has-promo-banner .footer {
   height: 108px;
   padding: 0 28px 0 18px;
   box-sizing: border-box;
-  border-radius: 12px;
+  border-radius: 20px;
   border: 1px solid transparent;
   background-color: #242424;
   min-width: 0;
@@ -3100,7 +3134,7 @@ body.has-promo-banner .footer {
   letter-spacing: 0;
   margin: 0;
   padding: 40px 16px;
-  border-radius: 12px;
+  border-radius: 20px;
   background-color: rgba(23, 23, 23, 0.45);
   color: #E0E0E0;
   text-align: center;

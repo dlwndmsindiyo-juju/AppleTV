@@ -1,0 +1,594 @@
+.login-page .login-card.plan-card {
+  max-width: 800px;
+  padding: 54px 44px 52px;
+  background-color: #f5f5f7;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.login-page .login-card.plan-card .login-card-close {
+  top: 20px;
+  left: 24px;
+  width: 44px;
+  height: 44px;
+  background-color: #fff;
+  color: #000;
+}
+.login-page .login-card.plan-card .login-card-close svg {
+  width: 20px;
+  height: 20px;
+}
+.login-page .login-card.plan-card .login-card-close:hover {
+  background-color: #ececf0;
+}
+.login-page .login-card.plan-card .login-logo-area {
+  margin-bottom: 0;
+}
+.login-page .login-card.plan-card .login-logo-area .login-app-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #d9d9d9;
+}
+.login-page .login-card.plan-card .login-title {
+  margin: 20px 0 10px;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 500;
+  color: #111;
+}
+.login-page .login-card.plan-card .login-desc {
+  margin: 0 0 28px;
+  font-weight: 600;
+  color: #6e6e73;
+}
+.login-page .login-card.plan-card .plan-body {
+  width: 100%;
+  text-align: left;
+}
+.login-page .login-card.plan-card .plan-list {
+  border: 1px solid #8e8e93;
+  border-radius: 8px;
+  padding: 13px 20px;
+}
+.login-page .login-card.plan-card .plan-option {
+  position: relative;
+  display: grid;
+  grid-template-columns: 196px 210px 1fr 20px;
+  align-items: center;
+  height: 46px;
+  cursor: pointer;
+}
+.login-page .login-card.plan-card .plan-option .plan-name {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: #111;
+}
+.login-page .login-card.plan-card .plan-option .plan-price {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #1d1d1f;
+}
+.login-page .login-card.plan-card .plan-option .plan-note {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  color: #86868b;
+}
+.login-page .login-card.plan-card .plan-option .plan-radio {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+.login-page .login-card.plan-card .plan-option .plan-radio-mark {
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 1px solid #8e8e93;
+  background-color: #fff;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.login-page .login-card.plan-card .plan-option .plan-radio:checked ~ .plan-radio-mark {
+  background-color: #007aff;
+  border-color: #007aff;
+}
+.login-page .login-card.plan-card .plan-option .plan-radio:focus-visible ~ .plan-radio-mark {
+  outline: 2px solid #007aff;
+  outline-offset: 3px;
+}
+.login-page .login-card.plan-card .plan-section-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: #111;
+  margin: 27px 0 10px;
+}
+.login-page .login-card.plan-card .plan-benefits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+}
+.login-page .login-card.plan-card .plan-benefit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 20px;
+  border: 1px solid #8e8e93;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+.login-page .login-card.plan-card .plan-benefit strong {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: #111;
+}
+.login-page .login-card.plan-card .plan-benefit span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #86868b;
+}
+.login-page .login-card.plan-card .plan-error {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  margin: 14px 0 0;
+  text-align: center;
+  color: #d70015;
+}
+.login-page .login-card.plan-card .plan-submit {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  display: block;
+  width: 100%;
+  max-width: 428px;
+  height: 48px;
+  margin: 24px auto 0;
+  border: none;
+  border-radius: 6px;
+  background-color: #007aff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.login-page .login-card.plan-card .plan-submit:hover:not(:disabled) {
+  background-color: #0070eb;
+}
+.login-page .login-card.plan-card .plan-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+@media (max-width: 1024px) {
+  .login-page .login-card.plan-card {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  .login-page .login-card.plan-card .plan-option {
+    grid-template-columns: 170px 1fr 20px;
+    grid-template-areas: "name price radio" "note note note";
+    height: auto;
+    row-gap: 2px;
+    padding: 6px 0;
+  }
+  .login-page .login-card.plan-card .plan-option .plan-name {
+    grid-area: name;
+  }
+  .login-page .login-card.plan-card .plan-option .plan-price {
+    grid-area: price;
+  }
+  .login-page .login-card.plan-card .plan-option .plan-radio-mark {
+    grid-area: radio;
+  }
+  .login-page .login-card.plan-card .plan-option .plan-note {
+    grid-area: note;
+  }
+}
+@media (max-width: 767px) {
+  .login-page .login-card.plan-card {
+    padding: 76px 20px 32px;
+  }
+  .login-page .login-card.plan-card .login-card-close {
+    top: 16px;
+    left: 16px;
+    width: 38px;
+    height: 38px;
+  }
+  .login-page .login-card.plan-card .login-title {
+    font-size: 22px;
+    line-height: 28px;
+  }
+  .login-page .login-card.plan-card .login-desc {
+    margin-bottom: 20px;
+    word-break: keep-all;
+  }
+  .login-page .login-card.plan-card .plan-list {
+    padding: 4px 16px;
+  }
+  .login-page .login-card.plan-card .plan-option {
+    grid-template-columns: 1fr 20px;
+    grid-template-areas: "name radio" "price price" "note note";
+    padding: 14px 0;
+  }
+  .login-page .login-card.plan-card .plan-option + .plan-option {
+    border-top: 1px solid #d2d2d7;
+  }
+  .login-page .login-card.plan-card .plan-benefits {
+    grid-template-columns: 1fr;
+  }
+  .login-page .login-card.plan-card .plan-benefit {
+    padding: 16px;
+    gap: 6px;
+  }
+  .login-page .login-card.plan-card .plan-submit {
+    max-width: none;
+  }
+}
+.login-page .login-card.plan-card.plan-card--confirm {
+  padding-bottom: 38px;
+}
+.login-page .login-card.plan-card.plan-card--confirm .login-desc {
+  margin-bottom: 18px;
+}
+.login-page .login-card.plan-card .plan-summary {
+  margin: 0;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background-color: #d9d9d9;
+}
+.login-page .login-card.plan-card .plan-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 34px;
+}
+.login-page .login-card.plan-card .plan-summary-row dt {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #86868b;
+}
+.login-page .login-card.plan-card .plan-summary-row dd {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  margin: 0;
+  font-weight: 700;
+  color: #111;
+  text-align: right;
+}
+.login-page .login-card.plan-card .plan-field {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  padding: 18px 16px 17px;
+  border: 1px solid #8e8e93;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+.login-page .login-card.plan-card .plan-field:first-of-type {
+  margin-top: 16px;
+}
+.login-page .login-card.plan-card .plan-field .plan-field-label {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  color: #86868b;
+}
+.login-page .login-card.plan-card .plan-field .plan-field-value {
+  margin-top: 13px;
+  font-size: 18px;
+  line-height: 24px;
+  color: #111;
+}
+.login-page .login-card.plan-card .plan-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  margin: 30px 0 30px;
+  text-align: center;
+}
+.login-page .login-card.plan-card .plan-link {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  justify-self: center;
+  padding: 0;
+  border: none;
+  background: none;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.login-page .login-card.plan-card .plan-link--muted {
+  color: #6e6e73;
+}
+.login-page .login-card.plan-card .plan-link--blue {
+  color: #007aff;
+}
+.login-page .login-card.plan-card .plan-link:hover {
+  text-decoration: underline;
+}
+.login-page .login-card.plan-card .plan-links + .plan-submit,
+.login-page .login-card.plan-card .plan-error + .plan-submit {
+  margin-top: 0;
+}
+.login-page .login-card.plan-card.plan-card--processing, .login-page .login-card.plan-card.plan-card--done {
+  padding-top: 82px;
+}
+.login-page .login-card.plan-card.plan-card--processing .login-title, .login-page .login-card.plan-card.plan-card--done .login-title {
+  margin: 14px 0 24px;
+  font-size: 34px;
+  line-height: 41px;
+  font-weight: 500;
+  color: #111;
+}
+.login-page .login-card.plan-card.plan-card--processing .login-desc, .login-page .login-card.plan-card.plan-card--done .login-desc {
+  margin: 0;
+  font-size: 22px;
+  line-height: 29px;
+  font-weight: 400;
+  color: #a1a1a6;
+}
+.login-page .login-card.plan-card.plan-card--processing {
+  min-height: 560px;
+  padding-bottom: 69px;
+}
+.login-page .login-card.plan-card.plan-card--processing .plan-spinner {
+  width: 50px;
+  height: 50px;
+  margin: 24px 0 24px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 3px solid #d9d9d9;
+  border-top-color: #8e8e93;
+  animation: plan-spin 0.9s linear infinite;
+}
+.login-page .login-card.plan-card.plan-card--processing .plan-proc-name {
+  margin: 0 0 27px;
+  font-size: 22px;
+  line-height: 29px;
+  font-weight: 700;
+  color: #111;
+}
+.login-page .login-card.plan-card.plan-card--processing .plan-proc-note {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  letter-spacing: 0;
+  margin: 0 0 26px;
+  color: #86868b;
+}
+.login-page .login-card.plan-card.plan-card--processing .plan-submit--wait {
+  max-width: 330px;
+  margin: 0;
+  background-color: #8e8e93;
+  opacity: 1;
+}
+.login-page .login-card.plan-card.plan-card--done {
+  padding-bottom: 51px;
+}
+.login-page .login-card.plan-card.plan-card--done .login-title {
+  margin-top: 16px;
+}
+.login-page .login-card.plan-card.plan-card--done .login-desc {
+  margin-bottom: 17px;
+}
+.login-page .login-card.plan-card.plan-card--done .plan-done-box {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 12px;
+  background-color: #d9d9d9;
+}
+.login-page .login-card.plan-card.plan-card--done .plan-done-box strong {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  letter-spacing: 0;
+  font-weight: 700;
+  line-height: 22px;
+  color: #111;
+}
+.login-page .login-card.plan-card.plan-card--done .plan-done-box span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #86868b;
+}
+.login-page .login-card.plan-card.plan-card--done .plan-done-box strong + span {
+  margin-top: 8px;
+}
+.login-page .login-card.plan-card.plan-card--done .plan-done-box span + span {
+  margin-top: 3px;
+}
+.login-page .login-card.plan-card.plan-card--done .plan-done-note {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  margin: 18px 0 17px;
+  text-align: center;
+  color: #86868b;
+}
+.login-page .login-card.plan-card.plan-card--done .plan-submit {
+  margin-top: 0;
+}
+.login-page .login-card.plan-card.plan-card--done .plan-manage {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  display: block;
+  margin-top: 30px;
+  text-align: center;
+  font-weight: 700;
+  color: #007aff;
+  text-decoration: none;
+}
+.login-page .login-card.plan-card.plan-card--done .plan-manage:hover {
+  text-decoration: underline;
+}
+
+@keyframes plan-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .login-page .login-card.plan-card.plan-card--processing .plan-spinner {
+    animation-duration: 3s;
+  }
+}
+.trial-welcome {
+  background-color: #141414;
+  padding: 80px 0 32px;
+}
+.trial-welcome .inner {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+.trial-welcome .trial-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 96px;
+  padding: 0 72px 0 24px;
+  border-radius: 16px;
+  background-color: #f5f5f7;
+  box-sizing: border-box;
+}
+.trial-welcome .trial-strip-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  margin: 0;
+  font-weight: 700;
+  color: #111;
+}
+.trial-welcome .trial-strip-link {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: #007aff;
+  text-decoration: none;
+}
+.trial-welcome .trial-strip-link:hover {
+  text-decoration: underline;
+}
+.trial-welcome .trial-heading {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0;
+  margin: 28px 0 0;
+  font-weight: 700;
+  color: #ffffff;
+  word-break: keep-all;
+}
+.trial-welcome .trial-sub {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  margin: 18px 0 0;
+  color: #b8bdc9;
+}
+
+@media (max-width: 767px) {
+  .login-page .login-card.plan-card.plan-card--processing, .login-page .login-card.plan-card.plan-card--done {
+    padding-top: 76px;
+  }
+  .login-page .login-card.plan-card.plan-card--processing .login-title, .login-page .login-card.plan-card.plan-card--done .login-title {
+    font-size: 24px;
+    line-height: 30px;
+    word-break: keep-all;
+  }
+  .login-page .login-card.plan-card.plan-card--processing .login-desc, .login-page .login-card.plan-card.plan-card--done .login-desc {
+    font-size: 17px;
+    line-height: 22px;
+  }
+  .login-page .login-card.plan-card.plan-card--processing {
+    min-height: 0;
+  }
+  .login-page .login-card.plan-card .plan-summary-row dd {
+    max-width: 55%;
+  }
+  .login-page .login-card.plan-card .plan-links {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+  .trial-welcome {
+    padding-bottom: 20px;
+  }
+  .trial-welcome .trial-strip {
+    height: auto;
+    padding: 20px;
+  }
+  .trial-welcome .trial-strip-title {
+    font-size: 17px;
+    line-height: 22px;
+  }
+  .trial-welcome .trial-heading {
+    margin-top: 20px;
+    font-size: 28px;
+    line-height: 34px;
+  }
+  .trial-welcome .trial-sub {
+    font-size: 15px;
+    line-height: 20px;
+  }
+}

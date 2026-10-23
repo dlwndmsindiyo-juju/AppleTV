@@ -13,8 +13,7 @@ main.sport-home {
   color: #ffffff;
   font-family: "Sport SF Pro", "SF Pro", system-ui, sans-serif;
 }
-main.sport-home,
-main.sport-home * {
+main.sport-home, main.sport-home * {
   font-family: "Sport SF Pro", "SF Pro", system-ui, sans-serif;
 }
 main.sport-home > section:not(.subscribe-cta):not(.device-guide) {
@@ -29,8 +28,7 @@ main.sport-home .sport-section-head {
   margin-bottom: 24px;
   gap: 16px;
 }
-main.sport-home .sport-section-title,
-main.sport-home .sport-teams-title {
+main.sport-home .sport-section-title, main.sport-home .sport-teams-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 22px;
@@ -38,30 +36,17 @@ main.sport-home .sport-teams-title {
   letter-spacing: 0;
   font-weight: 600;
 }
-main.sport-home .sport-more,
-main.sport-home .sport-teams-desc {
+main.sport-home .sport-more, main.sport-home .sport-teams-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 15px;
   line-height: 20px;
   letter-spacing: 0;
 }
-main.sport-home .sport-section-title,
-main.sport-home .sport-teams-title,
-main.sport-home .sport-more,
-main.sport-home .sport-teams-desc,
-main.sport-home .sport-hero-label,
-main.sport-home .sport-hero-title,
-main.sport-home .sport-hero-sub,
-main.sport-home .sport-btn,
-main.sport-home .sport-short-title,
-main.sport-home .sport-short-meta,
-main.sport-home .sport-highlight-title,
-main.sport-home .sport-highlight-meta,
-main.sport-home .sport-replay-name,
-main.sport-home .sport-replay-date,
-main.sport-home .sport-series-card,
-main.sport-home .sport-team-name {
+main.sport-home .sport-section-title, main.sport-home .sport-teams-title, main.sport-home .sport-more, main.sport-home .sport-teams-desc,
+main.sport-home .sport-hero-label, main.sport-home .sport-hero-title, main.sport-home .sport-hero-sub, main.sport-home .sport-btn,
+main.sport-home .sport-short-title, main.sport-home .sport-short-meta, main.sport-home .sport-highlight-title, main.sport-home .sport-highlight-meta,
+main.sport-home .sport-replay-name, main.sport-home .sport-replay-date, main.sport-home .sport-series-card, main.sport-home .sport-team-name {
   font-family: inherit;
   letter-spacing: 0;
 }
@@ -71,13 +56,12 @@ main.sport-home .sport-live-slide {
 }
 main.sport-home .sport-live-card {
   aspect-ratio: 3/2;
-  border-radius: 12px;
+  border-radius: 20px;
 }
 main.sport-home .sport-live-badge {
   background: #E91E1B;
 }
-main.sport-home .sport-live-badge,
-main.sport-home .sport-live-watch {
+main.sport-home .sport-live-badge, main.sport-home .sport-live-watch {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 12px;
@@ -101,8 +85,7 @@ main.sport-home .sport-live-time {
   letter-spacing: 0;
   font-family: inherit;
 }
-main.sport-home .sport-short-slide,
-main.sport-home .sport-series-slide {
+main.sport-home .sport-short-slide, main.sport-home .sport-series-slide {
   width: clamp(190px, 14.58vw, 280px);
   max-width: 85%;
 }
@@ -114,9 +97,7 @@ main.sport-home .sport-short-play {
   height: 96px;
   font-size: 32px;
 }
-main.sport-home .sport-short-title,
-main.sport-home .sport-highlight-title,
-main.sport-home .sport-series-card h4 {
+main.sport-home .sport-short-title, main.sport-home .sport-highlight-title, main.sport-home .sport-series-card h4 {
   font-family: "SF Pro", sans-serif;
   font-weight: 600;
   font-size: 17px;
@@ -125,9 +106,7 @@ main.sport-home .sport-series-card h4 {
   font-family: inherit;
   margin: 12px 0 6px;
 }
-main.sport-home .sport-short-meta,
-main.sport-home .sport-highlight-meta,
-main.sport-home .sport-series-description {
+main.sport-home .sport-short-meta, main.sport-home .sport-highlight-meta, main.sport-home .sport-series-description {
   font-family: "SF Pro", sans-serif;
   font-weight: 500;
   font-size: 13px;
@@ -157,8 +136,7 @@ main.sport-home .sport-teams .sport-teams-head {
 main.sport-home .sport-teams .sport-teams-title {
   margin-bottom: 12px;
 }
-main.sport-home .sport-teams .sport-team-filter,
-main.sport-home .sport-teams .sport-teams-count {
+main.sport-home .sport-teams .sport-team-filter, main.sport-home .sport-teams .sport-teams-count {
   display: none;
 }
 main.sport-home .sport-teams .sport-team-slide {
@@ -212,7 +190,7 @@ main.sport-home .sport-conference-grid {
 main.sport-home .sport-conference-card {
   min-width: 0;
   padding: 24px 32px 28px;
-  border-radius: 12px;
+  border-radius: 20px;
   background: #F2F2F2;
   color: #171717;
 }
@@ -271,8 +249,7 @@ main.sport-home .sport-conference-table .col-club {
 main.sport-home .sport-conference-table .col-stat {
   width: 11%;
 }
-main.sport-home .sport-conference-table th,
-main.sport-home .sport-conference-table td {
+main.sport-home .sport-conference-table th, main.sport-home .sport-conference-table td {
   height: 34px;
   padding: 0 4px;
   text-align: center;
@@ -292,8 +269,7 @@ main.sport-home .sport-conference-table thead th {
 main.sport-home .sport-conference-table thead th:nth-child(2) {
   text-align: center;
 }
-main.sport-home .sport-conference-table tbody td,
-main.sport-home .sport-conference-table tbody th {
+main.sport-home .sport-conference-table tbody td, main.sport-home .sport-conference-table tbody th {
   font-family: "SF Pro", sans-serif;
   font-weight: 500;
   font-size: 13px;
@@ -417,8 +393,7 @@ main.sport-home .sport-highlight-thumb img {
   height: 100%;
   object-fit: cover;
 }
-main.sport-home .sport-highlight-title,
-main.sport-home .sport-highlight-meta {
+main.sport-home .sport-highlight-title, main.sport-home .sport-highlight-meta {
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -447,13 +422,12 @@ main.sport-home .sport-series-thumb {
   position: relative;
   width: 100%;
   aspect-ratio: 280/304;
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
   background: #242424;
   margin-bottom: 12px;
 }
-main.sport-home .sport-series-thumb img,
-main.sport-home .sport-series-thumb .sport-series-placeholder {
+main.sport-home .sport-series-thumb img, main.sport-home .sport-series-thumb .sport-series-placeholder {
   width: 100%;
   height: 100%;
   aspect-ratio: auto;
@@ -534,8 +508,7 @@ main.sport-home .sport-series-description {
   main.sport-home .sport-replay-list > li {
     flex-basis: 300px;
   }
-  main.sport-home .sport-live-slide,
-  main.sport-home .sport-replay-list > li {
+  main.sport-home .sport-live-slide, main.sport-home .sport-replay-list > li {
     max-width: 80%;
   }
 }
@@ -550,8 +523,7 @@ main.sport-home .sport-series-description {
     justify-content: space-between;
     margin-bottom: 16px;
   }
-  main.sport-home .sport-section-title,
-  main.sport-home .sport-teams-title {
+  main.sport-home .sport-section-title, main.sport-home .sport-teams-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 22px;
@@ -581,7 +553,7 @@ main.sport-home .sport-series-description {
     width: 100%;
     height: 140px;
     padding: 14px;
-    border-radius: 12px;
+    border-radius: 20px;
   }
   main.sport-home .sport-match-card .sport-match-content {
     gap: 28px;
@@ -728,8 +700,7 @@ main.sport-home .sport-series-description {
   main.sport-home .sport-conference-table .col-club {
     width: 36%;
   }
-  main.sport-home .sport-conference-table th,
-  main.sport-home .sport-conference-table td {
+  main.sport-home .sport-conference-table th, main.sport-home .sport-conference-table td {
     height: 28px;
     padding: 0 2px;
   }
@@ -743,8 +714,7 @@ main.sport-home .sport-series-description {
     font-family: inherit;
     font-weight: 600;
   }
-  main.sport-home .sport-conference-table tbody td,
-  main.sport-home .sport-conference-table tbody th {
+  main.sport-home .sport-conference-table tbody td, main.sport-home .sport-conference-table tbody th {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 12px;
@@ -865,8 +835,7 @@ main.sport-home.sport-home > section:not(.sport-teams):not(.subscribe-cta):not(.
 main.sport-home.sport-home > section.sport-league {
   padding: 0;
 }
-main.sport-home.sport-home .sport-replay-list,
-main.sport-home.sport-home .sport-highlight-list {
+main.sport-home.sport-home .sport-replay-list, main.sport-home.sport-home .sport-highlight-list {
   padding-bottom: 0;
   margin-bottom: 0;
 }
@@ -924,11 +893,10 @@ section.sport-hero .sport-hero-card {
   width: min(700px, 100% - 128px);
   max-width: none;
   padding: 32px;
-  border-radius: 12px;
+  border-radius: 20px;
   background: #1f1f1f;
 }
-section.sport-hero .sport-hero-label,
-section.sport-hero .sport-hero-sub {
+section.sport-hero .sport-hero-label, section.sport-hero .sport-hero-sub {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 17px;
@@ -991,8 +959,7 @@ section.sport-hero .sport-btn.secondary {
     padding: 16px;
     bottom: 32px;
   }
-  section.sport-hero .sport-hero-label,
-  section.sport-hero .sport-hero-sub {
+  section.sport-hero .sport-hero-label, section.sport-hero .sport-hero-sub {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 12px;
@@ -1124,7 +1091,7 @@ main.sport-home.sport-detail-page .sport-detail-stage {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
   background: #000;
 }
@@ -1294,7 +1261,7 @@ main.sport-home.sport-detail-page .sport-detail-item {
   width: 100%;
   padding: 4px;
   border: 0;
-  border-radius: 12px;
+  border-radius: 20px;
   background: transparent;
   color: inherit;
   font: inherit;
@@ -1512,8 +1479,7 @@ main.sport-home.sport-standings-page .sport-standings .inner {
   flex-direction: column;
   gap: 120px;
 }
-main.sport-home.sport-standings-page .sport-standings-block,
-main.sport-home.sport-standings-page .sport-standings-head {
+main.sport-home.sport-standings-page .sport-standings-block, main.sport-home.sport-standings-page .sport-standings-head {
   width: 100%;
   max-width: 1280px;
 }
@@ -1620,8 +1586,7 @@ main.sport-home.sport-standings-page .sport-standings-table .col-club {
 main.sport-home.sport-standings-page .sport-standings-table .col-stat {
   width: 11%;
 }
-main.sport-home.sport-standings-page .sport-standings-table th,
-main.sport-home.sport-standings-page .sport-standings-table td {
+main.sport-home.sport-standings-page .sport-standings-table th, main.sport-home.sport-standings-page .sport-standings-table td {
   font-family: "SF Pro", sans-serif;
   font-weight: 500;
   font-size: 13px;
@@ -1644,13 +1609,10 @@ main.sport-home.sport-standings-page .sport-standings-table thead th:first-child
 main.sport-home.sport-standings-page .sport-standings-table thead th:last-child {
   border-radius: 0 8px 8px 0;
 }
-main.sport-home.sport-standings-page .sport-standings-table thead th:nth-child(-n+2),
-main.sport-home.sport-standings-page .sport-standings-table tbody td.rank,
-main.sport-home.sport-standings-page .sport-standings-table tbody th {
+main.sport-home.sport-standings-page .sport-standings-table thead th:nth-child(-n+2), main.sport-home.sport-standings-page .sport-standings-table tbody td.rank, main.sport-home.sport-standings-page .sport-standings-table tbody th {
   text-align: left;
 }
-main.sport-home.sport-standings-page .sport-standings-table tbody td,
-main.sport-home.sport-standings-page .sport-standings-table tbody th {
+main.sport-home.sport-standings-page .sport-standings-table tbody td, main.sport-home.sport-standings-page .sport-standings-table tbody th {
   height: 56px;
   background: #242424;
 }
@@ -1660,8 +1622,7 @@ main.sport-home.sport-standings-page .sport-standings-table tbody tr > :first-ch
 main.sport-home.sport-standings-page .sport-standings-table tbody tr > :last-child {
   border-radius: 0 8px 8px 0;
 }
-main.sport-home.sport-standings-page .sport-standings-table tbody tr:hover td,
-main.sport-home.sport-standings-page .sport-standings-table tbody tr:hover th {
+main.sport-home.sport-standings-page .sport-standings-table tbody tr:hover td, main.sport-home.sport-standings-page .sport-standings-table tbody tr:hover th {
   background: #3A3A3A;
 }
 main.sport-home.sport-standings-page .sport-standings-table tbody td.rank {
@@ -1710,7 +1671,7 @@ main.sport-home.sport-standings-page .sport-player-card {
   display: flex;
   flex-direction: column;
   padding: 24px 40px 32px;
-  border-radius: 12px;
+  border-radius: 20px;
   background: #242424;
 }
 main.sport-home.sport-standings-page .sport-player-photo {
@@ -1873,8 +1834,7 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
   main.sport-home.sport-standings-page .sport-standings-table .col-stat {
     width: 34px;
   }
-  main.sport-home.sport-standings-page .sport-standings-table th,
-  main.sport-home.sport-standings-page .sport-standings-table td {
+  main.sport-home.sport-standings-page .sport-standings-table th, main.sport-home.sport-standings-page .sport-standings-table td {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 11px;
@@ -1883,12 +1843,10 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
     font-family: inherit;
     padding: 0 4px;
   }
-  main.sport-home.sport-standings-page .sport-standings-table thead th:first-child,
-  main.sport-home.sport-standings-page .sport-standings-table tbody tr > :first-child {
+  main.sport-home.sport-standings-page .sport-standings-table thead th:first-child, main.sport-home.sport-standings-page .sport-standings-table tbody tr > :first-child {
     padding-left: 10px;
   }
-  main.sport-home.sport-standings-page .sport-standings-table tbody td,
-  main.sport-home.sport-standings-page .sport-standings-table tbody th {
+  main.sport-home.sport-standings-page .sport-standings-table tbody td, main.sport-home.sport-standings-page .sport-standings-table tbody th {
     height: 48px;
   }
   main.sport-home.sport-standings-page .sport-standings-club {
@@ -1970,7 +1928,7 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
 .sport-shorts.sport-shortform .sport-sf-card {
   position: relative;
   aspect-ratio: 200/330;
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
   background: #2E2E2E;
   color: #FFFFFF;
@@ -2034,8 +1992,8 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
 .sport-shorts.sport-shortform .sport-sf-logo {
   display: grid;
   place-items: center;
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: #000;
 }
@@ -2099,8 +2057,7 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
   font-size: 11px;
   opacity: 0;
 }
-.sport-shorts.sport-shortform .is-playing:hover .sport-sf-play,
-.sport-shorts.sport-shortform .is-playing .sport-sf-play:focus-visible {
+.sport-shorts.sport-shortform .is-playing:hover .sport-sf-play, .sport-shorts.sport-shortform .is-playing .sport-sf-play:focus-visible {
   opacity: 1;
 }
 .sport-shorts.sport-shortform .sport-sf-side {
@@ -2228,8 +2185,7 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sport-shorts.sport-shortform .sport-sf-media,
-  .sport-shorts.sport-shortform .sport-sf-play {
+  .sport-shorts.sport-shortform .sport-sf-media, .sport-shorts.sport-shortform .sport-sf-play {
     transition: none;
   }
   .sport-shorts.sport-shortform .is-playing .sport-sf-progress span {
@@ -2245,5 +2201,1135 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
   }
   to {
     width: 100%;
+  }
+}
+section.sport-hero.sport-hero--team {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--team-color, #171717);
+  isolation: isolate;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  animation: sport-team-hero-in 0.5s ease both;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0) 45%), linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba(23, 23, 23, 0.6) 100%);
+  pointer-events: none;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 96px;
+  margin-top: -40px;
+  animation: sport-team-hero-in 0.5s ease both;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-badge {
+  display: block;
+  width: 130px;
+  height: 150px;
+  margin: 0 0 32px 24px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.25));
+}
+section.sport-hero.sport-hero--team .sport-team-hero-name {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 76px;
+  line-height: 96px;
+  letter-spacing: 0;
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  word-break: keep-all;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-record {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  font-family: inherit;
+  margin: 20px 0 10px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+}
+section.sport-hero.sport-hero--team .sport-team-hero-follow {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 40px;
+  border: 0;
+  border-radius: 9999px;
+  background: #F5F5F5;
+  color: #171717;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-follow svg {
+  flex-shrink: 0;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-follow:hover {
+  background: #FFFFFF;
+  transform: translateY(-1px);
+}
+section.sport-hero.sport-hero--team .sport-team-hero-follow.is-on svg {
+  color: #FFD60A;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-follow:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 3px;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-chips {
+  position: absolute;
+  left: 96px;
+  bottom: 40px;
+  display: flex;
+  gap: 8px;
+  max-width: calc(100% - 192px);
+  padding: 6px;
+  overflow-x: auto;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  scrollbar-width: none;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-chips::-webkit-scrollbar {
+  display: none;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-chip {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  font-family: inherit;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px 0 6px;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-chip img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-chip:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-chip.is-active {
+  background: #FFFFFF;
+  color: #171717;
+  font-weight: 700;
+}
+section.sport-hero.sport-hero--team .sport-team-hero-chip:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+@media (max-width: 1024px) {
+  section.sport-hero.sport-hero--team .sport-team-hero-body {
+    padding: 0 40px;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-badge {
+    width: 104px;
+    height: 120px;
+    margin: 0 0 24px 16px;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-name {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 400;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-record {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: 0;
+    font-family: inherit;
+    margin-top: 14px;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-chips {
+    left: 40px;
+    bottom: 28px;
+    max-width: calc(100% - 80px);
+  }
+}
+@media (max-width: 767px) {
+  section.sport-hero.sport-hero--team .sport-team-hero-body {
+    padding: 0 20px;
+    margin-top: -24px;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-badge {
+    width: 80px;
+    height: 92px;
+    margin: 0 0 16px 8px;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-name {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 41px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 400;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-record {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    font-family: inherit;
+    margin: 10px 0 14px;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-follow {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    font-family: inherit;
+    height: 40px;
+    padding: 0 24px;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-chips {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    max-width: none;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-chip {
+    height: 36px;
+    padding: 0 4px;
+  }
+  section.sport-hero.sport-hero--team .sport-team-hero-chip span {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  section.sport-hero.sport-hero--team .sport-team-hero-bg, section.sport-hero.sport-hero--team .sport-team-hero-body {
+    animation: none;
+  }
+}
+
+@keyframes sport-team-hero-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.sport-team-card .sport-team-add svg {
+  display: block;
+}
+.sport-team-card .sport-team-add.on {
+  color: #FFFFFF;
+}
+
+main.sport-home.sport-live-page {
+  padding-bottom: 160px;
+}
+main.sport-home.sport-live-page .sport-detail-player img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+main.sport-home.sport-live-page .sport-detail-info {
+  gap: 6px;
+  padding: 20px 32px 24px;
+}
+main.sport-home.sport-live-page .sport-live-info-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #E91E1B;
+  font-weight: 700;
+}
+main.sport-home.sport-live-page .sport-live-badge i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #E91E1B;
+  animation: sport-live-blink 1.4s ease-in-out infinite;
+}
+main.sport-home.sport-live-page .sport-live-info-sub {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-family: inherit;
+  margin: 6px 0 0;
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-live-info-note {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  font-family: inherit;
+  margin: 0;
+  color: #C8C8C8;
+}
+main.sport-home.sport-live-page .sport-live-tabs-section > .inner {
+  width: min(1280px, 100% - 128px);
+  max-width: none;
+}
+main.sport-home.sport-live-page .sport-live-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid #464646;
+  box-shadow: 0 16px 24px -16px rgba(0, 0, 0, 0.5);
+}
+main.sport-home.sport-live-page .sport-live-tab {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  font-family: inherit;
+  position: relative;
+  height: 72px;
+  border: 0;
+  background: transparent;
+  color: #E0E0E0;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+main.sport-home.sport-live-page .sport-live-tab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: #E91E1B;
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+main.sport-home.sport-live-page .sport-live-tab:hover {
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-live-tab.is-active {
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-live-tab.is-active::after {
+  transform: scaleX(1);
+}
+main.sport-home.sport-live-page .sport-live-tab:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: -4px;
+}
+main.sport-home.sport-live-page .sport-live-panel {
+  padding-top: 64px;
+}
+main.sport-home.sport-live-page .sport-lineup-team + .sport-lineup-team {
+  margin-top: 80px;
+}
+main.sport-home.sport-live-page .sport-lineup-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 40px;
+}
+main.sport-home.sport-live-page .sport-lineup-head img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+main.sport-home.sport-live-page .sport-lineup-head h3 {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 41px;
+  letter-spacing: 0;
+  font-family: inherit;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-lineup-head p {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 41px;
+  letter-spacing: 0;
+  font-family: inherit;
+  margin: 0;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-lineup-head p span {
+  margin-right: 12px;
+  font-weight: 400;
+  color: #C8C8C8;
+}
+main.sport-home.sport-live-page .sport-pitch {
+  position: relative;
+  aspect-ratio: 1773/1596;
+  border-radius: 24px;
+  background: #242424;
+}
+main.sport-home.sport-live-page .sport-pitch-field {
+  position: absolute;
+  inset: 2.5%;
+  border: 1px solid #464646;
+}
+main.sport-home.sport-live-page .sport-pitch-field span {
+  position: absolute;
+  border: 1px solid #464646;
+}
+main.sport-home.sport-live-page .sport-pitch-field .sport-pitch-box {
+  left: 28.7%;
+  width: 42.6%;
+  height: 11%;
+}
+main.sport-home.sport-live-page .sport-pitch-field .sport-pitch-box.top {
+  top: -1px;
+  border-top: 0;
+}
+main.sport-home.sport-live-page .sport-pitch-field .sport-pitch-box.bottom {
+  bottom: -1px;
+  border-bottom: 0;
+}
+main.sport-home.sport-live-page .sport-pitch-field .sport-pitch-line {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0;
+  border-width: 1px 0 0;
+}
+main.sport-home.sport-live-page .sport-pitch-field .sport-pitch-circle {
+  left: 50%;
+  top: 50%;
+  width: 12.5%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+main.sport-home.sport-live-page .sport-pitch-players {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+main.sport-home.sport-live-page .sport-pitch-players li {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transform: translate(-50%, -50%);
+}
+main.sport-home.sport-live-page .sport-pitch-photo {
+  width: 120px;
+  height: 120px;
+  border: 3px solid #FFFFFF;
+  border-radius: 50%;
+  background: #E0E0E0;
+  object-fit: cover;
+  object-position: top;
+}
+main.sport-home.sport-live-page .sport-pitch-photo.is-empty {
+  display: grid;
+  place-items: center;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0;
+  font-family: inherit;
+  font-weight: 700;
+  color: #242424;
+}
+main.sport-home.sport-live-page .sport-pitch-label {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-family: inherit;
+  white-space: nowrap;
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-pitch-label b {
+  color: #E91E1B;
+  font-weight: 600;
+}
+main.sport-home.sport-live-page .sport-subs-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: 0;
+  font-family: inherit;
+  margin: 120px 0 0;
+  padding: 0 0 28px;
+  text-align: center;
+  font-weight: 700;
+  color: #FFFFFF;
+  box-shadow: 0 24px 24px -24px rgba(0, 0, 0, 0.6);
+}
+main.sport-home.sport-live-page .sport-subs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+  padding: 120px 10% 0;
+}
+main.sport-home.sport-live-page .sport-subs-team {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: 0;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 120px;
+  padding-left: 15%;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-subs-team img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+}
+main.sport-home.sport-live-page .sport-subs-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 84px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+main.sport-home.sport-live-page .sport-subs-col li {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: 0;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-subs-col li b {
+  font-weight: 400;
+  color: #E91E1B;
+}
+main.sport-home.sport-live-page .sport-subs-col li span {
+  font-weight: 700;
+}
+main.sport-home.sport-live-page .sport-subs-photo {
+  width: 116px;
+  height: 116px;
+  border: 3px solid #FFFFFF;
+  border-radius: 50%;
+  background: #E0E0E0;
+  object-fit: cover;
+  object-position: top;
+  margin-right: 24px;
+}
+main.sport-home.sport-live-page .sport-subs-photo.is-empty {
+  display: grid;
+  place-items: center;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  font-family: inherit;
+  font-weight: 700;
+  color: #242424;
+}
+main.sport-home.sport-live-page .sport-commentary {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+main.sport-home.sport-live-page .sport-commentary li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 8px;
+  border-bottom: 1px solid #2E2E2E;
+}
+main.sport-home.sport-live-page .sport-commentary li.is-goal {
+  background: rgba(233, 30, 27, 0.08);
+}
+main.sport-home.sport-live-page .sport-commentary p {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  font-family: inherit;
+  margin: 0;
+  color: #EBEBEB;
+}
+main.sport-home.sport-live-page .sport-commentary li.is-goal p {
+  font-weight: 700;
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-commentary-min {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  font-family: inherit;
+  flex: 0 0 56px;
+  color: #E91E1B;
+  text-align: right;
+}
+main.sport-home.sport-live-page .sport-commentary-icon {
+  flex: 0 0 24px;
+  text-align: center;
+}
+main.sport-home.sport-live-page .sport-commentary-team {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+main.sport-home.sport-live-page .sport-stats {
+  max-width: 880px;
+  margin: 0 auto;
+}
+main.sport-home.sport-live-page .sport-stats-teams {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  font-family: inherit;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+main.sport-home.sport-live-page .sport-stats-teams span {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+main.sport-home.sport-live-page .sport-stats-teams img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+main.sport-home.sport-live-page .sport-stats ul {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+main.sport-home.sport-live-page .sport-stats-values {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+main.sport-home.sport-live-page .sport-stats-values span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-family: inherit;
+  color: #C8C8C8;
+}
+main.sport-home.sport-live-page .sport-stats-values b {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  font-family: inherit;
+  font-weight: 600;
+  color: #D5D5D5;
+}
+main.sport-home.sport-live-page .sport-stats-values b.is-lead {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+main.sport-home.sport-live-page .sport-stats-bars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+main.sport-home.sport-live-page .sport-stats-bars span {
+  display: flex;
+  height: 8px;
+  border-radius: 9999px;
+  background: #2E2E2E;
+  overflow: hidden;
+}
+main.sport-home.sport-live-page .sport-stats-bars .home {
+  justify-content: flex-end;
+}
+main.sport-home.sport-live-page .sport-stats-bars i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #525252;
+}
+main.sport-home.sport-live-page .sport-stats-bars .is-lead i {
+  background: #E91E1B;
+}
+main.sport-home.sport-live-page .sport-chat {
+  max-width: 880px;
+  margin: 0 auto;
+  border-radius: 20px;
+  background: #1f1f1f;
+  overflow: hidden;
+}
+main.sport-home.sport-live-page .sport-chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 420px;
+  margin: 0;
+  padding: 24px;
+  overflow-y: auto;
+  list-style: none;
+}
+main.sport-home.sport-live-page .sport-chat-list li {
+  max-width: 75%;
+}
+main.sport-home.sport-live-page .sport-chat-list li.is-mine {
+  align-self: flex-end;
+  text-align: right;
+}
+main.sport-home.sport-live-page .sport-chat-list b {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  font-family: inherit;
+  color: #C8C8C8;
+}
+main.sport-home.sport-live-page .sport-chat-list p {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-family: inherit;
+  display: inline-block;
+  margin: 4px 0 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #2E2E2E;
+  color: #FFFFFF;
+  text-align: left;
+}
+main.sport-home.sport-live-page .sport-chat-list li.is-mine p {
+  background: #E91E1B;
+}
+main.sport-home.sport-live-page .sport-chat-form {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #2E2E2E;
+}
+main.sport-home.sport-live-page .sport-chat-form input {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-family: inherit;
+  flex: 1;
+  height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 9999px;
+  background: #242424;
+  color: #FFFFFF;
+  outline: none;
+}
+main.sport-home.sport-live-page .sport-chat-form input:focus {
+  box-shadow: 0 0 0 2px #525252;
+}
+main.sport-home.sport-live-page .sport-chat-form button {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-family: inherit;
+  height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 9999px;
+  background: #E91E1B;
+  color: #FFFFFF;
+  font-weight: 600;
+  cursor: pointer;
+}
+main.sport-home.sport-live-page .sport-chat-form button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+main.sport-home.sport-live-page .sport-live-back-wrap {
+  width: min(1280px, 100% - 128px);
+  margin: 80px auto 0;
+}
+@media (max-width: 1024px) {
+  main.sport-home.sport-live-page {
+    padding-bottom: 120px;
+  }
+  main.sport-home.sport-live-page .sport-live-tabs-section > .inner, main.sport-home.sport-live-page .sport-live-back-wrap {
+    width: calc(100% - 80px);
+  }
+  main.sport-home.sport-live-page .sport-live-tab {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: 0;
+    font-family: inherit;
+    height: 56px;
+  }
+  main.sport-home.sport-live-page .sport-live-panel {
+    padding-top: 40px;
+  }
+  main.sport-home.sport-live-page .sport-lineup-head {
+    margin-bottom: 24px;
+  }
+  main.sport-home.sport-live-page .sport-lineup-head img {
+    width: 56px;
+    height: 56px;
+  }
+  main.sport-home.sport-live-page .sport-lineup-head h3, main.sport-home.sport-live-page .sport-lineup-head p {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 28px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+  }
+  main.sport-home.sport-live-page .sport-pitch-photo {
+    width: 72px;
+    height: 72px;
+  }
+  main.sport-home.sport-live-page .sport-pitch-photo.is-empty {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+  }
+  main.sport-home.sport-live-page .sport-pitch-label {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0;
+    font-family: inherit;
+  }
+  main.sport-home.sport-live-page .sport-subs-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 28px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+    margin-top: 72px;
+  }
+  main.sport-home.sport-live-page .sport-subs {
+    padding: 56px 0 0;
+    gap: 24px;
+  }
+  main.sport-home.sport-live-page .sport-subs-team {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+    margin-bottom: 40px;
+    padding-left: 0;
+  }
+  main.sport-home.sport-live-page .sport-subs-team img {
+    width: 64px;
+    height: 64px;
+  }
+  main.sport-home.sport-live-page .sport-subs-col ul {
+    gap: 28px;
+  }
+  main.sport-home.sport-live-page .sport-subs-col li {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: 0;
+    font-family: inherit;
+    gap: 12px;
+  }
+  main.sport-home.sport-live-page .sport-subs-photo {
+    width: 56px;
+    height: 56px;
+    margin-right: 4px;
+  }
+  main.sport-home.sport-live-page .sport-subs-photo.is-empty {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+  }
+}
+@media (max-width: 767px) {
+  main.sport-home.sport-live-page {
+    padding-bottom: 80px;
+  }
+  main.sport-home.sport-live-page .sport-live-tabs-section > .inner, main.sport-home.sport-live-page .sport-live-back-wrap {
+    width: calc(100% - 40px);
+  }
+  main.sport-home.sport-live-page .sport-detail-info {
+    padding: 16px;
+  }
+  main.sport-home.sport-live-page .sport-live-info-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+    gap: 10px;
+  }
+  main.sport-home.sport-live-page .sport-live-tab {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+    height: 48px;
+  }
+  main.sport-home.sport-live-page .sport-live-panel {
+    padding-top: 28px;
+  }
+  main.sport-home.sport-live-page .sport-lineup-team + .sport-lineup-team {
+    margin-top: 48px;
+  }
+  main.sport-home.sport-live-page .sport-lineup-head {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  main.sport-home.sport-live-page .sport-lineup-head img {
+    width: 36px;
+    height: 36px;
+  }
+  main.sport-home.sport-live-page .sport-lineup-head h3, main.sport-home.sport-live-page .sport-lineup-head p {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+  }
+  main.sport-home.sport-live-page .sport-lineup-head p span {
+    margin-right: 6px;
+  }
+  main.sport-home.sport-live-page .sport-pitch {
+    aspect-ratio: 3/4;
+    border-radius: 20px;
+  }
+  main.sport-home.sport-live-page .sport-pitch-photo {
+    width: 40px;
+    height: 40px;
+    border-width: 2px;
+  }
+  main.sport-home.sport-live-page .sport-pitch-photo.is-empty {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+  }
+  main.sport-home.sport-live-page .sport-pitch-players li {
+    gap: 4px;
+  }
+  main.sport-home.sport-live-page .sport-pitch-label {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-size: 10px;
+  }
+  main.sport-home.sport-live-page .sport-subs-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+    margin-top: 48px;
+    padding-bottom: 16px;
+  }
+  main.sport-home.sport-live-page .sport-subs {
+    padding-top: 28px;
+    gap: 16px;
+  }
+  main.sport-home.sport-live-page .sport-subs-team {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  main.sport-home.sport-live-page .sport-subs-team img {
+    width: 32px;
+    height: 32px;
+  }
+  main.sport-home.sport-live-page .sport-subs-col ul {
+    gap: 16px;
+  }
+  main.sport-home.sport-live-page .sport-subs-col li {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    font-family: inherit;
+    gap: 6px;
+  }
+  main.sport-home.sport-live-page .sport-subs-photo {
+    width: 36px;
+    height: 36px;
+    border-width: 2px;
+    margin-right: 2px;
+  }
+  main.sport-home.sport-live-page .sport-subs-photo.is-empty {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+  }
+  main.sport-home.sport-live-page .sport-commentary li {
+    gap: 10px;
+    padding: 14px 4px;
+  }
+  main.sport-home.sport-live-page .sport-commentary p {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    font-family: inherit;
+  }
+  main.sport-home.sport-live-page .sport-commentary-min {
+    flex-basis: 36px;
+    font-family: "SF Pro", sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    font-family: inherit;
+    font-weight: 700;
+  }
+  main.sport-home.sport-live-page .sport-chat-list {
+    height: 360px;
+    padding: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  main.sport-home.sport-live-page .sport-live-badge i {
+    animation: none;
+  }
+}
+
+@keyframes sport-live-blink {
+  50% {
+    opacity: 0.3;
   }
 }
