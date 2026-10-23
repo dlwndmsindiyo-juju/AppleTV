@@ -63,38 +63,53 @@ export const LIVE_MATCH = {
     },
   },
 
-  // 중계 (문자 중계, 최신이 위)
+  // 경기 제목 · 날짜 (기록 탭 상단)
+  title: "메이저 리그 사커(MLS) 정규 시즌 경기 - 1부",
+  date: "2026.09.27",
+
+  // 중계 타임라인 (최신이 위)
+  // - team: 이벤트 팀 id → 왼쪽 팀(토론토) 이벤트는 왼쪽, 상대 팀은 오른쪽에 표시
+  // - type: goal(골) · sub(교체: in / out) · yellow(경고) · red(퇴장) · half(전반 종료 구분선)
   commentary: [
-    { minute: 87, type: "chance", text: "토론토 코스타의 오른쪽 크로스, 케르의 헤더가 골대를 살짝 벗어납니다." },
-    { minute: 81, type: "goal", team: "toronto", text: "골! 토론토 베르나르데스키 동점골 (3 : 3)" },
-    { minute: 74, type: "sub", team: "nashville", text: "교체: 내슈빌 고도이 OUT · 바리보 IN" },
-    { minute: 66, type: "goal", team: "nashville", text: "골! 내슈빌 무이유 (3 : 2)" },
-    { minute: 58, type: "card", team: "toronto", text: "경고: 토론토 플로레스" },
-    { minute: 52, type: "goal", team: "toronto", text: "골! 토론토 케르 (2 : 2)" },
-    { minute: 45, type: "info", text: "후반전 시작" },
-    { minute: 38, type: "goal", team: "nashville", text: "골! 내슈빌 수르리지 (2 : 1)" },
-    { minute: 22, type: "goal", team: "toronto", text: "골! 토론토 오스본 (1 : 1)" },
-    { minute: 9, type: "goal", team: "nashville", text: "골! 내슈빌 무이유 선제골 (1 : 0)" },
-    { minute: 0, type: "info", text: "경기 시작" },
+    { minute: "+1'", team: "toronto", type: "goal", player: "오스번", assist: "베르나르데스키 도움" },
+    { minute: "87'", team: "toronto", type: "sub", in: "폴로더", out: "팀 파커" },
+    { minute: "87'", team: "toronto", type: "sub", in: "로하스", out: "소포" },
+    { minute: "86'", team: "nashville", type: "yellow", player: "마허" },
+    { minute: "85'", team: "nashville", type: "sub", in: "바리보", out: "고도이" },
+    { minute: "84'", team: "toronto", type: "sub", in: "워스", out: "코네" },
+    { minute: "71'", team: "nashville", type: "sub", in: "스트라우드", out: "라이언" },
+    { minute: "66'", team: "nashville", type: "goal", player: "무이유", assist: "수르리지 도움" },
+    { minute: "64'", team: "toronto", type: "sub", in: "페드로 카스트로", out: "루발카바" },
+    { minute: "52'", team: "toronto", type: "goal", player: "케르" },
+    { type: "half", label: "전반종료", score: { toronto: 1, nashville: 2 } },
+    { minute: "38'", team: "nashville", type: "goal", player: "수르리지", assist: "얼링 도움" },
+    { minute: "35'", team: "toronto", type: "yellow", player: "플로레스" },
+    { minute: "22'", team: "toronto", type: "goal", player: "베르나르데스키", assist: "코스타 도움" },
+    { minute: "9'", team: "nashville", type: "goal", player: "무이유" },
   ],
 
-  // 기록 (홈 / 원정)
+  // 기록 (팀 id 별 값)
   stats: [
-    { label: "점유율", home: 46, away: 54, unit: "%" },
-    { label: "슈팅", home: 14, away: 17 },
-    { label: "유효 슈팅", home: 6, away: 7 },
-    { label: "코너킥", home: 5, away: 8 },
-    { label: "파울", home: 11, away: 9 },
-    { label: "오프사이드", home: 2, away: 3 },
-    { label: "경고", home: 1, away: 2 },
-    { label: "패스 성공률", home: 82, away: 86, unit: "%" },
+    { label: "볼점유율", values: { toronto: 62, nashville: 38 }, unit: "%" },
+    { label: "슈팅", values: { toronto: 11, nashville: 5 } },
+    { label: "유효슈팅", values: { toronto: 4, nashville: 1 } },
+    { label: "코너킥", values: { toronto: 3, nashville: 5 } },
+    { label: "프리킥", values: { toronto: 14, nashville: 12 } },
+    { label: "오프사이드", values: { toronto: 1, nashville: 3 } },
+    { label: "경고", values: { toronto: 1, nashville: 2 } },
   ],
 
-  // 채팅 첫 메시지
+  // 채팅 (minutesAgo: 몇 분 전 / likes: 인기순 정렬용 / team: 프로필 뱃지)
+  chatRoom: { title: "메이저 리그", users: 9927, messages: 1616 },
   chat: [
-    { id: 1, user: "TFC_fan", text: "베르나르데스키 동점골 미쳤다 🔥" },
-    { id: 2, user: "nash_sc", text: "아직 3분 남았다 집중!" },
-    { id: 3, user: "mls_kr", text: "오늘 경기 진짜 재밌네요" },
+    { id: 1, user: "땃쥐", team: "toronto", text: "야르야르야르야르렁~~~~~~~~~~~", minutesAgo: 8, likes: 12 },
+    { id: 2, user: "닉넴2", team: "toronto", text: "행복하자,.우리...행복하자...", minutesAgo: 8, likes: 31 },
+    { id: 3, user: "오렌지렌지", team: "toronto", text: "시즌 시작하고 첫승 ㄱㄱㄱ", minutesAgo: 9, likes: 54 },
+    { id: 4, user: "dodw22", team: "nashville", text: "똑바로 좀 해라 좀.", minutesAgo: 10, likes: 7 },
+    { id: 5, user: "오늘도축구", team: "toronto", text: "화이팅화이팅!!!!!@@@@@@@@@@@", minutesAgo: 11, likes: 19 },
+    { id: 6, user: "축구는내인생", team: "nashville", text: "야르야르!! 쮀쮀이야 ~~", minutesAgo: 12, likes: 3 },
+    { id: 7, user: "ektha3848", team: "toronto", text: "할 수 있음 ㄹㅇ 할 수 있다ㅏㅏ고", minutesAgo: 13, likes: 41 },
+    { id: 8, user: "ekdji123", team: "toronto", text: "이얏호 할 수 있어으푸", minutesAgo: 15, likes: 26 },
   ],
 };
 

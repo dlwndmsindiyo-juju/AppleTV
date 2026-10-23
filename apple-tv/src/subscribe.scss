@@ -47,13 +47,13 @@ $plan-blue: #007aff;
       margin: 20px 0 10px;
       font-size: 24px;
       line-height: 30px;
-      font-weight: 500;
+      font-weight: $font-weight-regular;
       color: #111;
     }
 
     .login-desc {
       margin: 0 0 28px;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       color: #6e6e73;
     }
 
@@ -79,7 +79,7 @@ $plan-blue: #007aff;
 
       .plan-name {
         @include heading-h3;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: #111;
       }
 
@@ -126,7 +126,7 @@ $plan-blue: #007aff;
     // ---------- 포함 혜택 ----------
     .plan-section-title {
       @include heading-h3;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       color: #111;
       margin: 27px 0 10px;
     }
@@ -151,7 +151,7 @@ $plan-blue: #007aff;
 
       strong {
         @include body-default;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: #111;
       }
 
@@ -180,7 +180,7 @@ $plan-blue: #007aff;
       border-radius: 6px;
       background-color: $plan-blue;
       color: #fff;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       cursor: pointer;
       transition: background-color 0.2s ease;
 
@@ -304,7 +304,7 @@ $plan-gray-box: #d9d9d9;
       dd {
         @include body-default;
         margin: 0;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: #111;
         text-align: right;
       }
@@ -350,7 +350,7 @@ $plan-gray-box: #d9d9d9;
       padding: 0;
       border: none;
       background: none;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       text-decoration: none;
       cursor: pointer;
 
@@ -381,7 +381,7 @@ $plan-gray-box: #d9d9d9;
         margin: 14px 0 24px;
         font-size: 34px;
         line-height: 41px;
-        font-weight: 500;
+        font-weight: $font-weight-regular;
         color: #111;
       }
 
@@ -389,7 +389,7 @@ $plan-gray-box: #d9d9d9;
         margin: 0;
         font-size: 22px;
         line-height: 29px;
-        font-weight: 400;
+        font-weight: $font-weight-regular;
         color: #a1a1a6;
       }
     }
@@ -414,7 +414,7 @@ $plan-gray-box: #d9d9d9;
         margin: 0 0 27px;
         font-size: 22px;
         line-height: 29px;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: #111;
       }
 
@@ -453,7 +453,7 @@ $plan-gray-box: #d9d9d9;
 
         strong {
           @include heading-h5;
-          font-weight: 700;
+          font-weight: $font-weight-bold;
           line-height: 22px;
           color: #111;
         }
@@ -488,7 +488,7 @@ $plan-gray-box: #d9d9d9;
         display: block;
         margin-top: 30px;
         text-align: center;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: $plan-blue;
         text-decoration: none;
 
@@ -535,13 +535,13 @@ $plan-gray-box: #d9d9d9;
   .trial-strip-title {
     @include heading-h2;
     margin: 0;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     color: #111;
   }
 
   .trial-strip-link {
     @include body-small;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     color: $plan-blue;
     text-decoration: none;
 
@@ -553,7 +553,7 @@ $plan-gray-box: #d9d9d9;
   .trial-heading {
     @include heading-h1;
     margin: 28px 0 0;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     color: $text-primary;
     word-break: keep-all;
   }

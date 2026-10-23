@@ -43,7 +43,7 @@ header .inner .header-login {
   background-color: #f5f5f5;
   color: #171717;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   transition: background-color 0.2s ease;
 }
 header .inner .header-login:hover {
@@ -79,7 +79,7 @@ header .inner nav .gnb-center-toggle .toggle-indicator {
   height: 100%;
   border-radius: 9999px;
   pointer-events: none;
-  background-color: #FFFFFF;
+  background-color: #5865F2;
 }
 header .inner nav .gnb-center-toggle .toggle-indicator.sport {
   background-color: #E91E1B;
@@ -97,7 +97,7 @@ header .inner nav .gnb-center-toggle button {
   background: transparent;
   color: #ffffff;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
   cursor: pointer;
   transition: color 0.4s ease;
@@ -106,8 +106,8 @@ header .inner nav .gnb-center-toggle button:hover {
   color: #D4D4D4;
 }
 header .inner nav .gnb-center-toggle button.active {
-  color: #171717;
-  font-weight: 600;
+  color: #FFFFFF;
+  font-weight: 700;
 }
 header .inner nav .gnb-center-toggle .toggle-indicator.sport ~ button.active {
   color: #FFFFFF;
@@ -154,6 +154,40 @@ header .inner nav .gnb-right ul .search-box input {
 }
 header .inner nav .gnb-right ul .search-box input::placeholder {
   color: #A3A3A3;
+}
+header .inner nav .gnb-right ul .login-box {
+  display: flex;
+}
+header .inner nav .gnb-right ul .header-login-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background-color: #0a84ff;
+  color: #FFFFFF;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+header .inner nav .gnb-right ul .header-login-btn img {
+  width: 12px;
+  height: 13px;
+  display: block;
+}
+header .inner nav .gnb-right ul .header-login-btn:hover {
+  background-color: rgb(0, 111.6424489796, 224.2);
+}
+header .inner nav .gnb-right ul .header-login-btn:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
 }
 header .inner nav .gnb-right ul .profile-box {
   cursor: pointer;
@@ -245,7 +279,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   font-size: 28px;
   line-height: 34px;
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: 700;
   color: #171717;
   margin: 0 0 8px;
   padding: 0;
@@ -302,7 +336,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   border: none;
   background-color: #0a84ff;
   color: #ffffff;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -329,7 +363,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 
 .login-page .login-card .login-desc strong {
-  font-weight: 600;
+  font-weight: 700;
   color: #262626;
 }
 .login-page .login-card .login-form .code-input-group {
@@ -346,7 +380,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   background-color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
   color: #171717;
   outline: none;
@@ -414,7 +448,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   margin: 84px 0 12px;
   font-size: 34px;
   line-height: 41px;
-  font-weight: 500;
+  font-weight: 400;
   color: #111;
 }
 .login-page .login-card.login-card--confirm .login-desc {
@@ -444,7 +478,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .login-page .login-card.login-card--confirm .login-links.row-links .login-link-btn {
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   color: #007aff;
 }
 
@@ -453,7 +487,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   min-height: 468px;
   padding: 68px 56px 32px;
   background-color: #F5F5F5;
-  border-radius: 12px;
+  border-radius: 20px;
   box-shadow: none;
   justify-content: flex-start;
 }
@@ -664,7 +698,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 .hero-swiper-container .swiper-button-next::after,
 .hero-swiper-container .swiper-button-prev::after {
   font-size: 20px !important;
-  font-weight: bold;
+  font-weight: 700;
 }
 .hero-swiper-container .swiper-pagination {
   bottom: 24px !important;
@@ -780,7 +814,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   padding: 0 20px;
   border-radius: 9999px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
@@ -832,7 +866,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .value-props .value-prop-desc {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -911,7 +945,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .top10-section .top10-poster .top10-hover .top10-movie-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
@@ -939,7 +973,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   z-index: 2;
   font-family: "SF Pro", sans-serif;
   font-size: 140px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1;
   color: #ffffff;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
@@ -988,7 +1022,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .upcoming-section .upcoming-more {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1011,7 +1045,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   align-items: center;
   gap: 16px;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 20px;
   background-color: #1f1f1f;
   min-width: 0;
 }
@@ -1038,7 +1072,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .upcoming-section .upcoming-date {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1130,7 +1164,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   gap: 24px;
 }
 .movie-detail-page .player-box {
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
   background-color: #08090d;
 }
@@ -1176,7 +1210,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .movie-detail-page .player-box .title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 34px;
   line-height: 41px;
   letter-spacing: 0;
@@ -1202,7 +1236,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .movie-detail-page .player-box .overview {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1259,7 +1293,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   font-size: 15px;
   line-height: 20px;
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: 700;
   width: 180px;
   height: 40px;
   border: none;
@@ -1370,7 +1404,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   line-height: 20px;
   letter-spacing: 0;
   align-self: center;
-  font-weight: 600;
+  font-weight: 700;
   height: 40px;
   padding: 0 28px;
   border: none;
@@ -1406,7 +1440,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   max-height: 920px;
   box-sizing: border-box;
   padding: 20px 24px 8px;
-  border-radius: 12px;
+  border-radius: 20px;
   background-color: #1f1f1f;
   display: flex;
   flex-direction: column;
@@ -1436,7 +1470,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .movie-detail-page .right-section .tabs .tab-btn.active {
   color: #FFFFFF;
-  font-weight: 600;
+  font-weight: 700;
 }
 .movie-detail-page .right-section .tabs .tab-btn.active::after {
   content: "";
@@ -1459,7 +1493,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: 700;
   height: 36px;
   padding: 0 32px 0 12px;
   border: none;
@@ -1569,7 +1603,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: 700;
   color: #EBEBEB;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -1696,7 +1730,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .movie-detail-page .right-section .empty-content {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1743,7 +1777,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   border-radius: 9999px;
   background-color: #FFFFFF;
   color: #171717;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -1823,7 +1857,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .apple-originals .apple-card-meta {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1831,7 +1865,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .apple-originals .apple-card-badge {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1925,7 +1959,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .subscribe-cta .subscribe-note {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -1994,12 +2028,12 @@ header .inner nav .gnb-right ul .profile-box span a img {
   position: relative;
   z-index: 2;
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
   color: #D4D4D4;
-  font-weight: 600;
+  font-weight: 700;
 }
 .sport-upcoming .sport-match-card .sport-match-content {
   position: absolute;
@@ -2040,8 +2074,8 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 
 .device-guide {
-  background-color: #141414;
-  padding: 80px 0;
+  background-color: #2E2E2E;
+  padding: 30px 0;
 }
 .device-guide .inner {
   width: 100%;
@@ -2054,6 +2088,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 .device-guide .device-guide-card {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+  gap: 64px;
   align-items: start;
   max-width: 1440px;
   margin: 0 auto;
@@ -2062,11 +2097,11 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .device-guide .device-guide-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 34px;
   line-height: 41px;
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 24px;
   padding-top: 0;
   color: #ffffff;
@@ -2109,7 +2144,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   transition: color 0.2s ease;
 }
 .device-guide .device-guide-link:hover {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .ecosystem-page {
@@ -2139,7 +2174,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   text-decoration: none;
 }
 .ecosystem-page .ecosystem-back:hover {
-  font-weight: 600;
+  font-weight: 700;
 }
 .ecosystem-page .ecosystem-head {
   margin: 48px 0 64px;
@@ -2157,7 +2192,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .ecosystem-page .ecosystem-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 48px;
   line-height: 56px;
   letter-spacing: 0;
@@ -2200,21 +2235,21 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .ecosystem-page .ecosystem-card-name {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 34px;
   line-height: 41px;
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 16px;
   color: #ffffff;
 }
 .ecosystem-page .ecosystem-card-category {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 20px;
   color: #A3A3A3;
 }
@@ -2419,7 +2454,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .promo-banner .promo-banner-desc {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2440,7 +2475,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .promo-banner .promo-banner-btn {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2452,7 +2487,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
   border-radius: 9999px;
   background-color: #FFFFFF;
   color: #171717;
-  font-weight: 600;
+  font-weight: 700;
   font-size: clamp(12px, 0.9vw, 13px);
   text-decoration: none;
   transition: background-color 0.25s ease;
@@ -2524,7 +2559,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 .promo-banner.is-live .promo-banner-desc {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2606,7 +2641,7 @@ body.has-promo-banner .footer {
 }
 .sport-hero .sport-hero-label {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2649,7 +2684,7 @@ body.has-promo-banner .footer {
 }
 .sport-hero .sport-hero-sub {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2671,7 +2706,7 @@ body.has-promo-banner .footer {
 }
 .sport-btn {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2681,7 +2716,7 @@ body.has-promo-banner .footer {
   height: 40px;
   padding: 0 24px;
   border-radius: 9999px;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   transition: background-color 0.25s ease, opacity 0.25s ease;
 }
@@ -2721,7 +2756,7 @@ body.has-promo-banner .footer {
 }
 .sport-section-head .sport-more {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2778,7 +2813,7 @@ body.has-promo-banner .footer {
 }
 .sport-upcoming .sport-match-status {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2896,7 +2931,7 @@ body.has-promo-banner .footer {
 }
 .sport-shorts .sport-short-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
@@ -2910,7 +2945,7 @@ body.has-promo-banner .footer {
 }
 .sport-shorts .sport-short-meta {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -2964,7 +2999,7 @@ body.has-promo-banner .footer {
   height: 108px;
   padding: 0 28px 0 18px;
   box-sizing: border-box;
-  border-radius: 12px;
+  border-radius: 20px;
   border: 1px solid transparent;
   background-color: #242424;
   min-width: 0;
@@ -3013,7 +3048,7 @@ body.has-promo-banner .footer {
 }
 .sport-team-card .sport-team-meta {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -3035,7 +3070,7 @@ body.has-promo-banner .footer {
   border-radius: 50%;
   background: transparent;
   color: #ffffff;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -3086,7 +3121,7 @@ body.has-promo-banner .footer {
 .sport-team-filter button.active {
   background-color: #FFFFFF;
   color: #171717;
-  font-weight: 600;
+  font-weight: 700;
 }
 .sport-team-filter button.active .count {
   color: #525252;
@@ -3100,7 +3135,7 @@ body.has-promo-banner .footer {
   letter-spacing: 0;
   margin: 0;
   padding: 40px 16px;
-  border-radius: 12px;
+  border-radius: 20px;
   background-color: rgba(23, 23, 23, 0.45);
   color: #E0E0E0;
   text-align: center;
@@ -3215,7 +3250,7 @@ body.has-promo-banner .footer {
 }
 .sport-teams-page .sport-teams-back {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -3231,7 +3266,7 @@ body.has-promo-banner .footer {
 }
 .sport-teams-page .sport-teams-page-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 48px;
   line-height: 56px;
   letter-spacing: 0;
@@ -3266,7 +3301,7 @@ body.has-promo-banner .footer {
 }
 .sport-teams-page .sport-teams-clear {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -3323,7 +3358,7 @@ body.has-promo-banner .footer {
 }
 .sport-teams-page .sport-team-search input {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -3420,7 +3455,7 @@ body.has-promo-banner .footer {
 }
 .sport-league .sport-league-label {
   font-family: "SF Pro", sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
@@ -3495,7 +3530,7 @@ body.has-promo-banner .footer {
 }
 .sport-replay .sport-replay-name {
   font-family: "SF Pro", sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
@@ -3507,7 +3542,7 @@ body.has-promo-banner .footer {
 }
 .sport-replay .sport-replay-date {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -3580,7 +3615,7 @@ body.has-promo-banner .footer {
 }
 .sport-highlights .sport-highlight-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
@@ -3594,7 +3629,7 @@ body.has-promo-banner .footer {
 }
 .sport-highlights .sport-highlight-meta {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -3638,7 +3673,7 @@ body.has-promo-banner .footer {
 }
 .sport-notify .sport-notify-desc {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -3660,7 +3695,7 @@ body.has-promo-banner .footer {
   border-radius: 9999px;
   background-color: #FFFFFF;
   color: #171717;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   transition: background-color 0.25s ease;
 }
@@ -3736,7 +3771,7 @@ main h2 {
   gap: 6px;
   color: #C8C8C8;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
   transition: color 0.2s ease;
 }
 .footer .footer-main-menu a:hover {
@@ -3830,14 +3865,14 @@ main h2 {
   }
   .upcoming-section .upcoming-desc {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
   }
   .upcoming-section .upcoming-overview {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -3882,7 +3917,7 @@ main h2 {
   }
   .promo-banner .promo-banner-desc {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -3975,4 +4010,140 @@ main.sport-home .sport-series-card .sport-series-placeholder {
 }
 main.sport-home .sport-series-card h4 {
   margin: 12px 0 0;
+}
+
+@media (min-width: 1025px) {
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info {
+    left: 12.5%;
+    max-width: 720px;
+  }
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-meta {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0;
+    gap: 8px;
+    margin-bottom: 12px;
+    color: #ffffff;
+  }
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-meta .age-rating {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: 0;
+  }
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 76px;
+    line-height: 96px;
+    letter-spacing: 0;
+    margin: 0 0 16px;
+  }
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-overview {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: 0;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    margin-bottom: 24px;
+  }
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions {
+    gap: 12px;
+  }
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions .hero-btn {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    height: 40px;
+    padding: 0 24px;
+  }
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions .hero-btn.primary {
+    background-color: #5865F2;
+    color: #FFFFFF;
+  }
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions .hero-btn.primary:hover {
+    background-color: #6E7AF4;
+  }
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions .hero-btn.secondary {
+    border-color: #FFFFFF;
+  }
+  .value-props {
+    background-color: #08090d;
+    padding: 36px 0 24px;
+  }
+  .value-props .inner {
+    padding-left: calc(80px + 48px);
+    padding-right: calc(80px + 48px);
+  }
+  .value-props .value-props-inner {
+    gap: 24px;
+  }
+  .value-props .value-prop-item {
+    gap: 8px;
+  }
+  .value-props .value-prop-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+  }
+  .value-props .value-prop-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    color: #C8C8C8;
+  }
+  .top10-section .inner {
+    padding-left: 12.5%;
+    padding-right: 12.5%;
+    overflow: hidden;
+  }
+  .top10-section .top10-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: 0;
+    margin: 0 0 24px;
+  }
+}
+.swiper-button-prev,
+.swiper-button-next {
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  content: "" !important;
+  display: none;
+}
+.swiper-button-prev .swiper-navigation-icon,
+.swiper-button-next .swiper-navigation-icon {
+  display: none;
+}
+
+.swiper-button-prev {
+  background-image: url("/icons/nav/left-nav.svg") !important;
+}
+
+.swiper-button-next {
+  background-image: url("/icons/nav/right-nav.svg") !important;
+}
+
+section.device-guide {
+  background-color: #2E2E2E;
+}
+section.device-guide .device-guide-card {
+  background-color: transparent;
 }
