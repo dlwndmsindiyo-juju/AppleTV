@@ -4111,3 +4111,177 @@ main.sport-home {
     }
   }
 }
+
+// =====================================================================
+// [추가] 홈 공통 섹션 — 로그인 후 메인 시안(Desktop.pdf) 기준 (PC 전용)
+// - 랜딩 홈(Home)과 로그인 후 메인(MemberHome)이 함께 쓰는 섹션:
+//   히어로 · 핵심 혜택 · TOP 10 · 기기 안내(에코시스템)
+// - 태블릿 / 모바일 규칙은 그대로 (1025px 이상에서만 적용)
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+
+  // ---------- 히어로: 높이는 기존 100vh(화면 꽉 차게) 그대로 · 본문 시작선(12.5%) · 보라색 CTA ----------
+  // (스포츠 히어로 .sport-hero-swiper 는 제외)
+  .hero-swiper-container:not(.sport-hero-swiper) {
+    .hero-slide-item .hero-info {
+      left: $desktop-gutter;
+      max-width: 720px;
+
+      .hero-meta {
+        @include label-default-b;
+        gap: $space-sm;
+        margin-bottom: $space-md;
+        color: $text-primary;
+
+        .age-rating {
+          @include caption-default;
+        }
+      }
+
+      .hero-title {
+        @include display-xl-b;
+        margin: 0 0 $space-lg;
+      }
+
+      .hero-overview {
+        @include body-large;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        margin-bottom: $space-xl;
+      }
+
+      .hero-actions {
+        gap: $space-md;
+
+        .hero-btn {
+          @include body-small-b;
+          height: 40px;
+          padding: 0 $space-xl;
+
+          &.primary {
+            background-color: $primary-color-500;
+            color: $light-color-0;
+
+            &:hover {
+              background-color: $primary-color-400;
+            }
+          }
+
+          &.secondary {
+            border-color: $light-color-0;
+          }
+        }
+      }
+    }
+  }
+
+  // ---------- 핵심 혜택: 검은 띠 · 3칸 ----------
+  .value-props {
+    background-color: $bg-color;
+    padding: $space-2xl 0 $space-xl;
+
+    .inner {
+      padding-left: calc(#{$grid-margin} + #{$space-3xl}); // 128
+      padding-right: calc(#{$grid-margin} + #{$space-3xl});
+    }
+
+    .value-props-inner {
+      gap: $grid-gutter;
+    }
+
+    .value-prop-item {
+      gap: $space-sm;
+    }
+
+    .value-prop-title {
+      @include body-default-b;
+    }
+
+    .value-prop-desc {
+      @include body-small;
+      color: $light-color-500;
+    }
+  }
+
+  // ---------- TOP 10: 제목 크게 · 본문 시작선 · 이너 안에서 잘림 ----------
+  .top10-section {
+    .inner {
+      padding-left: $desktop-gutter;
+      padding-right: $desktop-gutter;
+      overflow: hidden;
+    }
+
+    .top10-title {
+      @include heading-h1;
+      margin: 0 0 $space-xl;
+    }
+  }
+
+  // ---------- 기기 안내 (에코시스템): 회색 박스 ----------
+  .device-guide {
+    .inner {
+      padding-left: $desktop-gutter;
+      padding-right: $desktop-gutter;
+    }
+
+    .device-guide-card {
+      max-width: none;
+      align-items: center;
+      background-color: $dark-color-400;
+      border-radius: $radius-card;
+    }
+
+    .device-guide-title {
+      margin-bottom: $space-lg;
+    }
+
+    .device-guide-sub {
+      @include body-default;
+      color: $light-color-500;
+    }
+
+    .device-guide-list {
+      margin-bottom: $space-xl;
+
+      li {
+        @include body-default;
+        color: $light-color-0;
+      }
+    }
+
+    .device-guide-link {
+      @include body-small;
+      color: $primary-color-400;
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 모든 슬라이드 네비게이터 아이콘 (public/icons/nav/left-nav.svg · right-nav.svg)
+// - Swiper 기본 화살표(::after 글자 / 버전에 따라 svg)를 숨기고 시안 아이콘으로 교체
+// - 버튼 크기 · 배경(원형 등)은 각 섹션 스타일 그대로
+// =====================================================================
+.swiper-button-prev,
+.swiper-button-next {
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
+
+  &::after {
+    content: "" !important;
+    display: none;
+  }
+
+  // Swiper 11 이상: 버튼 안의 기본 svg 아이콘
+  .swiper-navigation-icon {
+    display: none;
+  }
+}
+
+.swiper-button-prev {
+  background-image: url("/icons/nav/left-nav.svg") !important;
+}
+
+.swiper-button-next {
+  background-image: url("/icons/nav/right-nav.svg") !important;
+}

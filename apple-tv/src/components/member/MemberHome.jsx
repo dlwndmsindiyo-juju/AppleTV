@@ -18,7 +18,7 @@ import RecommendSection from "./RecommendSection";
 import MoodAssistant from "./MoodAssistant";
 import NewRelease from "./NewRelease";
 import ComingSoon from "./ComingSoon";
-import EcosystemBand from "./EcosystemBand";
+import DeviceGuide from "../landing/DeviceGuide"; // 에코시스템 (시안: 랜딩 홈의 기기 안내와 같은 회색 박스)
 
 const MemberHome = ({ userName = "회원" }) => {
   const { onFetchAppleOriginals, onFetchUpcoming, onFetchRecommended } =
@@ -63,8 +63,8 @@ const MemberHome = ({ userName = "회원" }) => {
       {/* 8-1. 구독 유도 CTA (미구독자에게만 보임) */}
       <SubscribeCTA type="tv" />
 
-      {/* 9. 에코시스템 (아래는 기존 푸터) */}
-      <EcosystemBand />
+      {/* 9. 에코시스템 (아래는 기존 푸터) — 시안 내용이 기기 안내와 같아 DeviceGuide 재사용 */}
+      <DeviceGuide />
     </main>
   );
 };
