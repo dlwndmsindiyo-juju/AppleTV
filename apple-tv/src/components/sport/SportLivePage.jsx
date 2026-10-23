@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSportStore } from "../../store/useSportStore";
 import { useTeamStore } from "../../store/useTeamStore";
 import { getTeamById } from "../../data/sportTeams";
-import { LIVE_MATCH, LIVE_OTHER_MATCHES } from "../../data/mockLiveMatch";
 import { TeamHero } from "./SportHero";
+import { getMockLiveMatch, MOCK_LIVE_IDS, buildFromSportsDb, liveRowToEvent, toTeam } from "./liveMatchAdapter";
 
 // =====================================================================
 // 라이브 상세 (/sport/match/:id) — 시안: 라이브 상세.pdf
@@ -13,7 +13,10 @@ import { TeamHero } from "./SportHero";
 // 2. 왼쪽 큰 화면(라이브 영상 + 경기 정보) / 오른쪽 다른 라이브 경기 목록  ← 상세(SportDetail) 레이아웃 재사용
 // 3. 탭: 중계 · 라인업 · 기록 · 채팅
 //    - 라인업: 팀별 포메이션 + 감독, 경기장 위 선발 11명, 후보선수 2열
-// - 데이터: data/mockLiveMatch.js (영상은 짧은 하이라이트 클립 → 없으면 TheSportsDB 하이라이트)
+// - 데이터: 주소의 경기 id 로 결정 (liveMatchAdapter 가 모두 같은 모양으로 변환)
+//   · sample / l1 ~ l7       → data/mockLiveMatch.js 목업
+//   · 그 밖의 id(실제 경기)  → TheSportsDB livescore 한 줄 + lookup 4개(경기 · 라인업 · 타임라인 · 기록)
+// - 영상은 짧은 하이라이트 클립 → 없으면 TheSportsDB 하이라이트
 // =====================================================================
 
 const FALLBACK_THUMB = "/images/matches/matches-bg.png";
@@ -49,15 +52,23 @@ const matchBadge = (team) =>
 
 const TeamBadge = ({ team, className }) => {
   const [failed, setFailed] = useState(false);
+  const src = failed ? team.logo : matchBadge(team);
+  // MLS 외 팀인데 뱃지 주소도 없으면 이름 첫 글자
+  if (!src) {
+    return <span className={`${className || ""} sport-badge-initial`} aria-hidden="true">{team.shortName?.[0]}</span>;
+  }
   return (
     <img
       className={className}
-      src={failed ? team.logo : matchBadge(team)}
+      src={src}
       alt=""
       onError={() => setFailed(true)}
     />
   );
 };
+
+// 데이터가 없는 탭 (API 가 아직 제공하지 않는 경기)
+const EmptyPanel = ({ text }) => <p className="sport-live-empty">{text}</p>;
 
 // ---------- 라인업: 팀 머리 (뱃지 · 이름 포메이션 · 감독) ----------
 // - onSelect 가 있으면 버튼으로 동작 (누르면 그 팀 라인업으로 경기장 전환)
@@ -103,6 +114,7 @@ const Pitch = ({ team, lineup }) => (
 // - 아래 상대 팀 머리를 누르면 그 팀이 위로 올라오고 경기장이 그 팀 선발로 바뀜
 const LineupPanel = ({ teams }) => {
   const [selectedId, setSelectedId] = useState(teams[0].team.id);
+  if (teams.every(({ lineup }) => !lineup?.starters?.length)) return <EmptyPanel text="라인업 정보가 아직 없습니다." />;
   const selected = teams.find(({ team }) => team.id === selectedId) || teams[0];
   const other = teams.find(({ team }) => team.id !== selected.team.id);
 
@@ -140,13 +152,25 @@ const LineupPanel = ({ teams }) => {
 // ---------- 아이콘 (public/icons/live/) ----------
 const ICON = (name) => `/icons/live/${name}.svg`;
 
+// ---------- 스코어보드 팀 원 ----------
+// - MLS 구단: 구단 칩 이미지(public/images/sport-team/{id}-chip.svg)를 원 전체에 꽉 채움
+// - 그 밖의 팀: 팀색 원 + 가운데 뱃지 (기존 방식)
+const ScoreBadge = ({ team }) =>
+  getTeamById(team.id) ? (
+    <span className="sport-scoreboard-badge is-chip">
+      <img src={team.logo} alt="" />
+    </span>
+  ) : (
+    <span className="sport-scoreboard-badge" style={{ backgroundColor: team.color }}>
+      <TeamBadge team={team} />
+    </span>
+  );
+
 // ---------- 중계 · 기록 공통: 스코어보드 ----------
 // [팀 뱃지(팀색 원)] [점수] : [점수] [팀 뱃지]  · 점수 아래 팀 이름
 const Scoreboard = ({ left, right, score }) => (
   <div className="sport-scoreboard" aria-label={`${left.shortName} ${score[left.id]} 대 ${score[right.id]} ${right.shortName}`}>
-    <span className="sport-scoreboard-badge" style={{ backgroundColor: left.color }}>
-      <TeamBadge team={left} />
-    </span>
+    <ScoreBadge team={left} />
     <div className="sport-scoreboard-score">
       <b>{score[left.id]}</b>
       <span>{left.shortName}</span>
@@ -156,9 +180,7 @@ const Scoreboard = ({ left, right, score }) => (
       <b>{score[right.id]}</b>
       <span>{right.shortName}</span>
     </div>
-    <span className="sport-scoreboard-badge" style={{ backgroundColor: right.color }}>
-      <TeamBadge team={right} />
-    </span>
+    <ScoreBadge team={right} />
   </div>
 );
 
@@ -193,6 +215,7 @@ const EventBody = ({ event }) => {
 const CommentaryPanel = ({ events, left, right, score }) => (
   <div className="sport-commentary">
     <Scoreboard left={left} right={right} score={score} />
+    {events.length === 0 && <EmptyPanel text="아직 중계 기록이 없습니다." />}
     <ol className="sport-timeline">
       {events.map((event, index) => {
         if (event.type === "half") {
@@ -225,6 +248,7 @@ const StatsPanel = ({ match, stats, left, right, score }) => (
       <p>{match.date}</p>
     </div>
     <Scoreboard left={left} right={right} score={score} />
+    {stats.length === 0 && <EmptyPanel text="경기 기록이 아직 없습니다." />}
     <ul className="sport-stats-list">
       {stats.map((row) => {
         const l = row.values[left.id] ?? 0, r = row.values[right.id] ?? 0;
@@ -345,12 +369,42 @@ const ChatPanel = ({ room, seed, myTeam }) => {
   );
 };
 
+const isMockId = (id) => !id || MOCK_LIVE_IDS.includes(id);
+
+// 오른쪽 목록 한 줄 (실제 라이브 경기)
+const toListTeam = (t) => toTeam({ name: t?.shortName || t?.name, badge: t?.crest });
+
 const SportLivePage = () => {
-  const match = LIVE_MATCH;
-  const home = getTeamById(match.homeId);
-  const away = getTeamById(match.awayId);
-  // 팀 id 별 점수 (중계 · 기록 스코어보드)
-  const finalScore = { [match.homeId]: match.score.home, [match.awayId]: match.score.away };
+  const { id: routeId } = useParams();
+  const navigate = useNavigate();
+
+  // ---------- 경기 데이터 ----------
+  const liveMatches = useSportStore((state) => state.liveMatches);
+  const fetchLiveMatches = useSportStore((state) => state.onFetchLiveMatches);
+  const details = useSportStore((state) => state.liveMatchDetails);
+  const fetchDetail = useSportStore((state) => state.onFetchLiveMatchDetail);
+  const isMock = isMockId(routeId);
+  const liveRow = liveMatches.find((m) => String(m.id) === String(routeId));
+  // TheSportsDB 경기만 lookup 상세가 있음 (football-data 로 대체된 경기는 점수 · 팀만 표시)
+  const hasSportsDbDetail = !liveRow || Boolean(liveRow._league);
+
+  // 실제 경기: 목록 + 상세를 2분마다 갱신 (TheSportsDB livescore 갱신 주기)
+  useEffect(() => {
+    if (isMock) return undefined;
+    const load = () => { fetchLiveMatches(); if (hasSportsDbDetail) fetchDetail(routeId); };
+    load();
+    const timer = setInterval(load, 2 * 60 * 1000);
+    return () => clearInterval(timer);
+  }, [isMock, routeId, hasSportsDbDetail, fetchLiveMatches, fetchDetail]);
+
+  const match = useMemo(() => {
+    if (isMock) return getMockLiveMatch(routeId);
+    const saved = details[routeId];
+    // 다른 경기 응답이 섞이지 않게 id 확인
+    const detail = hasSportsDbDetail && (!saved?.event || String(saved.event.idEvent) === String(routeId)) ? saved : null;
+    const event = liveRowToEvent(liveRow, detail?.event);
+    return event ? buildFromSportsDb({ ...detail, event }) : null;
+  }, [isMock, routeId, details, liveRow, hasSportsDbDetail]);
 
   const favorites = useTeamStore((state) => state.favorites);
   // 영상: 짧은 MLS 하이라이트 클립(YouTube) → 없으면 TheSportsDB 하이라이트 (홈 "라이브" 카드와 같은 영상)
@@ -360,17 +414,16 @@ const SportLivePage = () => {
   const fetchHighlightList = useSportStore((state) => state.onFetchHighlightList);
   useEffect(() => { fetchLiveClips(); fetchHighlightList(); }, [fetchLiveClips, fetchHighlightList]);
   const highlightList = clips.length > 0 ? clips : sdbVideos;
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, [routeId]);
 
   const [tab, setTab] = useState("lineup");
-  const [currentId, setCurrentId] = useState(match.id);
 
-  // 히어로 팀: 이 경기 팀 중 팔로우한 팀 → 없으면 원정팀
-  const heroTeam = [away, home].find((t) => favorites.includes(t.id)) || away;
-
-  // 왼쪽 큰 화면 + 오른쪽 목록 (영상은 TheSportsDB 하이라이트를 순서대로 배정)
+  // 오른쪽 "다른 라이브 경기": 목업 경기면 목업 목록, 실제 경기면 livescore 목록 (누르면 그 경기 상세로 이동)
   const items = useMemo(() => {
     const videoAt = (i) => highlightList?.[i];
+    if (!match) return [];
+    const home = match.teams[match.homeId];
+    const away = match.teams[match.awayId];
     const main = {
       id: match.id,
       title: `${home.shortName} ${match.score.home} : ${match.score.away} ${away.shortName}`,
@@ -378,23 +431,55 @@ const SportLivePage = () => {
       note: away.shortName,
       video: videoAt(0),
     };
-    const others = LIVE_OTHER_MATCHES.map((m, i) => {
-      const team = getTeamById(m.homeId);
-      return {
-        id: m.id,
-        title: `${team?.shortName} VS ${away.shortName}`,
-        sub: halfLabel(m.minute),
-        note: `${team?.name} vs ${away.name}`,
-        video: videoAt(i + 1),
-      };
-    });
-    return [main, ...others];
-  }, [highlightList, match, home, away]);
+    const others = isMock
+      ? MOCK_LIVE_IDS.filter((mid) => mid !== match.id).map(getMockLiveMatch).filter(Boolean).map((m) => {
+          const mid = m.id;
+          const h = m.teams[m.homeId], a = m.teams[m.awayId];
+          return { id: mid, title: `${h.shortName} VS ${a.shortName}`, sub: m.minute ? halfLabel(m.minute) : "", note: `${h.name} vs ${a.name}` };
+        })
+      : liveMatches.filter((m) => String(m.id) !== String(match.id)).map((m) => {
+          const h = toListTeam(m.homeTeam), a = toListTeam(m.awayTeam);
+          const sc = m.score?.fullTime || {};
+          return {
+            id: String(m.id),
+            title: `${h.shortName} ${sc.home ?? 0} : ${sc.away ?? 0} ${a.shortName}`,
+            sub: m.minute ? halfLabel(m.minute) : m.competition?.name || "",
+            note: `${h.name} vs ${a.name}`,
+          };
+        });
+    return [main, ...others.map((o, i) => ({ ...o, video: videoAt(i + 1) }))];
+  }, [highlightList, match, isMock, liveMatches]);
 
-  const current = items.find((item) => item.id === currentId) || items[0];
-  const list = items.filter((item) => item.id !== current.id);
+  // 실제 경기인데 아직 목록 · 상세가 오지 않았거나 경기가 끝나 목록에서 빠진 경우
+  if (!match) {
+    return (
+      <main className="sport-home sport-detail-page sport-live-page">
+        <div className="inner sport-live-back-wrap">
+          <EmptyPanel text="경기 정보를 불러오는 중이거나 종료된 경기입니다." />
+          <Link className="sport-detail-back" to="/sport">← 스포츠 홈으로</Link>
+        </div>
+      </main>
+    );
+  }
+
+  const home = match.teams[match.homeId];
+  const away = match.teams[match.awayId];
+  // 팀 id 별 점수 (중계 · 기록 스코어보드)
+  const finalScore = { [match.homeId]: match.score.home, [match.awayId]: match.score.away };
+
+  // 히어로 팀: 이 경기 팀 중 팔로우한 팀 → MLS 구단(원정 → 홈) → 원정팀
+  const heroTeam =
+    [away, home].find((t) => favorites.includes(t.id)) ||
+    [away, home].find((t) => getTeamById(t.id)) ||
+    away;
+
+  const current = items[0];
+  const list = items.slice(1);
   const thumbOf = (item) => item.video?.snippet?.thumbnails?.high?.url || FALLBACK_THUMB;
-  const lineupTeams = [away, home].map((team) => ({ team, lineup: match.lineups[team.id] }));
+  const lineupTeams = [away, home].map((team) => ({
+    team,
+    lineup: match.lineups[team.id] || { formation: "-", coach: "-", starters: [], subs: [] },
+  }));
 
   return (
     <main className="sport-home sport-detail-page sport-live-page">
@@ -431,7 +516,7 @@ const SportLivePage = () => {
             <ul className="sport-detail-list" aria-label="다른 라이브 경기">
               {list.map((item) => (
                 <li key={item.id}>
-                  <button type="button" className="sport-detail-item" onClick={() => setCurrentId(item.id)}>
+                  <button type="button" className="sport-detail-item" onClick={() => navigate(`/sport/match/${item.id}`)}>
                     <span className="sport-detail-thumb">
                       <img src={thumbOf(item)} alt="" loading="lazy" />
                       <span className="sport-detail-play" aria-hidden="true">▶</span>
@@ -469,9 +554,9 @@ const SportLivePage = () => {
 
         <div className="inner sport-live-panel" role="tabpanel" id="sport-live-panel" aria-labelledby={`sport-live-tab-${tab}`}>
           {tab === "commentary" && <CommentaryPanel events={match.commentary} left={away} right={home} score={finalScore} />}
-          {tab === "lineup" && <LineupPanel teams={lineupTeams} />}
+          {tab === "lineup" && <LineupPanel key={match.id} teams={lineupTeams} />}
           {tab === "stats" && <StatsPanel match={match} stats={match.stats} left={away} right={home} score={finalScore} />}
-          {tab === "chat" && <ChatPanel room={match.chatRoom} seed={match.chat} myTeam={heroTeam} />}
+          {tab === "chat" && <ChatPanel key={match.id} room={match.chatRoom} seed={match.chat} myTeam={heroTeam} />}
         </div>
       </section>
 
