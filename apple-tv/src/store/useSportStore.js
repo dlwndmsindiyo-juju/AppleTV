@@ -554,4 +554,35 @@ export const useSportStore = create((set, get) => ({
             console.error("숏츠 영상 조회 실패:", error);
         }
     },
+
+    // [추가] 라이브 상세 (/sport/match/:id) — 어떤 경기든 같은 탭(중계 · 라인업 · 기록) 정보
+    // - TheSportsDB 프리미엄 V1 lookup 4개를 한 번에 요청 (경기 id = livescore 의 idEvent)
+    //   lookupevent(경기 · 포메이션 · 감독) / lookuplineup(선발 · 후보) / lookuptimeline(골 · 카드 · 교체) / lookupeventstats(기록)
+    // - 진행 중인 경기라 2분만 캐시, 실패한 항목은 빈 배열 (페이지가 "정보 없음" 으로 표시)
+    liveMatchDetails: {},
+    onFetchLiveMatchDetail: async (eventId) => {
+        if (!SPORTSDB_KEY || !eventId) return;
+        const pick = (data, ...keys) => keys.map((k) => data?.[k]).find(Array.isArray) || [];
+        const load = (path, keys) =>
+            withCache(`sport-sdb-live-${path}:${eventId}`, async () => {
+                const data = await sportsDbV1(`${path}.php?id=${eventId}`);
+                if (import.meta.env.DEV) console.info(`[TheSportsDB ${path}]`, data);
+                return pick(data, ...keys);
+            }, 2 * 60 * 1000).catch((error) => {
+                console.error(`TheSportsDB ${path} 조회 실패:`, error);
+                return [];
+            });
+        const [events, lineup, timeline, stats] = await Promise.all([
+            load("lookupevent", ["events"]),
+            load("lookuplineup", ["lineup"]),
+            load("lookuptimeline", ["timeline"]),
+            load("lookupeventstats", ["eventstats"]),
+        ]);
+        set((state) => ({
+            liveMatchDetails: {
+                ...state.liveMatchDetails,
+                [eventId]: { event: events[0] || null, lineup, timeline, stats, fetchedAt: Date.now() },
+            },
+        }));
+    },
 }));
