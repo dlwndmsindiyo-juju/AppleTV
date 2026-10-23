@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSportStore } from "../../store/useSportStore";
-import { useTeamStore } from "../../store/useTeamStore";
+import { useTeamStore, selectHeroTeam } from "../../store/useTeamStore";
 import { getTeamById } from "../../data/sportTeams";
 import { TeamHero } from "./SportHero";
 import { getMockLiveMatch, MOCK_LIVE_IDS, buildFromSportsDb, liveRowToEvent, toTeam } from "./liveMatchAdapter";
 
 // =====================================================================
 // 라이브 상세 (/sport/match/:id) — 시안: 라이브 상세.pdf
-// 1. 팀 히어로 (팔로우한 경기 팀 → 없으면 원정팀)        ← SportHero 의 TeamHero 재사용
+// 1. 팀 히어로 (내가 고른 팔로우 팀 → 처음 팔로우한 팀 / 경기 팀과 상관없이 유지, 팔로우가 없을 때만 경기 팀)        ← SportHero 의 TeamHero 재사용
 //    (하단 LIVE 배너는 App 의 PromoBanner 가 그대로 표시)
 // 2. 왼쪽 큰 화면(라이브 영상 + 경기 정보) / 오른쪽 다른 라이브 경기 목록  ← 상세(SportDetail) 레이아웃 재사용
 // 3. 탭: 중계 · 라인업 · 기록 · 채팅
@@ -406,7 +406,8 @@ const SportLivePage = () => {
     return event ? buildFromSportsDb({ ...detail, event }) : null;
   }, [isMock, routeId, details, liveRow, hasSportsDbDetail]);
 
-  const favorites = useTeamStore((state) => state.favorites);
+  // 히어로 배너: 스포츠 홈과 같은 팀 (내가 고른 팀 → 처음 팔로우한 팀)
+  const followedHero = useTeamStore(selectHeroTeam);
   // 영상: 짧은 MLS 하이라이트 클립(YouTube) → 없으면 TheSportsDB 하이라이트 (홈 "라이브" 카드와 같은 영상)
   const clips = useSportStore((state) => state.liveClips);
   const sdbVideos = useSportStore((state) => state.highlightList);
@@ -467,9 +468,10 @@ const SportLivePage = () => {
   // 팀 id 별 점수 (중계 · 기록 스코어보드)
   const finalScore = { [match.homeId]: match.score.home, [match.awayId]: match.score.away };
 
-  // 히어로 팀: 이 경기 팀 중 팔로우한 팀 → MLS 구단(원정 → 홈) → 원정팀
+  // 히어로 팀: 팔로우한 팀이 있으면 어떤 경기를 보든 그 팀 배너 유지
+  //           팔로우가 없을 때만 이 경기의 MLS 구단(원정 → 홈) → 원정팀
   const heroTeam =
-    [away, home].find((t) => favorites.includes(t.id)) ||
+    followedHero ||
     [away, home].find((t) => getTeamById(t.id)) ||
     away;
 
