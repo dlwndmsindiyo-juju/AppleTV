@@ -107,118 +107,68 @@ $toggle-inactive-bg: #262626;
 $input-bg: #262626;
 $input-focus-bg: #2e2e2e;
 
-// text-크기 (PDF 사양 반영)
-@mixin display-xl {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700; // Bold (700)
-  font-size: 76px;
-  line-height: 96px;
+// =====================================================================
+// Typography (시안: Text styles · Desktop / TV 1920)
+// - 모든 스타일은 Regular(400) / Bold(700) 두 가지 굵기 (B 스타일 = 같은 크기 · 행간 + 700)
+// - 기본 믹스인: Regular  /  -b 믹스인: Bold   예) @include heading-h4;  @include heading-h4-b;
+// =====================================================================
+
+// ---------- Font weight ----------
+$font-weight-regular: 400; // Regular
+$font-weight-bold: 700;    // Bold (B 스타일)
+
+$font-family-base: "SF Pro", sans-serif;
+
+// 공통 타이포 믹스인 (크기 · 행간 · 굵기)
+@mixin type-style($size, $line-height, $weight: $font-weight-regular) {
+  font-family: $font-family-base;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
   letter-spacing: 0;
 }
 
-@mixin display-l {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 500; // Medium (500)
-  font-size: 34px;
-  line-height: 41px;
-  letter-spacing: 0;
-}
+// ---------- Display ----------
+@mixin display-xl { @include type-style(76px, 96px); }                      // 대형 히어로 타이틀
+@mixin display-xl-b { @include type-style(76px, 96px, $font-weight-bold); }
+@mixin display-l { @include type-style(34px, 41px); }                       // 메인 타이틀
+@mixin display-l-b { @include type-style(34px, 41px, $font-weight-bold); }
+@mixin display-M { @include type-style(28px, 34px); }                       // 주요 섹션 강조
+@mixin display-M-b { @include type-style(28px, 34px, $font-weight-bold); }
 
-@mixin display-M {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // Regular (400)
-  font-size: 28px;
-  line-height: 34px;
-  letter-spacing: 0;
-}
+// ---------- Heading ----------
+@mixin heading-h1 { @include type-style(48px, 56px); }                      // 페이지 제목
+@mixin heading-h1-b { @include type-style(48px, 56px, $font-weight-bold); }
+@mixin heading-h2 { @include type-style(22px, 28px); }                      // 섹션 헤더
+@mixin heading-h2-b { @include type-style(22px, 28px, $font-weight-bold); }
+@mixin heading-h3 { @include type-style(20px, 25px); }                      // 콘텐츠 그룹 제목
+@mixin heading-h3-b { @include type-style(20px, 25px, $font-weight-bold); }
+@mixin heading-h4 { @include type-style(17px, 22px); }                      // 카드 및 모듈 제목
+@mixin heading-h4-b { @include type-style(17px, 22px, $font-weight-bold); }
+@mixin heading-h5 { @include type-style(16px, 21px); }                      // 보조 헤딩
+@mixin heading-h5-b { @include type-style(16px, 21px, $font-weight-bold); }
 
-@mixin heading-h1 {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 500; // Medium (500)
-  font-size: 48px;
-  line-height: 56px;
-  letter-spacing: 0;
-}
+// ---------- Body ----------
+@mixin body-large { @include type-style(17px, 22px); }                      // 소개 및 설명
+@mixin body-large-b { @include type-style(17px, 22px, $font-weight-bold); }
+@mixin body-default { @include type-style(15px, 20px); }                    // 기본 본문
+@mixin body-default-b { @include type-style(15px, 20px, $font-weight-bold); }
+@mixin body-small { @include type-style(13px, 18px); }                      // 보조 설명
+@mixin body-small-b { @include type-style(13px, 18px, $font-weight-bold); }
 
-@mixin heading-h2 {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // Regular (400)
-  font-size: 22px;
-  line-height: 28px;
-  letter-spacing: 0;
-}
+// ---------- Label ----------
+@mixin label-default { @include type-style(12px, 16px); }                   // 버튼 및 상태
+@mixin label-default-b { @include type-style(12px, 16px, $font-weight-bold); }
 
-@mixin heading-h3 {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // Regular (400)
-  font-size: 20px;
-  line-height: 25px;
-  letter-spacing: 0;
-}
+// ---------- Caption ----------
+@mixin caption-default { @include type-style(11px, 13px); }                 // 주석 및 부가정보
+@mixin caption-default-b { @include type-style(11px, 13px, $font-weight-bold); }
+@mixin caption-small { @include type-style(9px, normal); }                  // 작은 캡션 (행간 Auto)
+@mixin caption-small-b { @include type-style(9px, normal, $font-weight-bold); }
 
-@mixin heading-h4 {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 600; // SemiBold (600)
-  font-size: 17px;
-  line-height: 22px;
-  letter-spacing: 0;
-}
-
-@mixin heading-h5 {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // Regular (400)
-  font-size: 16px;
-  line-height: 21px;
-  letter-spacing: 0;
-}
-
-@mixin body-large {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // Regular (400)
-  font-size: 17px;
-  line-height: 22px;
-  letter-spacing: 0;
-}
-
-@mixin body-default {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // Regular (400)
-  font-size: 15px;
-  line-height: 20px;
-  letter-spacing: 0;
-}
-
-@mixin body-small {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 500; // Medium (500)
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: 0;
-}
-
-@mixin label-default {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // Regular (400)
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0;
-}
-
-@mixin caption-default {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400; // Regular (400)
-  font-size: 11px;
-  line-height: 13px;
-  letter-spacing: 0;
-}
-
-@mixin tv-control {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 600; // SemiBold (600)
-  font-size: 20px;
-  line-height: 125px;
-  letter-spacing: 0;
-}
+// ---------- TV 1920 ----------
+@mixin tv-control { @include type-style(20px, 125px); }                     // TV 컨트롤
+@mixin tv-control-b { @include type-style(20px, 125px, $font-weight-bold); }
 
 // 반응형 브레이크포인트
 $breakpoint-tablet: 1024px; // 태블릿 시안 1024 (이하 적용)

@@ -215,7 +215,7 @@ $mobile-edge: 20px;
       background-color: $light-color-0;
       border-color: $light-color-0;
       color: $dark-color-900;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
 
       &:hover {
         background-color: $light-color-300;
@@ -291,7 +291,7 @@ $mobile-edge: 20px;
   }
 
   .member-wish-name {
-    @include heading-h4;
+    @include heading-h4-b;
     color: $text-primary;
     white-space: nowrap;
     overflow: hidden;
@@ -324,7 +324,7 @@ $mobile-edge: 20px;
     &.active {
       background-color: $toggle-active-bg;
       color: $toggle-active-text;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
     }
   }
 
@@ -537,7 +537,7 @@ $mobile-edge: 20px;
 
       &::after {
         font-size: 16px;
-        font-weight: bold;
+        font-weight: $font-weight-bold;
       }
 
       &:hover {

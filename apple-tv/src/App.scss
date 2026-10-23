@@ -50,7 +50,7 @@ header {
       background-color: $toggle-active-bg;
       color: $toggle-active-text;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       transition: background-color 0.2s ease;
 
       &:hover {
@@ -117,7 +117,7 @@ header {
           background: transparent;
           color: $text-primary;
           font-size: 18px;
-          font-weight: 600;
+          font-weight: $font-weight-bold;
           line-height: 1;
           cursor: pointer;
           transition: color 0.4s ease;
@@ -129,7 +129,7 @@ header {
           // 선택된 버튼: 텍스트는 항상 $dark-color-900
           &.active {
             color: $dark-color-900;
-            font-weight: 600; // 굵기 변화로 폭이 흔들리지 않게 고정
+            font-weight: $font-weight-bold; // 굵기 변화로 폭이 흔들리지 않게 고정
           }
         }
 
@@ -203,7 +203,7 @@ header {
             border-radius: 10px;
             background-color: $accent-color;
             color: $light-color-0;
-            font-weight: 700;
+            font-weight: $font-weight-bold;
             white-space: nowrap;
             text-decoration: none;
             transition: background-color 0.2s ease;
@@ -329,7 +329,7 @@ header {
     // 타이틀: @mixin display-M 또는 커스텀 크기 활용
     .login-title {
       @include display-M;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       color: $neutral-color-900; // #171717
       margin: 0 0 8px;
       padding: 0;
@@ -382,7 +382,7 @@ header {
         border: none;
         background-color: $accent-color; // #0a84ff
         color: $text-primary; // #ffffff
-        font-weight: 600;
+        font-weight: $font-weight-bold;
         cursor: pointer;
         transition: background-color 0.2s ease;
 
@@ -417,7 +417,7 @@ header {
   .login-card {
     .login-desc {
       strong {
-        font-weight: 600;
+        font-weight: $font-weight-bold;
         color: $neutral-color-800;
       }
     }
@@ -437,7 +437,7 @@ header {
           background-color: $neutral-color-white;
           font-family: "SF Pro", sans-serif;
           font-size: 24px;
-          font-weight: 600;
+          font-weight: $font-weight-bold;
           text-align: center;
           color: $neutral-color-900;
           outline: none;
@@ -521,7 +521,7 @@ header {
       margin: 84px 0 12px;
       font-size: 34px;
       line-height: 41px;
-      font-weight: 500;
+      font-weight: $font-weight-regular;
       color: #111;
     }
 
@@ -543,7 +543,7 @@ header {
         border-radius: 6px;
         background-color: #007aff;
         font-size: 17px;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
 
         &:hover {
           background-color: #0070eb;
@@ -558,7 +558,7 @@ header {
 
       .login-link-btn {
         font-size: 12px;
-        font-weight: 500;
+        font-weight: $font-weight-regular;
         color: #007aff;
       }
     }
@@ -611,7 +611,7 @@ header {
 
     .login-title {
       @include display-M;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       color: $dark-color-900;
       margin: 0 0 10px;
     }
@@ -659,7 +659,7 @@ header {
         border-radius: 6px;
         background-color: $accent-color;
         color: $light-color-0;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
 
         &:hover {
           background-color: darken($accent-color, 6%);
@@ -804,7 +804,7 @@ header {
 
     &::after {
       font-size: 20px !important;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
     }
   }
 
@@ -900,7 +900,7 @@ header {
       .hero-title {
         @include display-M;
         font-size: 64px;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         line-height: 1.15;
         margin: 0 0 24px;
         padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
@@ -932,7 +932,7 @@ header {
           padding: 0 20px;
           border-radius: 9999px;
           font-size: 14px;
-          font-weight: 600;
+          font-weight: $font-weight-bold;
           text-decoration: none;
           transition: background-color 0.25s ease, color 0.25s ease,
             border-color 0.25s ease;
@@ -1066,7 +1066,7 @@ header {
       transition: opacity 0.3s ease;
 
       .top10-movie-title {
-        @include heading-h4;
+        @include heading-h4-b;
         color: $text-primary;
         word-break: keep-all;
       }
@@ -1096,7 +1096,7 @@ header {
     z-index: 2;
     font-family: "SF Pro", sans-serif;
     font-size: 140px;
-    font-weight: 800;
+    font-weight: $font-weight-bold;
     line-height: 1;
     color: $text-primary;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
@@ -1331,7 +1331,7 @@ header {
 
     .title {
       @include display-l;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       color: $light-color-0;
     }
 
@@ -1399,7 +1399,7 @@ header {
 
     .btn-play {
       @include body-default;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       width: 180px;
       height: 40px;
       border: none;
@@ -1429,7 +1429,7 @@ header {
 
       h3 {
         @include heading-h2;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: $light-color-0;
       }
 
@@ -1444,7 +1444,7 @@ header {
         }
 
         strong {
-          font-weight: 700;
+          font-weight: $font-weight-bold;
         }
 
         .max-score {
@@ -1504,7 +1504,7 @@ header {
     .btn-submit-rating {
       @include body-default;
       align-self: center;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       height: 40px;
       padding: 0 28px;
       border: none;
@@ -1569,7 +1569,7 @@ header {
 
         &.active {
           color: $light-color-0;
-          font-weight: 600;
+          font-weight: $font-weight-bold;
 
           &::after {
             content: "";
@@ -1592,7 +1592,7 @@ header {
 
       select {
         @include label-default;
-        font-weight: 600;
+        font-weight: $font-weight-bold;
         height: 36px;
         padding: 0 32px 0 12px;
         border: none;
@@ -1698,7 +1698,7 @@ header {
 
         .ep-title {
           @include label-default;
-          font-weight: 600;
+          font-weight: $font-weight-bold;
           color: $light-color-200;
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -1867,7 +1867,7 @@ header {
       border-radius: 9999px;
       background-color: $light-color-0;
       color: $dark-color-900;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       cursor: pointer;
     }
   }
@@ -2117,7 +2117,7 @@ header {
       z-index: 2;
       @include body-small;
       color: $neutral-color-300;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
     }
 
     // 중앙 팀 로고 & 대각선 선 영역
@@ -2194,7 +2194,7 @@ header {
   // 좌측: 제목 + 설명
   .device-guide-title {
     @include display-l;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     margin: 0 0 24px;
     padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
     color: $text-primary;
@@ -2231,7 +2231,7 @@ header {
     transition: color 0.2s ease;
 
     &:hover {
-      font-weight: 600;
+      font-weight: $font-weight-bold;
     }
   }
 }
@@ -2259,7 +2259,7 @@ header {
     text-decoration: none;
 
     &:hover {
-      font-weight: 600;
+      font-weight: $font-weight-bold;
     }
   }
 
@@ -2278,7 +2278,7 @@ header {
 
   .ecosystem-title {
     @include heading-h1;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin: 0 0 16px;
     padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
     color: $text-primary;
@@ -2315,14 +2315,14 @@ header {
 
   .ecosystem-card-name {
     @include display-l;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     margin: 0 0 16px;
     color: $text-primary;
   }
 
   .ecosystem-card-category {
     @include body-small;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     margin: 0 0 20px;
     color: $neutral-color-400;
   }
@@ -2367,7 +2367,7 @@ header {
 
     dt {
       @include body-default;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       margin: 0 0 10px;
       color: $text-primary;
     }
@@ -2508,7 +2508,7 @@ header {
   // Apple TV를 1주일 무료로 즐기세요. (사진의 굵고 아담한 타이틀)
   .promo-banner-title {
     @include heading-h5; // 16px
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     color: $text-primary;
     margin: 0;
     font-size: clamp(14px, 1.1vw, 16px);
@@ -2548,7 +2548,7 @@ header {
     border-radius: 9999px;
     background-color: $light-color-0;
     color: $dark-color-900;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     font-size: clamp(12px, 0.9vw, 13px);
     text-decoration: none;
     transition: background-color 0.25s ease;
@@ -2582,7 +2582,7 @@ header {
   // LIVE ● + 팀 + 스코어 한 줄
   .live-title {
     @include heading-h3;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     display: flex;
     align-items: center;
     gap: 14px;
@@ -2637,7 +2637,7 @@ header {
     height: 36px;
     background-color: $sports-color;
     color: $text-primary;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
     &:hover {
       background-color: darken($sports-color, 6%);
@@ -2718,7 +2718,7 @@ body.has-promo-banner .footer {
     color: $text-primary;
 
     strong {
-      font-weight: 700;
+      font-weight: $font-weight-bold;
     }
 
     .sport-hero-divider {
@@ -2736,7 +2736,7 @@ body.has-promo-banner .footer {
 
   .sport-hero-title {
     @include heading-h2;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -2783,7 +2783,7 @@ body.has-promo-banner .footer {
   height: 40px;
   padding: 0 24px;
   border-radius: 9999px;
-  font-weight: 600;
+  font-weight: $font-weight-bold;
   text-decoration: none;
   transition: background-color 0.25s ease, opacity 0.25s ease;
 
@@ -2922,7 +2922,7 @@ body.has-promo-banner .footer {
 
   .sport-match-score {
     @include heading-h3;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     flex-shrink: 0;
     color: $text-primary;
   }
@@ -2994,7 +2994,7 @@ body.has-promo-banner .footer {
   }
 
   .sport-short-title {
-    @include heading-h4;
+    @include heading-h4-b;
     margin: 0;
     color: $text-primary;
     display: -webkit-box;
@@ -3102,7 +3102,7 @@ body.has-promo-banner .footer {
 
   .sport-team-name {
     @include heading-h3;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     color: $text-primary;
   }
 
@@ -3124,7 +3124,7 @@ body.has-promo-banner .footer {
     border-radius: 50%;
     background: transparent;
     color: $text-primary;
-    font-weight: 300;
+    font-weight: $font-weight-regular;
     line-height: 1;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -3135,7 +3135,7 @@ body.has-promo-banner .footer {
 
     &.on {
       @include heading-h5;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       background-color: $sports-color;
     }
   }
@@ -3173,7 +3173,7 @@ body.has-promo-banner .footer {
     &.active {
       background-color: $light-color-0;
       color: $dark-color-900;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
 
       .count {
         color: $neutral-color-600;
@@ -3218,7 +3218,7 @@ body.has-promo-banner .footer {
 
   .sport-teams-title {
     @include display-M;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin: 0 0 8px;
     padding-top: 0;
     color: $text-primary;
@@ -3237,7 +3237,7 @@ body.has-promo-banner .footer {
     color: rgba($light-color-0, 0.85);
 
     strong {
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       color: $text-primary;
     }
   }
@@ -3317,7 +3317,7 @@ body.has-promo-banner .footer {
 
   .sport-teams-page-title {
     @include heading-h1;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin: 0 0 8px;
     padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
     color: $text-primary;
@@ -3337,7 +3337,7 @@ body.has-promo-banner .footer {
     color: rgba($light-color-0, 0.85);
 
     strong {
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       color: $text-primary;
     }
   }
@@ -3428,7 +3428,7 @@ body.has-promo-banner .footer {
 
   .sport-team-group-title {
     @include heading-h2;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin: 0 0 20px;
     color: $text-primary;
 
@@ -3503,7 +3503,7 @@ body.has-promo-banner .footer {
   }
 
   .sport-league-label {
-    @include heading-h4;
+    @include heading-h4-b;
     flex: 1;
     min-width: 0;
     color: $text-primary;
@@ -3570,12 +3570,12 @@ body.has-promo-banner .footer {
 
   .sport-replay-score {
     @include heading-h3;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     color: $text-primary;
   }
 
   .sport-replay-name {
-    @include heading-h4;
+    @include heading-h4-b;
     padding: 0 4px;
     color: $text-primary;
     white-space: nowrap;
@@ -3657,7 +3657,7 @@ body.has-promo-banner .footer {
   }
 
   .sport-highlight-title {
-    @include heading-h4;
+    @include heading-h4-b;
     margin: 0;
     color: $text-primary;
     display: -webkit-box;
@@ -3697,7 +3697,7 @@ body.has-promo-banner .footer {
 
   .sport-notify-title {
     @include heading-h2;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin: 0 0 12px;
     color: $text-primary;
     word-break: keep-all;
@@ -3720,7 +3720,7 @@ body.has-promo-banner .footer {
     border-radius: 9999px;
     background-color: $light-color-0;
     color: $dark-color-900;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     text-decoration: none;
     transition: background-color 0.25s ease;
 
@@ -3805,7 +3805,7 @@ main {
       gap: 6px;
       color: $light-color-500;
       font-size: 15px;
-      font-weight: 500;
+      font-weight: $font-weight-regular;
       transition: color 0.2s ease;
 
       &:hover {

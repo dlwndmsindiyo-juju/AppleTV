@@ -44,7 +44,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
           @include body-small;
           height: 32px;
           padding: 0 12px;
-          font-weight: 700;
+          font-weight: $font-weight-bold;
         }
       }
     }
@@ -142,7 +142,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     }
  
     .upcoming-movie-title {
-      @include heading-h4;
+      @include heading-h4-b;
     }
  
     .upcoming-btn {
@@ -293,7 +293,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       }
 
       .member-card-title {
-        @include heading-h4;
+        @include heading-h4-b;
       }
     }
 
@@ -309,7 +309,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       }
 
       .member-card-title {
-        @include heading-h4;
+        @include heading-h4-b;
       }
     }
 
@@ -406,7 +406,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .player-box .title {
       @include display-M;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
     }
 
     // 오른쪽 패널: 고정(sticky) 해제, 높이 고정
@@ -450,7 +450,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
       .title {
         @include heading-h2;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
       }
 
       .original-title {
@@ -480,7 +480,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       padding: 0;
 
       .rating-header h3 {
-        @include heading-h4;
+        @include heading-h4-b;
       }
 
       .rating-desc {
@@ -560,7 +560,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .sport-teams-page-title {
       @include display-l;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
     }
 
     .sport-teams-toolbar {
@@ -593,7 +593,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     }
 
     .sport-team-name {
-      @include heading-h4;
+      @include heading-h4-b;
     }
 
     .sport-team-meta {
@@ -640,7 +640,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .sport-teams-title {
       @include heading-h2;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
     }
 
     .sport-teams-desc,
@@ -672,7 +672,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .sport-teams-page-title {
       @include display-M;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
     }
 
     .sport-teams-page-desc {
@@ -692,7 +692,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     }
 
     .sport-team-group-title {
-      @include heading-h4;
+      @include heading-h4-b;
       margin-bottom: 12px;
     }
 
@@ -710,7 +710,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 @media (max-width: $breakpoint-tablet) {
   .promo-banner.is-live {
     .live-title {
-      @include heading-h4;
+      @include heading-h4-b;
       gap: 10px;
     }
 
@@ -735,7 +735,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .live-title {
       @include body-default;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       gap: 8px;
     }
 
@@ -792,7 +792,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .device-guide-title {
       @include display-M;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       margin-bottom: 16px;
     }
 
@@ -818,7 +818,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .device-guide-title {
       @include heading-h2;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       margin-bottom: 12px;
     }
 
@@ -858,7 +858,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .ecosystem-title {
       @include display-l;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
     }
 
     // 3단 → 1단 (카드 세로 나열)
@@ -899,7 +899,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .ecosystem-title {
       @include display-M;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
     }
 
     .ecosystem-lead,
@@ -914,7 +914,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
     .ecosystem-card-name {
       @include display-M;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       margin-bottom: 8px;
     }
 
@@ -944,13 +944,13 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       }
 
       dt {
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         margin-bottom: 6px;
       }
     }
 
     .ecosystem-footer-title {
-      @include heading-h4;
+      @include heading-h4-b;
       margin-bottom: 12px;
     }
 
@@ -1030,7 +1030,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       .login-desc {
         @include body-default;
         margin: 0 0 24px;
-        font-weight: 600;
+        font-weight: $font-weight-bold;
         color: $neutral-color-600;
         word-break: keep-all;
       }
@@ -1052,7 +1052,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
     // ---------- 로그인 (1단계) ----------
     .login-card.login-card--signin {
       .login-desc {
-        font-weight: 400;
+        font-weight: $font-weight-regular;
       }
 
       .login-form .input-field input {
@@ -1087,7 +1087,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
       .login-desc {
         margin-bottom: 32px;
-        font-weight: 400;
+        font-weight: $font-weight-regular;
       }
 
       .login-links.row-links {
@@ -1124,7 +1124,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
         .plan-name {
           grid-area: name;
           @include heading-h3;
-          font-weight: 700;
+          font-weight: $font-weight-bold;
         }
 
         .plan-price {
@@ -1146,7 +1146,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
       .plan-section-title {
         @include heading-h3;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         margin: 32px 0 12px;
       }
 
@@ -1163,7 +1163,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
 
         strong {
           @include body-default;
-          font-weight: 700;
+          font-weight: $font-weight-bold;
         }
 
         span {
@@ -1192,13 +1192,13 @@ $mobile-edge: 20px; // 모바일 좌우 여백
           margin: 20px 0 12px;
           font-size: 24px;
           line-height: 30px;
-          font-weight: 500;
+          font-weight: $font-weight-regular;
         }
 
         .login-desc {
           @include body-large;
           margin-bottom: 20px;
-          font-weight: 400;
+          font-weight: $font-weight-regular;
         }
       }
 
@@ -1234,7 +1234,7 @@ $mobile-edge: 20px; // 모바일 좌우 여백
       }
 
       .plan-option .plan-name {
-        @include heading-h4;
+        @include heading-h4-b;
         font-size: 18px;
         line-height: 24px;
       }
