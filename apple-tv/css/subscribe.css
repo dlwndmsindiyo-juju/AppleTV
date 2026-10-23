@@ -32,12 +32,12 @@
   margin: 20px 0 10px;
   font-size: 24px;
   line-height: 30px;
-  font-weight: 500;
+  font-weight: 400;
   color: #111;
 }
 .login-page .login-card.plan-card .login-desc {
   margin: 0 0 28px;
-  font-weight: 600;
+  font-weight: 700;
   color: #6e6e73;
 }
 .login-page .login-card.plan-card .plan-body {
@@ -175,7 +175,7 @@
   border-radius: 6px;
   background-color: #007aff;
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -356,7 +356,7 @@
   margin: 14px 0 24px;
   font-size: 34px;
   line-height: 41px;
-  font-weight: 500;
+  font-weight: 400;
   color: #111;
 }
 .login-page .login-card.plan-card.plan-card--processing .login-desc, .login-page .login-card.plan-card.plan-card--done .login-desc {
@@ -516,7 +516,7 @@
 }
 .trial-welcome .trial-strip-link {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -529,7 +529,7 @@
 }
 .trial-welcome .trial-heading {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 48px;
   line-height: 56px;
   letter-spacing: 0;

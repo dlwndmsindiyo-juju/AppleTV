@@ -41,14 +41,14 @@
 }
 .member-home .member-desc.small {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
 }
 .member-home .member-more {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -136,7 +136,7 @@
 }
 .member-home .member-card-meta {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -151,7 +151,7 @@
 }
 .member-home .member-card-link {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -200,7 +200,7 @@
   background-color: #FFFFFF;
   border-color: #FFFFFF;
   color: #171717;
-  font-weight: 600;
+  font-weight: 700;
 }
 .member-home .member-btn.filled:hover {
   background-color: #E0E0E0;
@@ -263,7 +263,7 @@
 }
 .member-home .member-wish-name {
   font-family: "SF Pro", sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
@@ -280,7 +280,7 @@
 }
 .member-home .member-chip {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -299,7 +299,7 @@
 .member-home .member-chip.active {
   background-color: #f5f5f5;
   color: #171717;
-  font-weight: 600;
+  font-weight: 700;
 }
 .member-home .member-notice {
   display: flex;
@@ -313,7 +313,7 @@
 }
 .member-home .member-notice p {
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -324,7 +324,7 @@
   margin-top: 0;
   height: 32px;
   font-family: "SF Pro", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
@@ -470,7 +470,7 @@
 .member-home .member-slider .swiper-button-prev::after,
 .member-home .member-slider .swiper-button-next::after {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 700;
 }
 .member-home .member-slider .swiper-button-prev:hover,
 .member-home .member-slider .swiper-button-next:hover {

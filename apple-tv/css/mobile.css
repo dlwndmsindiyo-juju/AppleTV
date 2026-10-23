@@ -23,7 +23,7 @@
   }
   header .inner nav .gnb-right ul .header-login-btn {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -100,7 +100,7 @@
   }
   .upcoming-section .upcoming-movie-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: 0;
@@ -110,7 +110,7 @@
     padding: 0 14px;
     margin-top: 4px;
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -168,7 +168,7 @@
   }
   main.member-home .member-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 48px;
     line-height: 56px;
     letter-spacing: 0;
@@ -177,7 +177,7 @@
   }
   main.member-home .member-desc {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -226,7 +226,7 @@
   }
   main.member-home .member-mood .member-card-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: 0;
@@ -240,7 +240,7 @@
   }
   main.member-home .member-recommend .member-card-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: 0;
@@ -358,7 +358,7 @@
   }
   .movie-detail-page .player-box .original-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -381,14 +381,14 @@
   }
   .movie-detail-page .rating-section .rating-header h3 {
     font-family: "SF Pro", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: 0;
   }
   .movie-detail-page .rating-section .rating-desc {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -412,7 +412,7 @@
   }
   .movie-detail-page .right-section .season-label {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -451,7 +451,7 @@
   }
   .sport-teams-page .sport-teams-page-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 34px;
     line-height: 41px;
     letter-spacing: 0;
@@ -482,7 +482,7 @@
   }
   .sport-team-card .sport-team-name {
     font-family: "SF Pro", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: 0;
@@ -508,7 +508,7 @@
   }
   .sport-team-filter button {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -538,7 +538,7 @@
   .sport-teams .sport-teams-desc,
   .sport-teams .sport-teams-count {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -548,7 +548,7 @@
   }
   .sport-teams .sport-team-more {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -572,7 +572,7 @@
   }
   .sport-teams-page .sport-teams-page-desc {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -588,7 +588,7 @@
   }
   .sport-teams-page .sport-team-group-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: 0;
@@ -602,7 +602,7 @@
 @media (max-width: 1024px) {
   .promo-banner.is-live .live-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: 0;
@@ -652,7 +652,7 @@
   }
   .promo-banner.is-live .promo-banner-btn {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -687,7 +687,7 @@
     font-size: 28px;
     line-height: 34px;
     letter-spacing: 0;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 16px;
   }
   .device-guide .device-guide-list {
@@ -712,12 +712,12 @@
     font-size: 22px;
     line-height: 28px;
     letter-spacing: 0;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 12px;
   }
   .device-guide .device-guide-sub {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -737,7 +737,7 @@
   }
   .device-guide .device-guide-link {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -753,7 +753,7 @@
   }
   .ecosystem-page .ecosystem-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 34px;
     line-height: 41px;
     letter-spacing: 0;
@@ -798,7 +798,7 @@
   .ecosystem-page .ecosystem-lead,
   .ecosystem-page .ecosystem-desc {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -813,7 +813,7 @@
     font-size: 28px;
     line-height: 34px;
     letter-spacing: 0;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 8px;
   }
   .ecosystem-page .ecosystem-card-category {
@@ -839,7 +839,7 @@
   .ecosystem-page .ecosystem-row dt,
   .ecosystem-page .ecosystem-row dd {
     font-family: "SF Pro", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
@@ -850,7 +850,7 @@
   }
   .ecosystem-page .ecosystem-footer-title {
     font-family: "SF Pro", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: 0;
@@ -925,7 +925,7 @@
     line-height: 20px;
     letter-spacing: 0;
     margin: 0 0 24px;
-    font-weight: 600;
+    font-weight: 700;
     color: #525252;
     word-break: keep-all;
   }
@@ -1076,7 +1076,7 @@
     margin: 20px 0 12px;
     font-size: 24px;
     line-height: 30px;
-    font-weight: 500;
+    font-weight: 400;
   }
   .login-page.login-page .login-card.plan-card.plan-card--processing .login-desc, .login-page.login-page .login-card.plan-card.plan-card--done .login-desc {
     font-family: "SF Pro", sans-serif;
@@ -1112,7 +1112,7 @@
   }
   .login-page.login-page .login-card.plan-card .plan-option .plan-name {
     font-family: "SF Pro", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 17px;
     line-height: 22px;
     letter-spacing: 0;

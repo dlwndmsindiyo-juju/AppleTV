@@ -115,7 +115,7 @@ $input-focus-bg: #2e2e2e;
 
 // ---------- Font weight ----------
 $font-weight-regular: 400; // Regular
-$font-weight-bold: 700;    // Bold (B 스타일)
+$font-weight-bold: 700; // Bold (B 스타일)
 
 $font-family-base: "SF Pro", sans-serif;
 
@@ -129,46 +129,145 @@ $font-family-base: "SF Pro", sans-serif;
 }
 
 // ---------- Display ----------
-@mixin display-xl { @include type-style(76px, 96px); }                      // 대형 히어로 타이틀
-@mixin display-xl-b { @include type-style(76px, 96px, $font-weight-bold); }
-@mixin display-l { @include type-style(34px, 41px); }                       // 메인 타이틀
-@mixin display-l-b { @include type-style(34px, 41px, $font-weight-bold); }
-@mixin display-M { @include type-style(28px, 34px); }                       // 주요 섹션 강조
-@mixin display-M-b { @include type-style(28px, 34px, $font-weight-bold); }
+@mixin display-xl {
+  @include type-style(76px, 96px);
+}
+
+// 대형 히어로 타이틀
+@mixin display-xl-b {
+  @include type-style(76px, 96px, $font-weight-bold);
+}
+
+@mixin display-l {
+  @include type-style(34px, 41px);
+}
+
+// 메인 타이틀
+@mixin display-l-b {
+  @include type-style(34px, 41px, $font-weight-bold);
+}
+
+@mixin display-M {
+  @include type-style(28px, 34px);
+}
+
+// 주요 섹션 강조
+@mixin display-M-b {
+  @include type-style(28px, 34px, $font-weight-bold);
+}
 
 // ---------- Heading ----------
-@mixin heading-h1 { @include type-style(48px, 56px); }                      // 페이지 제목
-@mixin heading-h1-b { @include type-style(48px, 56px, $font-weight-bold); }
-@mixin heading-h2 { @include type-style(22px, 28px); }                      // 섹션 헤더
-@mixin heading-h2-b { @include type-style(22px, 28px, $font-weight-bold); }
-@mixin heading-h3 { @include type-style(20px, 25px); }                      // 콘텐츠 그룹 제목
-@mixin heading-h3-b { @include type-style(20px, 25px, $font-weight-bold); }
-@mixin heading-h4 { @include type-style(17px, 22px); }                      // 카드 및 모듈 제목
-@mixin heading-h4-b { @include type-style(17px, 22px, $font-weight-bold); }
-@mixin heading-h5 { @include type-style(16px, 21px); }                      // 보조 헤딩
-@mixin heading-h5-b { @include type-style(16px, 21px, $font-weight-bold); }
+@mixin heading-h1 {
+  @include type-style(48px, 56px);
+}
+
+// 페이지 제목
+@mixin heading-h1-b {
+  @include type-style(48px, 56px, $font-weight-bold);
+}
+
+@mixin heading-h2 {
+  @include type-style(22px, 28px);
+}
+
+// 섹션 헤더
+@mixin heading-h2-b {
+  @include type-style(22px, 28px, $font-weight-bold);
+}
+
+@mixin heading-h3 {
+  @include type-style(20px, 25px);
+}
+
+// 콘텐츠 그룹 제목
+@mixin heading-h3-b {
+  @include type-style(20px, 25px, $font-weight-bold);
+}
+
+@mixin heading-h4 {
+  @include type-style(17px, 22px);
+}
+
+// 카드 및 모듈 제목
+@mixin heading-h4-b {
+  @include type-style(17px, 22px, $font-weight-bold);
+}
+
+@mixin heading-h5 {
+  @include type-style(16px, 21px);
+}
+
+// 보조 헤딩
+@mixin heading-h5-b {
+  @include type-style(16px, 21px, $font-weight-bold);
+}
 
 // ---------- Body ----------
-@mixin body-large { @include type-style(17px, 22px); }                      // 소개 및 설명
-@mixin body-large-b { @include type-style(17px, 22px, $font-weight-bold); }
-@mixin body-default { @include type-style(15px, 20px); }                    // 기본 본문
-@mixin body-default-b { @include type-style(15px, 20px, $font-weight-bold); }
-@mixin body-small { @include type-style(13px, 18px); }                      // 보조 설명
-@mixin body-small-b { @include type-style(13px, 18px, $font-weight-bold); }
+@mixin body-large {
+  @include type-style(17px, 22px);
+}
+
+// 소개 및 설명
+@mixin body-large-b {
+  @include type-style(17px, 22px, $font-weight-bold);
+}
+
+@mixin body-default {
+  @include type-style(15px, 20px);
+}
+
+// 기본 본문
+@mixin body-default-b {
+  @include type-style(15px, 20px, $font-weight-bold);
+}
+
+@mixin body-small {
+  @include type-style(13px, 18px);
+}
+
+// 보조 설명
+@mixin body-small-b {
+  @include type-style(13px, 18px, $font-weight-bold);
+}
 
 // ---------- Label ----------
-@mixin label-default { @include type-style(12px, 16px); }                   // 버튼 및 상태
-@mixin label-default-b { @include type-style(12px, 16px, $font-weight-bold); }
+@mixin label-default {
+  @include type-style(12px, 16px);
+}
+
+// 버튼 및 상태
+@mixin label-default-b {
+  @include type-style(12px, 16px, $font-weight-bold);
+}
 
 // ---------- Caption ----------
-@mixin caption-default { @include type-style(11px, 13px); }                 // 주석 및 부가정보
-@mixin caption-default-b { @include type-style(11px, 13px, $font-weight-bold); }
-@mixin caption-small { @include type-style(9px, normal); }                  // 작은 캡션 (행간 Auto)
-@mixin caption-small-b { @include type-style(9px, normal, $font-weight-bold); }
+@mixin caption-default {
+  @include type-style(11px, 13px);
+}
+
+// 주석 및 부가정보
+@mixin caption-default-b {
+  @include type-style(11px, 13px, $font-weight-bold);
+}
+
+@mixin caption-small {
+  @include type-style(9px, normal);
+}
+
+// 작은 캡션 (행간 Auto)
+@mixin caption-small-b {
+  @include type-style(9px, normal, $font-weight-bold);
+}
 
 // ---------- TV 1920 ----------
-@mixin tv-control { @include type-style(20px, 125px); }                     // TV 컨트롤
-@mixin tv-control-b { @include type-style(20px, 125px, $font-weight-bold); }
+@mixin tv-control {
+  @include type-style(20px, 125px);
+}
+
+// TV 컨트롤
+@mixin tv-control-b {
+  @include type-style(20px, 125px, $font-weight-bold);
+}
 
 // 반응형 브레이크포인트
 $breakpoint-tablet: 1024px; // 태블릿 시안 1024 (이하 적용)
