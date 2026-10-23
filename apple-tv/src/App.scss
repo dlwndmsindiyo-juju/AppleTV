@@ -92,7 +92,7 @@ header {
           height: 100%;
           border-radius: 9999px;
           pointer-events: none;
-          background-color: $light-color-0; // Apple TV 선택 색상
+          background-color: $primary-color-500; // Apple TV 선택 색상 (프라이머리)
 
           &.sport {
             background-color: $sports-color; // Sport 선택 색상
@@ -126,9 +126,9 @@ header {
             color: $neutral-color-300;
           }
 
-          // 선택된 버튼: 텍스트는 항상 $dark-color-900
+          // 선택된 버튼: 텍스트는 흰색 $light-color-0 (Apple TV · Sport 공통)
           &.active {
-            color: $dark-color-900;
+            color: $light-color-0;
             font-weight: $font-weight-bold; // 굵기 변화로 폭이 흔들리지 않게 고정
           }
         }
@@ -2173,8 +2173,8 @@ header {
 
 // ===== 기기 안내 (좌우 2단, 기존 다크 톤 유지) =====
 .device-guide {
-  background-color: $gnb-bg;
-  padding: 80px 0;
+  background-color: $dark-color-400;
+  padding: 30px 0;
 
   .inner {
     @include inner-wrap;
@@ -4218,43 +4218,6 @@ main.sport-home {
     }
   }
 
-  // ---------- 기기 안내 (에코시스템): 회색 박스 ----------
-  .device-guide {
-    .inner {
-      padding-left: $desktop-gutter;
-      padding-right: $desktop-gutter;
-    }
-
-    .device-guide-card {
-      max-width: none;
-      align-items: center;
-      background-color: $dark-color-400;
-      border-radius: $radius-sm;
-    }
-
-    .device-guide-title {
-      margin-bottom: $space-lg;
-    }
-
-    .device-guide-sub {
-      @include body-default;
-      color: $light-color-500;
-    }
-
-    .device-guide-list {
-      margin-bottom: $space-xl;
-
-      li {
-        @include body-default;
-        color: $light-color-0;
-      }
-    }
-
-    .device-guide-link {
-      @include body-small;
-      color: $primary-color-400;
-    }
-  }
 }
 
 // =====================================================================
@@ -4285,4 +4248,16 @@ main.sport-home {
 
 .swiper-button-next {
   background-image: url("/icons/nav/right-nav.svg") !important;
+}
+
+// =====================================================================
+// [추가] 기기 안내 (에코시스템) 영역 배경 — 모든 화면 크기 공통
+// - 카드에는 색을 넣지 않고, 섹션(영역) 자체에 회색 배경을 깔아 헤더처럼 화면 전체 폭으로 표시
+// =====================================================================
+section.device-guide {
+  background-color: $dark-color-400;
+
+  .device-guide-card {
+    background-color: transparent;
+  }
 }

@@ -79,7 +79,7 @@ header .inner nav .gnb-center-toggle .toggle-indicator {
   height: 100%;
   border-radius: 9999px;
   pointer-events: none;
-  background-color: #FFFFFF;
+  background-color: #5865F2;
 }
 header .inner nav .gnb-center-toggle .toggle-indicator.sport {
   background-color: #E91E1B;
@@ -106,7 +106,7 @@ header .inner nav .gnb-center-toggle button:hover {
   color: #D4D4D4;
 }
 header .inner nav .gnb-center-toggle button.active {
-  color: #171717;
+  color: #FFFFFF;
   font-weight: 700;
 }
 header .inner nav .gnb-center-toggle .toggle-indicator.sport ~ button.active {
@@ -2074,8 +2074,8 @@ header .inner nav .gnb-right ul .profile-box span a img {
 }
 
 .device-guide {
-  background-color: #141414;
-  padding: 80px 0;
+  background-color: #2E2E2E;
+  padding: 30px 0;
 }
 .device-guide .inner {
   width: 100%;
@@ -4116,46 +4116,6 @@ main.sport-home .sport-series-card h4 {
     letter-spacing: 0;
     margin: 0 0 24px;
   }
-  .device-guide .inner {
-    padding-left: 12.5%;
-    padding-right: 12.5%;
-  }
-  .device-guide .device-guide-card {
-    max-width: none;
-    align-items: center;
-    background-color: #2E2E2E;
-    border-radius: 10px;
-  }
-  .device-guide .device-guide-title {
-    margin-bottom: 16px;
-  }
-  .device-guide .device-guide-sub {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    color: #C8C8C8;
-  }
-  .device-guide .device-guide-list {
-    margin-bottom: 24px;
-  }
-  .device-guide .device-guide-list li {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    color: #FFFFFF;
-  }
-  .device-guide .device-guide-link {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    color: #6E7AF4;
-  }
 }
 .swiper-button-prev,
 .swiper-button-next {
@@ -4179,4 +4139,11 @@ main.sport-home .sport-series-card h4 {
 
 .swiper-button-next {
   background-image: url("/icons/nav/right-nav.svg") !important;
+}
+
+section.device-guide {
+  background-color: #2E2E2E;
+}
+section.device-guide .device-guide-card {
+  background-color: transparent;
 }

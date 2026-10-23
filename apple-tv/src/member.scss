@@ -8,6 +8,7 @@
 $mobile-edge: 20px;
 
 .member-home {
+
   // ---------- 섹션 공통 ----------
   .member-section {
     background-color: $gnb-bg;
@@ -159,6 +160,7 @@ $mobile-edge: 20px;
 
   .member-clamp {
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -446,6 +448,7 @@ $mobile-edge: 20px;
     .member-continue,
     .member-recommend,
     .member-mood {
+
       .member-head,
       .member-chips,
       .member-notice {
@@ -509,6 +512,7 @@ $mobile-edge: 20px;
 // - 슬라이드가 모자라 Swiper 가 버튼을 숨기려 해도(lock) 항상 보이게 함
 // =====================================================================
 .member-home {
+
   // 썸네일 중앙 높이쯤에 오도록 슬라이드별로 위치 조정
   .rail-continue {
     --nav-top: 30%;
@@ -565,6 +569,7 @@ $mobile-edge: 20px;
 
 @media (max-width: $breakpoint-tablet) {
   .member-home {
+
     // 태블릿 기분별 추천은 가로형 카드라 버튼 위치가 더 위쪽
     .rail-mood {
       --nav-top: 30%;
@@ -586,28 +591,27 @@ $mobile-edge: 20px;
 // - 1025px 이상에서만 적용 (태블릿 · 모바일 규칙은 그대로)
 // - 본문 시작선 좌우 12.5%(1920 기준 240 → 콘텐츠 1440), 섹션 사이 약 256
 // =====================================================================
-$member-section-space: $space-4xl * 2; // 128 (위아래 합쳐 섹션 사이 256)
+$member-section-space: $space-4xl * 2; // 128 (섹션 사이 간격)
 
-@media (min-width: $breakpoint-tablet + 1) {
+@media (min-width: ($breakpoint-tablet + 1)) {
   main.member-home {
+
     // ---------- 섹션 공통 ----------
     .member-section,
     .member-section.band,
-    .top10-section,
-    .device-guide {
+    .top10-section {
       background-color: $dark-color-900;
-      padding: $member-section-space 0 0;
+      // 위아래 64 씩 → 섹션 사이 128 (마지막 섹션 아래도 64 띄우고 기기 안내로 이어짐)
+      padding: $space-4xl 0;
     }
+
+    // 기기 안내(DeviceGuide)는 로그인 전 홈과 똑같이 App.scss / mobile.scss 스타일만 사용 (여기서 덮어쓰지 않음)
 
     // 히어로 · 핵심 혜택 바로 아래 첫 섹션은 조금 더 띄움
     .member-continue {
       padding-top: $member-section-space + $space-2xl;
     }
 
-    // 마지막(기기 안내) 아래 → 푸터
-    .device-guide {
-      padding-bottom: $member-section-space;
-    }
 
     .member-section .inner {
       padding-left: $desktop-gutter;
@@ -823,6 +827,7 @@ $member-section-space: $space-4xl * 2; // 128 (위아래 합쳐 섹션 사이 25
 
     // 네비게이터: 시안 아이콘(App.scss) + 어두운 원
     .member-slider {
+
       .swiper-button-prev,
       .swiper-button-next {
         background-size: 100% 100% !important;
