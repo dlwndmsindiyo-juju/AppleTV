@@ -2088,6 +2088,7 @@ header .inner nav .gnb-right ul .profile-box span a img {
 .device-guide .device-guide-card {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+  gap: 64px;
   align-items: start;
   max-width: 1440px;
   margin: 0 auto;
@@ -4123,7 +4124,7 @@ main.sport-home .sport-series-card h4 {
     max-width: none;
     align-items: center;
     background-color: #2E2E2E;
-    border-radius: 20px;
+    border-radius: 10px;
   }
   .device-guide .device-guide-title {
     margin-bottom: 16px;

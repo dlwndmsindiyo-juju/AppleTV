@@ -2184,6 +2184,7 @@ header {
   .device-guide-card {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+    gap: 64px;
     align-items: start;
     max-width: 1440px;
     margin: 0 auto;
@@ -4228,7 +4229,7 @@ main.sport-home {
       max-width: none;
       align-items: center;
       background-color: $dark-color-400;
-      border-radius: $radius-card;
+      border-radius: $radius-sm;
     }
 
     .device-guide-title {
