@@ -23,59 +23,206 @@ main.sport-home {
   color: $text-primary;
   font-family: "Sport SF Pro", "SF Pro", system-ui, sans-serif;
 
-  &, * { font-family: "Sport SF Pro", "SF Pro", system-ui, sans-serif; }
-  > section:not(.subscribe-cta):not(.device-guide) { background-color: transparent; }
-  > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
+  &,
+  * {
+    font-family: "Sport SF Pro", "SF Pro", system-ui, sans-serif;
+  }
+
+  >section:not(.subscribe-cta):not(.device-guide) {
+    background-color: transparent;
+  }
+
+  >section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide)>.inner {
     width: 75%;
     max-width: var(--sport-content-width);
     padding: 0;
   }
 
-  .sport-section-head { margin-bottom: 24px; gap: 16px; }
-  .sport-section-title, .sport-teams-title { @include heading-h2; font-weight: 600; }
-  .sport-more, .sport-teams-desc { @include body-default; }
-  .sport-section-title, .sport-teams-title, .sport-more, .sport-teams-desc,
-  .sport-hero-label, .sport-hero-title, .sport-hero-sub, .sport-btn,
-  .sport-short-title, .sport-short-meta, .sport-highlight-title, .sport-highlight-meta,
-  .sport-replay-name, .sport-replay-date, .sport-series-card, .sport-team-name {
+  .sport-section-head {
+    margin-bottom: 24px;
+    gap: 16px;
+  }
+
+  .sport-section-title,
+  .sport-teams-title {
+    @include heading-h2;
+    font-weight: $font-weight-bold;
+  }
+
+  .sport-more,
+  .sport-teams-desc {
+    @include body-default;
+  }
+
+  .sport-section-title,
+  .sport-teams-title,
+  .sport-more,
+  .sport-teams-desc,
+  .sport-hero-label,
+  .sport-hero-title,
+  .sport-hero-sub,
+  .sport-btn,
+  .sport-short-title,
+  .sport-short-meta,
+  .sport-highlight-title,
+  .sport-highlight-meta,
+  .sport-replay-name,
+  .sport-replay-date,
+  .sport-series-card,
+  .sport-team-name {
     font-family: inherit;
     letter-spacing: 0;
   }
 
-  .sport-live-slide { width: clamp(280px, 20.1vw, 386px); max-width: 90%; }
-  .sport-live-card { aspect-ratio: 3 / 2; border-radius: $radius-card; }
-  .sport-live-badge { background: $sports-color; }
-  .sport-live-badge, .sport-live-watch { @include label-default; font-family: inherit; }
-  .sport-live-time { position: absolute; z-index: 1; right: 14px; bottom: 14px; padding: 5px 12px; border-radius: 3px; background: rgba(0, 0, 0, .6); color: $text-primary; @include label-default; font-family: inherit; }
+  .sport-live-slide {
+    width: clamp(280px, 20.1vw, 386px);
+    max-width: 90%;
+  }
+
+  .sport-live-card {
+    aspect-ratio: 3 / 2;
+    border-radius: $radius-card;
+  }
+
+  .sport-live-badge {
+    background: $sports-color;
+  }
+
+  .sport-live-badge,
+  .sport-live-watch {
+    @include label-default;
+    font-family: inherit;
+  }
+
+  .sport-live-time {
+    position: absolute;
+    z-index: 1;
+    right: 14px;
+    bottom: 14px;
+    padding: 5px 12px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, .6);
+    color: $text-primary;
+    @include label-default;
+    font-family: inherit;
+  }
 
 
-  .sport-short-slide, .sport-series-slide { width: clamp(190px, 14.58vw, 280px); max-width: 85%; }
-  .sport-short-thumb { aspect-ratio: 280 / 304; }
-  .sport-short-play { width: 96px; height: 96px; font-size: 32px; }
-  .sport-short-title, .sport-highlight-title, .sport-series-card h4 { @include heading-h4; font-family: inherit; margin: 12px 0 6px; }
-  .sport-short-meta, .sport-highlight-meta, .sport-series-description { @include body-small; font-family: inherit; color: $neutral-color-400; }
-  .sport-short-meta { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .sport-short-slide,
+  .sport-series-slide {
+    width: clamp(190px, 14.58vw, 280px);
+    max-width: 85%;
+  }
+
+  .sport-short-thumb {
+    aspect-ratio: 280 / 304;
+  }
+
+  .sport-short-play {
+    width: 96px;
+    height: 96px;
+    font-size: 32px;
+  }
+
+  .sport-short-title,
+  .sport-highlight-title,
+  .sport-series-card h4 {
+    @include heading-h4-b;
+    font-family: inherit;
+    margin: 12px 0 6px;
+  }
+
+  .sport-short-meta,
+  .sport-highlight-meta,
+  .sport-series-description {
+    @include body-small;
+    font-family: inherit;
+    color: $neutral-color-400;
+  }
+
+  .sport-short-meta {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 
   // 관심있는 구단: 그라데이션 띠 안쪽 여백을 넉넉하게 (위아래 96 / 좌우 104)
-  > section.sport-teams { margin: 0; padding: 96px 0 88px; }
+  >section.sport-teams {
+    margin: 0;
+    padding: 96px 0 88px;
+  }
+
   .sport-teams {
-    .inner { max-width: $inner-width; padding: 0 104px; position: relative; }
-    .sport-teams-head { margin-bottom: 40px; }
-    .sport-teams-title { margin-bottom: 12px; }
-    .sport-team-filter, .sport-teams-count { display: none; }
-    .sport-team-slide { width: calc((100% - 108px) / 4); min-width: 260px; }
-    .sport-team-card { padding: 20px; gap: 16px; height: 108px; background: $dark-color-800; }
-    .sport-team-logo { width: 64px; height: 64px; }
-    .sport-team-name { @include body-default; font-family: inherit; }
-    .sport-team-more { margin: 40px 0 0 auto; height: auto; padding: 0; border: 0; background: transparent; @include body-small; font-family: inherit; }
+    .inner {
+      max-width: $inner-width;
+      padding: 0 104px;
+      position: relative;
+    }
+
+    .sport-teams-head {
+      margin-bottom: 40px;
+    }
+
+    .sport-teams-title {
+      margin-bottom: 12px;
+    }
+
+    .sport-team-filter,
+    .sport-teams-count {
+      display: none;
+    }
+
+    .sport-team-slide {
+      width: calc((100% - 108px) / 4);
+      min-width: 260px;
+    }
+
+    .sport-team-card {
+      padding: 20px;
+      gap: 16px;
+      height: 108px;
+      background: $dark-color-800;
+    }
+
+    .sport-team-logo {
+      width: 64px;
+      height: 64px;
+    }
+
+    .sport-team-name {
+      @include body-default;
+      font-family: inherit;
+    }
+
+    .sport-team-more {
+      margin: 40px 0 0 auto;
+      height: auto;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      @include body-small;
+      font-family: inherit;
+    }
   }
 
   // ---------- 리그 순위 (MLS 동부 / 서부 컨퍼런스) ----------
   .sport-conferences {
     padding: 0;
-    > .inner { width: 75%; max-width: var(--sport-content-width); padding: 0; }
+
+    >.inner {
+      width: 75%;
+      max-width: var(--sport-content-width);
+      padding: 0;
+    }
   }
-  .sport-conference-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sport-card-gap); }
+
+  .sport-conference-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sport-card-gap);
+  }
 
   // 밝은 카드
   .sport-conference-card {
@@ -94,10 +241,17 @@ main.sport-home {
     margin: 0 0 20px;
     @include body-default;
     font-family: inherit;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     color: $dark-color-900;
   }
-  .sport-conference-logo { width: 32px; height: 40px; object-fit: contain; display: block; }
+
+  .sport-conference-logo {
+    width: 32px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+  }
+
   // 로고 이미지가 없을 때 쓰는 방패 모양 배지
   .sport-conference-badge {
     display: grid;
@@ -110,10 +264,12 @@ main.sport-home {
     color: $light-color-0;
     @include caption-default;
     font-family: inherit;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
   }
 
-  .sport-conference-scroll { overflow-x: auto; }
+  .sport-conference-scroll {
+    overflow-x: auto;
+  }
 
   .sport-conference-table {
     width: 100%;
@@ -121,30 +277,57 @@ main.sport-home {
     table-layout: fixed;
     color: $dark-color-900;
 
-    .col-rank { width: 10%; }
-    .col-club { width: 35%; }
-    .col-stat { width: 11%; }
+    .col-rank {
+      width: 10%;
+    }
 
-    th, td { height: 34px; padding: 0 4px; text-align: center; box-sizing: border-box; }
+    .col-club {
+      width: 35%;
+    }
+
+    .col-stat {
+      width: 11%;
+    }
+
+    th,
+    td {
+      height: 34px;
+      padding: 0 4px;
+      text-align: center;
+      box-sizing: border-box;
+    }
 
     // 머리글: 클럽 경기 승 무 패 승점
     thead th {
       height: 40px;
       @include label-default;
       font-family: inherit;
-      font-weight: 600;
+      font-weight: $font-weight-bold;
       color: $dark-color-900;
     }
-    thead th:nth-child(2) { text-align: center; }
 
-    tbody td, tbody th {
+    thead th:nth-child(2) {
+      text-align: center;
+    }
+
+    tbody td,
+    tbody th {
       @include body-small;
       font-family: inherit;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
     }
-    tbody th { text-align: left; }
-    .rank { font-weight: 700; }
-    .points { font-weight: 700; }
+
+    tbody th {
+      text-align: left;
+    }
+
+    .rank {
+      font-weight: $font-weight-bold;
+    }
+
+    .points {
+      font-weight: $font-weight-bold;
+    }
   }
 
   .sport-conference-club {
@@ -152,36 +335,140 @@ main.sport-home {
     align-items: center;
     gap: 10px;
     min-width: 0;
-    img { width: 22px; height: 22px; flex-shrink: 0; border-radius: 4px; object-fit: cover; }
-    span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; @include label-default; font-family: inherit; font-weight: 600; }
+
+    img {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      @include label-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
   }
 
-  .sport-conference-empty { height: 170px; color: $neutral-color-600; @include body-small; font-family: inherit; font-weight: 400; }
-  .sport-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .sport-conference-empty {
+    height: 170px;
+    color: $neutral-color-600;
+    @include body-small;
+    font-family: inherit;
+    font-weight: $font-weight-regular;
+  }
 
-  .sport-replay-list { display: flex; gap: var(--sport-card-gap); overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
-  .sport-replay-list > li { flex: 0 0 clamp(280px, 20.1vw, 386px); max-width: 90%; scroll-snap-align: start; }
-  .sport-replay-card { padding: 16px; gap: 8px; background: $dark-color-500; }
-  .sport-replay-thumb { aspect-ratio: 16 / 9; }
-  .sport-replay-name { @include heading-h4; font-family: inherit; }
-  .sport-replay-date { @include body-small; font-family: inherit; margin: 0; }
+  .sport-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .sport-replay-list {
+    display: flex;
+    gap: var(--sport-card-gap);
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .sport-replay-list>li {
+    flex: 0 0 clamp(280px, 20.1vw, 386px);
+    max-width: 90%;
+    scroll-snap-align: start;
+  }
+
+  .sport-replay-card {
+    padding: 16px;
+    gap: 8px;
+    background: $dark-color-500;
+  }
+
+  .sport-replay-thumb {
+    aspect-ratio: 16 / 9;
+  }
+
+  .sport-replay-name {
+    @include heading-h4-b;
+    font-family: inherit;
+  }
+
+  .sport-replay-date {
+    @include body-small;
+    font-family: inherit;
+    margin: 0;
+  }
+
   // 하이라이트: 가로 스크롤 대신 4칸 그리드 (카드 폭 · 썸네일 비율 · 글 높이를 모두 맞춤)
-  .sport-highlight-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sport-card-gap); overflow: visible; padding-bottom: 0; }
-  .sport-highlight-list > li { min-width: 0; }
-  .sport-highlight-card { height: 100%; }
-  .sport-highlight-thumb { width: 100%; aspect-ratio: 16 / 9; }
-  .sport-highlight-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .sport-highlight-title, .sport-highlight-meta { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .sport-highlight-play { background: rgba(0, 0, 0, .6); }
+  .sport-highlight-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sport-card-gap);
+    overflow: visible;
+    padding-bottom: 0;
+  }
+
+  .sport-highlight-list>li {
+    min-width: 0;
+  }
+
+  .sport-highlight-card {
+    height: 100%;
+  }
+
+  .sport-highlight-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .sport-highlight-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sport-highlight-title,
+  .sport-highlight-meta {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sport-highlight-play {
+    background: rgba(0, 0, 0, .6);
+  }
+
   // ---------- 추천 시리즈 (카드 슬라이드) ----------
   .sport-series-card {
     display: flex;
     flex-direction: column;
     color: $text-primary;
     cursor: pointer;
-    h4 { padding: 0; margin: 4px 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    &:hover .sport-series-thumb img { transform: scale(1.04); }
+
+    h4 {
+      padding: 0;
+      margin: 4px 0 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:hover .sport-series-thumb img {
+      transform: scale(1.04);
+    }
   }
+
   .sport-series-thumb {
     position: relative;
     width: 100%;
@@ -190,8 +477,19 @@ main.sport-home {
     overflow: hidden;
     background: $dark-color-500;
     margin-bottom: 12px;
-    img, .sport-series-placeholder { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; display: block; border-radius: 0; transition: transform 0.4s ease; }
+
+    img,
+    .sport-series-placeholder {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      object-fit: cover;
+      display: block;
+      border-radius: 0;
+      transition: transform 0.4s ease;
+    }
   }
+
   // 재생 버튼: 하이라이트(.sport-highlight-play)와 같은 가운데 원형 버튼 (항상 표시)
   .sport-series-play {
     position: absolute;
@@ -212,101 +510,385 @@ main.sport-home {
     text-shadow: none;
     pointer-events: none;
   }
-  .sport-series-category { @include label-default; font-family: inherit; font-weight: 600; color: $sports-color; }
-  .sport-series-description { margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .sport-series-category {
+    @include label-default;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+    color: $sports-color;
+  }
+
+  .sport-series-description {
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 
   // ---------- 태블릿 (로그인 전 / 후 동일) ----------
   @media (max-width: $breakpoint-tablet) {
-    > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner { width: calc(100% - 80px); }
-    > section.sport-teams { padding: 72px 0 64px; }
-    .sport-teams .inner { padding: 0 40px; }
-    .sport-teams .sport-teams-head { margin-bottom: 32px; }
-    .sport-teams .sport-team-slide { width: 300px; min-width: 0; }
-    .sport-conferences > .inner { width: calc(100% - 80px); }
-    .sport-conference-grid { grid-template-columns: 1fr; }
-    .sport-conference-card { padding: 20px 24px 24px; }
-    .sport-highlight-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    >section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide)>.inner {
+      width: calc(100% - 80px);
+    }
+
+    >section.sport-teams {
+      padding: 72px 0 64px;
+    }
+
+    .sport-teams .inner {
+      padding: 0 40px;
+    }
+
+    .sport-teams .sport-teams-head {
+      margin-bottom: 32px;
+    }
+
+    .sport-teams .sport-team-slide {
+      width: 300px;
+      min-width: 0;
+    }
+
+    .sport-conferences>.inner {
+      width: calc(100% - 80px);
+    }
+
+    .sport-conference-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sport-conference-card {
+      padding: 20px 24px 24px;
+    }
+
+    .sport-highlight-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     // 다시보기: 가로 스크롤 유지 (App.scss 태블릿 3칸 그리드 규칙 무시)
-    .sport-replay-list { display: flex; grid-template-columns: none; }
-    .sport-replay-list > li { flex-basis: 300px; }
-    .sport-live-slide, .sport-replay-list > li { max-width: 80%; }
+    .sport-replay-list {
+      display: flex;
+      grid-template-columns: none;
+    }
+
+    .sport-replay-list>li {
+      flex-basis: 300px;
+    }
+
+    .sport-live-slide,
+    .sport-replay-list>li {
+      max-width: 80%;
+    }
   }
+
   // ---------- 모바일 (로그인 전 / 후 동일) — 시안: 모바일 스포츠 홈 ----------
   @media (max-width: $breakpoint-mobile) {
 
-    > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner { width: calc(100% - 40px); padding: 0; }
+    >section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide)>.inner {
+      width: calc(100% - 40px);
+      padding: 0;
+    }
 
     // 섹션 머리: 큰 제목 + 오른쪽 '더보기 →'
-    .sport-section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-    .sport-section-title, .sport-teams-title { @include heading-h2; font-family: inherit; font-weight: 700; }
-    .sport-more { flex-shrink: 0; @include label-default; font-family: inherit; color: $light-color-500; }
+    .sport-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .sport-section-title,
+    .sport-teams-title {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-more {
+      flex-shrink: 0;
+      @include label-default;
+      font-family: inherit;
+      color: $light-color-500;
+    }
 
     // 라이브: 카드 1장 반
-    .sport-live-slide { width: 72%; max-width: none; }
+    .sport-live-slide {
+      width: 72%;
+      max-width: none;
+    }
 
     // 예정된 경기: 카드 1장 반 정도 (엠블럼이 잘 보이게)
-    .sport-upcoming-slide { width: 240px !important; }
-    .sport-match-card { width: 100%; height: 140px; padding: 14px; border-radius: $radius-card; }
-    .sport-match-card .sport-match-content { gap: 28px; }
-    .sport-match-card .sport-team { width: 64px; height: 64px; }
-    .sport-match-card .sport-match-divider { height: 56px; }
+    .sport-upcoming-slide {
+      width: 240px !important;
+    }
+
+    .sport-match-card {
+      width: 100%;
+      height: 140px;
+      padding: 14px;
+      border-radius: $radius-card;
+    }
+
+    .sport-match-card .sport-match-content {
+      gap: 28px;
+    }
+
+    .sport-match-card .sport-team {
+      width: 64px;
+      height: 64px;
+    }
+
+    .sport-match-card .sport-match-divider {
+      height: 56px;
+    }
 
     // 숏츠: 카드 2장 반
-    .sport-short-slide { width: 150px; max-width: none; }
-    .sport-short-play { width: 48px; height: 48px; font-size: 18px; }
-    .sport-short-title { @include body-small; font-family: inherit; font-weight: 600; margin: 8px 0 4px; }
-    .sport-short-meta { @include caption-default; font-family: inherit; }
+    .sport-short-slide {
+      width: 150px;
+      max-width: none;
+    }
+
+    .sport-short-play {
+      width: 48px;
+      height: 48px;
+      font-size: 18px;
+    }
+
+    .sport-short-title {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      margin: 8px 0 4px;
+    }
+
+    .sport-short-meta {
+      @include caption-default;
+      font-family: inherit;
+    }
 
     // 관심있는 구단: 세로 목록 3개 + 오른쪽 위 '더보기'
-    > section.sport-teams { padding: 48px 0 40px; }
-    .sport-teams .inner { padding: 0 20px; }
-    .sport-teams .sport-teams-head { margin-bottom: 20px; padding-right: 120px; }
-    .sport-teams .sport-teams-title { margin: 0; }
-    .sport-teams .sport-teams-desc { display: none; }
-    .sport-teams .sport-team-more { position: absolute; top: 4px; right: 20px; margin: 0; @include label-default; font-family: inherit; }
-    .sport-teams .sport-team-swiper .swiper-wrapper { display: flex; flex-direction: column; gap: 12px; transform: none !important; }
-    .sport-teams .sport-team-slide { width: 100% !important; min-width: 0; margin-right: 0 !important; }
-    .sport-teams .sport-team-slide:nth-child(n + 4) { display: none; }
-    .sport-teams .sport-team-card { height: 64px; padding: 0 16px 0 12px; gap: 12px; }
-    .sport-teams .sport-team-logo { width: 40px; height: 40px; border-radius: 8px; }
-    .sport-teams .sport-team-name { @include body-default; font-family: inherit; font-weight: 600; }
-    .sport-teams .sport-team-add { width: 32px; height: 32px; @include heading-h3; }
+    >section.sport-teams {
+      padding: 48px 0 40px;
+    }
+
+    .sport-teams .inner {
+      padding: 0 20px;
+    }
+
+    .sport-teams .sport-teams-head {
+      margin-bottom: 20px;
+      padding-right: 120px;
+    }
+
+    .sport-teams .sport-teams-title {
+      margin: 0;
+    }
+
+    .sport-teams .sport-teams-desc {
+      display: none;
+    }
+
+    .sport-teams .sport-team-more {
+      position: absolute;
+      top: 4px;
+      right: 20px;
+      margin: 0;
+      @include label-default;
+      font-family: inherit;
+    }
+
+    .sport-teams .sport-team-swiper .swiper-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transform: none !important;
+    }
+
+    .sport-teams .sport-team-slide {
+      width: 100% !important;
+      min-width: 0;
+      margin-right: 0 !important;
+    }
+
+    .sport-teams .sport-team-slide:nth-child(n + 4) {
+      display: none;
+    }
+
+    .sport-teams .sport-team-card {
+      height: 64px;
+      padding: 0 16px 0 12px;
+      gap: 12px;
+    }
+
+    .sport-teams .sport-team-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .sport-teams .sport-team-name {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-teams .sport-team-add {
+      width: 32px;
+      height: 32px;
+      @include heading-h3;
+    }
 
     // 리그 순위: 카드 세로 나열
-    .sport-conferences > .inner { width: calc(100% - 40px); }
-    .sport-conference-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-    .sport-conference-card { padding: 16px 12px; }
-    .sport-conference-title { margin-bottom: 8px; gap: 10px; @include label-default; font-family: inherit; font-weight: 600; }
-    .sport-conference-logo { width: 24px; height: 30px; }
-    .sport-conference-badge { width: 24px; height: 28px; }
+    .sport-conferences>.inner {
+      width: calc(100% - 40px);
+    }
+
+    .sport-conference-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .sport-conference-card {
+      padding: 16px 12px;
+    }
+
+    .sport-conference-title {
+      margin-bottom: 8px;
+      gap: 10px;
+      @include label-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-conference-logo {
+      width: 24px;
+      height: 30px;
+    }
+
+    .sport-conference-badge {
+      width: 24px;
+      height: 28px;
+    }
+
     .sport-conference-table {
       min-width: 0;
-      .col-rank { width: 9%; }
-      .col-club { width: 36%; }
-      th, td { height: 28px; padding: 0 2px; }
-      thead th { height: 32px; @include caption-default; font-family: inherit; font-weight: 600; }
-      tbody td, tbody th { @include label-default; font-family: inherit; font-weight: 700; }
+
+      .col-rank {
+        width: 9%;
+      }
+
+      .col-club {
+        width: 36%;
+      }
+
+      th,
+      td {
+        height: 28px;
+        padding: 0 2px;
+      }
+
+      thead th {
+        height: 32px;
+        @include caption-default;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      tbody td,
+      tbody th {
+        @include label-default;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
     }
-    .sport-conference-club { gap: 6px; img { width: 18px; height: 18px; } span { @include caption-default; font-family: inherit; font-weight: 600; } }
+
+    .sport-conference-club {
+      gap: 6px;
+
+      img {
+        width: 18px;
+        height: 18px;
+      }
+
+      span {
+        @include caption-default;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
 
     // 영상 다시보기: 카드 1장 + 다음 카드 살짝
-    .sport-replay-list { display: flex; grid-template-columns: none; gap: 12px; }
-    .sport-replay-list > li { flex: 0 0 72%; max-width: none; }
-    .sport-replay-card { padding: 12px; }
-    .sport-replay-name { @include body-default; font-family: inherit; font-weight: 600; }
+    .sport-replay-list {
+      display: flex;
+      grid-template-columns: none;
+      gap: 12px;
+    }
+
+    .sport-replay-list>li {
+      flex: 0 0 72%;
+      max-width: none;
+    }
+
+    .sport-replay-card {
+      padding: 12px;
+    }
+
+    .sport-replay-name {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
 
     // 하이라이트: 큰 카드 1장
-    .sport-highlight-list { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-    .sport-highlight-list > li:nth-child(n + 2) { display: none; }
-    .sport-highlight-title { @include heading-h4; font-family: inherit; margin: 12px 0 4px; }
-    .sport-highlight-meta { @include label-default; font-family: inherit; }
+    .sport-highlight-list {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .sport-highlight-list>li:nth-child(n + 2) {
+      display: none;
+    }
+
+    .sport-highlight-title {
+      @include heading-h4-b;
+      font-family: inherit;
+      margin: 12px 0 4px;
+    }
+
+    .sport-highlight-meta {
+      @include label-default;
+      font-family: inherit;
+    }
 
     // 추천 시리즈: 카드 2장 반
-    .sport-series-slide { width: 140px; max-width: none; }
-    .sport-series-card h4 { @include body-small; font-family: inherit; font-weight: 600; }
-    .sport-series-category { @include caption-default; font-family: inherit; font-weight: 600; }
-    .sport-series-description { @include caption-default; font-family: inherit; }
-    .sport-series-play { width: 36px; height: 36px; font-size: 12px; }
+    .sport-series-slide {
+      width: 140px;
+      max-width: none;
+    }
+
+    .sport-series-card h4 {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-series-category {
+      @include caption-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-series-description {
+      @include caption-default;
+      font-family: inherit;
+    }
+
+    .sport-series-play {
+      width: 36px;
+      height: 36px;
+      font-size: 12px;
+    }
   }
 }
 
@@ -322,19 +904,44 @@ main.sport-home.sport-home {
   padding-bottom: 118px;
 
   // 섹션 사이 간격 (히어로 다음 섹션부터)
-  > section + section { margin-top: var(--sport-section-gap); }
+  >section+section {
+    margin-top: var(--sport-section-gap);
+  }
 
   // 섹션 안쪽에 남아 있던 위아래 여백 제거 (관심있는 구단 띠 · 구독 CTA · 기기 안내 제외)
-  > section:not(.sport-teams):not(.subscribe-cta):not(.device-guide):not(.sport-hero) { padding-top: 0; padding-bottom: 0; }
-  > section.sport-league { padding: 0; }
+  >section:not(.sport-teams):not(.subscribe-cta):not(.device-guide):not(.sport-hero) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  >section.sport-league {
+    padding: 0;
+  }
 
   // 카드 목록 아래에 남던 여백 (가로 스크롤바 자리 · 슬라이더 여백) 제거
-  .sport-replay-list, .sport-highlight-list { padding-bottom: 0; margin-bottom: 0; }
-  .sport-replay-list { scrollbar-width: none; &::-webkit-scrollbar { display: none; } }
-  > section:not(.sport-hero) .swiper { margin-bottom: 0; padding-bottom: 0; }
+  .sport-replay-list,
+  .sport-highlight-list {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .sport-replay-list {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  >section:not(.sport-hero) .swiper {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 
   // 섹션 머리(제목 ↔ 내용) 간격 통일
-  .sport-section-head { margin: 0 0 24px; }
+  .sport-section-head {
+    margin: 0 0 24px;
+  }
 
   @media (max-width: $breakpoint-tablet) {
     --sport-section-gap: 96px;
@@ -344,7 +951,10 @@ main.sport-home.sport-home {
   @media (max-width: $breakpoint-mobile) {
     --sport-section-gap: 64px;
     padding-bottom: 64px;
-    .sport-section-head { margin-bottom: 16px; }
+
+    .sport-section-head {
+      margin-bottom: 16px;
+    }
   }
 }
 
@@ -359,12 +969,27 @@ section.sport-hero {
   height: calc(100vh - #{$header-height});
   height: calc(100svh - #{$header-height});
   min-height: 0;
-  .sport-hero-bg { background-position: center 36%; }
-  .sport-hero-overlay { background: linear-gradient(0deg, rgba(0, 0, 0, .15), transparent 65%); }
+
+  .sport-hero-bg {
+    background-position: center 36%;
+  }
+
+  .sport-hero-overlay {
+    background: linear-gradient(0deg, rgba(0, 0, 0, .15), transparent 65%);
+  }
+
   // 히어로 슬라이드: 히어로 영역을 가득 채우고(애플TV 히어로 스타일은 그대로 재사용),
   // 오버레이가 화살표/페이지네이션 클릭을 막지 않게 함
-  .sport-hero-swiper { position: absolute; inset: 0; height: 100%; }
-  .sport-hero-overlay { pointer-events: none; }
+  .sport-hero-swiper {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+
+  .sport-hero-overlay {
+    pointer-events: none;
+  }
+
   .sport-hero-card {
     left: $header-pad-x;
     bottom: 56px;
@@ -374,27 +999,101 @@ section.sport-hero {
     border-radius: $radius-card;
     background: $dark-color-800;
   }
-  .sport-hero-label, .sport-hero-sub { @include body-large; font-family: inherit; }
-  .sport-hero-title { @include display-l; font-family: inherit; font-weight: 700; gap: 16px; }
-  .sport-hero-actions { margin-top: 32px; gap: 24px; }
-  .sport-btn { @include body-large; font-family: inherit; font-weight: 600; height: 60px; padding: 0 40px; }
-  .sport-btn.primary { background: $sports-color; }
-  .sport-btn.primary:hover { background: #cf1715; }
-  .sport-btn.secondary { background: $neutral-color-100; color: $dark-color-900; }
+
+  .sport-hero-label,
+  .sport-hero-sub {
+    @include body-large;
+    font-family: inherit;
+  }
+
+  .sport-hero-title {
+    @include display-l;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+    gap: 16px;
+  }
+
+  .sport-hero-actions {
+    margin-top: 32px;
+    gap: 24px;
+  }
+
+  .sport-btn {
+    @include body-large;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+    height: 60px;
+    padding: 0 40px;
+  }
+
+  .sport-btn.primary {
+    background: $sports-color;
+  }
+
+  .sport-btn.primary:hover {
+    background: #cf1715;
+  }
+
+  .sport-btn.secondary {
+    background: $neutral-color-100;
+    color: $dark-color-900;
+  }
 }
 
 @media (max-width: $breakpoint-tablet) {
-  section.sport-hero .sport-hero-card { left: 40px; width: min(600px, calc(100% - 80px)); bottom: 32px; padding: 24px; }
-  section.sport-hero .sport-hero-title { font-size: 28px; line-height: 34px; }
+  section.sport-hero .sport-hero-card {
+    left: 40px;
+    width: min(600px, calc(100% - 80px));
+    bottom: 32px;
+    padding: 24px;
+  }
+
+  section.sport-hero .sport-hero-title {
+    font-size: 28px;
+    line-height: 34px;
+  }
 }
 
 @media (max-width: $breakpoint-mobile) {
-  section.sport-hero .sport-hero-card { left: 20px; width: calc(100% - 40px); padding: 16px; bottom: 32px; }
-  section.sport-hero .sport-hero-label, section.sport-hero .sport-hero-sub { @include label-default; font-family: inherit; }
-  section.sport-hero .sport-hero-title { @include heading-h3; font-family: inherit; font-weight: 700; gap: 8px; margin-bottom: 6px; }
-  section.sport-hero .sport-hero-actions { gap: 8px; margin-top: 16px; }
-  section.sport-hero .sport-btn { height: 36px; min-height: 36px; padding: 0 16px; @include body-small; font-family: inherit; font-weight: 600; }
-  section.sport-hero .sport-hero-bg { background-size: cover; background-position: center 40%; }
+  section.sport-hero .sport-hero-card {
+    left: 20px;
+    width: calc(100% - 40px);
+    padding: 16px;
+    bottom: 32px;
+  }
+
+  section.sport-hero .sport-hero-label,
+  section.sport-hero .sport-hero-sub {
+    @include label-default;
+    font-family: inherit;
+  }
+
+  section.sport-hero .sport-hero-title {
+    @include heading-h3;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  section.sport-hero .sport-hero-actions {
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  section.sport-hero .sport-btn {
+    height: 36px;
+    min-height: 36px;
+    padding: 0 16px;
+    @include body-small;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+  }
+
+  section.sport-hero .sport-hero-bg {
+    background-size: cover;
+    background-position: center 40%;
+  }
 }
 
 // =====================================================================
@@ -444,12 +1143,12 @@ section.sport-hero {
       max-width: none;
       padding: 20px;
     }
- 
+
     .sport-hero-title {
       font-size: 20px;
     }
   }
- 
+
   .sport-upcoming .inner,
   .sport-shorts .inner,
   .sport-promo .inner,
@@ -461,7 +1160,7 @@ section.sport-hero {
     padding-left: 20px;
     padding-right: 20px;
   }
- 
+
   .sport-upcoming .sport-match-list,
   .sport-teams .sport-team-list,
   .sport-league .sport-league-list,
@@ -469,22 +1168,22 @@ section.sport-hero {
     grid-template-columns: 1fr;
     gap: 16px;
   }
- 
+
   .sport-replay .sport-replay-list {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
- 
+
   .sport-shorts .sport-short-slide {
     width: 160px;
   }
- 
+
   .sport-notify .sport-notify-banner {
     flex-direction: column;
     align-items: flex-start;
     padding: 24px;
   }
- 
+
   .sport-notify .sport-notify-btn {
     width: 100%;
   }
@@ -498,7 +1197,11 @@ section.sport-hero {
 main.sport-home.sport-detail-page {
   padding-bottom: 240px;
 
-  .sport-detail .inner { display: flex; flex-direction: column; gap: 24px; }
+  .sport-detail .inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
 
   .sport-detail-layout {
     display: grid;
@@ -521,7 +1224,14 @@ main.sport-home.sport-detail-page {
     position: relative;
     aspect-ratio: 16 / 9;
     background: #000;
-    iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
   }
 
   .sport-detail-countdown {
@@ -532,8 +1242,14 @@ main.sport-home.sport-detail-page {
     overflow: hidden;
     background: $dark-color-800;
 
-    &::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.45); }
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
   }
+
   .sport-detail-countdown-bg {
     position: absolute;
     inset: -24px;
@@ -543,7 +1259,13 @@ main.sport-home.sport-detail-page {
     filter: blur(18px);
     transform: scale(1.05);
   }
-  .sport-detail-countdown-body { position: relative; z-index: 1; text-align: center; }
+
+  .sport-detail-countdown-body {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
   .sport-detail-countdown-label {
     @include caption-default;
     font-family: inherit;
@@ -551,6 +1273,7 @@ main.sport-home.sport-detail-page {
     letter-spacing: 0.2em;
     color: $light-color-400;
   }
+
   .sport-detail-countdown-time {
     display: flex;
     align-items: flex-start;
@@ -559,18 +1282,41 @@ main.sport-home.sport-detail-page {
     padding: 0;
     list-style: none;
 
-    li { display: flex; align-items: flex-start; }
+    li {
+      display: flex;
+      align-items: flex-start;
+    }
   }
+
   .sport-detail-countdown-unit {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-width: 96px;
 
-    strong { @include display-l; font-family: inherit; font-weight: 400; color: $neutral-color-white; font-variant-numeric: tabular-nums; }
-    small { @include caption-default; font-family: inherit; margin-top: 4px; letter-spacing: 0.12em; color: $neutral-color-400; }
+    strong {
+      @include display-l;
+      font-family: inherit;
+      font-weight: $font-weight-regular;
+      color: $neutral-color-white;
+      font-variant-numeric: tabular-nums;
+    }
+
+    small {
+      @include caption-default;
+      font-family: inherit;
+      margin-top: 4px;
+      letter-spacing: 0.12em;
+      color: $neutral-color-400;
+    }
   }
-  .sport-detail-countdown-colon { @include heading-h2; font-family: inherit; margin-top: 0.4em; color: $sports-color; }
+
+  .sport-detail-countdown-colon {
+    @include heading-h2;
+    font-family: inherit;
+    margin-top: 0.4em;
+    color: $sports-color;
+  }
 
   .sport-detail-info {
     display: flex;
@@ -579,8 +1325,9 @@ main.sport-home.sport-detail-page {
     padding: 24px 28px 28px;
     background: #000;
   }
+
   .sport-detail-info-title {
-    @include heading-h4;
+    @include heading-h4-b;
     font-family: inherit;
     display: flex;
     align-items: center;
@@ -589,13 +1336,25 @@ main.sport-home.sport-detail-page {
     margin: 0;
     color: $neutral-color-white;
   }
+
   .sport-detail-info-label {
     color: $sports-color;
     padding-right: 10px;
     border-right: 1px solid $dark-color-100;
   }
-  .sport-detail-info-desc { @include body-default; font-family: inherit; margin: 0; color: $light-color-300; }
-  .sport-detail-info-meta { @include caption-default; font-family: inherit; color: $light-color-400; }
+
+  .sport-detail-info-desc {
+    @include body-default;
+    font-family: inherit;
+    margin: 0;
+    color: $light-color-300;
+  }
+
+  .sport-detail-info-meta {
+    @include caption-default;
+    font-family: inherit;
+    color: $light-color-400;
+  }
 
   // ---------- 오른쪽 : 목록 ----------
   .sport-detail-list {
@@ -612,6 +1371,7 @@ main.sport-home.sport-detail-page {
     scrollbar-width: thin;
     scrollbar-color: $dark-color-200 transparent;
   }
+
   .sport-detail-item {
     display: flex;
     align-items: center;
@@ -627,9 +1387,17 @@ main.sport-home.sport-detail-page {
     cursor: pointer;
     transition: background 0.2s ease;
 
-    &:hover, &.is-active { background: $dark-color-500; }
-    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: 2px; }
+    &:hover,
+    &.is-active {
+      background: $dark-color-500;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+    }
   }
+
   .sport-detail-thumb {
     position: relative;
     flex: 0 0 120px;
@@ -638,8 +1406,14 @@ main.sport-home.sport-detail-page {
     overflow: hidden;
     background: $dark-color-400;
 
-    img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
   }
+
   .sport-detail-play {
     position: absolute;
     top: 50%;
@@ -655,6 +1429,7 @@ main.sport-home.sport-detail-page {
     color: $neutral-color-white;
     font-size: 10px;
   }
+
   .sport-detail-badge {
     @include caption-default;
     font-family: inherit;
@@ -665,53 +1440,144 @@ main.sport-home.sport-detail-page {
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.75);
     color: $neutral-color-white;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
   }
-  .sport-detail-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+
+  .sport-detail-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
   .sport-detail-title {
     @include body-default;
     font-family: inherit;
     color: $neutral-color-white;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .sport-detail-meta { @include caption-default; font-family: inherit; color: $light-color-500; }
 
-  .sport-detail--upcoming .sport-detail-title { @include label-default; font-family: inherit; font-weight: 700; }
+  .sport-detail-meta {
+    @include caption-default;
+    font-family: inherit;
+    color: $light-color-500;
+  }
 
-  .sport-detail-back { @include body-small; font-family: inherit; align-self: flex-start; color: $neutral-color-400; &:hover { color: $neutral-color-white; } }
+  .sport-detail--upcoming .sport-detail-title {
+    @include label-default;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+  }
+
+  .sport-detail-back {
+    @include body-small;
+    font-family: inherit;
+    align-self: flex-start;
+    color: $neutral-color-400;
+
+    &:hover {
+      color: $neutral-color-white;
+    }
+  }
 
   // ---------- 태블릿 : 목록을 아래로 ----------
   @media (max-width: $breakpoint-tablet) {
     padding-bottom: 160px;
 
-    .sport-detail-layout { grid-template-columns: 1fr; gap: 24px; }
-    .sport-detail-list { height: auto; min-height: 0; max-height: none; overflow: visible; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }
-    .sport-detail-countdown { aspect-ratio: 16 / 9; }
-    .sport-detail-countdown-unit { min-width: 80px; }
+    .sport-detail-layout {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .sport-detail-list {
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      overflow: visible;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 16px;
+    }
+
+    .sport-detail-countdown {
+      aspect-ratio: 16 / 9;
+    }
+
+    .sport-detail-countdown-unit {
+      min-width: 80px;
+    }
   }
 
   // ---------- 모바일 ----------
   @media (max-width: $breakpoint-mobile) {
     padding-bottom: 96px;
 
-    .sport-detail-stage { border-radius: 8px; }
-    .sport-detail-info { padding: 16px; gap: 6px; }
-    .sport-detail-info-title { @include body-large; font-family: inherit; font-weight: 600; gap: 8px; }
-    .sport-detail-info-label { padding-right: 8px; }
-    .sport-detail-info-desc { @include body-small; font-family: inherit; }
-    .sport-detail-countdown { aspect-ratio: 4 / 3; }
+    .sport-detail-stage {
+      border-radius: 8px;
+    }
+
+    .sport-detail-info {
+      padding: 16px;
+      gap: 6px;
+    }
+
+    .sport-detail-info-title {
+      @include body-large;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      gap: 8px;
+    }
+
+    .sport-detail-info-label {
+      padding-right: 8px;
+    }
+
+    .sport-detail-info-desc {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    .sport-detail-countdown {
+      aspect-ratio: 4 / 3;
+    }
+
     .sport-detail-countdown-unit {
       min-width: 52px;
-      strong { @include heading-h2; font-family: inherit; font-weight: 400; }
-      small { font-size: 9px; letter-spacing: 0.08em; }
+
+      strong {
+        @include heading-h2;
+        font-family: inherit;
+        font-weight: $font-weight-regular;
+      }
+
+      small {
+        font-size: 9px;
+        letter-spacing: 0.08em;
+      }
     }
-    .sport-detail-countdown-colon { @include heading-h4; font-family: inherit; margin-top: 0.3em; }
-    .sport-detail-list { grid-template-columns: 1fr; }
-    .sport-detail-thumb { flex-basis: 112px; }
-    .sport-detail-title { @include body-small; font-family: inherit; }
+
+    .sport-detail-countdown-colon {
+      @include heading-h4-b;
+      font-family: inherit;
+      margin-top: 0.3em;
+    }
+
+    .sport-detail-list {
+      grid-template-columns: 1fr;
+    }
+
+    .sport-detail-thumb {
+      flex-basis: 112px;
+    }
+
+    .sport-detail-title {
+      @include body-small;
+      font-family: inherit;
+    }
   }
 }
 
@@ -722,19 +1588,61 @@ main.sport-home.sport-detail-page {
 main.sport-home.sport-standings-page {
   padding-bottom: 240px;
 
-  .sport-standings .inner { display: flex; flex-direction: column; gap: 120px; }
-  .sport-standings-block, .sport-standings-head { width: 100%; max-width: 1280px; }
+  .sport-standings .inner {
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+  }
+
+  .sport-standings-block,
+  .sport-standings-head {
+    width: 100%;
+    max-width: 1280px;
+  }
 
   // ---------- 페이지 제목 ----------
-  .sport-standings-head { display: flex; flex-direction: column; gap: 12px; margin-bottom: -56px; } // 제목 ↔ 팀 순위는 64px
-  .sport-standings-title { @include heading-h1; font-family: inherit; margin: 0; padding: 0; color: $neutral-color-white; }
-  .sport-standings-sub { @include body-default; font-family: inherit; margin: 0; color: $neutral-color-400; }
+  .sport-standings-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: -56px;
+  }
+
+  // 제목 ↔ 팀 순위는 64px
+  .sport-standings-title {
+    @include heading-h1;
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+    color: $neutral-color-white;
+  }
+
+  .sport-standings-sub {
+    @include body-default;
+    font-family: inherit;
+    margin: 0;
+    color: $neutral-color-400;
+  }
 
   // ---------- 블록 제목 + 탭 ----------
-  .sport-standings-block { display: flex; flex-direction: column; }
-  .sport-standings-block-title { @include heading-h3; font-family: inherit; margin: 0 0 32px; color: $neutral-color-white; }
+  .sport-standings-block {
+    display: flex;
+    flex-direction: column;
+  }
 
-  .sport-standings-tabs { display: flex; gap: 24px; margin-bottom: 24px; }
+  .sport-standings-block-title {
+    @include heading-h3;
+    font-family: inherit;
+    margin: 0 0 32px;
+    color: $neutral-color-white;
+  }
+
+  .sport-standings-tabs {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
   .sport-standings-tab {
     @include body-large;
     font-family: inherit;
@@ -758,13 +1666,28 @@ main.sport-home.sport-standings-page {
       transform: scaleX(0);
       transition: transform 0.2s ease;
     }
-    &:hover, &.is-active { color: $neutral-color-white; }
-    &.is-active::after { transform: scaleX(1); }
-    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: 2px; border-radius: 4px; }
+
+    &:hover,
+    &.is-active {
+      color: $neutral-color-white;
+    }
+
+    &.is-active::after {
+      transform: scaleX(1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
   }
 
   // ---------- 팀 순위 표 ----------
-  .sport-standings-table-wrap { overflow-x: auto; }
+  .sport-standings-table-wrap {
+    overflow-x: auto;
+  }
+
   .sport-standings-table {
     width: 100%;
     min-width: 640px;
@@ -772,32 +1695,102 @@ main.sport-home.sport-standings-page {
     border-spacing: 0 4px;
     table-layout: fixed;
 
-    .col-rank { width: 80px; }
-    .col-club { width: auto; }
-    .col-stat { width: 11%; }
+    .col-rank {
+      width: 80px;
+    }
 
-    th, td { @include body-small; font-family: inherit; padding: 0 16px; text-align: center; color: $light-color-200; }
-    thead th { height: 48px; background: $dark-color-400; color: $light-color-500; font-weight: 500; }
-    thead th:first-child { border-radius: 8px 0 0 8px; }
-    thead th:last-child { border-radius: 0 8px 8px 0; }
-    thead th:nth-child(-n + 2), tbody td.rank, tbody th { text-align: left; }
+    .col-club {
+      width: auto;
+    }
 
-    tbody td, tbody th { height: 56px; background: $dark-color-500; }
-    tbody tr > :first-child { border-radius: 8px 0 0 8px; }
-    tbody tr > :last-child { border-radius: 0 8px 8px 0; }
-    tbody tr:hover td, tbody tr:hover th { background: $dark-color-300; }
-    tbody td.rank { color: $light-color-400; font-variant-numeric: tabular-nums; }
+    .col-stat {
+      width: 11%;
+    }
+
+    th,
+    td {
+      @include body-small;
+      font-family: inherit;
+      padding: 0 16px;
+      text-align: center;
+      color: $light-color-200;
+    }
+
+    thead th {
+      height: 48px;
+      background: $dark-color-400;
+      color: $light-color-500;
+      font-weight: $font-weight-regular;
+    }
+
+    thead th:first-child {
+      border-radius: 8px 0 0 8px;
+    }
+
+    thead th:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+
+    thead th:nth-child(-n + 2),
+    tbody td.rank,
+    tbody th {
+      text-align: left;
+    }
+
+    tbody td,
+    tbody th {
+      height: 56px;
+      background: $dark-color-500;
+    }
+
+    tbody tr> :first-child {
+      border-radius: 8px 0 0 8px;
+    }
+
+    tbody tr> :last-child {
+      border-radius: 0 8px 8px 0;
+    }
+
+    tbody tr:hover td,
+    tbody tr:hover th {
+      background: $dark-color-300;
+    }
+
+    tbody td.rank {
+      color: $light-color-400;
+      font-variant-numeric: tabular-nums;
+    }
   }
+
   .sport-standings-club {
     display: flex;
     align-items: center;
     gap: 16px;
     min-width: 0;
 
-    img { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
-    span { @include body-default; font-family: inherit; font-weight: 600; color: $neutral-color-white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    span {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      color: $neutral-color-white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
-  .sport-standings-empty { height: 160px !important; color: $neutral-color-600 !important; text-align: center !important; }
+
+  .sport-standings-empty {
+    height: 160px !important;
+    color: $neutral-color-600 !important;
+    text-align: center !important;
+  }
 
   // ---------- 선수 순위 카드 ----------
   .sport-player-list {
@@ -808,6 +1801,7 @@ main.sport-home.sport-standings-page {
     padding: 0;
     list-style: none;
   }
+
   .sport-player-card {
     display: flex;
     flex-direction: column;
@@ -815,6 +1809,7 @@ main.sport-home.sport-standings-page {
     border-radius: $radius-card;
     background: $dark-color-500;
   }
+
   .sport-player-photo {
     align-self: center;
     width: 180px;
@@ -825,51 +1820,179 @@ main.sport-home.sport-standings-page {
     object-position: top;
     background: $dark-color-300;
   }
-  .sport-player-photo--empty { display: grid; place-items: center; @include display-M; font-family: inherit; color: $light-color-400; }
-  .sport-player-name { @include body-large; font-family: inherit; font-weight: 600; margin: 0 0 4px; color: $neutral-color-white; }
-  .sport-player-rank { margin-right: 10px; }
-  .sport-player-value { @include heading-h3; font-family: inherit; font-weight: 700; color: $neutral-color-white; }
 
-  .sport-detail-back { @include body-small; font-family: inherit; align-self: flex-start; margin-top: -72px; color: $neutral-color-400; &:hover { color: $neutral-color-white; } }
+  .sport-player-photo--empty {
+    display: grid;
+    place-items: center;
+    @include display-M;
+    font-family: inherit;
+    color: $light-color-400;
+  }
+
+  .sport-player-name {
+    @include body-large;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+    margin: 0 0 4px;
+    color: $neutral-color-white;
+  }
+
+  .sport-player-rank {
+    margin-right: 10px;
+  }
+
+  .sport-player-value {
+    @include heading-h3;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+    color: $neutral-color-white;
+  }
+
+  .sport-detail-back {
+    @include body-small;
+    font-family: inherit;
+    align-self: flex-start;
+    margin-top: -72px;
+    color: $neutral-color-400;
+
+    &:hover {
+      color: $neutral-color-white;
+    }
+  }
 
   // ---------- 태블릿 ----------
   @media (max-width: $breakpoint-tablet) {
     padding-bottom: 160px;
 
-    .sport-standings .inner { width: calc(100% - 80px); gap: 96px; }
-    .sport-standings-head { margin-bottom: -40px; }
-    .sport-standings-title { @include heading-h2; font-family: inherit; }
-    .sport-player-list { gap: 16px; }
-    .sport-player-card { padding: 20px 20px 24px; }
-    .sport-player-photo { width: 140px; height: 140px; }
-    .sport-player-name { @include body-default; font-family: inherit; font-weight: 600; }
+    .sport-standings .inner {
+      width: calc(100% - 80px);
+      gap: 96px;
+    }
+
+    .sport-standings-head {
+      margin-bottom: -40px;
+    }
+
+    .sport-standings-title {
+      @include heading-h2;
+      font-family: inherit;
+    }
+
+    .sport-player-list {
+      gap: 16px;
+    }
+
+    .sport-player-card {
+      padding: 20px 20px 24px;
+    }
+
+    .sport-player-photo {
+      width: 140px;
+      height: 140px;
+    }
+
+    .sport-player-name {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
   }
 
   // ---------- 모바일 ----------
   @media (max-width: $breakpoint-mobile) {
     padding-bottom: 96px;
 
-    .sport-standings .inner { width: calc(100% - 40px); gap: 64px; }
-    .sport-standings-head { gap: 6px; margin-bottom: -24px; }
-    .sport-standings-title { @include heading-h3; font-family: inherit; }
-    .sport-standings-sub { @include body-small; font-family: inherit; }
-    .sport-standings-block-title { @include heading-h4; font-family: inherit; margin-bottom: 16px; }
-    .sport-standings-tabs { gap: 8px; margin-bottom: 16px; overflow-x: auto; scrollbar-width: none; }
-    .sport-standings-tab { @include body-default; font-family: inherit; padding: 6px 10px 10px; white-space: nowrap; }
+    .sport-standings .inner {
+      width: calc(100% - 40px);
+      gap: 64px;
+    }
+
+    .sport-standings-head {
+      gap: 6px;
+      margin-bottom: -24px;
+    }
+
+    .sport-standings-title {
+      @include heading-h3;
+      font-family: inherit;
+    }
+
+    .sport-standings-sub {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    .sport-standings-block-title {
+      @include heading-h4-b;
+      font-family: inherit;
+      margin-bottom: 16px;
+    }
+
+    .sport-standings-tabs {
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .sport-standings-tab {
+      @include body-default;
+      font-family: inherit;
+      padding: 6px 10px 10px;
+      white-space: nowrap;
+    }
 
     // 표: 가로 스크롤 없이 한 화면에 (순위 · 구단 · 승점 · 경기 · 승 · 무 · 패)
     .sport-standings-table {
       min-width: 0;
-      .col-rank { width: 36px; }
-      .col-stat { width: 34px; }
-      th, td { @include caption-default; font-family: inherit; padding: 0 4px; }
-      thead th:first-child, tbody tr > :first-child { padding-left: 10px; }
-      tbody td, tbody th { height: 48px; }
+
+      .col-rank {
+        width: 36px;
+      }
+
+      .col-stat {
+        width: 34px;
+      }
+
+      th,
+      td {
+        @include caption-default;
+        font-family: inherit;
+        padding: 0 4px;
+      }
+
+      thead th:first-child,
+      tbody tr> :first-child {
+        padding-left: 10px;
+      }
+
+      tbody td,
+      tbody th {
+        height: 48px;
+      }
     }
-    .sport-standings-club { gap: 8px; img { width: 20px; height: 20px; } span { @include label-default; font-family: inherit; font-weight: 600; } }
+
+    .sport-standings-club {
+      gap: 8px;
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+
+      span {
+        @include label-default;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
 
     // 선수 카드: 가로 카드 1열 (사진 왼쪽)
-    .sport-player-list { grid-template-columns: 1fr; gap: 12px; }
+    .sport-player-list {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
     .sport-player-card {
       display: grid;
       grid-template-columns: 72px 1fr;
@@ -878,11 +2001,35 @@ main.sport-home.sport-standings-page {
       align-items: center;
       padding: 12px 16px;
     }
-    .sport-player-photo { grid-row: 1 / span 2; width: 72px; height: 72px; margin: 0; }
-    .sport-player-photo--empty { @include heading-h3; font-family: inherit; }
-    .sport-player-name { @include body-small; font-family: inherit; font-weight: 600; align-self: end; }
-    .sport-player-value { @include heading-h4; font-family: inherit; align-self: start; }
-    .sport-detail-back { margin-top: -40px; }
+
+    .sport-player-photo {
+      grid-row: 1 / span 2;
+      width: 72px;
+      height: 72px;
+      margin: 0;
+    }
+
+    .sport-player-photo--empty {
+      @include heading-h3;
+      font-family: inherit;
+    }
+
+    .sport-player-name {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      align-self: end;
+    }
+
+    .sport-player-value {
+      @include heading-h4-b;
+      font-family: inherit;
+      align-self: start;
+    }
+
+    .sport-detail-back {
+      margin-top: -40px;
+    }
   }
 }
 
@@ -892,9 +2039,13 @@ main.sport-home.sport-standings-page {
 // - 아이콘 파일: public/icons/shorts/logo_w.svg (좋아요 · 공유 · 소리는 JSX 안 SVG)
 // =====================================================================
 .sport-shorts.sport-shortform {
-  .inner { overflow: hidden; }
+  .inner {
+    overflow: hidden;
+  }
 
-  .sport-sf-swiper { overflow: visible; }
+  .sport-sf-swiper {
+    overflow: visible;
+  }
 
   .sport-sf-slide {
     width: clamp(170px, 14vw, 240px);
@@ -930,15 +2081,29 @@ main.sport-home.sport-standings-page {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0) 22%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.75) 100%);
     transition: background-color 0.3s ease;
   }
+
   .sport-sf-slide:not(.swiper-slide-active) {
-    .sport-sf-shade { background-color: rgba(0, 0, 0, 0.45); }
-    .sport-sf-card { cursor: pointer; }
+    .sport-sf-shade {
+      background-color: rgba(0, 0, 0, 0.45);
+    }
+
+    .sport-sf-card {
+      cursor: pointer;
+    }
   }
-  .sport-sf-slide:not(.swiper-slide-active):hover .sport-sf-shade { background-color: rgba(0, 0, 0, 0.25); }
-  .sport-sf-card:hover img.sport-sf-media { transform: scale(1.04); }
+
+  .sport-sf-slide:not(.swiper-slide-active):hover .sport-sf-shade {
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .sport-sf-card:hover img.sport-sf-media {
+    transform: scale(1.04);
+  }
 
   // 재생 중이면 영상이 잘 보이도록 위쪽 그림자 제거
-  .is-playing .sport-sf-shade { background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.75) 100%); }
+  .is-playing .sport-sf-shade {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.75) 100%);
+  }
 
   // ---------- 상단: 브랜드 / 소리 ----------
   .sport-sf-top {
@@ -951,15 +2116,17 @@ main.sport-home.sport-standings-page {
     align-items: center;
     justify-content: space-between;
   }
+
   .sport-sf-brand {
     @include caption-default;
     font-family: inherit;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     color: $light-color-100;
   }
+
   .sport-sf-logo {
     display: grid;
     place-items: center;
@@ -968,7 +2135,11 @@ main.sport-home.sport-standings-page {
     border-radius: 50%;
     background: #000;
 
-    img { width: 14px; height: auto; display: block; }
+    img {
+      width: 14px;
+      height: auto;
+      display: block;
+    }
   }
 
   .sport-sf-icon-btn {
@@ -983,9 +2154,18 @@ main.sport-home.sport-standings-page {
     cursor: pointer;
     filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
 
-    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: 2px; border-radius: 6px; }
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
   }
-  .sport-sf-sound { width: 30px; height: 30px; justify-content: center; }
+
+  .sport-sf-sound {
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+  }
 
   // ---------- 가운데 재생 ----------
   .sport-sf-play {
@@ -1008,11 +2188,27 @@ main.sport-home.sport-standings-page {
     backdrop-filter: blur(6px);
     transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
 
-    &:hover { transform: translate(-50%, -50%) scale(1.08); background: $neutral-color-white; }
-    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: 3px; }
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+      background: $neutral-color-white;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 3px;
+    }
   }
-  .is-playing .sport-sf-play { padding-left: 0; font-size: 11px; opacity: 0; }
-  .is-playing:hover .sport-sf-play, .is-playing .sport-sf-play:focus-visible { opacity: 1; }
+
+  .is-playing .sport-sf-play {
+    padding-left: 0;
+    font-size: 11px;
+    opacity: 0;
+  }
+
+  .is-playing:hover .sport-sf-play,
+  .is-playing .sport-sf-play:focus-visible {
+    opacity: 1;
+  }
 
   // ---------- 오른쪽: 좋아요 · 공유 ----------
   .sport-sf-side {
@@ -1025,11 +2221,24 @@ main.sport-home.sport-standings-page {
     align-items: center;
     gap: 6px;
   }
+
   .sport-sf-like {
-    svg { width: 30px; height: 18px; }
-    &.is-on { color: $sports-color; }
+    svg {
+      width: 30px;
+      height: 18px;
+    }
+
+    &.is-on {
+      color: $sports-color;
+    }
   }
-  .sport-sf-count { font-size: 9px; line-height: 12px; font-weight: 500; color: $neutral-color-white; }
+
+  .sport-sf-count {
+    font-size: 9px;
+    line-height: 12px;
+    font-weight: $font-weight-regular;
+    color: $neutral-color-white;
+  }
 
   // ---------- 하단 정보 ----------
   .sport-sf-info {
@@ -1043,9 +2252,18 @@ main.sport-home.sport-standings-page {
     gap: 4px;
     min-width: 0;
   }
-  .sport-sf-tag { @include caption-default; font-family: inherit; font-weight: 700; letter-spacing: 0.04em; color: $light-color-400; text-transform: uppercase; }
+
+  .sport-sf-tag {
+    @include caption-default;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.04em;
+    color: $light-color-400;
+    text-transform: uppercase;
+  }
+
   .sport-sf-title {
-    @include heading-h4;
+    @include heading-h4-b;
     font-family: inherit;
     margin: 0;
     padding: 0;
@@ -1054,7 +2272,15 @@ main.sport-home.sport-standings-page {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .sport-sf-meta { @include caption-default; font-family: inherit; color: $light-color-500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .sport-sf-meta {
+    @include caption-default;
+    font-family: inherit;
+    color: $light-color-500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   // ---------- 진행 바 ----------
   .sport-sf-progress {
@@ -1066,32 +2292,78 @@ main.sport-home.sport-standings-page {
     height: 3px;
     background: rgba(255, 255, 255, 0.25);
 
-    span { display: block; width: 0; height: 100%; background: $neutral-color-white; }
+    span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: $neutral-color-white;
+    }
   }
-  .is-playing .sport-sf-progress span { animation: sport-sf-progress linear infinite; }
+
+  .is-playing .sport-sf-progress span {
+    animation: sport-sf-progress linear infinite;
+  }
 
   // ---------- 태블릿 / 모바일 ----------
   @media (max-width: $breakpoint-tablet) {
-    .sport-sf-slide { width: 200px; }
+    .sport-sf-slide {
+      width: 200px;
+    }
   }
 
   @media (max-width: $breakpoint-mobile) {
-    .sport-sf-slide { width: 160px; }
-    .sport-sf-top { top: 8px; left: 8px; right: 4px; }
-    .sport-sf-play { width: 36px; height: 36px; font-size: 11px; }
-    .sport-sf-info { left: 10px; right: 10px; bottom: 14px; }
-    .sport-sf-title { @include body-small; font-family: inherit; font-weight: 700; }
+    .sport-sf-slide {
+      width: 160px;
+    }
+
+    .sport-sf-top {
+      top: 8px;
+      left: 8px;
+      right: 4px;
+    }
+
+    .sport-sf-play {
+      width: 36px;
+      height: 36px;
+      font-size: 11px;
+    }
+
+    .sport-sf-info {
+      left: 10px;
+      right: 10px;
+      bottom: 14px;
+    }
+
+    .sport-sf-title {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sport-sf-media, .sport-sf-play { transition: none; }
-    .is-playing .sport-sf-progress span { animation: none; width: 100%; opacity: 0.4; }
+
+    .sport-sf-media,
+    .sport-sf-play {
+      transition: none;
+    }
+
+    .is-playing .sport-sf-progress span {
+      animation: none;
+      width: 100%;
+      opacity: 0.4;
+    }
   }
 }
 
 @keyframes sport-sf-progress {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 // =====================================================================
@@ -1152,7 +2424,7 @@ section.sport-hero.sport-hero--team {
     font-family: inherit;
     margin: 0;
     padding: 0; // main h2 { padding-top: 200px } 영향 제거
-    font-weight: 400;
+    font-weight: $font-weight-regular;
     color: $neutral-color-white;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
     word-break: keep-all;
@@ -1182,10 +2454,23 @@ section.sport-hero.sport-hero--team {
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease;
 
-    svg { flex-shrink: 0; }
-    &:hover { background: $neutral-color-white; transform: translateY(-1px); }
-    &.is-on svg { color: $rating-color; }
-    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: 3px; }
+    svg {
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background: $neutral-color-white;
+      transform: translateY(-1px);
+    }
+
+    &.is-on svg {
+      color: $rating-color;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 3px;
+    }
   }
 
   // ---------- 팀 선택 칩 ----------
@@ -1203,8 +2488,11 @@ section.sport-hero.sport-hero--team {
     backdrop-filter: blur(12px);
     scrollbar-width: none;
 
-    &::-webkit-scrollbar { display: none; }
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
+
   .sport-team-hero-chip {
     @include body-small;
     font-family: inherit;
@@ -1221,46 +2509,137 @@ section.sport-hero.sport-hero--team {
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
 
-    img { width: 28px; height: 28px; object-fit: contain; }
-    &:hover { background: rgba(255, 255, 255, 0.15); color: $neutral-color-white; }
-    &.is-active { background: $neutral-color-white; color: $dark-color-900; font-weight: 700; }
-    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: 2px; }
+    img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: $neutral-color-white;
+    }
+
+    &.is-active {
+      background: $neutral-color-white;
+      color: $dark-color-900;
+      font-weight: $font-weight-bold;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+    }
   }
 
   // ---------- 태블릿 ----------
   @media (max-width: $breakpoint-tablet) {
-    .sport-team-hero-body { padding: 0 $tablet-edge; }
-    .sport-team-hero-badge { width: 104px; height: 120px; margin: 0 0 24px 16px; }
-    .sport-team-hero-name { @include heading-h1; font-family: inherit; font-weight: 400; }
-    .sport-team-hero-record { @include body-large; font-family: inherit; margin-top: 14px; }
-    .sport-team-hero-chips { left: $tablet-edge; bottom: 28px; max-width: calc(100% - #{$tablet-edge * 2}); }
+    .sport-team-hero-body {
+      padding: 0 $tablet-edge;
+    }
+
+    .sport-team-hero-badge {
+      width: 104px;
+      height: 120px;
+      margin: 0 0 24px 16px;
+    }
+
+    .sport-team-hero-name {
+      @include heading-h1;
+      font-family: inherit;
+      font-weight: $font-weight-regular;
+    }
+
+    .sport-team-hero-record {
+      @include body-large;
+      font-family: inherit;
+      margin-top: 14px;
+    }
+
+    .sport-team-hero-chips {
+      left: $tablet-edge;
+      bottom: 28px;
+      max-width: calc(100% - #{$tablet-edge * 2});
+    }
   }
 
   // ---------- 모바일 ----------
   @media (max-width: $breakpoint-mobile) {
-    .sport-team-hero-body { padding: 0 20px; margin-top: -24px; }
-    .sport-team-hero-badge { width: 80px; height: 92px; margin: 0 0 16px 8px; }
-    .sport-team-hero-name { @include display-l; font-family: inherit; font-weight: 400; }
-    .sport-team-hero-record { @include body-small; font-family: inherit; margin: 10px 0 14px; }
-    .sport-team-hero-follow { @include body-small; font-family: inherit; height: 40px; padding: 0 24px; }
-    .sport-team-hero-chips { left: 20px; right: 20px; bottom: 20px; max-width: none; }
-    .sport-team-hero-chip { height: 36px; padding: 0 4px; span { display: none; } }
+    .sport-team-hero-body {
+      padding: 0 20px;
+      margin-top: -24px;
+    }
+
+    .sport-team-hero-badge {
+      width: 80px;
+      height: 92px;
+      margin: 0 0 16px 8px;
+    }
+
+    .sport-team-hero-name {
+      @include display-l;
+      font-family: inherit;
+      font-weight: $font-weight-regular;
+    }
+
+    .sport-team-hero-record {
+      @include body-small;
+      font-family: inherit;
+      margin: 10px 0 14px;
+    }
+
+    .sport-team-hero-follow {
+      @include body-small;
+      font-family: inherit;
+      height: 40px;
+      padding: 0 24px;
+    }
+
+    .sport-team-hero-chips {
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      max-width: none;
+    }
+
+    .sport-team-hero-chip {
+      height: 36px;
+      padding: 0 4px;
+
+      span {
+        display: none;
+      }
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sport-team-hero-bg, .sport-team-hero-body { animation: none; }
+
+    .sport-team-hero-bg,
+    .sport-team-hero-body {
+      animation: none;
+    }
   }
 }
 
 @keyframes sport-team-hero-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 // 구단 카드 팔로우 버튼: 별 아이콘 (팔로우 중이면 채워진 별)
 .sport-team-card .sport-team-add {
-  svg { display: block; }
-  &.on { color: $neutral-color-white; }
+  svg {
+    display: block;
+  }
+
+  &.on {
+    color: $neutral-color-white;
+  }
 }
 
 // =====================================================================
@@ -1273,38 +2652,81 @@ main.sport-home.sport-live-page {
   padding-bottom: 160px;
 
   // ---------- 영상 아래 경기 정보 ----------
-  .sport-detail-player img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .sport-detail-info { gap: 6px; padding: 20px 32px 24px; }
-  .sport-live-info-title { @include heading-h4; font-family: inherit; display: flex; align-items: center; gap: 16px; margin: 0; color: $neutral-color-white; }
-  .sport-live-badge {
+  .sport-detail-player img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sport-detail-info {
+    gap: 6px;
+    padding: 20px 32px 24px;
+  }
+
+  .sport-live-info-title {
+    @include heading-h4-b;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    color: $neutral-color-white;
+  }
+
+  .sport-live-info-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     color: $sports-color;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
-    i { width: 10px; height: 10px; border-radius: 50%; background: $sports-color; animation: sport-live-blink 1.4s ease-in-out infinite; }
+    i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: $sports-color;
+      animation: sport-live-blink 1.4s ease-in-out infinite;
+    }
   }
-  .sport-live-info-sub { @include body-default; font-family: inherit; margin: 6px 0 0; color: $neutral-color-white; }
-  .sport-live-info-note { @include label-default; font-family: inherit; margin: 0; color: $light-color-500; }
+
+  .sport-live-info-sub {
+    @include body-default;
+    font-family: inherit;
+    margin: 6px 0 0;
+    color: $neutral-color-white;
+  }
+
+  .sport-live-info-note {
+    @include label-default;
+    font-family: inherit;
+    margin: 0;
+    color: $light-color-500;
+  }
 
   // ---------- 탭 (화면 전체 폭) ----------
-  .sport-live-tabs-section > .inner { width: min(1280px, calc(100% - 128px)); max-width: none; }
+  .sport-live-tabs-section>.inner {
+    width: min(1280px, calc(100% - 128px));
+    max-width: none;
+  }
+
   .sport-live-tabs {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     border-bottom: 1px solid $dark-color-200;
     box-shadow: 0 16px 24px -16px rgba(0, 0, 0, 0.5);
   }
+
   .sport-live-tab {
-    @include heading-h2;
+    @include heading-h4-b;
     font-family: inherit;
     position: relative;
     height: 72px;
     border: 0;
     background: transparent;
     color: $light-color-300;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     cursor: pointer;
     transition: color 0.2s ease;
 
@@ -1319,24 +2741,69 @@ main.sport-home.sport-live-page {
       transform: scaleX(0);
       transition: transform 0.25s ease;
     }
-    &:hover { color: $neutral-color-white; }
-    &.is-active { color: $neutral-color-white; &::after { transform: scaleX(1); } }
-    &:focus-visible { outline: 2px solid $neutral-color-white; outline-offset: -4px; }
+
+    &:hover {
+      color: $neutral-color-white;
+    }
+
+    &.is-active {
+      color: $neutral-color-white;
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: -4px;
+    }
   }
-  .sport-live-panel { padding-top: 64px; }
+
+  .sport-live-panel {
+    padding-top: 64px;
+  }
 
   // ---------- 라인업 ----------
-  .sport-lineup-team + .sport-lineup-team { margin-top: 80px; }
+  .sport-lineup-team {
+    margin-top: 80px;
+  }
+
   .sport-lineup-head {
     display: flex;
     align-items: center;
     gap: 16px;
-    margin: 0 0 40px;
+    margin: 52px 0;
 
-    img { width: 72px; height: 72px; object-fit: contain; }
-    h3 { @include display-l; font-family: inherit; flex: 1; margin: 0; padding: 0; font-weight: 700; color: $neutral-color-white; }
-    p { @include display-l; font-family: inherit; margin: 0; font-weight: 700; color: $neutral-color-white; }
-    p span { margin-right: 12px; font-weight: 400; color: $light-color-500; }
+    img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+    }
+
+    h3 {
+      @include display-l;
+      font-family: inherit;
+      flex: 1;
+      margin: 0;
+      padding: 0;
+      font-weight: $font-weight-bold;
+      color: $neutral-color-white;
+    }
+
+    p {
+      @include display-l;
+      font-family: inherit;
+      margin: 0;
+      font-weight: $font-weight-bold;
+      color: $neutral-color-white;
+    }
+
+    p span {
+      margin-right: 12px;
+      font-weight: $font-weight-regular;
+      color: $light-color-500;
+    }
   }
 
   // 경기장 카드 (시안: 둥근 회색 카드 + 얇은 라인)
@@ -1346,18 +2813,51 @@ main.sport-home.sport-live-page {
     border-radius: 24px;
     background: $dark-color-500;
   }
+
   .sport-pitch-field {
     position: absolute;
     inset: 2.5%;
     border: 1px solid $dark-color-200;
 
-    span { position: absolute; border: 1px solid $dark-color-200; }
-    .sport-pitch-box { left: 28.7%; width: 42.6%; height: 11%; }
-    .sport-pitch-box.top { top: -1px; border-top: 0; }
-    .sport-pitch-box.bottom { bottom: -1px; border-bottom: 0; }
-    .sport-pitch-line { left: 0; right: 0; top: 50%; height: 0; border-width: 1px 0 0; }
-    .sport-pitch-circle { left: 50%; top: 50%; width: 12.5%; aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%); }
+    span {
+      position: absolute;
+      border: 1px solid $dark-color-200;
+    }
+
+    .sport-pitch-box {
+      left: 28.7%;
+      width: 42.6%;
+      height: 11%;
+    }
+
+    .sport-pitch-box.top {
+      top: -1px;
+      border-top: 0;
+    }
+
+    .sport-pitch-box.bottom {
+      bottom: -1px;
+      border-bottom: 0;
+    }
+
+    .sport-pitch-line {
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 0;
+      border-width: 1px 0 0;
+    }
+
+    .sport-pitch-circle {
+      left: 50%;
+      top: 50%;
+      width: 12.5%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
+
   .sport-pitch-players {
     position: absolute;
     inset: 0;
@@ -1374,6 +2874,7 @@ main.sport-home.sport-live-page {
       transform: translate(-50%, -50%);
     }
   }
+
   .sport-pitch-photo {
     width: 120px;
     height: 120px;
@@ -1383,15 +2884,26 @@ main.sport-home.sport-live-page {
     object-fit: cover;
     object-position: top;
 
-    &.is-empty { display: grid; place-items: center; @include heading-h1; font-family: inherit; font-weight: 700; color: $dark-color-500; }
+    &.is-empty {
+      display: grid;
+      place-items: center;
+      @include heading-h1;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      color: $dark-color-500;
+    }
   }
+
   .sport-pitch-label {
     @include body-default;
     font-family: inherit;
     white-space: nowrap;
     color: $neutral-color-white;
 
-    b { color: $sports-color; font-weight: 600; }
+    b {
+      color: $sports-color;
+      font-weight: $font-weight-bold;
+    }
   }
 
   // 후보선수
@@ -1401,16 +2913,18 @@ main.sport-home.sport-live-page {
     margin: 120px 0 0;
     padding: 0 0 28px;
     text-align: center;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     color: $neutral-color-white;
     box-shadow: 0 24px 24px -24px rgba(0, 0, 0, 0.6);
   }
+
   .sport-subs {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 40px;
     padding: 120px 10% 0;
   }
+
   .sport-subs-team {
     @include display-M;
     font-family: inherit;
@@ -1419,12 +2933,25 @@ main.sport-home.sport-live-page {
     gap: 16px;
     margin: 0 0 120px;
     padding-left: 15%;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     color: $neutral-color-white;
 
-    img { width: 140px; height: 140px; object-fit: contain; }
+    img {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+    }
   }
-  .sport-subs-col ul { display: flex; flex-direction: column; gap: 84px; margin: 0; padding: 0; list-style: none; }
+
+  .sport-subs-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 84px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
   .sport-subs-col li {
     @include display-M;
     font-family: inherit;
@@ -1433,9 +2960,16 @@ main.sport-home.sport-live-page {
     gap: 24px;
     color: $neutral-color-white;
 
-    b { font-weight: 400; color: $sports-color; }
-    span { font-weight: 700; }
+    b {
+      font-weight: $font-weight-regular;
+      color: $sports-color;
+    }
+
+    span {
+      font-weight: $font-weight-bold;
+    }
   }
+
   .sport-subs-photo {
     width: 116px;
     height: 116px;
@@ -1446,7 +2980,14 @@ main.sport-home.sport-live-page {
     object-position: top;
     margin-right: 24px;
 
-    &.is-empty { display: grid; place-items: center; @include heading-h2; font-family: inherit; font-weight: 700; color: $dark-color-500; }
+    &.is-empty {
+      display: grid;
+      place-items: center;
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      color: $dark-color-500;
+    }
   }
 
   // ---------- 중계 ----------
@@ -1464,52 +3005,143 @@ main.sport-home.sport-live-page {
       padding: 20px 8px;
       border-bottom: 1px solid $dark-color-400;
     }
-    li.is-goal { background: rgba($sports-color, 0.08); }
-    p { @include body-large; font-family: inherit; margin: 0; color: $light-color-200; }
-    li.is-goal p { font-weight: 700; color: $neutral-color-white; }
+
+    li.is-goal {
+      background: rgba($sports-color, 0.08);
+    }
+
+    p {
+      @include body-large;
+      font-family: inherit;
+      margin: 0;
+      color: $light-color-200;
+    }
+
+    li.is-goal p {
+      font-weight: $font-weight-bold;
+      color: $neutral-color-white;
+    }
   }
-  .sport-commentary-min { @include heading-h4; font-family: inherit; flex: 0 0 56px; color: $sports-color; text-align: right; }
-  .sport-commentary-icon { flex: 0 0 24px; text-align: center; }
-  .sport-commentary-team { width: 28px; height: 28px; object-fit: contain; }
+
+  .sport-commentary-min {
+    @include heading-h4-b;
+    font-family: inherit;
+    flex: 0 0 56px;
+    color: $sports-color;
+    text-align: right;
+  }
+
+  .sport-commentary-icon {
+    flex: 0 0 24px;
+    text-align: center;
+  }
+
+  .sport-commentary-team {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
 
   // ---------- 기록 ----------
-  .sport-stats { max-width: 880px; margin: 0 auto; }
+  .sport-stats {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
   .sport-stats-teams {
     @include heading-h3;
     font-family: inherit;
     display: flex;
     justify-content: space-between;
     margin-bottom: 32px;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     color: $neutral-color-white;
 
-    span { display: inline-flex; align-items: center; gap: 12px; }
-    img { width: 40px; height: 40px; object-fit: contain; }
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
   }
-  .sport-stats ul { display: flex; flex-direction: column; gap: 28px; margin: 0; padding: 0; list-style: none; }
+
+  .sport-stats ul {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
   .sport-stats-values {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 10px;
 
-    span { @include body-default; font-family: inherit; color: $light-color-500; }
-    b { @include heading-h3; font-family: inherit; font-weight: 600; color: $light-color-400; }
-    b.is-lead { color: $neutral-color-white; font-weight: 700; }
+    span {
+      @include body-default;
+      font-family: inherit;
+      color: $light-color-500;
+    }
+
+    b {
+      @include heading-h3;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      color: $light-color-400;
+    }
+
+    b.is-lead {
+      color: $neutral-color-white;
+      font-weight: $font-weight-bold;
+    }
   }
+
   .sport-stats-bars {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
 
-    span { display: flex; height: 8px; border-radius: 9999px; background: $dark-color-400; overflow: hidden; }
-    .home { justify-content: flex-end; }
-    i { display: block; height: 100%; border-radius: inherit; background: $dark-color-100; }
-    .is-lead i { background: $sports-color; }
+    span {
+      display: flex;
+      height: 8px;
+      border-radius: 9999px;
+      background: $dark-color-400;
+      overflow: hidden;
+    }
+
+    .home {
+      justify-content: flex-end;
+    }
+
+    i {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: $dark-color-100;
+    }
+
+    .is-lead i {
+      background: $sports-color;
+    }
   }
 
   // ---------- 채팅 ----------
-  .sport-chat { max-width: 880px; margin: 0 auto; border-radius: $radius-card; background: $dark-color-800; overflow: hidden; }
+  .sport-chat {
+    max-width: 880px;
+    margin: 0 auto;
+    border-radius: $radius-card;
+    background: $dark-color-800;
+    overflow: hidden;
+  }
+
   .sport-chat-list {
     display: flex;
     flex-direction: column;
@@ -1520,74 +3152,1845 @@ main.sport-home.sport-live-page {
     overflow-y: auto;
     list-style: none;
 
-    li { max-width: 75%; }
-    li.is-mine { align-self: flex-end; text-align: right; }
-    b { @include label-default; font-family: inherit; color: $light-color-500; }
-    p { @include body-default; font-family: inherit; display: inline-block; margin: 4px 0 0; padding: 10px 14px; border-radius: 14px; background: $dark-color-400; color: $neutral-color-white; text-align: left; }
-    li.is-mine p { background: $sports-color; }
+    li {
+      max-width: 75%;
+    }
+
+    li.is-mine {
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    b {
+      @include label-default;
+      font-family: inherit;
+      color: $light-color-500;
+    }
+
+    p {
+      @include body-default;
+      font-family: inherit;
+      display: inline-block;
+      margin: 4px 0 0;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: $dark-color-400;
+      color: $neutral-color-white;
+      text-align: left;
+    }
+
+    li.is-mine p {
+      background: $sports-color;
+    }
   }
+
   .sport-chat-form {
     display: flex;
     gap: 8px;
     padding: 12px;
     border-top: 1px solid $dark-color-400;
 
-    input { @include body-default; font-family: inherit; flex: 1; height: 44px; padding: 0 16px; border: 0; border-radius: 9999px; background: $dark-color-500; color: $neutral-color-white; outline: none; }
-    input:focus { box-shadow: 0 0 0 2px $dark-color-100; }
-    button { @include body-default; font-family: inherit; height: 44px; padding: 0 20px; border: 0; border-radius: 9999px; background: $sports-color; color: $neutral-color-white; font-weight: 600; cursor: pointer; }
-    button:disabled { opacity: 0.4; cursor: default; }
+    input {
+      @include body-default;
+      font-family: inherit;
+      flex: 1;
+      height: 44px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 9999px;
+      background: $dark-color-500;
+      color: $neutral-color-white;
+      outline: none;
+    }
+
+    input:focus {
+      box-shadow: 0 0 0 2px $dark-color-100;
+    }
+
+    button {
+      @include body-default;
+      font-family: inherit;
+      height: 44px;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 9999px;
+      background: $sports-color;
+      color: $neutral-color-white;
+      font-weight: $font-weight-bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
   }
 
-  .sport-live-back-wrap { width: min(1280px, calc(100% - 128px)); margin: 80px auto 0; }
+  .sport-live-back-wrap {
+    width: min(1280px, calc(100% - 128px));
+    margin: 80px auto 0;
+  }
 
   // ---------- 태블릿 ----------
   @media (max-width: $breakpoint-tablet) {
     padding-bottom: 120px;
-    .sport-live-tabs-section > .inner, .sport-live-back-wrap { width: calc(100% - 80px); }
-    .sport-live-tab { @include heading-h4; font-family: inherit; height: 56px; }
-    .sport-live-panel { padding-top: 40px; }
-    .sport-lineup-head { margin-bottom: 24px; img { width: 56px; height: 56px; } h3, p { @include heading-h2; font-family: inherit; font-weight: 700; } }
-    .sport-pitch-photo { width: 72px; height: 72px; &.is-empty { @include heading-h3; font-family: inherit; font-weight: 700; } }
-    .sport-pitch-label { @include label-default; font-family: inherit; }
-    .sport-subs-title { @include heading-h2; font-family: inherit; font-weight: 700; margin-top: 72px; }
-    .sport-subs { padding: 56px 0 0; gap: 24px; }
-    .sport-subs-team { @include heading-h3; font-family: inherit; font-weight: 700; margin-bottom: 40px; padding-left: 0; img { width: 64px; height: 64px; } }
-    .sport-subs-col ul { gap: 28px; }
-    .sport-subs-col li { @include heading-h4; font-family: inherit; gap: 12px; }
-    .sport-subs-photo { width: 56px; height: 56px; margin-right: 4px; &.is-empty { @include body-default; font-family: inherit; font-weight: 700; } }
+
+    .sport-live-tabs-section>.inner,
+    .sport-live-back-wrap {
+      width: calc(100% - 80px);
+    }
+
+    .sport-live-tab {
+      @include heading-h4-b;
+      font-family: inherit;
+      height: 56px;
+    }
+
+    .sport-live-panel {
+      padding-top: 40px;
+    }
+
+    .sport-lineup-head {
+      margin-bottom: 24px;
+
+      img {
+        width: 56px;
+        height: 56px;
+      }
+
+      h3,
+      p {
+        @include heading-h2;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .sport-pitch-photo {
+      width: 72px;
+      height: 72px;
+
+      &.is-empty {
+        @include heading-h3;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .sport-pitch-label {
+      @include label-default;
+      font-family: inherit;
+    }
+
+    .sport-subs-title {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      margin-top: 72px;
+    }
+
+    .sport-subs {
+      padding: 56px 0 0;
+      gap: 24px;
+    }
+
+    .sport-subs-team {
+      @include heading-h3;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      margin-bottom: 40px;
+      padding-left: 0;
+
+      img {
+        width: 64px;
+        height: 64px;
+      }
+    }
+
+    .sport-subs-col ul {
+      gap: 28px;
+    }
+
+    .sport-subs-col li {
+      @include heading-h4-b;
+      font-family: inherit;
+      gap: 12px;
+    }
+
+    .sport-subs-photo {
+      width: 56px;
+      height: 56px;
+      margin-right: 4px;
+
+      &.is-empty {
+        @include body-default;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
   }
 
   // ---------- 모바일 ----------
   @media (max-width: $breakpoint-mobile) {
     padding-bottom: 80px;
-    .sport-live-tabs-section > .inner, .sport-live-back-wrap { width: calc(100% - 40px); }
-    .sport-detail-info { padding: 16px; }
-    .sport-live-info-title { @include body-default; font-family: inherit; font-weight: 700; gap: 10px; }
-    .sport-live-tab { @include body-default; font-family: inherit; font-weight: 700; height: 48px; }
-    .sport-live-panel { padding-top: 28px; }
-    .sport-lineup-team + .sport-lineup-team { margin-top: 48px; }
-    .sport-lineup-head { gap: 10px; margin-bottom: 16px; img { width: 36px; height: 36px; } h3, p { @include heading-h4; font-family: inherit; font-weight: 700; } p span { margin-right: 6px; } }
-    .sport-pitch { aspect-ratio: 3 / 4; border-radius: $radius-card; }
-    .sport-pitch-photo { width: 40px; height: 40px; border-width: 2px; &.is-empty { @include body-small; font-family: inherit; font-weight: 700; } }
-    .sport-pitch-players li { gap: 4px; }
-    .sport-pitch-label { @include caption-default; font-family: inherit; font-size: 10px; }
-    .sport-subs-title { @include heading-h3; font-family: inherit; font-weight: 700; margin-top: 48px; padding-bottom: 16px; }
-    .sport-subs { padding-top: 28px; gap: 16px; }
-    .sport-subs-team { @include body-default; font-family: inherit; font-weight: 700; gap: 8px; margin-bottom: 20px; img { width: 32px; height: 32px; } }
-    .sport-subs-col ul { gap: 16px; }
-    .sport-subs-col li { @include body-small; font-family: inherit; gap: 6px; }
-    .sport-subs-photo { width: 36px; height: 36px; border-width: 2px; margin-right: 2px; &.is-empty { @include label-default; font-family: inherit; font-weight: 700; } }
-    .sport-commentary li { gap: 10px; padding: 14px 4px; }
-    .sport-commentary p { @include body-small; font-family: inherit; }
-    .sport-commentary-min { flex-basis: 36px; @include body-small; font-family: inherit; font-weight: 700; }
-    .sport-chat-list { height: 360px; padding: 16px; }
+
+    .sport-live-tabs-section>.inner,
+    .sport-live-back-wrap {
+      width: calc(100% - 40px);
+    }
+
+    .sport-detail-info {
+      padding: 16px;
+    }
+
+    .sport-live-info-title {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      gap: 10px;
+    }
+
+    .sport-live-tab {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      height: 48px;
+    }
+
+    .sport-live-panel {
+      padding-top: 28px;
+    }
+
+    .sport-lineup-team+.sport-lineup-team {
+      margin-top: 48px;
+    }
+
+    .sport-lineup-head {
+      gap: 10px;
+      margin-bottom: 16px;
+
+      img {
+        width: 36px;
+        height: 36px;
+      }
+
+      h3,
+      p {
+        @include heading-h4-b;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p span {
+        margin-right: 6px;
+      }
+    }
+
+    .sport-pitch {
+      aspect-ratio: 3 / 4;
+      border-radius: $radius-card;
+    }
+
+    .sport-pitch-photo {
+      width: 40px;
+      height: 40px;
+      border-width: 2px;
+
+      &.is-empty {
+        @include body-small;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .sport-pitch-players li {
+      gap: 4px;
+    }
+
+    .sport-pitch-label {
+      @include caption-default;
+      font-family: inherit;
+      font-size: 10px;
+    }
+
+    .sport-subs-title {
+      @include heading-h3;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      margin-top: 48px;
+      padding-bottom: 16px;
+    }
+
+    .sport-subs {
+      padding-top: 28px;
+      gap: 16px;
+    }
+
+    .sport-subs-team {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      gap: 8px;
+      margin-bottom: 20px;
+
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .sport-subs-col ul {
+      gap: 16px;
+    }
+
+    .sport-subs-col li {
+      @include body-small;
+      font-family: inherit;
+      gap: 6px;
+    }
+
+    .sport-subs-photo {
+      width: 36px;
+      height: 36px;
+      border-width: 2px;
+      margin-right: 2px;
+
+      &.is-empty {
+        @include label-default;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .sport-commentary li {
+      gap: 10px;
+      padding: 14px 4px;
+    }
+
+    .sport-commentary p {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    .sport-commentary-min {
+      flex-basis: 36px;
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-chat-list {
+      height: 360px;
+      padding: 16px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sport-live-badge i { animation: none; }
+    .sport-live-info-badge i {
+      animation: none;
+    }
   }
 }
 
 @keyframes sport-live-blink {
-  50% { opacity: 0.3; }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+// ---------------------------------------------------------------------
+// 라이브 상세 · 라인업 (시안): 선택 팀 머리 → 경기장 → 상대 팀 머리(버튼) → 후보선수
+// - 팀 뱃지: public/images/matches/{팀}.svg
+// ---------------------------------------------------------------------
+main.sport-home.sport-live-page {
+  .sport-lineup-head {
+    width: 100%;
+
+    .sport-lineup-badge {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+  }
+
+  // 경기장 아래 상대 팀 머리: 누르면 그 팀 라인업으로 전환
+  .sport-lineup-head.is-button {
+    margin: 40px 0 0;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: $radius-card;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: $dark-color-800;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+    }
+  }
+
+  .sport-subs-team img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    .sport-lineup-head .sport-lineup-badge {
+      width: 56px;
+      height: 56px;
+    }
+
+    .sport-lineup-head.is-button {
+      margin-top: 24px;
+    }
+
+    .sport-subs-team img {
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    .sport-lineup-head .sport-lineup-badge {
+      width: 36px;
+      height: 36px;
+    }
+
+    .sport-lineup-head.is-button {
+      margin-top: 16px;
+      padding: 6px 8px;
+    }
+
+    .sport-subs-team img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+// 라이브 상세 · 라인업 PC 시안 (1920)
+// - 탭 → 팀 머리 → 경기장 → 상대 팀 머리 간격 모두 52px
+// - 폰트: 탭 h1 · 팀 이름(포메이션) h1 Bold · 감독 h1 · 선수 포지션 h3
+// - 태블릿 / 모바일 규칙을 덮지 않도록 PC(1025px 이상)에서만 적용
+// ---------------------------------------------------------------------
+$live-lineup-gap: 52px;
+
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.sport-home.sport-live-page {
+    .sport-live-tab {
+      @include heading-h1;
+      font-family: inherit;
+      height: auto;
+      padding: 20px 0;
+    }
+
+    .sport-live-panel {
+      padding-top: $live-lineup-gap;
+    }
+
+    .sport-lineup-head {
+      margin: 0 0 $live-lineup-gap;
+
+      h3 {
+        @include heading-h1;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p {
+        @include heading-h1;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p span {
+        font-weight: $font-weight-regular;
+        color: $light-color-500;
+      }
+    }
+
+    // 경기장 아래 상대 팀 머리: 경기장과 52px, 위아래 여백 없이
+    .sport-lineup-head.is-button {
+      margin: $live-lineup-gap 0 0;
+      padding: 0 12px;
+    }
+
+    .sport-pitch-label {
+      @include heading-h3;
+      font-family: inherit;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+// 라이브 상세 · 태블릿 (768 ~ 1024px) — 히어로 제외
+// - PC 시안(1920)을 1024 폭에 맞게 비율로 줄임 · 좌우 여백 $tablet-edge(40px)
+// - 휴대폰 규칙을 덮지 않도록 태블릿 구간에서만 적용
+// ---------------------------------------------------------------------
+$live-lineup-gap-tablet: $space-2xl; // 36px (PC 52px)
+
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  main.sport-home.sport-live-page {
+    padding-bottom: 120px;
+
+    // ---------- 영상 + 다른 경기 목록 (영상 위 · 목록 아래 2열) ----------
+    .sport-live-stage>.inner {
+      width: calc(100% - #{$tablet-edge * 2});
+    }
+
+    .sport-detail-layout {
+      grid-template-columns: 1fr;
+      gap: $space-xl;
+    }
+
+    .sport-detail-list {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: $space-md $space-lg;
+    }
+
+    .sport-detail-thumb {
+      flex-basis: 128px;
+    }
+
+    .sport-detail-title {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-detail-meta {
+      @include label-default;
+      font-family: inherit;
+    }
+
+    .sport-detail-info {
+      gap: $space-xs;
+      padding: $space-lg $space-xl $space-xl;
+    }
+
+    .sport-live-info-title {
+      @include heading-h4-b;
+      font-family: inherit;
+      gap: $space-md;
+    }
+
+    .sport-live-info-sub {
+      @include body-default;
+      font-family: inherit;
+    }
+
+    .sport-live-info-note {
+      @include label-default;
+      font-family: inherit;
+    }
+
+    // ---------- 탭 ----------
+    .sport-live-tabs-section>.inner,
+    .sport-live-back-wrap {
+      width: calc(100% - #{$tablet-edge * 2});
+    }
+
+    .sport-live-tab {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      height: auto;
+      padding: $space-lg 0;
+    }
+
+    .sport-live-panel {
+      padding-top: $live-lineup-gap-tablet;
+    }
+
+    // ---------- 라인업 (간격 36px) ----------
+    .sport-lineup-head {
+      gap: $space-md;
+      margin: 0 0 $live-lineup-gap-tablet;
+
+      .sport-lineup-badge {
+        width: 56px;
+        height: 56px;
+      }
+
+      h3 {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p span {
+        margin-right: $space-sm;
+        font-weight: $font-weight-regular;
+        color: $light-color-500;
+      }
+    }
+
+    .sport-lineup-head.is-button {
+      margin: $live-lineup-gap-tablet 0 0;
+      padding: 0 $space-sm;
+    }
+
+    .sport-pitch {
+      border-radius: $radius-card;
+    }
+
+    .sport-pitch-players li {
+      gap: $space-xs;
+    }
+
+    .sport-pitch-photo {
+      width: 72px;
+      height: 72px;
+      border-width: 2px;
+
+      &.is-empty {
+        @include heading-h3;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .sport-pitch-label {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    // ---------- 후보선수 ----------
+    .sport-subs-title {
+      @include display-M;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      margin-top: 72px;
+      padding-bottom: $space-xl;
+    }
+
+    .sport-subs {
+      gap: $space-xl;
+      padding: $space-3xl 4% 0;
+    }
+
+    .sport-subs-team {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      gap: $space-md;
+      margin-bottom: $space-2xl;
+      padding-left: 0;
+
+      img {
+        width: 64px;
+        height: 64px;
+      }
+    }
+
+    .sport-subs-col ul {
+      gap: $space-xl;
+    }
+
+    .sport-subs-col li {
+      @include heading-h4-b;
+      font-family: inherit;
+      gap: $space-md;
+    }
+
+    .sport-subs-photo {
+      width: 64px;
+      height: 64px;
+      border-width: 2px;
+      margin-right: $space-xs;
+
+      &.is-empty {
+        @include body-default;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .sport-live-back-wrap {
+      margin-top: 56px;
+    }
+  }
+}
+
+// =====================================================================
+// 라이브 상세 · 중계 / 기록 / 채팅 탭 (시안)
+// - 아이콘: public/icons/live/ (green-up · red-down · football-icon · yellow-card · red-card · bell-btn · light-500-top-arrow)
+// - 왼쪽 팀(토론토) · 오른쪽 팀(내슈빌) 기준 좌우 배치
+// =====================================================================
+main.sport-home.sport-live-page {
+
+  // 전반 종료 띠가 화면 끝까지 이어져도 가로 스크롤이 생기지 않게
+  .sport-live-tabs-section {
+    overflow-x: clip;
+  }
+
+  // ---------- 스코어보드 (중계 · 기록 공통) ----------
+  .sport-scoreboard {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: $space-2xl;
+    padding-bottom: $space-3xl;
+    border-bottom: 1px solid $dark-color-200;
+  }
+
+  .sport-scoreboard-badge {
+    display: grid;
+    place-items: center;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+
+    img {
+      width: 68%;
+      height: 68%;
+      object-fit: contain;
+    }
+  }
+
+  .sport-scoreboard-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-lg;
+
+    b {
+      @include heading-h1;
+      font-family: inherit;
+      display: grid;
+      place-items: center;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #0d0d0d;
+      font-weight: $font-weight-regular;
+      color: $neutral-color-white;
+    }
+
+    span {
+      @include body-large;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      color: $neutral-color-white;
+    }
+  }
+
+  // 가운데 콜론 (점 두 개)
+  .sport-scoreboard-colon {
+    align-self: flex-start;
+    width: 8px;
+    height: 26px;
+    margin-top: 57px;
+    background: radial-gradient(circle, $light-color-500 3.5px, transparent 4px) top / 8px 8px no-repeat,
+      radial-gradient(circle, $light-color-500 3.5px, transparent 4px) bottom / 8px 8px no-repeat;
+  }
+
+  // ---------- 중계: 가운데 시간 축 타임라인 ----------
+  .sport-timeline {
+    position: relative;
+    margin: 0;
+    padding: $space-3xl 0;
+    list-style: none;
+
+    // 가운데 세로선
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: $dark-color-100;
+    }
+  }
+
+  .sport-tl-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
+    align-items: center;
+    column-gap: $space-lg;
+    min-height: 72px;
+  }
+
+  .sport-tl-min {
+    @include label-default;
+    font-family: inherit;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: $neutral-color-white;
+    color: $dark-color-900;
+    font-weight: $font-weight-bold;
+  }
+
+  .is-goal .sport-tl-min {
+    background: $sports-color;
+    color: $neutral-color-white;
+  }
+
+  .is-yellow .sport-tl-min,
+  .is-red .sport-tl-min {
+    background: $dark-color-900;
+    color: $neutral-color-white;
+    box-shadow: inset 0 0 0 1px $neutral-color-white;
+  }
+
+  .sport-tl-body {
+    grid-row: 1;
+    min-width: 0;
+    color: $neutral-color-white;
+  }
+
+  .is-left .sport-tl-body {
+    grid-column: 1;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .is-right .sport-tl-body {
+    grid-column: 3;
+    justify-self: start;
+  }
+
+  // 교체: ↑ 투입 / ↓ 아웃 (왼쪽 팀은 이름 뒤에 화살표)
+  .sport-tl-sub {
+    @include body-default;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .is-left .sport-tl-sub span {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+  }
+
+  .sport-tl-goal {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+
+    strong {
+      @include body-large;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: $font-weight-bold;
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+
+    small {
+      @include label-default;
+      font-family: inherit;
+      color: $light-color-500;
+    }
+  }
+
+  .is-left .sport-tl-goal strong {
+    flex-direction: row-reverse;
+  }
+
+  .sport-tl-card {
+    @include body-default;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: $font-weight-bold;
+
+    img {
+      width: 12px;
+      height: 16px;
+    }
+  }
+
+  .is-left .sport-tl-card {
+    flex-direction: row-reverse;
+  }
+
+  // 전반 종료 구분 띠 (화면 폭 전체)
+  .sport-tl-half {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: $space-3xl;
+    margin: $space-xl calc(50% - 50vw);
+    padding: $space-lg calc(50vw - 50%);
+    background: $dark-color-400;
+
+    b {
+      @include heading-h1;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      color: $neutral-color-white;
+    }
+
+    b:first-child {
+      justify-self: end;
+    }
+
+    span {
+      @include heading-h3;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      color: $light-color-500;
+    }
+  }
+
+  // ---------- 기록 ----------
+  .sport-stats-head {
+    margin-bottom: $space-4xl;
+
+    h3 {
+      @include heading-h3;
+      font-family: inherit;
+      display: inline-block;
+      margin: 0 0 $space-md;
+      padding: $space-xs $space-md;
+      background: $dark-color-400;
+      font-weight: $font-weight-bold;
+      color: $neutral-color-white;
+    }
+
+    p {
+      @include body-small;
+      font-family: inherit;
+      margin: 0;
+      color: $light-color-500;
+    }
+  }
+
+  .sport-stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    margin: 0;
+    padding: $space-3xl 0 0;
+    list-style: none;
+
+    li {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $space-3xl;
+      row-gap: $space-xs;
+    }
+  }
+
+  .sport-stats-label {
+    @include body-default;
+    font-family: inherit;
+    grid-column: 1 / -1;
+    justify-self: center;
+    font-weight: $font-weight-bold;
+    color: $neutral-color-white;
+  }
+
+  .sport-stats-side {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+
+    b {
+      @include label-default;
+      font-family: inherit;
+      color: $light-color-500;
+    }
+
+    &.is-left {
+      align-items: flex-end;
+    }
+  }
+
+  .sport-stats-bar {
+    display: flex;
+    width: 100%;
+    height: 10px;
+    background: $dark-color-100;
+
+    i {
+      display: block;
+      height: 100%;
+    }
+  }
+
+  .is-left .sport-stats-bar {
+    justify-content: flex-end;
+
+    i {
+      background: $sports-color;
+    }
+  }
+
+  .is-right .sport-stats-bar i {
+    background: $neutral-color-white;
+  }
+
+  // ---------- 채팅 ----------
+  .sport-chat {
+    max-width: none;
+    margin: 0;
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .sport-chat-head {
+    h3 {
+      @include display-M;
+      font-family: inherit;
+      margin: 0 0 $space-sm;
+      font-weight: $font-weight-bold;
+      color: $neutral-color-white;
+    }
+
+    p {
+      @include body-large;
+      font-family: inherit;
+      margin: 0;
+      color: $light-color-500;
+    }
+  }
+
+  .sport-chat-filters {
+    display: flex;
+    gap: $space-md;
+    margin: $space-2xl 0 $space-3xl;
+  }
+
+  .sport-chat-filter {
+    @include body-large;
+    font-family: inherit;
+    height: 44px;
+    padding: 0 $space-xl;
+    border: 0;
+    border-radius: $radius-sm;
+    background: $dark-color-400;
+    color: $neutral-color-white;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background: $dark-color-300;
+    }
+
+    &.is-active {
+      background: $neutral-color-white;
+      color: $dark-color-900;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+    }
+  }
+
+  .sport-chat-list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    height: auto;
+    margin: 0;
+    padding: 0 $space-2xl;
+    list-style: none;
+    overflow: visible;
+
+    li {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: $space-xl;
+      max-width: none;
+    }
+  }
+
+  .sport-chat-avatar {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+
+    img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+    }
+  }
+
+  .sport-chat-body {
+    min-width: 0;
+
+    b {
+      @include body-large;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      color: $neutral-color-white;
+    }
+
+    p {
+      @include body-small;
+      font-family: inherit;
+      margin: $space-xs 0 0;
+      padding: 0;
+      background: none;
+      color: $light-color-300;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .sport-chat-meta {
+    @include label-default;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    align-self: start;
+    color: $light-color-500;
+  }
+
+  .sport-chat-bell {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+
+    img {
+      width: 14px;
+      height: 18px;
+      filter: invert(1);
+      opacity: 0.85;
+    }
+
+    &.is-on {
+      background: $rating-color;
+
+      img {
+        filter: none;
+        opacity: 1;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+    }
+  }
+
+  .sport-chat-form {
+    position: sticky;
+    bottom: $space-xl;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin: $space-3xl auto 0;
+    max-width: 880px;
+    height: 64px;
+    padding: 0 $space-sm 0 $space-2xl;
+    border: 0;
+    border-radius: 9999px;
+    background: $dark-color-400;
+    box-shadow: 0 -24px 40px rgba(0, 0, 0, 0.35);
+
+    input {
+      @include body-large;
+      font-family: inherit;
+      flex: 1;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: $neutral-color-white;
+      outline: none;
+      box-shadow: none;
+    }
+
+    input::placeholder {
+      color: $light-color-500;
+    }
+
+    input:focus {
+      box-shadow: none;
+    }
+
+    button {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border-radius: 50%;
+      background: $dark-color-900;
+      cursor: pointer;
+    }
+
+    button img {
+      width: 18px;
+      height: 22px;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  // ---------- 태블릿 ----------
+  @media (max-width: $breakpoint-tablet) {
+    .sport-scoreboard {
+      gap: $space-xl;
+      padding-bottom: $space-2xl;
+    }
+
+    .sport-scoreboard-badge {
+      width: 100px;
+      height: 100px;
+    }
+
+    .sport-scoreboard-score {
+      gap: $space-md;
+
+      b {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-regular;
+        width: 88px;
+        height: 88px;
+      }
+
+      span {
+        @include body-small;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .sport-scoreboard-colon {
+      margin-top: 31px;
+    }
+
+    .sport-timeline {
+      padding: $space-2xl 0;
+    }
+
+    .sport-tl-item {
+      grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+      column-gap: $space-md;
+      min-height: 52px;
+    }
+
+    .sport-tl-min {
+      width: 28px;
+      height: 28px;
+      font-size: 10px;
+    }
+
+    .sport-tl-sub,
+    .sport-tl-card {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    .sport-tl-sub img {
+      width: 12px;
+      height: 12px;
+    }
+
+    .sport-tl-goal strong {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-tl-goal img {
+      width: 14px;
+      height: 14px;
+    }
+
+    .sport-tl-half {
+      gap: $space-2xl;
+      padding-top: $space-md;
+      padding-bottom: $space-md;
+
+      b {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      span {
+        @include heading-h4-b;
+        font-family: inherit;
+      }
+    }
+
+    .sport-stats-head {
+      margin-bottom: $space-3xl;
+    }
+
+    .sport-stats-list {
+      gap: $space-lg;
+      padding-top: $space-2xl;
+
+      li {
+        column-gap: $space-2xl;
+      }
+    }
+
+    .sport-stats-label {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-stats-bar {
+      height: 8px;
+    }
+
+    .sport-chat-head h3 {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-chat-head p {
+      @include body-default;
+      font-family: inherit;
+    }
+
+    .sport-chat-filters {
+      margin: $space-xl 0 $space-2xl;
+    }
+
+    .sport-chat-filter {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      height: 40px;
+      padding: 0 $space-lg;
+    }
+
+    .sport-chat-list {
+      padding: 0 $space-lg;
+
+      li {
+        grid-template-columns: 52px minmax(0, 1fr) auto;
+        gap: $space-lg;
+      }
+    }
+
+    .sport-chat-avatar {
+      width: 52px;
+      height: 52px;
+    }
+
+    .sport-chat-form {
+      height: 56px;
+      padding-left: $space-xl;
+
+      button {
+        width: 44px;
+        height: 44px;
+      }
+    }
+  }
+
+  // ---------- 모바일 ----------
+  @media (max-width: $breakpoint-mobile) {
+    .sport-scoreboard {
+      gap: $space-md;
+    }
+
+    .sport-scoreboard-badge {
+      width: 64px;
+      height: 64px;
+    }
+
+    .sport-scoreboard-score b {
+      @include heading-h3;
+      font-family: inherit;
+      width: 56px;
+      height: 56px;
+    }
+
+    .sport-scoreboard-colon {
+      margin-top: 15px;
+    }
+
+    .sport-tl-item {
+      column-gap: $space-sm;
+    }
+
+    .sport-tl-half {
+      gap: $space-xl;
+
+      b {
+        @include heading-h2;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      span {
+        @include body-small;
+        font-family: inherit;
+      }
+    }
+
+    .sport-stats-list li {
+      column-gap: $space-lg;
+    }
+
+    .sport-chat-list {
+      padding: 0;
+
+      li {
+        grid-template-columns: 44px minmax(0, 1fr) auto;
+        gap: $space-md;
+      }
+    }
+
+    .sport-chat-avatar {
+      width: 44px;
+      height: 44px;
+    }
+
+    .sport-chat-filter {
+      height: 36px;
+      padding: 0 $space-md;
+    }
+
+    .sport-chat-form {
+      height: 52px;
+      padding-left: $space-lg;
+
+      button {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+// 라이브 상세 · 새 탭 레이아웃 보정
+// - 예전 중계 · 기록 · 채팅 규칙(.sport-commentary li · .sport-stats ul · .sport-chat-list p 등)이
+//   우선순위가 더 높아 새 레이아웃을 덮는 부분만 한 단계 높여서 다시 지정
+// ---------------------------------------------------------------------
+main.sport-home.sport-live-page {
+
+  // 중계: 예전 목록 줄(밑줄 · 패딩 · 골 배경) 초기화
+  .sport-commentary .sport-timeline>li {
+    gap: 0;
+    padding: 0;
+    border-bottom: 0;
+    background: none;
+  }
+
+  .sport-commentary .sport-timeline>.sport-tl-item {
+    display: grid;
+    column-gap: $space-lg;
+  }
+
+  .sport-commentary .sport-timeline>.sport-tl-half {
+    display: grid;
+    gap: $space-3xl;
+    padding: $space-lg calc(50vw - 50%);
+  }
+
+  // 기록: 예전 .sport-stats ul 규칙 대신 새 목록 간격
+  .sport-stats {
+    max-width: none;
+    margin: 0;
+  }
+
+  .sport-stats .sport-stats-list {
+    gap: $space-xl;
+    padding: $space-3xl 0 0;
+  }
+
+  // 채팅: 예전 말풍선 · 내 메시지 오른쪽 정렬 해제
+  .sport-chat-list .sport-chat-body b {
+    @include body-large;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+    color: $neutral-color-white;
+  }
+
+  .sport-chat-list .sport-chat-body p {
+    @include body-small;
+    font-family: inherit;
+    display: block;
+    margin: $space-xs 0 0;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    color: $light-color-300;
+  }
+
+  .sport-chat-list li.is-mine {
+    align-self: stretch;
+    text-align: left;
+  }
+
+  .sport-chat-list li.is-mine .sport-chat-body p {
+    background: none;
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    .sport-commentary .sport-timeline>.sport-tl-item {
+      column-gap: $space-md;
+    }
+
+    .sport-commentary .sport-timeline>.sport-tl-half {
+      gap: $space-2xl;
+      padding-top: $space-md;
+      padding-bottom: $space-md;
+    }
+
+    .sport-stats .sport-stats-list {
+      gap: $space-lg;
+      padding-top: $space-2xl;
+    }
+
+    .sport-chat-list .sport-chat-body b {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    .sport-commentary .sport-timeline>.sport-tl-item {
+      column-gap: $space-sm;
+    }
+
+    .sport-commentary .sport-timeline>.sport-tl-half {
+      gap: $space-xl;
+    }
+  }
+}
+
+// =====================================================================
+// 라이브 상세 · 조정 (탭 ↔ 내용 간격 / 채팅 사이렌 / PC 텍스트 = 태블릿 텍스트)
+// =====================================================================
+$live-tab-content-gap: 80px; // PC: 탭 메뉴 ↔ 내용
+$live-tab-content-gap-tablet: $space-4xl; // 64px
+$live-tab-content-gap-mobile: $space-3xl; // 48px
+
+main.sport-home.sport-live-page {
+
+  // ---------- 탭 ↔ 내용 간격 ----------
+  // .sport-live-panel 은 .inner 라 공통 규칙(padding: 0)에 패딩이 지워짐 → 탭 아래 여백으로 띄움
+  .sport-live-tabs {
+    margin-bottom: $live-tab-content-gap;
+  }
+
+  // ---------- 채팅: 벨 → 사이렌(신고) 아이콘 ----------
+  .sport-chat-siren {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    img {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    &:hover {
+      background: $dark-color-400;
+    }
+
+    &.is-on {
+      background: rgba($sports-color, 0.25);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    .sport-live-tabs {
+      margin-bottom: $live-tab-content-gap-tablet;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    .sport-live-tabs {
+      margin-bottom: $live-tab-content-gap-mobile;
+    }
+
+    .sport-chat-siren {
+      width: 24px;
+      height: 24px;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+// ---------- PC 텍스트: 태블릿과 같은 크기로 (믹스인 동일 적용) ----------
+// - 크기 · 간격 · 이미지 크기는 PC 그대로, 글자 크기만 태블릿 기준
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.sport-home.sport-live-page {
+
+    // 영상 정보 · 다른 경기 목록
+    .sport-live-info-title {
+      @include heading-h4-b;
+      font-family: inherit;
+    }
+
+    .sport-live-info-sub {
+      @include body-default;
+      font-family: inherit;
+    }
+
+    .sport-live-info-note {
+      @include label-default;
+      font-family: inherit;
+    }
+
+    .sport-detail-title {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-detail-meta {
+      @include label-default;
+      font-family: inherit;
+    }
+
+    // 탭
+    .sport-live-tab {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      padding: $space-lg 0;
+    }
+
+    // 라인업
+    .sport-lineup-head {
+      h3 {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p span {
+        font-weight: $font-weight-regular;
+      }
+    }
+
+    .sport-pitch-label {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    .sport-subs-title {
+      @include display-M;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-subs-team {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-subs-col li {
+      @include heading-h4-b;
+      font-family: inherit;
+    }
+
+    // 스코어보드
+    .sport-scoreboard-score {
+      b {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-regular;
+      }
+
+      span {
+        @include body-small;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    // 중계
+    .sport-tl-sub,
+    .sport-tl-card {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    .sport-tl-goal strong {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-commentary .sport-timeline>.sport-tl-half {
+      b {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      span {
+        @include heading-h4-b;
+        font-family: inherit;
+      }
+    }
+
+    // 기록
+    .sport-stats-head h3 {
+      @include heading-h4-b;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-stats-label {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    // 채팅
+    .sport-chat-head h3 {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-chat-head p {
+      @include body-default;
+      font-family: inherit;
+    }
+
+    .sport-chat-filter {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-chat-list .sport-chat-body b {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-chat-form input {
+      @include body-default;
+      font-family: inherit;
+    }
+  }
+}
+// =====================================================================
+// 라이브 상세: 다른 팀 경기 (MLS 외 팀 · 데이터 없는 탭)
+// =====================================================================
+.sport-live-page {
+  // 탭에 표시할 데이터가 아직 없을 때
+  .sport-live-empty {
+    @include body-default;
+    padding: $space-3xl 0;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+  }
+
+  // 뱃지 이미지가 없는 팀: 이름 첫 글자
+  .sport-badge-initial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    @include heading-h4-b;
+    color: #fff;
+  }
+}
+
+// =====================================================================
+// 스코어보드 팀 원: 구단 칩 이미지를 원 전체에 꽉 채움 (radius full)
+// =====================================================================
+.sport-live-page .sport-scoreboard .sport-scoreboard-badge.is-chip {
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 }
