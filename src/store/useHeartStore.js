@@ -313,14 +313,14 @@ export const useHeartStore = create((set, get) => ({
   onCloseToast: () => set({ toast: null }),
 }));
 
-// 컴포넌트용: 하트 상태 + 토글 (로그인 전에는 구독 팝업)
+// 컴포넌트용: 하트 상태 + 토글 (로그인 전에는 로그인 안내 팝업)
 export const useWish = (type, id) => {
   const wished = useHeartStore((s) => Boolean(s.items[wishKey(type, id)]));
   const uid = useHeartStore((s) => s.uid);
   const onToggle = useHeartStore((s) => s.onToggle);
   const toggle = (content) => {
     if (!uid) {
-      window.dispatchEvent(new CustomEvent("subscribe-gate:open"));
+      window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason: "account" } }));
       return;
     }
     onToggle({ id, type, ...content });
@@ -328,11 +328,11 @@ export const useWish = (type, id) => {
   return { wished, toggle };
 };
 
-// 컴포넌트에서 바로 쓰는 토글 (로그인 전에는 구독 팝업)
+// 컴포넌트에서 바로 쓰는 토글 (로그인 전에는 로그인 안내 팝업)
 export const toggleWish = (content) => {
   const s = useHeartStore.getState();
   if (!s.uid) {
-    window.dispatchEvent(new CustomEvent("subscribe-gate:open"));
+    window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason: "account" } }));
     return;
   }
   s.onToggle(content);
