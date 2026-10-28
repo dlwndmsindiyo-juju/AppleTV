@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
-import SubscribeGate from "./SubscribeGate"; // 로그인 전 "구독 후 이용해주세요." 팝업
+import SubscribeGate from "./SubscribeGate"; // 로그인 전 안내 팝업 (재생: 구독 / 찜 등: 로그인)
 import { WishIcon } from "../wishlist/WishlistLayer"; // 위시리스트 하트 아이콘
 import ProfileAvatar from "../profile/ProfileAvatar"; // 계정 설정에서 고른 프로필 아이콘
 
@@ -112,7 +112,7 @@ const Header = () => {
   // PC · 태블릿 검색창 = 검색 페이지의 검색창 (시안: 검색 페이지에는 따로 검색창이 없음)
   // - 다른 페이지: 검색창을 누르면 검색 페이지(둘러보기)로 이동 · Enter 로 바로 검색
   // - 검색 페이지: 입력을 멈추면(0.4초) 결과가 바뀌고, 주소의 검색어와 항상 같게 유지
-  // - 로그인 전: 검색하면 구독 팝업
+  // - 로그인 전에도 검색 가능 (작품 재생만 구독 팝업)
   const [headerQuery, setHeaderQuery] = useState("");
   const onSearchPage = location.pathname === "/search";
   const urlQuery = onSearchPage ? new URLSearchParams(location.search).get("q") || "" : "";
@@ -124,34 +124,24 @@ const Header = () => {
 
   // 검색 페이지에서 입력을 멈추면 검색어 반영
   useEffect(() => {
-    if (!onSearchPage || !user || headerQuery.trim() === urlQuery) return undefined;
+    if (!onSearchPage || headerQuery.trim() === urlQuery) return undefined;
     const t = setTimeout(() => {
       const q = headerQuery.trim();
       navigate(q ? `/search?q=${encodeURIComponent(q)}` : "/search", { replace: true });
     }, 400);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [headerQuery, onSearchPage, user]);
+  }, [headerQuery, onSearchPage]);
 
   const handleHeaderFocus = () => {
-    if (user && !onSearchPage) navigate("/search");
+    if (!onSearchPage) navigate("/search");
   };
 
   const handleHeaderSearch = (e) => {
     if (e.key !== "Enter" || e.nativeEvent.isComposing) return; // 한글 조합 중 Enter 무시
     const q = headerQuery.trim();
-    if (!user) {
-      window.dispatchEvent(new CustomEvent("subscribe-gate:open"));
-      return;
-    }
     navigate(q ? `/search?q=${encodeURIComponent(q)}` : "/search", { replace: onSearchPage });
     e.currentTarget.blur();
-  };
-  // 모바일 검색 아이콘: 로그인 전에는 이동 대신 구독 팝업
-  const handleSearchIcon = (e) => {
-    if (user) return;
-    e.preventDefault();
-    window.dispatchEvent(new CustomEvent("subscribe-gate:open"));
   };
 
   const handleTabChange = (tab) => {
@@ -216,7 +206,7 @@ const Header = () => {
               </li>
               {/* 모바일 전용: 검색창 대신 검색 아이콘만 (누르면 검색 페이지로) */}
               <li className="search-icon-item">
-                <Link to="/search" className="search-icon-btn" aria-label="검색" onClick={handleSearchIcon}>
+                <Link to="/search" className="search-icon-btn" aria-label="검색">
                   <img src="/icons/search.svg" alt="" aria-hidden="true" />
                 </Link>
               </li>
