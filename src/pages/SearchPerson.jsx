@@ -113,7 +113,7 @@ const SearchPerson = () => {
   const following = (user?.favoritePeople || []).includes(personId);
   const toggleFollow = async () => {
     if (!user) {
-      openSubscribeGate();
+      openSubscribeGate("account"); // 관심 인물은 계정에 저장 → 로그인 안내
       return;
     }
     setSaving(true);
