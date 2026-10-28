@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import AiAssistantLink from "../ai/AiAssistantLink";
 
 // AI 어시스턴트 안내 띠 (로그인 전 메인 · 시안)
 // - 왼쪽: APPLE TV / 제목 / 설명,  오른쪽: 흰 카드(취향 칩 + 맞는 작품 찾기)
-// - 로그인 전이라 버튼은 로그인 페이지로 이동 (선택한 취향은 state 로 함께 전달)
+// - 선택한 취향을 전달하고 공통 AI 팝업을 엽니다.
 const TASTES = ["편안한 힐링", "몰입감 있는", "가볍게 웃는"];
 
-const AiAssistantPromo = ({ ctaPath = "/login" }) => {
+const AiAssistantPromo = () => {
   const [taste, setTaste] = useState(null);
 
   return (
@@ -43,9 +43,9 @@ const AiAssistantPromo = ({ ctaPath = "/login" }) => {
             </ul>
 
             <p className="ai-promo-question">무엇을 보고 싶으세요?</p>
-            <Link to={ctaPath} state={{ taste }} className="ai-promo-btn">
+            <AiAssistantLink initialTaste={taste} className="ai-promo-btn">
               맞는 작품 찾기
-            </Link>
+            </AiAssistantLink>
           </div>
         </div>
       </div>

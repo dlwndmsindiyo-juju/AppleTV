@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMovieStore } from "../../store/useMovieStore";
 import { SwiperSlide } from "swiper/react";
 import Rail from "../common/Rail";
+import AiAssistantPopup from "../ai/AiAssistantPopup";
 import { img, genreText, detailPath } from "./memberUtils";
 
 // useMovieStore 의 MOOD_GENRES 키와 동일해야 함
@@ -10,6 +11,7 @@ const MOODS = ["심심한", "힘든", "슬픈", "즐거움", "화남"];
 
 const MoodAssistant = ({ userName = "회원" }) => {
   const [mood, setMood] = useState(MOODS[0]);
+  const [aiOpen, setAiOpen] = useState(false);
   const list = useMovieStore((s) => s.moodList[mood]);
   const onFetchMood = useMovieStore((s) => s.onFetchMood);
 
@@ -44,7 +46,7 @@ const MoodAssistant = ({ userName = "회원" }) => {
 
         <div className="member-notice">
           <p>{userName}님의 기분에 맞춰 추천하는 콘텐츠입니다.</p>
-          <button type="button" className="member-btn">
+          <button type="button" className="member-btn" aria-haspopup="dialog" aria-expanded={aiOpen} onClick={() => setAiOpen(true)}>
             <span className="ui-icon ui-icon-plus" aria-hidden="true" />
             취향 더 반영하기
           </button>
@@ -81,6 +83,7 @@ const MoodAssistant = ({ userName = "회원" }) => {
           )}
         </Rail>
       </div>
+      {aiOpen && <AiAssistantPopup onClose={() => setAiOpen(false)} />}
     </section>
   );
 };
