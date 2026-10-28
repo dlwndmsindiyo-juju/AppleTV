@@ -145,9 +145,19 @@ export const MovieDetail = ({ type: typeProp }) => {
   const history = useWatchStore((s) => s.items.find((h) => h.type === type && h.id === contentId));
   const onSaveProgress = useWatchStore((s) => s.onSaveProgress);
 
+  // 로그인 전: 상세 페이지는 둘러볼 수 있고, 재생할 때만 구독 팝업 (SubscribeGate)
+  const authReady = useAuthStore((s) => s.authReady);
+  const askSubscribe = () =>
+    window.dispatchEvent(new CustomEvent('subscribe-gate:open', { detail: { reason: 'watch' } }));
+
   // 영상 열기: 같은 영상을 보다 멈췄으면 그 위치부터
-  const openPlayer = (key, meta = {}) =>
+  const openPlayer = (key, meta = {}) => {
+    if (!uid) {
+      askSubscribe();
+      return;
+    }
     setPlaying(key ? { key, ...meta, startAt: resumeAt(history, key) } : { key: 'none' });
+  };
 
   // 재생하기 · 이어보기: 보던 영상이 있으면 이어서, 없으면 예고편
   const playFromHistory = () => {
@@ -185,14 +195,14 @@ export const MovieDetail = ({ type: typeProp }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const autoPlay = searchParams.get('play') === '1';
   useEffect(() => {
-    if (!autoPlay || !detail || (uid && watchStatus === 'loading')) return;
-    playFromHistory();
+    if (!autoPlay || !authReady || !detail || (uid && watchStatus === 'loading')) return;
+    playFromHistory(); // 로그인 전이면 재생 대신 구독 팝업
     // 한 번만 재생되도록 주소에서 play 제거 (뒤로 가기 · 새로고침 시 다시 열리지 않게)
     const next = new URLSearchParams(searchParams);
     next.delete('play');
     setSearchParams(next, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPlay, detail, trailer, searchParams, setSearchParams, uid, watchStatus]);
+  }, [autoPlay, authReady, detail, trailer, searchParams, setSearchParams, uid, watchStatus]);
 
   // (TV) 선택한 시즌의 회차 불러오기
   useEffect(() => {
@@ -258,6 +268,10 @@ export const MovieDetail = ({ type: typeProp }) => {
 
   // (TV) 회차 재생: 회차 영상 → 없으면 작품 예고편 → 없으면 안내
   const handlePlayEpisode = async (ep) => {
+    if (!uid) {
+      askSubscribe(); // 로그인 전: 구독 팝업
+      return;
+    }
     await onFetchEpisodeVideo(contentId, ep.season_number, ep.episode_number);
     const key = `${contentId}_${ep.season_number}_${ep.episode_number}`;
     const list = useMovieStore.getState().episodeVideos[key] || [];

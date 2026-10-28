@@ -4,7 +4,8 @@
 // - 검색 전: 최근 검색 항목(있으면) + 둘러보기 포스터
 // - 검색 결과: 인기 검색 결과 3 + TV 프로그램 + 영화
 // - 결과 없음: 검색어 지우기
-// - 로그인 전: 검색하면 구독 팝업 ("구독 후 이용해주세요.")
+// - 로그인 전에도 검색 · 둘러보기 가능 (작품을 재생할 때만 상세 페이지에서 구독 팝업)
+// - 최근 검색 항목은 로그인한 계정만 저장
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
@@ -22,8 +23,9 @@ const DEBOUNCE_MS = 400;
 const TOP_COUNT = 3; // 인기 검색 결과
 const ROW_COUNT = 16; // TV 프로그램 · 영화 (8칸 x 2줄)
 
-// 로그인 전 구독 팝업 열기 (SubscribeGate 가 받음)
-export const openSubscribeGate = () => window.dispatchEvent(new CustomEvent("subscribe-gate:open"));
+// 로그인 전 안내 팝업 열기 (SubscribeGate 가 받음) — reason: "watch"(구독) | "account"(로그인)
+export const openSubscribeGate = (reason = "watch") =>
+  window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason } }));
 
 const Search = () => {
   const [params, setParams] = useSearchParams();
@@ -32,7 +34,6 @@ const Search = () => {
   const q = params.get("q") || "";
 
   const user = useAuthStore((s) => s.user);
-  const authReady = useAuthStore((s) => s.authReady);
 
   const {
     status,
@@ -71,31 +72,20 @@ const Search = () => {
     setParams(v ? { q: v } : {}, { replace });
   };
 
-  // 입력을 멈추면 검색어 반영 (로그인한 경우만)
+  // 입력을 멈추면 검색어 반영
   useEffect(() => {
-    if (!user || text.trim() === q) return undefined;
+    if (text.trim() === q) return undefined;
     const t = setTimeout(() => setQuery(text), DEBOUNCE_MS);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text, user]);
+  }, [text]);
 
-  // 검색 실행
+  // 검색 실행 (로그인 전에도)
   useEffect(() => {
-    if (!authReady) return;
-    if (!user) {
-      if (q) openSubscribeGate(); // 로그인 전: 결과 대신 구독 팝업
-      return;
-    }
     onSearch(q);
-  }, [q, user, authReady, onSearch]);
+  }, [q, onSearch]);
 
-  const submit = (value) => {
-    if (!user) {
-      openSubscribeGate();
-      return;
-    }
-    setQuery(value, false);
-  };
+  const submit = (value) => setQuery(value, false);
 
   // 검색어 지우기 → 검색 전 화면 (헤더 검색창도 주소를 따라 비워짐)
   const clear = () => {
@@ -128,7 +118,7 @@ const Search = () => {
   // ---------- 화면 ----------
   let body = null;
 
-  if (!q || !user) {
+  if (!q) {
     // 검색 전: 최근 검색 항목이 있으면 위에, 없으면 "무엇을 보고 싶으세요?"
     const hasRecent = Boolean(user) && recent.length > 0;
     body = (
