@@ -1,87 +1,102 @@
 // src/components/layout/SubscribeGate.jsx
-// 로그인 전 구독 유도 팝업 ("구독 후 이용해주세요.")
-// - 로그인 전 TV 홈(/) · 스포츠(/sport…) 에서 본문(main) 안의 링크 · 버튼을 누르면
-//   이동/동작 대신 이 팝업을 먼저 보여줌 (작품 상세 · 재생 · 알림 받기 · 관심있는 구단 팔로우 등 전부)
-// - 섹션마다 코드를 고치지 않도록 한 곳에서 클릭을 먼저 받아 처리 (Header 에서 한 번만 렌더)
-// - 그대로 동작해야 하는 것은 FREE_SELECTOR 에서 제외
-//   (로그인 · 구독으로 가는 버튼, 슬라이드 화살표 · 점, 탭, 에코시스템 안내, AI 어시스턴트 띠)
-// - 따로 열어두고 싶은 버튼이 생기면 그 요소에 data-gate="free" 를 붙이면 됨
+// 로그인 전 안내 팝업 (Header 에서 한 번만 렌더)
+// - 로그인 전에도 모든 섹션 · 페이지(작품 상세 · 검색 · 스포츠 등)는 그대로 둘러볼 수 있음
+// - 콘텐츠를 직접 감상할 때만 "구독 후 이용해주세요." (reason: "watch")
+//     · 작품 재생 (상세 페이지 재생하기 · 회차 · 영상 · 이어보기)  → MovieDetail 에서 요청
+//     · 스포츠 경기 라이브 · 하이라이트 · 다시보기 · 시리즈 · 숏츠 재생 → 아래 WATCH_ROUTES · WATCH_SELECTOR
+// - 계정이 있어야 저장되는 기능(찜 · 관심 인물 등)은 "로그인 후 이용해주세요." (reason: "account")
+// - 다른 곳에서 열기: window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason } }))
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 
-const FREE_SELECTOR = [
-  "[data-gate='free']",
-  "a[href^='/login']",
-  "a[href^='/subscribe']",
-  "a[href^='/ecosystem']",
-  ".swiper-button-prev",
-  ".swiper-button-next",
-  ".swiper-pagination-bullet",
-  "[role='tab']",
-  ".ai-promo",
+// 들어가면 바로 영상이 재생되는 스포츠 페이지 (예정된 경기 /sport/upcoming 은 카운트다운이라 제외)
+const WATCH_ROUTES = ["/sport/match/", "/sport/replay", "/sport/highlights", "/sport/series"];
+
+// 누르면 바로 재생되는 버튼 · 감상 페이지로 가는 링크
+const WATCH_SELECTOR = [
+  "[data-gate='watch']",
+  ".sport-sf-play", // 숏츠 재생
+  ...WATCH_ROUTES.map((path) => `a[href^='${path}']`),
 ].join(",");
+
+const isWatchRoute = (pathname) => WATCH_ROUTES.some((p) => pathname.startsWith(p));
+
+const TEXT = {
+  watch: {
+    title: "구독 후 이용해주세요.",
+    button: "구독하기",
+  },
+  account: {
+    title: "로그인 후 이용해주세요.",
+    desc: "찜 · 관심 인물 같은 기능은 Apple 계정으로 로그인하면 이용할 수 있어요.",
+    button: "로그인",
+  },
+};
 
 const SubscribeGate = () => {
   const user = useAuthStore((s) => s.user);
   const authReady = useAuthStore((s) => s.authReady);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [reason, setReason] = useState(null); // null | "watch" | "account"
+  const [leaveOnClose, setLeaveOnClose] = useState(false); // 감상 페이지에 바로 들어온 경우: 닫으면 스포츠 홈으로
   const primaryRef = useRef(null);
   const lastFocus = useRef(null);
 
-  // 로그인 전 + TV 홈 / 스포츠 / 검색 화면에서만 동작
-  const active =
-    authReady &&
-    !user &&
-    (pathname === "/" || pathname.startsWith("/sport") || pathname.startsWith("/search"));
+  const loggedOut = authReady && !user;
 
-  // 어디서든 팝업 열기 (헤더 검색창 · 검색 페이지에서 window 이벤트로 요청)
+  // 어디서든 팝업 열기 (상세 페이지 재생 · 찜 · 관심 인물 등)
   useEffect(() => {
-    const onOpen = () => {
-      if (!useAuthStore.getState().user) {
-        lastFocus.current = document.activeElement;
-        setOpen(true);
-      }
+    const onOpen = (e) => {
+      if (useAuthStore.getState().user) return;
+      lastFocus.current = document.activeElement;
+      setLeaveOnClose(false);
+      setReason(e.detail?.reason === "account" ? "account" : "watch");
     };
     window.addEventListener("subscribe-gate:open", onOpen);
     return () => window.removeEventListener("subscribe-gate:open", onOpen);
   }, []);
 
-  // 본문 안 링크 · 버튼 클릭을 먼저 받아서 팝업으로 대신함
+  // 감상 버튼 · 링크만 먼저 받아서 팝업으로 대신함 (나머지 클릭은 그대로 동작)
   useEffect(() => {
-    if (!active) return undefined;
-
+    if (!loggedOut) return undefined;
     const onClick = (e) => {
-      const el = e.target.closest("a, button, [role='button']");
-      if (!el || !el.closest("main")) return; // 헤더 · 푸터 · 하단 배너는 그대로
-      if (el.closest(".subscribe-gate") || el.closest(FREE_SELECTOR)) return;
-
+      const el = e.target.closest?.(WATCH_SELECTOR);
+      if (!el || el.closest(".subscribe-gate")) return;
       e.preventDefault();
       e.stopPropagation();
       lastFocus.current = el;
-      setOpen(true);
+      setLeaveOnClose(false);
+      setReason("watch");
     };
-
     document.addEventListener("click", onClick, true); // capture: 각 섹션의 onClick 보다 먼저
     return () => document.removeEventListener("click", onClick, true);
-  }, [active]);
+  }, [loggedOut]);
 
-  // 페이지가 바뀌거나 로그인하면 닫기
+  // 감상 페이지 주소로 바로 들어온 경우 (새로고침 · 공유 링크)
   useEffect(() => {
-    setOpen(false);
-  }, [pathname, user]);
+    if (loggedOut && isWatchRoute(pathname)) {
+      setLeaveOnClose(true);
+      setReason("watch");
+    } else {
+      setReason(null); // 페이지가 바뀌거나 로그인하면 닫기
+    }
+  }, [pathname, loggedOut]);
 
   const close = useCallback(() => {
-    setOpen(false);
+    setReason(null);
+    if (leaveOnClose) {
+      navigate("/sport", { replace: true });
+      return;
+    }
     lastFocus.current?.focus?.(); // 누른 버튼으로 포커스 되돌리기
-  }, []);
+  }, [leaveOnClose, navigate]);
 
-  // 열렸을 때: Esc 로 닫기 · 구독 버튼에 포커스 · 뒤 화면 스크롤 막기
+  // 열렸을 때: Esc 로 닫기 · 주 버튼에 포커스 · 뒤 화면 스크롤 막기
   useEffect(() => {
-    if (!open) return undefined;
+    if (!reason) return undefined;
     const onKey = (e) => e.key === "Escape" && close();
     document.addEventListener("keydown", onKey);
     primaryRef.current?.focus();
@@ -91,13 +106,20 @@ const SubscribeGate = () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
     };
-  }, [open, close]);
+  }, [reason, close]);
 
-  if (!open) return null;
+  if (!reason) return null;
 
-  const goSubscribe = () => {
-    setOpen(false);
-    navigate("/login", { state: { from: pathname, intent: "subscribe" } });
+  const text = TEXT[reason];
+  const watchDesc = pathname.startsWith("/sport")
+    ? "Apple TV를 구독하면 경기 라이브 · 하이라이트 · 다시보기를 모두 시청할 수 있어요."
+    : "Apple TV를 구독하면 모든 작품을 바로 시청할 수 있어요.";
+
+  const goNext = () => {
+    setReason(null);
+    navigate("/login", {
+      state: { from: leaveOnClose ? "/sport" : pathname, intent: reason === "watch" ? "subscribe" : "login" },
+    });
   };
 
   return createPortal(
@@ -113,23 +135,14 @@ const SubscribeGate = () => {
           <img src="/icons/header-icon.svg" alt="" />
         </div>
         <h2 className="subscribe-gate-title" id="subscribe-gate-title">
-          구독 후 이용해주세요.
+          {text.title}
         </h2>
         <p className="subscribe-gate-desc" id="subscribe-gate-desc">
-          {pathname.startsWith("/sport")
-            ? "Apple TV를 구독하면 경기 시청과 관심 구단 팔로우를 모두 이용할 수 있어요."
-            : pathname.startsWith("/search")
-              ? "Apple TV를 구독하면 작품 · 인물 검색과 모든 작품을 이용할 수 있어요."
-              : "Apple TV를 구독하면 모든 작품과 기능을 이용할 수 있어요."}
+          {reason === "watch" ? watchDesc : text.desc}
         </p>
         <div className="subscribe-gate-actions">
-          <button
-            ref={primaryRef}
-            type="button"
-            className="subscribe-gate-btn"
-            onClick={goSubscribe}
-          >
-            구독하기
+          <button ref={primaryRef} type="button" className="subscribe-gate-btn" onClick={goNext}>
+            {text.button}
           </button>
           <button
             type="button"
