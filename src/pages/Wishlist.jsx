@@ -205,9 +205,11 @@ const Wishlist = () => {
   const groupId = params.get("group") || "all";
   const sort = SORTS.some((s) => s.key === params.get("sort")) ? params.get("sort") : "latest";
 
-  // 로그인 전: 구독 팝업
+  // 로그인 전: 로그인 안내 팝업 (위시리스트는 계정에 저장)
   useEffect(() => {
-    if (authReady && !user) window.dispatchEvent(new CustomEvent("subscribe-gate:open"));
+    if (authReady && !user) {
+      window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason: "account" } }));
+    }
   }, [authReady, user]);
 
   useEffect(() => {
