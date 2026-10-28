@@ -1,0 +1,931 @@
+@use "./variables" as *;
+
+// =====================================================================
+// 로그인 후 메인 (Desktop.pdf 시안) — 신규 섹션 전용 스타일
+// - .member-home 안에서만 적용되므로 기존 스타일에 영향 없음
+// - App.jsx 의 import 순서와 무관하게 MemberHome.jsx 에서 직접 불러옴
+// =====================================================================
+$mobile-edge: 20px;
+
+.member-home {
+
+  // ---------- 섹션 공통 ----------
+  .member-section {
+    background-color: $gnb-bg;
+    padding: 40px 0 56px;
+
+    .inner {
+      @include inner-wrap;
+    }
+
+    // 회색 띠 구간 (찜한 콘텐츠 / 에코시스템)
+    &.band {
+      background-color: $bg-page;
+    }
+  }
+
+  .member-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: $space-lg;
+    margin-bottom: $space-xl;
+  }
+
+  // main h2 { padding-top: 200px } 영향 제거
+  .member-title {
+    @include heading-h2;
+    color: $text-primary;
+    margin: 0 0 $space-sm;
+    padding-top: 0;
+  }
+
+  .member-desc {
+    @include body-large;
+    color: $text-tertiary;
+    margin: 0;
+
+    &.small {
+      @include body-small;
+    }
+  }
+
+  .member-more {
+    @include body-small;
+    flex-shrink: 0;
+    color: $text-tertiary;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+
+  // ---------- 가로 슬라이드 (Swiper) ----------
+  // 이너 폭 안에서 잘리도록 overflow hidden (히어로 제외 공통 콘텐츠 폭)
+  .member-continue .inner,
+  .member-wishlist .inner,
+  .member-recommend .inner,
+  .member-mood .inner {
+    overflow: hidden;
+  }
+
+  .member-slider {
+    width: 100%;
+
+    // 카드 폭은 --rail-col 로 지정 (slidesPerView: auto)
+    .swiper-slide {
+      width: var(--rail-col, 280px);
+      height: auto;
+      min-width: 0;
+    }
+  }
+
+  // 찜한 콘텐츠: 한 화면에 최대 3개 (나머지는 슬라이드)
+  .rail-wish {
+    --rail-col: calc((100% - 48px) / 3);
+    --nav-top: 50%;
+  }
+
+  .rail-continue {
+    --rail-col: calc((100% - 72px) / 3.5);
+  }
+
+  .rail-poster {
+    --rail-col: calc((100% - 96px) / 5.5);
+  }
+
+  .rail-mood {
+    --rail-col: calc((100% - 96px) / 5.2);
+  }
+
+  // ---------- 카드 공통 ----------
+  .member-card {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    text-decoration: none;
+    color: $text-primary;
+  }
+
+  .member-thumb {
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius-xs;
+    background-color: $surface-color;
+    margin-bottom: $space-md;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    &.landscape {
+      aspect-ratio: 16 / 9;
+    }
+
+    &.portrait {
+      aspect-ratio: 282 / 400;
+    }
+
+    // 로딩 자리표시 (시안의 체크무늬)
+    &.skeleton {
+      background: repeating-conic-gradient($dark-color-800 0% 25%, $dark-color-500 0% 50%) 50% / 24px 24px;
+    }
+  }
+
+  .member-card:hover .member-thumb img {
+    transform: scale(1.05);
+  }
+
+  .member-card-title {
+    @include heading-h3;
+    color: $text-primary;
+    margin: 0;
+    padding-top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-card-meta {
+    @include body-small;
+    color: $text-tertiary;
+  }
+
+  .member-clamp {
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: keep-all;
+  }
+
+  .member-card-link {
+    @include body-small;
+    color: $text-primary;
+    margin-top: $space-xs;
+  }
+
+  // 이어보기 진행 바 (시안: 썸네일 바로 아래 · 회색 트랙 + 흰 진행)
+  .member-continue .member-thumb {
+    margin-bottom: $space-sm;
+  }
+
+  .member-progress {
+    height: 4px;
+    margin-bottom: $space-md;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: $dark-color-300;
+
+    span {
+      display: block;
+      height: 100%;
+      border-radius: 2px;
+      background-color: $light-color-0;
+    }
+  }
+
+  // 굵은 한 줄 (추천작 별점 등 · 시안 body small 2)
+  .member-card-strong {
+    @include body-small-b;
+    color: $text-primary;
+  }
+
+  .member-rating {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .member-clamp.one {
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+  }
+
+  // ---------- 버튼 ----------
+  .member-btn {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    gap: 6px; // 알림 설정됨 벨 아이콘과 글자 사이
+    height: 36px;
+    margin-top: 6px;
+    padding: 0 $space-lg;
+    border: 1px solid $neutral-color-400;
+    border-radius: 9999px;
+    background: transparent;
+    color: $text-primary;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-color: $light-color-0;
+    }
+
+    // 설정 완료 상태
+    &.filled {
+      background-color: $light-color-0;
+      border-color: $light-color-0;
+      color: $text-inverse;
+      font-weight: $font-weight-bold;
+
+      &:hover {
+        background-color: $light-color-300;
+      }
+    }
+  }
+
+  // 추천작 찜 버튼 (포스터 우상단 · public/icons/heart-icon.svg)
+  .member-heart {
+    position: absolute;
+    top: $space-sm;
+    right: $space-sm;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.55);
+    color: $text-primary;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    // 찜한 상태: 아이콘 빨간색
+    &.on {
+      color: $live-color;
+    }
+  }
+
+  // 아이콘 파일을 마스크로 써서 상태별 색만 바꿈
+  .member-heart-icon {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background-color: currentColor;
+    -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+    mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+  }
+
+  // 찜 버튼이 포스터 위에 놓이도록 슬라이드를 기준으로
+  .member-poster-item {
+    position: relative;
+  }
+
+  // ---------- 공개예정작 (로그인 전 메인의 UpcomingSection 재사용) ----------
+  // 로그인 후 메인 배경 · 여백에 맞춤
+  .upcoming-section {
+    background-color: $gnb-bg;
+  }
+
+  // ---------- 내가 찜한 콘텐츠 ----------
+
+  .member-wish-card {
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
+    padding: $space-md $space-lg;
+    border-radius: $radius-card;
+    background-color: $bg-surface-raised;
+    text-decoration: none;
+    color: $text-primary;
+    min-width: 0;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: $bg-surface-hover;
+    }
+  }
+
+  .member-wish-thumb {
+    flex-shrink: 0;
+    width: 52px;
+    height: 72px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: $dark-color-300;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .member-wish-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .member-wish-name {
+    @include heading-h4-b;
+    color: $text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // ---------- AI 어시스턴트 ----------
+  .member-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-sm;
+    margin-bottom: $space-lg;
+  }
+
+  .member-chip {
+    @include body-small;
+    height: 32px;
+    padding: 0 $space-lg;
+    border: none;
+    border-radius: 9999px;
+    background-color: $toggle-inactive-bg;
+    color: $text-primary;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      background-color: $dark-color-300;
+    }
+
+    &.active {
+      background-color: $toggle-active-bg;
+      color: $toggle-active-text;
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  .member-notice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-lg;
+    margin-bottom: $space-xl;
+    padding: $space-md 20px;
+    border-radius: $radius-card;
+    background-color: $bg-surface;
+
+    p {
+      @include body-small;
+      margin: 0;
+      color: $neutral-color-300;
+    }
+
+    .member-btn {
+      margin-top: 0;
+      height: 32px;
+      @include body-small;
+    }
+  }
+
+  // ---------- 신규 출시 / 공개예정작 (2열 카드) ----------
+  .member-pair {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-xl;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .member-wide-card {
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
+    padding: $space-lg;
+    border-radius: $radius-card;
+    background-color: $bg-surface;
+    min-width: 0;
+
+    &.tall {
+      align-items: stretch;
+    }
+  }
+
+  .member-wide-thumb {
+    flex-shrink: 0;
+    display: block;
+    width: 150px;
+    height: 96px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: $surface-color;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    &.poster {
+      width: 120px;
+      height: auto;
+      aspect-ratio: 2 / 3;
+    }
+  }
+
+  .member-wide-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: $space-xs;
+    min-width: 0;
+  }
+
+  // ---------- 에코시스템 ----------
+  .member-ecosystem {
+    padding: $space-4xl 0;
+  }
+
+  // ---------- 키보드 포커스 ----------
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid $accent-color;
+    outline-offset: 2px;
+  }
+}
+
+// ---------------------------------------------------------------------
+// 태블릿 (1024px 이하) — 시안 1024 x 3304
+// 좌우 여백 13%, 카드 레일은 오른쪽 끝까지 이어짐 (카드 간격 24)
+// 모바일(767px 이하)은 mobile.scss 에서 이어서 덮어씀
+// ---------------------------------------------------------------------
+@media (max-width: $breakpoint-tablet) {
+  .member-home {
+    .member-section {
+      overflow: hidden;
+
+      .inner {
+        padding-left: $tablet-gutter;
+        padding-right: $tablet-gutter;
+      }
+    }
+
+    // ---------- 레일 섹션: 오른쪽 끝까지 이어지는 슬라이더 ----------
+    .member-continue .inner,
+    .member-wishlist .inner,
+    .member-recommend .inner,
+    .member-mood .inner {
+      padding-right: 0;
+    }
+
+    .member-continue,
+    .member-wishlist,
+    .member-recommend,
+    .member-mood {
+
+      .member-head,
+      .member-chips,
+      .member-notice {
+        margin-right: $tablet-gutter;
+      }
+    }
+
+    .rail-continue {
+      --rail-col: 286px;
+    }
+
+    // 찜: 오른쪽 끝까지 이어짐 (시안: 4장 + 다음 장 일부)
+    .rail-wish {
+      --rail-col: 210px;
+    }
+
+    .rail-poster {
+      --rail-col: 200px;
+    }
+
+    // 기분별 추천: 가로형 카드 3장 (시안)
+    .rail-mood {
+      --rail-col: 286px;
+
+      .member-thumb.portrait {
+        aspect-ratio: 16 / 9;
+      }
+    }
+
+    // ---------- 칩 / 안내 바 ----------
+    .member-chips {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .member-chip {
+        flex-shrink: 0;
+      }
+    }
+
+    // ---------- 찜 / 신규 출시 / 공개예정작 ----------
+
+    .member-pair {
+      grid-template-columns: 1fr;
+      gap: $space-xl;
+    }
+
+    // ---------- 에코시스템 ----------
+    .member-ecosystem {
+      padding: $space-4xl 0;
+    }
+
+    // ---------- 섹션 제목 (시안: 크게) ----------
+    .member-title {
+      @include display-l;
+    }
+
+    // ---------- 공개예정작: 카드 세로 2장 (로그인 전 메인의 가로 스크롤 대신) ----------
+    .upcoming-section {
+      .inner {
+        padding-right: $tablet-gutter;
+      }
+
+      .upcoming-title,
+      .upcoming-desc {
+        padding-right: 0;
+      }
+
+      .upcoming-list {
+        grid-auto-flow: row;
+        grid-auto-columns: auto;
+        grid-template-columns: minmax(0, 1fr);
+        overflow: visible;
+        padding-right: 0;
+      }
+
+      .upcoming-thumb {
+        width: 156px;
+      }
+
+      .upcoming-movie-title {
+        @include heading-h3-b;
+      }
+
+      // 시안: 태블릿도 흰 알약 버튼
+      .upcoming-btn:not(.on) {
+        border-color: transparent;
+        background-color: $light-color-100;
+        color: $text-inverse;
+
+        &:hover {
+          background-color: $light-color-400;
+        }
+      }
+    }
+  }
+}
+
+
+// =====================================================================
+// 가로 슬라이드 좌우 네비게이터 (Swiper 기본 버튼 커스텀)
+// - 슬라이드가 모자라 Swiper 가 버튼을 숨기려 해도(lock) 항상 보이게 함
+// =====================================================================
+.member-home {
+
+  // 썸네일 중앙 높이쯤에 오도록 슬라이드별로 위치 조정
+  .rail-continue {
+    --nav-top: 30%;
+  }
+
+  .rail-poster,
+  .rail-mood {
+    --nav-top: 34%;
+  }
+
+  .member-slider {
+    --swiper-navigation-size: 18px;
+    --swiper-navigation-color: #{$text-primary};
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      top: var(--nav-top, 35%);
+      margin-top: 0;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      transition: background-color 0.25s ease, opacity 0.25s ease;
+
+      &::after {
+        font-size: 16px;
+        font-weight: $font-weight-bold;
+      }
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.85);
+      }
+    }
+
+    .swiper-button-prev {
+      left: 8px;
+    }
+
+    .swiper-button-next {
+      right: 8px;
+    }
+
+    // 끝에 도달 / 슬라이드가 적을 때: 숨기지 않고 흐리게
+    .swiper-button-disabled,
+    .swiper-button-lock {
+      display: flex;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .member-home {
+
+    // 태블릿 기분별 추천은 가로형 카드라 버튼 위치가 더 위쪽
+    .rail-mood {
+      --nav-top: 30%;
+    }
+
+    // 기존 랜딩 슬라이더(히어로 / TOP 10)의 태블릿 화살표 숨김 규칙을
+    // 로그인 후 메인에서는 덮어써서 항상 보이게 함 (App.scss 는 수정하지 않음)
+    .hero-swiper-container .swiper-button-next,
+    .hero-swiper-container .swiper-button-prev,
+    .top10-section .swiper-button-next,
+    .top10-section .swiper-button-prev {
+      display: flex;
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 로그인 후 메인 PC — 시안: Desktop.pdf (1920)
+// - 1025px 이상에서만 적용 (태블릿 · 모바일 규칙은 그대로)
+// - 본문 시작선 좌우 12.5%(1920 기준 240 → 콘텐츠 1440), 섹션 사이 약 256
+// =====================================================================
+$member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
+
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.member-home {
+
+    // ---------- 섹션 공통 ----------
+    .member-section,
+    .member-section.band,
+    .top10-section,
+    .upcoming-section {
+      background-color: $bg-page;
+      // 위아래 64 씩 → 섹션 사이 128 (마지막 섹션 아래도 64 띄우고 기기 안내로 이어짐)
+      padding: $space-5xl 0;
+    }
+
+    // 기기 안내(DeviceGuide)는 로그인 전 홈과 똑같이 App.scss / mobile.scss 스타일만 사용 (여기서 덮어쓰지 않음)
+
+    // 히어로 · 핵심 혜택 바로 아래 첫 섹션은 조금 더 띄움
+    .member-continue {
+      padding-top: $member-section-space + $space-3xl;
+    }
+
+
+    .member-section .inner {
+      padding-left: $desktop-gutter;
+      padding-right: $desktop-gutter;
+    }
+
+    .member-head {
+      margin-bottom: $space-xl;
+    }
+
+    .member-title {
+      @include heading-h1;
+      margin: 0 0 $space-sm;
+    }
+
+    .member-desc {
+      @include body-large;
+      color: $text-secondary;
+
+      &.small {
+        @include body-small;
+      }
+    }
+
+    .member-more {
+      @include body-small;
+      color: $text-secondary;
+    }
+
+    // ---------- 슬라이드 카드 폭 (간격 24) ----------
+    .rail-continue {
+      --rail-col: calc((100% - 72px) / 3.57); // 3장 + 4번째 일부
+    }
+
+    .rail-wish {
+      --rail-col: calc((100% - 72px) / 4); // 4장
+    }
+
+    .rail-poster {
+      --rail-col: calc((100% - 96px) / 4.75); // 4장 + 5번째 일부
+    }
+
+    .rail-mood {
+      --rail-col: calc((100% - 96px) / 4.78);
+      --nav-top: 30%;
+    }
+
+    // ---------- 카드 글자 ----------
+    .member-thumb {
+      margin-bottom: $space-md;
+    }
+
+    .member-card {
+      gap: $space-xs;
+    }
+
+    .member-card-meta {
+      @include body-small;
+    }
+
+    .member-card-link {
+      @include body-small-b;
+    }
+
+    // 이어보기: 제목 굵게
+    .member-continue .member-card-title {
+      @include heading-h4-b;
+    }
+
+    // ---------- 내가 찜한 콘텐츠 (4칸 가로 카드) ----------
+    .member-wish-card {
+      gap: $space-lg;
+      padding: $space-md $space-lg;
+      border-radius: $radius-sm;
+      background-color: $bg-surface-hover;
+
+      &:hover {
+        background-color: $dark-color-300;
+      }
+    }
+
+    .member-wish-name {
+      @include body-default-b;
+    }
+
+    // ---------- AI 어시스턴트 ----------
+    .member-chips {
+      gap: $space-sm;
+      margin-bottom: $space-lg;
+    }
+
+    .member-chip {
+      @include body-small;
+      height: 36px;
+      padding: 0 $space-lg;
+      border: 1px solid $light-color-0;
+      background-color: transparent;
+
+      &:hover {
+        background-color: rgba($light-color-0, 0.12);
+      }
+
+      &.active {
+        @include body-small-b;
+        border-color: $primary-color-500;
+        background-color: $primary-color-500;
+        color: $text-primary;
+      }
+    }
+
+    .member-notice {
+      margin-bottom: $space-xl;
+      padding: $space-lg $space-xl;
+      border-radius: $radius-sm;
+      background-color: $bg-surface;
+
+      p {
+        @include body-default;
+        color: $light-color-300;
+      }
+
+      .member-btn {
+        @include body-small;
+        height: 36px;
+        padding: 0 $space-lg;
+        border-color: $light-color-0;
+      }
+    }
+
+    // 기분별 추천: 가로형(16:9) 카드
+    .member-mood .member-thumb.portrait {
+      aspect-ratio: 16 / 9;
+    }
+
+    // ---------- 신규출시 / 공개예정작 (2칸 회색 카드) ----------
+    .member-pair {
+      gap: $grid-gutter;
+    }
+
+    .member-wide-card {
+      gap: $space-lg;
+      padding: $space-lg;
+      border-radius: $radius-sm;
+      background-color: $bg-surface-hover;
+
+      .member-card-meta {
+        @include label-default;
+      }
+
+      .member-card-title {
+        @include body-default-b;
+      }
+
+      .member-desc,
+      .member-desc.small {
+        @include label-default;
+        color: $text-secondary;
+      }
+
+      // 신규출시: 흰 테두리 버튼
+      .member-btn {
+        @include body-small;
+        height: 40px;
+        margin-top: $space-sm;
+        padding: 0 $space-lg;
+        border-color: $light-color-0;
+      }
+    }
+
+    .member-wide-thumb {
+      width: 152px;
+      height: 96px;
+    }
+
+    // 공개예정작 (세로 포스터 카드): 흰 버튼 → 알림 설정 후 보라색
+    .member-wide-card.tall {
+      padding: $space-lg $space-xl $space-lg $space-lg;
+
+      .member-wide-thumb.poster {
+        width: 154px;
+        height: auto;
+        aspect-ratio: 154 / 182;
+      }
+
+      .member-card-title {
+        @include body-large-b;
+      }
+
+      .member-btn {
+        min-width: 152px;
+        height: 48px;
+        border-color: $light-color-100;
+        background-color: $light-color-100;
+        color: $text-inverse;
+        font-weight: $font-weight-bold;
+
+        &:hover {
+          background-color: $light-color-400;
+        }
+
+        &.filled {
+          gap: $space-sm;
+          border-color: $primary-color-500;
+          background-color: $primary-color-500;
+          color: $text-primary;
+
+          &:hover {
+            background-color: $primary-color-400;
+          }
+        }
+      }
+    }
+
+    // 네비게이터: 시안 아이콘(App.scss) + 어두운 원
+    .member-slider {
+
+      .swiper-button-prev,
+      .swiper-button-next {
+        background-size: 100% 100% !important;
+      }
+    }
+  }
+}

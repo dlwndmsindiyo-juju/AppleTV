@@ -1,0 +1,135 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function validSubscription(sub) {
+      return sub is map
+        && sub.keys().hasOnly(['status', 'plan', 'startedAt', 'expiresAt'])
+        && sub.keys().hasAll(['status', 'plan', 'startedAt', 'expiresAt'])
+        && sub.status in ['trial', 'active']
+        && sub.plan in ['monthly', 'yearly']
+        && sub.startedAt is timestamp
+        && sub.expiresAt is timestamp
+        && sub.expiresAt > sub.startedAt
+        && sub.expiresAt <= request.time + duration.value(366, 'd');
+    }
+
+    // [추가] 계정 설정: 프로필 아이콘 { icon, color }
+    function validAvatar(a) {
+      return a is map
+        && a.keys().hasOnly(['icon', 'color'])
+        && a.icon is string && a.icon.size() <= 40
+        && a.color is string && a.color.size() <= 20;
+    }
+
+    // [추가] 계정 설정: 자동 재생 · AI · 알림 (값 형식만 확인)
+    function validAlert(a) {
+      return a is map
+        && a.keys().hasOnly(['on', 'channels'])
+        && a.on is bool
+        && a.channels is list && a.channels.size() <= 3;
+    }
+
+    function validSettings(s) {
+      return s is map
+        && s.keys().hasOnly(['autoplayNext', 'autoplayRecommend', 'assistant', 'releaseAlert', 'sportAlert'])
+        && (!('autoplayNext' in s) || s.autoplayNext is bool)
+        && (!('autoplayRecommend' in s) || s.autoplayRecommend is bool)
+        && (!('assistant' in s) || s.assistant is bool)
+        && (!('releaseAlert' in s) || validAlert(s.releaseAlert))
+        && (!('sportAlert' in s) || validAlert(s.sportAlert));
+    }
+
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      allow create: if request.auth != null && request.auth.uid == uid
+        && !('subscription' in request.resource.data)
+        && !('trialUsed' in request.resource.data)
+        && !('emailCodeVerified' in request.resource.data)
+        && !('emailVerifiedAt' in request.resource.data);
+
+      // [추가] 아래 avatar · settings · sessionsRevokedAt 3줄: 계정 설정 (Profile.jsx)
+      allow update: if request.auth != null && request.auth.uid == uid
+        && !request.resource.data.diff(resource.data).affectedKeys()
+             .hasAny(['emailCodeVerified', 'emailVerifiedAt'])
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['subscription'])
+            || validSubscription(request.resource.data.subscription))
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['trialUsed'])
+            || request.resource.data.trialUsed == true)
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['avatar'])
+            || validAvatar(request.resource.data.avatar))
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['settings'])
+            || validSettings(request.resource.data.settings))
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['sessionsRevokedAt'])
+            || request.resource.data.sessionsRevokedAt == request.time);
+
+      allow delete: if false;
+    }
+
+    // 위시리스트 작품: users/{uid}/wishlist/{movie_123} — 본인만
+    match /users/{uid}/wishlist/{itemId} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(
+             ['id', 'type', 'title', 'poster_path', 'backdrop_path', 'genres', 'overview', 'addedAt', 'groups'])
+        && request.resource.data.type in ['movie', 'tv']
+        && request.resource.data.title is string
+        && request.resource.data.title.size() <= 200
+        && request.resource.data.groups is list
+        && request.resource.data.groups.size() <= 50
+        && (!('overview' in request.resource.data) || request.resource.data.overview.size() <= 3000);
+    }
+
+    // [추가] 이어보기 시청 기록: users/{uid}/watchHistory/{movie_123} — 본인만
+    match /users/{uid}/watchHistory/{itemId} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(
+             ['id', 'type', 'title', 'backdrop_path', 'poster_path', 'genre',
+              'season', 'episode', 'episodeName', 'videoKey', 'position', 'duration', 'updatedAt'])
+        && request.resource.data.type in ['movie', 'tv']
+        && request.resource.data.title is string
+        && request.resource.data.title.size() <= 200
+        && request.resource.data.position is number
+        && request.resource.data.duration is number
+        && request.resource.data.updatedAt == request.time;
+    }
+
+    // 위시리스트 그룹: users/{uid}/wishGroups/{groupId} — 본인만 · 이름 30자
+    match /users/{uid}/wishGroups/{groupId} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['name', 'icon', 'order', 'createdAt'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.name.size() <= 30
+        && request.resource.data.icon is string
+        && request.resource.data.icon.size() <= 40;
+    }
+
+    match /emailCodes/{id} { allow read, write: if false; }
+    match /mail/{id}       { allow read, write: if false; }
+
+    match /liveChats/{matchId}/messages/{msgId} {
+      allow read: if request.auth != null;
+
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['uid', 'name', 'teamId', 'text', 'createdAt'])
+        && request.resource.data.keys().hasAll(['uid', 'name', 'text', 'createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() >= 1
+        && request.resource.data.text.size() <= 120
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.name.size() <= 30
+        && (!('teamId' in request.resource.data)
+            || request.resource.data.teamId == null
+            || (request.resource.data.teamId is string && request.resource.data.teamId.size() <= 40))
+        && request.resource.data.createdAt == request.time;
+
+      allow update, delete: if false;
+    }
+  }
+}

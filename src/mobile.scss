@@ -1,0 +1,1456 @@
+@use "./variables" as *;
+
+// =====================================================================
+// 모바일 (767px 이하)
+// - App.scss 의 태블릿(1024px 이하) 규칙 위에 덮어쓰기 때문에
+//   App.scss 다음에 불러와야 합니다.  (App.jsx: import "./mobile.scss";)
+// - 모바일 시안이 아직 없어 태블릿 시안을 1열 구조로 줄여서 작성했어요.
+// =====================================================================
+$mobile-edge: 20px; // 모바일 좌우 여백
+
+@media (max-width: $breakpoint-mobile) {
+
+  // ---------- 헤더 ----------
+  header .inner {
+    padding: $header-pad-y $mobile-edge;
+
+    .logo a img {
+      height: 20px;
+    }
+
+    nav {
+      padding: $header-pad-y $mobile-edge;
+
+      .gnb-center-toggle {
+        button {
+          height: 34px;
+          padding: 0 14px;
+          font-size: 14px;
+        }
+      }
+
+      .gnb-right ul {
+        .search-box {
+          display: none; // 모바일에서는 검색창 숨김
+        }
+
+        .profile-box {
+          width: 36px;
+          height: 36px;
+          font-size: 14px;
+        }
+
+        // 로그인 버튼: PC 와 같은 크기 (App.scss .header-login-btn)
+      }
+    }
+  }
+
+  // ---------- 푸터 ----------
+  .footer {
+    padding: $footer-pad-y $mobile-edge;
+
+    .footer-main-menu {
+      gap: 10px 20px;
+    }
+  }
+
+  // ---------- 히어로 ----------
+  .hero-swiper-container {
+    // 화면이 줄어도 히어로는 화면 높이 그대로
+    height: 100vh;
+    height: 100svh;
+
+    // 모바일: 좌우 네비게이션 아이콘은 숨기고 아래 페이지네이션(점)만 표시
+    // (로그인 후 메인 member.scss 에서 태블릿용으로 보이게 한 규칙보다 우선)
+    .swiper-button-prev,
+    .swiper-button-next {
+      display: none !important;
+    }
+
+    // 모바일: 배경 이미지를 가로 · 세로 정가운데 기준으로 채움
+    .hero-slide-item .hero-media-bg {
+      background-size: cover;
+      background-position: center center !important;
+
+      // 예고편 영상도 화면 가운데를 기준으로 꽉 채움 (좌우가 같은 양만큼 잘림)
+      iframe {
+        top: 50%;
+        left: 50%;
+        width: calc(100vh * 16 / 9);
+        width: calc(100svh * 16 / 9);
+        min-width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    // PC 용 왼쪽 어두운 그라데이션은 빼고 아래쪽만 (이미지가 한쪽으로 치우쳐 보이지 않게)
+    .hero-slide-item .hero-overlay {
+      background: linear-gradient(to top,
+          $bg-color 0%,
+          rgba($bg-color, 0.55) 45%,
+          rgba($bg-color, 0) 100%);
+    }
+
+    .hero-slide-item .hero-info {
+      left: $mobile-edge;
+      right: $mobile-edge;
+      width: auto;
+      max-width: none;
+
+      .hero-title {
+        font-size: 34px;
+        margin-bottom: $space-lg;
+      }
+
+      .hero-overview {
+        line-clamp: 3;
+        -webkit-line-clamp: 3;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  // ---------- 홈 섹션 공통 좌우 여백 ----------
+  .value-props .inner,
+  .top10-section .inner,
+  .upcoming-section .inner,
+  .apple-originals .inner,
+  .ai-promo .inner,
+  .subscribe-cta .inner,
+  .movie-slider-section .inner {
+    padding-left: $mobile-edge;
+    padding-right: $mobile-edge;
+  }
+
+  // ---------- 핵심 혜택: 1열 ----------
+  .value-props {
+    .value-props-inner {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  // ---------- TOP 10 (시안: 포스터 2장 + 다음 장 살짝) ----------
+  .top10-section {
+    padding: 40px 0;
+
+    .inner {
+      padding-right: 0;
+    }
+
+    .top10-title {
+      @include display-M;
+      padding-right: $mobile-edge;
+    }
+
+    .top10-slide {
+      width: 135px;
+    }
+
+    .top10-rank {
+      font-size: 80px;
+      bottom: -6px;
+    }
+  }
+
+  // ---------- 공개예정작 (시안: 카드 세로 나열 · 썸네일 왼쪽 + 글 오른쪽) ----------
+  .upcoming-section {
+    padding: 40px 0;
+
+    .inner {
+      padding-right: $mobile-edge;
+    }
+
+    .upcoming-title {
+      @include display-M;
+    }
+
+    .upcoming-title,
+    .upcoming-desc {
+      padding-right: 0;
+    }
+
+    .upcoming-desc {
+      @include body-small;
+      margin-bottom: 20px;
+    }
+
+    .upcoming-list {
+      grid-auto-flow: row;
+      grid-auto-columns: auto;
+      grid-template-columns: minmax(0, 1fr);
+      gap: $space-lg;
+      overflow: visible;
+      padding-right: 0;
+    }
+
+    .upcoming-card {
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .upcoming-thumb {
+      width: 96px;
+    }
+
+    // 제목은 두 줄까지 (시안: "딩크 / the Dink")
+    .upcoming-movie-title {
+      @include heading-h4;
+      white-space: normal;
+      word-break: keep-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    // 시안: 모바일은 줄거리 없이 장르 · 제목 · 버튼만
+    .upcoming-overview {
+      display: none;
+    }
+
+    .upcoming-btn {
+      height: 32px;
+      padding: 0 14px;
+      margin-top: $space-xs;
+    }
+  }
+
+  // ---------- 오리지널스 (시안: 포스터 2장 + 다음 장 살짝) ----------
+  .apple-originals {
+    padding: 40px 0;
+
+    .apple-originals-title {
+      @include display-M;
+      padding-right: $mobile-edge;
+    }
+
+    .apple-originals-desc {
+      @include body-small;
+      padding-right: $mobile-edge;
+      margin-bottom: 20px;
+    }
+
+    .inner {
+      padding-right: 0;
+    }
+
+    .apple-originals-slide {
+      width: 140px;
+    }
+
+    .apple-card-poster {
+      margin-bottom: $space-sm;
+    }
+
+    .apple-card-title {
+      @include heading-h4;
+    }
+  }
+
+  // ---------- AI 어시스턴트 띠: 글 → 카드(화면 폭 가득) ----------
+  .ai-promo {
+    padding: 40px 0;
+
+    .inner {
+      gap: $space-xl;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .ai-promo-text {
+      width: 100%;
+    }
+
+    .ai-promo-title {
+      @include heading-h2-b;
+    }
+
+    .ai-promo-desc {
+      @include body-small;
+    }
+
+    .ai-promo-card {
+      max-width: none;
+    }
+
+    // 칩이 넘치면 카드 안에서 가로 스크롤
+    .ai-promo-chips {
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  // ---------- 구독 CTA: 이미지 위에 텍스트 ----------
+  .subscribe-cta {
+    padding: $space-xl 0 $space-4xl;
+
+    .subscribe-banner {
+      height: 300px;
+      border-radius: 16px;
+    }
+
+    .subscribe-content {
+      left: 5%;
+      right: 5%;
+      gap: $space-md;
+    }
+
+    .subscribe-title {
+      font-size: 17px;
+    }
+
+    .subscribe-btn {
+      height: 42px;
+      padding: 0 $space-xl;
+    }
+
+    // 모바일은 텍스트가 이미지 전체에 걸치므로 그라데이션을 더 넓게
+    .subscribe-banner::after {
+      background: linear-gradient(to right,
+          rgba($dark-color-900, 0.92) 0%,
+          rgba($dark-color-900, 0.7) 60%,
+          rgba($dark-color-900, 0.2) 100%);
+    }
+  }
+
+  // 스포츠 홈 반응형은 sport-member.scss 에서 관리
+
+}
+
+// =====================================================================
+// [추가] 로그인 후 메인 (member) 모바일 — 시안: Mobile.pdf (390 폭)
+// - member.scss 의 태블릿 규칙을 덮어쓰므로 main.member-home 으로 우선순위를 높임
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  main.member-home {
+    .member-section {
+      padding: $space-2xl 0 40px;
+
+      .inner {
+        padding-left: $mobile-edge;
+        padding-right: $mobile-edge;
+      }
+    }
+
+    // AI 어시스턴트(2장 나란히)는 좌우 여백 유지
+    .member-mood .inner {
+      padding-right: $mobile-edge;
+    }
+
+    // 이어보기 · 찜 · 추천작은 슬라이드: 오른쪽 끝까지 이어지고 이너 안에서 잘림 (시안)
+    .member-continue .inner,
+    .member-wishlist .inner,
+    .member-recommend .inner {
+      padding-right: 0;
+    }
+
+    .member-continue .member-head,
+    .member-wishlist .member-head,
+    .member-recommend .member-head {
+      margin-right: $mobile-edge;
+    }
+
+    .member-head {
+      margin-right: 0;
+    }
+
+    .member-title {
+      @include heading-h1;
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    .member-desc {
+      @include body-small;
+    }
+
+    // ---------- 이어보기 / 찜: 가로 스크롤 유지 ----------
+    .rail-continue {
+      --rail-col: 240px;
+    }
+
+    // 찜한 콘텐츠: 카드 1장 + 다음 카드 살짝 보이게 (슬라이드)
+    .rail-wish {
+      --rail-col: calc((100% - 16px) / 1.15);
+    }
+
+    // 추천작: 포스터 2장 + 다음 장 일부 (시안)
+    .rail-poster {
+      --rail-col: 138px;
+    }
+
+    // AI 어시스턴트: 가로형 카드 2장 나란히 (시안)
+    .rail-mood {
+      --rail-col: calc((100% - 16px) / 2);
+    }
+
+    // ---------- AI 어시스턴트 (시안: 칩 → 안내 → 카드 2장) ----------
+    .member-mood {
+      .member-chips {
+        margin-right: -$mobile-edge; // 칩이 화면 오른쪽으로 이어짐
+        padding-right: $mobile-edge;
+      }
+
+      .member-notice {
+        margin-right: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: $space-lg;
+        padding: 20px $space-lg;
+        text-align: center;
+
+        p {
+          @include body-default;
+        }
+
+        .member-btn {
+          align-self: center;
+          height: 40px;
+          padding: 0 $space-xl;
+          @include body-default;
+        }
+      }
+
+      .member-thumb.portrait {
+        aspect-ratio: 16 / 9; // 시안: 가로형 카드
+        margin-bottom: $space-sm;
+      }
+
+      .member-card {
+        gap: 2px;
+      }
+
+      .member-card-title {
+        @include body-default;
+      }
+
+      .member-card-meta,
+      .member-card-link {
+        @include caption-default;
+      }
+    }
+
+    // ---------- 추천작 (시안: 포스터 가로 슬라이드) ----------
+    .member-recommend {
+      .member-head {
+        align-items: flex-end;
+      }
+
+      .member-thumb.portrait {
+        margin-bottom: $space-sm;
+      }
+
+      .member-card-title {
+        @include body-default;
+      }
+
+      .member-card-meta,
+      .member-card-strong,
+      .member-card-link {
+        @include caption-default;
+      }
+
+      .member-card-strong {
+        font-weight: $font-weight-bold;
+      }
+
+      .member-heart {
+        width: 30px;
+        height: 30px;
+      }
+
+      .member-heart-icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    // ---------- 신규출시 (시안: 배경 없이 작은 썸네일 왼쪽 + 글 오른쪽, 세로 나열) ----------
+    .member-pair {
+      grid-template-columns: 1fr;
+      gap: $space-xl;
+    }
+
+    .member-wide-card {
+      flex-direction: row;
+      align-items: center;
+      gap: $space-md;
+      padding: 0;
+      background-color: transparent;
+    }
+
+    .member-wide-thumb {
+      width: 80px;
+      height: auto;
+      aspect-ratio: 3 / 2;
+    }
+
+    .member-wide-info {
+      flex: 1;
+      min-width: 0;
+
+      .member-card-title {
+        @include body-small-b;
+      }
+
+      .member-card-meta {
+        @include caption-default;
+      }
+
+      .member-btn {
+        @include caption-default;
+        height: 28px;
+        padding: 0 $space-md;
+      }
+    }
+
+    // 공개예정작 (UpcomingSection): 로그인 후 메인 여백에 맞춤
+    .upcoming-section {
+      padding: $space-2xl 0 40px;
+    }
+
+    // ---------- 에코시스템 ----------
+    .member-ecosystem {
+      padding: 40px 0;
+
+      .member-title {
+        font-size: 22px;
+        line-height: 28px;
+        word-break: keep-all;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// 영화 상세페이지 (MovieDetail) — 태블릿 / 모바일
+// PC 스타일은 App.scss 의 .movie-detail-page
+// =====================================================================
+
+// ---------- 태블릿 (1024px 이하): 좌우 2단 → 위아래로 쌓기 ----------
+@media (max-width: $breakpoint-tablet) {
+  .movie-detail-page {
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .content-layout {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $space-2xl;
+    }
+
+    .left-section,
+    .right-section {
+      width: 100%;
+      flex: none;
+    }
+
+    .player-box .title {
+      @include display-M;
+      font-weight: $font-weight-bold;
+    }
+
+    // 오른쪽 패널: 고정(sticky) 해제, 높이 고정
+    .right-section {
+      position: static;
+      height: 640px;
+      min-height: 0;
+      max-height: none;
+    }
+  }
+}
+
+// ---------- 모바일 (767px 이하) ----------
+@media (max-width: $breakpoint-mobile) {
+  .movie-detail-page {
+    padding-top: calc(#{$header-height} + 16px);
+    padding-bottom: 56px;
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .content-layout {
+      gap: $space-xl;
+    }
+
+    // 정보 바: 글 → 버튼 순으로 세로 배치
+    .player-box {
+      .player-info {
+        flex-direction: column;
+        align-items: stretch;
+        gap: $space-lg;
+        padding: $space-lg;
+      }
+
+      .title-logo {
+        max-width: 160px;
+        max-height: 44px;
+      }
+
+      .title {
+        @include heading-h2;
+        font-weight: $font-weight-bold;
+      }
+
+      .original-title {
+        @include body-small;
+      }
+
+      .overview {
+        line-clamp: 4;
+        -webkit-line-clamp: 4;
+      }
+
+      // 재생하기(가득) + 찜/공유 아이콘 한 줄
+      .info-actions {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: center;
+        gap: $space-md;
+      }
+
+      .btn-play {
+        width: auto;
+        flex: 1;
+      }
+    }
+
+    // 작품 평점
+    .rating-section {
+      padding: 0;
+
+      .rating-header h3 {
+        @include heading-h4-b;
+      }
+
+      .rating-desc {
+        @include body-small;
+      }
+
+      .star-picker {
+        gap: $space-xs;
+      }
+    }
+
+    // 탭 패널
+    .right-section {
+      height: 560px;
+      padding: $space-lg;
+
+      .tabs .tab-btn {
+        @include body-default;
+      }
+
+      .filter-bar {
+        gap: $space-sm;
+      }
+
+      .season-label {
+        @include body-small;
+      }
+
+      .episode-card .thumb {
+        width: 128px;
+      }
+
+      .cast-photo {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// 스포츠 — 관심있는 구단 (홈 슬라이드) + 구단 전체 페이지  태블릿 / 모바일
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+
+  // 카드 공용
+  .sport-team-card {
+    height: 96px;
+    gap: $space-lg;
+    padding: 0 20px 0 $space-lg;
+
+    .sport-team-logo {
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  // 홈 슬라이드
+  .sport-teams {
+    padding: 56px 0;
+
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .sport-team-slide {
+      width: 320px;
+    }
+  }
+
+  // 구단 전체 페이지
+  .sport-teams-page {
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .sport-teams-page-title {
+      @include display-l;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-teams-toolbar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .sport-team-search {
+      width: 100%;
+    }
+
+    .sport-team-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: $space-lg;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+
+  // 카드 공용
+  .sport-team-card {
+    height: 80px;
+    gap: $space-md;
+    padding: 0 $space-md;
+
+    .sport-team-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: $radius-xs;
+    }
+
+    .sport-team-name {
+      @include heading-h4-b;
+    }
+
+    .sport-team-meta {
+      @include label-default;
+    }
+  }
+
+  // 탭 공용: 화면 오른쪽 끝까지 가로 스크롤
+  .sport-team-filter {
+    overflow-x: auto;
+    margin-right: -$mobile-edge;
+    padding-right: $mobile-edge;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    li {
+      flex-shrink: 0;
+    }
+
+    button {
+      @include body-small;
+      height: 34px;
+      padding: 0 14px;
+    }
+  }
+
+  // 홈 슬라이드
+  .sport-teams {
+    padding: 40px 0;
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .sport-teams-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $space-sm;
+    }
+
+    .sport-teams-title {
+      @include heading-h2;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-teams-desc,
+    .sport-teams-count {
+      @include body-small;
+    }
+
+    .sport-team-slide {
+      width: 260px;
+    }
+
+    .sport-team-more {
+      @include body-small;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  // 구단 전체 페이지
+  .sport-teams-page {
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .sport-teams-hero {
+      padding: $space-xl 0 $space-2xl;
+    }
+
+    .sport-teams-page-title {
+      @include display-M;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-teams-page-desc {
+      @include body-small;
+    }
+
+    .sport-teams-body {
+      padding-top: $space-xl;
+    }
+
+    .sport-teams-toolbar {
+      margin-bottom: $space-xl;
+    }
+
+    .sport-team-group+.sport-team-group {
+      margin-top: $space-2xl;
+    }
+
+    .sport-team-group-title {
+      @include heading-h4-b;
+      margin-bottom: $space-md;
+    }
+
+    .sport-team-list {
+      grid-template-columns: minmax(0, 1fr);
+      gap: $space-md;
+    }
+  }
+}
+
+// =====================================================================
+// 하단 LIVE 배너 (로그인 후 스포츠) — 태블릿 / 모바일
+// 높이는 PC 와 동일 (97px)
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .promo-banner.is-live {
+    .live-title {
+      @include heading-h4-b;
+      gap: 10px;
+    }
+
+    .live-dot {
+      width: 14px;
+      height: 14px;
+    }
+
+    .promo-banner-btn {
+      min-width: 140px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .promo-banner.is-live {
+    .promo-banner-inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+      gap: $space-md;
+    }
+
+    .live-title {
+      @include body-default;
+      font-weight: $font-weight-bold;
+      gap: $space-sm;
+    }
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+    }
+
+    .live-score {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .promo-banner-desc {
+      @include label-default;
+      white-space: normal;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .promo-banner-btn {
+      @include body-small;
+      min-width: 0;
+      height: 32px;
+      padding: 0 14px;
+    }
+
+    .promo-banner-note {
+      @include caption-default;
+    }
+  }
+}
+
+// =====================================================================
+// 기기 안내 (DeviceGuide) — 태블릿 / 모바일
+// PC 스타일은 App.scss 의 .device-guide
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .device-guide {
+    padding: 56px 0;
+
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    // 좌우 2단 → 위아래로 쌓기
+    .device-guide-card {
+      grid-template-columns: minmax(0, 1fr);
+      gap: $space-2xl;
+      padding: 0;
+    }
+
+    .device-guide-title {
+      @include display-M;
+      font-weight: $font-weight-bold;
+      margin-bottom: $space-lg;
+    }
+
+    .device-guide-list {
+      margin-bottom: $space-xl;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .device-guide {
+    padding: 40px 0;
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .device-guide-card {
+      gap: $space-xl;
+      padding: 0;
+    }
+
+    .device-guide-title {
+      @include heading-h2;
+      font-weight: $font-weight-bold;
+      margin-bottom: $space-md;
+    }
+
+    .device-guide-sub {
+      @include body-small;
+    }
+
+    .device-guide-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+
+      li {
+        @include body-default;
+      }
+    }
+
+    .device-guide-link {
+      @include body-small;
+    }
+  }
+}
+
+// =====================================================================
+// Apple TV 에코시스템 비교 페이지 — 태블릿 / 모바일
+// PC 스타일은 App.scss 의 .ecosystem-page
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .ecosystem-page {
+    padding: calc(#{$header-height} + 56px) 0 80px;
+
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .ecosystem-title {
+      @include display-l;
+      font-weight: $font-weight-bold;
+    }
+
+    // 3단 → 1단 (카드 세로 나열)
+    .ecosystem-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: $space-xl;
+    }
+
+    .ecosystem-row,
+    .ecosystem-row:last-child {
+      min-height: 0;
+    }
+
+    .ecosystem-row dd {
+      max-width: none;
+    }
+
+    .ecosystem-footer {
+      grid-template-columns: minmax(0, 1fr);
+      gap: $space-2xl;
+      padding: 0;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .ecosystem-page {
+    padding: calc(#{$header-height} + 40px) 0 64px;
+
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .ecosystem-head {
+      margin: $space-2xl 0 40px;
+    }
+
+    .ecosystem-title {
+      @include display-M;
+      font-weight: $font-weight-bold;
+    }
+
+    .ecosystem-lead,
+    .ecosystem-desc {
+      @include body-small;
+    }
+
+    .ecosystem-card {
+      padding: $space-lg $space-lg 20px;
+      border-radius: $radius-card;
+    }
+
+    .ecosystem-card-name {
+      @include display-M;
+      font-weight: $font-weight-bold;
+      margin-bottom: $space-sm;
+    }
+
+    .ecosystem-card-category {
+      margin-bottom: $space-md;
+    }
+
+    .ecosystem-card-desc {
+      @include body-default;
+    }
+
+    .ecosystem-card-image {
+      height: 160px;
+      margin: 20px 0;
+    }
+
+    .ecosystem-rows {
+      gap: 10px;
+    }
+
+    .ecosystem-row {
+      padding: 14px $space-md;
+
+      dt,
+      dd {
+        @include body-small;
+      }
+
+      dt {
+        font-weight: $font-weight-bold;
+        margin-bottom: 6px;
+      }
+    }
+
+    .ecosystem-footer-title {
+      @include heading-h4-b;
+      margin-bottom: $space-md;
+    }
+
+    .ecosystem-devices li {
+      @include body-default;
+
+      &+li::before {
+        margin: 0 6px;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// 로그인 + 구독 (태블릿 / 모바일)
+// - PC 스타일: App.scss(.login-page / .login-card) · subscribe.scss(.plan-card) 는 그대로 두고 여기서만 덮어씀
+// - .login-page.login-page : subscribe.scss 와 불러오는 순서가 달라도 이 규칙이 우선되도록 우선순위를 한 단계 높임
+// - 공통 껍데기(시안): 회색 카드 · 흰 원형 닫기(좌상단) · 아이콘 50 · 제목 · 회색 설명
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .login-page.login-page {
+    // 화면 높이를 꽉 채워서 푸터 아래로 빈 흰 여백이 생기지 않게 (모바일 주소창 제외 높이)
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: calc(#{$header-height} + 24px) $tablet-edge 64px;
+    align-items: center;
+
+    // ---------- 카드 공통 ----------
+    .login-card,
+    .login-card.login-card--signin,
+    .login-card.login-card--confirm,
+    .login-card.plan-card {
+      max-width: 560px;
+      min-height: 0;
+      padding: 76px $space-xl $space-2xl;
+      background-color: $light-color-100;
+      border-radius: $radius-card;
+      box-shadow: none;
+    }
+
+    // .login-card.login-card : PC 단계별 규칙(--signin / --confirm / .plan-card)보다 우선
+    .login-card.login-card {
+      .login-card-close {
+        top: 20px;
+        left: 16px;
+        width: 44px;
+        height: 44px;
+        background-color: $light-color-0;
+        color: $text-inverse;
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .login-logo-area {
+        margin-bottom: 0;
+
+        .login-app-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: $radius-card;
+          background-color: $light-color-400;
+        }
+      }
+
+      .login-title {
+        @include heading-h2;
+        margin: 20px 0 10px;
+        font-size: 24px;
+        line-height: 30px;
+        color: $text-inverse;
+        word-break: keep-all;
+      }
+
+      .login-desc {
+        @include body-default;
+        margin: 0 0 $space-xl;
+        font-weight: $font-weight-bold;
+        color: $neutral-color-600;
+        word-break: keep-all;
+      }
+
+      .login-form {
+        max-width: none;
+      }
+
+      .login-form .login-btn,
+      .plan-submit {
+        @include body-default;
+        width: 100%;
+        max-width: none;
+        height: 48px;
+        border-radius: 6px;
+      }
+    }
+
+    // ---------- 로그인 (1단계) ----------
+    .login-card.login-card--signin {
+      .login-desc {
+        font-weight: $font-weight-regular;
+      }
+
+      .login-form .input-field input {
+        @include body-default;
+        height: 50px;
+      }
+
+      .login-links-row {
+        flex-wrap: wrap;
+        gap: $space-sm $space-lg;
+      }
+    }
+
+    // ---------- 인증번호 (2단계): 6칸이 카드 폭 안에 들어오게 ----------
+    .login-card .login-form .code-input-group {
+      gap: 6px;
+
+      .code-box {
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: 52px;
+        height: 54px;
+      }
+    }
+
+    // ---------- 인증 완료 (3단계): PC 의 큰 여백 줄이기 ----------
+    .login-card.login-card--confirm {
+      .login-title {
+        margin: 20px 0 10px;
+      }
+
+      .login-desc {
+        margin-bottom: $space-2xl;
+        font-weight: $font-weight-regular;
+      }
+
+      .login-links.row-links {
+        gap: 40px;
+      }
+    }
+
+    // ---------- 구독 플랜 선택 (시안) ----------
+    .login-card.plan-card {
+      .plan-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px $space-lg;
+        border-radius: $radius-card;
+      }
+
+      // 이름 / 가격 / 안내 왼쪽 세로 배치 + 라디오는 오른쪽 가운데
+      .plan-option {
+        grid-template-columns: minmax(0, 1fr) 20px;
+        grid-template-areas:
+          "name radio"
+          "price radio"
+          "note radio";
+        column-gap: $space-lg;
+        row-gap: $space-sm;
+        height: auto;
+        padding: 0;
+
+        &+.plan-option {
+          border-top: none;
+        }
+
+        .plan-name {
+          grid-area: name;
+          @include heading-h3;
+          font-weight: $font-weight-bold;
+        }
+
+        .plan-price {
+          grid-area: price;
+          @include body-default;
+        }
+
+        .plan-note {
+          grid-area: note;
+          @include label-default;
+          word-break: keep-all;
+        }
+
+        .plan-radio-mark {
+          grid-area: radio;
+          align-self: center;
+        }
+      }
+
+      .plan-section-title {
+        @include heading-h3;
+        font-weight: $font-weight-bold;
+        margin: $space-2xl 0 $space-md;
+      }
+
+      // 포함 혜택: 1열 카드
+      .plan-benefits {
+        grid-template-columns: minmax(0, 1fr);
+        gap: $space-md;
+      }
+
+      .plan-benefit {
+        gap: 10px;
+        padding: 22px 20px;
+        border-radius: $radius-card;
+
+        strong {
+          @include body-default;
+          font-weight: $font-weight-bold;
+        }
+
+        span {
+          @include body-default;
+          word-break: keep-all;
+        }
+      }
+
+      .plan-submit {
+        margin-top: $space-xl;
+      }
+
+      // 2. 내용 확인
+      .plan-links {
+        grid-template-columns: 1fr;
+        row-gap: $space-lg;
+        margin: $space-xl 0;
+      }
+
+      // 3. 처리 중 / 4. 완료
+      &.plan-card--processing,
+      &.plan-card--done {
+        padding-top: 76px;
+
+        .login-title {
+          margin: 20px 0 $space-md;
+          font-size: 24px;
+          line-height: 30px;
+          font-weight: $font-weight-regular;
+        }
+
+        .login-desc {
+          @include body-large;
+          margin-bottom: 20px;
+          font-weight: $font-weight-regular;
+        }
+      }
+
+      &.plan-card--processing .plan-submit--wait {
+        max-width: none;
+      }
+    }
+  }
+}
+
+// ---------- 휴대폰 (767px 이하): 화면 좌우 16px 까지 카드 확장 ----------
+@media (max-width: $breakpoint-mobile) {
+  .login-page.login-page {
+    padding: calc(#{$header-height} + 16px) 16px 40px;
+    background-color: $bg-color;
+
+    .login-card,
+    .login-card.login-card--signin,
+    .login-card.login-card--confirm,
+    .login-card.plan-card {
+      max-width: none;
+      padding: 76px 20px $space-xl;
+    }
+
+    .login-card.login-card .login-title {
+      font-size: 22px;
+      line-height: 28px;
+    }
+
+    .login-card.plan-card {
+      .plan-list {
+        gap: $space-xl;
+      }
+
+      .plan-option .plan-name {
+        @include heading-h4-b;
+        font-size: 18px;
+        line-height: 24px;
+      }
+
+      .plan-section-title {
+        margin-top: 28px;
+      }
+
+      .plan-benefit {
+        padding: 20px;
+      }
+
+      .plan-summary-row dd {
+        max-width: 55%;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 헤더 검색: 모바일에서는 검색창 대신 검색 아이콘만 (프로필 옆)
+// - PC · 태블릿: 기존 검색창 그대로, 아이콘 버튼은 숨김
+// - 모바일: 검색창 숨김(기존 규칙) · 프로필과 같은 36px 원형 아이콘 버튼 표시 → /search 로 이동
+// =====================================================================
+header .inner nav .gnb-right ul .search-icon-item {
+  display: none;
+}
+
+@media (max-width: $breakpoint-mobile) {
+  header .inner nav .gnb-right ul {
+    gap: $space-sm; // 검색 아이콘 ↔ 프로필 사이 8px (가운데 토글과 겹치지 않게 오른쪽 묶음을 좁힘)
+
+    .search-icon-item {
+      display: flex;
+    }
+
+    // 프로필(36px)보다 작은 32px → 가운데 토글과 붙지 않게
+    .search-icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: $input-bg;
+      transition: background-color 0.2s ease;
+
+      &:hover,
+      &:focus-visible {
+        background-color: $input-focus-bg;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $light-color-0;
+        outline-offset: 2px;
+      }
+
+      img {
+        width: 14px;
+        height: 14px;
+        display: block;
+        filter: invert(0.7); // 검색창 안 아이콘과 같은 색
+      }
+    }
+  }
+}
