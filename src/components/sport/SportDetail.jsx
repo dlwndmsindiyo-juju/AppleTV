@@ -5,7 +5,7 @@ import { upcomingMatchesData } from "../../data/mockMatches";
 import { SPORT_TEAMS } from "../../data/sportTeams";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
 import { decodeHtml } from "./sportUtils";
-import { REPLAY_LEAGUES, playlistEmbedUrl, playlistWatchUrl } from "../../data/replayLeagues";
+import { REPLAY_LEAGUES, leagueThumb, playlistEmbedUrl, playlistWatchUrl } from "../../data/replayLeagues";
 import { LeagueCover } from "./SportReplay";
 import SportHero from "./SportHero";
 
@@ -70,10 +70,11 @@ const DETAIL_CONFIG = {
       REPLAY_LEAGUES.map((league) => ({
         id: league.id,
         playlistId: league.playlistId,
+        videoId: league.thumbVideoId || "", // 썸네일 영상부터 재생 (없으면 재생목록 처음부터)
         league,
         title: `${league.league} 영상 모음`,
         meta: league.country,
-        thumb: league.cover || "",
+        thumb: leagueThumb(league),
         info: {
           label: league.country,
           title: `${league.league} · ${league.leagueEn}`,
@@ -215,7 +216,7 @@ const DetailPlayer = ({ item }) => (
       key={item.playlistId || item.videoId}
       src={
         item.playlistId
-          ? playlistEmbedUrl(item.playlistId)
+          ? playlistEmbedUrl(item.playlistId, item.videoId)
           : `https://www.youtube.com/embed/${item.videoId}?autoplay=1&rel=0&playsinline=1`
       }
       title={item.title}

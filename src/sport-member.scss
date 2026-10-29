@@ -5341,3 +5341,50 @@ main.sport-home {
     text-decoration: underline;
   }
 }
+
+// =====================================================================
+// [추가] 경기 다시보기 슬라이드 (Swiper) — 예전 가로 스크롤(ul) 대신
+// - 카드 폭은 예전 .sport-replay-list > li 와 같게 · 좌우 화살표는 다른 스포츠 슬라이드와 같은 아이콘
+// =====================================================================
+main.sport-home .sport-replay {
+  .sport-replay-swiper {
+    width: 100%;
+  }
+
+  .sport-replay-slide {
+    width: clamp(280px, 20.1vw, 386px);
+    max-width: 90%;
+    height: auto;
+
+    .sport-replay-card {
+      height: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $text-primary;
+    top: 40%; // 썸네일 가운데쯤
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    .sport-replay-slide {
+      width: 300px;
+      max-width: 80%;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    // 모바일: 카드 1장 + 다음 카드 살짝 (손가락으로 넘김 · 화살표 숨김)
+    .sport-replay-slide {
+      width: 72%;
+      max-width: none;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none;
+    }
+  }
+}
