@@ -21,7 +21,10 @@ export const LeagueCover = ({ league, small = false }) => (
   </span>
 );
 
-const SportReplay = ({ title = "경기 다시보기" }) => {
+// 섹션 제목은 "경기 다시보기" 로 고정 (부모에서 title="영상 다시보기" 를 넘겨도 무시)
+const TITLE = "경기 다시보기";
+
+const SportReplay = () => {
   // 최근 종료 경기: 다시보기 카드에는 쓰지 않지만, 하이라이트 섹션의 첫 카드("A vs B 하이라이트")가 사용
   const fetchFinished = useSportStore((state) => state.onFetchFinishedMatches);
   useEffect(() => {
@@ -32,7 +35,7 @@ const SportReplay = ({ title = "경기 다시보기" }) => {
     <section className="sport-replay">
       <div className="inner">
         <div className="sport-section-head">
-          <h3 className="sport-section-title">{title}</h3>
+          <h3 className="sport-section-title">{TITLE}</h3>
           <Link className="sport-more" to="/sport/replay">
             전체 보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
           </Link>

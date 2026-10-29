@@ -5388,3 +5388,447 @@ main.sport-home .sport-replay {
     }
   }
 }
+
+// =====================================================================
+// [추가] 하이라이트 · 추천 시리즈 — 이미지 위에 글자가 겹치는 카드 슬라이드 (시안)
+// - SportHighlights.jsx (.sport-hl-*) · SportSeries.jsx (.sport-sc-*)
+// - 예전 카드 클래스(.sport-highlight-* · .sport-series-*)와 겹치지 않게 새 이름 사용
+// =====================================================================
+main.sport-home {
+
+  // ---------- 하이라이트: 가로형 카드 4장 ----------
+  .sport-hl-swiper,
+  .sport-sc-swiper {
+    width: 100%;
+  }
+
+  .sport-hl-slide {
+    width: calc((100% - 72px) / 4); // 간격 24 x 3
+    height: auto;
+  }
+
+  .sport-hl-card {
+    position: relative;
+    display: block;
+    aspect-ratio: 3 / 2;
+    border-radius: $radius-card;
+    overflow: hidden;
+    background-color: $bg-surface;
+    color: $text-primary;
+    text-decoration: none;
+
+    &:hover .sport-hl-thumb {
+      transform: scale(1.04);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $light-color-0;
+      outline-offset: 2px;
+    }
+  }
+
+  .sport-hl-thumb {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  // 아래쪽 글자 영역: 어둡게 + 흐림 (시안의 뿌연 하단)
+  .sport-hl-body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    padding: $space-2xl $space-xl $space-lg;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.45) 60%, rgba(0, 0, 0, 0) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    -webkit-mask-image: linear-gradient(to top, #000 75%, transparent 100%);
+    mask-image: linear-gradient(to top, #000 75%, transparent 100%);
+  }
+
+  .sport-hl-title {
+    @include body-small-b;
+    font-family: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .sport-hl-desc {
+    @include caption-default;
+    font-family: inherit;
+    color: $light-color-300;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: keep-all;
+  }
+
+  .sport-hl-meta {
+    @include caption-default;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    margin-top: $space-xs;
+    color: $light-color-400;
+
+    .play-icon {
+      height: 10px;
+    }
+  }
+
+  // ---------- 추천 시리즈: 세로 포스터 카드 (4장 + 다음 장 일부) ----------
+  .sport-sc-slide {
+    width: calc((100% - 96px) / 4.8);
+    height: auto;
+  }
+
+  .sport-sc-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    border-radius: $radius-card;
+
+    &:hover .sport-sc-poster {
+      transform: scale(1.04);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $light-color-0;
+      outline-offset: 2px;
+    }
+  }
+
+  .sport-sc-card {
+    position: relative;
+    aspect-ratio: 7 / 10;
+    border-radius: $radius-card;
+    overflow: hidden;
+    background-color: $bg-surface-raised;
+    color: $text-primary;
+
+    // 아래쪽을 어둡게 (글자가 잘 보이게)
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0) 60%);
+      pointer-events: none;
+    }
+  }
+
+  .sport-sc-poster {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+
+    &--empty {
+      background-color: $bg-surface-hover;
+    }
+  }
+
+  .sport-sc-body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    padding: $space-lg;
+  }
+
+  .sport-sc-title {
+    @include heading-h4-b;
+    font-family: inherit;
+    margin: 0 0 $space-md;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .sport-sc-category {
+    @include caption-default;
+    font-family: inherit;
+    margin: 0 0 $space-xs;
+    color: $light-color-300;
+  }
+
+  .sport-sc-desc {
+    @include caption-default;
+    font-family: inherit;
+    margin: 0;
+    color: $light-color-300;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: keep-all;
+  }
+
+  // ---------- 좌우 화살표 (다른 스포츠 슬라이드와 같은 아이콘) ----------
+  .sport-highlights,
+  .sport-series {
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: $text-primary;
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    .sport-hl-slide {
+      width: calc((100% - 48px) / 2.3);
+    }
+
+    .sport-sc-slide {
+      width: calc((100% - 72px) / 3.3);
+    }
+  }
+
+  // 모바일: 손가락으로 넘김 (화살표 숨김)
+  @media (max-width: $breakpoint-mobile) {
+    .sport-hl-slide {
+      width: 82%;
+    }
+
+    .sport-sc-slide {
+      width: 44%;
+    }
+
+    .sport-hl-body {
+      padding: $space-xl $space-lg $space-md;
+    }
+
+    .sport-sc-body {
+      padding: $space-md;
+    }
+
+    .sport-sc-title {
+      @include body-small-b;
+      font-family: inherit;
+      margin-bottom: $space-xs;
+    }
+
+    .sport-sc-desc {
+      display: none; // 좁은 카드에서는 이름 · 분류만
+    }
+
+    .sport-highlights,
+    .sport-series {
+      .swiper-button-next,
+      .swiper-button-prev {
+        display: none;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 라이브 — 영상 썸네일 + LIVE 배지 + 스코어보드 카드 (SportLive.jsx · .sport-lv-*)
+// - 예전 라이브 카드 클래스(.sport-live-card · .sport-live-slide)와 겹치지 않게 새 이름 사용
+// =====================================================================
+main.sport-home {
+  .sport-lv-swiper {
+    width: 100%;
+  }
+
+  // PC: 카드 3장 + 다음 장 일부 (간격 32)
+  .sport-lv-slide {
+    width: calc((100% - 64px) / 3.25);
+    height: auto;
+  }
+
+  .sport-lv-card {
+    position: relative;
+    display: block;
+    aspect-ratio: 3 / 2;
+    border-radius: $radius-card;
+    overflow: hidden;
+    background-color: $bg-surface-hover;
+    color: $text-primary;
+    text-decoration: none;
+
+    &:hover .sport-lv-thumb {
+      transform: scale(1.04);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $light-color-0;
+      outline-offset: 2px;
+    }
+  }
+
+  .sport-lv-thumb {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  // 왼쪽 위 LIVE 배지 (빨간 알약)
+  .sport-lv-badge {
+    @include body-default-b;
+    position: absolute;
+    top: $space-lg;
+    left: $space-lg;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px $space-lg;
+    border-radius: 9999px;
+    background-color: $sports-color;
+    font-family: inherit;
+
+    img {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+  }
+
+  // 아래 스코어보드: [엠블럼] 점수  시간  점수 [엠블럼] · 아래쪽을 어둡게 + 흐림
+  .sport-lv-board {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto auto;
+    align-items: center;
+    column-gap: $space-xl;
+    padding: $space-4xl $space-xl $space-lg;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    -webkit-mask-image: linear-gradient(to top, #000 70%, transparent 100%);
+    mask-image: linear-gradient(to top, #000 70%, transparent 100%);
+  }
+
+  .sport-lv-team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-sm;
+
+    b {
+      @include body-small-b;
+      font-family: inherit;
+    }
+  }
+
+  .sport-lv-crest {
+    display: block;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+
+    &.is-empty {
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.4);
+      @include body-default-b;
+      font-family: inherit;
+    }
+  }
+
+  // 점수 (엠블럼 가운데 높이에 맞춤)
+  .sport-lv-score {
+    @include display-l-b;
+    font-family: inherit;
+    align-self: start;
+    margin-top: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sport-lv-time {
+    @include heading-h4-b;
+    align-self: start;
+    margin-top: 20px;
+    font-family: inherit;
+    text-align: center;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sport-live {
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: $text-primary;
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    .sport-lv-slide {
+      width: calc((100% - 24px) / 1.6);
+    }
+  }
+
+  // 모바일: 카드 1장 + 다음 장 일부 · 손가락으로 넘김
+  @media (max-width: $breakpoint-mobile) {
+    .sport-lv-slide {
+      width: 86%;
+    }
+
+    .sport-lv-badge {
+      @include label-default-b;
+      top: $space-md;
+      left: $space-md;
+      padding: 4px $space-md;
+      font-family: inherit;
+
+      img {
+        width: 11px;
+        height: 11px;
+      }
+    }
+
+    .sport-lv-board {
+      column-gap: $space-md;
+      padding: $space-2xl $space-lg $space-md;
+    }
+
+    .sport-lv-crest {
+      width: 44px;
+      height: 44px;
+    }
+
+    .sport-lv-score {
+      @include display-M-b;
+      font-family: inherit;
+      margin-top: 6px;
+    }
+
+    .sport-lv-time {
+      @include body-small-b;
+      font-family: inherit;
+      margin-top: 14px;
+    }
+
+    .sport-live {
+      .swiper-button-next,
+      .swiper-button-prev {
+        display: none;
+      }
+    }
+  }
+}
