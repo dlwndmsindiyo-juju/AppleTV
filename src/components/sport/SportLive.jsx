@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { useSportStore } from "../../store/useSportStore";
 import { getMockLiveMatch, MOCK_LIVE_IDS } from "./liveMatchAdapter";
+import { SPORT_TEAMS } from "../../data/sportTeams";
 
 // =====================================================================
 // 라이브 (시안: 영상 썸네일 위에 LIVE 배지 + 아래 스코어보드)
@@ -48,30 +49,51 @@ const clockText = (minute) => {
   return `${PERIOD_LABEL[m > 45 ? 1 : 0]} ${String(m).padStart(2, "0")}:00`;
 };
 
+// 엠블럼은 public/images/matches/*.svg 만 사용 · 파일이 없는 팀은 null → 약자 원으로 표시
+const badgeOf = (id) => (MATCH_BADGE_FILE[id] ? `/images/matches/${MATCH_BADGE_FILE[id]}.svg` : null);
+
+// 실제 경기 팀 이름 → 구단 id (영문/한글 이름으로 찾기)
+const norm = (v = "") => v.toLowerCase().replace(/[^a-z0-9가-힣]/g, "");
+const teamIdByName = (name = "") => {
+  const n = norm(name);
+  if (!n) return null;
+  const t = SPORT_TEAMS.find((team) => [team.enName, team.name, team.shortName].some((v) => norm(v) === n));
+  return t?.id || null;
+};
+
 // 카드 한 장에 쓰는 모양으로 정리
 const fromMock = (m) => {
   const home = m.teams[m.homeId];
   const away = m.teams[m.awayId];
   const side = (t) => ({
     name: t.name || t.shortName,
-    crest: MATCH_BADGE_FILE[t.id] ? `/images/matches/${MATCH_BADGE_FILE[t.id]}.svg` : t.logo,
+    crest: badgeOf(t.id),
     code: TEAM_CODE[t.id] || codeFromName(t.enName || t.name),
   });
   return { id: String(m.id), home: side(home), away: side(away), score: m.score, minute: m.minute };
 };
 
 const fromLive = (m) => {
-  const side = (t = {}) => ({ name: t.name || t.shortName || "", crest: t.crest, code: codeFromName(t.name || t.shortName) });
+  const side = (t = {}) => {
+    const id = teamIdByName(t.name) || teamIdByName(t.shortName);
+    return { name: t.name || t.shortName || "", crest: badgeOf(id), code: TEAM_CODE[id] || codeFromName(t.name || t.shortName) };
+  };
   const sc = m.score?.fullTime || {};
   return { id: String(m.id), home: side(m.homeTeam), away: side(m.awayTeam), score: { home: sc.home ?? 0, away: sc.away ?? 0 }, minute: m.minute };
 };
 
-const Crest = ({ team }) =>
-  team.crest ? (
-    <img className="sport-lv-crest" src={team.crest} alt="" />
+// 엠블럼 파일이 없거나 못 불러오면 약자 원으로 대체
+const Crest = ({ team }) => {
+  const [broken, setBroken] = useState(false);
+  return team.crest && !broken ? (
+    <img className="sport-lv-crest" src={team.crest} alt="" onError={() => setBroken(true)} />
   ) : (
     <span className="sport-lv-crest is-empty" aria-hidden="true">{team.code}</span>
   );
+};
+
+// hqdefault · sddefault 썸네일은 위아래 검은 띠(4:3)가 있어 잘라서 표시
+const isLetterbox = (url = "") => /\/(hq|sd)default\.jpg/.test(url);
 
 export default function SportLive() {
   const clips = useSportStore((state) => state.liveClips);
@@ -128,7 +150,9 @@ export default function SportLive() {
                   to={`/sport/match/${card.id}`}
                   aria-label={`${card.home.name} ${card.score.home} 대 ${card.score.away} ${card.away.name} 라이브 시청`}
                 >
-                  {card.thumb && <img className="sport-lv-thumb" src={card.thumb} alt="" loading="lazy" />}
+                  {card.thumb && (
+                    <img className={`sport-lv-thumb${isLetterbox(card.thumb) ? " is-letterbox" : ""}`} src={card.thumb} alt="" loading="lazy" />
+                  )}
                   <span className="sport-lv-badge">
                     <img src="/icons/live/live-icon.svg" alt="" aria-hidden="true" />
                     LIVE
