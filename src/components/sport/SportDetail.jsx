@@ -5,11 +5,13 @@ import { upcomingMatchesData } from "../../data/mockMatches";
 import { SPORT_TEAMS } from "../../data/sportTeams";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
 import { decodeHtml } from "./sportUtils";
+import { REPLAY_LEAGUES, leagueThumb, playlistEmbedUrl, playlistWatchUrl } from "../../data/replayLeagues";
+import { LeagueCover } from "./SportReplay";
 import SportHero from "./SportHero";
 
 // =====================================================================
 // 스포츠 상세 (하나의 컴포넌트로 3개 상세 사용)
-//   /sport/replay      → 경기 다시보기 상세 (SportReplay "전체 보기" · 카드)
+//   /sport/replay      → 경기 다시보기 상세 (국가별 리그 영상 모음집 · data/replayLeagues.js 재생목록)
 //   /sport/upcoming    → 예정된 경기 상세   (SportUpcoming "전체 보기" · 카드)
 //   /sport/highlights  → 하이라이트 상세    (SportHighlights "전체 보기" · 카드)
 //   /sport/series      → 추천 시리즈 상세   (SportSeries 카드 · data/mockSportSeries.js 의 youtubeUrl 영상)
@@ -60,28 +62,27 @@ const thumbOf = (video) =>
 // 항목 공통 모양: { id, title, meta, thumb, videoId?, kickoff?, info: { title, desc, meta } }
 // ---------------------------------------------------------------------
 const DETAIL_CONFIG = {
-  // 경기 다시보기: TheSportsDB 최신 경기 하이라이트
+  // 경기 다시보기: 국가별 1부 리그 공식 채널 재생목록 (API 키 없이 고정 재생목록)
   replay: {
     title: "경기 다시보기",
-    empty: "다시볼 경기가 없습니다.",
-    buildItems: ({ sdbPool }) =>
-      (sdbPool || []).map((video) => {
-        const ev = video.event || {};
-        const title = decodeHtml(video.snippet?.title);
-        const hasScore = ev.homeScore != null && ev.awayScore != null;
-        return {
-          id: video.id.videoId,
-          videoId: video.id.videoId,
-          title,
-          meta: "영상 다시보기",
-          thumb: thumbOf(video),
-          info: {
-            title: [ev.home && ev.away ? `${ev.home} vs ${ev.away}` : title, dotDate(ev.date)].filter(Boolean).join(", "),
-            desc: [video.snippet?.channelTitle, hasScore ? `최종 스코어 ${ev.homeScore} : ${ev.awayScore}` : ""].filter(Boolean).join(" · "),
-            meta: "경기 다시보기",
-          },
-        };
-      }),
+    empty: "다시볼 영상이 없습니다.",
+    buildItems: () =>
+      REPLAY_LEAGUES.map((league) => ({
+        id: league.id,
+        playlistId: league.playlistId,
+        videoId: league.thumbVideoId || "", // 썸네일 영상부터 재생 (없으면 재생목록 처음부터)
+        league,
+        title: `${league.league} 영상 모음`,
+        meta: league.country,
+        thumb: leagueThumb(league),
+        info: {
+          label: league.country,
+          title: `${league.league} · ${league.leagueEn}`,
+          desc: league.desc,
+          meta: `${league.channel} 공식 채널 재생목록`,
+          href: playlistWatchUrl(league.playlistId),
+        },
+      })),
   },
 
   // 하이라이트: LIVE 하이라이트(TheSportsDB) + 카테고리 영상(YouTube)
@@ -208,12 +209,16 @@ const DetailCountdown = ({ item, target }) => {
   );
 };
 
-// 왼쪽 큰 화면 - 영상 플레이어 (YouTube)
+// 왼쪽 큰 화면 - 영상 플레이어 (YouTube 영상 하나 또는 재생목록)
 const DetailPlayer = ({ item }) => (
   <div className="sport-detail-player">
     <iframe
-      key={item.videoId}
-      src={`https://www.youtube.com/embed/${item.videoId}?autoplay=1&rel=0&playsinline=1`}
+      key={item.playlistId || item.videoId}
+      src={
+        item.playlistId
+          ? playlistEmbedUrl(item.playlistId, item.videoId)
+          : `https://www.youtube.com/embed/${item.videoId}?autoplay=1&rel=0&playsinline=1`
+      }
       title={item.title}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
@@ -231,18 +236,15 @@ const SportDetail = () => {
   // 다른 상세(/sport/replay 등)에서 예정 경기 상세로 바로 넘어와도 9시간부터 다시 시작
   useEffect(() => { setCountdownTarget(Date.now() + COUNTDOWN_START_MS); }, [type]);
 
-  const sdbPool = useSportStore((state) => state.sportsDbHighlights);
   const highlightList = useSportStore((state) => state.highlightList);
   const categories = useSportStore((state) => state.highlightCategories);
   const finishedMatches = useSportStore((state) => state.finishedMatches);
-  const fetchSportsDb = useSportStore((state) => state.onFetchSportsDbHighlights);
   const fetchHighlightList = useSportStore((state) => state.onFetchHighlightList);
   const fetchCategories = useSportStore((state) => state.onFetchHighlightCategories);
 
   // 상세 종류에 필요한 데이터만 불러오기
   const latestMatch = finishedMatches?.[0];
   useEffect(() => {
-    if (type === "replay") fetchSportsDb();
     if (type === "highlights") {
       let cancelled = false;
       (async () => {
@@ -252,11 +254,11 @@ const SportDetail = () => {
       return () => { cancelled = true; };
     }
     return undefined;
-  }, [type, fetchSportsDb, fetchHighlightList, fetchCategories, latestMatch]);
+  }, [type, fetchHighlightList, fetchCategories, latestMatch]);
 
   const items = useMemo(
-    () => (config ? config.buildItems({ sdbPool, highlightList, categories }) : []),
-    [config, sdbPool, highlightList, categories]
+    () => (config ? config.buildItems({ highlightList, categories }) : []),
+    [config, highlightList, categories]
   );
 
   // 페이지 이동 시 맨 위로
@@ -293,6 +295,12 @@ const SportDetail = () => {
                   {current.info.meta && (
                     <span className="sport-detail-info-meta"><img className="play-icon" src="/icons/play-w.svg" alt="" aria-hidden="true" />{current.info.meta}</span>
                   )}
+                  {/* 재생목록: 지역 · 퍼가기 제한으로 여기서 재생되지 않을 때 YouTube 에서 보기 */}
+                  {current.info.href && (
+                    <a className="sport-detail-info-link" href={current.info.href} target="_blank" rel="noopener noreferrer">
+                      YouTube에서 보기 <span className="ui-icon ui-icon-external" aria-hidden="true" />
+                    </a>
+                  )}
                 </div>
               </article>
 
@@ -307,7 +315,11 @@ const SportDetail = () => {
                       onClick={() => select(item.id)}
                     >
                       <span className="sport-detail-thumb">
-                        {item.thumb && <img src={item.thumb} alt="" loading="lazy" />}
+                        {item.thumb ? (
+                          <img src={item.thumb} alt="" loading="lazy" />
+                        ) : (
+                          item.league && <LeagueCover league={item.league} small />
+                        )}
                         {item.badge ? (
                           <span className="sport-detail-badge">{item.badge}</span>
                         ) : (

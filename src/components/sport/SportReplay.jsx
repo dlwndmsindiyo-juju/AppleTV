@@ -1,121 +1,81 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 import { useSportStore } from "../../store/useSportStore";
-import { getScore, decodeHtml } from "./sportUtils";
+import { REPLAY_LEAGUES, leagueThumb } from "../../data/replayLeagues";
 
-// 팀 이름 비교용 (대소문자 · 공백 · FC 등 무시)
-const norm = (name = "") =>
-  name.toLowerCase().replace(/\b(fc|afc|cf|sc)\b/g, "").replace(/[^a-z0-9가-힣]/g, "");
+// 경기 다시보기 — 국가별 1부 리그 영상 모음집 (data/replayLeagues.js)
+// - 리그 공식 YouTube 채널 재생목록을 직접 지정 → API 키 없이 항상 같은 모음집
+// - 가로 슬라이드: 추천 시리즈와 같은 Swiper (좌우 화살표 · 마우스 드래그 · 터치)
+// - 카드를 누르면 /sport/replay?id=리그 에서 재생목록 재생 (로그인 전에는 구독 팝업)
+// - 썸네일: 지정한 YouTube 영상 썸네일(thumbVideoId) · cover 이미지, 없으면 리그 이름 + 국가 글자 카드
 
-// 종료 경기와 같은 경기의 TheSportsDB 하이라이트 찾기
-const findVideo = (pool, home, away) => {
-  const h = norm(home), a = norm(away);
-  if (!h || !a) return null;
-  return pool.find((v) => {
-    const title = norm(v.snippet?.title);
-    const eh = norm(v.event?.home), ea = norm(v.event?.away);
-    return (eh && ea && eh.includes(h) && ea.includes(a)) || (title.includes(h) && title.includes(a));
-  }) || null;
-};
+// 리그 썸네일 (이미지가 없을 때 글자 카드) — 다시보기 상세 목록에서도 사용
+export const LeagueCover = ({ league, small = false }) => (
+  <span className={`sport-league-cover${small ? " is-small" : ""}`} aria-hidden="true">
+    <strong>{league.leagueEn}</strong>
+    {!small && <span>{league.country}</span>}
+  </span>
+);
 
-// 영상 다시보기 (최근 종료된 경기 5개)
-// 1) football-data 종료 경기가 있으면: 같은 경기의 TheSportsDB 영상이 있으면 바로 재생, 없으면 YouTube 검색으로 이동
-// 2) football-data 키가 없거나 결과가 없으면: TheSportsDB 최신 경기 하이라이트 5개로 카드 구성
-const SportReplay = ({ title = "경기 다시보기" }) => {
-  const finishedMatches = useSportStore((state) => state.finishedMatches);
-  const sdbPool = useSportStore((state) => state.sportsDbHighlights);
+// 섹션 제목은 "경기 다시보기" 로 고정 (부모에서 title="영상 다시보기" 를 넘겨도 무시)
+const TITLE = "경기 다시보기";
+
+const SportReplay = () => {
+  // 최근 종료 경기: 다시보기 카드에는 쓰지 않지만, 하이라이트 섹션의 첫 카드("A vs B 하이라이트")가 사용
   const fetchFinished = useSportStore((state) => state.onFetchFinishedMatches);
-  const fetchSportsDb = useSportStore((state) => state.onFetchSportsDbHighlights);
-
   useEffect(() => {
     fetchFinished();
-    fetchSportsDb();
-  }, [fetchFinished, fetchSportsDb]);
-
-  const cards = (finishedMatches || []).length > 0
-    ? finishedMatches.slice(0, 5).map((match) => {
-        const home = match.homeTeam?.shortName || match.homeTeam?.name;
-        const away = match.awayTeam?.shortName || match.awayTeam?.name;
-        const video = findVideo(sdbPool, match.homeTeam?.name || home, match.awayTeam?.name || away);
-        const date = new Date(match.utcDate);
-        return {
-          key: match.id,
-          // 같은 경기 영상이 있으면 상세(/sport/replay)로, 없으면 YouTube 검색
-          detailId: video?.id?.videoId,
-          home, away,
-          homeCrest: match.homeTeam?.crest,
-          awayCrest: match.awayTeam?.crest,
-          score: getScore(match),
-          thumb: video?.snippet?.thumbnails?.high?.url,
-          date: `${date.getMonth() + 1}월 ${date.getDate()}일`,
-          href: video
-            ? `https://www.youtube.com/watch?v=${video.id.videoId}`
-            : `https://www.youtube.com/results?search_query=${encodeURIComponent(`${home} vs ${away} 풀경기 다시보기`)}`,
-        };
-      })
-    : (sdbPool || []).slice(0, 5).map((video) => {
-        const ev = video.event || {};
-        const d = ev.date ? new Date(ev.date) : null;
-        const hasScore = ev.homeScore !== null && ev.homeScore !== undefined && ev.awayScore !== null && ev.awayScore !== undefined;
-        return {
-          key: video.id.videoId,
-          detailId: video.id.videoId,
-          home: ev.home,
-          away: ev.away,
-          title: decodeHtml(video.snippet?.title),
-          homeCrest: ev.homeBadge,
-          awayCrest: ev.awayBadge,
-          score: hasScore ? { home: ev.homeScore, away: ev.awayScore } : null,
-          thumb: video.snippet?.thumbnails?.high?.url,
-          date: d && !Number.isNaN(d.getTime()) ? `${d.getMonth() + 1}월 ${d.getDate()}일` : video.snippet?.channelTitle || "",
-          href: `https://www.youtube.com/watch?v=${video.id.videoId}`,
-        };
-      });
+  }, [fetchFinished]);
 
   return (
     <section className="sport-replay">
       <div className="inner">
         <div className="sport-section-head">
-          <h3 className="sport-section-title">{title}</h3>
+          <h3 className="sport-section-title">{TITLE}</h3>
           <Link className="sport-more" to="/sport/replay">
             전체 보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
           </Link>
         </div>
 
-        {cards.length === 0 ? (
-          <p className="sport-empty">다시볼 경기가 없습니다.</p>
+        {REPLAY_LEAGUES.length === 0 ? (
+          <p className="sport-empty">다시볼 영상이 없습니다.</p>
         ) : (
-          <ul className="sport-replay-list">
-            {cards.map((card) => {
-              const body = (
-                <>
-                  <div
-                    className="sport-replay-thumb"
-                    style={card.thumb ? { backgroundImage: `url(${card.thumb})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
-                  >
-                    {card.homeCrest && <img src={card.homeCrest} alt="" />}
-                    <span className="sport-replay-score">
-                      {card.score ? `${card.score.home} : ${card.score.away}` : "VS"}
-                    </span>
-                    {card.awayCrest && <img src={card.awayCrest} alt="" />}
+          <Swiper
+            className="sport-replay-swiper"
+            modules={[Navigation]}
+            navigation
+            grabCursor
+            slidesPerView="auto"
+            spaceBetween={24}
+            breakpoints={{ 0: { spaceBetween: 12 }, 768: { spaceBetween: 24 } }}
+          >
+            {REPLAY_LEAGUES.map((league) => (
+              <SwiperSlide key={league.id} className="sport-replay-slide">
+                <Link
+                  className="sport-replay-card"
+                  to={`/sport/replay?id=${league.id}`}
+                  aria-label={`${league.country} ${league.league} 영상 모음 보기`}
+                >
+                  <div className="sport-replay-thumb sport-replay-thumb--league">
+                    {leagueThumb(league) ? (
+                      <img src={leagueThumb(league)} alt="" loading="lazy" />
+                    ) : (
+                      <LeagueCover league={league} />
+                    )}
                   </div>
-                  <span className="sport-replay-name">
-                    {card.home && card.away ? `${card.home} vs ${card.away}` : card.title}
+                  <span className="sport-replay-name">{league.league}</span>
+                  <span className="sport-replay-date">
+                    <img className="play-icon" src="/icons/play-w.svg" alt="" aria-hidden="true" />
+                    {league.country} · 영상 모음 보기
                   </span>
-                  <span className="sport-replay-date">{card.date}</span>
-                </>
-              );
-              return (
-                <li key={card.key}>
-                  {card.detailId ? (
-                    <Link className="sport-replay-card" to={`/sport/replay?id=${card.detailId}`}>{body}</Link>
-                  ) : (
-                    <a className="sport-replay-card" href={card.href} target="_blank" rel="noreferrer">{body}</a>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         )}
       </div>
     </section>
