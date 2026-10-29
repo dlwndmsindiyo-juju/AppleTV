@@ -5264,3 +5264,80 @@ main.sport-home {
     opacity: 0.6;
   }
 }
+
+// =====================================================================
+// [추가] 경기 다시보기 — 국가별 리그 영상 모음집 (SportReplay.jsx · data/replayLeagues.js)
+// - 썸네일: cover 이미지가 있으면 꽉 채움, 없으면 리그 이름 + 국가 글자 카드 (스포츠 그라데이션)
+// =====================================================================
+.sport-replay-thumb.sport-replay-thumb--league {
+  position: relative;
+  display: block;
+  padding: 0;
+
+  // App.scss 의 엠블럼 크기(44px) 규칙 대신 썸네일을 가득 채움
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// 리그 글자 카드 (홈 카드 · 다시보기 상세 목록 공용)
+.sport-league-cover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-xs;
+  padding: $space-md;
+  background: linear-gradient(135deg, $sport-team-gradient-start 0%, $sport-team-gradient-mid 60%, $sport-team-gradient-end 100%);
+  color: $text-primary;
+  text-align: center;
+
+  strong {
+    @include heading-h3-b;
+    font-family: inherit;
+    word-break: keep-all;
+  }
+
+  span {
+    @include body-small;
+    font-family: inherit;
+    color: $light-color-200;
+  }
+
+  &.is-small strong {
+    @include caption-default-b;
+    font-family: inherit;
+  }
+}
+
+// 카드 아래 "▶ 잉글랜드 · 영상 모음 보기"
+.sport-replay-card .sport-replay-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+
+  .play-icon {
+    height: 9px;
+  }
+}
+
+// 다시보기 상세: 재생목록이 여기서 재생되지 않을 때 "YouTube에서 보기"
+.sport-detail-info-link {
+  @include body-small;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.25em;
+  font-family: inherit;
+  color: $text-secondary;
+  text-decoration: none;
+
+  &:hover {
+    color: $text-primary;
+    text-decoration: underline;
+  }
+}
