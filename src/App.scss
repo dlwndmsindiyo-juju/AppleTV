@@ -1057,12 +1057,12 @@ header {
 
   .value-prop-title {
     @include body-large; // 시안 제목 크기 (17px)
-    color: $text-primary;
+    color: $light-color-0;
   }
 
   .value-prop-desc {
     @include body-small; // Body Small 13
-    color: $text-tertiary;
+    color: $light-color-500;
   }
 }
 
