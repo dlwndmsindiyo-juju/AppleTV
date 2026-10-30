@@ -32,7 +32,6 @@ const ContinueCard = ({ h }) => {
   ]
     .filter(Boolean)
     .join(" · ");
-  const genres = info?.genres?.length ? info.genres : [h.genre].filter(Boolean);
 
   return (
     <Link to={`${detailPath(h.type, h.id)}?play=1`} className="member-card member-cw-card">
@@ -54,7 +53,7 @@ const ContinueCard = ({ h }) => {
         </span>
       </div>
       <h3 className="member-card-title">{h.title}</h3>
-      <span className="member-card-meta">{contentMeta(h.type, genres, info?.original)}</span>
+      <span className="member-card-meta">{contentMeta(h.type, info, [h.genre].filter(Boolean))}</span>
       <span className="member-card-link">이어보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" /></span>
     </Link>
   );

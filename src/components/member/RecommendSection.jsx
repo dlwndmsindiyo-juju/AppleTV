@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { useMovieStore } from "../../store/useMovieStore";
 import { SwiperSlide } from "swiper/react";
 import Rail from "../common/Rail";
-import { img, detailPath, MOVIE_GENRES, TV_GENRES } from "./memberUtils";
-import { useContentInfo, contentMeta } from "./useContentInfo";
+import { img, detailPath } from "./memberUtils";
+import { useContentInfo, contentMeta, shortGenres } from "./useContentInfo";
 
 // Apple이 모두에게 추천하는 작품 — 시안: 포스터 카드 + 아래 그림자 위에 제목 · 설명 · [재생] [★ 평점]
 // - 데이터: 이번 주 인기 영화 + 시리즈를 번갈아 섞음 (useMovieStore.recommendedMix)
 //   · 탑텐(Apple TV+ 오리지널)에 있는 작품은 빼서 겹치지 않게
-// - 설명 줄: "영화 · 액션 · 스릴러" / 실제 Apple Original 이면 "영화 · 액션 · Apple Original"
+// - 설명 줄: "액션 · 영화 · 스릴러" / 실제 Apple Original 이면 "스포츠 · 영화 · Apple Original" (useContentInfo)
 // - 재생: 상세 페이지에서 바로 재생 (?play=1)
 // - ★ 평점: 상세 페이지의 "작품 평점"으로 이동 (#rating)
 // - 카드(포스터 · 제목)를 누르면 상세 페이지
@@ -18,8 +18,6 @@ const RecommendCard = ({ item }) => {
   const type = item.media_type === "tv" ? "tv" : "movie";
   const title = item.title || item.name;
   const info = useContentInfo(type, item.id);
-  const genreMap = type === "tv" ? TV_GENRES : MOVIE_GENRES;
-  const genres = (item.genre_ids || []).map((id) => genreMap[id]).filter(Boolean);
   const path = detailPath(type, item.id);
   const rating = item.vote_average ? item.vote_average.toFixed(1) : "-";
 
@@ -29,7 +27,7 @@ const RecommendCard = ({ item }) => {
         <img className="member-rc-poster" src={img(item.poster_path, "w500")} alt="" loading="lazy" />
         <span className="member-rc-info">
           <strong className="member-rc-title">{title}</strong>
-          <span className="member-rc-meta">{contentMeta(type, genres, info?.original)}</span>
+          <span className="member-rc-meta">{contentMeta(type, info, shortGenres(type, item.genre_ids))}</span>
         </span>
       </Link>
       <div className="member-rc-actions">

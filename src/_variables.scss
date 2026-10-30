@@ -69,6 +69,14 @@ $card-shadow-start: rgba(0, 0, 0, 0.86); // #000000 · 100% × 86%
 $card-shadow-end: rgba(102, 102, 102, 0.172); // #666666 · 20% × 86%
 $card-shadow-gradient: linear-gradient(to top, $card-shadow-start 0%, $card-shadow-end 100%);
 
+// [추가] 가로형 썸네일 그림자 (Figma: AI 어시스트 카드 · Linear)
+// - 위 0% 검정 28% → 30% ~ 49% 투명 → 아래 100% 검정 90% (위아래 글자가 잘 보이게)
+$thumb-shadow-gradient: linear-gradient(to bottom,
+    rgba(0, 0, 0, 0.28) 0%,
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0) 49%,
+    rgba(0, 0, 0, 0.9) 100%);
+
 // [추가] Opacity (Figma 색상 스타일: Sports / Opacity-b · Opacity-w · Opacity / 55% · 50% · 45%)
 $sport-opacity-b: rgba(0, 0, 0, 0.5);
 $sport-opacity-w: rgba(255, 255, 255, 0.1);
