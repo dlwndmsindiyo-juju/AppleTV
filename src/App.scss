@@ -78,6 +78,8 @@ header {
 
       // [중앙 토글] 슬라이딩 인디케이터 방식
       .gnb-center-toggle {
+        @include body-large-b;
+        color: $light-color-0;
         position: absolute;
         left: 50%;
         top: 50%;

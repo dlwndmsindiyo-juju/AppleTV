@@ -65,6 +65,12 @@ header .inner nav > * {
   pointer-events: auto;
 }
 header .inner nav .gnb-center-toggle {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  color: #FFFFFF;
   position: absolute;
   left: 50%;
   top: 50%;
