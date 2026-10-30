@@ -35,6 +35,7 @@ import SearchTitle from "./pages/SearchTitle";
 import Wishlist from "./pages/Wishlist";
 import WishlistLayer from "./components/wishlist/WishlistLayer";
 import { Profile } from "./pages/Profile";
+import AiAssistantPromo from "./components/landing/AiAssistantPromo";
 
 function App() {
   const [showIntro, setShowIntro] = useState(() => {
