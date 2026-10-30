@@ -1147,3 +1147,184 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     }
   }
 }
+
+
+// =====================================================================
+// [추가] Apple이 모두에게 추천하는 작품 (추천작) — 시안
+// - 포스터 카드 + 아래 그림자($card-shadow-gradient) 위에 제목 · 설명 · [재생] [★ 평점]
+// - PC 한 줄 5장 + 화살표 슬라이드 (.rail-recommend)
+// =====================================================================
+.member-home {
+  .member-rc-card {
+    position: relative;
+    aspect-ratio: 282 / 392; // 시안 282 × 392
+    border-radius: $radius-sm; // 시안 Corner radius 10
+    overflow: hidden;
+    background-color: $dark-color-300;
+  }
+
+  // 카드 전체 → 상세 페이지
+  .member-rc-link {
+    position: absolute;
+    inset: 0;
+    display: block;
+    color: $text-primary;
+    text-decoration: none;
+
+    // 카드 전체 그림자 (Figma Fill: Linear 100% · 카드섹션 이미지 앞배경 그림자)
+    // - 아래 검정 86% → 위 회색 17% : 포스터 위를 덮어 제목 · 버튼이 잘 보이게
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $card-shadow-gradient;
+      pointer-events: none;
+    }
+
+    &:hover .member-rc-poster {
+      transform: scale(1.05);
+    }
+  }
+
+  .member-rc-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .member-rc-info {
+    position: absolute;
+    left: $space-lg;
+    right: $space-lg;
+    bottom: 72px; // 버튼(40) + 아래 여백(16) + 간격(16)
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    min-width: 0;
+  }
+
+  .member-rc-title {
+    @include body-default-b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-rc-meta {
+    @include caption-default;
+    color: $text-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // [재생] [★ 평점] 같은 폭 두 칸
+  .member-rc-actions {
+    position: absolute;
+    left: $space-lg;
+    right: $space-lg;
+    bottom: $space-lg;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-sm;
+  }
+
+  .member-rc-play,
+  .member-rc-rate {
+    @include label-default-b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 40px; // 시안 115 × 40
+    box-sizing: border-box;
+    border-radius: 999px;
+    color: $text-primary;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  // 재생: 프라이머리
+  .member-rc-play {
+    background-color: $primary-color-500;
+
+    img {
+      width: 8px;
+      height: 11px;
+      display: block;
+    }
+
+    &:hover {
+      background-color: $primary-color-400;
+    }
+  }
+
+  // ★ 평점 (시안: Fill Sports/Opacity-w · Stroke Light/500 1px Inside) → 작품 평점으로 이동
+  .member-rc-rate {
+    border: 1px solid $light-color-500; // border-box 라 버튼 안쪽에 그려짐 (Inside)
+    background-color: $sport-opacity-w;
+
+    &:hover {
+      border-color: $light-color-0;
+      background-color: rgba($light-color-0, 0.2);
+    }
+  }
+
+  .member-rc-star {
+    width: 12px;
+    height: 12px;
+    display: block;
+    flex-shrink: 0;
+  }
+}
+
+// PC: 한 줄 5장 (간격 24 × 4) · 화살표는 카드 가운데 높이
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.member-home .rail-recommend {
+    --rail-col: calc((100% - 96px) / 5);
+    --nav-top: 50%;
+  }
+}
+
+// 태블릿 · 모바일: 버튼 두 개가 들어가는 폭
+@media (max-width: $breakpoint-tablet) {
+  main.member-home .rail-recommend {
+    --rail-col: 220px;
+    --nav-top: 50%;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  main.member-home .rail-recommend {
+    --rail-col: 176px;
+  }
+
+  .member-home {
+    .member-rc-info {
+      left: $space-md;
+      right: $space-md;
+      bottom: 56px;
+    }
+
+    .member-rc-actions {
+      left: $space-md;
+      right: $space-md;
+      bottom: $space-md;
+      gap: 6px;
+    }
+
+    .member-rc-play,
+    .member-rc-rate {
+      @include caption-default-b;
+      height: 30px;
+      gap: $space-xs;
+    }
+  }
+}
