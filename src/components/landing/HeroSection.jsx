@@ -189,7 +189,7 @@ const HeroSection = () => {
   if (heroItems.length === 0) return null;
 
   return (
-    <div className="hero-swiper-container">
+    <div className="hero-swiper-container movie-home-hero">
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
         effect="fade"

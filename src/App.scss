@@ -7584,3 +7584,22 @@ section.top10-section {
     }
   }
 }
+// Movie home banner: mirror the sports home hero dimensions at each breakpoint.
+// Scoped class prevents changes to sports or other Swiper instances.
+.hero-swiper-container.movie-home-hero {
+  height: min(955px, calc(100svh - 64px));
+  min-height: 620px;
+  overflow: hidden;
+}
+@media (max-width: 1024px) {
+  .hero-swiper-container.movie-home-hero {
+    height: min(740px, calc(100svh - 60px));
+    min-height: 480px;
+  }
+}
+@media (max-width: 600px) {
+  .hero-swiper-container.movie-home-hero {
+    height: min(580px, calc(100svh - 56px));
+    min-height: 400px;
+  }
+}

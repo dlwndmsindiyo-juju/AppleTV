@@ -6,7 +6,7 @@ import ValueProps from "../components/landing/ValueProps";
 import Top10Section from "../components/landing/Top10Section";
 import UpcomingSection from "../components/landing/UpcomingSection";
 import AppleOriginals from "../components/landing/AppleOriginals";
-import AiAssistantPromo from "../components/landing/AiAssistantPromo"; // [추가] 시안: AI 어시스턴트 안내 띠
+import AiAssistantPromo from "../components/landing/AiAssistantPromo";
 import SubscribeCTA from "../components/landing/SubscribeCTA"; // 구독 유도 CTA (로그인 전 메인에만 표시)
 import DeviceGuide from "../components/landing/DeviceGuide";
 import MemberHome from "../components/member/MemberHome"; // [추가] 로그인 후 메인
@@ -43,8 +43,9 @@ const Home = () => {
       {/* 5. 오리지널스 */}
       <AppleOriginals />
 
-      {/* 6. AI 어시스턴트 안내 띠 (시안: 구독 CTA 자리) */}
-      <AiAssistantPromo ctaPath="/login" />
+      {/* 비구독 전용 AI: 오리지널스 바로 아래, 기존 팝업 연결 유지 */}
+      <AiAssistantPromo />
+
 
       {/* 7. 구독 유도 CTA — 로그인 전에만 보임 (로그인하면 위의 MemberHome 으로 바뀌어 자동으로 숨겨짐) */}
       <SubscribeCTA type="tv" />
