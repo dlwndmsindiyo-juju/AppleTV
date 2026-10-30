@@ -5827,3 +5827,134 @@ main.sport-home {
     }
   }
 }
+
+
+// =====================================================================
+// [추가] 예정된 경기 — 시안: 경기 이미지 카드 (SportUpcoming.jsx · .sport-up-*)
+// - 왼쪽 위 날짜 알약 · 오른쪽 위 Apple TV 로고 · 왼쪽 아래 "홈 vs. 원정"
+// - PC 한 줄 4장 + 화살표 슬라이드 / 태블릿 2장 반 / 모바일 1장 + 다음 장 일부
+// - 예전 카드 클래스(.sport-match-card · .sport-upcoming-slide)와 겹치지 않게 새 이름 사용
+// =====================================================================
+.sport-upcoming {
+  .sport-up-swiper {
+    width: 100%;
+    overflow: hidden;
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: $text-primary;
+    }
+  }
+
+  .sport-up-slide {
+    width: calc((100% - 72px) / 4);
+    height: auto;
+  }
+
+  .sport-up-card {
+    position: relative;
+    display: block;
+    aspect-ratio: 306 / 182;
+    border-radius: $radius-xs;
+    overflow: hidden;
+    background-color: $bg-surface-hover;
+    color: $text-primary;
+    text-decoration: none;
+
+    // 아래 제목이 잘 보이게 아래쪽만 어둡게
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 50%;
+      background: linear-gradient(to top, $opacity-b-55 0%, rgba(0, 0, 0, 0) 100%);
+      pointer-events: none;
+    }
+
+    &:hover .sport-up-bg {
+      transform: scale(1.04);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $light-color-0;
+      outline-offset: 2px;
+    }
+  }
+
+  .sport-up-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  // 왼쪽 위 날짜 (반투명 검정 알약)
+  .sport-up-date {
+    @include caption-default;
+    position: absolute;
+    top: $space-md;
+    left: $space-md;
+    z-index: 1;
+    padding: 5px $space-md;
+    border-radius: 999px;
+    background-color: $sport-opacity-b;
+    color: $text-primary;
+    white-space: nowrap;
+  }
+
+  // 오른쪽 위 Apple TV 로고 (public/icons/shorts/logo_w.svg)
+  .sport-up-logo {
+    position: absolute;
+    top: $space-md;
+    right: $space-md;
+    z-index: 1;
+    width: auto;
+    height: 20px;
+    max-width: none;
+    display: block;
+  }
+
+  // 왼쪽 아래 "뉴욕 vs. 애틀랜타"
+  .sport-up-title {
+    @include heading-h4-b;
+    position: absolute;
+    left: $space-md;
+    right: $space-md;
+    bottom: $space-md;
+    z-index: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .sport-upcoming .sport-up-slide {
+    width: calc((100% - 32px) / 2.5);
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .sport-upcoming {
+    .sport-up-slide {
+      width: 82%;
+    }
+
+    .sport-up-logo {
+      height: 16px;
+    }
+
+    .sport-up-swiper {
+      .swiper-button-next,
+      .swiper-button-prev {
+        display: none;
+      }
+    }
+  }
+}
