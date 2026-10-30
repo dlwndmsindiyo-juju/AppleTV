@@ -7142,8 +7142,8 @@ section.top10-section .top10-title {
 section.top10-section .top10-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 22px;
-  line-height: 28px;
+  font-size: 17px;
+  line-height: 22px;
   letter-spacing: 0;
   margin: 0 0 24px;
   color: #C8C8C8;
@@ -7217,5 +7217,31 @@ section.top10-section .top10-num-stop-end {
   }
   section.top10-section .top10-num .top10-num-stroke {
     stroke-width: 8px;
+  }
+}
+@media (min-width: 1025px) {
+  section.top10-section .top10-desc,
+  .upcoming-section .upcoming-desc.upcoming-desc,
+  .apple-originals .apple-originals-desc.apple-originals-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 28px;
+    letter-spacing: 0;
+    color: #C8C8C8;
+  }
+}
+@media (min-width: 1025px) {
+  section.top10-section .top10-title,
+  .upcoming-section .upcoming-title.upcoming-title,
+  .apple-originals .apple-originals-title.apple-originals-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+    padding-top: 0;
   }
 }

@@ -7431,10 +7431,29 @@ section.top10-section {
 // - TOP 10 · 공개예정작 · 오리지널스 설명 문구 (로그인 전 · 후 홈 공통)
 // =====================================================================
 @media (min-width: ($breakpoint-tablet + 1)) {
+
   section.top10-section .top10-desc,
   .upcoming-section .upcoming-desc.upcoming-desc,
   .apple-originals .apple-originals-desc.apple-originals-desc {
     @include heading-h2;
     color: $light-color-500;
+  }
+}
+
+
+// =====================================================================
+// [추가] 홈 섹션 제목 — .member-title 과 같게 (PC 1025px 이상 · 로그인 전 / 후 홈 공통)
+// - TOP 10 · 공개예정작 · 오리지널스 제목: Heading/h1-B · Light/0 (기존 믹스인 heading-h1-b)
+// - 소제목은 위 [추가] 섹션 소제목 규칙(heading-h2 · Light/500)과 같음
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+
+  section.top10-section .top10-title,
+  .upcoming-section .upcoming-title.upcoming-title,
+  .apple-originals .apple-originals-title.apple-originals-title {
+    @include heading-h1-b;
+    color: $light-color-0;
+    margin: 0 0 $space-sm;
+    padding-top: 0;
   }
 }
