@@ -7136,3 +7136,86 @@ img.ui-icon.ui-icon-arrow {
     padding: 32px 16px;
   }
 }
+section.top10-section .top10-title {
+  margin-bottom: 8px;
+}
+section.top10-section .top10-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0;
+  margin: 0 0 24px;
+  color: #C8C8C8;
+}
+section.top10-section .top10-slide {
+  width: calc((100% - 72px) / 4);
+}
+section.top10-section .top10-card {
+  position: relative;
+  display: block;
+  padding-left: 24%;
+}
+section.top10-section .top10-poster {
+  position: relative;
+  z-index: 1;
+}
+section.top10-section .top10-num {
+  position: absolute;
+  left: 0;
+  bottom: 2%;
+  z-index: 0;
+  height: 46%;
+  width: auto;
+  max-width: none;
+  overflow: visible;
+  pointer-events: none;
+}
+section.top10-section .top10-num .top10-num-glyph {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 160px;
+  letter-spacing: -8px;
+}
+section.top10-section .top10-num .top10-num-stroke {
+  stroke: #C8C8C8;
+  stroke-width: 6px;
+  stroke-linejoin: round;
+}
+section.top10-section .top10-num-stop-start {
+  stop-color: rgba(0, 0, 0, 0.86);
+}
+section.top10-section .top10-num-stop-end {
+  stop-color: rgba(102, 102, 102, 0.172);
+}
+
+@media (max-width: 1024px) {
+  section.top10-section .top10-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+    padding-right: 13%;
+  }
+  section.top10-section .top10-slide {
+    width: 240px;
+  }
+}
+@media (max-width: 767px) {
+  section.top10-section .top10-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    margin-bottom: 20px;
+    padding-right: 20px;
+  }
+  section.top10-section .top10-slide {
+    width: 170px;
+  }
+  section.top10-section .top10-num .top10-num-stroke {
+    stroke-width: 8px;
+  }
+}
