@@ -35,6 +35,7 @@ import SearchTitle from "./pages/SearchTitle";
 import Wishlist from "./pages/Wishlist";
 import WishlistLayer from "./components/wishlist/WishlistLayer";
 import { Profile } from "./pages/Profile";
+import AiAssistantPromo from "./components/landing/AiAssistantPromo";
 
 function App() {
   const [showIntro, setShowIntro] = useState(() => {
@@ -166,12 +167,8 @@ function App() {
             </Routes>
           </div>
 
-<<<<<<< HEAD
           {/* AI 어시스턴트 안내 배너 */}
           {!location.pathname.startsWith("/sport") && <AiAssistantPromo />}
-=======
-          {/* AI 어시스턴트 안내 띠(AiAssistantPromo)는 로그인 전 홈(pages/Home.jsx)에서만 표시 */}
->>>>>>> 5b96e058d09fbab4acd97a4d553eca312e56a12d
 
           {/* 기존 프로모션 배너 */}
           <PromoBanner />
