@@ -166,7 +166,6 @@ function App() {
             </Routes>
           </div>
 
-
           {/* 기존 프로모션 배너 */}
           <PromoBanner />
 
