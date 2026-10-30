@@ -22,9 +22,9 @@
 }
 .member-home .member-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 48px;
-  line-height: 56px;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0 0 8px;
@@ -965,6 +965,7 @@
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
+  color: #FFFFFF;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -972,8 +973,8 @@
 .member-home .member-wl-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 13px;
+  line-height: 18px;
   letter-spacing: 0;
   color: #C8C8C8;
   white-space: nowrap;
@@ -1072,9 +1073,10 @@
 .member-home .member-rc-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 15px;
-  line-height: 20px;
+  font-size: 17px;
+  line-height: 22px;
   letter-spacing: 0;
+  color: #C8C8C8;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1082,8 +1084,8 @@
 .member-home .member-rc-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 11px;
-  line-height: 13px;
+  font-size: 13px;
+  line-height: 18px;
   letter-spacing: 0;
   color: #C8C8C8;
   white-space: nowrap;
@@ -1104,8 +1106,8 @@
 .member-home .member-rc-rate {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 15px;
+  line-height: 20px;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
@@ -1252,6 +1254,11 @@
 
 main.member-home .member-mood .member-chip:not(.active),
 main.member-home .member-mood .member-notice .member-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
   box-sizing: border-box;
   border: 1px solid #C8C8C8;
   border-radius: 999px;
@@ -1286,5 +1293,24 @@ main.member-home .member-mood .member-chip.active {
 @media (max-width: 767px) {
   main.member-home .rail-ai {
     --rail-col: 240px;
+  }
+}
+@media (min-width: 1025px) {
+  main.member-home .member-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  main.member-home .member-head .member-desc,
+  main.member-home .member-section.member-wishlist .member-head .member-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 28px;
+    letter-spacing: 0;
+    color: #C8C8C8;
   }
 }

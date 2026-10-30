@@ -989,6 +989,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
   // 썸네일 아래 글자는 살짝 안쪽에서 시작 (시안)
   .member-cw-card {
+
     .member-card-title,
     .member-card-meta,
     .member-card-link {
@@ -1080,15 +1081,16 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
   }
 
   .member-wl-name {
-    @include heading-h4-b;
+    @include body-large-b;
+    color: $light-color-0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .member-wl-meta {
-    @include label-default;
-    color: $text-secondary;
+    @include body-small;
+    color: $light-color-500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1209,15 +1211,16 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
   }
 
   .member-rc-title {
-    @include body-default-b;
+    @include body-large-b;
+    color: $light-color-500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .member-rc-meta {
-    @include caption-default;
-    color: $text-secondary;
+    @include body-small;
+    color: $light-color-500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1237,7 +1240,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
   .member-rc-play,
   .member-rc-rate {
-    @include label-default-b;
+    @include body-default-b;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1245,7 +1248,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     height: 40px; // 시안 115 × 40
     box-sizing: border-box;
     border-radius: 999px;
-    color: $text-primary;
+    color: $light-color-0;
     text-decoration: none;
     white-space: nowrap;
     transition: background-color 0.2s ease, border-color 0.2s ease;
@@ -1374,6 +1377,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
   }
 
   .member-ai-card {
+
     .member-card-title,
     .member-card-meta,
     .member-card-link {
@@ -1400,13 +1404,15 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
 // 버튼형 메뉴 (기분 칩 · 취향 더 반영하기) — 기존 PC · 모바일 규칙보다 우선
 main.member-home .member-mood {
+
   .member-chip:not(.active),
   .member-notice .member-btn {
+    @include body-default-b;
     box-sizing: border-box;
     border: 1px solid $light-color-500; // Inside
     border-radius: 999px;
     background-color: $sport-opacity-w;
-    color: $text-primary;
+    color: $light-color-0;
 
     &:hover {
       border-color: $light-color-0;
@@ -1420,7 +1426,7 @@ main.member-home .member-mood {
     border: 1px solid $primary-color-500;
     border-radius: 999px;
     background-color: $primary-color-500;
-    color: $text-primary;
+    color: $light-color-0;
   }
 }
 
