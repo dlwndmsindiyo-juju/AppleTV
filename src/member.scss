@@ -929,3 +929,221 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     }
   }
 }
+
+
+// =====================================================================
+// [추가] 멈춘 순간부터 다시 (이어보기) · 마음에 담아둔 이야기 (찜) — 시안
+// - 이어보기: 썸네일 안 "시즌 1 · 3화 · 38분 남음" + 맨 아래 진행 바 (.member-cw-*)
+// - 찜: 배경 그라데이션 띠 + 반투명 가로 카드 · + 버튼 (.member-wl-*)
+// - 기존 .member-progress / .member-wish-card 규칙과 겹치지 않게 새 이름 사용
+// =====================================================================
+.member-home {
+
+  // ---------- 멈춘 순간부터 다시 ----------
+  .member-cw-thumb {
+    aspect-ratio: 255 / 158;
+    margin-bottom: $space-md;
+    border-radius: $radius-xs;
+
+    // 아래쪽 글자 · 진행 바가 잘 보이도록 어둡게
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 50%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+      pointer-events: none;
+    }
+  }
+
+  .member-cw-time {
+    @include label-default;
+    position: absolute;
+    left: $space-md;
+    right: $space-md;
+    bottom: $space-md;
+    z-index: 1;
+    color: $text-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-cw-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    height: 3px;
+    background-color: rgba($light-color-0, 0.25);
+
+    span {
+      display: block;
+      height: 100%;
+      background-color: $light-color-0;
+    }
+  }
+
+  // 썸네일 아래 글자는 살짝 안쪽에서 시작 (시안)
+  .member-cw-card {
+    .member-card-title,
+    .member-card-meta,
+    .member-card-link {
+      padding: 0 $space-sm;
+    }
+
+    .member-card-title {
+      @include heading-h4-b;
+    }
+
+    .member-card-meta {
+      @include label-default;
+      color: $text-secondary;
+    }
+
+    .member-card-link {
+      @include label-default-b;
+      display: inline-flex;
+      align-items: center;
+      gap: $space-xs;
+    }
+  }
+
+  // ---------- 마음에 담아둔 이야기 ----------
+  // 배경 그라데이션 띠 (_variables 의 $bg-gradient)
+  .member-section.member-wishlist {
+    background-image: $bg-gradient;
+
+    .member-desc,
+    .member-more {
+      color: $text-secondary;
+    }
+
+    .member-more:hover {
+      color: $text-primary;
+    }
+  }
+
+  .member-wl-card {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    height: 100%;
+    padding: $space-sm $space-sm $space-sm $space-md;
+    border-radius: $radius-xs;
+    background-color: rgba($dark-color-900, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: $text-primary;
+    box-sizing: border-box;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: rgba($dark-color-900, 0.7);
+    }
+  }
+
+  .member-wl-link {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .member-wl-thumb {
+    flex-shrink: 0;
+    width: 60px;
+    aspect-ratio: 2 / 3;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: $dark-color-300;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .member-wl-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+  }
+
+  .member-wl-name {
+    @include heading-h4-b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-wl-meta {
+    @include label-default;
+    color: $text-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // + 버튼 (위시리스트에 추가)
+  .member-wl-add {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: $text-primary;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba($light-color-0, 0.15);
+    }
+  }
+}
+
+// PC: 이어보기 카드도 찜 카드와 같은 폭 (한 줄 4칸 · 시안)
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.member-home .rail-continue {
+    --rail-col: calc((100% - 72px) / 4);
+  }
+}
+
+// 태블릿: 찜 가로 카드가 좁아지지 않게
+@media (max-width: $breakpoint-tablet) {
+  .member-home .rail-wish {
+    --rail-col: 300px;
+  }
+}
+
+// 모바일
+@media (max-width: $breakpoint-mobile) {
+  main.member-home {
+    .rail-wish {
+      --rail-col: calc((100% - 16px) / 1.15);
+    }
+
+    .member-wl-thumb {
+      width: 48px;
+    }
+
+    .member-wl-name {
+      @include body-default-b;
+    }
+  }
+}

@@ -49,10 +49,33 @@ $live-color: #ff453a;
 $success-color: #30d158;
 $accent-color: #0a84ff; // 기존 링크 · 로그인 버튼 파랑 (가이드 외 · 기존 화면 유지)
 
-// 스포츠 > 관심있는 구단 배경 그라데이션
-$sport-team-gradient-start: #000590;
-$sport-team-gradient-mid: #7A5585;
-$sport-team-gradient-end: #FFAB78;
+// [수정] 배경 그라데이션 (Figma 색상 스타일: Gradient · Linear)
+// - 진한 파랑(#00047C) → 살구색(#FFAA7A) 두 색
+// - 쓰는 곳: 홈 "마음에 담아둔 이야기" 띠 · 스포츠 관심 구단 띠 · 구단 페이지 상단 · 리그 글자 카드
+$bg-gradient-start: #00047C;
+$bg-gradient-end: #FFAA7A;
+$bg-gradient: linear-gradient(to right, $bg-gradient-start 0%, $bg-gradient-end 100%); // 가로 띠
+$bg-gradient-diagonal: linear-gradient(135deg, $bg-gradient-start 0%, $bg-gradient-end 100%); // 카드 (대각선)
+
+// 예전 이름 (호환용 · 새 코드에서는 위 $bg-gradient-* 사용)
+$sport-team-gradient-start: $bg-gradient-start;
+$sport-team-gradient-mid: color.mix($bg-gradient-start, $bg-gradient-end, 50%);
+$sport-team-gradient-end: $bg-gradient-end;
+
+// [추가] 카드 이미지 앞 그림자 (Figma 색상 스타일: Linear · "카드섹션 이미지 앞배경 그림자")
+// - 아래(0%) #000000 100% → 위(100%) #666666 20%, 레이어 불투명도 86% 를 곱한 값
+// - 사용 예: .card::after { background: $card-shadow-gradient; }
+$card-shadow-start: rgba(0, 0, 0, 0.86); // #000000 · 100% × 86%
+$card-shadow-end: rgba(102, 102, 102, 0.172); // #666666 · 20% × 86%
+$card-shadow-gradient: linear-gradient(to top, $card-shadow-start 0%, $card-shadow-end 100%);
+
+// [추가] Opacity (Figma 색상 스타일: Sports / Opacity-b · Opacity-w · Opacity / 55% · 50% · 45%)
+$sport-opacity-b: rgba(0, 0, 0, 0.5);
+$sport-opacity-w: rgba(255, 255, 255, 0.1);
+
+$opacity-b-55: rgba(0, 0, 0, 0.55);
+$opacity-b-50: rgba(0, 0, 0, 0.5);
+$opacity-b-45: rgba(0, 0, 0, 0.45);
 
 // ---------- Legacy Collection (기존 화면에서만 사용 · 새 화면에서는 쓰지 않기) ----------
 // 가이드: #08090D, #181A21, #252832, #B8BDC9 는 새 가이드와 분리

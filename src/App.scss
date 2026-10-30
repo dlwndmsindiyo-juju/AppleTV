@@ -3456,11 +3456,7 @@ body.has-promo-banner .footer {
 
 // ===== 스포츠 홈 > 관심있는 구단 (그라데이션 띠 + 슬라이드) =====
 .sport-teams {
-  background: linear-gradient(to right,
-      $sport-team-gradient-start 0%,
-      $sport-team-gradient-start 20%,
-      $sport-team-gradient-mid 55%,
-      $sport-team-gradient-end 100%);
+  background: $bg-gradient; // [수정] 배경 그라데이션 토큰
   padding: $space-5xl 0;
 
   // 이너 폭에서 슬라이드를 끊음
@@ -3554,11 +3550,7 @@ body.has-promo-banner .footer {
 
   // 상단 그라데이션 띠
   .sport-teams-hero {
-    background: linear-gradient(to right,
-        $sport-team-gradient-start 0%,
-        $sport-team-gradient-start 20%,
-        $sport-team-gradient-mid 55%,
-        $sport-team-gradient-end 100%);
+    background: $bg-gradient; // [수정] 배경 그라데이션 토큰
     padding: 40px 0 $space-4xl;
   }
 

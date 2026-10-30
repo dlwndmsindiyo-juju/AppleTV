@@ -5292,7 +5292,7 @@ main.sport-home {
   justify-content: center;
   gap: $space-xs;
   padding: $space-md;
-  background: linear-gradient(135deg, $sport-team-gradient-start 0%, $sport-team-gradient-mid 60%, $sport-team-gradient-end 100%);
+  background: $bg-gradient-diagonal; // [수정] 배경 그라데이션 토큰
   color: $text-primary;
   text-align: center;
 

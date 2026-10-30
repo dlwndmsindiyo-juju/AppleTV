@@ -404,7 +404,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   transition: background-color 0.2s ease;
 }
 .login-page .login-card .login-form .login-btn:hover {
-  background-color: rgb(0, 119.2612244898, 239.5);
+  background-color: rgb(0, 116.7216326531, 234.4);
 }
 .login-page .login-card .login-links {
   margin-top: 20px;
@@ -3386,7 +3386,7 @@ body.has-promo-banner .footer {
 }
 
 .sport-teams {
-  background: linear-gradient(to right, #000590 0%, #000590 20%, #7A5585 55%, #FFAB78 100%);
+  background: linear-gradient(to right, #00047C 0%, #FFAA7A 100%);
   padding: 64px 0;
 }
 .sport-teams .inner {
@@ -3489,7 +3489,7 @@ body.has-promo-banner .footer {
   box-sizing: border-box;
 }
 .sport-teams-page .sport-teams-hero {
-  background: linear-gradient(to right, #000590 0%, #000590 20%, #7A5585 55%, #FFAB78 100%);
+  background: linear-gradient(to right, #00047C 0%, #FFAA7A 100%);
   padding: 40px 0 48px;
 }
 .sport-teams-page .sport-teams-back {
@@ -6383,5 +6383,756 @@ img.ui-icon.ui-icon-arrow {
     width: 36px;
     height: 36px;
     font-size: 18px;
+  }
+}
+.auth-card {
+  background-color: #F5F5F5;
+  color: #171717;
+}
+
+.auth-close {
+  background-color: #FFFFFF;
+  color: #171717;
+}
+.auth-close:hover {
+  background-color: #E0E0E0;
+}
+.auth-close:focus-visible {
+  outline-color: #5865F2;
+}
+
+.auth-logo {
+  background-color: #D5D5D5;
+}
+.auth-logo img {
+  filter: brightness(0);
+}
+
+.auth-title {
+  color: #171717;
+}
+
+.auth-desc {
+  color: #A3A3A3;
+}
+
+.auth-field {
+  border-color: #D5D5D5;
+  background-color: #F5F5F5;
+}
+.auth-field:focus-within {
+  border-color: #5865F2;
+  background-color: #FFFFFF;
+}
+.auth-field input {
+  color: #171717;
+}
+.auth-field input::placeholder {
+  color: #525252;
+  opacity: 1;
+}
+
+.auth-field-label {
+  color: #525252;
+}
+
+.auth-field-value {
+  color: #171717;
+}
+
+.auth-privacy strong {
+  color: #171717;
+}
+.auth-privacy p {
+  color: #525252;
+}
+
+.auth-info {
+  background-color: #EBEBEB;
+}
+.auth-info strong {
+  color: #171717;
+}
+.auth-info p {
+  color: #525252;
+}
+
+.auth-notice,
+.auth-hint,
+.auth-fineprint,
+.plan-fineprint {
+  color: #525252;
+}
+
+.auth-message {
+  color: #171717;
+}
+
+.auth-btn:focus-visible {
+  outline-color: #5865F2;
+}
+.auth-btn--secondary {
+  background-color: #EBEBEB;
+  color: #171717;
+}
+.auth-btn--secondary:hover:not(:disabled) {
+  background-color: #E0E0E0;
+}
+
+.auth-divider {
+  color: #A3A3A3;
+}
+.auth-divider::before, .auth-divider::after {
+  background-color: #D5D5D5;
+}
+
+.auth-link:hover:not(:disabled) {
+  color: #6E7AF4;
+}
+
+.plan-opt {
+  border-color: #D5D5D5;
+  background-color: #F5F5F5;
+}
+.plan-opt:hover {
+  border-color: #A3A3A3;
+}
+.plan-opt.on {
+  border-color: #5865F2;
+  box-shadow: 0 0 0 1px #5865F2;
+  background-color: #FFFFFF;
+}
+.plan-opt:has(input:focus-visible) {
+  outline-color: #5865F2;
+}
+
+.plan-opt-name,
+.plan-opt-price,
+.plan-benefit-title {
+  color: #171717;
+}
+
+.plan-opt-note {
+  color: #525252;
+}
+
+.plan-opt-radio {
+  border-color: #C8C8C8;
+}
+.plan-opt.on .plan-opt-radio {
+  border-color: #5865F2;
+  background-color: #5865F2;
+}
+
+.plan-benefit-list li {
+  border-color: #D5D5D5;
+}
+.plan-benefit-list strong {
+  color: #171717;
+}
+.plan-benefit-list span {
+  color: #525252;
+}
+
+.account-page {
+  min-height: 100vh;
+  padding: calc(72px + 64px) 0 128px;
+  box-sizing: border-box;
+  background-color: #F5F5F5;
+  color: #171717;
+}
+.account-page :where(h1, h2, h3, p) {
+  margin: 0;
+  padding-top: 0;
+}
+.account-page button {
+  font-family: inherit;
+}
+
+.account-inner {
+  width: calc(100% - 80px);
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+.account-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 41px;
+  letter-spacing: 0;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #D5D5D5;
+}
+
+.account-section {
+  display: grid;
+  grid-template-columns: 252px minmax(0, 1fr);
+  align-items: start;
+  padding: 48px 0;
+  border-bottom: 1px solid #D5D5D5;
+}
+
+.account-section-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+}
+
+.account-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 0;
+}
+
+.account-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  transition: opacity 0.2s ease;
+}
+.account-item.is-muted {
+  opacity: 0.4;
+}
+
+.account-item-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+.account-item-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #525252;
+  word-break: keep-all;
+}
+
+.account-note {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #525252;
+}
+
+.account-link {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #5865F2;
+  cursor: pointer;
+  text-align: left;
+}
+.account-link:hover {
+  color: #6E7AF4;
+  text-decoration: underline;
+}
+.account-link:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.account-toggle {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #171717;
+  cursor: pointer;
+}
+.account-toggle:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.account-toggle-track {
+  position: relative;
+  flex-shrink: 0;
+  width: 36px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: #E0E0E0;
+  transition: background-color 0.2s ease;
+}
+
+.account-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.account-toggle.is-on .account-toggle-track {
+  background-color: #5865F2;
+}
+.account-toggle.is-on .account-toggle-thumb {
+  transform: translateX(16px);
+  background-color: #FFFFFF;
+}
+
+.account-channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  min-width: 0;
+}
+
+.account-check {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.account-check input {
+  appearance: none;
+  -webkit-appearance: none;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border-radius: 4px;
+  background-color: #E0E0E0;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-radius 0.15s ease;
+}
+.account-check input::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background-color: #FFFFFF;
+  -webkit-mask: url("/icons/check.svg") center/contain no-repeat;
+  mask: url("/icons/check.svg") center/contain no-repeat;
+  opacity: 0;
+}
+.account-check input:checked {
+  border-radius: 50%;
+  background-color: #5865F2;
+}
+.account-check input:checked::after {
+  opacity: 1;
+}
+.account-check input:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: 2px;
+}
+
+.account-channels:disabled .account-check {
+  cursor: default;
+}
+.account-channels:disabled .account-check input {
+  cursor: default;
+}
+
+.account-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.account-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.account-profile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.account-profile-text strong {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+}
+.account-profile-text span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #525252;
+  word-break: break-all;
+}
+
+.account-avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 56px);
+  gap: 12px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-avatar-option {
+  display: block;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.account-avatar-option .profile-avatar {
+  width: 52px;
+  height: 52px;
+}
+.account-avatar-option:hover {
+  transform: scale(1.05);
+}
+.account-avatar-option.is-on {
+  border-color: #171717;
+}
+.account-avatar-option:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: 2px;
+}
+
+.account-providers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.account-providers li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background-color: #FFFFFF;
+}
+.account-providers strong {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+.account-providers span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #525252;
+  word-break: break-all;
+}
+
+.account-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.account-dialog {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  border-radius: 24px;
+  background-color: #FFFFFF;
+  color: #171717;
+  box-sizing: border-box;
+  animation: login-step-in 0.25s ease both;
+}
+
+.account-dialog-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: 0;
+  margin-bottom: 8px;
+}
+
+.account-dialog-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #525252;
+  word-break: keep-all;
+}
+
+.account-dialog-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.account-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0;
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 8px;
+  background-color: #5865F2;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+.account-btn:hover:not(:disabled) {
+  background-color: #6E7AF4;
+}
+.account-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.account-btn:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: 2px;
+}
+.account-btn--secondary {
+  background-color: #EBEBEB;
+  color: #171717;
+}
+.account-btn--secondary:hover:not(:disabled) {
+  background-color: #E0E0E0;
+}
+
+.account-toast {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  z-index: 1100;
+  margin: 0;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  background-color: #171717;
+  color: #FFFFFF;
+  transform: translate(-50%, 16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.account-toast.is-show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.profile-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #262626;
+  color: #FFFFFF;
+}
+.profile-avatar--sm {
+  width: 100%;
+  height: 100%;
+}
+.profile-avatar--md {
+  width: 52px;
+  height: 52px;
+}
+.profile-avatar--lg {
+  width: 72px;
+  height: 72px;
+}
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.profile-avatar--primary {
+  background-color: #5865F2;
+}
+.profile-avatar--sports {
+  background-color: #E91E1B;
+}
+.profile-avatar--live {
+  background-color: #ff453a;
+}
+.profile-avatar--success {
+  background-color: #30d158;
+  color: #171717;
+}
+.profile-avatar--rating {
+  background-color: #FFD60A;
+  color: #171717;
+}
+.profile-avatar--accent {
+  background-color: #0a84ff;
+}
+.profile-avatar--dark {
+  background-color: #3A3A3A;
+}
+
+.profile-avatar-icon {
+  width: 62%;
+  height: 62%;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+@media (max-width: 1024px) {
+  .account-page {
+    padding-top: calc(72px + 48px);
+    padding-bottom: 64px;
+  }
+  .account-section {
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .account-page {
+    padding-top: calc(72px + 24px);
+  }
+  .account-inner {
+    width: calc(100% - 32px);
+  }
+  .account-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    letter-spacing: 0;
+    padding-bottom: 16px;
+  }
+  .account-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 32px 0;
+  }
+  .account-section-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: 0;
+  }
+  .account-section-body {
+    gap: 24px;
+  }
+  .account-item-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+  }
+  .account-avatar-grid {
+    grid-template-columns: repeat(4, 56px);
+  }
+  .account-channels {
+    gap: 12px 24px;
+  }
+}
+.member-home .member-empty {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0;
+  margin: 0;
+  padding: 64px 24px;
+  border-radius: 10px;
+  background-color: #1f1f1f;
+  color: #C8C8C8;
+  text-align: center;
+}
+
+.detail-popup .watch-player {
+  width: 100%;
+  height: 100%;
+}
+.detail-popup .watch-player iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 1024px) {
+  .member-home .member-continue .member-empty {
+    margin-right: 13%;
+  }
+}
+@media (max-width: 767px) {
+  .member-home .member-continue .member-empty {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+    margin-right: 20px;
+    padding: 32px 16px;
   }
 }
