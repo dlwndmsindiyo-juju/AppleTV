@@ -4,6 +4,7 @@ import { useMovieStore } from '../store/useMovieStore';
 import { toggleWish, useHeartStore, wishKey } from '../store/useHeartStore'; // 위시리스트 (Firestore)
 import { useAuthStore } from '../store/useAuthStore';
 import { isResumable, resumeAt, useWatchConnect, useWatchStore } from '../store/useWatchStore'; // 이어보기 (시청 기록)
+import CastFilmography from '../components/detail/CastFilmography';
 import WatchPlayer from '../components/common/WatchPlayer'; // 재생 위치를 알 수 있는 유튜브 플레이어
 
 // =====================================================================
@@ -528,26 +529,8 @@ export const MovieDetail = ({ type: typeProp }) => {
 
             {/* 등장인물 */}
             {activeTab === 'cast' && (
-              <div className="list-container">
-                {cast.length > 0 ? (
-                  <ul className="cast-grid">
-                    {cast.map((p) => (
-                      <li key={p.credit_id} className="cast-item">
-                        <div className="cast-photo">
-                          {p.profile_path ? (
-                            <img src={`${IMG}/w185${p.profile_path}`} alt={p.name} loading="lazy" />
-                          ) : (
-                            <span>{p.name?.[0]}</span>
-                          )}
-                        </div>
-                        <span className="cast-name">{p.name}</span>
-                        <span className="cast-role">{p.character}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="empty-content">등장인물 정보가 없습니다.</p>
-                )}
+              <div className="list-container cast-list-container">
+                <CastFilmography key={`${type}_${contentId}`} cast={cast} />
               </div>
             )}
 

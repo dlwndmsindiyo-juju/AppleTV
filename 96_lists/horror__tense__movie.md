@@ -1,0 +1,51 @@
+# 호러 × 긴장감 넘치는 × 영화 한 편
+
+20개 후보 중 조건 일치 1개, 조건 확장 19개. 분위기는 공식 소개를 해석한 편집 분류입니다.
+
+확장 후보를 자동으로 선택 조건에 맞는 작품처럼 표시하지 마세요. 한국 작품 페이지 확인과 구독 포함/현재 재생 가능 여부는 별개입니다.
+
+| 순위 | 작품·공식 링크 | 형식 | 확인한 길이 | 판정 | 완화한 조건 |
+|---:|---|---|---|---|---|
+| 1 | [더 캐니언](https://tv.apple.com/kr/movie/umc.cmc.26o403koqo2klixc0jtqy6tmc) | 영화/단편 | 127분 | 조건 일치 | 없음 |
+| 2 | [엿보는 자들의 밤](https://tv.apple.com/kr/show/umc.cmc.161vwm570k49vsn7xjtzvnwex) | 시리즈 | 공식 페이지 노출 회차: * · 53분 ([회차](https://tv.apple.com/kr/episode/umc.cmc.7jdx9hl96lorv838f97rxthxe?showId=umc.cmc.161vwm570k49vsn7xjtzvnwex)) | 확장 후보 | 시청 시간 |
+| 3 | [위도우스 베이의 저주](https://tv.apple.com/kr/show/umc.cmc.1zzly0vah46bnvnwf0qkrjhh2) | 시리즈 | 공식 페이지 노출 회차: 위도우스 베이에 오신 것을 환영합니다! · 41분 ([회차](https://tv.apple.com/kr/episode/umc.cmc.66qky4nskhbw2mdz0dt3oc0gu?showId=umc.cmc.1zzly0vah46bnvnwf0qkrjhh2)) | 확장 후보 | 시청 시간 |
+| 4 | [엔필드의 유령](https://tv.apple.com/kr/show/umc.cmc.33t5cskiqmmft1hxp23w9gnbw) | 시리즈 | 공식 페이지 노출 회차: 사건들 · 62분 ([회차](https://tv.apple.com/kr/episode/umc.cmc.6etgmpujeo88atk0sgx5akvwe?showId=umc.cmc.33t5cskiqmmft1hxp23w9gnbw)) | 확장 후보 | 시청 시간 |
+| 5 | [리시 이야기](https://tv.apple.com/kr/show/umc.cmc.34uwnqvp7211b9fl3vb25vled) | 시리즈 | 공식 페이지 노출 회차: 피의 불 · 53분 ([회차](https://tv.apple.com/kr/episode/umc.cmc.4r2ljwrb9kdh9gcfnc9z4p1f7?showId=umc.cmc.34uwnqvp7211b9fl3vb25vled)) | 확장 후보 | 시청 시간 |
+| 6 | [우리, 이전에](https://tv.apple.com/kr/show/umc.cmc.4uwoba1ftlsr5da94wc98ilsc) | 시리즈 | 공식 페이지 노출 회차: 사기꾼 · 36분 ([회차](https://tv.apple.com/kr/episode/umc.cmc.4shwf6avu7azzwrsn789ctf0l?showId=umc.cmc.4uwoba1ftlsr5da94wc98ilsc)) | 확장 후보 | 시청 시간 |
+| 7 | [서번트](https://tv.apple.com/kr/show/umc.cmc.4y25wuby7pck9o6vaubbbk7gb) | 시리즈 | 공식 페이지 노출 회차: 부활 · 35분 ([회차](https://tv.apple.com/kr/episode/umc.cmc.6ooshiy96qegjvtnzpmhqwyq6?showId=umc.cmc.4y25wuby7pck9o6vaubbbk7gb)) | 확장 후보 | 시청 시간 |
+| 8 | [콜](https://tv.apple.com/kr/show/umc.cmc.7hp8sparfsxo0l4f712f3mf2r) | 시리즈 | 공식 페이지 노출 회차: 시작 · 19분 ([회차](https://tv.apple.com/kr/episode/umc.cmc.60ma7grkzp52n160708lso71n?showId=umc.cmc.7hp8sparfsxo0l4f712f3mf2r)) | 확장 후보 | 시청 시간 |
+| 9 | [저주에 걸린 가족을 구해라!](https://tv.apple.com/kr/show/umc.cmc.4zami3bauzt4rzxhh4tzfmrfl) | 시리즈 | 공식 페이지 노출 회차: 일본화 · 23분 ([회차](https://tv.apple.com/kr/episode/umc.cmc.1sknvkaei7xs8duwt6870nimi?showId=umc.cmc.4zami3bauzt4rzxhh4tzfmrfl)) | 확장 후보 | 시청 시간 |
+| 10 | [Dr.브레인](https://tv.apple.com/kr/show/umc.cmc.60vbrno9xpmmax8wmdo4ow05u) | 시리즈 | 공식 페이지 노출 회차: 1회 · 61분 ([회차](https://tv.apple.com/kr/episode/umc.cmc.74syedyzw2tlg5ku6zs6p5xed?showId=umc.cmc.60vbrno9xpmmax8wmdo4ow05u)) | 확장 후보 | 시청 시간 |
+| 11 | [로스트 버스](https://tv.apple.com/kr/movie/umc.cmc.4p7gv4trt1rt0kuiwzmitibiv) | 영화/단편 | 133분 | 확장 후보 | 장르 |
+| 12 | [샤퍼](https://tv.apple.com/kr/movie/umc.cmc.5ud0ivpwgqw2st0u4z73gwpar) | 영화/단편 | 116분 | 확장 후보 | 장르 |
+| 13 | [고스팅](https://tv.apple.com/kr/movie/umc.cmc.6nodv9rf3ltfk2ar3pfc8hced) | 영화/단편 | 116분 | 확장 후보 | 장르 |
+| 14 | [어카운턴트](https://tv.apple.com/kr/movie/umc.cmc.6bgpmgz76x46tw3qd1jlsj1mm) | 영화/단편 | 128분 | 확장 후보 | 장르 |
+| 15 | [에코 밸리](https://tv.apple.com/kr/movie/umc.cmc.1al6pi2y17htw3z98tbacgo55) | 영화/단편 | 104분 | 확장 후보 | 장르 |
+| 16 | [천국부터 지옥까지](https://tv.apple.com/kr/movie/umc.cmc.3rbg43tt2brl2cp5wwacfrmhx) | 영화/단편 | 133분 | 확장 후보 | 장르 |
+| 17 | [테트리스](https://tv.apple.com/kr/movie/umc.cmc.4evmgcam356pzgxs2l7a18d7b) | 영화/단편 | 117분 | 확장 후보 | 장르 |
+| 18 | [우주 전쟁](https://tv.apple.com/kr/movie/umc.cmc.5hnkwafey90ub95m8pxtaeb9t) | 영화/단편 | 116분 | 확장 후보 | 장르 |
+| 19 | [본 아이덴티티](https://tv.apple.com/kr/movie/umc.cmc.6zfr90m4ghv0pt4l4nsfrm40d) | 영화/단편 | 118분 | 확장 후보 | 장르 |
+| 20 | [그레이하운드](https://tv.apple.com/kr/movie/umc.cmc.o5z5ztufuu3uv8lx7m0jcega) | 영화/단편 | 91분 | 확장 후보 | 장르 |
+
+## 추천 근거
+
+1. **더 캐니언** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 충족. 선택한 조건 모두 충족. 공식 장르: 스릴러 · 액션 · SF. 선택 분위기 점수 0.99 (편집값).
+2. **엿보는 자들의 밤** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 완화. 확장 후보: 시청 시간 재확인 필요. 공식 장르: 스릴러 · 미스테리 · 드라마. 선택 분위기 점수 0.99 (편집값).
+3. **위도우스 베이의 저주** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 완화. 확장 후보: 시청 시간 재확인 필요. 공식 장르: 미스테리 · 스릴러 · 코미디. 선택 분위기 점수 0.99 (편집값).
+4. **엔필드의 유령** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 완화. 확장 후보: 시청 시간 재확인 필요. 공식 장르: 다큐멘터리 · 호러. 선택 분위기 점수 0.99 (편집값).
+5. **리시 이야기** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 완화. 확장 후보: 시청 시간 재확인 필요. 공식 장르: 드라마 · 호러 · 미스테리. 선택 분위기 점수 0.99 (편집값).
+6. **우리, 이전에** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 완화. 확장 후보: 시청 시간 재확인 필요. 공식 장르: 스릴러 · 드라마. 선택 분위기 점수 0.99 (편집값).
+7. **서번트** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 완화. 확장 후보: 시청 시간 재확인 필요. 공식 장르: 스릴러 · 드라마 · 미스테리. 선택 분위기 점수 0.99 (편집값).
+8. **콜** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 완화. 확장 후보: 시청 시간 재확인 필요. 공식 장르: 스릴러 · SF. 선택 분위기 점수 0.99 (편집값).
+9. **저주에 걸린 가족을 구해라!** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 완화. 확장 후보: 시청 시간 재확인 필요. 공식 장르: 키즈 & 가족 · 애니메이션 · 어드벤처. 선택 분위기 점수 0.82 (편집값).
+10. **Dr.브레인** — 장르 일치 / 분위기 편집 기준 충족 / 시간 조건 완화. 확장 후보: 시청 시간 재확인 필요. 공식 장르: 스릴러 · SF · 미스테리. 선택 분위기 점수 0.82 (편집값).
+11. **로스트 버스** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: 스릴러 · 드라마 · 액션. 선택 분위기 점수 0.99 (편집값).
+12. **샤퍼** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: 스릴러 · 드라마 · 범죄. 선택 분위기 점수 0.99 (편집값).
+13. **고스팅** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: 액션 · 코미디 · 로맨스. 선택 분위기 점수 0.99 (편집값).
+14. **어카운턴트** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: 액션 · 스릴러. 선택 분위기 점수 0.96 (편집값).
+15. **에코 밸리** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: 스릴러. 선택 분위기 점수 0.82 (편집값).
+16. **천국부터 지옥까지** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: 스릴러 · 범죄 · 드라마. 선택 분위기 점수 0.82 (편집값).
+17. **테트리스** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: 스릴러 · 드라마. 선택 분위기 점수 0.82 (편집값).
+18. **우주 전쟁** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: SF · 스릴러 · 액션. 선택 분위기 점수 0.82 (편집값).
+19. **본 아이덴티티** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: 액션 · 스릴러 · 어드벤처. 선택 분위기 점수 0.82 (편집값).
+20. **그레이하운드** — 연관 장르로 확장 / 분위기 편집 기준 충족 / 시간 조건 충족. 확장 후보: 장르 재확인 필요. 공식 장르: 액션 · 드라마 · 스릴러. 선택 분위기 점수 0.82 (편집값).
