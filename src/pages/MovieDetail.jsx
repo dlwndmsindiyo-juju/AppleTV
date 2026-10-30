@@ -4,6 +4,7 @@ import { useMovieStore } from '../store/useMovieStore';
 import { toggleWish, useHeartStore, wishKey } from '../store/useHeartStore'; // 위시리스트 (Firestore)
 import { useAuthStore } from '../store/useAuthStore';
 import { isResumable, resumeAt, useWatchConnect, useWatchStore } from '../store/useWatchStore'; // 이어보기 (시청 기록)
+import CastFilmography from '../components/detail/CastFilmography';
 import WatchPlayer from '../components/common/WatchPlayer'; // 재생 위치를 알 수 있는 유튜브 플레이어
 
 // =====================================================================
@@ -204,6 +205,13 @@ export const MovieDetail = ({ type: typeProp }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPlay, authReady, detail, trailer, searchParams, setSearchParams, uid, watchStatus]);
 
+  // [추가] 홈 추천작의 ★ 평점 버튼 (#rating) → 상세 정보를 받으면 "작품 평점"으로 스크롤
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (hash !== '#rating' || !detail) return;
+    document.getElementById('rating')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [hash, detail]);
+
   // (TV) 선택한 시즌의 회차 불러오기
   useEffect(() => {
     if (!isTv || currentSeason === null) return;
@@ -369,7 +377,7 @@ export const MovieDetail = ({ type: typeProp }) => {
             </div>
 
             {/* 작품 평점 */}
-            <div className="rating-section">
+            <div className="rating-section" id="rating">
               <div className="rating-header">
                 <h3>작품 평점</h3>
                 <div className="score-display">
@@ -528,26 +536,8 @@ export const MovieDetail = ({ type: typeProp }) => {
 
             {/* 등장인물 */}
             {activeTab === 'cast' && (
-              <div className="list-container">
-                {cast.length > 0 ? (
-                  <ul className="cast-grid">
-                    {cast.map((p) => (
-                      <li key={p.credit_id} className="cast-item">
-                        <div className="cast-photo">
-                          {p.profile_path ? (
-                            <img src={`${IMG}/w185${p.profile_path}`} alt={p.name} loading="lazy" />
-                          ) : (
-                            <span>{p.name?.[0]}</span>
-                          )}
-                        </div>
-                        <span className="cast-name">{p.name}</span>
-                        <span className="cast-role">{p.character}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="empty-content">등장인물 정보가 없습니다.</p>
-                )}
+              <div className="list-container cast-list-container">
+                <CastFilmography key={`${type}_${contentId}`} cast={cast} />
               </div>
             )}
 

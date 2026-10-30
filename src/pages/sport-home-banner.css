@@ -1,0 +1,61 @@
+/* Guest-only sports promotion placeholder. Replace once the banner design is finalized. */
+.sport-home .sport-promo-placeholder { box-sizing: border-box; width: min(1445px, calc(100% - 48px)); min-height: 280px; margin: 90px auto; background: #d71920; color: #fff; display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 12px; padding: 32px; }
+.sport-promo-placeholder__inner { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.sport-promo-placeholder__label { font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+.sport-promo-placeholder strong { font-size: clamp(22px, 2.5vw, 36px); }
+.sport-promo-placeholder__inner > span:not(.sport-promo-placeholder__label) { font-size: 14px; }
+.sport-promo-placeholder__link { display: inline-flex; padding: 10px 22px; border-radius: 24px; background: #fff; color: #b6000a; text-decoration: none; font-size: 14px; font-weight: 700; }
+@media(max-width:1024px) { .sport-home .sport-promo-placeholder { width: calc(100% - 36px); min-height: 230px; margin: 64px auto; padding: 24px; } }
+@media(max-width:600px) { .sport-home .sport-promo-placeholder { width: calc(100% - 30px); min-height: 190px; margin: 48px auto; padding: 18px; border-radius: 8px; } .sport-promo-placeholder__inner > span:not(.sport-promo-placeholder__label) { font-size: 11px; } .sport-promo-placeholder__link { font-size: 12px; } }
+
+/* Desktop sports home refinements: match the 1920px Figma frame. */
+main.sport-home section.sport-hero { height: min(955px, calc(100svh - 64px)); min-height: 620px; overflow: hidden; }
+main.sport-home section.sport-hero .sport-hero-card {
+  left: max(32px, calc((100% - 1445px) / 2)); bottom: 76px;
+  width: min(560px, calc(100% - 64px)); padding: 28px 30px;
+  background: rgba(0,0,0,.53); border-radius: 12px;
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+}
+main.sport-home section.sport-hero .sport-hero-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,.52), rgba(0,0,0,.08) 50%, transparent 75%);
+  pointer-events: none;
+}
+main.sport-home section.sport-hero .sport-hero-title { font-size: clamp(26px, 2.2vw, 42px); line-height: 1.2; }
+main.sport-home section.sport-hero .sport-btn { height: 42px; padding: 0 22px; font-size: 14px; }
+main.sport-home section.sport-hero .sport-hero-actions { margin-top: 22px; gap: 10px; }
+main.sport-home .sport-teams .sport-teams-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+main.sport-home .sport-teams .sport-team-more--head { display: inline-flex; align-items: center; align-self: flex-start; flex: 0 0 auto; margin: 8px 0 0; padding: 0; height: auto; white-space: nowrap; }
+@media (max-width: 1024px) {
+  main.sport-home section.sport-hero { height: min(740px, calc(100svh - 60px)); min-height: 480px; }
+  main.sport-home section.sport-hero .sport-hero-card { left: 40px; bottom: 38px; width: min(500px, calc(100% - 80px)); padding: 24px; }
+  main.sport-home .sport-teams .sport-teams-head { align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  main.sport-home section.sport-hero { height: min(580px, calc(100svh - 56px)); min-height: 400px; }
+  main.sport-home section.sport-hero .sport-hero-card { left: 20px; bottom: 28px; width: calc(100% - 40px); padding: 18px; }
+  main.sport-home section.sport-hero .sport-hero-title { font-size: 21px; }
+  main.sport-home section.sport-hero .sport-btn { height: 36px; padding: 0 14px; font-size: 12px; }
+  main.sport-home .sport-teams .sport-teams-head { gap: 12px; }
+  main.sport-home .sport-teams .sport-team-more--head { font-size: 11px; margin-top: 4px; }
+}
+
+/* MLS standings: reference layout, scoped to the sports home. */
+main.sport-home .sport-conferences > .inner { width: min(1445px, calc(100% - 48px)); max-width: 1445px; margin-inline: auto; }
+main.sport-home .sport-conferences .sport-section-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; }
+main.sport-home .sport-conference-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+main.sport-home .sport-conference-card { background:#fff; color:#101010; border-radius:14px; padding:22px 22px 26px; min-width:0; }
+main.sport-home .sport-conference-title { display:flex; align-items:center; gap:18px; margin:0 0 22px; font-size:19px; font-weight:750; color:#111; }
+main.sport-home .sport-conference-logo { width:44px; height:48px; object-fit:contain; }
+main.sport-home .sport-conference-table { width:100%; border-collapse:collapse; table-layout:fixed; color:#111; }
+main.sport-home .sport-conference-table .col-rank { width:10%; }
+main.sport-home .sport-conference-table .col-club { width:29%; }
+main.sport-home .sport-conference-table .col-stat { width:12.2%; }
+main.sport-home .sport-conference-table th, main.sport-home .sport-conference-table td { height:52px; padding:0 5px; font-size:15px; text-align:center; color:#111; }
+main.sport-home .sport-conference-table thead th { font-size:15px; font-weight:750; }
+main.sport-home .sport-conference-table tbody th { text-align:left; font-weight:700; }
+main.sport-home .sport-conference-club { display:flex; align-items:center; gap:9px; min-width:0; white-space:nowrap; }
+main.sport-home .sport-conference-club img { width:26px; height:26px; object-fit:contain; flex-shrink:0; }
+main.sport-home .sport-conference-club span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; color:#111; }
+main.sport-home .sport-conference-table .points { font-weight:800; }
+@media(max-width:1024px){ main.sport-home .sport-conferences > .inner { width:calc(100% - 36px); } main.sport-home .sport-conference-grid { gap:12px; } main.sport-home .sport-conference-card { padding:18px 12px; } main.sport-home .sport-conference-table th, main.sport-home .sport-conference-table td { font-size:12px; padding:0 2px; height:44px; } main.sport-home .sport-conference-club span { font-size:12px; } }
+@media(max-width:700px){ main.sport-home .sport-conferences > .inner { width:calc(100% - 30px); } main.sport-home .sport-conference-grid { grid-template-columns:1fr; } main.sport-home .sport-conference-card { padding:18px 12px; } main.sport-home .sport-conference-title { font-size:16px; } main.sport-home .sport-conference-table th, main.sport-home .sport-conference-table td { font-size:11px; } main.sport-home .sport-conference-club span { font-size:11px; } }

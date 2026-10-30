@@ -929,3 +929,564 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     }
   }
 }
+
+
+// =====================================================================
+// [추가] 멈춘 순간부터 다시 (이어보기) · 마음에 담아둔 이야기 (찜) — 시안
+// - 이어보기: 썸네일 안 "시즌 1 · 3화 · 38분 남음" + 맨 아래 진행 바 (.member-cw-*)
+// - 찜: 배경 그라데이션 띠 + 반투명 가로 카드 · + 버튼 (.member-wl-*)
+// - 기존 .member-progress / .member-wish-card 규칙과 겹치지 않게 새 이름 사용
+// =====================================================================
+.member-home {
+
+  // ---------- 멈춘 순간부터 다시 ----------
+  .member-cw-thumb {
+    aspect-ratio: 255 / 158;
+    margin-bottom: $space-md;
+    border-radius: $radius-xs;
+
+    // 아래쪽 글자 · 진행 바가 잘 보이도록 어둡게
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 50%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+      pointer-events: none;
+    }
+  }
+
+  .member-cw-time {
+    @include label-default;
+    position: absolute;
+    left: $space-md;
+    right: $space-md;
+    bottom: $space-md;
+    z-index: 1;
+    color: $text-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-cw-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    height: 3px;
+    background-color: rgba($light-color-0, 0.25);
+
+    span {
+      display: block;
+      height: 100%;
+      background-color: $light-color-0;
+    }
+  }
+
+  // 썸네일 아래 글자는 살짝 안쪽에서 시작 (시안)
+  .member-cw-card {
+
+    .member-card-title,
+    .member-card-meta,
+    .member-card-link {
+      padding: 0 $space-sm;
+    }
+
+    .member-card-title {
+      @include heading-h4-b;
+    }
+
+    .member-card-meta {
+      @include label-default;
+      color: $text-secondary;
+    }
+
+    .member-card-link {
+      @include label-default-b;
+      display: inline-flex;
+      align-items: center;
+      gap: $space-xs;
+    }
+  }
+
+  // ---------- 마음에 담아둔 이야기 ----------
+  // 배경 그라데이션 띠 (_variables 의 $bg-gradient)
+  .member-section.member-wishlist {
+    background-image: $bg-gradient;
+
+    .member-desc,
+    .member-more {
+      color: $text-secondary;
+    }
+
+    .member-more:hover {
+      color: $text-primary;
+    }
+  }
+
+  .member-wl-card {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    height: 100%;
+    padding: $space-sm $space-sm $space-sm $space-md;
+    border-radius: $radius-xs;
+    background-color: rgba($dark-color-900, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: $text-primary;
+    box-sizing: border-box;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: rgba($dark-color-900, 0.7);
+    }
+  }
+
+  .member-wl-link {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .member-wl-thumb {
+    flex-shrink: 0;
+    width: 60px;
+    aspect-ratio: 2 / 3;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: $dark-color-300;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .member-wl-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+  }
+
+  .member-wl-name {
+    @include body-large-b;
+    color: $light-color-0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-wl-meta {
+    @include body-small;
+    color: $light-color-500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // + 버튼 (위시리스트에 추가)
+  .member-wl-add {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: $text-primary;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba($light-color-0, 0.15);
+    }
+  }
+}
+
+// PC: 이어보기 카드도 찜 카드와 같은 폭 (한 줄 4칸 · 시안)
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.member-home .rail-continue {
+    --rail-col: calc((100% - 72px) / 4);
+  }
+}
+
+// 태블릿: 찜 가로 카드가 좁아지지 않게
+@media (max-width: $breakpoint-tablet) {
+  .member-home .rail-wish {
+    --rail-col: 300px;
+  }
+}
+
+// 모바일
+@media (max-width: $breakpoint-mobile) {
+  main.member-home {
+    .rail-wish {
+      --rail-col: calc((100% - 16px) / 1.15);
+    }
+
+    .member-wl-thumb {
+      width: 48px;
+    }
+
+    .member-wl-name {
+      @include body-default-b;
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] Apple이 모두에게 추천하는 작품 (추천작) — 시안
+// - 포스터 카드 + 아래 그림자($card-shadow-gradient) 위에 제목 · 설명 · [재생] [★ 평점]
+// - PC 한 줄 5장 + 화살표 슬라이드 (.rail-recommend)
+// =====================================================================
+.member-home {
+  .member-rc-card {
+    position: relative;
+    aspect-ratio: 282 / 392; // 시안 282 × 392
+    border-radius: $radius-sm; // 시안 Corner radius 10
+    overflow: hidden;
+    background-color: $dark-color-300;
+  }
+
+  // 카드 전체 → 상세 페이지
+  .member-rc-link {
+    position: absolute;
+    inset: 0;
+    display: block;
+    color: $text-primary;
+    text-decoration: none;
+
+    // 카드 전체 그림자 (Figma Fill: Linear 100% · 카드섹션 이미지 앞배경 그림자)
+    // - 아래 검정 86% → 위 회색 17% : 포스터 위를 덮어 제목 · 버튼이 잘 보이게
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $card-shadow-gradient;
+      pointer-events: none;
+    }
+
+    &:hover .member-rc-poster {
+      transform: scale(1.05);
+    }
+  }
+
+  .member-rc-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .member-rc-info {
+    position: absolute;
+    left: $space-lg;
+    right: $space-lg;
+    bottom: 72px; // 버튼(40) + 아래 여백(16) + 간격(16)
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    min-width: 0;
+  }
+
+  .member-rc-title {
+    @include body-large-b;
+    color: $light-color-500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-rc-meta {
+    @include body-small;
+    color: $light-color-500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // [재생] [★ 평점] 같은 폭 두 칸
+  .member-rc-actions {
+    position: absolute;
+    left: $space-lg;
+    right: $space-lg;
+    bottom: $space-lg;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-sm;
+  }
+
+  .member-rc-play,
+  .member-rc-rate {
+    @include body-default-b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 40px; // 시안 115 × 40
+    box-sizing: border-box;
+    border-radius: 999px;
+    color: $light-color-0;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  // 재생: 프라이머리
+  .member-rc-play {
+    background-color: $primary-color-500;
+
+    img {
+      width: 8px;
+      height: 11px;
+      display: block;
+    }
+
+    &:hover {
+      background-color: $primary-color-400;
+    }
+  }
+
+  // ★ 평점 (시안: Fill Sports/Opacity-w · Stroke Light/500 1px Inside) → 작품 평점으로 이동
+  .member-rc-rate {
+    border: 1px solid $light-color-500; // border-box 라 버튼 안쪽에 그려짐 (Inside)
+    background-color: $sport-opacity-w;
+
+    &:hover {
+      border-color: $light-color-0;
+      background-color: rgba($light-color-0, 0.2);
+    }
+  }
+
+  .member-rc-star {
+    width: 12px;
+    height: 12px;
+    display: block;
+    flex-shrink: 0;
+  }
+}
+
+// PC: 한 줄 5장 (간격 24 × 4) · 화살표는 카드 가운데 높이
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.member-home .rail-recommend {
+    --rail-col: calc((100% - 96px) / 5);
+    --nav-top: 50%;
+  }
+}
+
+// 태블릿 · 모바일: 버튼 두 개가 들어가는 폭
+@media (max-width: $breakpoint-tablet) {
+  main.member-home .rail-recommend {
+    --rail-col: 220px;
+    --nav-top: 50%;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  main.member-home .rail-recommend {
+    --rail-col: 176px;
+  }
+
+  .member-home {
+    .member-rc-info {
+      left: $space-md;
+      right: $space-md;
+      bottom: 56px;
+    }
+
+    .member-rc-actions {
+      left: $space-md;
+      right: $space-md;
+      bottom: $space-md;
+      gap: 6px;
+    }
+
+    .member-rc-play,
+    .member-rc-rate {
+      @include caption-default-b;
+      height: 30px;
+      gap: $space-xs;
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] AI 어시스트 — 시안
+// - 가로형 카드: 썸네일 그림자($thumb-shadow-gradient) + 왼쪽 아래 소개 한 줄(tagline)
+// - 기분 칩 · "취향 더 반영하기": 평점 버튼과 같은 배경(Sports/Opacity-w) · 테두리(Light/500 1px Inside)
+// - PC 한 줄 4장 + 화살표 슬라이드 (.rail-ai)
+// =====================================================================
+.member-home {
+  .member-ai-thumb {
+    aspect-ratio: 285 / 178;
+    margin-bottom: $space-md;
+    border-radius: $radius-xs;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: $thumb-shadow-gradient;
+      pointer-events: none;
+    }
+
+    &.skeleton::after {
+      content: none;
+    }
+  }
+
+  .member-ai-tagline {
+    @include caption-default;
+    position: absolute;
+    left: $space-md;
+    bottom: $space-md;
+    z-index: 2;
+    max-width: calc(100% - #{$space-md * 2});
+    padding: 6px $space-sm;
+    border-radius: 4px;
+    background-color: $sport-opacity-b;
+    color: $text-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+  }
+
+  .member-ai-card {
+
+    .member-card-title,
+    .member-card-meta,
+    .member-card-link {
+      padding: 0 $space-sm;
+    }
+
+    .member-card-title {
+      @include heading-h4-b;
+    }
+
+    .member-card-meta {
+      @include label-default;
+      color: $text-secondary;
+    }
+
+    .member-card-link {
+      @include label-default-b;
+      display: inline-flex;
+      align-items: center;
+      gap: $space-xs;
+    }
+  }
+}
+
+// 버튼형 메뉴 (기분 칩 · 취향 더 반영하기) — 기존 PC · 모바일 규칙보다 우선
+main.member-home .member-mood {
+
+  .member-chip:not(.active),
+  .member-notice .member-btn {
+    @include body-default-b;
+    box-sizing: border-box;
+    border: 1px solid $light-color-500; // Inside
+    border-radius: 999px;
+    background-color: $sport-opacity-w;
+    color: $light-color-0;
+
+    &:hover {
+      border-color: $light-color-0;
+      background-color: rgba($light-color-0, 0.2);
+    }
+  }
+
+  // 선택된 기분: 프라이머리
+  .member-chip.active {
+    box-sizing: border-box;
+    border: 1px solid $primary-color-500;
+    border-radius: 999px;
+    background-color: $primary-color-500;
+    color: $light-color-0;
+  }
+}
+
+// 슬라이드 폭: PC 4장 / 태블릿 · 모바일 고정 폭 (화살표는 썸네일 가운데 높이)
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.member-home .rail-ai {
+    --rail-col: calc((100% - 72px) / 4);
+    --nav-top: 30%;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  main.member-home .rail-ai {
+    --rail-col: 286px;
+    --nav-top: 30%;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  main.member-home .rail-ai {
+    --rail-col: 240px;
+  }
+}
+
+
+// =====================================================================
+// [추가] 섹션 제목 · 소제목 — 시안 (PC 1025px 이상)
+// - 제목 .member-title: Heading/h1-B · Light/0 (기존 믹스인 heading-h1-b)
+// - 소제목 .member-desc: Heading/h2 · Light/500 (기존 믹스인 heading-h2)
+//   · 섹션 머리(.member-head)의 소제목만 (카드 안 설명 .member-desc.small 등은 그대로)
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.member-home {
+    .member-title {
+      @include heading-h1-b;
+      color: $light-color-0;
+    }
+
+    .member-head .member-desc,
+    .member-section.member-wishlist .member-head .member-desc {
+      @include heading-h2;
+      color: $light-color-500;
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] AI 어시스트 기분 칩 크기 (심심한 · 힘든 · 슬픈 · 즐거움 · 화남)
+// - 패딩까지 포함한 크기 80 × 40 (위아래 패딩 10 · 글자는 가운데)
+// - 폰트 · 색은 위에 적용된 내용 그대로 (크기만 지정)
+// =====================================================================
+main.member-home .member-mood .member-chips .member-chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 80px;
+  height: 40px;
+  padding: 10px 0;
+  white-space: nowrap;
+}
