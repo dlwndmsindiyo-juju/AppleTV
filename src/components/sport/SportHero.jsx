@@ -150,7 +150,7 @@ const MatchHero = () => {
           ))}
         </Swiper>
       </div>
-      <div className="sport-hero-overlay" />
+      <div className="sport-hero-overlay" aria-hidden="true" />
 
       {/* 경기 카드 (슬라이드가 넘어가도 고정) */}
       <div className="sport-hero-card">

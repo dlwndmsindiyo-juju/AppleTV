@@ -3,18 +3,16 @@ import { useEffect } from "react";
 import { useSportStore } from "../store/useSportStore";
 import { useAuthStore } from "../store/useAuthStore";
 import SportLive from "../components/sport/SportLive";
-import SportSeries from "../components/sport/SportSeries";
 import SportHero from "../components/sport/SportHero";
 import SportUpcoming from "../components/sport/SportUpcoming";
 import SportShorts from "../components/sport/SportShorts";
 import SportTeams from "../components/sport/SportTeams";
 import "../sport-member.scss";
 import SportConferenceStandings from "../components/sport/SportConferenceStandings";
-import SportLeague from "../components/sport/SportLeague";
 import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
-import DeviceGuide from "../components/landing/DeviceGuide";
-import SubscribeCTA from "../components/landing/SubscribeCTA";
+import { Link } from "react-router-dom";
+import "./sport-home-banner.css";
 
 const SportHome = () => {
   const {
@@ -65,13 +63,22 @@ const SportHome = () => {
       <SportShorts />
 
       {/* 4. 홍보 배너 */}
-      {!user && <SubscribeCTA type="sport" />}
+      {!user && (
+        <section className="sport-promo-placeholder" aria-label="스포츠 홍보 배너 예정 영역">
+          <div className="sport-promo-placeholder__inner">
+            <span className="sport-promo-placeholder__label">SPORTS PROMOTION</span>
+            <strong>스포츠 홍보 배너 영역</strong>
+            <span>추후 확정된 홍보 디자인이 들어갈 자리입니다.</span>
+            <Link to="/login" className="sport-promo-placeholder__link">로그인하기 →</Link>
+          </div>
+        </section>
+      )}
 
       {/* 5. 관심있는 구단 */}
       <SportTeams />
 
       {/* 6. 리그 순위 */}
-      {user ? <SportConferenceStandings /> : <SportLeague />}
+      <SportConferenceStandings />
 
       {/* 7. 영상 다시보기 */}
       <SportReplay title="영상 다시보기" />
@@ -79,8 +86,6 @@ const SportHome = () => {
       {/* 8. 하이라이트 */}
       <SportHighlights />
 
-      {/* 9. 디바이스 가이드 (마지막) */}
-      {user ? <SportSeries /> : <DeviceGuide />}
 
     </main>
   );
