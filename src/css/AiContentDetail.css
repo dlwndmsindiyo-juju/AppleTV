@@ -1,0 +1,94 @@
+.ai-content-detail {
+  min-height: 70vh;
+  padding: 120px 32px 64px;
+  background: #121212;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.ai-content-detail__inner {
+  max-width: 1120px;
+  margin: auto;
+}
+.ai-content-detail__back {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #bfc3ff;
+}
+.ai-content-detail__art {
+  width: 100%;
+  max-height: 480px;
+  aspect-ratio: 16/9;
+  object-fit: contain;
+  border-radius: 18px;
+  background: #222;
+}
+.ai-content-detail h1 {
+  margin: 24px 0 8px;
+  font-size: 32px;
+}
+.ai-content-detail h2 {
+  margin-top: 32px;
+  font-size: 22px;
+}
+.ai-content-detail p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #ccc;
+}
+.ai-content-detail__original {
+  color: #aaa;
+}
+.ai-content-detail__overview {
+  max-width: 800px;
+}
+.ai-content-detail__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.ai-content-detail__actions a, .ai-content-detail__actions button {
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #5865f2;
+  color: white;
+  border: 0;
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+}
+.ai-content-detail ul {
+  list-style: none;
+  padding: 0;
+}
+.ai-content-detail li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #333;
+  font-size: 14px;
+}
+@media (max-width: 1024px) {
+  .ai-content-detail {
+    padding: 100px 24px 48px;
+  }
+  .ai-content-detail h1 {
+    font-size: 29px;
+  }
+}
+@media (max-width: 600px) {
+  .ai-content-detail {
+    padding: 88px 16px 32px;
+  }
+  .ai-content-detail h1 {
+    font-size: 26px;
+  }
+  .ai-content-detail p, .ai-content-detail li {
+    font-size: 12px;
+  }
+  .ai-content-detail__actions a, .ai-content-detail__actions button {
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+}

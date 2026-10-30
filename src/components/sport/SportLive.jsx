@@ -41,12 +41,24 @@ const codeFromName = (name = "") => {
   return (words[0] || "").slice(0, 2).toUpperCase();
 };
 
-// 시간 표기 (시안: "1회 44:00" — 45분까지 1회, 그 뒤 2회)
-const PERIOD_LABEL = ["1회", "2회"];
-const clockText = (minute) => {
-  if (!minute && minute !== 0) return "LIVE";
-  const m = Number(minute);
-  return `${PERIOD_LABEL[m > 45 ? 1 : 0]} ${String(m).padStart(2, "0")}:00`;
+// 경기별 전반/후반 표시는 최초 1회 랜덤 결정하여 리렌더링 중 유지합니다.
+// 실제 API에서 period/half 정보를 제공하면 해당 값을 우선합니다.
+const randomPeriods = new Map();
+const clockText = (match) => {
+  const id = String(match.id);
+  const supplied = String(match.period ?? match.half ?? "").toLowerCase();
+  let period;
+  if (["first", "1", "1h", "first_half", "전반"].includes(supplied)) period = "전반";
+  else if (["second", "2", "2h", "second_half", "후반"].includes(supplied)) period = "후반";
+  else {
+    if (!randomPeriods.has(id)) randomPeriods.set(id, Math.random() < 0.5 ? "전반" : "후반");
+    period = randomPeriods.get(id);
+  }
+  const minute = Number(match.minute);
+  const displayMinute = Number.isFinite(minute) && match.minute != null
+    ? (period === "후반" && minute > 45 ? minute - 45 : minute)
+    : 0;
+  return `${period} ${displayMinute}분`;
 };
 
 // 엠블럼은 public/images/matches/*.svg 만 사용 · 파일이 없는 팀은 null → 약자 원으로 표시
@@ -70,7 +82,7 @@ const fromMock = (m) => {
     crest: badgeOf(t.id),
     code: TEAM_CODE[t.id] || codeFromName(t.enName || t.name),
   });
-  return { id: String(m.id), home: side(home), away: side(away), score: m.score, minute: m.minute };
+  return { id: String(m.id), home: side(home), away: side(away), score: m.score, minute: m.minute, period: m.period ?? m.half };
 };
 
 const fromLive = (m) => {
@@ -79,7 +91,7 @@ const fromLive = (m) => {
     return { name: t.name || t.shortName || "", crest: badgeOf(id), code: TEAM_CODE[id] || codeFromName(t.name || t.shortName) };
   };
   const sc = m.score?.fullTime || {};
-  return { id: String(m.id), home: side(m.homeTeam), away: side(m.awayTeam), score: { home: sc.home ?? 0, away: sc.away ?? 0 }, minute: m.minute };
+  return { id: String(m.id), home: side(m.homeTeam), away: side(m.awayTeam), score: { home: sc.home ?? 0, away: sc.away ?? 0 }, minute: m.minute, period: m.period ?? m.half };
 };
 
 // 엠블럼 파일이 없거나 못 불러오면 약자 원으로 대체
@@ -163,7 +175,7 @@ export default function SportLive() {
                       <b>{card.home.code}</b>
                     </span>
                     <strong className="sport-lv-score">{card.score.home}</strong>
-                    <span className="sport-lv-time">{clockText(card.minute)}</span>
+                    <span className="sport-lv-time">{clockText(card)}</span>
                     <strong className="sport-lv-score">{card.score.away}</strong>
                     <span className="sport-lv-team">
                       <Crest team={card.away} />
