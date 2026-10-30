@@ -5641,15 +5641,17 @@ main.sport-home {
 // =====================================================================
 // [추가] 라이브 — 영상 썸네일 + LIVE 배지 + 스코어보드 카드 (SportLive.jsx · .sport-lv-*)
 // - 예전 라이브 카드 클래스(.sport-live-card · .sport-live-slide)와 겹치지 않게 새 이름 사용
+// - 카드 안 크기는 카드 너비 기준(cqw)이라 화면이 줄어도 스코어보드가 카드 밖으로 나가지 않음
 // =====================================================================
 main.sport-home {
   .sport-lv-swiper {
     width: 100%;
+    overflow: hidden;
   }
 
   // PC: 카드 3장 + 다음 장 일부 (간격 32)
   .sport-lv-slide {
-    width: calc((100% - 64px) / 3.25);
+    width: calc((100% - 64px) / 3.3);
     height: auto;
   }
 
@@ -5659,12 +5661,14 @@ main.sport-home {
     aspect-ratio: 3 / 2;
     border-radius: $radius-card;
     overflow: hidden;
+    isolation: isolate;
+    container-type: inline-size;
     background-color: $bg-surface-hover;
     color: $text-primary;
     text-decoration: none;
 
     &:hover .sport-lv-thumb {
-      transform: scale(1.04);
+      scale: 1.04;
     }
 
     &:focus-visible {
@@ -5678,28 +5682,42 @@ main.sport-home {
     inset: 0;
     width: 100%;
     height: 100%;
+    max-width: none;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition: scale 0.4s ease;
+
+    // hqdefault(4:3) 위아래 검은 띠 잘라내기: 16:9 영상 부분만 카드에 꽉 차게
+    &.is-letterbox {
+      inset: auto;
+      top: 50%;
+      left: 50%;
+      width: auto;
+      height: 134%;
+      min-width: 134%;
+      translate: -50% -50%;
+    }
   }
 
   // 왼쪽 위 LIVE 배지 (빨간 알약)
   .sport-lv-badge {
-    @include body-default-b;
+    @include label-default-b;
+    font-family: inherit;
+    font-size: clamp(11px, 3.3cqw, 14px);
+    line-height: 1;
     position: absolute;
-    top: $space-lg;
-    left: $space-lg;
+    top: 4cqw;
+    left: 4cqw;
     z-index: 1;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px $space-lg;
+    gap: 1.4cqw;
+    padding: 2cqw 3.6cqw;
     border-radius: 9999px;
     background-color: $sports-color;
-    font-family: inherit;
 
     img {
-      width: 14px;
-      height: 14px;
+      width: 1.1em;
+      height: 1.1em;
       display: block;
     }
   }
@@ -5712,61 +5730,73 @@ main.sport-home {
     bottom: 0;
     z-index: 1;
     display: grid;
-    grid-template-columns: auto auto 1fr auto auto;
-    align-items: center;
-    column-gap: $space-xl;
-    padding: $space-4xl $space-xl $space-lg;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0) 100%);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.5fr) auto minmax(0, 1fr);
+    align-items: start;
+    column-gap: 2cqw;
+    padding: 10cqw 3cqw 4cqw;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.25) 65%, rgba(0, 0, 0, 0) 100%);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    -webkit-mask-image: linear-gradient(to top, #000 70%, transparent 100%);
-    mask-image: linear-gradient(to top, #000 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, #000 75%, transparent 100%);
+    mask-image: linear-gradient(to top, #000 75%, transparent 100%);
   }
 
   .sport-lv-team {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: $space-sm;
+    gap: 2cqw;
 
     b {
       @include body-small-b;
       font-family: inherit;
+      font-size: clamp(10px, 3.3cqw, 14px);
+      line-height: 1;
     }
   }
 
-  .sport-lv-crest {
+  // 엠블럼: 카드 너비의 약 13% (최대 64px)
+  .sport-lv-team .sport-lv-crest {
     display: block;
-    width: 64px;
-    height: 64px;
+    width: min(13cqw, 64px);
+    height: min(13cqw, 64px);
+    max-width: none;
     object-fit: contain;
+    flex-shrink: 0;
 
     &.is-empty {
       display: grid;
       place-items: center;
       border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.4);
-      @include body-default-b;
+      background-color: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       font-family: inherit;
+      font-weight: 700;
+      font-size: min(4cqw, 18px);
+      line-height: 1;
     }
   }
 
-  // 점수 (엠블럼 가운데 높이에 맞춤)
+  // 점수 · 시간: 엠블럼 가운데 높이에 맞춤
   .sport-lv-score {
-    @include display-l-b;
+    @include display-M-b;
     font-family: inherit;
-    align-self: start;
-    margin-top: 14px;
+    font-size: min(9cqw, 44px);
+    line-height: min(13cqw, 64px);
     font-variant-numeric: tabular-nums;
   }
 
   .sport-lv-time {
-    @include heading-h4-b;
-    align-self: start;
-    margin-top: 20px;
+    @include body-default-b;
     font-family: inherit;
+    font-size: min(4.2cqw, 20px);
+    line-height: min(13cqw, 64px);
+    min-width: 0;
     text-align: center;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
     font-variant-numeric: tabular-nums;
   }
 
@@ -5787,41 +5817,6 @@ main.sport-home {
   @media (max-width: $breakpoint-mobile) {
     .sport-lv-slide {
       width: 86%;
-    }
-
-    .sport-lv-badge {
-      @include label-default-b;
-      top: $space-md;
-      left: $space-md;
-      padding: 4px $space-md;
-      font-family: inherit;
-
-      img {
-        width: 11px;
-        height: 11px;
-      }
-    }
-
-    .sport-lv-board {
-      column-gap: $space-md;
-      padding: $space-2xl $space-lg $space-md;
-    }
-
-    .sport-lv-crest {
-      width: 44px;
-      height: 44px;
-    }
-
-    .sport-lv-score {
-      @include display-M-b;
-      font-family: inherit;
-      margin-top: 6px;
-    }
-
-    .sport-lv-time {
-      @include body-small-b;
-      font-family: inherit;
-      margin-top: 14px;
     }
 
     .sport-live {
