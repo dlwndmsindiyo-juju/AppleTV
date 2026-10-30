@@ -1472,3 +1472,21 @@ main.member-home .member-mood {
     }
   }
 }
+
+
+// =====================================================================
+// [추가] AI 어시스트 기분 칩 크기 (심심한 · 힘든 · 슬픈 · 즐거움 · 화남)
+// - 패딩까지 포함한 크기 80 × 40 (위아래 패딩 10 · 글자는 가운데)
+// - 폰트 · 색은 위에 적용된 내용 그대로 (크기만 지정)
+// =====================================================================
+main.member-home .member-mood .member-chips .member-chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 80px;
+  height: 40px;
+  padding: 10px 0;
+  white-space: nowrap;
+}
