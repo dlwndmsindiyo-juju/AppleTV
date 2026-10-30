@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import AiAssistantLink from "../ai/AiAssistantLink"; // AI 작품 추천 팝업 (components/ai)
+import { useState } from "react";
+import AiAssistantLink from "../ai/AiAssistantLink";
 
 // AI 어시스턴트 안내 띠 (로그인 전 메인 · 시안)
 // - 왼쪽: APPLE TV / 제목 / 설명,  오른쪽: 흰 카드(취향 칩 + 맞는 작품 찾기)
-// - 맞는 작품 찾기: 로그인 전에도 AI 작품 추천 팝업이 열림 (고른 취향 칩이 팝업의 분위기로 미리 선택됨)
+// - 선택한 취향을 전달하고 공통 AI 팝업을 엽니다.
 const TASTES = ["편안한 힐링", "몰입감 있는", "가볍게 웃는"];
 
 const AiAssistantPromo = () => {
