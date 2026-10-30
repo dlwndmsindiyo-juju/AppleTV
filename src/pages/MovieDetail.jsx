@@ -205,6 +205,13 @@ export const MovieDetail = ({ type: typeProp }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPlay, authReady, detail, trailer, searchParams, setSearchParams, uid, watchStatus]);
 
+  // [추가] 홈 추천작의 ★ 평점 버튼 (#rating) → 상세 정보를 받으면 "작품 평점"으로 스크롤
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (hash !== '#rating' || !detail) return;
+    document.getElementById('rating')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [hash, detail]);
+
   // (TV) 선택한 시즌의 회차 불러오기
   useEffect(() => {
     if (!isTv || currentSeason === null) return;
@@ -370,7 +377,7 @@ export const MovieDetail = ({ type: typeProp }) => {
             </div>
 
             {/* 작품 평점 */}
-            <div className="rating-section">
+            <div className="rating-section" id="rating">
               <div className="rating-header">
                 <h3>작품 평점</h3>
                 <div className="score-display">
