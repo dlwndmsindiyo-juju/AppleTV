@@ -317,6 +317,31 @@ export const useMovieStore = create((set, get) => ({
     }
   },
 
+  // [추가] Apple이 모두에게 추천하는 작품 — 영화 + 시리즈를 번갈아 섞은 목록 (이번 주 인기)
+  // - 탑텐(Apple TV+ 오리지널)과 겹치는 작품은 RecommendSection 에서 뺌
+  // - 각 작품에 media_type("movie" | "tv") 을 붙여 상세 경로 · 설명 줄에 사용
+  recommendedMix: [],
+  onFetchRecommendedMix: async () => {
+    if (get().recommendedMix.length > 0) return;
+    try {
+      const [movieRes, tvRes] = await Promise.all([
+        fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${TMDB_KEY}&language=ko-KR`),
+        fetch(`https://api.themoviedb.org/3/trending/tv/week?api_key=${TMDB_KEY}&language=ko-KR`),
+      ]);
+      if (!movieRes.ok || !tvRes.ok) throw new Error("추천 작품을 불러오지 못했습니다.");
+      const movies = (await movieRes.json()).results || [];
+      const tvs = (await tvRes.json()).results || [];
+      const mixed = [];
+      for (let i = 0; i < Math.max(movies.length, tvs.length); i += 1) {
+        if (movies[i]) mixed.push({ ...movies[i], media_type: "movie" });
+        if (tvs[i]) mixed.push({ ...tvs[i], media_type: "tv" });
+      }
+      set({ recommendedMix: mixed.filter((item) => item.poster_path) });
+    } catch (error) {
+      console.error("추천 작품 조회 실패:", error);
+    }
+  },
+
   // 내가 찜한 콘텐츠 (localStorage 에 유지)
   wishlist: loadLocal("wishlist"),
   onToggleWishlist: (item) => {
