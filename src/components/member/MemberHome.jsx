@@ -62,8 +62,9 @@ const MemberHome = ({ userName = "회원" }) => {
       {/* 5. 추천작 */}
       <RecommendSection />
 
-      {/* 6. AI 어시스턴트 (기분별 추천) */}
+      {/* 구독 전용 AI: 애플 추천작 바로 아래, 기존 팝업 연결 유지 */}
       <MoodAssistant userName={userName} />
+
 
       {/* 7. 신규 출시 */}
       <NewRelease />
