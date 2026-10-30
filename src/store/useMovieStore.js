@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { fetchMoodRecommendations } from "./moodRecommendations.mjs";
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -283,29 +284,15 @@ export const useMovieStore = create((set, get) => ({
     const { moodList } = get();
     if (moodList[mood]) return;
 
-    const genres = MOOD_GENRES[mood];
-    if (!genres) return;
-
     try {
-      const base = `https://api.themoviedb.org/3/discover/tv?api_key=${TMDB_KEY}&language=ko-KR&with_genres=${genres}&sort_by=popularity.desc&page=1`;
-
-      // 1. Apple TV+ 작품 우선
-      let res = await fetch(`${base}&with_networks=2552`);
-      let data = await res.json();
-      let list = data.results || [];
-
-      // 2. 작품이 부족하면 전체 TV 에서 보충
-      if (list.length < 5) {
-        res = await fetch(base);
-        data = await res.json();
-        list = data.results || [];
-      }
+      const list = await fetchMoodRecommendations(mood, { apiKey: TMDB_KEY });
 
       set((state) => ({
         moodList: { ...state.moodList, [mood]: list.slice(0, 10) },
       }));
     } catch (error) {
       console.error("기분별 추천 조회 실패:", error);
+      throw error;
     }
   },
 
@@ -371,11 +358,3 @@ function saveLocal(key, value) {
   }
 }
 
-// 기분 → TMDB TV 장르 id ("|" 는 OR, URL 인코딩 %7C)
-const MOOD_GENRES = {
-  심심한: "10765%7C10759",
-  힘든: "35%7C10751",
-  슬픈: "18",
-  즐거움: "35",
-  화남: "10759%7C80",
-};
