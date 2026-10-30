@@ -1,7 +1,7 @@
 export const GENRES = ['코미디', '호러', '로맨스', '스릴러', 'SF', '애니메이션'];
-export const MOODS = ['가볍게 웃기', '긴장감 넘치는', '따뜻한 갈등', '몰입감 있는'];
+export const MOODS = ['가볍게 웃기', '긴장감 넘치는', '따뜻한 갈등', '몰입감 있는', '편안한 힐링'];
 export const DURATIONS = ['30분 이하', '1시간 내외', '영화 한 편', '상관없음'];
-const moodKeys = { '가볍게 웃기':'light', '가볍게 웃고 싶어요':'light', '긴장감 넘치는':'tense', '긴장감':'tense', '따뜻한 갈등':'warm', '따뜻한 감동':'warm', '갈등':'warm', '몰입감 있는':'immersive' };
+const moodKeys = { '편안한 힐링':'healing', '가볍게 웃기':'light', '가볍게 웃고 싶어요':'light', '긴장감 넘치는':'tense', '긴장감':'tense', '따뜻한 갈등':'warm', '따뜻한 감동':'warm', '갈등':'warm', '몰입감 있는':'immersive' };
 export const CONFIG = { moodThreshold: 0.65, shortMax: 30, hourMin: 40, hourMax: 75, featureMin: 60 };
 
 function durationMatch(item, duration) {
@@ -29,7 +29,11 @@ export function recommend(catalog, preferences, { limit = 20, includeExpanded = 
     const hitGenres = selected.filter(g => item.genres.includes(g));
     const genre = genreMode === 'all' ? hitGenres.length === selected.length : hitGenres.length > 0;
     const time = durationMatch(item,duration);
-    const moodScore = mood ? item.moodScores[mood] : 1;
+    // 힐링은 따뜻함과 가벼움이 있으면서 긴장감이 낮은 작품만 선택합니다.
+    const moodScore = mood === 'healing'
+      ? (item.moodScores.warm >= 0.65 && item.moodScores.light >= 0.65 && item.moodScores.tense < 0.65
+        ? (item.moodScores.warm + item.moodScores.light) / 2 : 0)
+      : mood ? item.moodScores[mood] : 1;
     const atmosphere = !mood || moodScore >= CONFIG.moodThreshold;
     const relaxations = [];
     if (!genre) relaxations.push('장르');

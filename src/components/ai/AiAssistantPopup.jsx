@@ -17,7 +17,7 @@ import "./AiAssistantPopup.scss";
 
 const emptyPreferences = (taste) => ({
   genres: [],
-  mood: ({ "편안한 힐링": "따뜻한 감동", "몰입감 있는": "몰입감 있는", "가볍게 웃는": "가볍게 웃고 싶어요" })[taste] || "",
+  mood: ({ "편안한 힐링": "편안한 힐링", "몰입감 있는": "몰입감 있는", "가볍게 웃는": "가볍게 웃고 싶어요" })[taste] || "",
   duration: "",
 });
 

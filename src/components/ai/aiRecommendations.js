@@ -2,7 +2,7 @@ import catalog from "./appleTvCatalog.json";
 import { recommend } from "./recommendationEngine.mjs";
 
 export const GENRES = ["코미디", "호러", "로맨스", "스릴러", "SF", "애니메이션"];
-export const MOODS = ["가볍게 웃고 싶어요", "긴장감 넘치는", "따뜻한 감동", "몰입감 있는"];
+export const MOODS = ["가볍게 웃고 싶어요", "긴장감 넘치는", "따뜻한 감동", "몰입감 있는", "편안한 힐링"];
 export const DURATIONS = ["30분 이하", "1시간 내외", "영화 한 편", "상관없어요"];
 const PAGE_SIZE = 6;
 const MAX_RESULTS = 20;

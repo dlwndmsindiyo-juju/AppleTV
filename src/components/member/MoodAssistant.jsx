@@ -6,7 +6,7 @@ import Rail from "../common/Rail";
 import AiAssistantLink from "../ai/AiAssistantLink";
 import { img, genreText, detailPath } from "./memberUtils";
 
-// useMovieStore의 MOOD_GENRES 키와 동일해야 합니다.
+// moodRecommendations의 기분 키와 동일하게 유지합니다.
 const MOODS = ["심심한", "힘든", "슬픈", "즐거움", "화남"];
 
 const normalizeMoodTitle = (title = "") =>
@@ -71,7 +71,7 @@ const MOOD_ARTWORK = [
       "미틱 퀘스트",
       "Mythic Quest",
       "미틱 퀘스트: 레이븐스 뱅큇",
-      "Mythic Quest: Raven’s Banquet",
+      "Mythic Quest: Raven's Banquet",
       "Mythic Quest: Raven's Banquet",
     ],
   ],
@@ -107,11 +107,17 @@ const getMoodArtwork = (tv) => {
 const MoodAssistant = ({ userName = "회원" }) => {
   const [mood, setMood] = useState(MOODS[0]);
 
+  const [error, setError] = useState("");
   const list = useMovieStore((s) => s.moodList[mood]);
   const onFetchMood = useMovieStore((s) => s.onFetchMood);
 
   useEffect(() => {
-    onFetchMood(mood);
+    let active = true;
+    setError("");
+    onFetchMood(mood).catch(() => {
+      if (active) setError("추천 작품을 불러오지 못했습니다. 기분 버튼을 다시 선택해주세요.");
+    });
+    return () => { active = false; };
   }, [mood, onFetchMood]);
 
   return (
@@ -139,7 +145,13 @@ const MoodAssistant = ({ userName = "회원" }) => {
               type="button"
               className={`member-chip${m === mood ? " active" : ""}`}
               aria-pressed={m === mood}
-              onClick={() => setMood(m)}
+              onClick={() => {
+                setMood(m);
+                if (m === mood && error) {
+                  setError("");
+                  onFetchMood(m).catch(() => setError("추천 작품을 불러오지 못했습니다. 다시 시도해주세요."));
+                }
+              }}
             >
               {m}
             </button>
@@ -158,12 +170,15 @@ const MoodAssistant = ({ userName = "회원" }) => {
           </AiAssistantLink>
         </div>
 
+        {error && <p role="alert">{error}</p>}
+        {list?.length === 0 && <p role="status">이 기분에 맞는 작품을 아직 찾지 못했어요. 다른 기분을 선택해주세요.</p>}
         <Rail
           bleed={false}
+          key={mood}
           className="rail-mood"
           label="기분별 추천"
         >
-          {(list ? list.slice(0, 10) : Array.from({ length: 5 })).map(
+          {(list ? list.slice(0, 10) : error ? [] : Array.from({ length: 5 })).map(
             (tv, i) => {
               if (!tv) {
                 return (
