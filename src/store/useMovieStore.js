@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { fetchMoodRecommendations } from "./moodRecommendations.mjs";
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -283,29 +284,15 @@ export const useMovieStore = create((set, get) => ({
     const { moodList } = get();
     if (moodList[mood]) return;
 
-    const genres = MOOD_GENRES[mood];
-    if (!genres) return;
-
     try {
-      const base = `https://api.themoviedb.org/3/discover/tv?api_key=${TMDB_KEY}&language=ko-KR&with_genres=${genres}&sort_by=popularity.desc&page=1`;
-
-      // 1. Apple TV+ 작품 우선
-      let res = await fetch(`${base}&with_networks=2552`);
-      let data = await res.json();
-      let list = data.results || [];
-
-      // 2. 작품이 부족하면 전체 TV 에서 보충
-      if (list.length < 5) {
-        res = await fetch(base);
-        data = await res.json();
-        list = data.results || [];
-      }
+      const list = await fetchMoodRecommendations(mood, { apiKey: TMDB_KEY });
 
       set((state) => ({
         moodList: { ...state.moodList, [mood]: list.slice(0, 10) },
       }));
     } catch (error) {
       console.error("기분별 추천 조회 실패:", error);
+      throw error;
     }
   },
 
@@ -327,6 +314,31 @@ export const useMovieStore = create((set, get) => ({
       set((state) => ({ contentDetails: { ...state.contentDetails, [key]: data } }));
     } catch (error) {
       console.error("상세 정보 조회 실패:", error);
+    }
+  },
+
+  // [추가] Apple이 모두에게 추천하는 작품 — 영화 + 시리즈를 번갈아 섞은 목록 (이번 주 인기)
+  // - 탑텐(Apple TV+ 오리지널)과 겹치는 작품은 RecommendSection 에서 뺌
+  // - 각 작품에 media_type("movie" | "tv") 을 붙여 상세 경로 · 설명 줄에 사용
+  recommendedMix: [],
+  onFetchRecommendedMix: async () => {
+    if (get().recommendedMix.length > 0) return;
+    try {
+      const [movieRes, tvRes] = await Promise.all([
+        fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${TMDB_KEY}&language=ko-KR`),
+        fetch(`https://api.themoviedb.org/3/trending/tv/week?api_key=${TMDB_KEY}&language=ko-KR`),
+      ]);
+      if (!movieRes.ok || !tvRes.ok) throw new Error("추천 작품을 불러오지 못했습니다.");
+      const movies = (await movieRes.json()).results || [];
+      const tvs = (await tvRes.json()).results || [];
+      const mixed = [];
+      for (let i = 0; i < Math.max(movies.length, tvs.length); i += 1) {
+        if (movies[i]) mixed.push({ ...movies[i], media_type: "movie" });
+        if (tvs[i]) mixed.push({ ...tvs[i], media_type: "tv" });
+      }
+      set({ recommendedMix: mixed.filter((item) => item.poster_path) });
+    } catch (error) {
+      console.error("추천 작품 조회 실패:", error);
     }
   },
 
@@ -371,11 +383,3 @@ function saveLocal(key, value) {
   }
 }
 
-// 기분 → TMDB TV 장르 id ("|" 는 OR, URL 인코딩 %7C)
-const MOOD_GENRES = {
-  심심한: "10765%7C10759",
-  힘든: "35%7C10751",
-  슬픈: "18",
-  즐거움: "35",
-  화남: "10759%7C80",
-};

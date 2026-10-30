@@ -45,9 +45,9 @@ const SportTeams = ({ title = "관심있는 구단" }) => {
               좋아하는 팀을 등록하면 경기 알림과 일정을 빠르게 확인할 수 있어요.
             </p>
           </div>
-          <p className="sport-teams-count">
-            구독 중 <strong>{favorites.length}</strong>팀
-          </p>
+          <Link to={SPORT_TEAMS_PATH} className="sport-team-more sport-team-more--head">
+            전체 구단 보기 ({SPORT_TEAMS.length})
+          </Link>
         </div>
 
         {/* 필터 탭 */}
@@ -91,10 +91,6 @@ const SportTeams = ({ title = "관심있는 구단" }) => {
           </Swiper>
         )}
 
-        {/* 구단 전체 페이지로 이동 */}
-        <Link to={SPORT_TEAMS_PATH} className="sport-team-more">
-          전체 구단 보기 ({SPORT_TEAMS.length})
-        </Link>
       </div>
     </section>
   );
