@@ -4,11 +4,16 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import { upcomingMatchesData } from "../../data/mockMatches";
-import { isLive } from "./sportUtils";
+import { upcomingMatches, matchTitle, kickoffText } from "../../data/matchesData";
+
+// 예정된 경기 — 시안: 경기 이미지 카드 + 왼쪽 위 날짜 · 오른쪽 위 Apple TV 로고 · 왼쪽 아래 "홈 vs. 원정"
+// - 데이터: data/matchesData.js (25경기 · 경기 이미지 · 시연용 일정)
+// - 홈: 가까운 경기 HOME_COUNT 개만 / "전체 보기" · 카드 → 예정된 경기 상세 (/sport/upcoming · 25경기 전부)
+const HOME_COUNT = 8;
+const TV_LOGO = "/icons/shorts/logo_w.svg";
 
 const SportUpcoming = ({ title = "예정된 경기" }) => {
-  const matches = upcomingMatchesData;
+  const matches = upcomingMatches().slice(0, HOME_COUNT);
 
   return (
     <section className="sport-upcoming" id="sport-upcoming">
@@ -26,60 +31,22 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
           <Swiper
             modules={[Navigation]}
             navigation
-            spaceBetween={20}
+            grabCursor
             slidesPerView="auto"
-            className="sport-upcoming-swiper"
+            spaceBetween={24}
+            breakpoints={{ 0: { spaceBetween: 12 }, 768: { spaceBetween: 16 }, 1025: { spaceBetween: 24 } }}
+            className="sport-up-swiper"
           >
             {matches.map((match) => {
-              const live = isLive(match);
-
+              const name = matchTitle(match);
+              const when = kickoffText(match.kickoff);
               return (
-                <SwiperSlide key={match.id} className="sport-upcoming-slide">
-                  <Link className="sport-match-card" to={`/sport/upcoming?id=${match.id}`}>
-                    {/* 카드 전체 배경 경기장 이미지 */}
-                    <img
-                      className="sport-match-bg"
-                      src="/images/matches/matches-bg.png"
-                      alt=""
-                      aria-hidden="true"
-                    />
-                    {/* 어두운 오버레이 섀도우 */}
-                    <div className="sport-match-overlay" />
-
-                    {/* 상단 상태 (LIVE 또는 경기 시간) */}
-                    <span className="sport-match-status">
-                      {live ? "LIVE" : match.status}
-                    </span>
-
-                    {/* 중앙 팀 로고 & 얇은 대각선 분할선 */}
-                    <div className="sport-match-content">
-                      {/* 홈 팀 로고 */}
-                      <div className="sport-team">
-                        {match.homeTeam?.crest ? (
-                          <img
-                            src={match.homeTeam.crest}
-                            alt={match.homeTeam.name}
-                          />
-                        ) : (
-                          <span className="sport-crest-empty" />
-                        )}
-                      </div>
-
-                      {/* 얇은 대각선 선 */}
-                      <div className="sport-match-divider" />
-
-                      {/* 원정 팀 로고 */}
-                      <div className="sport-team">
-                        {match.awayTeam?.crest ? (
-                          <img
-                            src={match.awayTeam.crest}
-                            alt={match.awayTeam.name}
-                          />
-                        ) : (
-                          <span className="sport-crest-empty" />
-                        )}
-                      </div>
-                    </div>
+                <SwiperSlide key={match.id} className="sport-up-slide">
+                  <Link className="sport-up-card" to={`/sport/upcoming?id=${match.id}`} aria-label={`${name} · ${when}`}>
+                    {match.image && <img className="sport-up-bg" src={match.image} alt="" loading="lazy" />}
+                    <span className="sport-up-date">{when}</span>
+                    <img className="sport-up-logo" src={TV_LOGO} alt="" aria-hidden="true" />
+                    <strong className="sport-up-title">{name}</strong>
                   </Link>
                 </SwiperSlide>
               );

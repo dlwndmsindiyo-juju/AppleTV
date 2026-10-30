@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import { useSportStore } from "../../store/useSportStore";
-import { upcomingMatchesData } from "../../data/mockMatches";
-import { SPORT_TEAMS } from "../../data/sportTeams";
+import { upcomingMatches, matchTitle, kickoffText } from "../../data/matchesData";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
 import { decodeHtml } from "./sportUtils";
 import { REPLAY_LEAGUES, leagueThumb, playlistEmbedUrl, playlistWatchUrl } from "../../data/replayLeagues";
@@ -21,30 +20,16 @@ import SportHero from "./SportHero";
 
 const MATCH_BG = "/images/matches/matches-bg.png";
 
-// 예정 경기 카운트다운: 실제 경기 시간 대신 상세에 들어올 때마다 9시간부터 줄어들게 (시연용)
+// [수정] 예정 경기 카운트다운: 카드에 표시한 경기 시각(data/matchesData.js 의 kickoff)까지 남은 시간
+// - 상세에 들어온 순간의 남은 시간부터 1초씩 줄어듦
+// - 경기 시각이 이미 지났으면 (시연용) 상세에 들어온 시점 + 9시간까지
 const COUNTDOWN_START_MS = 9 * 60 * 60 * 1000;
-
-// 영문 구단명 → 한글 짧은 이름 (data/sportTeams.js), 없으면 원래 이름
-const teamLabel = (team) => {
-  if (!team) return "";
-  const found = SPORT_TEAMS.find((t) => t.enName === team.name || t.enName === team.shortName);
-  return found?.shortName || team.shortName || team.name || "";
-};
 
 // 2026.09.19
 const dotDate = (value) => {
   const d = value ? new Date(value) : null;
   if (!d || Number.isNaN(d.getTime())) return "";
   return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
-};
-
-// 6월 13일 · 오전 9:30 / 6월 13일 토요일 · 오전 9:30
-const kickoffLabel = (value, withWeekday = false) => {
-  const d = value ? new Date(value) : null;
-  if (!d || Number.isNaN(d.getTime())) return "";
-  const date = d.toLocaleDateString("ko-KR", { month: "long", day: "numeric", ...(withWeekday && { weekday: "long" }) });
-  const time = d.toLocaleTimeString("ko-KR", { hour: "numeric", minute: "2-digit", hour12: true });
-  return `${date} · ${time}`;
 };
 
 // YouTube 주소(watch?v= · youtu.be/ · shorts/ · embed/) → 영상 ID
@@ -140,23 +125,22 @@ const DETAIL_CONFIG = {
         })),
   },
 
-  // 예정된 경기: mockMatches 예정 경기 (카운트다운)
+  // [수정] 예정된 경기: data/matchesData.js 25경기 (경기 이미지 · 가까운 순서 · 카운트다운)
   upcoming: {
     title: "예정된 경기",
     empty: "예정된 경기가 없습니다.",
     buildItems: () =>
-      (upcomingMatchesData || []).map((match) => {
-        const name = `${teamLabel(match.homeTeam)} VS ${teamLabel(match.awayTeam)}`;
-        const kickoff = match.utcDate || match.date || null;
+      upcomingMatches().map((match) => {
+        const name = matchTitle(match);
         return {
           id: String(match.id),
           title: name,
-          meta: kickoffLabel(kickoff) || match.status || "",
-          thumb: match.thumb || MATCH_BG,
+          meta: kickoffText(match.kickoff),
+          thumb: match.image || MATCH_BG,
           badge: "예정",
-          kickoff,
+          kickoff: match.kickoff,
           match,
-          info: { label: "예정 경기", title: kickoffLabel(kickoff, true) || match.status || "", desc: name },
+          info: { label: "예정 경기", title: kickoffText(match.kickoff, true), desc: `${match.homeTeam} vs. ${match.awayTeam}` },
         };
       }),
   },
@@ -231,7 +215,7 @@ const SportDetail = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const config = DETAIL_CONFIG[type];
 
-  // 상세에 들어온 시점 + 9시간 (목록에서 다른 경기를 눌러도 이어서 줄어들고, 다시 들어오면 9시간부터)
+  // (경기 시각이 지난 경우만) 상세에 들어온 시점 + 9시간
   const [countdownTarget, setCountdownTarget] = useState(() => Date.now() + COUNTDOWN_START_MS);
   // 다른 상세(/sport/replay 등)에서 예정 경기 상세로 바로 넘어와도 9시간부터 다시 시작
   useEffect(() => { setCountdownTarget(Date.now() + COUNTDOWN_START_MS); }, [type]);
@@ -284,7 +268,14 @@ const SportDetail = () => {
             <div className="sport-detail-layout">
               {/* 왼쪽: 큰 화면 + 정보 */}
               <article className="sport-detail-stage">
-                {type === "upcoming" ? <DetailCountdown item={current} target={countdownTarget} /> : <DetailPlayer item={current} />}
+                {type === "upcoming" ? (
+                  <DetailCountdown
+                    item={current}
+                    target={current.kickoff && new Date(current.kickoff).getTime() > Date.now() ? current.kickoff : countdownTarget}
+                  />
+                ) : (
+                  <DetailPlayer item={current} />
+                )}
 
                 <div className="sport-detail-info">
                   <p className="sport-detail-info-title">
