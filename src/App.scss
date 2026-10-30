@@ -7424,3 +7424,17 @@ section.top10-section {
     }
   }
 }
+
+
+// =====================================================================
+// [추가] 섹션 소제목 — 시안 Heading/h2 22/28 · Light/500 (PC 1025px 이상)
+// - TOP 10 · 공개예정작 · 오리지널스 설명 문구 (로그인 전 · 후 홈 공통)
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+  section.top10-section .top10-desc,
+  .upcoming-section .upcoming-desc.upcoming-desc,
+  .apple-originals .apple-originals-desc.apple-originals-desc {
+    @include heading-h2;
+    color: $light-color-500;
+  }
+}

@@ -1444,3 +1444,25 @@ main.member-home .member-mood {
     --rail-col: 240px;
   }
 }
+
+
+// =====================================================================
+// [추가] 섹션 제목 · 소제목 — 시안 (PC 1025px 이상)
+// - 제목 .member-title: Heading/h1-B · Light/0 (기존 믹스인 heading-h1-b)
+// - 소제목 .member-desc: Heading/h2 · Light/500 (기존 믹스인 heading-h2)
+//   · 섹션 머리(.member-head)의 소제목만 (카드 안 설명 .member-desc.small 등은 그대로)
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.member-home {
+    .member-title {
+      @include heading-h1-b;
+      color: $light-color-0;
+    }
+
+    .member-head .member-desc,
+    .member-section.member-wishlist .member-head .member-desc {
+      @include heading-h2;
+      color: $light-color-500;
+    }
+  }
+}
