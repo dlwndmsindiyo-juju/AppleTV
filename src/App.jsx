@@ -168,7 +168,7 @@ function App() {
           </div>
 
           {/* AI 어시스턴트 안내 배너 */}
-          <AiAssistantPromo />
+          {!location.pathname.startsWith("/sport") && <AiAssistantPromo />}
 
           {/* 기존 프로모션 배너 */}
           <PromoBanner />
