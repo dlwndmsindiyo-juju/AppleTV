@@ -197,6 +197,7 @@ $footer-pad-y: 14px;
 // ---------- Font weight ----------
 $font-weight-regular: 400; // Regular · 기본 정보와 편안하게 읽는 표현
 $font-weight-bold: 700; // Bold · 제목이나 강조가 필요한 핵심 표현
+$font-weight-medium: 500; // Medium · body-small-m 용 (SF Pro Medium)
 
 $font-family-base: "SF Pro", sans-serif;
 
@@ -309,6 +310,11 @@ $font-family-base: "SF Pro", sans-serif;
 
 @mixin body-small-b {
   @include type-style(13px, 18px, $font-weight-bold);
+}
+
+// Body Small M 13 / 18 · SF Pro Medium · 자간 0% (카드 소개 글)
+@mixin body-small-m {
+  @include type-style(13px, 18px, $font-weight-medium);
 }
 
 // ---------- Label ----------
