@@ -2,6 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuthStore, isSubscribed } from "../../store/useAuthStore";
 
+// [추가] TV 홍보 배너 오른쪽 포스터 (시안 순서 · public/images/promo)
+const TV_POSTERS = [
+  { src: "/images/promo/poster-wanda.png", title: "반다를 찾아서" },
+  { src: "/images/promo/poster-slow-horses.png", title: "슬로 호시스" },
+  { src: "/images/promo/poster-accountant.png", title: "어카운턴트" },
+  { src: "/images/promo/poster-matchbox.png", title: "매치박스 더 무비" },
+];
+
 /**
  * 구독 유도 CTA 배너 컴포넌트
  * @param {Object} props
@@ -21,6 +29,42 @@ const SubscribeCTA = ({ type = "tv" }) => {
   const bgImageSrc = isSport
     ? "/images/sport-subscribe-cta.webp"
     : "/images/subscribe-cta.webp";
+
+  // [추가] TV 홈(로그인 전) 홍보 배너 — 시안
+  // - 배경: 기존 배너 사진 + 검정 80% 그림자 / 왼쪽: 로고 · 문구 · 무료 체험 버튼 · 안내 / 오른쪽: 포스터 4장 (마지막 장은 배너 끝에서 잘림)
+  // - 포스터는 이미지만 (클릭 이동 없음)
+  if (!isSport) {
+    return (
+      <section className="subscribe-cta subscribe-cta--tv">
+        <div className="inner">
+          <div className="subscribe-banner">
+            <img className="subscribe-bg" src={bgImageSrc} alt="" aria-hidden="true" />
+
+            <div className="subscribe-content">
+              <img className="subscribe-logo" src="/icons/shorts/logo_w.svg" alt="Apple TV" />
+              <h3 className="subscribe-title">
+                독점 오리지널 콘텐츠를 한 곳에서,
+                <br />
+                지금 Apple TV로 경험해보세요.
+              </h3>
+              <Link className="subscribe-btn" to={to}>
+                7일 무료 체험하기
+              </Link>
+              <p className="subscribe-note">7일 무료 체험 후 월 ₩6,500입니다.</p>
+            </div>
+
+            <ul className="subscribe-posters" aria-hidden="true">
+              {TV_POSTERS.map((poster) => (
+                <li key={poster.src} className="subscribe-poster">
+                  <img src={poster.src} alt="" loading="lazy" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="subscribe-cta">
