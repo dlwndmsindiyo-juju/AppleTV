@@ -17,7 +17,7 @@ import WishlistSection from "./WishlistSection";
 import RecommendSection from "./RecommendSection";
 import MoodAssistant from "./MoodAssistant";
 import NewRelease from "./NewRelease";
-import UpcomingSection from "../landing/UpcomingSection"; // 공개예정작 (시안: 로그인 전 메인과 같은 카드)
+import ComingSoon from "./ComingSoon"; // 공개예정작 (시안: 신규출시와 같은 카드)
 import DeviceGuide from "../landing/DeviceGuide"; // 에코시스템 (시안: 랜딩 홈의 기기 안내와 같은 회색 박스)
 
 const MemberHome = ({ userName = "회원" }) => {
@@ -62,15 +62,14 @@ const MemberHome = ({ userName = "회원" }) => {
       {/* 5. 추천작 */}
       <RecommendSection />
 
-      {/* 구독 전용 AI: 애플 추천작 바로 아래, 기존 팝업 연결 유지 */}
+      {/* 6. AI 어시스턴트 (기분별 추천) */}
       <MoodAssistant userName={userName} />
-
 
       {/* 7. 신규 출시 */}
       <NewRelease />
 
       {/* 8. 공개예정작 */}
-      <UpcomingSection />
+      <ComingSoon />
 
       {/* 9. 에코시스템 (아래는 기존 푸터) — 시안 내용이 기기 안내와 같아 DeviceGuide 재사용 */}
       <DeviceGuide />

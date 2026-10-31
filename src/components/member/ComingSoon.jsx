@@ -1,14 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { SwiperSlide } from "swiper/react";
 import { useMovieStore } from "../../store/useMovieStore";
-import { img, genreText, detailPath, MOVIE_GENRES } from "./memberUtils";
+import Rail from "../common/Rail";
+import ReleaseCard from "./ReleaseCard";
 
+// 공개예정작 — 시안: 기대해도 좋을 새로운 이야기
+// - 데이터: 개봉 예정 영화(useMovieStore.upcoming) 중 오늘 이후 공개작 (없으면 전체)
+// - PC 한 줄 4장 + 화살표 슬라이드 (.rail-release)
 const ComingSoon = () => {
   const upcoming = useMovieStore((s) => s.upcoming);
-  const alarms = useMovieStore((s) => s.alarms);
-  const onToggleAlarm = useMovieStore((s) => s.onToggleAlarm);
 
-  const items = upcoming.filter((m) => m.poster_path).slice(0, 2);
+  const today = new Date().toISOString().slice(0, 10);
+  const withPoster = upcoming.filter((m) => m.poster_path);
+  const future = withPoster.filter((m) => m.release_date && m.release_date >= today);
+  const items = (future.length > 0 ? future : withPoster).slice(0, 10);
+
   if (items.length === 0) return null;
 
   return (
@@ -16,46 +22,18 @@ const ComingSoon = () => {
       <div className="inner">
         <div className="member-head">
           <div>
-            <h2 className="member-title">공개예정작</h2>
-            <p className="member-desc">시선을 사로잡을 다음 이야기</p>
+            <h2 className="member-title">기대해도 좋을 새로운 이야기</h2>
+            <p className="member-desc">앞으로 공개될 새로운 영화와 시리즈를 미리 만나보세요.</p>
           </div>
         </div>
 
-        <ul className="member-pair">
-          {items.map((m) => {
-            const on = alarms.includes(`movie_${m.id}`);
-            return (
-              <li key={m.id} className="member-wide-card tall">
-                <Link to={detailPath("movie", m.id)} className="member-wide-thumb poster">
-                  <img src={img(m.poster_path, "w342")} alt="" loading="lazy" />
-                </Link>
-                <div className="member-wide-info">
-                  <span className="member-card-meta">
-                    {genreText(m.genre_ids, MOVIE_GENRES)}
-                    {m.release_date ? ` · ${m.release_date}` : ""}
-                  </span>
-                  <h3 className="member-card-title">{m.title}</h3>
-                  <span className="member-card-meta member-clamp">{m.overview}</span>
-                  <button
-                    type="button"
-                    className={`member-btn${on ? " filled" : ""}`}
-                    aria-pressed={on}
-                    onClick={() => onToggleAlarm(`movie_${m.id}`)}
-                  >
-                    {on ? (
-                      <>
-                        <span className="ui-icon ui-icon-check" aria-hidden="true" />
-                        알림 설정됨
-                      </>
-                    ) : (
-                      "알람 받기"
-                    )}
-                  </button>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <Rail className="rail-release" label="공개예정작">
+          {items.map((m) => (
+            <SwiperSlide key={`movie_${m.id}`}>
+              <ReleaseCard item={m} type="movie" />
+            </SwiperSlide>
+          ))}
+        </Rail>
       </div>
     </section>
   );

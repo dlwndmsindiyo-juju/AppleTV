@@ -7603,3 +7603,302 @@ section.top10-section {
     min-height: 400px;
   }
 }
+
+
+// =====================================================================
+// [추가] TV 홈(로그인 전) 홍보 배너 — 시안 (SubscribeCTA.jsx · .subscribe-cta--tv)
+// - 배너 1440 × 420 (가로는 이너 폭) · 모서리 20 · 기존 배경 사진 위에 #000 80%
+// - 로고 흰색 73 × 56 / 문구 Display/L-B · Light/0
+// - 버튼 200 × 40 (패딩 좌우 36 · 위아래 7 포함) · 프라이머리 / 안내 Label/default · Light/500
+// - 오른쪽 포스터: 비스듬한 카드 4장 (Figma 216 × 323 · X 737 · Y 36 · 모서리 10, 마지막 장은 배너 끝에서 잘림)
+// - 스포츠 구독 배너(.subscribe-cta 기본)는 그대로
+// =====================================================================
+.subscribe-cta.subscribe-cta--tv {
+  .subscribe-banner {
+    height: 420px;
+    border: none;
+    border-radius: $radius-md; // 20
+    background-color: $dark-color-900;
+  }
+
+  .subscribe-bg {
+    object-position: center;
+  }
+
+  // 배경 사진 전체에 짙은 그림자 (#000 80%)
+  .subscribe-banner::after {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .subscribe-content {
+    left: 5%;
+    right: auto;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    gap: 0;
+  }
+
+  .subscribe-logo {
+    width: 73px;
+    height: 56px;
+    object-fit: contain;
+    object-position: left center;
+    filter: none; // 흰색 로고 파일 그대로
+  }
+
+  .subscribe-title {
+    @include display-l-b;
+    color: $light-color-0;
+    margin: $space-lg 0 0;
+    word-break: keep-all;
+  }
+
+  .subscribe-btn {
+    @include body-default-b;
+    box-sizing: border-box;
+    justify-content: center;
+    width: 200px;
+    height: 40px;
+    margin-top: $space-xl;
+    padding: 7px 36px;
+    border-radius: 999px;
+    background-color: $primary-color-500;
+    color: $light-color-0;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: $primary-color-400;
+    }
+  }
+
+  .subscribe-note {
+    @include label-default;
+    color: $light-color-500;
+    margin: $space-sm 0 0;
+  }
+
+  // 오른쪽 포스터 영역: 시안 X 737 (1440 기준 51.2%) · Y 36 · 오른쪽 끝에서 잘림 (배너 overflow hidden)
+  .subscribe-posters {
+    position: absolute;
+    top: 36px;
+    left: max(51.2%, 640px); // 문구(약 600px)와 겹치지 않게
+    z-index: 2;
+    display: flex;
+    gap: $space-lg;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // 비스듬한 포스터 카드 (평행사변형)
+  // - --poster-h 하나로 크기 조절: 기울기 6.2° → 위쪽이 높이의 약 11% 만큼 오른쪽으로 밀림
+  //   (323 높이 → 카드 면 181 + 기울어진 폭 35 = 전체 216, Figma 216 × 323)
+  // - 카드(li)만 기울이고 안쪽 사진은 반대로 기울여 똑바로 보이게 · 모서리 10 은 기울어진 카드에 그대로 적용
+  .subscribe-poster {
+    --poster-h: 323px;
+    position: relative;
+    flex-shrink: 0;
+    width: calc(var(--poster-h) * 0.56);
+    height: var(--poster-h);
+    border-radius: $radius-sm; // 10
+    overflow: hidden;
+    background-color: $dark-color-800;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    transform: skewX(-6.2deg);
+    transform-origin: left bottom; // 아래 변은 제자리, 위 변이 오른쪽으로
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      display: block;
+      width: calc(100% + var(--poster-h) * 0.14); // 기울어진 양쪽 모서리까지 빈틈 없이 채움
+      max-width: none;
+      height: 100%;
+      object-fit: cover;
+      transform: translateX(-50%) skewX(6.2deg);
+    }
+  }
+}
+
+// PC: 배너 가로 = 이너 폭 (1920 기준 좌우 240 → 1440, 다른 홈 섹션과 같은 시작선)
+@media (min-width: ($breakpoint-tablet + 1)) {
+  .subscribe-cta.subscribe-cta--tv .inner {
+    padding-left: $desktop-gutter;
+    padding-right: $desktop-gutter;
+  }
+}
+
+// 작은 PC (1025 ~ 1439px): 배너가 좁아져도 문구 · 포스터가 겹치지 않게 조금 줄임
+@media (min-width: ($breakpoint-tablet + 1)) and (max-width: 1439px) {
+  .subscribe-cta.subscribe-cta--tv {
+    .subscribe-title {
+      @include display-M-b;
+    }
+
+    .subscribe-posters {
+      top: 50%;
+      left: max(48%, 520px);
+      gap: $space-md;
+      transform: translateY(-50%);
+    }
+
+    .subscribe-poster {
+      --poster-h: 268px;
+    }
+  }
+}
+
+// 태블릿: 배너 높이 · 문구 · 포스터를 줄여서 그대로 보여줌
+@media (max-width: $breakpoint-tablet) {
+  .subscribe-cta.subscribe-cta--tv {
+    .subscribe-banner {
+      height: 340px;
+    }
+
+    .subscribe-content {
+      left: 6%;
+    }
+
+    .subscribe-title {
+      @include heading-h2-b;
+    }
+
+    .subscribe-posters {
+      top: 50%;
+      left: max(55%, 440px);
+      gap: $space-sm;
+      transform: translateY(-50%);
+    }
+
+    .subscribe-poster {
+      --poster-h: 238px;
+    }
+  }
+}
+
+// 모바일: 문구 위 · 포스터 아래 (포스터는 작게, 오른쪽 끝에서 잘림)
+@media (max-width: $breakpoint-mobile) {
+  .subscribe-cta.subscribe-cta--tv {
+    .subscribe-banner {
+      height: auto;
+      padding: $space-2xl 0;
+      border-radius: $radius-md;
+    }
+
+    .subscribe-content {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      transform: none;
+      padding: 0 20px;
+    }
+
+    .subscribe-logo {
+      width: 58px;
+      height: 44px;
+    }
+
+    .subscribe-title {
+      @include heading-h3-b;
+      margin-top: $space-md;
+    }
+
+    .subscribe-btn {
+      margin-top: 20px;
+    }
+
+    .subscribe-posters {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      margin-top: $space-xl;
+      padding-left: 20px;
+      gap: $space-sm;
+    }
+
+    .subscribe-poster {
+      --poster-h: 179px;
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] 헤더 프로필 버튼 (로그인 후) — 시안
+// - PC: 지름 40 원형 · 배경 프라이머리
+// - 기본 아이콘(public/icons/profile.svg)은 가운데 흰색 14px (모바일 돋보기 아이콘과 같은 크기)
+// - 계정 설정에서 고른 프로필 아이콘(.profile-avatar--색상)은 지금처럼 원을 가득 채움
+// - 모바일 크기(지름 32)는 mobile.scss
+// =====================================================================
+header .inner nav .gnb-right ul .profile-box.profile-box {
+  width: 40px;
+  height: 40px;
+  background-color: $primary-color-500;
+
+  &:hover {
+    background-color: $primary-color-400;
+  }
+
+  // 버튼 · 안쪽 아이콘 칸 모두 정가운데 정렬
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .profile-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  // 기본 아이콘일 때: 회색 원 대신 버튼의 프라이머리 배경이 보이게
+  .profile-avatar:has(img[src$="/profile.svg"]) {
+    background-color: transparent;
+  }
+
+  // 기본 아이콘: 14 × 14 칸 정가운데 (다른 규칙의 위치 · 크기 값 초기화)
+  img[src$="/profile.svg"] {
+    position: static;
+    display: block;
+    flex: none;
+    width: 14px;
+    height: 14px;
+    max-width: none;
+    margin: 0;
+    transform: none;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
+
+// =====================================================================
+// [추가] 계정 설정 프로필 아이콘 — 헤더 프로필 버튼과 같은 방식
+// - 기본 아이콘(public/icons/profile.svg)일 때: 배경 프라이머리 · 흰 사람 아이콘을 원 정중앙에
+// - 아이콘 크기는 헤더와 같은 비율 (지름 40 → 14 = 35%) · 52 → 약 18 / 72 → 약 25
+// - 고른 프로필 아이콘(.profile-avatar--색상)은 그대로
+// =====================================================================
+.profile-avatar.profile-avatar:has(img[src$="/profile.svg"]) {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary-color-500;
+
+  img[src$="/profile.svg"] {
+    position: static;
+    display: block;
+    flex: none;
+    width: 35%;
+    height: 35%;
+    max-width: none;
+    margin: 0;
+    transform: none;
+    object-fit: contain;
+    object-position: center;
+  }
+}
