@@ -1454,3 +1454,15 @@ header .inner nav .gnb-right ul .search-icon-item {
     }
   }
 }
+
+
+// =====================================================================
+// [추가] 헤더 프로필 버튼 (로그인 후) 모바일 — 검색 아이콘 버튼과 같은 지름 32 원형
+// - 배경 프라이머리 · 기본 아이콘 14px 은 App.scss 규칙 그대로
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  header .inner nav .gnb-right ul .profile-box.profile-box {
+    width: 32px;
+    height: 32px;
+  }
+}
