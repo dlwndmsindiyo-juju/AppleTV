@@ -2433,72 +2433,6 @@ header {
   }
 }
 
-// ===== 기기 안내 (좌우 2단, 기존 다크 톤 유지) =====
-.device-guide {
-  background-color: $bg-surface-hover;
-  padding: 30px 0;
-
-  .inner {
-    @include inner-wrap;
-  }
-
-  // 콘텐츠 영역 (1920 기준 좌우 240 여백 = 최대 1440, 배경 없음)
-  .device-guide-card {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
-    gap: $space-5xl;
-    align-items: start;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 68px 120px;
-    box-sizing: border-box;
-  }
-
-  // 좌측: 제목 + 설명
-  .device-guide-title {
-    @include display-l;
-    font-weight: $font-weight-bold;
-    margin: 0 0 $space-xl;
-    padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
-    color: $text-primary;
-    word-break: keep-all;
-  }
-
-  .device-guide-sub {
-    @include body-large;
-    margin: 0;
-    color: $neutral-color-600;
-    word-break: keep-all;
-  }
-
-  // 우측: 세 가지 구분
-  .device-guide-list {
-    list-style: none;
-    margin: 0 0 $space-3xl;
-    padding: 0;
-
-    li {
-      @include body-large;
-      color: $text-secondary;
-    }
-  }
-
-  // 세 가지 차이 보기 ›
-  .device-guide-link {
-    @include body-default;
-    display: inline-flex;
-    align-items: center;
-    gap: $space-xs;
-    color: $accent-color;
-    text-decoration: none;
-    transition: color 0.2s ease;
-
-    &:hover {
-      font-weight: $font-weight-bold;
-    }
-  }
-}
-
 // ===== Apple TV 에코시스템 비교 페이지 (/ecosystem) =====
 .ecosystem-page {
   // 로그인 페이지처럼 헤더 · 본문 · 푸터 영역이 확실히 구분되도록
@@ -4585,18 +4519,6 @@ main.sport-home {
 }
 
 // =====================================================================
-// [추가] 기기 안내 (에코시스템) 영역 배경 — 모든 화면 크기 공통
-// - 카드에는 색을 넣지 않고, 섹션(영역) 자체에 회색 배경을 깔아 헤더처럼 화면 전체 폭으로 표시
-// =====================================================================
-section.device-guide {
-  background-color: $bg-surface-hover;
-
-  .device-guide-card {
-    background-color: transparent;
-  }
-}
-
-// =====================================================================
 // 로그인 · 구독 플로우 (시안)
 // - 밝은 회색 페이지 위 어두운 카드 (폭 800 · 플랜 선택 900)
 // - App.scss 에 함께 들어 있어 따로 불러올 파일 없음
@@ -5660,7 +5582,6 @@ img.ui-icon.ui-icon-arrow {
 .member-card-link,
 .sport-more,
 .sport-league-arrow,
-.device-guide-link,
 .trial-strip-title,
 .member-btn,
 .auth-link,
@@ -7929,5 +7850,256 @@ section.top10-section .top10-slide.top10-slide--wide {
 @media (max-width: $breakpoint-mobile) {
   section.top10-section .top10-slide.top10-slide--wide {
     width: 170px * 1.3; // 221
+  }
+}
+
+
+// =====================================================================
+// [추가] 기기 안내 — 시안 "TV 화면에서도 시청하세요." (DeviceGuide.jsx · .device-guide--watch)
+// - 로그인 전 · 후 홈 공용 (예전 2단 카드 .device-guide-* 규칙은 App.scss · mobile.scss 에서 삭제함)
+// - 배경: Dark/950 (#141414 · 기기 아이콘 안쪽 #111 과 거의 같은 색)
+// - 가운데 정렬: Apple TV 로고 → 제목(Heading/h1-B · Light/0) → 설명(Body/large · Light/500)
+// - 로고 띠: 화면 전체 폭 · 왼쪽으로 계속 흐름(40초 한 바퀴) · 양 끝 흐리게 · 마우스 올리면 멈춤
+// - 이동 중 시청: 소제목(Display/L-B) → 링크(Body/large-B · Primary) → 기기 아이콘 7개
+// =====================================================================
+section.device-guide.device-guide--watch {
+  --logo-scale: 1; // 로고 크기 비율 (svg 원래 높이 × 비율)
+  --icon-scale: 1; // 기기 아이콘 크기 비율 (svg 원래 폭 × 비율)
+  --marquee-duration: 40s;
+
+  padding: 96px 0;
+  background-color: $dark-color-950;
+  text-align: center;
+  overflow: hidden;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  // ---------- 위: 로고 · 제목 · 설명 ----------
+  .watch-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .watch-logo-main {
+    display: block;
+    height: 60px;
+    width: auto;
+  }
+
+  .watch-title {
+    @include heading-h1-b;
+    margin: $space-xl 0 0;
+    padding-top: 0; // main h2/h3 기본 여백 제거
+    color: $light-color-0;
+    word-break: keep-all;
+  }
+
+  .watch-desc {
+    @include body-large;
+    margin: $space-lg 0 0;
+    color: $light-color-500;
+    word-break: keep-all;
+  }
+
+  // ---------- 로고 띠 ----------
+  .watch-marquee {
+    position: relative;
+    margin-top: $space-4xl;
+    overflow: hidden;
+    // 양 끝을 부드럽게 흐리게
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  }
+
+  // 같은 목록 2개를 이어 붙이고 절반(목록 1개)만큼 이동 → 끝과 처음이 이어져 끊김 없이 반복
+  .watch-track {
+    display: flex;
+    width: max-content;
+    animation: watch-marquee var(--marquee-duration) linear infinite;
+  }
+
+  .watch-marquee:hover .watch-track {
+    animation-play-state: paused;
+  }
+
+  .watch-logo-list {
+    display: flex;
+    align-items: center;
+    gap: $space-2xl;
+    margin: 0;
+    padding: 0 $space-2xl 0 0; // 두 목록 사이도 같은 간격
+    list-style: none;
+  }
+
+  .watch-logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+
+    img {
+      display: block;
+      width: auto;
+      height: calc(var(--logo-h) * 1px * var(--logo-scale));
+      max-width: none;
+    }
+  }
+
+  // ---------- 아래: 이동 중 시청 ----------
+  .watch-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: $space-4xl;
+  }
+
+  .watch-subtitle {
+    @include display-l-b;
+    margin: 0;
+    padding-top: 0;
+    color: $light-color-0;
+    word-break: keep-all;
+  }
+
+  .watch-link {
+    @include body-large-b;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    margin-top: $space-lg;
+    color: $primary-color-500;
+    text-decoration: none;
+
+    &:hover {
+      color: $primary-color-400;
+      text-decoration: underline;
+    }
+  }
+
+  .watch-link-arrow {
+    font-size: 1.2em;
+    line-height: 1;
+  }
+
+  .watch-devices {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end; // 아이콘 높이가 달라도 이름 줄을 맞춤
+    justify-content: center;
+    gap: $space-xl $space-5xl;
+    margin: $space-4xl 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .watch-device img {
+    display: block;
+    width: calc(var(--icon-w) * 1px * var(--icon-scale)); // svg 원래 크기 × 비율 (이름 글자 포함)
+    max-width: none;
+    height: auto;
+  }
+}
+
+@keyframes watch-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+// 기기의 '동작 줄이기' 설정: 흐르지 않고 멈춘 상태로
+@media (prefers-reduced-motion: reduce) {
+  section.device-guide.device-guide--watch .watch-track {
+    animation: none;
+  }
+}
+
+// 태블릿
+@media (max-width: $breakpoint-tablet) {
+  section.device-guide.device-guide--watch {
+    --logo-scale: 0.75;
+
+    padding: $space-5xl 0;
+
+    .inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+    }
+
+    .watch-logo-main {
+      height: 48px;
+    }
+
+    .watch-title {
+      @include display-l-b;
+    }
+
+    .watch-subtitle {
+      @include display-M-b;
+    }
+
+    .watch-devices {
+      gap: $space-xl $space-2xl;
+    }
+  }
+}
+
+// 모바일
+@media (max-width: $breakpoint-mobile) {
+  section.device-guide.device-guide--watch {
+    --logo-scale: 0.6;
+    --icon-scale: 0.8;
+
+    padding: $space-4xl 0;
+
+    .inner {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .watch-logo-main {
+      height: 40px;
+    }
+
+    .watch-title {
+      @include display-M-b;
+      margin-top: $space-lg;
+    }
+
+    .watch-desc {
+      @include body-small;
+    }
+
+    .watch-marquee {
+      margin-top: $space-2xl;
+    }
+
+    .watch-logo-list {
+      gap: $space-xl;
+      padding-right: $space-xl;
+    }
+
+    .watch-mobile {
+      margin-top: $space-2xl;
+    }
+
+    .watch-subtitle {
+      @include heading-h2-b;
+    }
+
+    .watch-link {
+      @include body-default-b;
+    }
+
+    .watch-devices {
+      gap: $space-lg $space-xl;
+      margin-top: $space-2xl;
+    }
+
   }
 }
