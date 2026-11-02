@@ -11,6 +11,7 @@ import "../sport-member.scss";
 import SportConferenceStandings from "../components/sport/SportConferenceStandings";
 import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
+import SportSeries from "../components/sport/SportSeries";
 import { Link } from "react-router-dom";
 import "./sport-home-banner.css";
 
@@ -81,10 +82,13 @@ const SportHome = () => {
       <SportConferenceStandings />
 
       {/* 7. 영상 다시보기 */}
-      <SportReplay title="영상 다시보기" />
+      <SportReplay title="경기 다시보기" />
 
       {/* 8. 하이라이트 */}
       <SportHighlights />
+
+      {/* Figma 스포츠 메인: 하이라이트 다음 추천 시리즈 */}
+      <SportSeries />
 
 
     </main>

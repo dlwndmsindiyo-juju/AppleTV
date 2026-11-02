@@ -28,7 +28,6 @@ import { useAuthStore, isSubscribed } from "./store/useAuthStore";
 import SportTeamsPage from "./pages/SportTeamsPage";
 import PromoBanner from "./components/landing/PromoBanner";
 
-import Ecosystem from "./pages/Ecosystem";
 import Search from "./pages/Search";
 import SearchPerson from "./pages/SearchPerson";
 import SearchTitle from "./pages/SearchTitle";
@@ -111,11 +110,6 @@ function App() {
               <Route
                 path="/sport/match/:id"
                 element={<SportLivePage />}
-              />
-
-              <Route
-                path="/ecosystem"
-                element={<Ecosystem />}
               />
 
               <Route
