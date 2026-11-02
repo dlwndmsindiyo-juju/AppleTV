@@ -100,13 +100,6 @@ const isPasswordOnly = (fbUser) =>
     fbUser.providerData.every((p) => p.providerId === "password");
 
 const demoKey = (uid) => `demoCodeVerified:${uid}`;
-const isDemoVerified = (uid) => {
-    try {
-        return localStorage.getItem(demoKey(uid)) === "1";
-    } catch {
-        return false;
-    }
-};
 const markDemoVerified = (uid) => {
     try {
         localStorage.setItem(demoKey(uid), "1");
@@ -125,13 +118,86 @@ const clearDemoVerified = (uid) => {
 // 실제 메일 인증을 쓰는 계정인지 (UI 전용 모드면 항상 false)
 const usesRealCode = (fbUser) => !DEMO_CODE_ONLY && isPasswordOnly(fbUser);
 
-const needsCode = (fbUser, data) =>
-    usesRealCode(fbUser) ? !data.emailCodeVerified : !isDemoVerified(fbUser.uid);
+// [추가] 확인 코드를 마친 기기(브라우저) 기록 — 이 기기에서는 다음부터 암호만 입력
+// - 로그아웃해도 지우지 않음 (다른 기기 · 브라우저 · 시크릿 창에서는 다시 코드 필요)
+const trustedKey = (uid) => `trustedDevice:${uid}`;
+const isTrustedDevice = (uid) => {
+    try {
+        // 예전 버전에서 확인 코드를 마치고 로그인 중인 기기(demoCodeVerified)도 인정 → 업데이트 후 로그아웃되지 않게
+        return localStorage.getItem(trustedKey(uid)) === "1" || localStorage.getItem(demoKey(uid)) === "1";
+    } catch {
+        return false;
+    }
+};
+const markTrustedDevice = (uid) => {
+    try {
+        localStorage.setItem(trustedKey(uid), "1");
+    } catch {
+        /* 저장 불가 환경이면 다음 로그인 때 다시 코드 */
+    }
+};
+
+// [수정] 확인 코드가 필요한 경우: 이메일/암호 계정이 "처음 로그인하는 기기"일 때만
+// - 구글 계정은 코드 없이 바로 로그인
+// - 이미 코드를 마친 기기면 통과 (UI 전용 · 실제 메일 인증 모두 같은 기준)
+const needsCode = (fbUser) => isPasswordOnly(fbUser) && !isTrustedDevice(fbUser.uid);
+
+// [추가] 이 기기에서 마지막으로 로그인한 계정 (로그인 화면에서 이메일 입력 없이 바로 암호 화면)
+const LAST_ACCOUNT_KEY = "lastLoginAccount";
+export const loadLastAccount = () => {
+    try {
+        const saved = JSON.parse(localStorage.getItem(LAST_ACCOUNT_KEY) || "null");
+        return saved?.email ? saved : null;
+    } catch {
+        return null;
+    }
+};
+export const saveLastAccount = (fbUser) => {
+    if (!fbUser?.email) return;
+    try {
+        localStorage.setItem(
+            LAST_ACCOUNT_KEY,
+            JSON.stringify({
+                email: fbUser.email,
+                provider: isPasswordOnly(fbUser) ? "password" : "google",
+            })
+        );
+    } catch {
+        /* noop */
+    }
+};
+export const clearLastAccount = () => {
+    try {
+        localStorage.removeItem(LAST_ACCOUNT_KEY);
+    } catch {
+        /* noop */
+    }
+};
+
+// [추가] 선택한 가족 프로필(아빠 · 엄마 · 아들 · 딸) — 새로고침해도 유지
+export const FAMILY_ORDER = ["아빠", "엄마", "아들", "딸"];
+const memberKey = (uid) => `currentMember:${uid}`;
+const loadMember = (uid) => {
+    try {
+        const name = localStorage.getItem(memberKey(uid));
+        return FAMILY_ORDER.includes(name) ? name : null;
+    } catch {
+        return null;
+    }
+};
+const saveMember = (uid, name) => {
+    try {
+        if (name) localStorage.setItem(memberKey(uid), name);
+        else localStorage.removeItem(memberKey(uid));
+    } catch {
+        /* noop */
+    }
+};
 
 // 인증 세션 → 앱 상태 반영
 const applySession = async (fbUser, set) => {
     const data = await syncUserDoc(fbUser);
-    if (needsCode(fbUser, data)) {
+    if (needsCode(fbUser)) {
         set({ user: null, pendingEmail: fbUser.email });
         return { status: "needCode" };
     }
@@ -188,7 +254,11 @@ export const useAuthStore = create((set, get) => ({
     pendingEmail: null,
     loginError: null,
 
-    onSetMember: (member) => set({ currentMember: member }),
+    // [수정] 가족 프로필 선택 → 이 기기에 저장 (새로고침해도 유지)
+    onSetMember: (member) => {
+        if (auth.currentUser) saveMember(auth.currentUser.uid, member);
+        set({ currentMember: member });
+    },
     clearLoginError: () => set({ loginError: null }),
 
     // 앱 시작 시 1회 호출 (App.jsx) → 새로고침해도 로그인 유지
@@ -208,6 +278,8 @@ export const useAuthStore = create((set, get) => ({
                     set({ user: null, currentMember: null, pendingEmail: null, authReady: true });
                     return;
                 }
+                // [추가] 이 기기에서 고른 가족 프로필 복원
+                if (session.status === "ok") set({ currentMember: loadMember(fbUser.uid) });
                 // UI 전용 2단계를 마치지 않은 세션은 복원하지 않고 로그인 화면부터 시작
                 if (session.status === "needCode" && !usesRealCode(fbUser)) {
                     await signOut(auth).catch(() => { });
@@ -251,8 +323,7 @@ export const useAuthStore = create((set, get) => ({
             return { status: "error" };
         }
 
-        // UI 전용 모드: 로그인할 때마다 2단계 화면을 거치도록 초기화 (구글과 동일)
-        if (!usesRealCode(cred.user)) clearDemoVerified(cred.user.uid);
+        // [수정] 확인 코드는 처음 로그인하는 기기에서만 (needsCode · isTrustedDevice)
 
         let session;
         try {
@@ -307,6 +378,7 @@ export const useAuthStore = create((set, get) => ({
             }
             const fbUser = auth.currentUser;
             if (!fbUser) throw new Error("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
+            markTrustedDevice(fbUser.uid); // [추가] 이 기기는 다음부터 암호만 입력
             const data = await syncUserDoc(fbUser); // 서버가 쓴 emailCodeVerified 반영
             set({ user: data, pendingEmail: null });
             return data;
@@ -387,7 +459,7 @@ export const useAuthStore = create((set, get) => ({
             return { status: "error" };
         }
 
-        clearDemoVerified(gUser.uid); // 구글 로그인할 때마다 2단계 인증을 거치도록 초기화
+        // [수정] 구글 계정은 확인 코드 없이 바로 로그인 (needsCode 가 구글은 항상 false)
 
         try {
             return await applySession(gUser, set);

@@ -1,14 +1,25 @@
 // src/pages/Login.jsx
 // 로그인 플로우 (시안)
-// 1. 이메일로 계속 → 2-a. Apple 계정 확인 (암호 · 확인 코드)  /  2-b. Apple 계정 생성
-//   → 로그인 완료: 구독 중이면 "이미 이용 중", 아니면 플랜 선택(/subscribe)으로 이어짐
+// 1. 이메일로 계속 → 2-a. 암호 입력 (처음 로그인하는 기기만 확인 코드 추가)  /  2-b. Apple 계정 생성
+//   - 이 기기에서 로그인한 적 있는 계정: 이메일 입력 없이 바로 암호 화면 ("다른 계정으로 로그인")
+//   - 구글 계정: 확인 코드 없이 바로 로그인
+// 3. 기존 계정: 가족 프로필(아빠 · 엄마 · 아들 · 딸) 선택
+//   → 구독 중이면 로그인 후 메인 홈(/), 아니면 플랜 선택(/subscribe)
+//   - 새 계정(계정 생성)은 프로필 선택 없이 바로 플랜 선택
 //   → 실패하면 "로그인할 수 없습니다"
 // - 로그인이 끝난 계정이 /login 으로 다시 들어오면 화면을 보여주지 않고 바로 이동
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { fetchSignInMethodsForEmail, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/firebase";
-import { useAuthStore, isSubscribed } from "../store/useAuthStore";
+import {
+  useAuthStore,
+  isSubscribed,
+  loadLastAccount,
+  saveLastAccount,
+  clearLastAccount,
+  FAMILY_ORDER,
+} from "../store/useAuthStore";
 import { MANAGE_URL } from "../data/appleLinks";
 // 로그인 · 구독 카드 스타일(.auth-*)은 App.scss 맨 아래에 있음
 
@@ -101,11 +112,13 @@ const Login = () => {
     onSendVerificationCode,
     onVerifyCode,
     onLogout,
+    onSetMember,
     clearLoginError,
   } = useAuthStore();
 
-  // step: "email" | "verify" | "create" | "error" | "already"
+  // step: "email" | "verify" | "create" | "error" | "profile"
   const [step, setStep] = useState("email");
+  const [remembered, setRemembered] = useState(false); // 이 기기에서 로그인한 적 있는 계정으로 바로 암호 화면
   const [mode, setMode] = useState("signin"); // verify 단계: "signin" | "signup"
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -138,17 +151,36 @@ const Login = () => {
       setEmail(pendingEmail);
       setStep("verify");
       setNotice("메일로 받은 6자리 확인 코드를 입력하세요.");
+    } else {
+      // [추가] 이 기기에서 이메일 · 암호로 로그인한 적 있으면 이메일 입력 없이 바로 암호 화면
+      const last = loadLastAccount();
+      if (last?.provider === "password") {
+        setEmail(last.email);
+        setMode("signin");
+        setStep("verify");
+        setRemembered(true);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authReady]);
 
-  // 로그인 완료 후: 구독 중이면 안내, 아니면 바로 플랜 선택으로
+  // 구독 중이면 로그인 후 메인 홈, 아니면 플랜 선택
+  const goNext = (u) => {
+    if (isSubscribed(u)) navigate("/", { replace: true });
+    else navigate("/subscribe", { replace: true, state: { from } });
+  };
+
+  // 로그인 완료 후: 이 기기에 계정 기억 → 기존 계정은 가족 프로필 선택, 새 계정은 바로 플랜 선택
   const finish = (u) => {
-    if (isSubscribed(u)) {
-      setStep("already");
-    } else {
-      navigate("/subscribe", { replace: true, state: { from } });
-    }
+    saveLastAccount(auth.currentUser);
+    if (mode === "signup") goNext(u);
+    else setStep("profile");
+  };
+
+  // 가족 프로필 선택
+  const handlePickMember = (name) => {
+    onSetMember(name);
+    goNext(useAuthStore.getState().user);
   };
 
   const showError = (message) => {
@@ -236,20 +268,17 @@ const Login = () => {
     if (res.status === "ok") {
       finish(res.user);
     } else if (res.status === "needCode") {
+      // 처음 로그인하는 기기: 확인 코드 입력 칸이 나타남
       setCooldown(RESEND_SECONDS);
-      if (/^\d{6}$/.test(code)) {
-        await verifyCode();
-      } else {
-        setNotice("메일로 6자리 확인 코드를 보냈습니다. 코드를 입력하고 다시 눌러 주세요.");
-        codeRef.current?.focus();
-      }
+      setCode("");
+      setNotice("처음 로그인하는 기기입니다. 메일로 받은 6자리 확인 코드를 입력하세요.");
     } else {
       showError(useAuthStore.getState().loginError);
     }
   };
 
   // ---------- 구글 계정으로 계속 (firebase.js 의 googleProvider) ----------
-  // 구글도 확인 코드 단계를 거침 → 코드 입력 화면(Apple 계정 확인)으로
+  // [수정] 구글 계정은 확인 코드 없이 바로 로그인 (needCode 는 오지 않지만 혹시 대비해 그대로 둠)
   const handleGoogleLogin = async () => {
     if (busy) return;
     flowStarted.current = true;
@@ -306,6 +335,14 @@ const Login = () => {
     if (pendingEmail && !user) await onLogout();
     resetSecrets();
     setStep("email");
+  };
+
+  // [추가] 다른 계정으로 로그인: 이 기기에 기억한 계정을 지우고 이메일 입력부터
+  const switchAccount = async () => {
+    clearLastAccount();
+    setRemembered(false);
+    setEmail("");
+    await backToEmail();
   };
 
   // ---------- 닫기: 로그인 전에 있던 화면으로 ----------
@@ -379,16 +416,18 @@ const Login = () => {
 
   if (step === "verify") {
     const waitingCode = Boolean(pendingEmail && !user);
+    let title = "Apple 계정으로 로그인";
+    let desc = "암호를 입력하세요.";
+    if (waitingCode) {
+      title = "본인 확인";
+      desc = "처음 로그인하는 기기입니다. 메일로 받은 6자리 확인 코드를 입력하세요.";
+    } else if (mode === "signup") {
+      title = "Apple 계정 생성";
+      desc = "사용할 암호(6자 이상)를 입력하고 본인 확인을 완료하세요.";
+    }
     content = (
       <>
-        <AuthHead
-          title={mode === "signup" ? "Apple 계정 생성" : "Apple 계정 확인"}
-          desc={
-            mode === "signup"
-              ? "사용할 암호(6자 이상)를 입력하고 본인 확인을 완료하세요."
-              : "계정에 설정된 인증 방법으로 본인 확인을 완료하세요."
-          }
-        />
+        <AuthHead title={title} desc={desc} />
         <form className="auth-form" onSubmit={handleVerifySubmit} noValidate>
           <div className="auth-fields">
             <AuthField label="Apple 계정" value={email || auth.currentUser?.email || ""} />
@@ -404,34 +443,43 @@ const Login = () => {
                 />
               </AuthField>
             )}
-            <AuthField label="확인 코드 · 필요한 경우">
-              <input
-                ref={codeRef}
-                type="text"
-                inputMode="numeric"
-                autoComplete="one-time-code"
-                maxLength={6}
-                placeholder="6자리 코드"
-                value={code}
-                onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                autoFocus={waitingCode}
-              />
-            </AuthField>
+            {/* 확인 코드: 처음 로그인하는 기기(또는 새 계정)일 때만 */}
+            {waitingCode && (
+              <AuthField label="확인 코드">
+                <input
+                  ref={codeRef}
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  maxLength={6}
+                  placeholder="6자리 코드"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                  autoFocus
+                />
+              </AuthField>
+            )}
           </div>
 
           {notice && <p className="auth-notice" role="status">{notice}</p>}
 
           <div className="auth-actions">
             <button type="submit" className="auth-btn" disabled={busy}>
-              {busy ? "확인 중..." : "확인하고 계속"}
+              {busy ? "확인 중..." : mode === "signin" && !waitingCode ? "로그인" : "확인하고 계속"}
             </button>
           </div>
         </form>
 
         <div className="auth-links">
-          <button type="button" className="auth-link" onClick={backToEmail}>
-            이메일 변경
-          </button>
+          {remembered && mode === "signin" ? (
+            <button type="button" className="auth-link" onClick={switchAccount}>
+              다른 계정으로 로그인
+            </button>
+          ) : (
+            <button type="button" className="auth-link" onClick={backToEmail}>
+              이메일 변경
+            </button>
+          )}
           {waitingCode && (
             <button
               type="button"
@@ -550,42 +598,35 @@ const Login = () => {
     );
   }
 
-  if (step === "already") {
+  // [추가] 3. 가족 프로필 선택 (기존 계정)
+  if (step === "profile") {
+    const members = user?.familyMembers || {};
+    const names = FAMILY_ORDER.filter((name) => !user?.familyMembers || name in members);
     content = (
       <>
-        <AuthHead
-          title="이미 Apple TV를 이용 중입니다"
-          desc="현재 계정의 구독 혜택을 이용할 수 있습니다."
-        />
-        <AuthInfo
-          title="이용 중인 구독"
-          lines={[
-            "활성 구독 또는 적용된 번들 혜택을 확인했습니다. 동일한 구독을 다시 시작할 필요가 없습니다.",
-          ]}
-        />
-        <div className="auth-actions">
-          <ExternalLink href={APPLE_LINKS.watch} className="auth-btn">
-            시청하러 가기
-          </ExternalLink>
-          <ExternalLink href={APPLE_LINKS.manage} className="auth-btn auth-btn--secondary">
-            구독 관리
-          </ExternalLink>
-        </div>
-        <div className="auth-links">
-          <button
-            type="button"
-            className="auth-link"
-            onClick={() => navigate("/ecosystem", { replace: true })}
-          >
-            에코시스템 안내로 돌아가기
-          </button>
-        </div>
+        <AuthHead title="누가 시청하나요?" desc="시청할 프로필을 선택하세요." />
+        <ul className="auth-profiles">
+          {names.map((name, i) => (
+            <li key={name}>
+              <button
+                type="button"
+                className={`auth-profile auth-profile--${i + 1}`}
+                onClick={() => handlePickMember(name)}
+              >
+                <span className="auth-profile-avatar" aria-hidden="true">
+                  <img src="/icons/profile.svg" alt="" />
+                </span>
+                <span className="auth-profile-name">{name}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
       </>
     );
   }
 
   // 세션 확인 전에는 빈 카드만 (로그인된 계정이 화면을 잠깐 보는 것 방지)
-  if (!authReady || (user && !flowStarted.current && step !== "already")) {
+  if (!authReady || (user && !flowStarted.current && step !== "profile")) {
     return <main className="auth-page" />;
   }
 

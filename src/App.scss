@@ -8103,3 +8103,98 @@ section.device-guide.device-guide--watch {
 
   }
 }
+
+
+// =====================================================================
+// [추가] 로그인 — 가족 프로필 선택 (Login.jsx step "profile")
+// - 밝은 로그인 카드 안: 원형 아이콘(흰 사람 · 프로필마다 다른 색) + 이름 · 4개 한 줄 (모바일 2 × 2)
+// - 누르면 선택 → 구독 중이면 메인 홈, 아니면 플랜 선택
+// =====================================================================
+.auth-profiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: $space-xl;
+  max-width: 520px;
+  margin: $space-2xl auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.auth-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-md;
+  width: 100%;
+  padding: $space-sm 0;
+  border: none;
+  border-radius: $radius-sm;
+  background: none;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $primary-color-500;
+    outline-offset: 2px;
+  }
+
+  &:hover .auth-profile-avatar {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 3px $light-color-0, 0 0 0 5px $primary-color-500;
+  }
+
+  // 프로필마다 다른 배경색 (아빠 · 엄마 · 아들 · 딸)
+  &--1 .auth-profile-avatar {
+    background-color: $primary-color-500;
+  }
+
+  &--2 .auth-profile-avatar {
+    background-color: $sports-color;
+  }
+
+  &--3 .auth-profile-avatar {
+    background-color: $accent-color;
+  }
+
+  &--4 .auth-profile-avatar {
+    background-color: $success-color;
+  }
+}
+
+.auth-profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+}
+
+.auth-profile-name {
+  @include body-large-b;
+  color: $text-inverse;
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .auth-profiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-lg;
+  }
+
+  .auth-profile-avatar {
+    width: 72px;
+    height: 72px;
+
+    img {
+      width: 26px;
+      height: 26px;
+    }
+  }
+}
