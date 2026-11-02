@@ -7,7 +7,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebase";
-import { useAuthStore, getSettings, ALERT_CHANNELS } from "../store/useAuthStore";
+import { useAuthStore, getSettings, ALERT_CHANNELS, FAMILY_ORDER } from "../store/useAuthStore";
 import ProfileAvatar, { AVATAR_OPTIONS, sameAvatar } from "../components/profile/ProfileAvatar";
 // 스타일: App.scss 맨 아래 "계정 설정" (.account-*)
 
@@ -129,6 +129,8 @@ export const Profile = () => {
   const onUpdateAvatar = useAuthStore((s) => s.onUpdateAvatar);
   const onClearWatchHistory = useAuthStore((s) => s.onClearWatchHistory);
   const onLogoutEverywhere = useAuthStore((s) => s.onLogoutEverywhere);
+  const currentMember = useAuthStore((s) => s.currentMember); // [추가] 지금 보고 있는 가족 프로필
+  const onSetMember = useAuthStore((s) => s.onSetMember);
 
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [providersOpen, setProvidersOpen] = useState(false);
@@ -182,6 +184,14 @@ export const Profile = () => {
     setDialog(null);
   };
 
+  // [추가] 다른 가족 프로필로 보기 (아빠 · 엄마 · 아들 · 딸)
+  const members = FAMILY_ORDER.filter((name) => !user.familyMembers || name in user.familyMembers);
+  const pickMember = (name) => {
+    if (name === currentMember) return;
+    onSetMember(name);
+    setMessage(`${name} 프로필로 보고 있어요.`);
+  };
+
   const providers = (auth.currentUser?.providerData || []).map((p) => ({
     id: p.providerId,
     label: PROVIDER_LABELS[p.providerId] || p.providerId,
@@ -200,8 +210,32 @@ export const Profile = () => {
             <div className="account-profile-text">
               <strong>{user.name || "Apple 사용자"}</strong>
               <span>{user.email}</span>
+              {currentMember && <span className="account-profile-member">{currentMember} 프로필로 보는 중</span>}
             </div>
           </div>
+          <Item title="다른 프로필로 보기" desc="가족 구성원의 프로필을 고르면 바로 그 프로필로 바뀝니다.">
+            <ul className="account-members" role="radiogroup" aria-label="가족 프로필">
+              {members.map((name, i) => {
+                const on = name === currentMember;
+                return (
+                  <li key={name}>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={on}
+                      className={`account-member account-member--${i + 1}${on ? " is-on" : ""}`}
+                      onClick={() => pickMember(name)}
+                    >
+                      <span className="account-member-avatar" aria-hidden="true">
+                        <img src="/icons/profile.svg" alt="" />
+                      </span>
+                      <span className="account-member-name">{name}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </Item>
           <Item title="프로필 아이콘" desc="헤더에 보이는 프로필 아이콘을 기본 아이콘 중에서 고를 수 있습니다.">
             <button
               type="button"

@@ -81,7 +81,11 @@ const Top10Section = () => {
           }}
         >
           {top10.map((tv, index) => (
-            <SwiperSlide key={tv.id} className="top10-slide">
+            <SwiperSlide
+              key={tv.id}
+              // 두 자리 순위(10위)는 숫자가 넓어 포스터에 가려지지 않게 숫자 자리를 넓힌 카드 (포스터 크기는 같음)
+              className={`top10-slide${index + 1 >= 10 ? " top10-slide--wide" : ""}`}
+            >
               <Link to={`/tv/${tv.id}`} className="top10-card" aria-label={`${index + 1}위 ${tv.name}`}>
                 {/* 순위 숫자 (포스터 뒤) */}
                 <RankNumber rank={index + 1} />

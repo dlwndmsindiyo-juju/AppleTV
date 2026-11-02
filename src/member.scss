@@ -1422,6 +1422,7 @@ main.member-home .member-mood {
 
   // 선택된 기분: 프라이머리
   .member-chip.active {
+    @include body-default-b;
     box-sizing: border-box;
     border: 1px solid $primary-color-500;
     border-radius: 999px;
@@ -1639,6 +1640,7 @@ main.member-home .member-mood .member-chips .member-chip {
 
 // PC: 한 줄 4장 (간격 24 × 3) · 화살표는 카드 가운데 높이
 @media (min-width: ($breakpoint-tablet + 1)) {
+
   main.member-home .rail-release,
   .upcoming-section .rail-release {
     --rail-col: calc((100% - 72px) / 4);
@@ -1647,6 +1649,7 @@ main.member-home .member-mood .member-chips .member-chip {
 }
 
 @media (max-width: $breakpoint-tablet) {
+
   main.member-home .rail-release,
   .upcoming-section .rail-release {
     --rail-col: 360px;
@@ -1655,6 +1658,7 @@ main.member-home .member-mood .member-chips .member-chip {
 }
 
 @media (max-width: $breakpoint-mobile) {
+
   main.member-home .rail-release,
   .upcoming-section .rail-release {
     --rail-col: 86%;
