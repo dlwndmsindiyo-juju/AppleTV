@@ -7902,3 +7902,32 @@ header .inner nav .gnb-right ul .profile-box.profile-box {
     object-position: center;
   }
 }
+
+
+// =====================================================================
+// [추가] TOP 10 — 10위(두 자리 순위)만 숫자 자리 넓히기 (Top10Section.jsx · .top10-slide--wide)
+// - 슬라이드 폭을 1.3배로 늘리고 늘어난 만큼 왼쪽 숫자 자리(padding-left)만 넓힘
+//   → 포스터 크기 · 높이 · 숫자 크기는 1~9위와 같고, "10" 이 포스터 뒤로 가려지지 않음
+//   · 기본 카드: 숫자 자리 24% + 포스터 76% (폭 W)
+//   · 10위 카드: 폭 1.3W = 숫자 자리 0.54W(41.5%) + 포스터 0.76W(58.5%)
+// - 이웃 카드(9위)와 겹치지 않도록 숫자는 10위 카드 안에서만 넓어짐
+// =====================================================================
+section.top10-section .top10-slide.top10-slide--wide {
+  width: calc((100% - 72px) / 4 * 1.3); // PC 기본 폭 × 1.3
+
+  .top10-card {
+    padding-left: 41.5%;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  section.top10-section .top10-slide.top10-slide--wide {
+    width: 240px * 1.3; // 312
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  section.top10-section .top10-slide.top10-slide--wide {
+    width: 170px * 1.3; // 221
+  }
+}
