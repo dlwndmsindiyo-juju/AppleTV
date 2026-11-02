@@ -1,16 +1,16 @@
 // src/pages/Login.jsx
 // 로그인 플로우 (시안)
-// 1. 이메일로 계속 → 2-a. 암호 입력 (처음 로그인하는 기기만 확인 코드 추가)  /  2-b. Apple 계정 생성
-//   - 이 기기에서 로그인한 적 있는 계정: 이메일 입력 없이 바로 암호 화면 ("다른 계정으로 로그인")
-//   - 구글 계정: 확인 코드 없이 바로 로그인
-// 3. 기존 계정: 가족 프로필(아빠 · 엄마 · 아들 · 딸) 선택
-//   → 구독 중이면 로그인 후 메인 홈(/), 아니면 플랜 선택(/subscribe)
-//   - 새 계정(계정 생성)은 프로필 선택 없이 바로 플랜 선택
-//   → 실패하면 "로그인할 수 없습니다"
+// 1. 로그인: 한 화면에 이메일 + 비밀번호 → [Apple TV 구독 플랜 보기]
+//    - 이 기기에서 로그인한 적 있으면 이메일이 미리 채워짐 ("다른 계정으로 로그인")
+//    - 링크: Google 계정으로 로그인 · 비밀번호를 잊으셨나요? / 새 Apple 계정 만들기
+// 2. 구글 로그인만: 처음 로그인하는 기기에서 "인증번호를 보냈습니다" (6칸 입력)
+// 3. 인증 완료 (기본 로그인 · 구글 공통) → 4. 가족 프로필 선택 (아빠 · 엄마 · 아들 · 딸) — 로그인할 때마다 항상
+//    → 구독 중이면 로그인 후 메인 홈(/), 아니면 플랜 선택(/subscribe)
+// - 새 Apple 계정 만들기: 이메일 + 비밀번호(6자 이상) → 인증 완료 → 프로필 선택 → 플랜 선택
 // - 로그인이 끝난 계정이 /login 으로 다시 들어오면 화면을 보여주지 않고 바로 이동
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchSignInMethodsForEmail, sendPasswordResetEmail } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import {
   useAuthStore,
@@ -36,9 +36,9 @@ const APPLE_LINKS = {
 
 // 카드 껍데기: 닫기 버튼 + 로고(public/icons/header-icon.svg) + 단계별 내용
 // stepKey 가 바뀔 때마다 내용이 아래에서 살짝 올라오며 나타남
-const AuthCard = ({ wide = false, onClose, stepKey, children }) => (
+const AuthCard = ({ wide = false, className = "", onClose, stepKey, children }) => (
   <main className="auth-page page-fade">
-    <div className={`auth-card${wide ? " auth-card--wide" : ""}`}>
+    <div className={`auth-card${wide ? " auth-card--wide" : ""}${className ? ` ${className}` : ""}`}>
       <button type="button" className="auth-close" onClick={onClose}>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           strokeWidth="3" strokeLinecap="round" aria-hidden="true">
@@ -67,24 +67,6 @@ const AuthHead = ({ title, desc }) => (
   </>
 );
 
-// 라벨이 위에 붙은 입력 칸 (children 에 input, 또는 value 로 읽기 전용 값)
-const AuthField = ({ label, value, children }) => (
-  <label className="auth-field">
-    <span className="auth-field-label">{label}</span>
-    {children ?? <span className="auth-field-value">{value}</span>}
-  </label>
-);
-
-// 회색 안내 박스 (제목 + 설명 여러 줄)
-const AuthInfo = ({ title, lines = [] }) => (
-  <div className="auth-info">
-    <strong>{title}</strong>
-    {lines.map((line) => (
-      <p key={line}>{line}</p>
-    ))}
-  </div>
-);
-
 // 바깥 링크 (새 창 · ↗)
 const ExternalLink = ({ href, className = "auth-link", children }) => (
   <a className={className} href={href} target="_blank" rel="noopener noreferrer">
@@ -97,6 +79,83 @@ const ExternalLink = ({ href, className = "auth-link", children }) => (
 const AUTH_PATHS = ["/login", "/subscribe"];
 const RESEND_SECONDS = 60;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const CODE_LENGTH = 6;
+
+// 6칸 인증번호 입력 (붙여넣기 · 지우기 · 방향키 지원)
+const CodeInput = ({ value, onChange, onComplete, disabled }) => {
+  const refs = useRef([]);
+  // value: 빈 칸은 공백으로 자리를 지킴 (예: "12 4  ")
+  const digits = Array.from({ length: CODE_LENGTH }, (_, i) => (/\d/.test(value[i] || "") ? value[i] : ""));
+  const toValue = (list) => list.map((d) => d || " ").join("").trimEnd();
+
+  const emit = (next) => {
+    onChange(toValue(next));
+    if (!next.includes("")) onComplete?.(next.join(""));
+  };
+
+  const setAt = (index, digit) => {
+    const next = digits.slice();
+    next[index] = digit;
+    emit(next);
+  };
+
+  const handleChange = (index, e) => {
+    const nums = e.target.value.replace(/\D/g, "");
+    if (!nums) return;
+    if (nums.length > 1) {
+      // 여러 자리 입력(붙여넣기 · 자동 완성): 지금 칸부터 채움
+      const next = digits.slice();
+      nums.split("").forEach((d, k) => {
+        if (index + k < CODE_LENGTH) next[index + k] = d;
+      });
+      refs.current[Math.min(index + nums.length, CODE_LENGTH - 1)]?.focus();
+      emit(next);
+      return;
+    }
+    setAt(index, nums.slice(-1));
+    if (index < CODE_LENGTH - 1) refs.current[index + 1]?.focus();
+  };
+
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace") {
+      e.preventDefault();
+      if (digits[index]) {
+        setAt(index, "");
+      } else if (index > 0) {
+        setAt(index - 1, "");
+        refs.current[index - 1]?.focus();
+      }
+    } else if (e.key === "ArrowLeft" && index > 0) {
+      refs.current[index - 1]?.focus();
+    } else if (e.key === "ArrowRight" && index < CODE_LENGTH - 1) {
+      refs.current[index + 1]?.focus();
+    }
+  };
+
+  return (
+    <div className="auth-code" role="group" aria-label="6자리 인증번호">
+      {digits.map((digit, i) => (
+        <input
+          key={i}
+          ref={(el) => (refs.current[i] = el)}
+          className="auth-code-box"
+          type="text"
+          inputMode="numeric"
+          autoComplete={i === 0 ? "one-time-code" : "off"}
+          maxLength={CODE_LENGTH}
+          value={digit}
+          onChange={(e) => handleChange(i, e)}
+          onKeyDown={(e) => handleKeyDown(i, e)}
+          onFocus={(e) => e.target.select()}
+          aria-label={`${i + 1}번째 숫자`}
+          autoFocus={i === 0}
+          disabled={disabled}
+        />
+      ))}
+    </div>
+  );
+};
 
 const Login = () => {
   const navigate = useNavigate();
@@ -116,19 +175,19 @@ const Login = () => {
     clearLoginError,
   } = useAuthStore();
 
-  // step: "email" | "verify" | "create" | "error" | "profile"
-  const [step, setStep] = useState("email");
-  const [remembered, setRemembered] = useState(false); // 이 기기에서 로그인한 적 있는 계정으로 바로 암호 화면
-  const [mode, setMode] = useState("signin"); // verify 단계: "signin" | "signup"
+  // step: "login" | "signup" | "code" | "done" | "profile"
+  const [step, setStep] = useState("login");
+  const [remembered, setRemembered] = useState(false); // 이 기기에서 로그인한 적 있는 계정 (이메일 미리 채움)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState("");
-  const [errorText, setErrorText] = useState("");
+  const [notice, setNotice] = useState(""); // 안내 문구 (회색)
+  const [errorText, setErrorText] = useState(""); // 오류 문구 (빨강)
+  const [cooldown, setCooldown] = useState(0); // 인증번호 재전송 대기(초)
 
-  const [cooldown, setCooldown] = useState(0); // 확인 코드 재전송 대기(초)
-  const codeRef = useRef(null);
+  const enteredChecked = useRef(false); // 처음 들어왔을 때 1번만 검사
+  const flowStarted = useRef(false); // 이 화면에서 로그인을 진행했는지
 
   // 재전송 대기 타이머
   useEffect(() => {
@@ -136,33 +195,35 @@ const Login = () => {
     const t = setTimeout(() => setCooldown((c) => c - 1), 1000);
     return () => clearTimeout(t);
   }, [cooldown]);
-  const enteredChecked = useRef(false); // 처음 들어왔을 때 1번만 검사
-  const flowStarted = useRef(false); // 이 화면에서 로그인을 진행했는지
 
-  // ---------- 로그인이 끝난 상태로 들어오면 이 화면을 보여주지 않음 ----------
+  // ---------- 처음 들어왔을 때 ----------
   useEffect(() => {
     if (!authReady || enteredChecked.current) return;
     enteredChecked.current = true;
     if (user) {
+      // 로그인이 끝난 계정: 화면을 보여주지 않고 바로 이동
       if (isSubscribed(user)) navigate(from, { replace: true });
       else navigate("/subscribe", { replace: true, state: { from } });
     } else if (pendingEmail) {
-      // 확인 코드 입력 도중 새로고침한 경우: 계정 확인 단계로 복귀
+      // 인증번호 입력 도중 새로고침: 인증번호 화면으로 복귀
       setEmail(pendingEmail);
-      setStep("verify");
-      setNotice("메일로 받은 6자리 확인 코드를 입력하세요.");
+      setStep("code");
     } else {
-      // [추가] 이 기기에서 이메일 · 암호로 로그인한 적 있으면 이메일 입력 없이 바로 암호 화면
+      // 이 기기에서 이메일 · 비밀번호로 로그인한 적 있으면 이메일 미리 채움
       const last = loadLastAccount();
       if (last?.provider === "password") {
         setEmail(last.email);
-        setMode("signin");
-        setStep("verify");
         setRemembered(true);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authReady]);
+
+  const clearMessages = () => {
+    setNotice("");
+    setErrorText("");
+    clearLoginError();
+  };
 
   // 구독 중이면 로그인 후 메인 홈, 아니면 플랜 선택
   const goNext = (u) => {
@@ -170,11 +231,18 @@ const Login = () => {
     else navigate("/subscribe", { replace: true, state: { from } });
   };
 
-  // 로그인 완료 후: 이 기기에 계정 기억 → 기존 계정은 가족 프로필 선택, 새 계정은 바로 플랜 선택
-  const finish = (u) => {
+  // 로그인 · 인증 완료: 이 기기에 계정 기억 → "인증 완료" 화면
+  const finish = () => {
     saveLastAccount(auth.currentUser);
-    if (mode === "signup") goNext(u);
-    else setStep("profile");
+    setPassword("");
+    setCode("");
+    clearMessages();
+    setStep("done");
+  };
+
+  // 인증 완료 → 로그인할 때마다 항상 가족 프로필 선택 (새 계정도 포함)
+  const handleDoneContinue = () => {
+    setStep("profile");
   };
 
   // 가족 프로필 선택
@@ -183,166 +251,153 @@ const Login = () => {
     goNext(useAuthStore.getState().user);
   };
 
-  const showError = (message) => {
-    setErrorText(message || "이메일 형식 또는 계정 정보를 확인해 주세요.");
-    setNotice("");
-    setStep("error");
-  };
-
-  const resetSecrets = () => {
-    setPassword("");
-    setCode("");
-    setNotice("");
-    clearLoginError();
-  };
-
-  // ---------- 1. 이메일로 계속 ----------
-  // 가입된 이메일이면 계정 확인, 아니면 계정 생성 안내
-  const continueWithEmail = async (value) => {
-    const trimmed = value.trim();
-    if (!trimmed || busy) return;
-    setEmail(trimmed);
-    resetSecrets();
-
-    if (!EMAIL_RE.test(trimmed)) {
-      showError("이메일 형식 또는 계정 정보를 확인해 주세요.");
-      return;
-    }
-
-    setBusy(true);
-    let methods = [];
-    try {
-      methods = await fetchSignInMethodsForEmail(auth, trimmed);
-    } catch (err) {
-      console.log("이메일 확인 에러:", err.code, err.message);
-    }
-    setBusy(false);
-
-    if (methods.length > 0) {
-      setMode("signin");
-      setStep("verify");
-    } else {
-      setStep("create");
-    }
-  };
-
-  const handleEmailSubmit = (e) => {
-    e.preventDefault();
-    continueWithEmail(email);
-  };
-
-  // ---------- 2-a. Apple 계정 확인 (암호 → 필요하면 확인 코드) ----------
-  const verifyCode = async () => {
-    if (!/^\d{6}$/.test(code)) {
-      setNotice("메일로 받은 6자리 확인 코드를 입력하세요.");
-      codeRef.current?.focus();
-      return;
-    }
-    setBusy(true);
-    const u = await onVerifyCode(code);
-    setBusy(false);
-    if (u) finish(u);
-    else showError(useAuthStore.getState().loginError || "확인 코드가 올바르지 않습니다.");
-  };
-
-  const handleVerifySubmit = async (e) => {
+  // ---------- 1. 로그인 (이메일 + 비밀번호 · 확인 코드 없음) ----------
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (busy) return;
+    clearMessages();
+    const trimmed = email.trim();
+    if (!EMAIL_RE.test(trimmed)) {
+      setErrorText("이메일 형식을 확인해 주세요.");
+      return;
+    }
+    if (!password) {
+      setErrorText("비밀번호를 입력해 주세요.");
+      return;
+    }
     flowStarted.current = true;
-
-    // 이미 암호 확인을 마치고 코드만 남은 상태
-    if (pendingEmail && !user) {
-      await verifyCode();
-      return;
-    }
-
-    if (password.length < 6) {
-      setNotice(mode === "signup" ? "암호는 6자 이상 입력하세요." : "암호를 입력하세요.");
-      return;
-    }
-
     setBusy(true);
-    const res = await onEmailAuth(mode, email, password);
+    const res = await onEmailAuth("signin", trimmed, password);
     setBusy(false);
-
-    if (res.status === "ok") {
-      finish(res.user);
-    } else if (res.status === "needCode") {
-      // 처음 로그인하는 기기: 확인 코드 입력 칸이 나타남
-      setCooldown(RESEND_SECONDS);
-      setCode("");
-      setNotice("처음 로그인하는 기기입니다. 메일로 받은 6자리 확인 코드를 입력하세요.");
-    } else {
-      showError(useAuthStore.getState().loginError);
-    }
+    if (res.status === "ok") finish();
+    else setErrorText(useAuthStore.getState().loginError || "이메일 또는 비밀번호가 올바르지 않습니다.");
   };
 
-  // ---------- 구글 계정으로 계속 (firebase.js 의 googleProvider) ----------
-  // [수정] 구글 계정은 확인 코드 없이 바로 로그인 (needCode 는 오지 않지만 혹시 대비해 그대로 둠)
+  // ---------- 새 Apple 계정 만들기 (확인 코드 없음) ----------
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+    if (busy) return;
+    clearMessages();
+    const trimmed = email.trim();
+    if (!EMAIL_RE.test(trimmed)) {
+      setErrorText("이메일 형식을 확인해 주세요.");
+      return;
+    }
+    if (password.length < 6) {
+      setErrorText("비밀번호는 6자 이상 입력해 주세요.");
+      return;
+    }
+    flowStarted.current = true;
+    setBusy(true);
+    const res = await onEmailAuth("signup", trimmed, password);
+    setBusy(false);
+    if (res.status === "ok") finish();
+    else setErrorText(useAuthStore.getState().loginError || "계정을 만들지 못했습니다.");
+  };
+
+  // ---------- Google 계정으로 로그인 (처음 로그인하는 기기만 인증번호) ----------
   const handleGoogleLogin = async () => {
     if (busy) return;
     flowStarted.current = true;
-    resetSecrets();
+    clearMessages();
     setBusy(true);
     const res = await onGoogleLogin();
     setBusy(false);
 
     if (res.status === "ok") {
-      finish(res.user);
+      finish();
     } else if (res.status === "needCode") {
       setEmail(useAuthStore.getState().pendingEmail || "");
-      setMode("signin");
+      setCode("");
       setCooldown(RESEND_SECONDS);
-      setNotice("본인 확인을 위해 6자리 확인 코드를 입력하세요.");
-      setStep("verify");
+      setStep("code");
     } else if (res.status === "error") {
-      showError(useAuthStore.getState().loginError);
+      setErrorText(useAuthStore.getState().loginError || "Google 로그인에 실패했습니다.");
     } // cancel: 팝업을 닫은 경우 그대로 둠
   };
 
-  // ---------- 확인 코드 다시 보내기 (firebase.js 의 functions) ----------
+  // ---------- 2. 인증번호 확인 ----------
+  const submitCode = async (value = code) => {
+    if (busy) return;
+    if (!new RegExp(`^\\d{${CODE_LENGTH}}$`).test(value)) {
+      setErrorText("6자리 인증번호를 입력해 주세요.");
+      return;
+    }
+    clearMessages();
+    flowStarted.current = true;
+    setBusy(true);
+    const u = await onVerifyCode(value);
+    setBusy(false);
+    if (u) finish();
+    else {
+      setCode("");
+      setErrorText(useAuthStore.getState().loginError || "인증번호가 올바르지 않습니다.");
+    }
+  };
+
+  const handleCodeSubmit = (e) => {
+    e.preventDefault();
+    submitCode();
+  };
+
+  // 인증번호 재전송
   const handleResendCode = async () => {
     if (cooldown > 0 || busy) return;
+    clearMessages();
     setBusy(true);
     const ok = await onSendVerificationCode();
     setBusy(false);
     if (ok) {
       setCode("");
       setCooldown(RESEND_SECONDS);
-      setNotice("확인 코드를 다시 보냈습니다. 메일함을 확인해 주세요.");
-      codeRef.current?.focus();
+      setNotice("인증번호를 다시 보냈습니다. 메일함을 확인해 주세요.");
     } else {
-      setNotice(useAuthStore.getState().loginError || "확인 코드를 보내지 못했습니다.");
+      setErrorText(useAuthStore.getState().loginError || "인증번호를 보내지 못했습니다.");
     }
   };
 
-  // 암호 재설정 메일 (입력한 이메일로)
+  // 비밀번호 재설정 메일 (입력한 이메일로)
   const handleResetPassword = async () => {
     if (busy) return;
+    clearMessages();
+    const trimmed = email.trim();
+    if (!EMAIL_RE.test(trimmed)) {
+      setErrorText("비밀번호를 재설정할 이메일을 먼저 입력해 주세요.");
+      return;
+    }
     setBusy(true);
     try {
-      await sendPasswordResetEmail(auth, email);
-      setNotice("암호 재설정 메일을 보냈습니다. 메일함을 확인해 주세요.");
+      await sendPasswordResetEmail(auth, trimmed);
+      setNotice("비밀번호 재설정 메일을 보냈습니다. 메일함을 확인해 주세요.");
     } catch (err) {
       console.log("암호 재설정 에러:", err.code, err.message);
-      setNotice("재설정 메일을 보내지 못했습니다. 잠시 후 다시 시도해 주세요.");
+      setErrorText("재설정 메일을 보내지 못했습니다. 잠시 후 다시 시도해 주세요.");
     }
     setBusy(false);
   };
 
-  // 이메일 변경 / 다른 이메일 사용: 진행 중인 인증 세션 정리 후 1단계로
-  const backToEmail = async () => {
+  // 로그인 화면으로 (진행 중인 인증 세션은 정리)
+  const backToLogin = async () => {
     if (pendingEmail && !user) await onLogout();
-    resetSecrets();
-    setStep("email");
+    setPassword("");
+    setCode("");
+    clearMessages();
+    setStep("login");
   };
 
-  // [추가] 다른 계정으로 로그인: 이 기기에 기억한 계정을 지우고 이메일 입력부터
+  // 다른 계정으로 로그인 / 다른 이메일 사용: 기억한 계정을 지우고 빈 로그인 화면
   const switchAccount = async () => {
     clearLastAccount();
     setRemembered(false);
     setEmail("");
-    await backToEmail();
+    await backToLogin();
+  };
+
+  const goSignup = () => {
+    setPassword("");
+    clearMessages();
+    if (remembered) setEmail("");
+    setStep("signup");
   };
 
   // ---------- 닫기: 로그인 전에 있던 화면으로 ----------
@@ -351,254 +406,184 @@ const Login = () => {
     navigate(from, { replace: true });
   };
 
+  // 안내 · 오류 문구
+  const messages = (
+    <>
+      {errorText && <p className="auth-login-error" role="alert">{errorText}</p>}
+      {!errorText && notice && <p className="auth-login-notice" role="status">{notice}</p>}
+    </>
+  );
+
   // ================= 화면 =================
   let content = null;
 
-  if (step === "email") {
+  // 1. 로그인 (시안: 이메일 + 비밀번호 한 화면)
+  if (step === "login") {
     content = (
       <>
-        <AuthHead
-          title="이메일로 계속"
-          desc="계정이 있는 경우 로그인하십시오. 없는 경우 새로운 계정을 생성할 수 있습니다."
-        />
-        <form className="auth-form" onSubmit={handleEmailSubmit} noValidate>
-          <div className="auth-fields">
-            <AuthField label="이메일">
-              <input
-                type="email"
-                autoComplete="email"
-                placeholder="이메일 주소를 입력하세요"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoFocus
-              />
-            </AuthField>
+        <AuthHead title="로그인" desc="Apple 계정으로 Apple TV를 이용하세요." />
+        <form className="auth-form auth-login-form" onSubmit={handleLoginSubmit} noValidate>
+          <div className="auth-login-fields">
+            <input
+              className="auth-login-input"
+              type="email"
+              autoComplete="username"
+              placeholder="이메일 또는 전화번호"
+              aria-label="이메일"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoFocus={!remembered}
+            />
+            <input
+              className="auth-login-input"
+              type="password"
+              autoComplete="current-password"
+              placeholder="비밀번호"
+              aria-label="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoFocus={remembered}
+            />
           </div>
-
-          <div className="auth-privacy">
-            <strong>Apple 계정 및 개인정보</strong>
-            <p>
-              Apple 계정은 안전한 로그인과 서비스 이용에 사용됩니다. 계정 정보의 처리 방식은
-              Apple의 개인정보 안내에서 확인할 수 있습니다.
-            </p>
-            <ExternalLink href={APPLE_LINKS.privacy}>개인정보 처리 안내</ExternalLink>
-          </div>
-
-          <div className="auth-actions">
-            <button type="submit" className="auth-btn" disabled={!email.trim() || busy}>
-              {busy ? "확인 중..." : "계속"}
-            </button>
-          </div>
-          <p className="auth-hint">이메일을 입력한 뒤 계속할 수 있습니다.</p>
-        </form>
-
-        {/* 구글 계정으로 계속 */}
-        <div className="auth-divider"><span>또는</span></div>
-        <div className="auth-actions">
-          <button
-            type="button"
-            className="auth-btn auth-btn--secondary"
-            onClick={handleGoogleLogin}
-            disabled={busy}
-          >
-            <svg className="auth-google-icon" viewBox="0 0 48 48" aria-hidden="true">
-              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
-              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
-              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
-              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
-            </svg>
-            Google 계정으로 계속
+          {messages}
+          <button type="submit" className="auth-btn auth-login-btn" disabled={busy}>
+            {busy ? "확인 중..." : "Apple TV 구독 플랜 보기"}
           </button>
-        </div>
-      </>
-    );
-  }
-
-  if (step === "verify") {
-    const waitingCode = Boolean(pendingEmail && !user);
-    let title = "Apple 계정으로 로그인";
-    let desc = "암호를 입력하세요.";
-    if (waitingCode) {
-      title = "본인 확인";
-      desc = "처음 로그인하는 기기입니다. 메일로 받은 6자리 확인 코드를 입력하세요.";
-    } else if (mode === "signup") {
-      title = "Apple 계정 생성";
-      desc = "사용할 암호(6자 이상)를 입력하고 본인 확인을 완료하세요.";
-    }
-    content = (
-      <>
-        <AuthHead title={title} desc={desc} />
-        <form className="auth-form" onSubmit={handleVerifySubmit} noValidate>
-          <div className="auth-fields">
-            <AuthField label="Apple 계정" value={email || auth.currentUser?.email || ""} />
-            {!waitingCode && (
-              <AuthField label="암호">
-                <input
-                  type="password"
-                  autoComplete={mode === "signup" ? "new-password" : "current-password"}
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoFocus
-                />
-              </AuthField>
-            )}
-            {/* 확인 코드: 처음 로그인하는 기기(또는 새 계정)일 때만 */}
-            {waitingCode && (
-              <AuthField label="확인 코드">
-                <input
-                  ref={codeRef}
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="one-time-code"
-                  maxLength={6}
-                  placeholder="6자리 코드"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                  autoFocus
-                />
-              </AuthField>
-            )}
-          </div>
-
-          {notice && <p className="auth-notice" role="status">{notice}</p>}
-
-          <div className="auth-actions">
-            <button type="submit" className="auth-btn" disabled={busy}>
-              {busy ? "확인 중..." : mode === "signin" && !waitingCode ? "로그인" : "확인하고 계속"}
-            </button>
-          </div>
         </form>
 
-        <div className="auth-links">
-          {remembered && mode === "signin" ? (
-            <button type="button" className="auth-link" onClick={switchAccount}>
+        <div className="auth-login-links">
+          <div className="auth-login-links-row">
+            <button type="button" className="auth-login-link" onClick={handleGoogleLogin} disabled={busy}>
+              Google 계정으로 로그인
+            </button>
+            <button type="button" className="auth-login-link" onClick={handleResetPassword} disabled={busy}>
+              비밀번호를 잊으셨나요?
+            </button>
+          </div>
+          {remembered ? (
+            <button type="button" className="auth-login-link" onClick={switchAccount}>
               다른 계정으로 로그인
             </button>
           ) : (
-            <button type="button" className="auth-link" onClick={backToEmail}>
-              이메일 변경
+            <button type="button" className="auth-login-link" onClick={goSignup}>
+              새 Apple 계정 만들기
             </button>
           )}
-          {waitingCode && (
+        </div>
+      </>
+    );
+  }
+
+  // 새 Apple 계정 만들기 (로그인 화면과 같은 모양)
+  if (step === "signup") {
+    content = (
+      <>
+        <AuthHead title="새 Apple 계정 만들기" desc="이메일과 사용할 비밀번호(6자 이상)를 입력하세요." />
+        <form className="auth-form auth-login-form" onSubmit={handleSignupSubmit} noValidate>
+          <div className="auth-login-fields">
+            <input
+              className="auth-login-input"
+              type="email"
+              autoComplete="email"
+              placeholder="이메일"
+              aria-label="이메일"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoFocus
+            />
+            <input
+              className="auth-login-input"
+              type="password"
+              autoComplete="new-password"
+              placeholder="비밀번호 (6자 이상)"
+              aria-label="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          {messages}
+          <button type="submit" className="auth-btn auth-login-btn" disabled={busy}>
+            {busy ? "만드는 중..." : "계정 만들기"}
+          </button>
+        </form>
+        <div className="auth-login-links">
+          <button type="button" className="auth-login-link" onClick={backToLogin}>
+            이미 계정이 있나요? 로그인
+          </button>
+        </div>
+      </>
+    );
+  }
+
+  // 2. 인증번호 (구글 로그인 · 처음 로그인하는 기기)
+  if (step === "code") {
+    const shownEmail = email || pendingEmail || auth.currentUser?.email || "";
+    content = (
+      <>
+        <AuthHead title="인증번호를 보냈습니다." />
+        <p className="auth-desc">
+          {shownEmail} 으로 6자리 인증번호를 보냈습니다.
+          <br />
+          메일함에서 확인 후 아래에 입력하세요.
+        </p>
+        <form className="auth-form auth-login-form" onSubmit={handleCodeSubmit} noValidate>
+          <CodeInput value={code} onChange={setCode} onComplete={submitCode} disabled={busy} />
+          {messages}
+          <button type="submit" className="auth-btn auth-login-btn" disabled={busy || code.replace(/\D/g, "").length < CODE_LENGTH}>
+            {busy ? "확인 중..." : "인증하고 계속"}
+          </button>
+        </form>
+        <div className="auth-login-links">
+          <div className="auth-login-links-row">
             <button
               type="button"
-              className="auth-link"
+              className="auth-login-link"
               onClick={handleResendCode}
               disabled={cooldown > 0 || busy}
             >
-              {cooldown > 0 ? `확인 코드 다시 보내기 (${cooldown}초)` : "확인 코드 다시 보내기"}
+              {cooldown > 0 ? `인증번호 재전송 (${cooldown}초)` : "인증번호 재전송"}
             </button>
-          )}
-          {mode === "signin" && !waitingCode && (
-            <button type="button" className="auth-link" onClick={handleResetPassword}>
-              암호를 잊으셨습니까? <span className="ui-icon ui-icon-external" aria-hidden="true" />
-            </button>
-          )}
-        </div>
-      </>
-    );
-  }
-
-  if (step === "create") {
-    content = (
-      <>
-        <AuthHead
-          title="Apple 계정 생성"
-          desc="입력한 이메일로 계정을 생성한 뒤 구독 플랜을 확인하세요."
-        />
-        <AuthInfo
-          title="새 계정으로 시작"
-          lines={[
-            "계정 생성과 필요한 본인 확인은 Apple 계정 화면에서 진행합니다. 완료 후 선택한 서비스의 구독 단계로 돌아옵니다.",
-          ]}
-        />
-        <div className="auth-actions">
-          <button
-            type="button"
-            className="auth-btn"
-            onClick={() => {
-              setMode("signup");
-              setStep("verify");
-            }}
-          >
-            Apple 계정 생성으로 이동 <span className="ui-icon ui-icon-external" aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            className="auth-btn auth-btn--secondary"
-            onClick={() => {
-              setMode("signin");
-              setStep("verify");
-            }}
-          >
-            계정 생성 후 로그인
-          </button>
-        </div>
-        <div className="auth-links">
-          <button type="button" className="auth-link" onClick={backToEmail}>
-            다른 이메일 사용
-          </button>
-        </div>
-      </>
-    );
-  }
-
-  if (step === "error") {
-    content = (
-      <>
-        <AuthHead
-          title="로그인할 수 없습니다"
-          desc="이메일 또는 인증 정보를 확인하고 다시 시도하세요."
-        />
-        <form
-          className="auth-form"
-          noValidate
-          onSubmit={async (e) => {
-            e.preventDefault();
-            if (pendingEmail && !user) await onLogout();
-            continueWithEmail(email);
-          }}
-        >
-          <div className="auth-fields">
-            <AuthField label="이메일">
-              <input
-                type="email"
-                autoComplete="email"
-                placeholder="입력한 이메일"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoFocus
-              />
-            </AuthField>
-          </div>
-          <p className="auth-message" role="alert">{errorText}</p>
-          <div className="auth-actions">
-            <button type="submit" className="auth-btn" disabled={!email.trim() || busy}>
-              다시 입력
-            </button>
-            <button
-              type="button"
-              className="auth-btn auth-btn--secondary"
-              onClick={() => {
-                setPassword("");
-                setCode("");
-                setNotice("");
-                setStep("verify");
-              }}
-            >
-              인증 다시 시도
+            <button type="button" className="auth-login-link" onClick={switchAccount}>
+              다른 이메일 사용
             </button>
           </div>
-        </form>
-        <div className="auth-links">
-          <ExternalLink href={APPLE_LINKS.recover}>Apple 계정 복구</ExternalLink>
         </div>
       </>
     );
   }
 
-  // [추가] 3. 가족 프로필 선택 (기존 계정)
+  // 3. 인증 완료 (기본 로그인 · 구글 공통)
+  if (step === "done") {
+    content = (
+      <>
+        <div className="auth-done">
+          <AuthHead title="인증 완료" />
+          <p className="auth-desc">
+            로그인이 완료되었습니다.
+            <br />
+            이제 Apple TV를 이용할 수 있습니다.
+          </p>
+        </div>
+        <div className="auth-login-form">
+          <button type="button" className="auth-btn auth-login-btn" onClick={handleDoneContinue}>
+            프로필 선택하기
+          </button>
+        </div>
+        <div className="auth-login-links">
+          <div className="auth-login-links-row">
+            <ExternalLink href={APPLE_LINKS.recover} className="auth-login-link">
+              문제가 있나요?
+            </ExternalLink>
+            <button type="button" className="auth-login-link" onClick={() => navigate("/", { replace: true })}>
+              나중에
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // 4. 가족 프로필 선택 (로그인할 때마다)
   if (step === "profile") {
     const members = user?.familyMembers || {};
     const names = FAMILY_ORDER.filter((name) => !user?.familyMembers || name in members);
@@ -626,12 +611,12 @@ const Login = () => {
   }
 
   // 세션 확인 전에는 빈 카드만 (로그인된 계정이 화면을 잠깐 보는 것 방지)
-  if (!authReady || (user && !flowStarted.current && step !== "profile")) {
+  if (!authReady || (user && !flowStarted.current && !["done", "profile"].includes(step))) {
     return <main className="auth-page" />;
   }
 
   return (
-    <AuthCard onClose={handleClose} stepKey={`${step}-${mode}`}>
+    <AuthCard className="auth-card--login" onClose={handleClose} stepKey={step}>
       {content}
     </AuthCard>
   );

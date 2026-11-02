@@ -137,10 +137,10 @@ const markTrustedDevice = (uid) => {
     }
 };
 
-// [수정] 확인 코드가 필요한 경우: 이메일/암호 계정이 "처음 로그인하는 기기"일 때만
-// - 구글 계정은 코드 없이 바로 로그인
-// - 이미 코드를 마친 기기면 통과 (UI 전용 · 실제 메일 인증 모두 같은 기준)
-const needsCode = (fbUser) => isPasswordOnly(fbUser) && !isTrustedDevice(fbUser.uid);
+// [수정] 확인 코드가 필요한 경우: 구글 로그인이 "처음 로그인하는 기기"일 때만
+// - 이메일 · 암호 로그인(기본 로그인)과 새 계정 만들기는 확인 코드 없이 바로 로그인
+// - 구글은 이미 코드를 마친 기기면 통과
+const needsCode = (fbUser) => !isPasswordOnly(fbUser) && !isTrustedDevice(fbUser.uid);
 
 // [추가] 이 기기에서 마지막으로 로그인한 계정 (로그인 화면에서 이메일 입력 없이 바로 암호 화면)
 const LAST_ACCOUNT_KEY = "lastLoginAccount";
@@ -323,7 +323,7 @@ export const useAuthStore = create((set, get) => ({
             return { status: "error" };
         }
 
-        // [수정] 확인 코드는 처음 로그인하는 기기에서만 (needsCode · isTrustedDevice)
+        // [수정] 이메일 · 암호 로그인은 확인 코드 없음 (needsCode 는 구글만)
 
         let session;
         try {
@@ -459,7 +459,7 @@ export const useAuthStore = create((set, get) => ({
             return { status: "error" };
         }
 
-        // [수정] 구글 계정은 확인 코드 없이 바로 로그인 (needsCode 가 구글은 항상 false)
+        // [수정] 구글 계정: 처음 로그인하는 기기에서만 확인 코드 (needsCode · isTrustedDevice)
 
         try {
             return await applySession(gUser, set);

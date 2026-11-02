@@ -1,24 +1,16 @@
 // src/pages/Subscribe.jsx
 // 구독 플로우 (시안)
 // 1. 이용 가능한 플랜 → 2. 구독 내용을 확인하세요 → 3. 완료 / 실패
+// - [수정] 완료 후에는 메인 홈으로 (에코시스템 안내 · 바깥 링크로 넘기지 않음)
 // - 로그인 전이면 로그인으로, 이미 구독 중인 계정이 들어오면 화면 없이 원래 화면으로 이동
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore, isSubscribed } from "../store/useAuthStore";
-import { MANAGE_URL } from "../data/appleLinks";
 // 로그인 · 구독 카드 스타일(.auth-*)은 App.scss 맨 아래에 있음
 
 // =====================================================================
 // 로그인 · 구독 공용 카드 조각 (Login.jsx 에도 같은 코드가 있음 — 바꿀 때 함께 수정)
 // =====================================================================
-// 외부(Apple 공식) 링크 — 주소가 바뀌면 여기만 수정
-const APPLE_LINKS = {
-  privacy: "https://www.apple.com/kr/legal/privacy/",
-  recover: "https://iforgot.apple.com/",
-  watch: "https://tv.apple.com/kr",
-  manage: MANAGE_URL, // 무료 체험 안내(TrialWelcome)와 같은 구독 관리 주소
-};
-
 // 카드 껍데기: 닫기 버튼 + 로고(public/icons/header-icon.svg) + 단계별 내용
 // stepKey 가 바뀔 때마다 내용이 아래에서 살짝 올라오며 나타남
 const AuthCard = ({ wide = false, onClose, stepKey, children }) => (
@@ -69,14 +61,6 @@ const AuthInfo = ({ title, lines = [] }) => (
     ))}
   </div>
 );
-
-// 바깥 링크 (새 창 · ↗)
-const ExternalLink = ({ href, className = "auth-link", children }) => (
-  <a className={className} href={href} target="_blank" rel="noopener noreferrer">
-    {children} <span className="ui-icon ui-icon-external" aria-hidden="true" />
-  </a>
-);
-
 
 const AUTH_PATHS = ["/login", "/subscribe"];
 
@@ -243,23 +227,9 @@ const Subscribe = () => {
           lines={["이용 중인 플랜과 다음 결제일은 계정의 구독 관리에서 확인할 수 있습니다."]}
         />
         <div className="auth-actions">
-          <button
-            type="button"
-            className="auth-btn"
-            onClick={() => navigate("/ecosystem", { replace: true })}
-          >
-            에코시스템 안내로 돌아가기
+          <button type="button" className="auth-btn" onClick={() => navigate("/", { replace: true })}>
+            Apple TV 시작하기
           </button>
-          <button
-            type="button"
-            className="auth-btn auth-btn--secondary"
-            onClick={() => navigate("/ecosystem#devices", { replace: true })}
-          >
-            내 기기에서 보는 방법
-          </button>
-        </div>
-        <div className="auth-links">
-          <ExternalLink href={APPLE_LINKS.watch}>Apple TV 시청하러 가기</ExternalLink>
         </div>
       </>
     );
