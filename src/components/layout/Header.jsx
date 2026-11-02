@@ -6,7 +6,7 @@ import { WishIcon } from "../wishlist/WishlistLayer"; // 위시리스트 하트 
 import ProfileAvatar from "../profile/ProfileAvatar"; // 계정 설정에서 고른 프로필 아이콘
 
 // TV · 스포츠 양쪽에서 함께 쓰는 페이지 (들어가도 토글이 바뀌지 않음)
-const SHARED_PATHS = ["/ecosystem", "/login", "/search", "/profile"]; // 검색 · 계정 설정: 들어가기 전 토글(Apple TV / Sport) 유지
+const SHARED_PATHS = ["/login", "/search", "/profile"]; // 검색 · 계정 설정: 들어가기 전 토글(Apple TV / Sport) 유지
 
 const TAB_KEY = "headerTab";
 export const loadLastTab = () => {
