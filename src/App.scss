@@ -2433,6 +2433,8 @@ header {
   }
 }
 
+
+
 // ===== 구독 전 프로모션 배너 (하단 플로팅) =====
 .promo-banner {
   position: fixed;
@@ -7277,6 +7279,7 @@ section.top10-section {
     }
   }
 }
+
 // Movie home banner: mirror the sports home hero dimensions at each breakpoint.
 // Scoped class prevents changes to sports or other Swiper instances.
 .hero-swiper-container.movie-home-hero {
@@ -7284,12 +7287,14 @@ section.top10-section {
   min-height: 620px;
   overflow: hidden;
 }
+
 @media (max-width: 1024px) {
   .hero-swiper-container.movie-home-hero {
     height: min(740px, calc(100svh - 60px));
     min-height: 480px;
   }
 }
+
 @media (max-width: 600px) {
   .hero-swiper-container.movie-home-hero {
     height: min(580px, calc(100svh - 56px));
