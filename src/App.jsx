@@ -34,6 +34,8 @@ import SearchTitle from "./pages/SearchTitle";
 import Wishlist from "./pages/Wishlist";
 import WishlistLayer from "./components/wishlist/WishlistLayer";
 import { Profile } from "./pages/Profile";
+import TvPreview from "./pages/TvPreview"; // [추가] TV 디자인 미리보기 (/tv)
+import FloatingActions from "./components/common/FloatingActions"; // [추가] 하단 TV · TOP 버튼
 
 function App() {
   const [showIntro, setShowIntro] = useState(() => {
@@ -43,6 +45,7 @@ function App() {
   const user = useAuthStore((state) => state.user);
   const initAuth = useAuthStore((state) => state.initAuth);
   const location = useLocation();
+  const isTvPreview = location.pathname === "/tv"; // [추가] TV 미리보기: 웹 헤더 · 푸터 · 배너 · 떠 있는 버튼 숨김
 
   // 로그인 상태 초기화
   useEffect(() => {
@@ -68,7 +71,7 @@ function App() {
       ) : (
         <>
           {/* 헤더 */}
-          <Header />
+          {!isTvPreview && <Header />}
 
           {/* 메인 콘텐츠 */}
           <div className="page-fade" key={location.pathname}>
@@ -76,6 +79,9 @@ function App() {
               <Route path="/" element={<Home />} />
 
               <Route path="/sport" element={<SportHome />} />
+
+              {/* [추가] TV 디자인 미리보기 (/tv/:id 상세와 다른 주소) */}
+              <Route path="/tv" element={<TvPreview />} />
 
               <Route
                 path="/movie/:id"
@@ -161,10 +167,13 @@ function App() {
           </div>
 
           {/* 기존 프로모션 배너 */}
-          <PromoBanner />
+          {!isTvPreview && <PromoBanner />}
 
           {/* 푸터 */}
-          <Footer />
+          {!isTvPreview && <Footer />}
+
+          {/* [추가] 오른쪽 아래 TV 디자인 · TOP 버튼 (항상 표시) */}
+          {!isTvPreview && <FloatingActions />}
 
           {/* 위시리스트 팝업 및 토스트 */}
           <WishlistLayer />
