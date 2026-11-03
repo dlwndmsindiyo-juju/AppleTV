@@ -1,0 +1,442 @@
+@use "./variables" as *;
+
+// =====================================================================
+// TV 디자인 (1920 × 1080) — 시안: 재생 오류 안내 · 이용 안내 · Apple 계정 로그인 · 계정 정보 입력
+// - 웹(App.scss · mobile.scss)과 따로 관리하는 TV 전용 스타일
+// - 모든 화면은 .tv-screen 안에서만 적용 (다른 화면에 영향 없음)
+// - 색 · 버튼 토큰은 _variables.scss 의 "TV 1920 × 1080 — 컴포넌트 토큰"
+//
+// 화면 구조 예시 (JSX 를 만들 때 이 클래스 이름을 그대로 사용)
+//
+//   <main class="tv-screen tv-error">                      재생 오류 안내 (가운데 정렬)
+//     <h1 class="tv-title">영상을 재생할 수 없습니다</h1>
+//     <p class="tv-desc">네트워크 연결을 확인한 후 다시 시도해주세요.</p>
+//     <div class="tv-actions tv-actions--column">
+//       <button class="tv-btn tv-btn--primary">다시 시도</button>
+//       <button class="tv-btn tv-btn--secondary">닫기</button>
+//     </div>
+//   </main>
+//
+//   <main class="tv-screen tv-terms">                      이용 안내 (제목 위 · 버튼 아래)
+//     <h1 class="tv-title tv-title--xl">Apple TV 이용 안내</h1>
+//     <p class="tv-desc">Apple TV에서 콘텐츠를 시청하려면 …</p>
+//     <div class="tv-actions">
+//       <button class="tv-btn tv-btn--primary">동의</button>
+//       <button class="tv-btn tv-btn--secondary">취소</button>
+//     </div>
+//   </main>
+//
+//   <main class="tv-screen tv-keyboard">                   Apple 계정 로그인 · 계정 정보 입력
+//     <h1 class="tv-title tv-title--xl">Apple 계정으로 로그인</h1>
+//     <p class="tv-desc">사용 중인 Apple 계정의 암호를 입력하세요.<br />계정 정보는 안전하게 보호됩니다.</p>
+//     <p class="tv-guide">리모컨의 마이크 버튼을 길게 눌러 검색</p>
+//     <div class="tv-keys">
+//       <div class="tv-key-row">
+//         <button class="tv-key-space">공백</button>
+//         <button class="tv-key">a</button> … <button class="tv-key">z</button>
+//         <button class="tv-key tv-key--delete" aria-label="지우기"><img src="/icons/tv/tv-delet-btn.svg" alt="" /></button>
+//       </div>
+//       <div class="tv-key-row"> <button class="tv-key">1</button> … </div>
+//     </div>
+//     <div class="tv-key-modes">                           3칸 (ABC · abc · #+-) / 4칸이면 tv-key-modes--4
+//       <button class="tv-key-mode is-active">ABC</button> …
+//     </div>
+//     <div class="tv-actions">
+//       <button class="tv-btn tv-btn--secondary">취소</button>
+//       <button class="tv-btn tv-btn--secondary">로그인</button>
+//     </div>
+//   </main>
+//
+// - 리모컨으로 고른 버튼: :focus-visible 또는 .is-focused (살짝 커지고 그림자)
+// =====================================================================
+
+// ---------- 화면 공통 ----------
+.tv-screen {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 $space-5xl;
+  background-color: $bg-page;
+  color: $light-color-0;
+  text-align: center;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  button {
+    margin: 0;
+    border: none;
+    font-family: $font-family-base;
+    cursor: pointer;
+  }
+}
+
+// ---------- 제목 · 설명 ----------
+// 기본 제목: Display/L · Light/0 (재생 오류 안내)
+.tv-screen .tv-title {
+  @include display-l;
+  margin: 0;
+  padding: 0;
+  color: $light-color-0;
+  word-break: keep-all;
+
+  // 큰 제목: Display/XL · Light/0 (이용 안내 · 로그인 · 계정 정보 입력)
+  &.tv-title--xl {
+    @include display-xl;
+  }
+}
+
+// 설명: Display/M · Light/0
+.tv-screen .tv-desc {
+  @include display-M;
+  max-width: 860px;
+  margin: 0;
+  color: $light-color-0;
+  word-break: keep-all;
+}
+
+// ---------- 버튼 ----------
+// 글자 Display/L · 모서리 12 · 크기는 화면별로 지정
+.tv-screen .tv-btn {
+  @include display-l;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 78px;
+  padding: 12px 0;
+  border-radius: $tv-btn-radius;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+  // 다시 시도 · 동의: 흰 배경 + 어두운 글자
+  &.tv-btn--primary {
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+
+  // 닫기 · 취소 · 로그인 · 계속: Light/100 40% + 흰 글자
+  &.tv-btn--secondary {
+    background-color: $tv-btn-secondary-bg;
+    color: $tv-btn-secondary-text;
+  }
+
+  // 리모컨 포커스
+  &:focus-visible,
+  &.is-focused {
+    outline: none;
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+}
+
+// 버튼 묶음 (기본: 가로 · 가운데)
+.tv-screen .tv-actions {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+
+  .tv-btn {
+    width: 340px; // 시안 340 × 78 (패딩 12 147)
+  }
+
+  // 세로 묶음 (재생 오류 안내)
+  &.tv-actions--column {
+    flex-direction: column;
+    align-items: center;
+    gap: $space-md;
+
+    .tv-btn {
+      width: 500px; // 시안 500 × 72 (패딩 12 172 / 12 219)
+      height: 72px;
+    }
+  }
+}
+
+
+// =====================================================================
+// 1. 재생 오류 안내 — 화면 가운데
+// =====================================================================
+.tv-screen.tv-error {
+  justify-content: center;
+
+  .tv-desc {
+    margin-top: 52px;
+  }
+
+  .tv-actions {
+    margin-top: 83px;
+  }
+}
+
+
+// =====================================================================
+// 2. 이용 안내 — 제목 · 설명은 위, 버튼은 화면 아래
+// =====================================================================
+.tv-screen.tv-terms {
+  padding-top: 72px;
+  padding-bottom: 41px;
+
+  .tv-desc {
+    margin-top: 62px;
+  }
+
+  .tv-actions {
+    margin-top: auto; // 남는 공간만큼 내려서 화면 아래에 붙임
+  }
+}
+
+
+// =====================================================================
+// 3. Apple 계정 로그인 · 계정 정보 입력 — 리모컨 자판
+// =====================================================================
+.tv-screen.tv-keyboard {
+  padding-top: 150px;
+  padding-bottom: 148px;
+
+  .tv-desc {
+    margin-top: 36px;
+  }
+
+  // 리모컨 안내 박스: 715 × 66 (패딩 12 93) · Display/L · Light/0
+  .tv-guide {
+    @include display-l;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 715px;
+    height: 66px;
+    margin: 76px 0 0;
+    padding: 12px 93px;
+    border-radius: $tv-btn-radius;
+    background-color: $tv-guide-bg;
+    color: $light-color-0;
+    white-space: nowrap;
+  }
+
+  // 자판 (글자 줄 · 숫자 줄)
+  .tv-keys {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-lg;
+    margin-top: 44px;
+  }
+
+  .tv-key-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // 글자 · 숫자 한 칸: 54 × 64 (패딩 포함)
+  .tv-key {
+    @include heading-h1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 64px;
+    padding: 0;
+    border-radius: $radius-xs;
+    background: transparent;
+    color: $light-color-0;
+
+    &:focus-visible,
+    &.is-focused {
+      outline: none;
+      background-color: $tv-btn-primary-bg;
+      color: $tv-btn-primary-text;
+    }
+
+    // 지우기: 아이콘 칸도 54 × 64 (public/icons/tv/tv-delet-btn.svg)
+    &.tv-key--delete {
+      margin-left: 20px;
+
+      img {
+        display: block;
+        width: 52px;
+        height: 44px;
+      }
+
+      &:focus-visible img,
+      &.is-focused img {
+        filter: invert(1);
+      }
+    }
+  }
+
+  // [공백]: 90 × 40 · Heading/h3-B · Dark/900 · 흰 배경
+  .tv-key-space {
+    @include heading-h3-b;
+    width: 90px;
+    height: 40px;
+    margin-right: 28px;
+    padding: 0;
+    border-radius: $radius-xs;
+    background-color: $tv-key-space-bg;
+    color: $tv-key-space-text;
+  }
+
+  // 자판 모드 (ABC · abc · 123 · #+-): 묶음 432 × 66 · Display/M-B · Light/0 · 사이 선 Dark/900
+  .tv-key-modes {
+    display: flex;
+    width: 432px;
+    height: 66px;
+    margin-top: 22px;
+    border-radius: $tv-btn-radius;
+    overflow: hidden;
+    background-color: $tv-key-mode-bg;
+
+    // 4칸 (계정 정보 입력: ABC · abc · 123 · #+-)
+    &.tv-key-modes--4 {
+      width: 514px;
+    }
+  }
+
+  .tv-key-mode {
+    @include display-M-b;
+    flex: 1;
+    padding: 0;
+    background: transparent;
+    color: $light-color-0;
+
+    & + .tv-key-mode {
+      border-left: 2px solid $tv-key-mode-divider;
+    }
+
+    &:focus-visible,
+    &.is-focused {
+      outline: none;
+      background-color: $tv-btn-primary-bg;
+      color: $tv-btn-primary-text;
+    }
+  }
+
+  // 취소 · 로그인 / 계속: 크기 · 글자는 이용 안내 버튼과 같음 (340 × 78)
+  .tv-actions {
+    margin-top: auto;
+  }
+}
+
+
+
+// =====================================================================
+// [추가] TV 디자인 미리보기 페이지 (/tv · pages/TvPreview.jsx)
+// - 위쪽: 웹 화면으로 돌아가기 + 화면 탭 (이용 안내 · Apple 계정 로그인 · 계정 정보 입력)
+// - 아래: 1920 × 1080 TV 화면을 창 크기에 맞게 비율대로 줄여서 가운데 표시
+// =====================================================================
+.tv-preview {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  padding: $space-lg $space-xl $space-xl;
+  background-color: $dark-color-950;
+  color: $light-color-0;
+  overflow: hidden;
+
+  button {
+    font-family: $font-family-base;
+  }
+}
+
+.tv-preview-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-md $space-xl;
+  margin-bottom: $space-lg;
+}
+
+.tv-preview-exit {
+  @include body-small-b;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: $text-secondary;
+  cursor: pointer;
+
+  &:hover {
+    color: $light-color-0;
+  }
+}
+
+.tv-preview-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+}
+
+.tv-preview-tab {
+  @include body-small-b;
+  height: 32px;
+  padding: 0 $space-lg;
+  border: 1px solid $light-color-500;
+  border-radius: 999px;
+  background-color: $sport-opacity-w;
+  color: $light-color-0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    border-color: $light-color-0;
+  }
+
+  &.is-active {
+    border-color: $primary-color-500;
+    background-color: $primary-color-500;
+  }
+}
+
+// 남은 공간 안에서 TV 화면을 가운데에
+.tv-preview-area {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// 줄어든 크기만큼 자리를 차지하는 틀 (안쪽은 1920 × 1080 을 scale 로 줄임)
+.tv-preview-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-card-sm;
+  box-shadow: 0 0 0 1px $dark-color-300;
+}
+
+.tv-preview-stage {
+  width: $tv-screen-width;
+  height: $tv-screen-height;
+  transform-origin: top left;
+
+  // 미리보기 안에서는 TV 화면 크기 고정 (화면 높이 100vh 대신 1080)
+  .tv-screen {
+    width: $tv-screen-width;
+    height: $tv-screen-height;
+    min-height: 0;
+  }
+
+  // 마우스로 볼 때도 리모컨 포커스와 같은 모양
+  .tv-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+
+  .tv-key:hover,
+  .tv-key-mode:hover {
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+
+  .tv-key.tv-key--delete:hover img {
+    filter: invert(1);
+  }
+}
