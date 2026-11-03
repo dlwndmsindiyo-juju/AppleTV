@@ -16,7 +16,8 @@ import "swiper/css/effect-fade";
 import "../../App.scss";
 
 // [수정] 히어로 — Apple TV+ 오리지널 인기순 6개 (로그인 전 · 후 홈 공통)
-// - 정보: 글자 제목 · [연령 등급] [TV 프로그램] [장르] [장르] 칩 · 줄거리 두 줄
+// - 정보: 제목 · [연령 등급] [TV 프로그램] [장르] [장르] 칩 · 줄거리 두 줄
+//   · [수정] 제목: 모든 화면에서 작품 로고 이미지 (TMDB 공식 타이틀 · 로고가 없으면 글자)
 // - 버튼: ▶ 재생 (상세에서 바로 재생 ?play=1 · 로그인 전에는 구독 안내 팝업) · ♡ 찜 (위시리스트에 담기 → 그룹 고르기)
 // - 배경: 마우스를 올리면 예고편 영상 재생 (기존 그대로)
 
@@ -46,6 +47,46 @@ const ratingLabel = (rating = "") => {
   if (!r) return "";
   if (/^all$/i.test(r) || r === "0") return "전체";
   return /^\d+$/.test(r) ? `${r}+` : r;
+};
+
+// [추가] 작품 로고 (TMDB images · 한국어 → 영어 → 언어 없음 순) — 같은 작품은 한 번만 요청
+const logoCache = new Map();
+const fetchLogo = (id) => {
+  if (!logoCache.has(id)) {
+    logoCache.set(
+      id,
+      fetch(`https://api.themoviedb.org/3/tv/${id}/images?api_key=${TMDB_KEY}&include_image_language=ko,en,null`)
+        .then((res) => (res.ok ? res.json() : {}))
+        .then((d) => {
+          const logos = d.logos || [];
+          const pick =
+            logos.find((l) => l.iso_639_1 === "ko") ||
+            logos.find((l) => l.iso_639_1 === "en") ||
+            logos[0];
+          return pick ? `https://image.tmdb.org/t/p/w500${pick.file_path}` : "";
+        })
+        .catch(() => {
+          logoCache.delete(id);
+          return "";
+        })
+    );
+  }
+  return logoCache.get(id);
+};
+
+const useTitleLogo = (id) => {
+  const [state, setState] = useState({ id: null, src: "" });
+  useEffect(() => {
+    if (!id) return undefined;
+    let alive = true;
+    fetchLogo(id).then((src) => {
+      if (alive) setState({ id, src });
+    });
+    return () => {
+      alive = false;
+    };
+  }, [id]);
+  return state.id === id ? state.src : "";
 };
 
 const useKrRating = (id) => {
@@ -81,6 +122,7 @@ const HeroItem = ({ tv, isSwiping }) => {
   const { tvVideo, onFetchTvVideo } = useMovieStore();
   const [hover, setHover] = useState(false);
   const rating = useKrRating(tv.id);
+  const logo = useTitleLogo(tv.id);
   const { wished, toggle } = useWish("tv", tv.id);
 
   // 마우스 오버 시 비디오 요청
@@ -129,7 +171,11 @@ const HeroItem = ({ tv, isSwiping }) => {
 
       {/* 작품 정보 */}
       <div className="hero-info">
-        <h2 className="hero-title">{tv.name}</h2>
+        {/* 제목: 작품 로고 이미지 (로고가 없으면 글자) · 크기는 App.scss */}
+        <h2 className={`hero-title${logo ? " has-logo" : ""}`}>
+          {logo && <img className="hero-title-logo" src={logo} alt="" aria-hidden="true" />}
+          <span className="hero-title-text">{tv.name}</span>
+        </h2>
 
         {/* [연령 등급] [TV 프로그램] [장르] [장르] — 등급 정보가 없으면 등급 칩만 숨김 */}
         <ul className="hero-chips" aria-label="작품 정보">
