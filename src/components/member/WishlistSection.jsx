@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SwiperSlide } from "swiper/react";
 import { useMovieStore } from "../../store/useMovieStore";
@@ -12,6 +12,24 @@ import { useContentInfo, contentMeta, shortGenreName } from "./useContentInfo";
 // - + 버튼: 내 위시리스트에 추가
 //   · 아직 안 담은 작품 → 위시리스트에 담고 "어떤 그룹에 추가할까요?" 팝업
 //   · 이미 담은 작품 → 바로 그룹 고르기 팝업 (위시리스트 페이지의 그룹에 추가)
+// - [추가] 휴대폰(767px 이하) 시안: 슬라이드 대신 세로 3줄 목록 (.member-wl-list)
+
+// 휴대폰 화면인지 (화면 폭이 바뀌면 다시 계산)
+const PHONE_QUERY = "(max-width: 767px)";
+const useIsPhone = () => {
+  const [isPhone, setIsPhone] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(PHONE_QUERY).matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(PHONE_QUERY);
+    const onChange = (e) => setIsPhone(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  return isPhone;
+};
 
 const WishCard = ({ item }) => {
   const info = useContentInfo(item.type, item.id);
@@ -43,6 +61,8 @@ const WishCard = ({ item }) => {
 };
 
 const WishlistSection = () => {
+  const isPhone = useIsPhone();
+
   // 위시리스트: 최근에 담은 순서
   const wishItems = useHeartStore((s) => s.items);
   const wishlist = Object.values(wishItems)
@@ -75,13 +95,24 @@ const WishlistSection = () => {
           <Link to="/wishlist" className="member-more">더보기</Link>
         </div>
 
-        <Rail bleed={false} className="rail-wish" label="마음에 담아둔 이야기">
-          {items.map((item) => (
-            <SwiperSlide key={`${item.type}_${item.id}`}>
-              <WishCard item={item} />
-            </SwiperSlide>
-          ))}
-        </Rail>
+        {isPhone ? (
+          // 휴대폰: 세로 3줄 목록
+          <ul className="member-wl-list" aria-label="마음에 담아둔 이야기">
+            {items.slice(0, 3).map((item) => (
+              <li key={`${item.type}_${item.id}`}>
+                <WishCard item={item} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <Rail bleed={false} className="rail-wish" label="마음에 담아둔 이야기">
+            {items.map((item) => (
+              <SwiperSlide key={`${item.type}_${item.id}`}>
+                <WishCard item={item} />
+              </SwiperSlide>
+            ))}
+          </Rail>
+        )}
       </div>
     </section>
   );
