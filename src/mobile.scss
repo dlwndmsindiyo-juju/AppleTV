@@ -3023,3 +3023,69 @@ header .inner nav .gnb-right ul .search-icon-item {
     }
   }
 }
+
+
+// =====================================================================
+// [추가] 오른쪽 아래 TV · TOP 버튼 — 휴대폰: 50 × 50 (TOP 화살표: 좌우 패딩 16 → 18 × 10) · 화면 끝 여백 16 (PC 규칙은 App.scss)
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .floating-actions {
+    right: $space-lg;
+    bottom: $space-lg;
+  }
+
+  .floating-btn {
+    width: 50px;
+    height: 50px;
+
+    &.floating-btn--tv img {
+      width: 50px;
+      height: 50px;
+    }
+
+    // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 18
+    &.floating-btn--top {
+      padding: 0 16px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  body.has-promo-banner .floating-actions {
+    bottom: calc(97px + #{$space-md});
+  }
+}
+
+
+// =====================================================================
+// [추가] 오른쪽 아래 TV · TOP 버튼 — 태블릿 (768 ~ 1024px) 에서 크게
+// - 60 × 60 · TOP 화살표는 좌우 패딩 19 → 22 × 12 · 버튼 사이 12
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  .floating-actions {
+    gap: $space-md;
+  }
+
+  .floating-btn {
+    width: 60px;
+    height: 60px;
+
+    &.floating-btn--tv img {
+      width: 60px;
+      height: 60px;
+    }
+
+    // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 22
+    &.floating-btn--top {
+      padding: 0 19px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
