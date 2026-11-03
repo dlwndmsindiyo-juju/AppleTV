@@ -1510,3 +1510,53 @@ main.member-home .subscribe-cta {
 }
 
 // (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
+
+
+// =====================================================================
+// [추가] 신규출시 · 공개예정작 — 휴대폰 전용 포스터 위 버튼 (ReleaseCard.jsx .member-nr-quick)
+// - PC · 태블릿에서는 숨김 (휴대폰 스타일은 mobile.scss)
+// =====================================================================
+.member-home,
+.upcoming-section {
+  .member-nr-quick {
+    display: none;
+  }
+}
+
+
+// =====================================================================
+// [추가] PC 슬라이드 카드 크기 고정 — 이너가 화면의 90% 로 넓어져도 카드는 원래 크기 그대로
+// - 원래 시안(본문 1440 · 간격 24) 기준으로 계산한 픽셀 값으로 고정
+//   → 이너가 넓어진 만큼 한 화면에 보이는 카드 수가 늘어남
+// - 이어보기 · 찜 · AI 어시스트 · 신규출시 · 공개예정작: (1440 - 72) / 4 = 342
+// - 추천작: (1440 - 96) / 5 = 269
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.member-home {
+    .rail-continue,
+    .rail-wish {
+      --rail-col: 342px;
+    }
+
+    .rail-poster {
+      --rail-col: 283px;
+    }
+
+    .rail-recommend {
+      --rail-col: 269px;
+    }
+
+    .rail-mood {
+      --rail-col: 281px;
+    }
+
+    .rail-ai {
+      --rail-col: 342px;
+    }
+  }
+
+  main.member-home .rail-release,
+  .upcoming-section .rail-release {
+    --rail-col: 342px;
+  }
+}
