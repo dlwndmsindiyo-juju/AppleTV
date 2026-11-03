@@ -1,13 +1,17 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TvTerms, TvKeyboard } from "../components/tv/TvScreens";
+import TvSportHome from "../components/tv/TvSportHome";
+import TvHome from "../components/tv/TvHome";
 import "../TV.scss";
 
 // TV 디자인 미리보기 (/tv) — 하단 TV 버튼(FloatingActions)으로 들어옴
-// - 위쪽 탭: 이용 안내 → Apple 계정 로그인 → 계정 정보 입력 (탭으로 바로 골라 보기)
+// - 위쪽 탭: 이용 안내 → Apple 계정 로그인 → 계정 정보 입력 · 홈 · 스포츠 (탭으로 바로 골라 보기)
 // - 화면 버튼도 순서대로 연결: 동의 → 로그인 / 로그인 → 계정 정보 입력 / 계속 → 처음(이용 안내)
 //   취소: 이용 안내 → 웹 화면으로 돌아가기 · 로그인 → 이용 안내
-// - 1920 × 1080 TV 화면을 보는 창 크기에 맞게 비율 그대로 줄여서 보여줌
+// - TV 화면이 창 전체를 꽉 채움 (테두리 · 바깥 여백 없음)
+//   · 가로 1920 기준으로 비율을 맞추고, 세로는 창 높이만큼 늘이거나 줄임
+//   · 화면 탭은 아래쪽에 작게 띄워 둠
 // - 리모컨처럼 방향키(← ↑ → ↓)로 버튼 사이를 이동 · Enter 로 누르기
 // - 헤더 · 푸터 · 하단 배너 · 떠 있는 버튼은 App.jsx 에서 /tv 일 때 숨김
 
@@ -18,6 +22,8 @@ const TABS = [
   { id: "terms", label: "이용 안내" },
   { id: "login", label: "Apple 계정 로그인" },
   { id: "account", label: "계정 정보 입력" },
+  { id: "home", label: "홈" },
+  { id: "sport", label: "스포츠" },
 ];
 
 // 방향키로 가장 가까운 버튼 찾기 (화면 위치 기준)
@@ -65,6 +71,8 @@ const TvPreview = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState("terms");
   const [scale, setScale] = useState(1);
+  const [stageW, setStageW] = useState(TV_W);
+  const [stageH, setStageH] = useState(TV_H);
   const areaRef = useRef(null);
   const stageRef = useRef(null);
 
@@ -75,7 +83,12 @@ const TvPreview = () => {
 
     const update = () => {
       const { width, height } = area.getBoundingClientRect();
-      setScale(Math.min(width / TV_W, height / TV_H, 1));
+      // [수정] 1920 × 1080 이 창 안에 다 들어가는 비율로 맞추고, 남는 쪽(가로 또는 세로)은 화면을 늘려서 채움
+      // → 창 전체를 빈틈없이 채우면서도 TV 화면이 1920 × 1080 보다 작아지지 않아 글자 · 버튼이 겹치지 않음
+      const s = Math.min(width / TV_W, height / TV_H);
+      setScale(s);
+      setStageW(width / s);
+      setStageH(height / s);
     };
 
     update();
@@ -130,20 +143,20 @@ const TvPreview = () => {
       </div>
 
       <div className="tv-preview-area" ref={areaRef}>
-        <div className="tv-preview-frame" style={{ width: TV_W * scale, height: TV_H * scale }}>
-          <div
-            className="tv-preview-stage"
-            ref={stageRef}
-            role="tabpanel"
-            style={{ transform: `scale(${scale})` }}
-            onKeyDown={handleKeyDown}
-          >
+        <div
+          className="tv-preview-stage"
+          ref={stageRef}
+          role="tabpanel"
+          style={{ width: stageW, height: stageH, transform: `scale(${scale})` }}
+          onKeyDown={handleKeyDown}
+        >
             {tab === "terms" && <TvTerms onAgree={() => setTab("login")} onCancel={exit} />}
             {tab === "login" && (
               <TvKeyboard key="login" variant="login" onCancel={() => setTab("terms")} onSubmit={() => setTab("account")} />
             )}
             {tab === "account" && <TvKeyboard key="account" variant="account" onSubmit={() => setTab("terms")} />}
-          </div>
+            {tab === "home" && <TvHome onMenu={setTab} />}
+            {tab === "sport" && <TvSportHome onMenu={setTab} />}
         </div>
       </div>
     </div>
