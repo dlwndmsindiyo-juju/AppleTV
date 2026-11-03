@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useMovieStore } from "../../store/useMovieStore";
+import { useWish } from "../../store/useHeartStore"; // 위시리스트 (찜)
 import { img, detailPath } from "./memberUtils";
 import { useContentInfo, contentMeta, shortGenres } from "./useContentInfo";
 
@@ -8,6 +9,9 @@ import { useContentInfo, contentMeta, shortGenres } from "./useContentInfo";
 // - 카드 배경 Dark/400 · 왼쪽 포스터 · 오른쪽 제목 / 장르 줄 / 소개 2줄
 // - 버튼: [N월 공개예정] (118 × 40 · 보라) + [알림 벨] (40 × 40 · 누르면 켜지고 다시 누르면 꺼짐)
 // - 포스터 · 제목 · [N월 공개예정] 을 누르면 상세 페이지
+// - [추가] 휴대폰 시안: 글자 없이 포스터 위 버튼만 (.member-nr-quick · PC · 태블릿에서는 숨김)
+//   · variant="new" (신규출시): [재생] + [찜]
+//   · variant="soon" (공개예정작 · 기본): [N월 공개예정 🔔] 하나 (누르면 알림 켜고 끄기)
 
 const BellIcon = ({ on }) => (
   <svg className="member-nr-bell-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -28,7 +32,7 @@ const monthLabel = (date) => {
   return month ? `${month}월 공개예정` : "공개예정";
 };
 
-const ReleaseCard = ({ item, type }) => {
+const ReleaseCard = ({ item, type, variant = "soon" }) => {
   const alarms = useMovieStore((s) => s.alarms);
   const onToggleAlarm = useMovieStore((s) => s.onToggleAlarm);
   const info = useContentInfo(type, item.id);
@@ -37,6 +41,8 @@ const ReleaseCard = ({ item, type }) => {
   const path = detailPath(type, item.id);
   const key = `${type}_${item.id}`;
   const on = alarms.includes(key);
+  const { wished, toggle } = useWish(type, item.id);
+  const month = monthLabel(item.release_date || item.first_air_date);
 
   return (
     <div className="member-nr-card">
@@ -51,7 +57,7 @@ const ReleaseCard = ({ item, type }) => {
 
         <div className="member-nr-actions">
           <Link to={path} className="member-nr-month">
-            {monthLabel(item.release_date || item.first_air_date)}
+            {month}
           </Link>
           <button
             type="button"
@@ -63,6 +69,37 @@ const ReleaseCard = ({ item, type }) => {
             <BellIcon on={on} />
           </button>
         </div>
+      </div>
+
+      {/* [추가] 휴대폰: 포스터 위 버튼 (글자 영역은 숨김) */}
+      <div className="member-nr-quick">
+        {variant === "new" ? (
+          <>
+            <Link to={`${path}?play=1`} className="member-nr-quick-play" aria-label={`${title} 재생`}>
+              <img src="/icons/play-w.svg" alt="" aria-hidden="true" />
+            </Link>
+            <button
+              type="button"
+              className={`member-nr-quick-heart${wished ? " is-on" : ""}`}
+              aria-pressed={wished}
+              aria-label={wished ? `${title} 찜 해제` : `${title} 찜하기`}
+              onClick={() => toggle({ title, poster_path: item.poster_path, backdrop_path: item.backdrop_path, overview: item.overview })}
+            >
+              <span className="member-nr-quick-heart-icon" aria-hidden="true" />
+            </button>
+          </>
+        ) : (
+          <button
+            type="button"
+            className={`member-nr-quick-month${on ? " is-on" : ""}`}
+            aria-pressed={on}
+            aria-label={on ? `${title} ${month} · 알림 끄기` : `${title} ${month} · 알림 받기`}
+            onClick={() => onToggleAlarm(key)}
+          >
+            {month}
+            <BellIcon on={on} />
+          </button>
+        )}
       </div>
     </div>
   );
