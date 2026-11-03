@@ -1729,3 +1729,107 @@ main.member-home .member-mood .member-chips .member-chip {
     overflow: hidden;
   }
 }
+
+
+// =====================================================================
+// [추가] 로그인 후 메인 — 태블릿 · 모바일 (시안: Apple TV 모바일 hi-fi · 1024px 이하)
+// - 섹션 제목 Display/L-B · Light/0 / 소제목 Heading/h3 · Light/500 (모든 섹션 동일 · App.scss 의 홈 섹션과 같음)
+// - 이어보기 카드: 시간 Body/small · 제목 Body/large-B · 설명 Body/small · 이어보기 Body/small-B (모두 Light/500)
+// - 찜 카드: 제목 Body/large-B · 설명 Body/small (Light/500)
+// - 태블릿(768 ~ 1024px): 슬라이드가 이너 폭 안에서 잘림 (시안 · 좌우 여백 같음)
+// - 홍보 배너(SubscribeCTA)는 페이지 배경색에 맞춤
+// =====================================================================
+main.member-home .subscribe-cta {
+  background-color: $bg-page;
+}
+
+@media (max-width: $breakpoint-tablet) {
+  main.member-home {
+
+    // ---------- 섹션 제목 · 소제목 ----------
+    .member-section .member-title.member-title {
+      @include display-l-b;
+      margin: 0 0 $space-sm;
+      padding-top: 0;
+      color: $light-color-0;
+      word-break: keep-all;
+    }
+
+    .member-section .member-head .member-desc.member-desc {
+      @include heading-h3;
+      color: $light-color-500;
+      word-break: keep-all;
+    }
+
+    // ---------- 이어보기 ----------
+    .member-continue {
+      .member-cw-time {
+        @include body-small;
+        color: $light-color-500;
+      }
+
+      .member-cw-card .member-card-title {
+        @include body-large-b;
+        color: $light-color-500;
+      }
+
+      .member-cw-card .member-card-meta {
+        @include body-small;
+        color: $light-color-500;
+      }
+
+      .member-cw-card .member-card-link {
+        @include body-small-b;
+        color: $light-color-500;
+      }
+    }
+
+    // ---------- 찜 (배경 그라데이션 띠) ----------
+    .member-wishlist {
+      .member-wl-name {
+        @include body-large-b;
+        color: $light-color-500;
+      }
+
+      .member-wl-meta {
+        @include body-small;
+        color: $light-color-500;
+      }
+    }
+  }
+}
+
+// 태블릿(768 ~ 1024px): 슬라이드도 좌우 여백 안에서 잘림 (시안) · 카드 폭 시안 기준
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  main.member-home {
+    .member-continue .inner,
+    .member-wishlist .inner,
+    .member-recommend .inner,
+    .member-mood .inner {
+      padding-right: $tablet-gutter;
+      overflow: hidden;
+    }
+
+    .member-continue,
+    .member-wishlist,
+    .member-recommend,
+    .member-mood {
+      .member-head,
+      .member-chips,
+      .member-notice {
+        margin-right: 0;
+      }
+    }
+
+    // 시안 1024 기준: 가로형 카드 346 · 포스터 카드 282
+    .rail-continue,
+    .rail-wish,
+    .rail-ai {
+      --rail-col: 346px;
+    }
+
+    .rail-recommend {
+      --rail-col: 282px;
+    }
+  }
+}

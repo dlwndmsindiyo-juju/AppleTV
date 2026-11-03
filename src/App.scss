@@ -8281,3 +8281,102 @@ section.device-guide.device-guide--watch {
 .account-member-name {
   @include body-default;
 }
+
+
+// =====================================================================
+// [수정] 히어로 제목 — 모든 화면에서 작품 로고 이미지 (HeroSection.jsx · TMDB 공식 타이틀 이미지)
+// - 로고가 없는 작품만 글자 제목 (SF Pro) · 로고 · 글자 모두 항상 흰색
+// - 크기: PC · 태블릿 · 모바일 모두 같음 (모바일 기준 · 최대 400 × 120, 화면이 좁으면 가로 75%)
+// =====================================================================
+.hero-swiper-container .hero-slide-item .hero-info .hero-title {
+  color: $light-color-0; // 로고가 없을 때 글자 제목도 흰색
+
+  .hero-title-logo {
+    display: none;
+  }
+
+  &.has-logo {
+    margin-bottom: $space-xl;
+
+    .hero-title-logo {
+      display: block;
+      width: auto;
+      max-width: min(400px, 75%);
+      max-height: 120px;
+      object-fit: contain;
+      object-position: left bottom;
+      filter: brightness(0) invert(1); // 로고 색과 상관없이 항상 흰색 (모양 · 투명 부분은 그대로)
+    }
+
+    // 글자 제목은 화면에서만 숨김 (스크린 리더는 읽음)
+    .hero-title-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] TV 메인 홈 — 태블릿 · 모바일 글자 위계 (시안: Apple TV 모바일 hi-fi · 1024px 이하)
+// - 섹션 제목 Display/L-B · Light/0 / 소제목 Heading/h3 · Light/500 — 모든 섹션 동일 (로그인 전 · 후 홈 공통)
+// - 히어로: 칩 Body/small · Light/0 / 소개 Heading/h4 · Light/0 / 재생 Body/default-B · Light/0
+// - 핵심 혜택: 제목 Body/large-B · Light/0 / 설명 Body/small · Light/500
+// - 로그인 후 홈 카드(이어보기 · 찜)는 member.scss
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+
+  // ---------- 섹션 제목 · 소제목 ----------
+  section.top10-section .top10-title,
+  .upcoming-section .upcoming-title.upcoming-title,
+  .apple-originals .apple-originals-title.apple-originals-title {
+    @include display-l-b;
+    margin: 0 0 $space-sm;
+    padding-top: 0;
+    color: $light-color-0;
+    word-break: keep-all;
+  }
+
+  section.top10-section .top10-desc,
+  .upcoming-section .upcoming-desc.upcoming-desc,
+  .apple-originals .apple-originals-desc.apple-originals-desc {
+    @include heading-h3;
+    color: $light-color-500;
+    word-break: keep-all;
+  }
+
+  // ---------- 히어로 ----------
+  .hero-swiper-container .hero-slide-item .hero-info {
+    .hero-chip.hero-chip {
+      @include body-small;
+      color: $light-color-0;
+    }
+
+    .hero-overview.hero-overview {
+      @include heading-h4;
+      color: $light-color-0;
+    }
+
+    .hero-play.hero-play {
+      @include body-default-b;
+      color: $light-color-0;
+    }
+  }
+
+  // ---------- 핵심 혜택 ----------
+  .value-props .value-props-inner {
+    .value-prop-title {
+      @include body-large-b;
+      color: $light-color-0;
+    }
+
+    .value-prop-desc {
+      @include body-small;
+      color: $light-color-500;
+    }
+  }
+}
