@@ -9,7 +9,7 @@ import HeroSection from "../landing/HeroSection";
 import ValueProps from "../landing/ValueProps";
 import Top10Section from "../landing/Top10Section";
 import TrialWelcome, { useTrialIntro } from "../landing/TrialWelcome"; // 무료 체험 중 안내 (체험 중일 때만 표시)
-// 구독 유도 CTA(SubscribeCTA)는 로그인 전 메인(Home.jsx)에서만 보여줌
+import SubscribeCTA from "../landing/SubscribeCTA"; // [추가] 홍보 배너 (시안: 공개예정작 다음) — 구독 중이면 컴포넌트가 알아서 숨김
 
 // 신규 섹션
 import ContinueWatching from "./ContinueWatching";
@@ -71,7 +71,10 @@ const MemberHome = ({ userName = "회원" }) => {
       {/* 8. 공개예정작 */}
       <ComingSoon />
 
-      {/* 9. 에코시스템 (아래는 기존 푸터) — 시안 내용이 기기 안내와 같아 DeviceGuide 재사용 */}
+      {/* 9. 홍보 배너 (7일 무료 체험) — 아직 구독하지 않은 계정에만 보임 */}
+      <SubscribeCTA type="tv" />
+
+      {/* 10. 에코시스템 (아래는 기존 푸터) — 시안 내용이 기기 안내와 같아 DeviceGuide 재사용 */}
       <DeviceGuide />
     </main>
   );
