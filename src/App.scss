@@ -2434,7 +2434,6 @@ header {
 }
 
 
-
 // ===== 구독 전 프로모션 배너 (하단 플로팅) =====
 .promo-banner {
   position: fixed;
@@ -3810,242 +3809,7 @@ main {
   }
 }
 
-// =====================================================================
-// 태블릿 (1024px 이하) — 시안: 1024 x 3304
-// 모바일(767px 이하)은 mobile.scss 에서 이어서 덮어씀
-// =====================================================================
-@media (max-width: $breakpoint-tablet) {
-
-  // ---------- 헤더 (좌우 40 / 상하 14) ----------
-  header .inner {
-    padding: $header-pad-y $tablet-edge;
-
-    nav {
-      padding: $header-pad-y $tablet-edge;
-
-      .gnb-center-toggle button {
-        padding: 0 20px;
-        font-size: 16px;
-      }
-
-      .gnb-right ul {
-        gap: $space-md;
-
-        .search-box {
-          width: 141px; // 시안 검색창 폭
-        }
-      }
-    }
-  }
-
-  // ---------- 푸터 (좌우 40 / 상하 14) ----------
-  .footer {
-    padding: $footer-pad-y $tablet-edge;
-  }
-
-  // ---------- 히어로 (화면 높이 100vh 유지, 텍스트는 본문 시작선) ----------
-  .hero-swiper-container {
-    height: 100vh;
-    height: 100svh; // 모바일 브라우저 주소창을 뺀 화면 높이 (지원 안 하면 위 100vh 사용)
-
-    .swiper-button-next,
-    .swiper-button-prev {
-      display: none; // 터치 환경이라 화살표 숨김
-    }
-
-    .hero-slide-item .hero-info {
-      left: $tablet-gutter;
-      max-width: 60%;
-
-      .hero-title {
-        font-size: 48px;
-      }
-    }
-  }
-
-  // ---------- 홈 섹션 공통: 본문 좌우 13% ----------
-  .value-props .inner,
-  .top10-section .inner,
-  .upcoming-section .inner,
-  .apple-originals .inner,
-  .ai-promo .inner,
-  .subscribe-cta .inner,
-  .movie-slider-section .inner {
-    padding-left: $tablet-gutter;
-    padding-right: $tablet-gutter;
-  }
-
-  // ---------- 핵심 혜택: 3칸 유지 ----------
-  .value-props {
-    .value-props-inner {
-      gap: $space-xl;
-    }
-  }
-
-  // ---------- TOP 10: 오른쪽 끝까지 이어지는 슬라이더 (시안: 포스터 4장 + 다음 장 살짝) ----------
-  .top10-section {
-    overflow: hidden;
-
-    .inner {
-      padding-right: 0; // 슬라이더가 화면 오른쪽으로 잘려 나가게
-    }
-
-    .top10-title {
-      @include display-l;
-      padding-right: $tablet-gutter;
-    }
-
-    .top10-slide {
-      width: 190px;
-    }
-
-    .top10-rank {
-      font-size: 104px;
-      bottom: -10px;
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-      display: none;
-    }
-  }
-
-  // ---------- 공개예정작: 카드 2장 가로 스크롤 (오른쪽 끝까지) ----------
-  .upcoming-section {
-    overflow: hidden;
-
-    .inner {
-      padding-right: 0;
-    }
-
-    .upcoming-title {
-      @include display-l;
-    }
-
-    .upcoming-title,
-    .upcoming-desc {
-      padding-right: $tablet-gutter;
-    }
-
-    .upcoming-list {
-      grid-template-columns: none;
-      grid-auto-flow: column;
-      grid-auto-columns: 440px;
-      gap: $space-xl;
-      overflow-x: auto;
-      padding-right: $tablet-gutter;
-      scroll-snap-type: x proximity;
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
-      >li {
-        scroll-snap-align: start;
-      }
-    }
-
-    .upcoming-card {
-      gap: $space-lg;
-      padding: $space-lg;
-    }
-
-    .upcoming-thumb {
-      width: 120px;
-    }
-
-    .upcoming-movie-title {
-      @include heading-h3;
-    }
-
-    // 시안: 알림 받기는 외곽선 버튼
-    .upcoming-btn:not(.on) {
-      border-color: $neutral-color-400;
-      background-color: transparent;
-      color: $text-primary;
-
-      &:hover {
-        border-color: $light-color-0;
-        background-color: rgba($light-color-0, 0.12);
-      }
-    }
-  }
-
-  // ---------- 오리지널스: 오른쪽 끝까지 이어지는 슬라이더 ----------
-  .apple-originals {
-    overflow: hidden;
-
-    .inner {
-      padding-right: 0;
-    }
-
-    .apple-originals-title {
-      @include display-l;
-    }
-
-    .apple-originals-title,
-    .apple-originals-desc {
-      padding-right: $tablet-gutter;
-    }
-
-    .apple-originals-slide {
-      width: 280px;
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-      display: none;
-    }
-  }
-
-  // ---------- AI 어시스턴트 띠: 글 → 카드 세로 배치 ----------
-  .ai-promo {
-    padding-bottom: $space-5xl;
-
-    .inner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: $space-2xl;
-      padding-top: $space-4xl;
-      padding-bottom: $space-4xl;
-    }
-
-    .ai-promo-title {
-      @include display-l;
-    }
-  }
-
-  // ---------- 구독 CTA ----------
-  .subscribe-cta {
-    .subscribe-banner {
-      height: 340px;
-    }
-
-    .subscribe-content {
-      left: 6%;
-    }
-  }
-
-  // ---------- 하단 플로팅 프로모션 배너 ----------
-  .promo-banner {
-    .promo-banner-inner {
-      padding-left: $tablet-edge;
-      padding-right: $tablet-edge;
-      gap: $space-xl;
-    }
-
-    .promo-banner-desc {
-      @include body-small;
-      color: rgba($text-primary, 0.75);
-    }
-
-    .promo-banner-btn {
-      min-width: 160px;
-    }
-  }
-
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 // 스포츠 홈 (로그인 전 / 후 공통): 섹션 사이 여백과 콘텐츠 폭을 한 곳에서 관리합니다.
 // - 기존 .sport-home-member(로그인 후 전용) → .sport-home 으로 바꿔 같은 영역은 똑같이 보이게 함
@@ -4803,65 +4567,7 @@ $auth-line: $dark-color-100; // 입력 칸 · 플랜 카드 테두리
   word-break: keep-all;
 }
 
-// =====================================================================
-// 태블릿 · 모바일
-// =====================================================================
-@media (max-width: $breakpoint-mobile) {
-  .auth-page {
-    align-items: flex-start;
-    padding: calc(#{$header-height} + #{$space-lg}) $space-lg $space-4xl;
-  }
-
-  .auth-card {
-    padding: $space-5xl 20px $space-2xl;
-  }
-
-  .auth-close {
-    top: $space-lg;
-    left: $space-lg;
-    height: 36px;
-    padding: 0 $space-lg;
-  }
-
-  .auth-title {
-    @include display-M-b;
-  }
-
-  .auth-desc {
-    @include body-default;
-  }
-
-  .auth-actions--row {
-    flex-direction: column-reverse;
-    gap: $space-md;
-
-    .auth-btn:first-child,
-    .auth-btn:last-child {
-      flex: none;
-    }
-  }
-
-  .plan-opt {
-    padding: 20px $space-4xl 20px 20px;
-  }
-
-  .plan-opt-name {
-    @include heading-h4-b;
-  }
-
-  .plan-opt-radio {
-    top: 22px;
-    right: 20px;
-  }
-
-  .plan-benefit-list {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .auth-links {
-    gap: $space-xl;
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 // =====================================================================
 // 별점 아이콘 (public/icons/star-icon.svg) — 오리지널스 · 추천작 공용
@@ -5121,19 +4827,7 @@ header .inner nav .gnb-right ul .profile-box,
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
-  .subscribe-gate-card {
-    padding: $space-xl 20px 20px;
-  }
-
-  .subscribe-gate-title {
-    @include heading-h3-b;
-  }
-
-  .subscribe-gate-desc {
-    @include body-small;
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 // ===== 무료 체험 배너: 하루 안 보기 / 일주일 안 보기 =====
 .trial-welcome {
@@ -5174,24 +4868,11 @@ header .inner nav .gnb-right ul .profile-box,
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
-  .trial-welcome {
-    .trial-strip {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .trial-strip-actions {
-      flex-wrap: wrap;
-      gap: $space-md;
-    }
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 // ===== 무료 체험 환영 화면: 문구 + TOP 10 슬라이드 + 홈으로 바로가기 =====
 // 간격: 배너 ↔ 문구 128px / 문구 ↔ TOP 10 128px / TOP 10 ↔ 버튼 128px / 버튼 ↔ 푸터 128px
 $trial-gap: 128px;
-$trial-gap-mobile: $space-5xl; // 64px
 
 .trial-welcome {
 
@@ -5272,29 +4953,7 @@ $trial-gap-mobile: $space-5xl; // 64px
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
-  .trial-welcome {
-    &.is-intro {
-      padding-bottom: $trial-gap-mobile;
-
-      .trial-heading {
-        margin-top: $trial-gap-mobile;
-      }
-
-      &.is-strip-hidden .trial-heading {
-        margin-top: $space-xl;
-      }
-
-      .top10-section {
-        padding-top: $trial-gap-mobile;
-      }
-    }
-
-    .inner.trial-home-actions {
-      margin-top: $trial-gap-mobile;
-    }
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 // ===== 공통 아이콘 (public/icons: plus · check · nav/right-nav · right-top) =====
 // - 사용: <span className="ui-icon ui-icon-arrow" aria-hidden="true" />
@@ -6086,132 +5745,7 @@ $mobile-edge: 20px;
   }
 }
 
-// =====================================================================
-// 태블릿 (1024px 이하) — 시안 Tablet: 카드 2열 유지 · 탭 가로 스크롤
-// =====================================================================
-@media (max-width: $breakpoint-tablet) {
-  .wish-page {
-    padding-top: calc(#{$header-height} + #{$space-4xl});
-    padding-bottom: $space-5xl;
-  }
-
-  .wish-title {
-    @include display-l-b;
-  }
-
-  .wish-sort {
-    margin-top: $space-2xl;
-  }
-
-  .wish-tabs {
-    gap: $space-md;
-
-    li {
-      flex: 0 0 120px;
-    }
-  }
-
-  .wish-tab {
-    height: 112px;
-  }
-
-  .wish-tab-icon {
-    font-size: 26px;
-  }
-
-  .wish-grid {
-    gap: $space-lg;
-    margin-top: $space-2xl;
-  }
-
-  .wish-card {
-    gap: $space-lg;
-    padding: $space-lg;
-  }
-
-  .wish-card-poster {
-    width: 112px;
-  }
-
-  .wish-card-title {
-    @include heading-h3;
-  }
-}
-
-// =====================================================================
-// 모바일 (767px 이하) — 시안 Mobile: 카드 1열
-// =====================================================================
-@media (max-width: $breakpoint-mobile) {
-  .wish-page {
-    padding-top: calc(#{$header-height} + #{$space-xl});
-  }
-
-  .wish-inner {
-    width: calc(100% - #{$mobile-edge * 2});
-  }
-
-  .wish-title {
-    @include display-M-b;
-  }
-
-  .wish-desc {
-    @include body-small;
-  }
-
-  .wish-tabs li {
-    flex-basis: 96px;
-  }
-
-  .wish-tab {
-    height: 96px;
-
-    strong {
-      @include label-default-b;
-    }
-  }
-
-  .wish-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .wish-card-poster {
-    width: 96px;
-  }
-
-  .wish-card-title {
-    @include heading-h4-b;
-  }
-
-  .wish-card-overview {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-  }
-
-  .wish-modal {
-    padding: 20px;
-  }
-
-  .wish-icon-btn {
-    width: 44px;
-    height: 44px;
-    font-size: 22px;
-  }
-
-  .wish-toast {
-    gap: $space-md;
-    padding: $space-md $space-lg;
-
-    p {
-      @include body-small-b;
-    }
-  }
-
-  .wish-toast-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 // =====================================================================
 // [추가] 로그인 · 구독 카드 밝은 색 (시안 PNG)
@@ -6921,59 +6455,7 @@ $account-sub: $neutral-color-600; // 설명 · 안내 글자 (밝은 배경에�
   mask-size: contain;
 }
 
-// ---------- 태블릿 ----------
-@media (max-width: $breakpoint-tablet) {
-  .account-page {
-    padding-top: calc(#{$header-height} + #{$space-4xl});
-    padding-bottom: $space-5xl;
-  }
-
-  .account-section {
-    grid-template-columns: 200px minmax(0, 1fr);
-  }
-}
-
-// ---------- 모바일: 섹션 이름 위 · 항목 아래 ----------
-@media (max-width: $breakpoint-mobile) {
-  .account-page {
-    padding-top: calc(#{$header-height} + #{$space-xl});
-  }
-
-  .account-inner {
-    width: calc(100% - #{$space-lg * 2});
-  }
-
-  .account-title {
-    @include display-M-b;
-    padding-bottom: $space-lg;
-  }
-
-  .account-section {
-    grid-template-columns: minmax(0, 1fr);
-    gap: $space-lg;
-    padding: $space-2xl 0;
-  }
-
-  .account-section-title {
-    @include heading-h4-b;
-  }
-
-  .account-section-body {
-    gap: $space-xl;
-  }
-
-  .account-item-desc {
-    @include body-small;
-  }
-
-  .account-avatar-grid {
-    grid-template-columns: repeat(4, 56px);
-  }
-
-  .account-channels {
-    gap: $space-md $space-xl;
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 // =====================================================================
 // [추가] 이어보기 — 시청 내역이 없을 때 · 재생 팝업 플레이어
@@ -7002,20 +6484,7 @@ $account-sub: $neutral-color-600; // 설명 · 안내 글자 (밝은 배경에�
   }
 }
 
-// 태블릿 · 모바일 이어보기는 오른쪽 여백 0 (슬라이드가 끝까지 이어짐) → 안내 상자만 제목과 같은 여백
-@media (max-width: $breakpoint-tablet) {
-  .member-home .member-continue .member-empty {
-    margin-right: $tablet-gutter;
-  }
-}
-
-@media (max-width: $breakpoint-mobile) {
-  .member-home .member-continue .member-empty {
-    @include body-default;
-    margin-right: 20px; // mobile.scss 의 $mobile-edge
-    padding: $space-2xl $space-lg;
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 
 // =====================================================================
@@ -7066,8 +6535,8 @@ section.top10-section {
     pointer-events: none;
 
     .top10-num-glyph {
-      font-family: $font-family-base;
-      font-weight: $font-weight-bold;
+      font-family: "Noto Sans KR", sans-serif; // 순위 숫자만 Noto Sans KR (PC · 태블릿 · 모바일 공통)
+      font-weight: 900; // Black
       font-size: 160px;
       letter-spacing: -8px;
     }
@@ -7089,38 +6558,7 @@ section.top10-section {
   }
 }
 
-// 태블릿: 고정 폭 슬라이드 (화살표는 기존 규칙대로 숨김)
-@media (max-width: $breakpoint-tablet) {
-  section.top10-section {
-    .top10-desc {
-      @include body-default;
-      padding-right: $tablet-gutter;
-    }
-
-    .top10-slide {
-      width: 240px;
-    }
-  }
-}
-
-// 모바일: 포스터 2장 + 다음 장 살짝
-@media (max-width: $breakpoint-mobile) {
-  section.top10-section {
-    .top10-desc {
-      @include body-small;
-      margin-bottom: 20px;
-      padding-right: 20px;
-    }
-
-    .top10-slide {
-      width: 170px;
-    }
-
-    .top10-num .top10-num-stroke {
-      stroke-width: 8px; // 숫자가 작아져도 바깥 테두리가 보이게 (viewBox 기준)
-    }
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 
 // =====================================================================
@@ -7259,26 +6697,7 @@ section.top10-section {
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
-  .hero-swiper-container .hero-slide-item .hero-info {
-    .hero-chip {
-      @include caption-default;
-      height: 24px;
-      padding: 0 $space-sm;
-    }
-
-    .hero-play {
-      @include body-small-b;
-      min-width: 100px;
-      height: 36px;
-    }
-
-    .hero-wish {
-      width: 36px;
-      height: 36px;
-    }
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 // Movie home banner: mirror the sports home hero dimensions at each breakpoint.
 // Scoped class prevents changes to sports or other Swiper instances.
@@ -7288,19 +6707,7 @@ section.top10-section {
   overflow: hidden;
 }
 
-@media (max-width: 1024px) {
-  .hero-swiper-container.movie-home-hero {
-    height: min(740px, calc(100svh - 60px));
-    min-height: 480px;
-  }
-}
-
-@media (max-width: 600px) {
-  .hero-swiper-container.movie-home-hero {
-    height: min(580px, calc(100svh - 56px));
-    min-height: 400px;
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 
 // =====================================================================
@@ -7448,81 +6855,7 @@ section.top10-section {
   }
 }
 
-// 태블릿: 배너 높이 · 문구 · 포스터를 줄여서 그대로 보여줌
-@media (max-width: $breakpoint-tablet) {
-  .subscribe-cta.subscribe-cta--tv {
-    .subscribe-banner {
-      height: 340px;
-    }
-
-    .subscribe-content {
-      left: 6%;
-    }
-
-    .subscribe-title {
-      @include heading-h2-b;
-    }
-
-    .subscribe-posters {
-      top: 50%;
-      left: max(55%, 440px);
-      gap: $space-sm;
-      transform: translateY(-50%);
-    }
-
-    .subscribe-poster {
-      --poster-h: 238px;
-    }
-  }
-}
-
-// 모바일: 문구 위 · 포스터 아래 (포스터는 작게, 오른쪽 끝에서 잘림)
-@media (max-width: $breakpoint-mobile) {
-  .subscribe-cta.subscribe-cta--tv {
-    .subscribe-banner {
-      height: auto;
-      padding: $space-2xl 0;
-      border-radius: $radius-md;
-    }
-
-    .subscribe-content {
-      position: relative;
-      top: auto;
-      left: auto;
-      right: auto;
-      transform: none;
-      padding: 0 20px;
-    }
-
-    .subscribe-logo {
-      width: 58px;
-      height: 44px;
-    }
-
-    .subscribe-title {
-      @include heading-h3-b;
-      margin-top: $space-md;
-    }
-
-    .subscribe-btn {
-      margin-top: 20px;
-    }
-
-    .subscribe-posters {
-      position: relative;
-      top: auto;
-      left: auto;
-      transform: none;
-      margin-top: $space-xl;
-      padding-left: 20px;
-      gap: $space-sm;
-    }
-
-    .subscribe-poster {
-      --poster-h: 179px;
-    }
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 
 // =====================================================================
@@ -7618,17 +6951,7 @@ section.top10-section .top10-slide.top10-slide--wide {
   }
 }
 
-@media (max-width: $breakpoint-tablet) {
-  section.top10-section .top10-slide.top10-slide--wide {
-    width: 240px * 1.3; // 312
-  }
-}
-
-@media (max-width: $breakpoint-mobile) {
-  section.top10-section .top10-slide.top10-slide--wide {
-    width: 170px * 1.3; // 221
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 
 // =====================================================================
@@ -7796,90 +7119,7 @@ section.device-guide.device-guide--watch {
   }
 }
 
-// 태블릿
-@media (max-width: $breakpoint-tablet) {
-  section.device-guide.device-guide--watch {
-    --logo-scale: 0.75;
-
-    padding: $space-5xl 0;
-
-    .inner {
-      padding-left: $tablet-edge;
-      padding-right: $tablet-edge;
-    }
-
-    .watch-logo-main {
-      height: 48px;
-    }
-
-    .watch-title {
-      @include display-l-b;
-    }
-
-    .watch-subtitle {
-      @include display-M-b;
-    }
-
-    .watch-devices {
-      gap: $space-xl $space-2xl;
-    }
-  }
-}
-
-// 모바일
-@media (max-width: $breakpoint-mobile) {
-  section.device-guide.device-guide--watch {
-    --logo-scale: 0.6;
-    --icon-scale: 0.8;
-
-    padding: $space-4xl 0;
-
-    .inner {
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-
-    .watch-logo-main {
-      height: 40px;
-    }
-
-    .watch-title {
-      @include display-M-b;
-      margin-top: $space-lg;
-    }
-
-    .watch-desc {
-      @include body-small;
-    }
-
-    .watch-marquee {
-      margin-top: $space-2xl;
-    }
-
-    .watch-logo-list {
-      gap: $space-xl;
-      padding-right: $space-xl;
-    }
-
-    .watch-mobile {
-      margin-top: $space-2xl;
-    }
-
-    .watch-subtitle {
-      @include heading-h2-b;
-    }
-
-    .watch-link {
-      @include body-default-b;
-    }
-
-    .watch-devices {
-      gap: $space-lg $space-xl;
-      margin-top: $space-2xl;
-    }
-
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 
 // =====================================================================
@@ -7959,22 +7199,7 @@ section.device-guide.device-guide--watch {
   color: $text-inverse;
 }
 
-@media (max-width: $breakpoint-mobile) {
-  .auth-profiles {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: $space-lg;
-  }
-
-  .auth-profile-avatar {
-    width: 72px;
-    height: 72px;
-
-    img {
-      width: 26px;
-      height: 26px;
-    }
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 
 // =====================================================================
@@ -8150,46 +7375,7 @@ section.device-guide.device-guide--watch {
   }
 }
 
-// 모바일
-@media (max-width: $breakpoint-mobile) {
-  .auth-card.auth-card--login {
-    min-height: 0;
-    padding: 76px 20px $space-2xl;
-
-    .auth-title {
-      @include display-M;
-    }
-
-    .auth-desc {
-      @include body-default;
-    }
-
-    .auth-login-input {
-      height: 52px;
-    }
-
-    .auth-code {
-      gap: 6px;
-    }
-
-    .auth-code-box {
-      @include heading-h2-b;
-      width: auto;
-      flex: 1 1 0;
-      min-width: 0;
-      max-width: 52px;
-      height: 56px;
-    }
-
-    .auth-login-links-row {
-      gap: $space-sm $space-xl;
-    }
-
-    .auth-done {
-      padding: $space-xl 0 $space-lg;
-    }
-  }
-}
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 
 
 // =====================================================================
@@ -8280,4 +7466,78 @@ section.device-guide.device-guide--watch {
 
 .account-member-name {
   @include body-default;
+}
+
+
+// =====================================================================
+// [수정] 히어로 제목 — 모든 화면에서 작품 로고 이미지 (HeroSection.jsx · TMDB 공식 타이틀 이미지)
+// - 로고가 없는 작품만 글자 제목 (SF Pro) · 로고 · 글자 모두 항상 흰색
+// - 크기: PC 390 × 162 (로고는 이 영역 안에 비율 유지 · 왼쪽 아래 정렬) · 태블릿 · 모바일 크기는 mobile.scss
+// =====================================================================
+.hero-swiper-container .hero-slide-item .hero-info .hero-title {
+  color: $light-color-0; // 로고가 없을 때 글자 제목도 흰색
+
+  .hero-title-logo {
+    display: none;
+  }
+
+  &.has-logo {
+    margin-bottom: $space-xl;
+
+    .hero-title-logo {
+      display: block;
+      width: 390px;
+      height: 162px;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: left bottom;
+      filter: brightness(0) invert(1); // 로고 색과 상관없이 항상 흰색 (모양 · 투명 부분은 그대로)
+    }
+
+    // 글자 제목은 화면에서만 숨김 (스크린 리더는 읽음)
+    .hero-title-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+}
+
+
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
+
+
+// =====================================================================
+// [추가] 푸터 글자 — 시안 (PC · 태블릿 · 모바일 공통)
+// - 주요 링크 (이용 가이드 › · 자주 묻는 질문 ›): Body/default-B · color/secondary
+// - 정책 링크 · 국가/언어: Body/small · color/secondary
+// - 저작권: Label/default · color/secondary
+// =====================================================================
+.footer.footer {
+  .footer-main-menu a,
+  .footer-main-menu .arrow {
+    @include body-default-b;
+    color: $text-secondary;
+  }
+
+  .footer-policy-menu,
+  .footer-policy-menu a,
+  .footer-policy-menu .footer-region {
+    @include body-small;
+    color: $text-secondary;
+  }
+
+  .footer-copyright {
+    @include label-default;
+    color: $text-secondary;
+  }
+
+  // 마우스를 올리면 밝게 (기존과 같음)
+  .footer-main-menu a:hover,
+  .footer-policy-menu a:hover {
+    color: $text-primary;
+  }
 }
