@@ -398,3 +398,14 @@ $tv-key-mode-bg: $dark-color-300; // 자판 모드 버튼 묶음 (시안 #353535
 $tv-key-mode-divider: $dark-color-900; // 모드 버튼 사이 선
 $tv-key-space-bg: $light-color-0; // [공백] 버튼
 $tv-key-space-text: $dark-color-900;
+
+// TV 스포츠 화면 (시안: 03 · 스포츠 · 하이라이트)
+$tv-header-bg: #000000; // TV 헤더 메뉴 바 (Dark/Black · 배경 흐림 30)
+$tv-header-tab-active-bg: $dark-color-200; // 선택된 메뉴 (Dark/200)
+$tv-card-radius: 30px; // 섹션 카드 모서리
+$tv-card-title-color: $text-tertiary; // 카드 제목 (시안 회색 #8E8E8E 에 가장 가까운 토큰)
+
+// TV 카드 제목: SF Pro Medium 32 / 46 · 자간 0%
+@mixin tv-card-title {
+  @include type-style(32px, 46px, $font-weight-medium);
+}
