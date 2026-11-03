@@ -31,7 +31,7 @@ const NewRelease = () => {
         <Rail className="rail-release" label="신규출시">
           {items.map((tv) => (
             <SwiperSlide key={`tv_${tv.id}`}>
-              <ReleaseCard item={tv} type="tv" />
+              <ReleaseCard item={tv} type="tv" variant="new" />
             </SwiperSlide>
           ))}
         </Rail>

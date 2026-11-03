@@ -185,6 +185,14 @@ $footer-pad-y: 14px;
   padding-left: $header-pad-x;
   padding-right: $header-pad-x;
   box-sizing: border-box;
+
+  // [수정] PC(1025px 이상): 고정 폭(1920) · 고정 여백(64px) 대신 화면 비율
+  // → 어떤 해상도에서도 좌우 5% 씩, 콘텐츠 폭 화면의 90%
+  @media (min-width: 1025px) {
+    max-width: none;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
 }
 
 // =====================================================================
@@ -366,5 +374,27 @@ $breakpoint-mobile: 767px; // 모바일 (mobile.scss 에서 사용)
 $tablet-gutter: 13%;
 $tablet-edge: 40px; // 헤더·푸터·스포츠 섹션 좌우 여백
 
-// 데스크톱 시안(1920): 본문 좌우 여백 240px = 12.5% (콘텐츠 폭 1440)
-$desktop-gutter: 12.5%;
+// 데스크톱(PC · 1025px 이상): 본문 좌우 여백 5% 씩 → 콘텐츠 폭 화면의 90% (1920 기준 96px · 콘텐츠 1728)
+// - [수정] 예전 값 12.5% (콘텐츠 75% · 1440)
+$desktop-gutter: 5%;
+
+
+// =====================================================================
+// [추가] TV 1920 × 1080 — 컴포넌트 토큰 (TV.scss 에서 사용)
+// - 버튼 2종: 기본(흰 배경 · 어두운 글자) / 보조(Light/100 40% · 흰 글자) · 모서리 12
+// - 리모컨 안내 박스 · 자판 모드 버튼(ABC · abc · 123 · #+-) 배경과 사이 선
+// =====================================================================
+$tv-screen-width: 1920px;
+$tv-screen-height: 1080px;
+
+$tv-btn-primary-bg: $light-color-0;
+$tv-btn-primary-text: $dark-color-900;
+$tv-btn-secondary-bg: rgba($light-color-100, 0.4); // Light/100 · 불투명도 40%
+$tv-btn-secondary-text: $light-color-0;
+$tv-btn-radius: $radius-card-sm; // 12
+
+$tv-guide-bg: $dark-color-100; // 리모컨 안내 박스 #525252
+$tv-key-mode-bg: $dark-color-300; // 자판 모드 버튼 묶음 (시안 #353535 에 가장 가까운 토큰)
+$tv-key-mode-divider: $dark-color-900; // 모드 버튼 사이 선
+$tv-key-space-bg: $light-color-0; // [공백] 버튼
+$tv-key-space-text: $dark-color-900;
