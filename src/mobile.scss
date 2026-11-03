@@ -2642,7 +2642,8 @@ header .inner nav .gnb-right ul .search-icon-item {
 // - 추천작: 버튼 글자 Label/default · Light/0 · 버튼 높이 25 (재생 아이콘 7 × 9)
 // - AI 어시스트: 기분 칩 Body/small · Light/0 · 56 × 30 (패딩 10 20)
 //   · 한 줄 소개 Body/small · Light/500 · 높이 30 (패딩 6 10) / 제목 Body/default-B · 상세 보기 Caption/default-B (Light/500)
-// - 신규출시 · 공개예정작: [N월 공개예정] Label/default · Light/0 · 105 × 25 (패딩 5 10) / 알림 벨 25 × 25
+// - 신규출시 · 공개예정작: 글자 없이 포스터 + 버튼 ([재생] [찜] 25 × 25 · 아이콘 7 × 9 / [N월 공개예정 🔔] 105 × 25 Label/default)
+// - 이어보기 · 찜 · AI 카드 · 추천작: 시안에 없는 설명 줄 · 남은 시간 · 제목 숨김
 // - 홍보 배너: 로고 73 × 56 / 제목 Display/M-B · Light/0 / 버튼 200 × 40 (패딩 7 36) Body/large-B · Light/0 / 안내 Label/default · Light/500
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
@@ -2663,7 +2664,16 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
 
   // ---------- 홍보 배너 ----------
+  // 시안: 비스듬한 포스터 없이 배경 사진(어둡게) 위에 로고 · 문구 · 버튼 · 안내
   .subscribe-cta.subscribe-cta--tv {
+    .subscribe-posters {
+      display: none;
+    }
+
+    .subscribe-content {
+      padding: 0 $space-3xl;
+    }
+
     .subscribe-logo {
       width: 73px;
       height: 56px;
@@ -2688,25 +2698,118 @@ header .inner nav .gnb-right ul .search-icon-item {
     }
   }
 
-  // ---------- 신규출시 · 공개예정작 버튼 (로그인 전 · 후 홈 공통 카드) ----------
-  main.member-home .member-nr-card,
-  section.upcoming-section .member-nr-card {
-    .member-nr-month {
+  // ---------- 신규출시 · 공개예정작 (로그인 전 · 후 홈 공통 카드) ----------
+  // 시안: 글자 없이 포스터만 + 아래 가운데 버튼 (포스터 폭 130 · 다음 장 일부 보임)
+  main.member-home .rail-release.rail-release,
+  section.upcoming-section .rail-release.rail-release {
+    --rail-col: 130px;
+  }
+
+  main.member-home .member-nr-card.member-nr-card,
+  section.upcoming-section .member-nr-card.member-nr-card {
+    position: relative;
+    display: block;
+    padding: 0;
+    border-radius: $radius-sm;
+    overflow: hidden;
+    background-color: $dark-color-400;
+
+    // 버튼이 잘 보이도록 포스터 아래쪽 그림자
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $card-shadow-gradient;
+      pointer-events: none;
+    }
+
+    .member-nr-poster {
+      border-radius: 0;
+    }
+
+    // 제목 · 장르 · 소개 · PC 버튼은 휴대폰에서 숨김
+    .member-nr-info {
+      display: none;
+    }
+
+    .member-nr-quick {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: $space-md;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: $space-sm;
+    }
+
+    // [재생] · [찜]: 25 × 25 원형 · 아이콘 7 × 9
+    .member-nr-quick-play,
+    .member-nr-quick-heart {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 25px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      color: $light-color-0;
+      cursor: pointer;
+    }
+
+    .member-nr-quick-play {
+      background-color: $primary-color-500;
+
+      img {
+        display: block;
+        width: 7px;
+        height: 9px;
+      }
+    }
+
+    .member-nr-quick-heart {
+      background-color: $sport-opacity-b;
+
+      &.is-on {
+        color: $live-color;
+      }
+    }
+
+    .member-nr-quick-heart-icon {
+      display: block;
+      width: 11px;
+      height: 11px;
+      background-color: currentColor;
+      -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+      mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+    }
+
+    // [N월 공개예정 🔔]: 105 × 25 (패딩 5 10) · Label/default · Light/0 · 프라이머리
+    .member-nr-quick-month {
       @include label-default;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: $space-xs;
       width: 105px;
       height: 25px;
       padding: 5px 10px;
+      border: none;
+      border-radius: 999px;
+      background-color: $primary-color-500;
       color: $light-color-0;
-    }
+      white-space: nowrap;
+      cursor: pointer;
 
-    .member-nr-bell {
-      width: 25px;
-      height: 25px;
-    }
-
-    .member-nr-bell-icon {
-      width: 11px;
-      height: 11px;
+      .member-nr-bell-icon {
+        flex-shrink: 0;
+        width: 10px;
+        height: 10px;
+      }
     }
   }
 
@@ -2736,10 +2839,24 @@ header .inner nav .gnb-right ul .search-icon-item {
       }
     }
 
-    // ---------- 찜 ----------
+    // ---------- 찜 (휴대폰: 세로 3줄 목록 · WishlistSection.jsx .member-wl-list) ----------
     .member-wishlist {
-      .rail-wish {
-        --rail-col: 340px;
+      .member-wl-list {
+        display: flex;
+        flex-direction: column;
+        gap: $space-sm;
+        margin: 0;
+        padding: 0 $mobile-edge 0 0; // 이너 오른쪽 여백 0 → 제목과 같은 오른쪽 끝선
+        list-style: none;
+
+        li {
+          min-width: 0;
+        }
+      }
+
+      .member-wl-card {
+        width: 100%;
+        max-width: 340px; // 시안 340 × 70
       }
 
       .member-wl-card {
@@ -2759,10 +2876,21 @@ header .inner nav .gnb-right ul .search-icon-item {
       }
     }
 
-    // ---------- 추천작 ----------
+    // ---------- 추천작 (시안: 제목 · 설명 없이 포스터 + [재생] [★ 평점]) ----------
     .member-recommend {
+      .rail-recommend {
+        --rail-col: 130px;
+      }
+
       .member-rc-info {
-        bottom: $space-md + 25px + $space-sm; // 버튼(25) 위
+        display: none;
+      }
+
+      .member-rc-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: $space-sm;
       }
 
       .member-rc-play,
@@ -2772,10 +2900,42 @@ header .inner nav .gnb-right ul .search-icon-item {
         color: $light-color-0;
       }
 
-      .member-rc-play img {
-        width: 7px;
-        height: 9px;
+      // 재생: 25 × 25 원형 · 아이콘 7 × 9 ("재생" 글자는 화면에서만 숨김)
+      .member-rc-play {
+        width: 25px;
+        padding: 0;
+        font-size: 0;
+        line-height: 0;
+        gap: 0;
+
+        img {
+          width: 7px;
+          height: 9px;
+        }
       }
+
+      .member-rc-rate {
+        padding: 0 10px;
+      }
+    }
+
+    // ---------- 글자 빼기 (시안) ----------
+    // 이어보기: 남은 시간 · 설명 줄 없이 제목 + 이어보기
+    .member-continue {
+      .member-cw-time,
+      .member-cw-card .member-card-meta {
+        display: none;
+      }
+    }
+
+    // 찜: 제목만
+    .member-wishlist .member-wl-meta {
+      display: none;
+    }
+
+    // AI 어시스트: 설명 줄 없이 제목 + 상세 보기
+    .member-mood .member-ai-card .member-card-meta {
+      display: none;
     }
 
     // ---------- AI 어시스트 ----------
@@ -2831,6 +2991,35 @@ header .inner nav .gnb-right ul .search-icon-item {
 
     img {
       display: none;
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] 스포츠 관심있는 구단 — 휴대폰: "전체 구단 보기" 를 제목 줄 오른쪽 끝에 고정
+// - 제목 · 구단 카드 위치는 그대로 (absolute 로 띄워서 다른 내용을 밀지 않음)
+// - 이너(좌우 20) 기준 맨 위 · 오른쪽 20 / 높이 28 = 제목 한 줄 높이 → 제목과 세로 가운데가 맞음
+// - 제목 오른쪽 120px 은 기존처럼 비워 둬서 버튼과 겹치지 않음
+// - main.sport-home.sport-home section.sport-teams : sport-member.scss 가 나중에 불러와져도 이 규칙이 우선
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  main.sport-home.sport-home section.sport-teams {
+    .inner {
+      position: relative;
+    }
+
+    .sport-team-more {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      left: auto;
+      display: flex;
+      align-items: center;
+      width: auto;
+      height: 28px;
+      margin: 0;
+      white-space: nowrap;
     }
   }
 }
