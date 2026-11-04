@@ -1393,3 +1393,20 @@ main.member-home .subscribe-cta {
     --rail-col: 342px;
   }
 }
+.member-home .member-nr-play {
+  gap: 6px;
+}
+.member-home .member-nr-play img {
+  display: block;
+  flex-shrink: 0;
+  width: 8px;
+  height: 11px;
+}
+.member-home .member-nr-heart-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/heart-icon.svg") center/contain no-repeat;
+  mask: url("/icons/heart-icon.svg") center/contain no-repeat;
+}

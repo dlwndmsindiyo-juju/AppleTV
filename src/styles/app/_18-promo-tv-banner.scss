@@ -147,3 +147,21 @@
 }
 
 // (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
+
+
+// =====================================================================
+// [추가] 스포츠 홈 홍보 배너 (SubscribeCTA type="sport" · .subscribe-cta--sport)
+// - 글자 · 버튼 · 크기는 TV 홍보 배너와 똑같음 (.subscribe-cta--tv 규칙 그대로)
+// - 배경만 선수 사진 (public/images/sport/sport-promo-banner.jpg) · 사진 왼쪽이 어두워 검정 그림자는 뺌
+// - 화면이 좁아지면 선수가 보이도록 사진 오른쪽 기준으로 채움
+// =====================================================================
+.subscribe-cta.subscribe-cta--tv.subscribe-cta--sport {
+  .subscribe-bg {
+    object-fit: cover;
+    object-position: right center;
+  }
+
+  .subscribe-banner::after {
+    background: none;
+  }
+}

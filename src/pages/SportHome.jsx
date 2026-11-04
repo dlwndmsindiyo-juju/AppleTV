@@ -12,7 +12,7 @@ import SportConferenceStandings from "../components/sport/SportConferenceStandin
 import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
 import SportSeries from "../components/sport/SportSeries";
-import { Link } from "react-router-dom";
+import SubscribeCTA from "../components/landing/SubscribeCTA"; // [추가] 홍보 배너 (TV 홈과 같은 글자 · 버튼)
 import "./sport-home-banner.css";
 
 const SportHome = () => {
@@ -64,16 +64,8 @@ const SportHome = () => {
       <SportShorts />
 
       {/* 4. 홍보 배너 */}
-      {!user && (
-        <section className="sport-promo-placeholder" aria-label="스포츠 홍보 배너 예정 영역">
-          <div className="sport-promo-placeholder__inner">
-            <span className="sport-promo-placeholder__label">SPORTS PROMOTION</span>
-            <strong>스포츠 홍보 배너 영역</strong>
-            <span>추후 확정된 홍보 디자인이 들어갈 자리입니다.</span>
-            <Link to="/login" className="sport-promo-placeholder__link">로그인하기 →</Link>
-          </div>
-        </section>
-      )}
+      {/* [수정] 예전 빨간 자리표시 → TV 홈과 같은 홍보 배너 (배경만 선수 사진 · 로그인 전에만) */}
+      {!user && <SubscribeCTA type="sport" />}
 
       {/* 5. 관심있는 구단 */}
       <SportTeams />
