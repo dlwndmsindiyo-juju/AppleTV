@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { createPortal } from "react-dom"; // [추가] 재생 팝업을 body 에 바로 그림 (페이지 전환 애니메이션 안에 갇히지 않게)
+import VideoPopup from "../common/VideoPopup"; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import { useSportStore } from "../../store/useSportStore";
@@ -17,6 +17,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import { openSubscribeGate } from "../../utils/subscribeGate"; // [정리] 구독 안내 팝업 열기 공용
 
 // 히어로 슬라이드 이미지 (public/images/sport/ 에 넣어 주세요)
 const SPORT_HERO_SLIDES = [
@@ -143,28 +144,12 @@ const MatchHero = () => {
 
   const handleWatch = () => {
     if (!uid) {
-      window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason: "watch" } }));
+      openSubscribeGate("watch");
       return;
     }
     setPlaying(true);
   };
 
-  // Esc · 브라우저 뒤로가기로 닫기 (열 때 기록을 하나 쌓아 두고, 뒤로가기를 누르면 팝업만 닫힘)
-  useEffect(() => {
-    if (!playing) return undefined;
-    window.history.pushState({ sportHeroPlayer: true }, "");
-    const onPop = () => setPlaying(false);
-    const onKey = (e) => e.key === "Escape" && window.history.back();
-    window.addEventListener("popstate", onPop);
-    window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("popstate", onPop);
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [playing]);
-
-  // 닫기 버튼 = 뒤로가기 (쌓아 둔 기록을 지우면서 닫힘)
-  const closePlayer = () => window.history.back();
 
   return (
     <section className="sport-hero">
@@ -232,26 +217,19 @@ const MatchHero = () => {
         </div>
       </div>
 
-      {/* [추가] 전체 화면 재생 팝업 (OTT 상세의 재생 팝업과 같은 모양) */}
-      {playing && createPortal(
-        <div className="detail-popup sport-hero-popup" role="dialog" aria-modal="true" aria-label="경기 시청">
-          {/* 작은 뒤로가기 버튼 (왼쪽 위) — 누르면 원래 화면으로 */}
-          <button type="button" className="sport-hero-popup-back" onClick={closePlayer} aria-label="닫고 돌아가기">
-            <span aria-hidden="true">←</span> 뒤로
-          </button>
-          {videoId ? (
-            <iframe
-              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1`}
-              title={`${sportTeamLabel(match.homeTeam)} vs ${sportTeamLabel(match.awayTeam)} 경기 시청`}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-              allowFullScreen
-            />
-          ) : (
-            <p>영상을 불러오는 중입니다…</p>
-          )}
-        </div>,
-        document.body
-      )}
+      {/* [추가] 전체 화면 재생 팝업 (공용 VideoPopup · 영상은 화면을 100% 채움) */}
+      <VideoPopup open={playing} onClose={() => setPlaying(false)} label="경기 시청">
+        {videoId ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1`}
+            title={`${sportTeamLabel(match.homeTeam)} vs ${sportTeamLabel(match.awayTeam)} 경기 시청`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowFullScreen
+          />
+        ) : (
+          <p>영상을 불러오는 중입니다…</p>
+        )}
+      </VideoPopup>
     </section>
   );
 };

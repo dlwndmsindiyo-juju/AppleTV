@@ -1,0 +1,195 @@
+// App.scss 에서 나눈 파일 (15) — 로그인 · 구독 카드 밝은 색
+@use "../../variables" as *;
+@use "tokens" as *;
+
+// =====================================================================
+// [추가] 로그인 · 구독 카드 밝은 색 (시안 PNG)
+// - 바깥 배경은 그대로 $bg-color, 팝업 카드 안쪽만 밝은 회색으로
+// - 위 "로그인 · 구독 플로우" 블록은 그대로 두고 색만 덮어씀 (크기 · 여백 · 플로우 변경 없음)
+// - 구독 안내 팝업(SubscribeGate · .subscribe-gate)은 적용 대상 아님
+// =====================================================================
+
+.auth-card {
+  background-color: $light-color-100;
+  color: $text-inverse;
+}
+
+// 닫기: 흰 원형 + 검정 X
+.auth-close {
+  background-color: $light-color-0;
+  color: $text-inverse;
+
+  &:hover {
+    background-color: $light-color-300;
+  }
+
+  &:focus-visible {
+    outline-color: $primary-color-500;
+  }
+}
+
+// 로고: 회색 칸 + 검정 아이콘
+.auth-logo {
+  background-color: $light-color-400;
+
+  img {
+    filter: brightness(0);
+  }
+}
+
+// 제목 · 설명
+.auth-title {
+  color: $text-inverse;
+}
+
+.auth-desc {
+  color: $text-tertiary;
+}
+
+// 입력 칸
+.auth-field {
+  border-color: $auth-light-line;
+  background-color: $light-color-100;
+
+  &:focus-within {
+    border-color: $primary-color-500;
+    background-color: $light-color-0;
+  }
+
+  input {
+    color: $text-inverse;
+
+    &::placeholder {
+      color: $auth-light-sub;
+      opacity: 1;
+    }
+  }
+}
+
+.auth-field-label {
+  color: $auth-light-sub;
+}
+
+.auth-field-value {
+  color: $text-inverse;
+}
+
+// 개인정보 안내 · 회색 안내 박스
+.auth-privacy {
+  strong {
+    color: $text-inverse;
+  }
+
+  p {
+    color: $auth-light-sub;
+  }
+}
+
+.auth-info {
+  background-color: $light-color-200;
+
+  strong {
+    color: $text-inverse;
+  }
+
+  p {
+    color: $auth-light-sub;
+  }
+}
+
+// 안내 · 오류 · 작은 글씨
+.auth-notice,
+.auth-hint,
+.auth-fineprint,
+.plan-fineprint {
+  color: $auth-light-sub;
+}
+
+.auth-message {
+  color: $text-inverse;
+}
+
+// 버튼: 메인은 프라이머리 그대로, 보조는 밝은 회색
+.auth-btn {
+  &:focus-visible {
+    outline-color: $primary-color-500;
+  }
+
+  &--secondary {
+    background-color: $light-color-200;
+    color: $text-inverse;
+
+    &:hover:not(:disabled) {
+      background-color: $light-color-300;
+    }
+  }
+}
+
+// 또는 구분선
+.auth-divider {
+  color: $text-tertiary;
+
+  &::before,
+  &::after {
+    background-color: $auth-light-line;
+  }
+}
+
+// 링크: 프라이머리 그대로
+.auth-link:hover:not(:disabled) {
+  color: $primary-color-400;
+}
+
+// 플랜 선택
+.plan-opt {
+  border-color: $auth-light-line;
+  background-color: $light-color-100;
+
+  &:hover {
+    border-color: $neutral-color-400;
+  }
+
+  &.on {
+    border-color: $primary-color-500;
+    box-shadow: 0 0 0 1px $primary-color-500;
+    background-color: $light-color-0;
+  }
+
+  &:has(input:focus-visible) {
+    outline-color: $primary-color-500;
+  }
+}
+
+.plan-opt-name,
+.plan-opt-price,
+.plan-benefit-title {
+  color: $text-inverse;
+}
+
+.plan-opt-note {
+  color: $auth-light-sub;
+}
+
+.plan-opt-radio {
+  border-color: $light-color-500;
+
+  .plan-opt.on & {
+    border-color: $primary-color-500;
+    background-color: $primary-color-500;
+  }
+}
+
+// 포함 혜택
+.plan-benefit-list {
+  li {
+    border-color: $auth-light-line;
+  }
+
+  strong {
+    color: $text-inverse;
+  }
+
+  span {
+    color: $auth-light-sub;
+  }
+}

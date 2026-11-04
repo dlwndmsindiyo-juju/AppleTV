@@ -1,0 +1,380 @@
+// mobile.scss 에서 나눈 파일 (04) — 홈 글자 위계 (1024px 이하) · 모바일 기본 (헤더 · 푸터 · 히어로 · 홈 섹션)
+@use "../../variables" as *;
+@use "tokens" as *;
+
+// ▼ App.scss 에서 옮김 — [수정] 히어로 제목 — 모든 화면에서 작품 로고 이미지 (HeroSection.jsx · TMDB 공식 타이틀 이미지)
+// =====================================================================
+// [추가] TV 메인 홈 — 태블릿 · 모바일 글자 위계 (시안: Apple TV 모바일 hi-fi · 1024px 이하)
+// - 섹션 제목 Display/L-B · Light/0 / 소제목 Heading/h3 · Light/500 — 모든 섹션 동일 (로그인 전 · 후 홈 공통)
+// - 히어로: 칩 Body/small · Light/0 / 소개 Heading/h4 · Light/0 / 재생 Body/default-B · Light/0
+// - 핵심 혜택: 제목 Body/large-B · Light/0 / 설명 Body/small · Light/500
+// - 로그인 후 홈 카드(이어보기 · 찜)는 member.scss
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+
+  // ---------- 섹션 제목 · 소제목 ----------
+  section.top10-section .top10-title,
+  .upcoming-section .upcoming-title.upcoming-title,
+  .apple-originals .apple-originals-title.apple-originals-title {
+    @include display-l-b;
+    margin: 0 0 $space-sm;
+    padding-top: 0;
+    color: $light-color-0;
+    word-break: keep-all;
+  }
+
+  section.top10-section .top10-desc,
+  .upcoming-section .upcoming-desc.upcoming-desc,
+  .apple-originals .apple-originals-desc.apple-originals-desc {
+    @include heading-h3;
+    color: $light-color-500;
+    word-break: keep-all;
+  }
+
+  // ---------- 히어로 ----------
+  .hero-swiper-container .hero-slide-item .hero-info {
+    .hero-chip.hero-chip {
+      @include body-small;
+      color: $light-color-0;
+    }
+
+    .hero-overview.hero-overview {
+      @include heading-h4;
+      color: $light-color-0;
+    }
+
+    .hero-play.hero-play {
+      @include body-default-b;
+      color: $light-color-0;
+    }
+  }
+
+  // ---------- 핵심 혜택 ----------
+  .value-props .value-props-inner {
+    .value-prop-title {
+      @include body-large-b;
+      color: $light-color-0;
+    }
+
+    .value-prop-desc {
+      @include body-small;
+      color: $light-color-500;
+    }
+  }
+}
+
+
+@media (max-width: $breakpoint-mobile) {
+
+  // ---------- 헤더 ----------
+  header .inner {
+    padding: $header-pad-y $mobile-edge;
+
+    .logo a img {
+      height: 20px;
+    }
+
+    nav {
+      padding: $header-pad-y $mobile-edge;
+
+      .gnb-center-toggle {
+        button {
+          height: 34px;
+          padding: 0 14px;
+          font-size: 14px;
+        }
+      }
+
+      .gnb-right ul {
+        .search-box {
+          display: none; // 모바일에서는 검색창 숨김
+        }
+
+        .profile-box {
+          width: 36px;
+          height: 36px;
+          font-size: 14px;
+        }
+
+        // 로그인 버튼: PC 와 같은 크기 (App.scss .header-login-btn)
+      }
+    }
+  }
+
+  // ---------- 푸터 ----------
+  .footer {
+    padding: $footer-pad-y $mobile-edge;
+
+    .footer-main-menu {
+      gap: 10px 20px;
+    }
+  }
+
+  // ---------- 히어로 ----------
+  .hero-swiper-container {
+    // 화면이 줄어도 히어로는 화면 높이 그대로
+    height: 100vh;
+    height: 100svh;
+
+    // 모바일: 좌우 네비게이션 아이콘은 숨기고 아래 페이지네이션(점)만 표시
+    // (로그인 후 메인 member.scss 에서 태블릿용으로 보이게 한 규칙보다 우선)
+    .swiper-button-prev,
+    .swiper-button-next {
+      display: none !important;
+    }
+
+    // 모바일: 배경 이미지를 가로 · 세로 정가운데 기준으로 채움
+    .hero-slide-item .hero-media-bg {
+      background-size: cover;
+      background-position: center center !important;
+
+      // 예고편 영상도 화면 가운데를 기준으로 꽉 채움 (좌우가 같은 양만큼 잘림)
+      iframe {
+        top: 50%;
+        left: 50%;
+        width: calc(100vh * 16 / 9);
+        width: calc(100svh * 16 / 9);
+        min-width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    // PC 용 왼쪽 어두운 그라데이션은 빼고 아래쪽만 (이미지가 한쪽으로 치우쳐 보이지 않게)
+    .hero-slide-item .hero-overlay {
+      background: linear-gradient(to top,
+          $bg-color 0%,
+          rgba($bg-color, 0.55) 45%,
+          rgba($bg-color, 0) 100%);
+    }
+
+    .hero-slide-item .hero-info {
+      left: $mobile-edge;
+      right: $mobile-edge;
+      width: auto;
+      max-width: none;
+
+      .hero-title {
+        font-size: 34px;
+        margin-bottom: $space-lg;
+      }
+
+      .hero-overview {
+        line-clamp: 3;
+        -webkit-line-clamp: 3;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  // ---------- 홈 섹션 공통 좌우 여백 ----------
+  .value-props .inner,
+  .top10-section .inner,
+  .upcoming-section .inner,
+  .apple-originals .inner,
+  .ai-promo .inner,
+  .subscribe-cta .inner,
+  .movie-slider-section .inner {
+    padding-left: $mobile-edge;
+    padding-right: $mobile-edge;
+  }
+
+  // ---------- 핵심 혜택: 1열 ----------
+  .value-props {
+    .value-props-inner {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  // ---------- TOP 10 (시안: 포스터 2장 + 다음 장 살짝) ----------
+  .top10-section {
+    padding: 40px 0;
+
+    .inner {
+      padding-right: 0;
+    }
+
+    .top10-title {
+      @include display-M;
+      padding-right: $mobile-edge;
+    }
+
+    .top10-slide {
+      width: 135px;
+    }
+
+    .top10-rank {
+      font-size: 80px;
+      bottom: -6px;
+    }
+  }
+
+  // ---------- 공개예정작 (시안: 카드 세로 나열 · 썸네일 왼쪽 + 글 오른쪽) ----------
+  .upcoming-section {
+    padding: 40px 0;
+
+    .inner {
+      padding-right: $mobile-edge;
+    }
+
+    .upcoming-title {
+      @include display-M;
+    }
+
+    .upcoming-title,
+    .upcoming-desc {
+      padding-right: 0;
+    }
+
+    .upcoming-desc {
+      @include body-small;
+      margin-bottom: 20px;
+    }
+
+    .upcoming-list {
+      grid-auto-flow: row;
+      grid-auto-columns: auto;
+      grid-template-columns: minmax(0, 1fr);
+      gap: $space-lg;
+      overflow: visible;
+      padding-right: 0;
+    }
+
+    .upcoming-card {
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .upcoming-thumb {
+      width: 96px;
+    }
+
+    // 제목은 두 줄까지 (시안: "딩크 / the Dink")
+    .upcoming-movie-title {
+      @include heading-h4;
+      white-space: normal;
+      word-break: keep-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    // 시안: 모바일은 줄거리 없이 장르 · 제목 · 버튼만
+    .upcoming-overview {
+      display: none;
+    }
+
+    .upcoming-btn {
+      height: 32px;
+      padding: 0 14px;
+      margin-top: $space-xs;
+    }
+  }
+
+  // ---------- 오리지널스 (시안: 포스터 2장 + 다음 장 살짝) ----------
+  .apple-originals {
+    padding: 40px 0;
+
+    .apple-originals-title {
+      @include display-M;
+      padding-right: $mobile-edge;
+    }
+
+    .apple-originals-desc {
+      @include body-small;
+      padding-right: $mobile-edge;
+      margin-bottom: 20px;
+    }
+
+    .inner {
+      padding-right: 0;
+    }
+
+    .apple-originals-slide {
+      width: 140px;
+    }
+
+    .apple-card-poster {
+      margin-bottom: $space-sm;
+    }
+
+    .apple-card-title {
+      @include heading-h4;
+    }
+  }
+
+  // ---------- AI 어시스턴트 띠: 글 → 카드(화면 폭 가득) ----------
+  .ai-promo {
+    padding: 40px 0;
+
+    .inner {
+      gap: $space-xl;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .ai-promo-text {
+      width: 100%;
+    }
+
+    .ai-promo-title {
+      @include heading-h2-b;
+    }
+
+    .ai-promo-desc {
+      @include body-small;
+    }
+
+    .ai-promo-card {
+      max-width: none;
+    }
+
+    // 칩이 넘치면 카드 안에서 가로 스크롤
+    .ai-promo-chips {
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  // ---------- 구독 CTA: 이미지 위에 텍스트 ----------
+  .subscribe-cta {
+    padding: $space-xl 0 $space-4xl;
+
+    .subscribe-banner {
+      height: 300px;
+      border-radius: 16px;
+    }
+
+    .subscribe-content {
+      left: 5%;
+      right: 5%;
+      gap: $space-md;
+    }
+
+    .subscribe-title {
+      font-size: 17px;
+    }
+
+    .subscribe-btn {
+      height: 42px;
+      padding: 0 $space-xl;
+    }
+
+    // 모바일은 텍스트가 이미지 전체에 걸치므로 그라데이션을 더 넓게
+    .subscribe-banner::after {
+      background: linear-gradient(to right,
+          rgba($dark-color-900, 0.92) 0%,
+          rgba($dark-color-900, 0.7) 60%,
+          rgba($dark-color-900, 0.2) 100%);
+    }
+  }
+
+  // 스포츠 홈 반응형은 sport-member.scss 에서 관리
+
+}

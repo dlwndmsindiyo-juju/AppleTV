@@ -1,0 +1,513 @@
+// App.scss 에서 나눈 파일 (03) — 히어로 · 핵심 혜택 · TOP 10 · 공개예정작 (기본)
+@use "../../variables" as *;
+
+// 히어로
+.hero-swiper-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; // 화면 전체 높이
+  height: 100svh; // 모바일 주소창을 뺀 화면 높이 (지원 안 하면 위 100vh 사용)
+  background-color: $bg-color;
+
+  // Swiper 내부 요소까지 높이를 100% 로 이어줌
+  .swiper,
+  .swiper-wrapper,
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+  }
+
+  // Swiper 기본 버튼/페이지네이션 커스텀
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $light-color-0 !important;
+    width: 52px !important;
+    height: 52px !important;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 20;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.08);
+    }
+
+    &::after {
+      font-size: 20px !important;
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  .swiper-pagination {
+    bottom: 24px !important;
+    z-index: 20;
+
+    .swiper-pagination-bullet {
+      background: rgba(255, 255, 255, 0.4) !important;
+      opacity: 1;
+      width: 8px;
+      height: 8px;
+      margin: 0 5px !important;
+      transition: all 0.3s ease;
+
+      &-active {
+        background: $light-color-0 !important;
+        width: 28px;
+        border-radius: $radius-card-sm;
+      }
+    }
+  }
+
+  // 개별 슬라이드 아이템
+  .hero-slide-item {
+    position: relative;
+    width: 100%;
+    height: 100%; // .hero-swiper-container (100vh) 를 가득 채움
+    overflow: hidden;
+
+    .hero-media-bg {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        pointer-events: none;
+      }
+    }
+
+    // 하단 비넷/그라데이션 오버레이
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba($bg-color, 0.7) 0%, rgba($bg-color, 0) 60%),
+        linear-gradient(to top,
+          $bg-color 0%,
+          rgba($bg-color, 0.5) 50%,
+          rgba($bg-color, 0) 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    // 영화 정보 영역 (왼쪽 배치·왼쪽 정렬: 라벨 / 제목 / 본문 / 버튼)
+    .hero-info {
+      position: absolute;
+      top: 50%;
+      left: 8%; // 왼쪽 배치
+      transform: translateY(-50%); // 세로만 가운데
+      width: 100%;
+      max-width: 750px;
+      box-sizing: border-box;
+      text-align: left; // 텍스트 전부 왼쪽 정렬
+      color: $text-primary;
+      z-index: 10;
+
+      .hero-meta {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: $space-md;
+        margin-bottom: 20px;
+        color: $text-secondary;
+        font-size: 14px;
+
+        .age-rating {
+          border: 1px solid $text-secondary;
+          padding: 2px 6px;
+          border-radius: 4px;
+          font-size: 12px;
+        }
+      }
+
+      .hero-title {
+        @include display-M;
+        font-size: 64px;
+        font-weight: $font-weight-bold;
+        line-height: 1.15;
+        margin: 0 0 $space-xl;
+        padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
+      }
+
+      .hero-overview {
+        @include body-large;
+        color: $neutral-color-300;
+        line-height: 1.6;
+        margin-bottom: 28px;
+        word-break: keep-all; // 한글이 단어 중간에서 끊기지 않게
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .hero-actions {
+        display: flex;
+        justify-content: flex-start;
+        gap: $space-md;
+
+        .hero-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          height: 40px;
+          padding: 0 20px;
+          border-radius: 9999px;
+          font-size: 14px;
+          font-weight: $font-weight-bold;
+          text-decoration: none;
+          transition: background-color 0.25s ease, color 0.25s ease,
+            border-color 0.25s ease;
+
+          // CTA 버튼 (채움)
+          &.primary {
+            background-color: $light-color-0;
+            color: $text-inverse;
+
+            &:hover {
+              background-color: $neutral-color-300;
+            }
+          }
+
+          // 서브 버튼 (외곽선)
+          &.secondary {
+            border: 1px solid $neutral-color-400;
+            color: $text-primary;
+
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.12);
+              border-color: $light-color-0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ===== 히어로 아래: 핵심 혜택 (Value Props) =====
+.value-props {
+  background-color: $gnb-bg;
+  padding: 22px 0 $space-xl;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .value-props-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-xl;
+  }
+
+  .value-prop-item {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  .value-prop-title {
+    @include body-large; // 시안 제목 크기 (17px)
+    color: $light-color-0;
+  }
+
+  .value-prop-desc {
+    @include body-small; // Body Small 13
+    color: $light-color-500;
+  }
+}
+
+// ===== 인기 영화 TOP 10 =====
+.top10-section {
+  background-color: $gnb-bg;
+  padding: 40px 0 56px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .top10-title {
+    @include heading-h2;
+    color: $text-primary;
+    margin: 0 0 20px;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $text-primary;
+  }
+
+  // 슬라이드 폭 고정 (slidesPerView: "auto") — 시안 282
+  .top10-slide {
+    width: 282px;
+  }
+
+  .top10-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: $text-primary;
+  }
+
+  .top10-poster {
+    position: relative;
+    aspect-ratio: 282 / 400;
+    border-radius: $radius-xs;
+    overflow: hidden;
+    background-color: $surface-color;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    // [추가] 포스터 아래쪽에만 깔리는 그라데이션 섀도우
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%; // 그라데이션이 적용될 높이 (조절 가능)
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+      pointer-events: none;
+      z-index: 1; // 포스터 이미지 위, 랭킹 숫자 아래 또는 적절한 위치
+    }
+
+    // 호버 오버레이
+    .top10-hover {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: $space-sm;
+      padding: $space-lg;
+      text-align: center;
+      background: rgba($bg-color, 0.7);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+
+      .top10-movie-title {
+        @include heading-h4-b;
+        color: $text-primary;
+        word-break: keep-all;
+      }
+
+      .top10-rating {
+        @include body-default;
+        color: $text-primary;
+      }
+    }
+  }
+
+  .top10-card:hover {
+    .top10-hover {
+      opacity: 1;
+    }
+
+    .top10-poster img {
+      transform: scale(1.05);
+    }
+  }
+
+  // 포스터 왼쪽 아래에 겹치는 큰 순위 숫자
+  .top10-rank {
+    position: absolute;
+    left: 8px;
+    bottom: -12px;
+    z-index: 2;
+    font-family: "SF Pro", sans-serif;
+    font-size: 140px;
+    font-weight: $font-weight-bold;
+    line-height: 1;
+    color: $text-primary;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+  }
+}
+
+// ===== 공개예정작 (시안: 포스터 썸네일 + 장르 · 제목 · 줄거리 · 알림 버튼) =====
+.upcoming-section {
+  background-color: $gnb-bg;
+  padding: $space-5xl 0;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .upcoming-title {
+    @include heading-h1;
+    color: $text-primary;
+    margin: 0 0 $space-sm;
+    padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
+  }
+
+  .upcoming-desc {
+    @include body-default;
+    color: $text-secondary;
+    margin: 0 0 $space-xl;
+  }
+
+  // (다른 화면용) 설명 문구 + 오른쪽 "전체 공개 일정 ›" 링크 한 줄
+  .upcoming-sub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-lg;
+    margin-bottom: $space-xl;
+
+    .upcoming-desc {
+      margin: 0;
+    }
+  }
+
+  .upcoming-more {
+    @include body-small;
+    flex-shrink: 0;
+    color: $text-tertiary;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+
+  // PC: 카드 2개 나란히
+  .upcoming-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $grid-gutter;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .upcoming-card {
+    display: flex;
+    align-items: center;
+    gap: $space-xl;
+    padding: 20px;
+    border-radius: $radius-card-sm;
+    background-color: $bg-surface-raised;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  // 포스터 썸네일 (시안 156 x 186)
+  .upcoming-thumb {
+    flex-shrink: 0;
+    display: block;
+    width: 156px;
+    aspect-ratio: 156 / 186;
+    border-radius: $radius-xs;
+    overflow: hidden;
+    background-color: $bg-surface-hover;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  .upcoming-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-sm;
+    min-width: 0;
+  }
+
+  // 장르 · 개봉일
+  .upcoming-meta {
+    @include label-default;
+    color: $text-tertiary;
+  }
+
+  .upcoming-movie-title {
+    @include heading-h3-b;
+    color: $text-primary;
+    margin: 0;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  .upcoming-overview {
+    @include body-small;
+    color: $text-tertiary;
+    margin: 0;
+    word-break: keep-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  // 알림 받기 (흰 알약) / ✓ 알림 설정됨 (프라이머리)
+  .upcoming-btn {
+    @include body-small-b;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    height: 36px;
+    margin-top: $space-sm;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    background-color: $light-color-100;
+    color: $text-inverse;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      background-color: $light-color-400;
+    }
+
+    &.on {
+      background-color: $primary-color-500;
+      color: $text-primary;
+
+      &:hover {
+        background-color: $primary-color-400;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $light-color-0;
+      outline-offset: 2px;
+    }
+  }
+}

@@ -1,0 +1,277 @@
+// sport-member.scss 에서 나눈 파일 (11) — 라이브 상세 조정 · 다른 팀 경기 · 스코어보드 원
+@use "../../variables" as *;
+@use "tokens" as *;
+
+// =====================================================================
+// 라이브 상세 · 조정 (탭 ↔ 내용 간격 / 채팅 사이렌 / PC 텍스트 = 태블릿 텍스트)
+// =====================================================================
+
+main.sport-home.sport-live-page {
+
+  // ---------- 탭 ↔ 내용 간격 ----------
+  // .sport-live-panel 은 .inner 라 공통 규칙(padding: 0)에 패딩이 지워짐 → 탭 아래 여백으로 띄움
+  .sport-live-tabs {
+    margin-bottom: $live-tab-content-gap;
+  }
+
+  // ---------- 채팅: 벨 → 사이렌(신고) 아이콘 ----------
+  .sport-chat-siren {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    img {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    &:hover {
+      background: $bg-surface-hover;
+    }
+
+    &.is-on {
+      background: rgba($sports-color, 0.25);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    .sport-live-tabs {
+      margin-bottom: $live-tab-content-gap-tablet;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    .sport-live-tabs {
+      margin-bottom: $live-tab-content-gap-mobile;
+    }
+
+    .sport-chat-siren {
+      width: 24px;
+      height: 24px;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+// ---------- PC 텍스트: 태블릿과 같은 크기로 (믹스인 동일 적용) ----------
+// - 크기 · 간격 · 이미지 크기는 PC 그대로, 글자 크기만 태블릿 기준
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.sport-home.sport-live-page {
+
+    // 영상 정보 · 다른 경기 목록
+    .sport-live-info-title {
+      @include heading-h4-b;
+      font-family: inherit;
+    }
+
+    .sport-live-info-sub {
+      @include body-default;
+      font-family: inherit;
+    }
+
+    .sport-live-info-note {
+      @include label-default;
+      font-family: inherit;
+    }
+
+    .sport-detail-title {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-detail-meta {
+      @include label-default;
+      font-family: inherit;
+    }
+
+    // 탭
+    .sport-live-tab {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      padding: $space-lg 0;
+    }
+
+    // 라인업
+    .sport-lineup-head {
+      h3 {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p span {
+        font-weight: $font-weight-regular;
+      }
+    }
+
+    .sport-pitch-label {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    .sport-subs-title {
+      @include display-M;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-subs-team {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-subs-col li {
+      @include heading-h4-b;
+      font-family: inherit;
+    }
+
+    // 스코어보드
+    .sport-scoreboard-score {
+      b {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-regular;
+      }
+
+      span {
+        @include body-small;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    // 중계
+    .sport-tl-sub,
+    .sport-tl-card {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    .sport-tl-goal strong {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-commentary .sport-timeline>.sport-tl-half {
+      b {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      span {
+        @include heading-h4-b;
+        font-family: inherit;
+      }
+    }
+
+    // 기록
+    .sport-stats-head h3 {
+      @include heading-h4-b;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-stats-label {
+      @include body-small;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    // 채팅
+    .sport-chat-head h3 {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-chat-head p {
+      @include body-default;
+      font-family: inherit;
+    }
+
+    .sport-chat-filter {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-chat-list .sport-chat-body b {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-chat-form input {
+      @include body-default;
+      font-family: inherit;
+    }
+  }
+}
+
+// =====================================================================
+// 라이브 상세: 다른 팀 경기 (MLS 외 팀 · 데이터 없는 탭)
+// =====================================================================
+.sport-live-page {
+
+  // 탭에 표시할 데이터가 아직 없을 때
+  .sport-live-empty {
+    @include body-default;
+    padding: $space-4xl 0;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+  }
+
+  // 뱃지 이미지가 없는 팀: 이름 첫 글자
+  .sport-badge-initial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    @include heading-h4-b;
+    color: $text-primary;
+  }
+}
+
+// =====================================================================
+// 스코어보드 팀 원: 구단 칩 이미지를 원 전체에 꽉 채움 (radius full)
+// =====================================================================
+.sport-live-page .sport-scoreboard .sport-scoreboard-badge.is-chip {
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}

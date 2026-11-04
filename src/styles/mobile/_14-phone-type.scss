@@ -1,0 +1,342 @@
+// mobile.scss 에서 나눈 파일 (14) — 휴대폰 글자 위계 · 버튼 크기
+@use "../../variables" as *;
+@use "tokens" as *;
+
+// =====================================================================
+// [추가] 휴대폰 (767px 이하) 글자 위계 · 버튼 크기 — 시안 (Apple TV 모바일 hi-fi · 390)
+// - 섹션 제목 Heading/h3-B · Light/0 / 소제목 Heading/h5 · Light/500 — 모든 섹션 (로그인 전 · 후 홈 공통)
+// - 히어로: 칩 Body/small · 소개 Heading/h4 · 재생 Body/default-B (Light/0) → 위 태블릿 규칙과 같아서 그대로
+// - 이어보기: 제목 Body/default-B · Light/0 / 이어보기 Caption/default · Light/500
+// - 찜: 카드 340 × 70 · 배경 Sports/Opacity-b · 포스터 60 × 50 / 제목 Body/default-B · Light/500
+// - 추천작: 버튼 글자 Label/default · Light/0 · 버튼 높이 25 (재생 아이콘 7 × 9)
+// - AI 어시스트: 기분 칩 Body/small · Light/0 · 56 × 30 (패딩 10 20)
+//   · 한 줄 소개 Body/small · Light/500 · 높이 30 (패딩 6 10) / 제목 Body/default-B · 상세 보기 Caption/default-B (Light/500)
+// - 신규출시 · 공개예정작: 글자 없이 포스터 + 버튼 ([재생] [찜] 25 × 25 · 아이콘 7 × 9 / [N월 공개예정 🔔] 105 × 25 Label/default)
+// - 이어보기 · 찜 · AI 카드 · 추천작: 시안에 없는 설명 줄 · 남은 시간 · 제목 숨김
+// - 홍보 배너: 로고 73 × 56 / 제목 Display/M-B · Light/0 / 버튼 200 × 40 (패딩 7 36) Body/large-B · Light/0 / 안내 Label/default · Light/500
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+
+  // ---------- 섹션 제목 · 소제목 (로그인 전 홈) ----------
+  section.top10-section .top10-title,
+  .upcoming-section .upcoming-title.upcoming-title,
+  .apple-originals .apple-originals-title.apple-originals-title {
+    @include heading-h3-b;
+    color: $light-color-0;
+  }
+
+  section.top10-section .top10-desc,
+  .upcoming-section .upcoming-desc.upcoming-desc,
+  .apple-originals .apple-originals-desc.apple-originals-desc {
+    @include heading-h5;
+    color: $light-color-500;
+  }
+
+  // ---------- 홍보 배너 ----------
+  // 시안: 비스듬한 포스터 없이 배경 사진(어둡게) 위에 로고 · 문구 · 버튼 · 안내
+  .subscribe-cta.subscribe-cta--tv {
+    .subscribe-posters {
+      display: none;
+    }
+
+    .subscribe-content {
+      padding: 0 $space-3xl;
+    }
+
+    .subscribe-logo {
+      width: 73px;
+      height: 56px;
+    }
+
+    .subscribe-title {
+      @include display-M-b;
+      color: $light-color-0;
+    }
+
+    .subscribe-btn {
+      @include body-large-b;
+      width: 200px;
+      height: 40px;
+      padding: 7px 36px;
+      color: $light-color-0;
+    }
+
+    .subscribe-note {
+      @include label-default;
+      color: $light-color-500;
+    }
+  }
+
+  // ---------- 신규출시 · 공개예정작 (로그인 전 · 후 홈 공통 카드) ----------
+  // 시안: 글자 없이 포스터만 + 아래 가운데 버튼 (포스터 폭 130 · 다음 장 일부 보임)
+  main.member-home .rail-release.rail-release,
+  section.upcoming-section .rail-release.rail-release {
+    --rail-col: 130px;
+  }
+
+  main.member-home .member-nr-card.member-nr-card,
+  section.upcoming-section .member-nr-card.member-nr-card {
+    position: relative;
+    display: block;
+    padding: 0;
+    border-radius: $radius-sm;
+    overflow: hidden;
+    background-color: $dark-color-400;
+
+    // 버튼이 잘 보이도록 포스터 아래쪽 그림자
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $card-shadow-gradient;
+      pointer-events: none;
+    }
+
+    .member-nr-poster {
+      border-radius: 0;
+    }
+
+    // 제목 · 장르 · 소개 · PC 버튼은 휴대폰에서 숨김
+    .member-nr-info {
+      display: none;
+    }
+
+    .member-nr-quick {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: $space-md;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: $space-sm;
+    }
+
+    // [재생] · [찜]: 25 × 25 원형 · 아이콘 7 × 9
+    .member-nr-quick-play,
+    .member-nr-quick-heart {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 25px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      color: $light-color-0;
+      cursor: pointer;
+    }
+
+    .member-nr-quick-play {
+      background-color: $primary-color-500;
+
+      img {
+        display: block;
+        width: 7px;
+        height: 9px;
+      }
+    }
+
+    .member-nr-quick-heart {
+      background-color: $sport-opacity-b;
+
+      &.is-on {
+        color: $live-color;
+      }
+    }
+
+    .member-nr-quick-heart-icon {
+      display: block;
+      width: 11px;
+      height: 11px;
+      background-color: currentColor;
+      -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+      mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+    }
+
+    // [N월 공개예정 🔔]: 105 × 25 (패딩 5 10) · Label/default · Light/0 · 프라이머리
+    .member-nr-quick-month {
+      @include label-default;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: $space-xs;
+      width: 105px;
+      height: 25px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 999px;
+      background-color: $primary-color-500;
+      color: $light-color-0;
+      white-space: nowrap;
+      cursor: pointer;
+
+      .member-nr-bell-icon {
+        flex-shrink: 0;
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+
+  main.member-home {
+
+    // ---------- 섹션 제목 · 소제목 (로그인 후 홈) ----------
+    .member-section .member-title.member-title {
+      @include heading-h3-b;
+      color: $light-color-0;
+    }
+
+    .member-section .member-head .member-desc.member-desc {
+      @include heading-h5;
+      color: $light-color-500;
+    }
+
+    // ---------- 이어보기 ----------
+    .member-continue {
+      .member-cw-card .member-card-title {
+        @include body-default-b;
+        color: $light-color-0;
+      }
+
+      .member-cw-card .member-card-link {
+        @include caption-default;
+        color: $light-color-500;
+      }
+    }
+
+    // ---------- 찜 (휴대폰: 세로 3줄 목록 · WishlistSection.jsx .member-wl-list) ----------
+    .member-wishlist {
+      .member-wl-list {
+        display: flex;
+        flex-direction: column;
+        gap: $space-sm;
+        margin: 0;
+        padding: 0 $mobile-edge 0 0; // 이너 오른쪽 여백 0 → 제목과 같은 오른쪽 끝선
+        list-style: none;
+
+        li {
+          min-width: 0;
+        }
+      }
+
+      .member-wl-card {
+        width: 100%;
+        max-width: 340px; // 시안 340 × 70
+      }
+
+      .member-wl-card {
+        height: 70px;
+        background-color: $sport-opacity-b;
+      }
+
+      .member-wl-thumb {
+        width: 60px;
+        height: 50px;
+        aspect-ratio: auto;
+      }
+
+      .member-wl-name {
+        @include body-default-b;
+        color: $light-color-500;
+      }
+    }
+
+    // ---------- 추천작 (시안: 제목 · 설명 없이 포스터 + [재생] [★ 평점]) ----------
+    .member-recommend {
+      .rail-recommend {
+        --rail-col: 130px;
+      }
+
+      .member-rc-info {
+        display: none;
+      }
+
+      .member-rc-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: $space-sm;
+      }
+
+      .member-rc-play,
+      .member-rc-rate {
+        @include label-default;
+        height: 25px;
+        color: $light-color-0;
+      }
+
+      // 재생: 25 × 25 원형 · 아이콘 7 × 9 ("재생" 글자는 화면에서만 숨김)
+      .member-rc-play {
+        width: 25px;
+        padding: 0;
+        font-size: 0;
+        line-height: 0;
+        gap: 0;
+
+        img {
+          width: 7px;
+          height: 9px;
+        }
+      }
+
+      .member-rc-rate {
+        padding: 0 10px;
+      }
+    }
+
+    // ---------- 글자 빼기 (시안) ----------
+    // 이어보기: 남은 시간 · 설명 줄 없이 제목 + 이어보기
+    .member-continue {
+      .member-cw-time,
+      .member-cw-card .member-card-meta {
+        display: none;
+      }
+    }
+
+    // 찜: 제목만
+    .member-wishlist .member-wl-meta {
+      display: none;
+    }
+
+    // AI 어시스트: 설명 줄 없이 제목 + 상세 보기
+    .member-mood .member-ai-card .member-card-meta {
+      display: none;
+    }
+
+    // ---------- AI 어시스트 ----------
+    .member-mood {
+      .member-chips .member-chip.member-chip {
+        @include body-small;
+        width: 56px;
+        height: 30px;
+        padding: 10px 0;
+        color: $light-color-0;
+      }
+
+      .member-ai-tagline {
+        @include body-small;
+        display: inline-flex;
+        align-items: center;
+        height: 30px;
+        padding: 6px 10px;
+        color: $light-color-500;
+      }
+
+      .member-ai-card {
+        .member-card-title {
+          @include body-default-b;
+          color: $light-color-500;
+        }
+
+        .member-card-link {
+          @include caption-default-b;
+          color: $light-color-500;
+        }
+      }
+    }
+  }
+}

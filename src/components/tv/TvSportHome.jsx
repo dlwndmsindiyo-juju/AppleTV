@@ -6,7 +6,7 @@ import { REPLAY_LEAGUES, leagueThumb } from "../../data/replayLeagues";
 import { upcomingMatches, matchTitle } from "../../data/matchesData";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
 import { SPORT_TEAMS } from "../../data/sportTeams";
-import { decodeHtml } from "../sport/sportUtils";
+import { decodeHtml, ytThumb } from "../sport/sportUtils"; // [정리] 썸네일 공용
 
 // TV 스포츠 화면 (1920 × 1080 기준) — 시안: 03 · 스포츠 · 하이라이트 · 스타일: TV.scss (.tv-sport)
 // - 위: TV 헤더 (로고 + 홈 · 스포츠 · 보관함 · 검색, "스포츠" 선택)
@@ -15,12 +15,6 @@ import { decodeHtml } from "../sport/sportUtils";
 // - 모든 섹션 같은 카드: 리모컨 포커스가 있는 줄 560 × 315 / 나머지 줄 410 × 230 · 아래 제목
 //   · 카드에 포커스가 오면 그 줄이 active 가 되고, 화면 안에 보이도록 위아래 · 옆으로 이동
 // - 방향키 이동은 미리보기(TvPreview.jsx)의 리모컨 처리 그대로 사용
-
-const ytThumb = (video) => {
-  const sn = video?.snippet || {};
-  const id = video?.id?.videoId;
-  return sn.thumbnails?.high?.url || sn.thumbnails?.medium?.url || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "");
-};
 
 // PC 스포츠 홈 섹션 데이터 → TV 카드 { id, title, image }
 const useTvSportRows = () => {

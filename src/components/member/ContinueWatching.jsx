@@ -6,6 +6,7 @@ import { img, detailPath } from "./memberUtils";
 import { useContentInfo, contentMeta } from "./useContentInfo";
 import { useAuthStore } from "../../store/useAuthStore";
 import { isResumable, useWatchConnect, useWatchStore } from "../../store/useWatchStore";
+import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 공용
 
 // 멈춘 순간부터 다시 (이어보기) — 실제 시청 기록 (Firestore users/{uid}/watchHistory · 계정 하나에 저장)
 // - 상세 페이지 재생 팝업에서 본 위치가 저장되고, 가장 최근에 본 작품이 맨 앞
@@ -71,12 +72,7 @@ const ContinueWatching = () => {
   return (
     <section className="member-section member-continue">
       <div className="inner">
-        <div className="member-head">
-          <div>
-            <h2 className="member-title">멈춘 순간부터 다시</h2>
-            <p className="member-desc">마지막으로 감상했던 장면부터 이어서 만나보세요.</p>
-          </div>
-        </div>
+        <MemberSectionHead title="멈춘 순간부터 다시" desc="마지막으로 감상했던 장면부터 이어서 만나보세요." />
 
         {loading ? null : items.length === 0 ? (
           <p className="member-empty">아직 시청 내역이 없습니다.</p>

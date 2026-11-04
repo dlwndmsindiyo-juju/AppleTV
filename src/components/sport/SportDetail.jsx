@@ -3,7 +3,7 @@ import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import { useSportStore } from "../../store/useSportStore";
 import { upcomingMatches, matchTitle, kickoffText } from "../../data/matchesData";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
-import { decodeHtml } from "./sportUtils";
+import { decodeHtml, ytThumb } from "./sportUtils";
 import { REPLAY_LEAGUES, leagueThumb, playlistEmbedUrl, playlistWatchUrl } from "../../data/replayLeagues";
 import { LeagueCover } from "./SportReplay";
 import SportHero from "./SportHero";
@@ -38,9 +38,7 @@ const youtubeIdOf = (url = "") => {
   return m ? m[1] : "";
 };
 
-const thumbOf = (video) =>
-  video?.snippet?.thumbnails?.high?.url || video?.snippet?.thumbnails?.medium?.url ||
-  (video?.id?.videoId ? `https://i.ytimg.com/vi/${video.id.videoId}/hqdefault.jpg` : "");
+const thumbOf = ytThumb; // [정리] 공용 썸네일 (sportUtils.js)
 
 // ---------------------------------------------------------------------
 // 상세 종류별 설정: 제목 · 데이터 불러오기 · 목록 항목 만들기

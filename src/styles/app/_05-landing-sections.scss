@@ -1,0 +1,436 @@
+// App.scss 에서 나눈 파일 (05) — 오리지널스 · AI 어시스턴트 띠 · 구독 유도 CTA
+@use "../../variables" as *;
+
+// ===== 오리지널스 (시안: 포스터 슬라이드 · 이너 안에서 잘림) =====
+.apple-originals {
+  background-color: $gnb-bg;
+  padding: $space-5xl 0;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .apple-originals-title {
+    @include heading-h1;
+    color: $text-primary;
+    margin: 0 0 $space-sm;
+    padding-top: 0;
+  }
+
+  .apple-originals-desc {
+    @include body-large;
+    color: $text-tertiary;
+    margin: 0 0 $space-xl;
+  }
+
+  // 슬라이드 폭 고정 (slidesPerView: "auto") — 시안 282
+  .apple-originals-slide {
+    width: 282px;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $text-primary;
+    top: calc(282px * 400 / 282 / 2); // 포스터 세로 가운데
+  }
+
+  .apple-card {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    text-decoration: none;
+    color: $text-primary;
+  }
+
+  .apple-card-poster {
+    aspect-ratio: 282 / 400;
+    border-radius: $radius-xs;
+    overflow: hidden;
+    background-color: $bg-surface;
+    margin-bottom: $space-md;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  .apple-card:hover .apple-card-poster img {
+    transform: scale(1.05);
+  }
+
+  .apple-card-title {
+    @include heading-h3;
+    color: $text-primary;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .apple-card-meta {
+    @include body-small; // body small 1
+    color: $text-tertiary;
+  }
+
+  .apple-card-badge {
+    @include body-small; // body small 2
+    color: $text-primary;
+    margin-top: $space-xs;
+  }
+}
+
+// ===== AI 어시스턴트 안내 띠 (로그인 전 메인 · 시안) =====
+// - 바깥 section 은 페이지 배경, 안쪽 .ai-promo-band 가 화면 전체 폭 회색 띠
+.ai-promo {
+  background-color: $gnb-bg;
+  padding: $space-5xl 0 ($space-5xl * 2);
+
+  .ai-promo-band {
+    background-color: $bg-surface-hover;
+  }
+
+  .inner {
+    @include inner-wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-5xl;
+    padding-top: $space-5xl;
+    padding-bottom: $space-5xl;
+  }
+
+  // 왼쪽 글
+  .ai-promo-text {
+    min-width: 0;
+  }
+
+  .ai-promo-eyebrow {
+    @include label-default;
+    margin: 0 0 $space-sm;
+    color: $text-primary;
+    letter-spacing: 0.04em;
+  }
+
+  .ai-promo-title {
+    @include heading-h1;
+    margin: 0 0 $space-md;
+    padding-top: 0;
+    color: $text-primary;
+    word-break: keep-all;
+  }
+
+  .ai-promo-desc {
+    @include body-default;
+    margin: 0;
+    color: $text-secondary;
+    word-break: keep-all;
+  }
+
+  // 오른쪽 흰 카드
+  .ai-promo-card {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: $radius-card-sm;
+    background-color: $light-color-0;
+    color: $text-inverse;
+    box-sizing: border-box;
+  }
+
+  .ai-promo-card-title {
+    @include body-default-b;
+    margin: 0 0 $space-sm;
+    padding-top: 0;
+    color: $text-inverse;
+  }
+
+  .ai-promo-card-sub,
+  .ai-promo-question {
+    @include label-default;
+    margin: 0;
+    color: $neutral-color-600;
+  }
+
+  .ai-promo-chips {
+    display: flex;
+    gap: $space-sm;
+    margin: $space-md 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      flex-shrink: 0;
+    }
+  }
+
+  .ai-promo-chip {
+    @include label-default;
+    height: 28px;
+    padding: 0 $space-md;
+    border: 1px solid $neutral-color-400;
+    border-radius: 9999px;
+    background-color: $light-color-0;
+    color: $text-inverse;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      border-color: $neutral-color-700;
+    }
+
+    &.active {
+      background-color: $text-inverse;
+      border-color: $text-inverse;
+      color: $text-primary;
+    }
+  }
+
+  .ai-promo-btn {
+    @include body-small-b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 36px;
+    margin-top: $space-md;
+    border-radius: 9999px;
+    background-color: $primary-color-500;
+    color: $text-primary;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $primary-color-400;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $primary-color-500;
+      outline-offset: 2px;
+    }
+  }
+}
+
+// ===== 구독 유도 CTA =====
+.subscribe-cta {
+  background-color: $gnb-bg;
+  padding: 40px 0 72px;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .subscribe-banner {
+    position: relative;
+    height: 415px;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    background-color: $bg-surface;
+    border: 1px solid $dark-color-300;
+  }
+
+  // 배경 webp 이미지: 크기가 줄어들어도 비율을 유지하며 자연스럽게 축소
+  .subscribe-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // 영역에 꽉 차게 유지하되 비율 보존
+    object-position: 70% center; // 이미지가 줄어들 때 핵심 피사체가 잘리지 않도록 정렬 조절 가능
+    display: block;
+  }
+
+  // 텍스트 가독성용 왼쪽 어두운 그라데이션
+  .subscribe-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to right,
+        rgba($dark-color-900, 0.92) 0%,
+        rgba($dark-color-900, 0.75) 25%,
+        rgba($dark-color-900, 0) 60%);
+    pointer-events: none;
+  }
+
+  .subscribe-content {
+    position: absolute;
+    left: 4%;
+    bottom: 50%;
+    transform: translateY(50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: $space-lg;
+  }
+
+  .subscribe-logo {
+    height: 28px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+
+  .subscribe-title {
+    @include heading-h3;
+    color: $text-primary;
+    margin: 0;
+    word-break: keep-all;
+  }
+
+  .subscribe-btn {
+    @include body-default;
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 $space-3xl;
+    border-radius: 9999px;
+    background-color: $light-color-100;
+    color: $text-inverse;
+    text-decoration: none;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: $light-color-400;
+    }
+  }
+
+  .subscribe-note {
+    @include body-small;
+    color: $text-tertiary;
+    margin: 0;
+  }
+}
+
+.sport-upcoming {
+  background-color: $gnb-bg;
+  padding: 56px 0 $space-2xl;
+
+  .inner {
+    @include inner-wrap;
+    overflow: hidden; // .inner 밖으로 넘치는 슬라이드 영역 숨기기
+  }
+
+  // Swiper 슬라이더 컨테이너
+  .sport-upcoming-swiper {
+    width: 100%;
+    // overflow: hidden이 inner에 걸려있으므로, 내부 슬라이드들이 정상 작동하도록 설정
+    overflow: visible;
+  }
+
+  // 슬라이드 하나의 고정 크기 (너비 310px)
+  .sport-upcoming-slide {
+    width: 310px !important;
+    flex-shrink: 0;
+  }
+
+  // 개별 카드 크기 (310px x 200px)
+  .sport-match-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 310px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: $bg-surface;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    // 전체 배경 이미지
+    .sport-match-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+
+    // 어두운 오버레이 그라데이션
+    .sport-match-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0.35) 0%,
+          rgba(0, 0, 0, 0.75) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    // 상단 상태 텍스트
+    .sport-match-status {
+      position: relative;
+      z-index: 2;
+      @include body-small;
+      color: $neutral-color-300;
+      font-weight: $font-weight-bold;
+    }
+
+    // 중앙 팀 로고 & 대각선 선 영역
+    .sport-match-content {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $space-2xl;
+    }
+
+    // 팀 로고 크기
+    .sport-team {
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.75));
+      }
+    }
+
+    // 가운데 얇은 대각선 선
+    .sport-match-divider {
+      position: absolute;
+      width: 1px;
+      height: 70px;
+      background: linear-gradient(to bottom,
+          rgba(255, 255, 255, 0),
+          rgba(255, 255, 255, 0.35),
+          rgba(255, 255, 255, 0));
+      transform: rotate(25deg);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+    }
+  }
+
+  // Swiper 화살표 버튼 커스텀
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $text-primary;
+  }
+}

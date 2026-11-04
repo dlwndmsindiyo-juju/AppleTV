@@ -1,0 +1,278 @@
+// sport-member.scss 에서 나눈 파일 (08) — 팔로우한 구단 히어로
+@use "../../variables" as *;
+
+// =====================================================================
+// 팔로우한 구단 히어로 (SportHero.jsx · TeamHero) — 시안: 왼쪽 정렬
+// - 배경: 구단 배너(public/images/sport-team/banners/{id}.webp) / 없으면 대표색 그라데이션
+// - 왼쪽: 팀 뱃지 → 팀 이름(크게, 얇게) → 전적 · 순위 → 팀 팔로우 버튼
+// - 아래: 팔로우한 팀이 2개 이상이면 팀 선택 칩
+// =====================================================================
+section.sport-hero.sport-hero--team {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--team-color, $dark-color-900);
+  isolation: isolate;
+
+  .sport-team-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    animation: sport-team-hero-in 0.5s ease both;
+  }
+
+  // 왼쪽 글이 잘 보이게 살짝 어둡게 + 아래쪽은 페이지 배경으로 이어지게
+  .sport-team-hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to right, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0) 45%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba($dark-color-900, 0.6) 100%);
+    pointer-events: none;
+  }
+
+  .sport-team-hero-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 $header-pad-x * 1.5;
+    margin-top: -40px;
+    animation: sport-team-hero-in 0.5s ease both;
+  }
+
+  .sport-team-hero-badge {
+    display: block;
+    width: 130px;
+    height: 150px;
+    margin: 0 0 $space-2xl $space-xl;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.25));
+  }
+
+  .sport-team-hero-name {
+    @include display-xl;
+    font-family: inherit;
+    margin: 0;
+    padding: 0; // main h2 { padding-top: 200px } 영향 제거
+    font-weight: $font-weight-regular;
+    color: $text-primary;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    word-break: keep-all;
+  }
+
+  .sport-team-hero-record {
+    @include heading-h3;
+    font-family: inherit;
+    margin: 20px 0 10px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  // 팀 팔로우 버튼 (흰 알약)
+  .sport-team-hero-follow {
+    @include body-default;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    height: 48px;
+    padding: 0 40px;
+    border: 0;
+    border-radius: 9999px;
+    background: $light-color-100;
+    color: $text-inverse;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background: $neutral-color-white;
+      transform: translateY(-1px);
+    }
+
+    &.is-on svg {
+      color: $rating-color;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 3px;
+    }
+  }
+
+  // ---------- 팀 선택 칩 ----------
+  .sport-team-hero-chips {
+    position: absolute;
+    left: $header-pad-x * 1.5;
+    bottom: 40px;
+    display: flex;
+    gap: $space-sm;
+    max-width: calc(100% - #{$header-pad-x * 3});
+    padding: 6px;
+    overflow-x: auto;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .sport-team-hero-chip {
+    @include body-small;
+    font-family: inherit;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    height: 40px;
+    padding: 0 $space-lg 0 6px;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: $text-primary;
+    }
+
+    &.is-active {
+      background: $neutral-color-white;
+      color: $text-inverse;
+      font-weight: $font-weight-bold;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+    }
+  }
+
+  // ---------- 태블릿 ----------
+  @media (max-width: $breakpoint-tablet) {
+    .sport-team-hero-body {
+      padding: 0 $tablet-edge;
+    }
+
+    .sport-team-hero-badge {
+      width: 104px;
+      height: 120px;
+      margin: 0 0 $space-xl $space-lg;
+    }
+
+    .sport-team-hero-name {
+      @include heading-h1;
+      font-family: inherit;
+      font-weight: $font-weight-regular;
+    }
+
+    .sport-team-hero-record {
+      @include body-large;
+      font-family: inherit;
+      margin-top: 14px;
+    }
+
+    .sport-team-hero-chips {
+      left: $tablet-edge;
+      bottom: 28px;
+      max-width: calc(100% - #{$tablet-edge * 2});
+    }
+  }
+
+  // ---------- 모바일 ----------
+  @media (max-width: $breakpoint-mobile) {
+    .sport-team-hero-body {
+      padding: 0 20px;
+      margin-top: -$space-xl;
+    }
+
+    .sport-team-hero-badge {
+      width: 80px;
+      height: 92px;
+      margin: 0 0 $space-lg $space-sm;
+    }
+
+    .sport-team-hero-name {
+      @include display-l;
+      font-family: inherit;
+      font-weight: $font-weight-regular;
+    }
+
+    .sport-team-hero-record {
+      @include body-small;
+      font-family: inherit;
+      margin: 10px 0 14px;
+    }
+
+    .sport-team-hero-follow {
+      @include body-small;
+      font-family: inherit;
+      height: 40px;
+      padding: 0 $space-xl;
+    }
+
+    .sport-team-hero-chips {
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      max-width: none;
+    }
+
+    .sport-team-hero-chip {
+      height: 36px;
+      padding: 0 $space-xs;
+
+      span {
+        display: none;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .sport-team-hero-bg,
+    .sport-team-hero-body {
+      animation: none;
+    }
+  }
+}
+
+@keyframes sport-team-hero-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+// 구단 카드 팔로우 버튼: 별 아이콘 (팔로우 중이면 채워진 별)
+.sport-team-card .sport-team-add {
+  svg {
+    display: block;
+  }
+
+  &.on {
+    color: $text-primary;
+  }
+}

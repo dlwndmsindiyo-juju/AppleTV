@@ -1,0 +1,393 @@
+// sport-member.scss 에서 나눈 파일 (05) — 스포츠 상세 (다시보기 · 예정 · 하이라이트)
+@use "../../variables" as *;
+
+// =====================================================================
+// 스포츠 상세 (SportDetail.jsx · /sport/replay · /sport/upcoming · /sport/highlights)
+// - 세 상세가 같은 구조: 왼쪽 큰 화면(영상 / 카운트다운) + 아래 정보, 오른쪽 목록
+// - 오른쪽 목록은 왼쪽 화면 높이에 맞추고 넘치면 목록 안에서 스크롤
+// =====================================================================
+main.sport-home.sport-detail-page {
+  padding-bottom: 240px;
+
+  .sport-detail .inner {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+  }
+
+  .sport-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    gap: $space-lg;
+    align-items: stretch;
+  }
+
+  // ---------- 왼쪽 : 큰 화면 + 정보 ----------
+  .sport-detail-stage {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-radius: $radius-card;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .sport-detail-player {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #000;
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
+
+  .sport-detail-countdown {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: $bg-surface;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  .sport-detail-countdown-bg {
+    position: absolute;
+    inset: -24px;
+    width: calc(100% + 48px);
+    height: calc(100% + 48px);
+    object-fit: cover;
+    filter: blur(18px);
+    transform: scale(1.05);
+  }
+
+  .sport-detail-countdown-body {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .sport-detail-countdown-label {
+    @include caption-default;
+    font-family: inherit;
+    margin: 0 0 $space-md;
+    letter-spacing: 0.2em;
+    color: $light-color-400;
+  }
+
+  .sport-detail-countdown-time {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+    }
+  }
+
+  .sport-detail-countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 96px;
+
+    strong {
+      @include display-l;
+      font-family: inherit;
+      font-weight: $font-weight-regular;
+      color: $text-primary;
+      font-variant-numeric: tabular-nums;
+    }
+
+    small {
+      @include caption-default;
+      font-family: inherit;
+      margin-top: $space-xs;
+      letter-spacing: 0.12em;
+      color: $text-tertiary;
+    }
+  }
+
+  .sport-detail-countdown-colon {
+    @include heading-h2;
+    font-family: inherit;
+    margin-top: 0.4em;
+    color: $sports-color;
+  }
+
+  .sport-detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+    padding: $space-xl 28px 28px;
+    background: #000;
+  }
+
+  .sport-detail-info-title {
+    @include heading-h4-b;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    color: $text-primary;
+  }
+
+  .sport-detail-info-label {
+    color: $sports-color;
+    padding-right: 10px;
+    border-right: 1px solid $dark-color-100;
+  }
+
+  .sport-detail-info-desc {
+    @include body-default;
+    font-family: inherit;
+    margin: 0;
+    color: $light-color-300;
+  }
+
+  .sport-detail-info-meta {
+    @include caption-default;
+    font-family: inherit;
+    color: $light-color-400;
+  }
+
+  // ---------- 오른쪽 : 목록 ----------
+  .sport-detail-list {
+    // 왼쪽 화면 높이에 맞추기 (내용이 많으면 목록 안에서 스크롤)
+    height: 0;
+    min-height: 100%;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    scrollbar-width: thin;
+    scrollbar-color: $dark-color-200 transparent;
+  }
+
+  .sport-detail-item {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    width: 100%;
+    padding: $space-xs;
+    border: 0;
+    border-radius: $radius-card;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover,
+    &.is-active {
+      background: $bg-surface-raised;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $neutral-color-white;
+      outline-offset: 2px;
+    }
+  }
+
+  .sport-detail-thumb {
+    position: relative;
+    flex: 0 0 120px;
+    aspect-ratio: 3 / 2;
+    border-radius: $radius-xs;
+    overflow: hidden;
+    background: $bg-surface-hover;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .sport-detail-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: $text-primary;
+    font-size: 10px;
+  }
+
+  .sport-detail-badge {
+    @include caption-default;
+    font-family: inherit;
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.75);
+    color: $text-primary;
+    font-weight: $font-weight-bold;
+  }
+
+  .sport-detail-text {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    min-width: 0;
+  }
+
+  .sport-detail-title {
+    @include body-default;
+    font-family: inherit;
+    color: $text-primary;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .sport-detail-meta {
+    @include caption-default;
+    font-family: inherit;
+    color: $text-secondary;
+  }
+
+  .sport-detail--upcoming .sport-detail-title {
+    @include label-default;
+    font-family: inherit;
+    font-weight: $font-weight-bold;
+  }
+
+  .sport-detail-back {
+    @include body-small;
+    font-family: inherit;
+    align-self: flex-start;
+    color: $text-tertiary;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+
+  // ---------- 태블릿 : 목록을 아래로 ----------
+  @media (max-width: $breakpoint-tablet) {
+    padding-bottom: 160px;
+
+    .sport-detail-layout {
+      grid-template-columns: 1fr;
+      gap: $space-xl;
+    }
+
+    .sport-detail-list {
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      overflow: visible;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: $space-md $space-lg;
+    }
+
+    .sport-detail-countdown {
+      aspect-ratio: 16 / 9;
+    }
+
+    .sport-detail-countdown-unit {
+      min-width: 80px;
+    }
+  }
+
+  // ---------- 모바일 ----------
+  @media (max-width: $breakpoint-mobile) {
+    padding-bottom: 96px;
+
+    .sport-detail-stage {
+      border-radius: $radius-xs;
+    }
+
+    .sport-detail-info {
+      padding: $space-lg;
+      gap: 6px;
+    }
+
+    .sport-detail-info-title {
+      @include body-large;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      gap: $space-sm;
+    }
+
+    .sport-detail-info-label {
+      padding-right: $space-sm;
+    }
+
+    .sport-detail-info-desc {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    .sport-detail-countdown {
+      aspect-ratio: 4 / 3;
+    }
+
+    .sport-detail-countdown-unit {
+      min-width: 52px;
+
+      strong {
+        @include heading-h2;
+        font-family: inherit;
+        font-weight: $font-weight-regular;
+      }
+
+      small {
+        font-size: 9px;
+        letter-spacing: 0.08em;
+      }
+    }
+
+    .sport-detail-countdown-colon {
+      @include heading-h4-b;
+      font-family: inherit;
+      margin-top: 0.3em;
+    }
+
+    .sport-detail-list {
+      grid-template-columns: 1fr;
+    }
+
+    .sport-detail-thumb {
+      flex-basis: 112px;
+    }
+
+    .sport-detail-title {
+      @include body-small;
+      font-family: inherit;
+    }
+  }
+}

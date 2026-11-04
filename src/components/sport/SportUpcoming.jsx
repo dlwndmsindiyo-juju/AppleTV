@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { upcomingMatches, matchTitle, kickoffText } from "../../data/matchesData";
+import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
 
 // 예정된 경기 — 시안: 경기 이미지 카드 + 왼쪽 위 날짜 · 오른쪽 위 Apple TV 로고 · 왼쪽 아래 "홈 vs. 원정"
 // - 데이터: data/matchesData.js (25경기 · 경기 이미지 · 시연용 일정)
@@ -18,12 +19,7 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
   return (
     <section className="sport-upcoming" id="sport-upcoming">
       <div className="inner">
-        <div className="sport-section-head">
-          <h3 className="sport-section-title">{title}</h3>
-          <Link className="sport-more" to="/sport/upcoming">
-            전체 보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-          </Link>
-        </div>
+        <SportSectionHead title={title} to="/sport/upcoming" />
 
         {matches.length === 0 ? (
           <p className="sport-empty">예정된 경기가 없습니다.</p>

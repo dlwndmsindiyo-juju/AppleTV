@@ -1,0 +1,515 @@
+// App.scss 에서 나눈 파일 (16) — 계정 설정 · 프로필 아이콘
+@use "../../variables" as *;
+@use "tokens" as *;
+
+// =====================================================================
+// [추가] 계정 설정 (/profile · pages/Profile.jsx)
+// - 시안: 계정 설정 · 기존 항목 + 신규 설정 전체 / AI 및 알림 켜짐 · 꺼짐 (1440 기준 본문 840)
+// - 왼쪽 섹션 이름 + 오른쪽 항목 · 섹션 사이 구분선
+// - 시안처럼 밝은 배경($light-color-100) + 어두운 글자
+// =====================================================================
+
+.account-page {
+  min-height: 100vh;
+  padding: calc(#{$header-height} + #{$space-5xl}) 0 ($space-5xl * 2);
+  box-sizing: border-box;
+  background-color: $light-color-100;
+  color: $text-inverse;
+
+  // main h2 { padding-top: 200px } 같은 공통 규칙 영향 제거 (우선순위 낮춤)
+  :where(h1, h2, h3, p) {
+    margin: 0;
+    padding-top: 0;
+  }
+
+  button {
+    font-family: inherit;
+  }
+}
+
+.account-inner {
+  width: calc(100% - #{$tablet-edge * 2});
+  max-width: $account-width;
+  margin: 0 auto;
+}
+
+.account-title {
+  @include display-l-b;
+  padding-bottom: $space-xl;
+  border-bottom: 1px solid $account-line;
+}
+
+// ---------- 섹션: 왼쪽 이름 + 오른쪽 항목 ----------
+.account-section {
+  display: grid;
+  grid-template-columns: $account-side minmax(0, 1fr);
+  align-items: start;
+  padding: $space-4xl 0;
+  border-bottom: 1px solid $account-line;
+}
+
+.account-section-title {
+  @include heading-h3-b;
+}
+
+.account-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2xl;
+  min-width: 0;
+}
+
+.account-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-sm;
+  transition: opacity 0.2s ease;
+
+  // 알림이 꺼져 있을 때 알림 받기 방식 (시안: 흐리게)
+  &.is-muted {
+    opacity: 0.4;
+  }
+}
+
+.account-item-title {
+  @include body-default-b;
+}
+
+.account-item-desc {
+  @include body-default;
+  color: $account-sub;
+  word-break: keep-all;
+}
+
+.account-note {
+  @include body-small;
+  color: $account-sub;
+}
+
+// 파란 글자 링크 (모든 브라우저에서 로그아웃 · 연결된 계정 관리 · 재생 기록 지우기)
+.account-link {
+  @include body-default;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $primary-color-500; // 시안 링크 색
+  cursor: pointer;
+  text-align: left;
+
+  &:hover {
+    color: $primary-color-400;
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary-color-500;
+    outline-offset: 2px;
+    border-radius: $space-xs;
+  }
+}
+
+// ---------- 켜기 / 끄기 스위치 ----------
+.account-toggle {
+  @include body-default;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $text-inverse;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $primary-color-500;
+    outline-offset: 4px;
+    border-radius: $space-xs;
+  }
+}
+
+.account-toggle-track {
+  position: relative;
+  flex-shrink: 0;
+  width: 36px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: $light-color-300;
+  transition: background-color 0.2s ease;
+}
+
+.account-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: $light-color-0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.account-toggle.is-on {
+  .account-toggle-track {
+    background-color: $primary-color-500;
+  }
+
+  .account-toggle-thumb {
+    transform: translateX(16px);
+    background-color: $light-color-0;
+  }
+}
+
+// ---------- 알림 받기 방식 (체크박스 여러 개) ----------
+.account-channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md $space-2xl;
+  margin: 0;
+  padding: 0;
+  border: none;
+  min-width: 0;
+}
+
+.account-check {
+  @include body-default;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  cursor: pointer;
+
+  // 실제 체크박스(checked) + 시안 모양: 선택 전 회색 칸 → 선택하면 파란 원 + 체크
+  input {
+    appearance: none;
+    -webkit-appearance: none;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    border-radius: $space-xs;
+    background-color: $light-color-300;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-radius 0.15s ease;
+
+    &::after {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background-color: $light-color-0;
+      -webkit-mask: url("/icons/check.svg") center / contain no-repeat;
+      mask: url("/icons/check.svg") center / contain no-repeat;
+      opacity: 0;
+    }
+
+    &:checked {
+      border-radius: 50%;
+      background-color: $primary-color-500;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $primary-color-500;
+      outline-offset: 2px;
+    }
+  }
+}
+
+// 꺼져 있을 때 (fieldset disabled) 선택 불가
+.account-channels:disabled .account-check {
+  cursor: default;
+
+  input {
+    cursor: default;
+  }
+}
+
+// 화면에는 숨기고 스크린리더만 읽음
+.account-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ---------- 프로필 (기본 아이콘 선택) ----------
+.account-profile {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+}
+
+.account-profile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+
+  strong {
+    @include heading-h4-b;
+  }
+
+  span {
+    @include body-small;
+    color: $account-sub;
+    word-break: break-all;
+  }
+}
+
+.account-avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 56px);
+  gap: $space-md;
+  margin: $space-sm 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-avatar-option {
+  display: block;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  .profile-avatar {
+    width: 52px;
+    height: 52px;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &.is-on {
+    border-color: $text-inverse;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary-color-500;
+    outline-offset: 2px;
+  }
+}
+
+// 연결된 계정 목록
+.account-providers {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  width: 100%;
+  margin: $space-xs 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-lg;
+    padding: $space-md $space-lg;
+    border-radius: $radius-card-sm;
+    background-color: $light-color-0;
+  }
+
+  strong {
+    @include body-default-b;
+  }
+
+  span {
+    @include body-small;
+    color: $account-sub;
+    word-break: break-all;
+  }
+}
+
+// ---------- 확인 팝업 ----------
+.account-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-lg;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.account-dialog {
+  width: 100%;
+  max-width: 420px;
+  padding: $space-2xl;
+  border-radius: $radius-lg;
+  background-color: $light-color-0;
+  color: $text-inverse;
+  box-sizing: border-box;
+  animation: login-step-in 0.25s ease both;
+}
+
+.account-dialog-title {
+  @include heading-h3-b;
+  margin-bottom: $space-sm;
+}
+
+.account-dialog-desc {
+  @include body-default;
+  color: $account-sub;
+  word-break: keep-all;
+}
+
+.account-dialog-actions {
+  display: flex;
+  gap: $space-md;
+  margin-top: $space-xl;
+}
+
+.account-btn {
+  @include body-default-b;
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: $radius-xs;
+  background-color: $primary-color-500;
+  color: $text-primary;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-color-400;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary-color-500;
+    outline-offset: 2px;
+  }
+
+  &--secondary {
+    background-color: $light-color-200;
+    color: $text-inverse;
+
+    &:hover:not(:disabled) {
+      background-color: $light-color-300;
+    }
+  }
+}
+
+// ---------- 저장 결과 안내 (화면 아래) ----------
+.account-toast {
+  @include body-small-b;
+  position: fixed;
+  left: 50%;
+  bottom: $space-2xl;
+  z-index: 1100;
+  margin: 0;
+  padding: $space-md $space-xl;
+  border-radius: 9999px;
+  background-color: $dark-color-900;
+  color: $text-primary;
+  transform: translate(-50%, $space-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  &.is-show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+// =====================================================================
+// [추가] 프로필 아이콘 (components/profile/ProfileAvatar.jsx) — 헤더 · 계정 설정 공용
+// =====================================================================
+.profile-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: $bg-input;
+  color: $text-primary;
+
+  &--sm {
+    width: 100%; // 헤더 .profile-box(36px) 를 가득 채움
+    height: 100%;
+  }
+
+  &--md {
+    width: 52px;
+    height: 52px;
+  }
+
+  &--lg {
+    width: 72px;
+    height: 72px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  // 배경색 (AVATAR_COLORS)
+  &--primary {
+    background-color: $primary-color-500;
+  }
+
+  &--sports {
+    background-color: $sports-color;
+  }
+
+  &--live {
+    background-color: $live-color;
+  }
+
+  &--success {
+    background-color: $success-color;
+    color: $text-inverse;
+  }
+
+  &--rating {
+    background-color: $rating-color;
+    color: $text-inverse;
+  }
+
+  &--accent {
+    background-color: $accent-color;
+  }
+
+  &--dark {
+    background-color: $dark-color-300;
+  }
+}
+
+// 아이콘 모양 (public/icons/wishlist/*.svg) · 글자색을 따라감
+.profile-avatar-icon {
+  width: 62%;
+  height: 62%;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)

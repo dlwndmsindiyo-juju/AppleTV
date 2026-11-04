@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import { useMovieStore } from "../../store/useMovieStore";
 import { useWish } from "../../store/useHeartStore"; // 위시리스트 (찜)
 import { shortGenres } from "../member/useContentInfo";
+import { loadYouTubeApi } from "../common/youtubeApi"; // [정리] YouTube API 불러오기 공용
 
 // Swiper 기본 스타일
 import "swiper/css";
@@ -19,7 +20,11 @@ import "../../App.scss";
 // - 정보: 제목 · [연령 등급] [TV 프로그램] [장르] [장르] 칩 · 줄거리 두 줄
 //   · [수정] 제목: 모든 화면에서 작품 로고 이미지 (TMDB 공식 타이틀 · 로고가 없으면 글자)
 // - 버튼: ▶ 재생 (상세에서 바로 재생 ?play=1 · 로그인 전에는 구독 안내 팝업) · ♡ 찜 (위시리스트에 담기 → 그룹 고르기)
-// - 배경: 마우스를 올리면 예고편 영상 재생 (기존 그대로)
+// - [수정] 배경: 슬라이드에 2초 머무르면 이미지 → 예고편 영상 재생 (마우스를 올리지 않아도) · 영상이 끝나면 다음 슬라이드
+//   · 예고편이 없거나 재생이 안 되는 작품은 기존처럼 5초 뒤 다음 슬라이드
+//   · 영상이 재생되는 동안에는 자동 넘김을 멈추고, 다음 슬라이드로 넘어가면 다시 켬
+//   · 브라우저 정책상 자동 재생은 소리 끔(mute) 상태로만 가능
+//   · YouTube 버튼(일시정지 등)이 뜨지 않게: 컨트롤 끔 + 영상 위 투명 막(.hero-video-shield) · 재생이 시작된 뒤에만 영상 보이기
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -117,25 +122,91 @@ const HeartIcon = ({ filled }) => (
   </svg>
 );
 
+// YouTube IFrame API 불러오기는 공용 파일 (components/common/youtubeApi.js) — 영상이 끝났는지 알기 위해 사용
+
+// [추가] 히어로 배경 예고편 (소리 끔 · 컨트롤 없음) — 재생 시작 · 끝 · 오류를 알려줌
+const HeroTrailer = ({ videoKey, title, onStart, onEnd }) => {
+  const holderRef = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const startRef = useRef(onStart);
+  const endRef = useRef(onEnd);
+  startRef.current = onStart;
+  endRef.current = onEnd;
+
+  useEffect(() => {
+    let player = null;
+    let alive = true;
+    loadYouTubeApi()
+      .then((YT) => {
+        if (!alive || !holderRef.current) return;
+        player = new YT.Player(holderRef.current, {
+          videoId: videoKey,
+          playerVars: {
+            autoplay: 1,
+            mute: 1,
+            controls: 0,
+            disablekb: 1,
+            fs: 0,
+            iv_load_policy: 3,
+            modestbranding: 1,
+            rel: 0,
+            playsinline: 1,
+          },
+          events: {
+            onReady: (e) => {
+              e.target.mute();
+              e.target.playVideo();
+            },
+            onStateChange: (e) => {
+              if (e.data === YT.PlayerState.PLAYING) {
+                setPlaying(true);
+                startRef.current?.();
+              }
+              if (e.data === YT.PlayerState.ENDED) endRef.current?.();
+            },
+            onError: () => endRef.current?.(), // 재생할 수 없는 영상 → 다음 슬라이드
+          },
+        });
+      })
+      .catch(() => endRef.current?.());
+
+    return () => {
+      alive = false;
+      try {
+        player?.destroy();
+      } catch {
+        // 이미 사라진 플레이어는 무시
+      }
+    };
+  }, [videoKey]);
+
+  return (
+    <div className={`hero-trailer${playing ? " is-playing" : ""}`} aria-hidden="true" title={title}>
+      <div ref={holderRef} />
+    </div>
+  );
+};
+
 // 개별 작품 슬라이드 아이템
-const HeroItem = ({ tv, isSwiping }) => {
+const HERO_VIDEO_DELAY = 2000; // 슬라이드에 머문 뒤 영상이 시작되기까지 (2초)
+
+const HeroItem = ({ tv, active, onVideoStart, onVideoEnd }) => {
   const { tvVideo, onFetchTvVideo } = useMovieStore();
-  const [hover, setHover] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const rating = useKrRating(tv.id);
   const logo = useTitleLogo(tv.id);
   const { wished, toggle } = useWish("tv", tv.id);
 
-  // 마우스 오버 시 비디오 요청
+  // [수정] 지금 보이는 슬라이드가 되면 예고편을 미리 받아 두고, 2초 머무르면 영상 재생 · 다른 슬라이드로 가면 끔
   useEffect(() => {
-    if (hover && tv?.id) {
-      onFetchTvVideo(tv.id);
+    if (!active || !tv?.id) {
+      setShowVideo(false);
+      return undefined;
     }
-  }, [hover, tv?.id, onFetchTvVideo]);
-
-  // 슬라이드가 넘어갈 때 hover 해제
-  useEffect(() => {
-    if (isSwiping) setHover(false);
-  }, [isSwiping]);
+    onFetchTvVideo(tv.id);
+    const timer = setTimeout(() => setShowVideo(true), HERO_VIDEO_DELAY);
+    return () => clearTimeout(timer);
+  }, [active, tv?.id, onFetchTvVideo]);
 
   const videoList = tvVideo?.[tv.id] || [];
   const trailer = videoList.find(
@@ -145,11 +216,7 @@ const HeroItem = ({ tv, isSwiping }) => {
   const genres = shortGenres("tv", tv.genre_ids).slice(0, 2);
 
   return (
-    <div
-      className="hero-slide-item"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
+    <div className="hero-slide-item">
       {/* 배경 및 트레일러 */}
       <div
         className="hero-media-bg"
@@ -157,13 +224,11 @@ const HeroItem = ({ tv, isSwiping }) => {
           backgroundImage: `url(https://image.tmdb.org/t/p/original${tv.backdrop_path})`,
         }}
       >
-        {hover && trailer && (
-          <iframe
-            src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=${trailer.key}`}
-            title={trailer.name}
-            allow="autoplay"
-          />
+        {active && showVideo && trailer && (
+          <HeroTrailer videoKey={trailer.key} title={trailer.name} onStart={onVideoStart} onEnd={onVideoEnd} />
         )}
+        {/* 영상 위 투명 막: 마우스가 YouTube 영상에 닿지 않아 일시정지 등 버튼이 뜨지 않음 */}
+        <div className="hero-video-shield" aria-hidden="true" />
       </div>
 
       {/* 오버레이 그라데이션 */}
@@ -223,7 +288,12 @@ const HeroItem = ({ tv, isSwiping }) => {
 
 const HeroSection = () => {
   const { appleOriginals, onFetchAppleOriginals } = useMovieStore();
-  const [isSwiping, setIsSwiping] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const swiperRef = useRef(null);
+
+  // 영상이 재생되면 자동 넘김 멈춤 · 영상이 끝나면 다음 슬라이드 (넘어가면 자동 넘김 다시 켬)
+  const handleVideoStart = () => swiperRef.current?.autoplay?.stop();
+  const handleVideoEnd = () => swiperRef.current?.slideNext();
 
   useEffect(() => {
     onFetchAppleOriginals(); // 이미 불러왔으면 다시 요청하지 않음
@@ -248,12 +318,22 @@ const HeroSection = () => {
           delay: 5000,
           disableOnInteraction: false,
         }}
-        onSlideChangeTransitionStart={() => setIsSwiping(true)}
-        onSlideChangeTransitionEnd={() => setIsSwiping(false)}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        onSlideChange={(swiper) => {
+          setActiveIndex(swiper.realIndex);
+          swiper.autoplay?.start(); // 영상 때문에 멈췄던 자동 넘김 다시 켜기
+        }}
       >
-        {heroItems.map((tv) => (
+        {heroItems.map((tv, index) => (
           <SwiperSlide key={tv.id}>
-            <HeroItem tv={tv} isSwiping={isSwiping} />
+            <HeroItem
+              tv={tv}
+              active={index === activeIndex}
+              onVideoStart={handleVideoStart}
+              onVideoEnd={handleVideoEnd}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

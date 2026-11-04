@@ -1,7 +1,8 @@
 // src/components/search/SearchParts.jsx
 // 검색하기 플로우 공용 조각 (검색 결과 · 인물 · 작품 페이지에서 함께 사용)
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import VideoPopup from "../common/VideoPopup"; // [추가] 전체 화면 영상 팝업 공용
 import { AVAILABILITY, IMG, itemKey, useSearchStore } from "../../store/useSearchStore";
 
 // ---------- 아이콘 ----------
@@ -232,24 +233,9 @@ export const shareCurrentPage = async (title) => {
 };
 
 // ---------- 예고편 팝업 ----------
-export const TrailerPopup = ({ videoKey, onClose }) => {
-  // Esc 로 닫기 · 뒤 화면 스크롤 막기
-  useEffect(() => {
-    const onKey = (e) => e.key === "Escape" && onClose();
-    document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [onClose]);
-
-  return (
-  <div className="search-popup" role="dialog" aria-modal="true" aria-label="예고편">
-    <button type="button" className="search-popup-close" onClick={onClose}>
-      닫기
-    </button>
+// [수정] 공용 VideoPopup 사용: 왼쪽 위 "← 뒤로" · Esc · 브라우저 뒤로가기로 닫기 · 뒤 화면 스크롤 막기
+export const TrailerPopup = ({ videoKey, onClose }) => (
+  <VideoPopup open onClose={onClose} label="예고편" className="search-popup">
     {videoKey ? (
       <iframe
         src={`https://www.youtube.com/embed/${videoKey}?autoplay=1`}
@@ -260,6 +246,5 @@ export const TrailerPopup = ({ videoKey, onClose }) => {
     ) : (
       <p>재생할 수 있는 예고편이 없습니다.</p>
     )}
-  </div>
-  );
-};
+  </VideoPopup>
+);

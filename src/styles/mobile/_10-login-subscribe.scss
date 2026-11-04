@@ -1,0 +1,292 @@
+// mobile.scss 에서 나눈 파일 (10) — 로그인 + 구독 (태블릿 / 모바일)
+@use "../../variables" as *;
+
+// =====================================================================Tk
+// 로그인 + 구독 (태블릿 / 모바일)
+// - PC 스타일: App.scss(.login-page / .login-card) · subscribe.scss(.plan-card) 는 그대로 두고 여기서만 덮어씀
+// - .login-page.login-page : subscribe.scss 와 불러오는 순서가 달라도 이 규칙이 우선되도록 우선순위를 한 단계 높임
+// - 공통 껍데기(시안): 회색 카드 · 흰 원형 닫기(좌상단) · 아이콘 50 · 제목 · 회색 설명
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .login-page.login-page {
+    // 화면 높이를 꽉 채워서 푸터 아래로 빈 흰 여백이 생기지 않게 (모바일 주소창 제외 높이)
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: calc(#{$header-height} + 24px) $tablet-edge 64px;
+    align-items: center;
+
+    // ---------- 카드 공통 ----------
+    .login-card,
+    .login-card.login-card--signin,
+    .login-card.login-card--confirm,
+    .login-card.plan-card {
+      max-width: 560px;
+      min-height: 0;
+      padding: 76px $space-xl $space-2xl;
+      background-color: $light-color-100;
+      border-radius: $radius-card;
+      box-shadow: none;
+    }
+
+    // .login-card.login-card : PC 단계별 규칙(--signin / --confirm / .plan-card)보다 우선
+    .login-card.login-card {
+      .login-card-close {
+        top: 20px;
+        left: 16px;
+        width: 44px;
+        height: 44px;
+        background-color: $light-color-0;
+        color: $text-inverse;
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .login-logo-area {
+        margin-bottom: 0;
+
+        .login-app-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: $radius-card;
+          background-color: $light-color-400;
+        }
+      }
+
+      .login-title {
+        @include heading-h2;
+        margin: 20px 0 10px;
+        font-size: 24px;
+        line-height: 30px;
+        color: $text-inverse;
+        word-break: keep-all;
+      }
+
+      .login-desc {
+        @include body-default;
+        margin: 0 0 $space-xl;
+        font-weight: $font-weight-bold;
+        color: $neutral-color-600;
+        word-break: keep-all;
+      }
+
+      .login-form {
+        max-width: none;
+      }
+
+      .login-form .login-btn,
+      .plan-submit {
+        @include body-default;
+        width: 100%;
+        max-width: none;
+        height: 48px;
+        border-radius: 6px;
+      }
+    }
+
+    // ---------- 로그인 (1단계) ----------
+    .login-card.login-card--signin {
+      .login-desc {
+        font-weight: $font-weight-regular;
+      }
+
+      .login-form .input-field input {
+        @include body-default;
+        height: 50px;
+      }
+
+      .login-links-row {
+        flex-wrap: wrap;
+        gap: $space-sm $space-lg;
+      }
+    }
+
+    // ---------- 인증번호 (2단계): 6칸이 카드 폭 안에 들어오게 ----------
+    .login-card .login-form .code-input-group {
+      gap: 6px;
+
+      .code-box {
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: 52px;
+        height: 54px;
+      }
+    }
+
+    // ---------- 인증 완료 (3단계): PC 의 큰 여백 줄이기 ----------
+    .login-card.login-card--confirm {
+      .login-title {
+        margin: 20px 0 10px;
+      }
+
+      .login-desc {
+        margin-bottom: $space-2xl;
+        font-weight: $font-weight-regular;
+      }
+
+      .login-links.row-links {
+        gap: 40px;
+      }
+    }
+
+    // ---------- 구독 플랜 선택 (시안) ----------
+    .login-card.plan-card {
+      .plan-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px $space-lg;
+        border-radius: $radius-card;
+      }
+
+      // 이름 / 가격 / 안내 왼쪽 세로 배치 + 라디오는 오른쪽 가운데
+      .plan-option {
+        grid-template-columns: minmax(0, 1fr) 20px;
+        grid-template-areas:
+          "name radio"
+          "price radio"
+          "note radio";
+        column-gap: $space-lg;
+        row-gap: $space-sm;
+        height: auto;
+        padding: 0;
+
+        &+.plan-option {
+          border-top: none;
+        }
+
+        .plan-name {
+          grid-area: name;
+          @include heading-h3;
+          font-weight: $font-weight-bold;
+        }
+
+        .plan-price {
+          grid-area: price;
+          @include body-default;
+        }
+
+        .plan-note {
+          grid-area: note;
+          @include label-default;
+          word-break: keep-all;
+        }
+
+        .plan-radio-mark {
+          grid-area: radio;
+          align-self: center;
+        }
+      }
+
+      .plan-section-title {
+        @include heading-h3;
+        font-weight: $font-weight-bold;
+        margin: $space-2xl 0 $space-md;
+      }
+
+      // 포함 혜택: 1열 카드
+      .plan-benefits {
+        grid-template-columns: minmax(0, 1fr);
+        gap: $space-md;
+      }
+
+      .plan-benefit {
+        gap: 10px;
+        padding: 22px 20px;
+        border-radius: $radius-card;
+
+        strong {
+          @include body-default;
+          font-weight: $font-weight-bold;
+        }
+
+        span {
+          @include body-default;
+          word-break: keep-all;
+        }
+      }
+
+      .plan-submit {
+        margin-top: $space-xl;
+      }
+
+      // 2. 내용 확인
+      .plan-links {
+        grid-template-columns: 1fr;
+        row-gap: $space-lg;
+        margin: $space-xl 0;
+      }
+
+      // 3. 처리 중 / 4. 완료
+      &.plan-card--processing,
+      &.plan-card--done {
+        padding-top: 76px;
+
+        .login-title {
+          margin: 20px 0 $space-md;
+          font-size: 24px;
+          line-height: 30px;
+          font-weight: $font-weight-regular;
+        }
+
+        .login-desc {
+          @include body-large;
+          margin-bottom: 20px;
+          font-weight: $font-weight-regular;
+        }
+      }
+
+      &.plan-card--processing .plan-submit--wait {
+        max-width: none;
+      }
+    }
+  }
+}
+
+// ---------- 휴대폰 (767px 이하): 화면 좌우 16px 까지 카드 확장 ----------
+@media (max-width: $breakpoint-mobile) {
+  .login-page.login-page {
+    padding: calc(#{$header-height} + 16px) 16px 40px;
+    background-color: $bg-color;
+
+    .login-card,
+    .login-card.login-card--signin,
+    .login-card.login-card--confirm,
+    .login-card.plan-card {
+      max-width: none;
+      padding: 76px 20px $space-xl;
+    }
+
+    .login-card.login-card .login-title {
+      font-size: 22px;
+      line-height: 28px;
+    }
+
+    .login-card.plan-card {
+      .plan-list {
+        gap: $space-xl;
+      }
+
+      .plan-option .plan-name {
+        @include heading-h4-b;
+        font-size: 18px;
+        line-height: 24px;
+      }
+
+      .plan-section-title {
+        margin-top: 28px;
+      }
+
+      .plan-benefit {
+        padding: 20px;
+      }
+
+      .plan-summary-row dd {
+        max-width: 55%;
+      }
+    }
+  }
+}
