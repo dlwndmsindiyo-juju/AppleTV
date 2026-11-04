@@ -53,7 +53,7 @@ $mobile-edge: 20px;
   .member-more {
     @include body-small;
     flex-shrink: 0;
-    color: $text-tertiary;
+    color: $light-color-0;
     text-decoration: none;
     white-space: nowrap;
     transition: color 0.2s ease;
@@ -586,7 +586,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
     .member-more {
       @include body-small;
-      color: $text-secondary;
+      color: $light-color-0;
     }
 
     // ---------- 슬라이드 카드 폭 (간격 24) ----------
@@ -874,7 +874,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
     .member-desc,
     .member-more {
-      color: $text-secondary;
+      color: $light-color-0;
     }
 
     .member-more:hover {
@@ -1533,6 +1533,7 @@ main.member-home .subscribe-cta {
 // =====================================================================
 @media (min-width: ($breakpoint-tablet + 1)) {
   main.member-home {
+
     .rail-continue,
     .rail-wish {
       --rail-col: 342px;

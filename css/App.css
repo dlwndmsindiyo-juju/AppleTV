@@ -5057,6 +5057,10 @@ img.ui-icon.ui-icon-arrow {
   mask-size: 60%;
 }
 
+.member-more {
+  color: #FFFFFF;
+}
+
 .member-more:has(> .ui-icon),
 .member-card-link:has(> .ui-icon),
 .sport-more:has(> .ui-icon),
@@ -7465,4 +7469,8 @@ body.has-promo-banner .floating-actions {
     width: 100%;
     height: auto;
   }
+}
+.swiper-button-prev,
+.swiper-button-next {
+  display: none !important;
 }

@@ -5010,6 +5010,11 @@ img.ui-icon.ui-icon-arrow {
   mask-size: 60%;
 }
 
+// 마음에 담아둔 이야기 더보기 색상 변경
+.member-more {
+  color: $light-color-0;
+}
+
 // 글자 + 아이콘 한 줄 가운데 정렬 (align-items: center)
 .member-more,
 .member-card-link,
@@ -7694,4 +7699,16 @@ body.has-promo-banner .floating-actions {
       }
     }
   }
+}
+
+
+// =====================================================================
+// [추가] 슬라이드 좌우 네비게이터(화살표) 아이콘 모두 숨김 — PC · 태블릿 · 휴대폰 · 모든 슬라이드
+// - 히어로 · TOP 10 · 오리지널스 · 로그인 후 홈 · 스포츠 등 Swiper 기본 화살표(.swiper-button-prev / next)
+// - 섹션마다 "항상 보이게(display: flex)" 규칙이 있어 !important 로 한 곳에서 숨김
+// - 슬라이드는 마우스 드래그 · 터치로 그대로 넘길 수 있음 / 히어로 아래 점(페이지네이션)은 그대로
+// =====================================================================
+.swiper-button-prev,
+.swiper-button-next {
+  display: none !important;
 }
