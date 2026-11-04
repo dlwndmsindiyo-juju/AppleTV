@@ -26,7 +26,7 @@ const swapOrHide = (fallback) => (e) => {
 };
 
 // 화면이 있는 메뉴 (나머지는 시안이 나오면 연결)
-const MENU_SCREEN = { 홈: "home", 스포츠: "sport", 검색: "search" }; // [추가] 검색
+const MENU_SCREEN = { 홈: "home", 스포츠: "sport", 보관함: "library", 검색: "search" }; // [추가] 검색 · 보관함
 
 export const TvHeader = ({ active, onMenu }) => (
   <header className="tv-header">
@@ -50,10 +50,9 @@ export const TvHeader = ({ active, onMenu }) => (
 
 // rows: [{ id, title, items: [{ id, title, image, logo?, logoFallback? }] }]
 // onItem: [추가] 카드를 눌렀을 때 (rowId, item)
-export const TvBrowseScreen = ({ menu, onMenu, rows, bg, onItem }) => {
+export const TvBrowseScreen = ({ menu, onMenu, rows, bg, onItem, empty = "콘텐츠를 불러오는 중입니다…" }) => {
   const [activeRow, setActiveRow] = useState(null);
-  // [추가] 로그인 전: 카드를 누르면 웹과 같은 안내 팝업 (SubscribeGate · data-gate="watch")
-  const loggedOut = useAuthStore((s) => s.authReady && !s.user);
+  // [수정] 카드를 누르면 상세 페이지 (로그인 전 안내 팝업은 상세의 "시청하기" 에서)
   const current = activeRow || rows[0]?.id;
 
   const handleFocus = (rowId) => (e) => {
@@ -77,7 +76,6 @@ export const TvBrowseScreen = ({ menu, onMenu, rows, bg, onItem }) => {
                   key={item.id}
                   className="tv-sport-card"
                   data-tv-autofocus={rowIndex === 0 && i === 0 ? true : undefined}
-                  data-gate={loggedOut ? "watch" : undefined}
                   onFocus={handleFocus(row.id)}
                   onClick={() => onItem?.(row.id, item)}
                 >
@@ -92,7 +90,7 @@ export const TvBrowseScreen = ({ menu, onMenu, rows, bg, onItem }) => {
           </section>
         ))}
 
-        {rows.length === 0 && <p className="tv-sport-empty">콘텐츠를 불러오는 중입니다…</p>}
+        {rows.length === 0 && <p className="tv-sport-empty">{empty}</p>}
       </div>
     </main>
   );

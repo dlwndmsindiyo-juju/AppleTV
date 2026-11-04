@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import TvPlayer from "./TvPlayer";
+import React, { useEffect, useMemo } from "react";
+import { videoItem, matchItem, leagueItem, seriesItem } from "./tvDetailItems"; // [추가] 상세 페이지 항목
 import { TV_SPORT_BG } from "../../data/tvSportData";
 import { TvBrowseScreen } from "./TvRows";
 import { useSportStore } from "../../store/useSportStore";
@@ -53,13 +53,13 @@ const useTvSportRows = () => {
       ...(highlightList || []),
     ]
       .filter((v) => v?.id?.videoId && !seen.has(v.id.videoId) && seen.add(v.id.videoId))
-      .map((v) => ({ id: v.id.videoId, title: decodeHtml(v.snippet?.title), image: ytThumb(v), label: "하이라이트", meta: "하이라이트" }));
+      .map((v) => ({ id: v.id.videoId, title: decodeHtml(v.snippet?.title), image: ytThumb(v), detail: videoItem(v) }));
 
     return [
       {
         id: "replay",
         title: "경기 다시보기",
-        items: REPLAY_LEAGUES.map((l) => ({ id: l.id, title: l.league, image: leagueThumb(l) })),
+        items: REPLAY_LEAGUES.map((l) => ({ id: l.id, title: l.league, image: leagueThumb(l), detail: leagueItem(l, leagueThumb(l)) })),
       },
       { id: "highlights", title: "하이라이트", items: highlights },
       {
@@ -67,12 +67,12 @@ const useTvSportRows = () => {
         title: "예정된 경기",
         items: upcomingMatches()
           .slice(0, 8)
-          .map((m) => ({ id: m.id, title: matchTitle(m), image: m.image })),
+          .map((m) => ({ id: m.id, title: matchTitle(m), image: m.image, detail: matchItem({ ...m, title: matchTitle(m), label: "예정된 경기" }) })),
       },
       {
         id: "series",
         title: "추천 시리즈",
-        items: SPORT_SERIES_DATA.map((s) => ({ id: s.id, title: s.title, image: s.poster })),
+        items: SPORT_SERIES_DATA.map((s) => ({ id: s.id, title: s.title, image: s.poster, detail: seriesItem(s) })),
       },
       {
         id: "teams",
@@ -84,27 +84,18 @@ const useTvSportRows = () => {
   }, [categories, highlightList]);
 };
 
-export const TvSportHome = ({ onMenu }) => {
+// onDetail(item): [추가] 영상 상세 페이지 열기 (TvDetail)
+export const TvSportHome = ({ onMenu, onDetail }) => {
   const rows = useTvSportRows();
-  const [playing, setPlaying] = useState(null); // [추가] 재생 중인 하이라이트 (카드 item)
 
-  // [추가] 카드를 눌렀을 때
-  // - 관심있는 구단 → 그 구단 화면 (팀 팔로우 버튼 · 팀 영상)
-  // - 하이라이트 → 그 영상을 화면 가득 바로 재생 ("← 뒤로" 로 닫기)
+  // [수정] 카드를 눌렀을 때
+  // - 관심있는 구단 → 그 구단 화면 (팀 팔로우 버튼 · 팀 영상 · 상세 페이지 예외)
+  // - 나머지(경기 다시보기 · 하이라이트 · 예정된 경기 · 추천 시리즈) → 영상 상세 페이지 → "시청하기" 로 재생
   const handleItem = (rowId, item) => {
     if (rowId === "teams") onMenu?.(`team:${item.id}`);
-    if (rowId === "highlights") setPlaying(item);
+    else if (item.detail) onDetail?.(item.detail);
   };
-  return (
-    <>
-      <TvBrowseScreen menu="스포츠" onMenu={onMenu} rows={rows} bg={TV_SPORT_BG} onItem={handleItem} />
-      <TvPlayer
-        video={playing}
-        related={rows.find((r) => r.id === "highlights")?.items || []} // 끝 화면 "하이라이트" 줄
-        onClose={() => setPlaying(null)}
-      />
-    </>
-  );
+  return <TvBrowseScreen menu="스포츠" onMenu={onMenu} rows={rows} bg={TV_SPORT_BG} onItem={handleItem} />;
 };
 
 export default TvSportHome;

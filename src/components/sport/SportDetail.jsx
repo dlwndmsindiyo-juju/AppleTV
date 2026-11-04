@@ -7,7 +7,9 @@ import { decodeHtml, ytThumb } from "./sportUtils";
 import { REPLAY_LEAGUES, leagueThumb, playlistEmbedUrl, playlistWatchUrl } from "../../data/replayLeagues";
 import { LeagueCover } from "./SportReplay";
 import SportHero from "./SportHero";
-import { SportBack } from "./SportBack";
+import WatchPlayer from "../common/WatchPlayer"; // [추가] 영상이 끝난 것을 알기 위해 (YouTube API)
+import AutoNext from "../common/AutoNext"; // [추가] 끝나면 "5초 후 다음 영상"
+import { useSettings } from "../../store/useAuthStore"; // [추가] 계정 설정 "추천 항목 재생"
 
 // =====================================================================
 // 스포츠 상세 (하나의 컴포넌트로 3개 상세 사용)
@@ -193,21 +195,44 @@ const DetailCountdown = ({ item, target }) => {
 };
 
 // 왼쪽 큰 화면 - 영상 플레이어 (YouTube 영상 하나 또는 재생목록)
-const DetailPlayer = ({ item }) => (
-  <div className="sport-detail-player">
-    <iframe
-      key={item.playlistId || item.videoId}
-      src={
-        item.playlistId
-          ? playlistEmbedUrl(item.playlistId, item.videoId)
-          : `https://www.youtube.com/embed/${item.videoId}?autoplay=1&rel=0&playsinline=1`
-      }
-      title={item.title}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-  </div>
-);
+// - [수정] 영상 하나: WatchPlayer (끝난 것을 알 수 있음) → 계정 설정 "추천 항목 재생" 이 켜져 있으면
+//   오른쪽 목록의 다음 영상을 5초 뒤 재생 (AutoNext · "취소" 로 멈춤)
+// - 재생목록(경기 다시보기)은 YouTube 가 목록 안에서 이어서 재생하므로 그대로
+const DetailPlayer = ({ item, next, onNext }) => {
+  const settings = useSettings();
+  const [ended, setEnded] = useState(false);
+  useEffect(() => setEnded(false), [item.id]);
+
+  if (item.playlistId) {
+    return (
+      <div className="sport-detail-player">
+        <iframe
+          key={item.playlistId || item.videoId}
+          src={playlistEmbedUrl(item.playlistId, item.videoId)}
+          title={item.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="sport-detail-player">
+      <WatchPlayer key={item.videoId} videoKey={item.videoId} title={item.title} onEnded={() => setEnded(true)} />
+      {ended && settings.autoplayRecommend && next && (
+        <AutoNext
+          className="auto-next--inline"
+          kind="다음 영상"
+          title={next.title}
+          image={next.thumb}
+          onPlay={() => onNext(next.id)}
+          onCancel={() => setEnded(false)}
+        />
+      )}
+    </div>
+  );
+};
 
 const SportDetail = () => {
   const { type } = useParams();
@@ -245,35 +270,7 @@ const SportDetail = () => {
   );
 
   // 페이지 이동 시 맨 위로
-  // useEffect(() => { window.scrollTo(0, 0); }, [type]);
-
-  // 영상으로 스크롤 이동
-  useEffect(() => {
-    const timer = requestAnimationFrame(() => {
-      const section = document.querySelector(".sport-detail");
-
-      if (!section) return;
-
-      const headerHeight =
-        document.querySelector("header")?.getBoundingClientRect().height || 0;
-
-      const offset = headerHeight + 80;
-
-      const top =
-        window.scrollY +
-        section.getBoundingClientRect().top -
-        offset;
-
-      window.scrollTo({
-        top: Math.max(0, top),
-        behavior: "instant",
-      });
-    });
-
-    return () => cancelAnimationFrame(timer);
-  }, [type]);
-
-
+  useEffect(() => { window.scrollTo(0, 0); }, [type]);
 
   if (!config) return <Navigate to="/sport" replace />;
 
@@ -287,8 +284,8 @@ const SportDetail = () => {
 
       <section className={`sport-detail sport-detail--${type}`} aria-labelledby="sport-detail-title">
         <div className="inner">
-          <SportBack />
           <h2 className="sport-sr-only" id="sport-detail-title">{config.title}</h2>
+
           {!current ? (
             <p className="sport-empty">{config.empty}</p>
           ) : (
@@ -301,7 +298,7 @@ const SportDetail = () => {
                     target={current.kickoff && new Date(current.kickoff).getTime() > Date.now() ? current.kickoff : countdownTarget}
                   />
                 ) : (
-                  <DetailPlayer item={current} />
+                  <DetailPlayer item={current} next={items[items.indexOf(current) + 1]} onNext={select} />
                 )}
 
                 <div className="sport-detail-info">
@@ -360,7 +357,7 @@ const SportDetail = () => {
             </div>
           )}
 
-
+          <Link className="sport-detail-back" to="/sport">← 스포츠 홈으로</Link>
         </div>
       </section>
     </main>
