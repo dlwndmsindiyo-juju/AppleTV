@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import TvPlayer from "./TvPlayer";
 import { TV_SPORT_BG } from "../../data/tvSportData";
 import { TvBrowseScreen } from "./TvRows";
 import { useSportStore } from "../../store/useSportStore";
@@ -76,7 +77,8 @@ const useTvSportRows = () => {
       {
         id: "teams",
         title: "관심있는 구단",
-        items: SPORT_TEAMS.map((t) => ({ id: t.id, title: t.shortName, image: t.banner, logo: t.logo })),
+        // [수정] TV 관심있는 구단: 배경 없는 뱃지 (파일이 아직 없으면 칩 로고로 대체)
+        items: SPORT_TEAMS.map((t) => ({ id: t.id, title: t.shortName, image: t.banner, logo: t.badge || t.logo, logoFallback: t.logo })),
       },
     ].filter((row) => row.items.length > 0);
   }, [categories, highlightList]);
@@ -84,7 +86,21 @@ const useTvSportRows = () => {
 
 export const TvSportHome = ({ onMenu }) => {
   const rows = useTvSportRows();
-  return <TvBrowseScreen menu="스포츠" onMenu={onMenu} rows={rows} bg={TV_SPORT_BG} />;
+  const [playing, setPlaying] = useState(null); // [추가] 재생 중인 하이라이트 { id, title }
+
+  // [추가] 카드를 눌렀을 때
+  // - 관심있는 구단 → 그 구단 화면 (팀 팔로우 버튼 · 팀 영상)
+  // - 하이라이트 → 그 영상을 화면 가득 바로 재생 ("← 뒤로" 로 닫기)
+  const handleItem = (rowId, item) => {
+    if (rowId === "teams") onMenu?.(`team:${item.id}`);
+    if (rowId === "highlights") setPlaying({ id: item.id, title: item.title });
+  };
+  return (
+    <>
+      <TvBrowseScreen menu="스포츠" onMenu={onMenu} rows={rows} bg={TV_SPORT_BG} onItem={handleItem} />
+      <TvPlayer videoId={playing?.id} title={playing?.title} onClose={() => setPlaying(null)} />
+    </>
+  );
 };
 
 export default TvSportHome;

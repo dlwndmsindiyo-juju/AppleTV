@@ -14,6 +14,17 @@ const hideBroken = (e) => {
   e.currentTarget.style.visibility = "hidden";
 };
 
+// [추가] 구단 뱃지: 못 불러오면 대체 이미지(fallback)로 한 번 바꿔 보고, 그래도 안 되면 숨김
+const swapOrHide = (fallback) => (e) => {
+  const el = e.currentTarget;
+  if (fallback && el.dataset.fallback !== "1") {
+    el.dataset.fallback = "1";
+    el.src = fallback;
+    return;
+  }
+  hideBroken(e);
+};
+
 // 화면이 있는 메뉴 (나머지는 시안이 나오면 연결)
 const MENU_SCREEN = { 홈: "home", 스포츠: "sport" };
 
@@ -37,8 +48,9 @@ export const TvHeader = ({ active, onMenu }) => (
   </header>
 );
 
-// rows: [{ id, title, items: [{ id, title, image, logo? }] }]
-export const TvBrowseScreen = ({ menu, onMenu, rows, bg }) => {
+// rows: [{ id, title, items: [{ id, title, image, logo?, logoFallback? }] }]
+// onItem: [추가] 카드를 눌렀을 때 (rowId, item)
+export const TvBrowseScreen = ({ menu, onMenu, rows, bg, onItem }) => {
   const [activeRow, setActiveRow] = useState(null);
   // [추가] 로그인 전: 카드를 누르면 웹과 같은 안내 팝업 (SubscribeGate · data-gate="watch")
   const loggedOut = useAuthStore((s) => s.authReady && !s.user);
@@ -67,10 +79,11 @@ export const TvBrowseScreen = ({ menu, onMenu, rows, bg }) => {
                   data-tv-autofocus={rowIndex === 0 && i === 0 ? true : undefined}
                   data-gate={loggedOut ? "watch" : undefined}
                   onFocus={handleFocus(row.id)}
+                  onClick={() => onItem?.(row.id, item)}
                 >
                   <span className="tv-sport-thumb">
                     {item.image && <img src={item.image} alt="" loading="lazy" onError={hideBroken} />}
-                    {item.logo && <img className="tv-sport-logo" src={item.logo} alt="" onError={hideBroken} />}
+                    {item.logo && <img className="tv-sport-logo" src={item.logo} alt="" onError={swapOrHide(item.logoFallback)} />}
                   </span>
                   <span className="tv-sport-card-title">{item.title}</span>
                 </button>

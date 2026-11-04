@@ -696,14 +696,13 @@
   }
 }
 
-// [추가] 로그아웃 — 웹 화면으로 바로 아래 (아이콘 없이 · 다른 메뉴 글자와 줄 맞춤)
+// [추가] 로그아웃 — 설정 묶음 맨 아래 (아이콘 없이 · 다른 메뉴 글자와 줄 맞춤)
 .tv-side-logout {
-  margin-top: $space-md;
   padding-left: calc(#{$space-md} + 30px + #{$space-lg}); // 아이콘 칸만큼 들여서 글자 줄 맞춤
 }
 
 // [추가] AI 아이콘 — 진짜 AI 처럼 빛나며 움직이는 그라데이션
-// - 별 모양(components/ai/assets/selection-stars.svg)을 mask 로 쓰고, 안쪽 그라데이션이 계속 흐름
+// - 별 모양(public/icons/tv/tv-ai-icon.svg)을 mask 로 쓰고, 안쪽 그라데이션이 계속 흐름
 // - 색: 원래 아이콘의 복숭아색(#FFAA7A) → AI 팝업 보라(#A5ACFF) → Primary/500 → 다시 복숭아색
 // - 바깥 빛(drop-shadow)이 숨 쉬듯 커졌다 작아지고, 살짝 커졌다 작아짐
 // - 움직임 줄이기 설정(prefers-reduced-motion)에서는 멈춤
@@ -716,12 +715,9 @@ $tv-ai-lilac: #a5acff;
   height: 26px;
   background: linear-gradient(120deg, $tv-ai-peach 0%, $tv-ai-lilac 30%, $primary-color-500 55%, $tv-ai-lilac 75%, $tv-ai-peach 100%);
   background-size: 300% 300%;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+  // [수정] 별 모양: public/icons/tv/tv-ai-icon.svg (원래 AI 아이콘과 같은 파일) 을 그대로 mask 로
+  -webkit-mask: url("/icons/tv/tv-ai-icon.svg") center / contain no-repeat;
+  mask: url("/icons/tv/tv-ai-icon.svg") center / contain no-repeat;
   animation: tv-ai-flow 4s linear infinite;
 }
 
@@ -760,10 +756,76 @@ $tv-ai-lilac: #a5acff;
   }
 }
 
-// 웹 화면으로: 메뉴 아래 따로
-.tv-side-exit {
-  margin-top: $space-xl;
+// [추가] 관심구단 — 메인 메뉴 아래 팔로우한 팀 이름
+// - 별 아이콘: public/icons/tv/tv-star-icon.svg 모양 · 색 Primary/500 (mask)
+.tv-side-star-icon {
+  display: block;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background-color: $primary-color-500;
+  -webkit-mask: url("/icons/tv/tv-star-icon.svg") center / contain no-repeat;
+  mask: url("/icons/tv/tv-star-icon.svg") center / contain no-repeat;
 }
+
+// [추가] 메뉴 묶음 (시안: Library · Apps) — 제목 Heading/h2-B · Light/0 + 오른쪽 접기 화살표
+.tv-side-group {
+  margin-top: 48px;
+}
+
+.tv-side-group-head {
+  @include heading-h2-b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 $space-md;
+  border: none;
+  border-radius: $radius-xs;
+  background: transparent;
+  color: $light-color-0;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $dark-color-400;
+  }
+
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+
+    .tv-side-group-arrow {
+      background-color: $tv-btn-primary-text;
+    }
+  }
+}
+
+// 화살표: public/icons/nav/left-nav.svg 모양 (흰색) · 펼침 ↓ / 접힘 →
+.tv-side-group-arrow {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background-color: $light-color-0;
+  -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  transform: rotate(180deg);
+  transition: transform 0.2s ease;
+
+  .tv-side-group.is-open & {
+    transform: rotate(-90deg);
+  }
+}
+
+.tv-side-group-body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  margin-top: $space-lg;
+}
+
 
 // 리모컨 안내 — 메뉴 맨 아래
 .tv-side-guide {
@@ -1052,4 +1114,296 @@ $tv-ai-lilac: #a5acff;
 // 스포츠 · 홈의 섹션 영역은 남은 높이만 채우고 안에서 위아래로 이동 (줄어들 수 있어야 함)
 .tv-screen > .tv-sport-body {
   flex-shrink: 1;
+}
+
+
+// =====================================================================
+// [추가] 관심구단 화면 (TvTeam.jsx) — 시안: 구단 히어로 + 그 팀 영상
+// - 구단명 Heading/h1-B · 전적 Heading/h4 · 설명 Heading/h2 (모두 Light/0)
+// - 팀 팔로우: 167 × 52 (패딩 포함) · 별 ↔ 글자 8 · SF Pro Bold 15 / 20
+// - LIVE: PC 라이브 표시와 같은 크기 (별표한 팀이 경기 중일 때만)
+// - 뱃지: 배경 없이 402 × 402 · 히어로 정가운데
+// - 영상 카드: 제목 Body/default-B Light/0 · 설명 Caption/default Light/500 · 정보 Caption/small Light/0
+// =====================================================================
+.tv-screen.tv-team {
+  align-items: stretch;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: $dark-color-900;
+  text-align: left;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ---------- 히어로 ----------
+.tv-team-hero {
+  position: relative;
+  flex-shrink: 0;
+  height: 776px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.tv-team-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+}
+
+// PC 구단 히어로와 같은 어둡게 (왼쪽 글자 · 아래쪽)
+.tv-team-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0) 45%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba($dark-color-900, 0.6) 100%);
+  pointer-events: none;
+}
+
+.tv-team-info {
+  position: absolute;
+  top: 50%;
+  left: 191px;
+  width: 520px;
+  transform: translateY(-50%);
+}
+
+.tv-team-name {
+  @include heading-h1-b;
+  margin: 0;
+  padding: 0;
+  color: $light-color-0;
+}
+
+.tv-team-record {
+  @include heading-h4;
+  margin: 12px 0 0;
+  color: $light-color-0;
+}
+
+.tv-team-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.tv-team-follow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 167px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: $light-color-100;
+  color: $text-inverse;
+  font-family: $font-family-base;
+  font-size: 15px;
+  font-weight: $font-weight-bold;
+  line-height: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &.is-on svg {
+    color: $rating-color;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background: $light-color-0;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba($light-color-0, 0.35);
+  }
+}
+
+// LIVE — PC 라이브 카드 표시와 같은 크기 (14 · 위아래 8 · 좌우 15)
+.tv-team-live {
+  @include label-default-b;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 15px;
+  border-radius: 9999px;
+  background-color: $sports-color;
+  color: $light-color-0;
+  font-size: 14px;
+  line-height: 1;
+
+  img {
+    display: block;
+    width: 1.1em;
+    height: 1.1em;
+  }
+}
+
+.tv-team-desc {
+  @include heading-h2;
+  margin: 40px 0 0;
+  color: $light-color-0;
+  word-break: keep-all;
+}
+
+// 뱃지: 배경 없이 402 × 402 · 히어로 정가운데
+.tv-team-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 402px;
+  height: 402px;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  &.sport-badge-initial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include display-xl-b;
+    color: $light-color-0;
+  }
+}
+
+// ---------- 그 팀 영상 ----------
+.tv-team-body {
+  padding: 40px 0 80px;
+}
+
+.tv-team-row + .tv-team-row {
+  margin-top: 56px;
+}
+
+.tv-team-row-title {
+  @include display-l-b;
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin: 0;
+  padding: 0 80px;
+  color: $light-color-0;
+
+  img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.tv-team-row-desc {
+  @include body-default;
+  margin: $space-xs 0 0;
+  padding: 0 80px;
+  color: $light-color-500;
+}
+
+// 카드 줄: 왼쪽 80 에서 시작 · 오른쪽 끝에서 잘림 (리모컨 이동 시 옆으로 밀림)
+.tv-team-track {
+  display: flex;
+  gap: 30px;
+  padding: 24px 80px 12px;
+  overflow: hidden;
+  scroll-padding: 0 80px;
+}
+
+.tv-team-card {
+  position: relative;
+  flex-shrink: 0;
+  width: 410px;
+  height: 231px;
+  padding: 0;
+  border: 0;
+  border-radius: $tv-card-radius;
+  overflow: hidden;
+  background-color: $dark-color-400;
+  color: $light-color-0;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  // 글자가 잘 보이도록 아래쪽 어둡게
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.85) 100%);
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    transform: scale(1.04);
+    box-shadow: 0 0 0 4px $light-color-0, 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.tv-team-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tv-team-card-text {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  left: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tv-team-card-title {
+  @include body-default-b;
+  color: $light-color-0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tv-team-card-desc {
+  @include caption-default;
+  display: -webkit-box;
+  overflow: hidden;
+  color: $light-color-500;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.tv-team-card-meta {
+  @include caption-small;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: $light-color-0;
+
+  img {
+    width: 8px;
+    height: 10px;
+  }
+}
+
+.tv-team-empty {
+  @include display-M;
+  margin: 0;
+  padding: 40px 80px;
+  color: $text-secondary;
 }

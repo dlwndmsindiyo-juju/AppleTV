@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSportStore } from "../../store/useSportStore";
 import { CONFERENCES } from "../../data/sportTeams";
 import { conferenceRows, clubOf } from "./standingsUtils";
+import TeamBadge from "./TeamBadge"; // [추가] 팀 뱃지 (배경 없이)
 import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
 
 // MLS 로고 (public/images/sport-team/mls-logo.svg 를 넣으면 이미지로, 없으면 텍스트 배지로 표시)
@@ -65,13 +66,13 @@ export default function SportConferenceStandings() {
                         </tr>
                       ) : rows.map((item, index) => {
                         const { row } = item;
-                        const { key: clubKey, logo, name } = clubOf(item);
+                        const { key: clubKey, logo, fallback, name } = clubOf(item);
                         return (
                           <tr key={clubKey}>
                             <td className="rank">{index + 1}</td>
                             <th scope="row">
                               <span className="sport-conference-club">
-                                {logo && <img src={logo} alt="" loading="lazy" />}
+                                {logo && <TeamBadge src={logo} fallback={fallback} label={name} loading="lazy" />}
                                 <span>{name}</span>
                               </span>
                             </th>

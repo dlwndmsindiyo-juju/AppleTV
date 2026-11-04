@@ -51,5 +51,22 @@ export const SPORT_TEAMS = [
   { id: "vancouver", shortName: "밴쿠버", name: "밴쿠버 화이트캡스", enName: "Vancouver Whitecaps", conference: "west", logo: logo("vancouver-chip.svg"), color: "#00245E", banner: bg("vancouver.svg") },
 ];
 
+// [추가] 팀 뱃지 (배경 없이 뱃지만) — public/images/matches/{파일}.svg
+// - 관심있는 구단 카드 · 실시간 채팅 프로필을 뺀 모든 스포츠 화면은 이 뱃지만 사용
+// - logo(*-chip.svg) 는 배경이 있는 칩 → 관심있는 구단 영역에서만 사용
+const BADGE_FILE = {
+  atlanta: "atlanta", austin: "austin", charlotte: "charlotte", chicago: "chicago", cincinnati: "cincinnati",
+  colorado: "colorado", columbus: "columbus", dallas: "dallas", dc: "DC", houston: "houston",
+  "kansas-city": "kansasCity", "la-galaxy": "LA", lafc: "LAFC", miami: "miami", minnesota: "minnesota",
+  montreal: "montreal", nashville: "nashville", "new-england": "newEngland", nycfc: "NewYorkCity", orlando: "orlando",
+  philadelphia: "philadelphia", portland: "portland", "red-bulls": "redbull", "salt-lake": "saltLake", "san-diego": "sanDiego",
+  "san-jose": "sanjose", seattle: "seattle", "st-louis": "st-louis", toronto: "toronto", vancouver: "vancouver",
+};
+export const teamBadge = (id) =>
+  BADGE_FILE[id] ? `${import.meta.env.BASE_URL}images/matches/${BADGE_FILE[id]}.svg` : null;
+SPORT_TEAMS.forEach((team) => {
+  team.badge = teamBadge(team.id);
+});
+
 // id → 구단 (없으면 undefined)
 export const getTeamById = (id) => SPORT_TEAMS.find((team) => team.id === id);
