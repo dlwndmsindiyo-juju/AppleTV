@@ -5,6 +5,7 @@ import { useSportStore } from "../../store/useSportStore";
 import { getTeamById } from "../../data/sportTeams";
 import { ytThumb, decodeHtml } from "../sport/sportUtils";
 import TvEndScreen from "./TvEndScreen";
+import { useSettings } from "../../store/useAuthStore"; // [추가] 계정 설정 "추천 항목 재생"
 
 // [추가] TV 영상 재생 — 카드를 누르면 그 영상을 화면 가득 바로 재생
 // - 웹과 같은 전체 화면 팝업(VideoPopup) · 왼쪽 위 "← 뒤로" · Esc · 브라우저 뒤로가기로 닫기
@@ -14,8 +15,10 @@ import TvEndScreen from "./TvEndScreen";
 //   · 경기 다시보기 카드: 그 경기 하이라이트를 찾아 재생 · 하이라이트 카드: 그 영상 재생
 //   · 끝 화면에서는 "← 뒤로" 버튼을 숨김 (Esc · 브라우저 뒤로가기로 닫기)
 // - YouTube API 를 못 불러오면 일반 영상으로 재생 (끝 화면 없이)
+// - [추가] 계정 설정 "추천 항목 재생" 이 켜져 있으면 끝 화면에서 5초 뒤 다음 영상 자동 재생 ("취소" 로 멈춤)
+//   · 다음 영상: getNext(current, played) 가 있으면 그 결과 (OTT 추천 콘텐츠 예고편) · 없으면 related 에서 지금 영상 다음
 // video: { id, title, image, label, desc, meta } · related: 같은 모양 배열 (끝 화면 하이라이트 줄)
-const TvPlayer = ({ video, related = [], onClose }) => {
+const TvPlayer = ({ video, related = [], onClose, getNext }) => {
   const [current, setCurrent] = useState(video);
   const [ended, setEnded] = useState(false);
   const [fallback, setFallback] = useState(false);
@@ -25,13 +28,38 @@ const TvPlayer = ({ video, related = [], onClose }) => {
   const lastFocus = useRef(null);
   const open = Boolean(video?.id);
   const fetchHighlights = useSportStore((s) => s.onFetchHighlights);
+  const settings = useSettings();
+  const [upNext, setUpNext] = useState(null); // [추가] 끝 화면에서 자동 재생할 영상
+  const playedRef = useRef([]); // [추가] 이번에 본 영상 id (같은 영상을 다시 고르지 않게)
 
   // 새 영상으로 열릴 때
   useEffect(() => {
     setCurrent(video);
     setEnded(false);
     setNotice("");
+    playedRef.current = video?.id ? [video.id] : [];
   }, [video]);
+
+  // [추가] 끝났을 때 다음 영상 정하기 (추천 항목 재생이 꺼져 있으면 없음)
+  useEffect(() => {
+    setUpNext(null);
+    if (!ended || !current || !settings.autoplayRecommend) return undefined;
+    let dead = false;
+    const played = playedRef.current;
+    const pick = async () => {
+      if (getNext) return getNext(current, played);
+      const list = related.filter((v) => v?.id);
+      const index = list.findIndex((v) => v.id === current.id);
+      return list.slice(index + 1).find((v) => !played.includes(v.id)) || null;
+    };
+    Promise.resolve(pick())
+      .then((next) => !dead && next && setUpNext(next))
+      .catch(() => {});
+    return () => {
+      dead = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ended, current?.id, settings.autoplayRecommend]);
 
   // 열고 닫을 때: 포커스 저장 · "← 뒤로" 에 포커스 · 닫으면 누른 카드로
   useEffect(() => {
@@ -81,6 +109,7 @@ const TvPlayer = ({ video, related = [], onClose }) => {
 
   // 다른 영상 재생 (같은 플레이어에서)
   const play = (next) => {
+    if (next?.id && !playedRef.current.includes(next.id)) playedRef.current = [...playedRef.current, next.id];
     setCurrent(next);
     setEnded(false);
     setNotice("");
@@ -142,6 +171,8 @@ const TvPlayer = ({ video, related = [], onClose }) => {
           onPlay={play}
           onPlayMatch={playMatch}
           notice={notice}
+          upNext={upNext}
+          onCancelNext={() => setUpNext(null)}
         />
       )}
     </VideoPopup>

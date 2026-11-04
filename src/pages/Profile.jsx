@@ -7,8 +7,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebase";
-import { useAuthStore, getSettings, ALERT_CHANNELS, FAMILY_ORDER } from "../store/useAuthStore";
-import ProfileAvatar, { AVATAR_OPTIONS, sameAvatar } from "../components/profile/ProfileAvatar";
+import { useAuthStore, getSettings, ALERT_CHANNELS, getProfiles, MAIN_PROFILE_ID } from "../store/useAuthStore";
+import ProfileAvatar, { AVATAR_OPTIONS, sameAvatar, profileLook } from "../components/profile/ProfileAvatar";
+import ProfilePicker from "../components/profile/ProfilePicker"; // [추가] 프로필 고르기 · 추가
 // 스타일: App.scss 맨 아래 "계정 설정" (.account-*)
 
 const CHANNEL_LABELS = { email: "이메일", sms: "문자 메시지", push: "앱 푸시 알림" };
@@ -129,8 +130,9 @@ export const Profile = () => {
   const onUpdateAvatar = useAuthStore((s) => s.onUpdateAvatar);
   const onClearWatchHistory = useAuthStore((s) => s.onClearWatchHistory);
   const onLogoutEverywhere = useAuthStore((s) => s.onLogoutEverywhere);
-  const currentMember = useAuthStore((s) => s.currentMember); // [추가] 지금 보고 있는 가족 프로필
-  const onSetMember = useAuthStore((s) => s.onSetMember);
+  const currentProfileId = useAuthStore((s) => s.currentProfileId) || MAIN_PROFILE_ID; // [수정] 지금 보고 있는 프로필
+  const onSelectProfile = useAuthStore((s) => s.onSelectProfile);
+  const onUpdateProfile = useAuthStore((s) => s.onUpdateProfile);
 
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [providersOpen, setProvidersOpen] = useState(false);
@@ -159,8 +161,9 @@ export const Profile = () => {
     if (!ok) setMessage("설정을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
   };
 
+  // [수정] 프로필 아이콘은 지금 보고 있는 프로필에 저장 (프로필마다 다른 아이콘)
   const pickAvatar = async (opt) => {
-    const ok = await onUpdateAvatar(opt);
+    const ok = await onUpdateProfile(currentProfileId, { avatar: opt });
     setMessage(ok ? "프로필 아이콘을 바꿨어요." : "프로필 아이콘을 저장하지 못했어요.");
   };
 
@@ -184,12 +187,14 @@ export const Profile = () => {
     setDialog(null);
   };
 
-  // [추가] 다른 가족 프로필로 보기 (아빠 · 엄마 · 아들 · 딸)
-  const members = FAMILY_ORDER.filter((name) => !user.familyMembers || name in user.familyMembers);
-  const pickMember = (name) => {
-    if (name === currentMember) return;
-    onSetMember(name);
-    setMessage(`${name} 프로필로 보고 있어요.`);
+  // [수정] 다른 프로필로 보기 (최대 5개 · "+" 로 추가)
+  const profiles = getProfiles(user);
+  const currentProfile = profiles.find((p) => p.id === currentProfileId) || profiles[0];
+  const look = profileLook(profiles, currentProfile?.id);
+  const pickProfile = (id) => {
+    if (id === currentProfileId) return;
+    onSelectProfile(id);
+    setMessage(`${profiles.find((p) => p.id === id)?.name || ""} 프로필로 보고 있어요.`);
   };
 
   const providers = (auth.currentUser?.providerData || []).map((p) => ({
@@ -206,37 +211,17 @@ export const Profile = () => {
         {/* ---------- 프로필 (기본 아이콘 선택) ---------- */}
         <Section title="프로필">
           <div className="account-profile">
-            <ProfileAvatar avatar={user.avatar} size="lg" />
+            <ProfileAvatar avatar={look.avatar} tone={look.tone} size="lg" />
             <div className="account-profile-text">
               <strong>{user.name || "Apple 사용자"}</strong>
               <span>{user.email}</span>
-              {currentMember && <span className="account-profile-member">{currentMember} 프로필로 보는 중</span>}
+              {currentProfile && <span className="account-profile-member">{currentProfile.name} 프로필로 보는 중</span>}
             </div>
           </div>
-          <Item title="다른 프로필로 보기" desc="가족 구성원의 프로필을 고르면 바로 그 프로필로 바뀝니다.">
-            <ul className="account-members" role="radiogroup" aria-label="가족 프로필">
-              {members.map((name, i) => {
-                const on = name === currentMember;
-                return (
-                  <li key={name}>
-                    <button
-                      type="button"
-                      role="radio"
-                      aria-checked={on}
-                      className={`account-member account-member--${i + 1}${on ? " is-on" : ""}`}
-                      onClick={() => pickMember(name)}
-                    >
-                      <span className="account-member-avatar" aria-hidden="true">
-                        <img src="/icons/profile.svg" alt="" />
-                      </span>
-                      <span className="account-member-name">{name}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+          <Item title="다른 프로필로 보기" desc="프로필을 고르면 바로 그 프로필로 바뀝니다. 프로필마다 위시리스트와 시청 기록이 따로 저장돼요. (최대 5개)">
+            <ProfilePicker className="account-profile-picker" current={currentProfileId} onPick={pickProfile} />
           </Item>
-          <Item title="프로필 아이콘" desc="헤더에 보이는 프로필 아이콘을 기본 아이콘 중에서 고를 수 있습니다.">
+          <Item title="프로필 아이콘" desc="지금 보고 있는 프로필의 아이콘을 기본 아이콘 중에서 고를 수 있습니다.">
             <button
               type="button"
               className="account-link"
@@ -249,7 +234,7 @@ export const Profile = () => {
             {avatarOpen && (
               <ul id="account-avatar-grid" className="account-avatar-grid" role="radiogroup" aria-label="프로필 아이콘">
                 {AVATAR_OPTIONS.map((opt) => {
-                  const on = sameAvatar(user.avatar, opt);
+                  const on = sameAvatar(currentProfile?.avatar, opt);
                   return (
                     <li key={`${opt.icon}-${opt.color}`}>
                       <button
