@@ -17,6 +17,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import TeamBadge from "./TeamBadge"; // [추가] 팀 뱃지 (배경 없이)
 import { openSubscribeGate } from "../../utils/subscribeGate"; // [정리] 구독 안내 팝업 열기 공용
 
 // 히어로 슬라이드 이미지 (public/images/sport/ 에 넣어 주세요)
@@ -76,7 +77,7 @@ export const TeamHero = ({ team }) => {
       <div className="sport-team-hero-overlay" aria-hidden="true" />
 
       <div key={`${team.id}-body`} className="sport-team-hero-body">
-        <img className="sport-team-hero-badge" src={team.logo} alt="" />
+        <TeamBadge className="sport-team-hero-badge" src={team.badge} fallback={team.logo} label={team.shortName} />
         <h2 className="sport-team-hero-name">{team.shortName}</h2>
         <p className="sport-team-hero-record">{recordText}</p>
 
@@ -107,7 +108,7 @@ export const TeamHero = ({ team }) => {
                 onClick={() => setHeroTeam(item.id)}
                 title={item.name}
               >
-                <img src={item.logo} alt="" />
+                <TeamBadge src={item.badge} fallback={item.logo} label={item.shortName} />
                 <span>{item.shortName}</span>
               </button>
             );
