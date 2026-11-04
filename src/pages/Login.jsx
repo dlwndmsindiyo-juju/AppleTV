@@ -428,7 +428,7 @@ const Login = () => {
               className="auth-login-input"
               type="email"
               autoComplete="username"
-              placeholder="이메일 또는 전화번호"
+              placeholder="hi1234@naver.com" /* [수정] 지정 아이디 안내 */
               aria-label="이메일"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -438,7 +438,7 @@ const Login = () => {
               className="auth-login-input"
               type="password"
               autoComplete="current-password"
-              placeholder="비밀번호"
+              placeholder="123456" /* [수정] 지정 비밀번호 안내 (입력 전에는 글자 그대로 보임) */
               aria-label="비밀번호"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
