@@ -16,7 +16,7 @@
 // main.sport-home: App.scss / mobile.scss 의 같은 선택자(.sport-replay .sport-replay-list 등)와
 // 우선순위가 같아 불러오는 순서에 따라 화면이 달라지던 문제 → 태그를 붙여 항상 이 파일이 이기도록 함
 main.sport-home {
-  --sport-content-width: 1440px;
+  --sport-content-width: 1720px;
   --sport-card-gap: 24px;
   padding-top: $header-height;
   background: $bg-page;
@@ -45,13 +45,16 @@ main.sport-home {
 
   .sport-section-title,
   .sport-teams-title {
-    @include heading-h2;
+    @include heading-h1;
     font-weight: $font-weight-bold;
   }
 
-  .sport-more,
+  .sport-more {
+    @include body-large;
+  }
+
   .sport-teams-desc {
-    @include body-default;
+    @include heading-h2;
   }
 
   .sport-section-title,
@@ -192,7 +195,7 @@ main.sport-home {
     }
 
     .sport-team-name {
-      @include body-default;
+      @include heading-h3-b;
       font-family: inherit;
     }
 
@@ -202,7 +205,7 @@ main.sport-home {
       padding: 0;
       border: 0;
       background: transparent;
-      @include body-small;
+      @include body-large;
       font-family: inherit;
     }
   }
@@ -892,15 +895,15 @@ main.sport-home {
 }
 
 // =====================================================================
-// 스포츠 홈 섹션 간격 (시안: 섹션 사이 128px · 마지막 섹션 → 푸터 118px)
+// 스포츠 홈 섹션 간격 (시안: 섹션 사이 120px)
 // - 예전에는 flex gap + 섹션마다 남아 있던 패딩 · 스크롤 여백이 섞여서
 //   152 / 72 / 183 / 376px 처럼 간격이 제각각이었음
 // - 섹션 안쪽 위아래 여백을 모두 0 으로 맞추고, 섹션 사이는 margin-top 하나로만 관리
 // - main.sport-home.sport-home: App.scss 의 같은 규칙보다 항상 우선 적용
 // =====================================================================
 main.sport-home.sport-home {
-  --sport-section-gap: 128px;
-  padding-bottom: 118px;
+  --sport-section-gap: 120px;
+  padding-bottom: 120px;
 
   // 섹션 사이 간격 (히어로 다음 섹션부터)
   >section+section {
@@ -992,7 +995,7 @@ section.sport-hero {
   .sport-hero-card {
     left: $header-pad-x;
     bottom: 56px;
-    width: min(700px, calc(100% - 128px));
+    width: min(700px, calc(100% - 100px));
     max-width: none;
     padding: $space-2xl;
     border-radius: $radius-card;
@@ -1006,7 +1009,7 @@ section.sport-hero {
   }
 
   .sport-hero-title {
-    @include display-l;
+    @include heading-h1-b;
     font-family: inherit;
     font-weight: $font-weight-bold;
     gap: $space-lg;
@@ -1018,7 +1021,7 @@ section.sport-hero {
   }
 
   .sport-btn {
-    @include body-large;
+    @include body-default-b;
     font-family: inherit;
     font-weight: $font-weight-bold;
     height: 60px;
@@ -1034,7 +1037,7 @@ section.sport-hero {
   }
 
   .sport-btn.secondary {
-    background: $neutral-color-100;
+    background: $light-color-100;
     color: $text-inverse;
   }
 }
@@ -1061,9 +1064,13 @@ section.sport-hero {
     bottom: 32px;
   }
 
-  section.sport-hero .sport-hero-label,
+  section.sport-hero .sport-hero-label {
+    @include heading-h2-b;
+    font-family: inherit;
+  }
+
   section.sport-hero .sport-hero-sub {
-    @include label-default;
+    @include body-large;
     font-family: inherit;
   }
 
@@ -1767,8 +1774,8 @@ main.sport-home.sport-standings-page {
     min-width: 0;
 
     img {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       object-fit: contain;
       flex-shrink: 0;
     }
@@ -4953,10 +4960,12 @@ main.sport-home.sport-live-page {
     }
   }
 }
+
 // =====================================================================
 // 라이브 상세: 다른 팀 경기 (MLS 외 팀 · 데이터 없는 탭)
 // =====================================================================
 .sport-live-page {
+
   // 탭에 표시할 데이터가 아직 없을 때
   .sport-live-empty {
     @include body-default;
@@ -5201,8 +5210,9 @@ main.sport-home {
   .sport-chat-avatar,
   .sport-chat-siren,
   .sport-chat-form button {
-    > img,
-    > svg {
+
+    >img,
+    >svg {
       display: block;
       flex-shrink: 0;
     }
@@ -5216,6 +5226,7 @@ main.sport-home {
 // - 영상 위 재생 아이콘 크기를 숫자로 고정 (24 × 34 비율 → 17 × 24)
 // =====================================================================
 main.sport-home {
+
   .sport-series .sport-series-thumb .sport-series-play .play-icon,
   .sport-highlights .sport-highlight-thumb .sport-highlight-play .play-icon,
   .sport-shorts.sport-shortform .sport-sf-play .play-icon,
@@ -5376,6 +5387,7 @@ main.sport-home .sport-replay {
   }
 
   @media (max-width: $breakpoint-mobile) {
+
     // 모바일: 카드 1장 + 다음 카드 살짝 (손가락으로 넘김 · 화살표 숨김)
     .sport-replay-slide {
       width: 72%;
@@ -5455,7 +5467,7 @@ main.sport-home {
   }
 
   .sport-hl-title {
-    @include body-small-b;
+    @include heading-h5-b;
     font-family: inherit;
     overflow: hidden;
     white-space: nowrap;
@@ -5463,9 +5475,9 @@ main.sport-home {
   }
 
   .sport-hl-desc {
-    @include caption-default;
+    @include body-small;
     font-family: inherit;
-    color: $light-color-300;
+    color: $light-color-100;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
@@ -5481,7 +5493,7 @@ main.sport-home {
     align-items: center;
     gap: 0.6em;
     margin-top: $space-xs;
-    color: $light-color-400;
+    color: $light-color-500;
 
     .play-icon {
       height: 10px;
@@ -5552,7 +5564,7 @@ main.sport-home {
   }
 
   .sport-sc-title {
-    @include heading-h4-b;
+    @include heading-h2-b;
     font-family: inherit;
     margin: 0 0 $space-md;
     padding: 0;
@@ -5562,17 +5574,17 @@ main.sport-home {
   }
 
   .sport-sc-category {
-    @include caption-default;
+    @include label-default;
     font-family: inherit;
     margin: 0 0 $space-xs;
     color: $light-color-300;
   }
 
   .sport-sc-desc {
-    @include caption-default;
+    @include label-default;
     font-family: inherit;
     margin: 0;
-    color: $light-color-300;
+    color: $light-color-500;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;
@@ -5584,6 +5596,7 @@ main.sport-home {
   // ---------- 좌우 화살표 (다른 스포츠 슬라이드와 같은 아이콘) ----------
   .sport-highlights,
   .sport-series {
+
     .swiper-button-next,
     .swiper-button-prev {
       color: $text-primary;
@@ -5630,6 +5643,7 @@ main.sport-home {
 
     .sport-highlights,
     .sport-series {
+
       .swiper-button-next,
       .swiper-button-prev {
         display: none;
@@ -5801,6 +5815,7 @@ main.sport-home {
   }
 
   .sport-live {
+
     .swiper-button-next,
     .swiper-button-prev {
       color: $text-primary;
@@ -5820,6 +5835,7 @@ main.sport-home {
     }
 
     .sport-live {
+
       .swiper-button-next,
       .swiper-button-prev {
         display: none;
@@ -5951,6 +5967,7 @@ main.sport-home {
     }
 
     .sport-up-swiper {
+
       .swiper-button-next,
       .swiper-button-prev {
         display: none;
