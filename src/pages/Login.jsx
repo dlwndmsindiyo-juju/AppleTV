@@ -18,9 +18,9 @@ import {
   loadLastAccount,
   saveLastAccount,
   clearLastAccount,
-  FAMILY_ORDER,
 } from "../store/useAuthStore";
 import { MANAGE_URL } from "../data/appleLinks";
+import ProfilePicker from "../components/profile/ProfilePicker"; // [추가] 프로필 고르기 · 추가
 // 로그인 · 구독 카드 스타일(.auth-*)은 App.scss 맨 아래에 있음
 
 // =====================================================================
@@ -171,7 +171,7 @@ const Login = () => {
     onSendVerificationCode,
     onVerifyCode,
     onLogout,
-    onSetMember,
+    onSelectProfile,
     clearLoginError,
   } = useAuthStore();
 
@@ -245,9 +245,9 @@ const Login = () => {
     setStep("profile");
   };
 
-  // 가족 프로필 선택
-  const handlePickMember = (name) => {
-    onSetMember(name);
+  // [수정] 프로필 선택 (혼자 쓰든 가족이 쓰든 로그인할 때마다 항상)
+  const handlePickProfile = (id) => {
+    onSelectProfile(id);
     goNext(useAuthStore.getState().user);
   };
 
@@ -583,29 +583,12 @@ const Login = () => {
     );
   }
 
-  // 4. 가족 프로필 선택 (로그인할 때마다)
+  // 4. [수정] 프로필 선택 · 추가 (로그인할 때마다 · 최대 5개 · "+" 로 언제든 추가)
   if (step === "profile") {
-    const members = user?.familyMembers || {};
-    const names = FAMILY_ORDER.filter((name) => !user?.familyMembers || name in members);
     content = (
       <>
-        <AuthHead title="누가 시청하나요?" desc="시청할 프로필을 선택하세요." />
-        <ul className="auth-profiles">
-          {names.map((name, i) => (
-            <li key={name}>
-              <button
-                type="button"
-                className={`auth-profile auth-profile--${i + 1}`}
-                onClick={() => handlePickMember(name)}
-              >
-                <span className="auth-profile-avatar" aria-hidden="true">
-                  <img src="/icons/profile.svg" alt="" />
-                </span>
-                <span className="auth-profile-name">{name}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
+        <AuthHead title="누가 시청하나요?" desc="시청할 프로필을 선택하거나 새 프로필을 추가하세요." />
+        <ProfilePicker className="auth-profile-picker" onPick={handlePickProfile} />
       </>
     );
   }

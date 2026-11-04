@@ -89,9 +89,16 @@ const useTvHomeRows = () => {
   }, [appleOriginals, upcoming, recommendedMix, history, wishItems]);
 };
 
-export const TvHome = ({ onMenu }) => {
+// onDetail(item): [추가] 작품 상세 페이지 열기 (TvDetail · OTT)
+export const TvHome = ({ onMenu, onDetail }) => {
   const { rows, bg } = useTvHomeRows();
-  return <TvBrowseScreen menu="홈" onMenu={onMenu} rows={rows} bg={bg} />;
+  // 카드 id 는 "movie_123" · "tv_456" → 상세 항목
+  const handleItem = (rowId, item) => {
+    const [type, id] = String(item.id).split("_");
+    if (!id) return;
+    onDetail?.({ kind: "ott", key: `ott-${item.id}`, type: type === "tv" ? "tv" : "movie", id: Number(id), title: item.title, image: item.image });
+  };
+  return <TvBrowseScreen menu="홈" onMenu={onMenu} rows={rows} bg={bg} onItem={handleItem} />;
 };
 
 export default TvHome;

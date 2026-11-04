@@ -4,6 +4,9 @@ import { TV_REPLAY_MATCHES } from "../../data/tvReplayMatches";
 import { TV_SPORT_BG } from "../../data/tvSportData";
 import TeamBadge from "../sport/TeamBadge";
 import { findNext } from "./tvFocus";
+import { sportSummary, cleanText } from "./tvDetailItems";
+import { TvActionButtons, PlayIcon, PlusIcon, TextIcon, useInterest } from "./TvActions"; // [정리] 상세 화면과 같은 버튼
+import { useAutoCountdown } from "../common/AutoNext"; // [추가] 5초 뒤 다음 영상
 
 // TV 영상 끝 화면 (시안: 10 · 처음부터 보기) — 영상을 끝까지 보면 TvPlayer 가 보여줌 · 스타일: TV.scss (.tv-end)
 // - 왼쪽 위: 시청한 영상 211 × 118 + 아래 제목 (Label/default-B · Light/0)
@@ -15,16 +18,6 @@ import { findNext } from "./tvFocus";
 
 const TV_W = 1920;
 const TV_H = 1080;
-const INTEREST_KEY = "tv-interest-videos";
-
-const readInterest = () => {
-  try {
-    return JSON.parse(localStorage.getItem(INTEREST_KEY) || "[]");
-  } catch {
-    return [];
-  }
-};
-
 // [수정] 화면 전체를 채움 (TV 미리보기와 같은 방식)
 // - 1920 × 1080 이 다 들어가는 비율로 글자 · 버튼 크기를 맞추고, 남는 쪽(가로 또는 세로)은 화면을 늘려서 채움
 const useStageSize = () => {
@@ -41,7 +34,7 @@ const useStageSize = () => {
   return size;
 };
 
-const ReplayCard = ({ match, onPlay }) => {
+export const ReplayCard = ({ match, onPlay }) => {
   const home = getTeamById(match.homeId);
   const away = getTeamById(match.awayId);
   const [h, a] = match.score;
@@ -67,31 +60,19 @@ const ReplayCard = ({ match, onPlay }) => {
 
 // video: { id, title, image, label, desc } · related: 같은 모양 배열 (하이라이트 줄)
 // onReplay: 처음부터 다시 · onPlay(video): 다른 영상 재생 · onPlayMatch(match): 경기 다시보기 카드
-export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch, notice = "" }) => {
+// [추가] upNext: 자동 재생할 다음 영상 (계정 설정 "추천 항목 재생" · 없으면 안내 없음) · onCancelNext: "취소"
+export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch, notice = "", upNext = null, onCancelNext }) => {
   const { scale, width, height } = useStageSize();
   const rootRef = useRef(null);
-  const primaryRef = useRef(null);
-  const [focusKey, setFocusKey] = useState("watch"); // 지금 선택된 버튼 (버튼 아래 글자 강조)
-  const [interest, setInterest] = useState(readInterest);
   const [infoOpen, setInfoOpen] = useState(false);
-  const saved = interest.includes(video.id);
+  const nextLeft = useAutoCountdown(Boolean(upNext), () => upNext && onPlay(upNext), undefined, upNext?.id); // [추가]
+  const { saved, toggle: toggleInterest } = useInterest(video.id, {
+    videoId: video.id, title: video.title, image: video.image, label: video.label, prefix: video.prefix, desc: video.desc,
+  });
 
-  // 열리면 "시청하기" 에 포커스 (시안: 시청하기가 선택된 상태)
   useEffect(() => {
-    primaryRef.current?.focus({ preventScroll: true });
-    setFocusKey("watch");
     setInfoOpen(false);
   }, [video.id]);
-
-  const toggleInterest = () => {
-    const next = saved ? interest.filter((id) => id !== video.id) : [...interest, video.id];
-    setInterest(next);
-    try {
-      localStorage.setItem(INTEREST_KEY, JSON.stringify(next));
-    } catch {
-      /* 저장 공간 없음: 화면에서만 반영 */
-    }
-  };
 
   // 리모컨 방향키 (끝 화면 안에서만)
   const handleKeyDown = (e) => {
@@ -104,15 +85,9 @@ export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch
   };
 
   const actions = [
-    { key: "watch", label: "시청하기", onClick: onReplay, ref: primaryRef, icon: <img className="tv-end-play" src="/icons/play-w.svg" alt="" aria-hidden="true" /> },
-    {
-      key: "interest",
-      label: "관심 경기",
-      onClick: toggleInterest,
-      pressed: saved,
-      icon: <span className={`tv-end-plus${saved ? " is-on" : ""}`} aria-hidden="true" />,
-    },
-    { key: "info", label: "경기 정보", onClick: () => setInfoOpen((v) => !v), pressed: infoOpen, icon: <span className="tv-end-btn-text">경기정보</span> },
+    { key: "watch", label: "시청하기", onClick: onReplay, icon: <PlayIcon /> },
+    { key: "interest", label: "관심 경기", onClick: toggleInterest, pressed: saved, icon: <PlusIcon on={saved} /> },
+    { key: "info", label: "경기 정보", onClick: () => setInfoOpen((v) => !v), pressed: infoOpen, icon: <TextIcon>경기정보</TextIcon> },
   ];
 
   const others = related.filter((v) => v.id !== video.id);
@@ -135,33 +110,30 @@ export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch
 
           <div className="tv-end-title">
             <h1>처음부터 보기</h1>
-            <p>MLS · {video.label || "경기 하이라이트"}</p>
+            <p>{video.prefix ?? "MLS"} · {video.label || "경기 하이라이트"}</p>
           </div>
 
-          <div className="tv-end-actions">
-            {actions.map((a) => (
-              <div key={a.key} className={`tv-end-action${focusKey === a.key ? " is-active" : ""}`}>
-                <button
-                  type="button"
-                  ref={a.ref}
-                  className="tv-end-btn"
-                  aria-label={a.label}
-                  aria-pressed={a.pressed}
-                  onFocus={() => setFocusKey(a.key)}
-                  onClick={a.onClick}
-                >
-                  {a.icon}
-                </button>
-                <span className="tv-end-action-label">{a.label}</span>
-              </div>
-            ))}
-          </div>
+          {/* 열리면 "시청하기" 에 포커스 (시안: 시청하기가 선택된 상태) */}
+          <TvActionButtons actions={actions} focusOn={video.id} />
+
+          {/* [추가] 5초 뒤 다음 영상 (계정 설정 "추천 항목 재생") · 취소하면 이 화면에 머묾 */}
+          {upNext && (
+            <div className="tv-end-next" role="status" aria-live="polite">
+              <span className="tv-end-next-text">
+                <span className="tv-end-next-kind">다음 영상 · {Math.max(0, nextLeft)}초 후 재생</span>
+                <strong className="tv-end-next-title">{upNext.title}</strong>
+              </span>
+              <button type="button" className="tv-end-next-cancel" onClick={onCancelNext}>
+                취소
+              </button>
+            </div>
+          )}
 
           {/* 경기정보: 영상 설명 */}
           {infoOpen && (
             <div className="tv-end-info" role="note">
               <strong>{video.title}</strong>
-              <p>{video.desc || "경기 정보가 없습니다."}</p>
+              <p>{video.prefix === "영화" || video.prefix === "시리즈" ? video.desc || "작품 정보가 없습니다." : sportSummary(video)}</p>
             </div>
           )}
         </div>
@@ -185,7 +157,7 @@ export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch
                     {item.image && <img className="tv-team-thumb" src={item.image} alt="" loading="lazy" />}
                     <span className="tv-team-card-text">
                       <strong className="tv-team-card-title">{item.title}</strong>
-                      {item.desc && <span className="tv-team-card-desc">{item.desc}</span>}
+                      {cleanText(item.desc) && <span className="tv-team-card-desc">{cleanText(item.desc)}</span>}
                       <span className="tv-team-card-meta">
                         <img src="/icons/play-w.svg" alt="" aria-hidden="true" />
                         {item.meta || item.label}

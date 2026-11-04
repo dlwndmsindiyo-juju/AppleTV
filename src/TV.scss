@@ -768,6 +768,16 @@ $tv-ai-lilac: #a5acff;
   mask: url("/icons/tv/tv-star-icon.svg") center / contain no-repeat;
 }
 
+// [추가] 보관함 메뉴 아이콘 — public/icons/heart-icon.svg 모양 · 다른 메뉴 아이콘과 같은 Primary/500
+.tv-side-heart-icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  background-color: $primary-color-500;
+  -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+  mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+}
+
 // [추가] 메뉴 묶음 (시안: Library · Apps) — 제목 Heading/h2-B · Light/0 + 오른쪽 접기 화살표
 .tv-side-group {
   margin-top: 48px;
@@ -1806,6 +1816,59 @@ $tv-ai-lilac: #a5acff;
   color: $light-color-500;
 }
 
+// [추가] 끝 화면 자동 재생 안내 (계정 설정 "추천 항목 재생") — 제목 아래 · 5초 뒤 다음 영상 · 취소
+.tv-end-next {
+  position: absolute;
+  top: 190px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px 16px 16px 28px;
+  border-radius: $tv-btn-radius;
+  background-color: rgba($dark-color-900, 0.72);
+}
+
+.tv-end-next-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 900px;
+}
+
+.tv-end-next-kind {
+  @include heading-h4;
+  color: $light-color-500;
+}
+
+.tv-end-next-title {
+  @include heading-h3-b;
+  overflow: hidden;
+  color: $light-color-0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tv-end-next-cancel {
+  @include heading-h4-b;
+  height: 64px;
+  padding: 0 36px;
+  border: 0;
+  border-radius: $tv-btn-radius;
+  background-color: $tv-btn-secondary-bg;
+  color: $tv-btn-secondary-text;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+  &:focus-visible,
+  &.is-focused {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+    transform: scale(1.06);
+  }
+}
+
 
 // =====================================================================
 // [추가] TV 검색 (TvSearch.jsx) — 위 메뉴 "검색" · 시안: 검색 (전체 검색 레이아웃)
@@ -2162,4 +2225,365 @@ $tv-ai-lilac: #a5acff;
   margin: 40px 0 0;
   color: $text-secondary;
   text-align: center;
+}
+
+
+// =====================================================================
+// [추가] TV 영상 상세 (TvDetail.jsx · 상세 타이틀 TvDetailHero.jsx) — 시안: 15 · 시즌 패스 · 소개
+// - 모든 영상 상세 공용 (스포츠 · OTT) · 관심구단 화면은 따로 (.tv-team)
+// - 타이틀 Heading/h1-B · Light/0 / 서브타이틀 SF Pro Regular 38 / 설명 SF Pro Medium 29 / 36
+// - 버튼: 영상 끝 화면과 같은 버튼 (142 × 80 · .tv-end-btn)
+// - 아래: 하이라이트 · 경기 다시보기 (스포츠) / 에피소드 · 등장인물 · 추천 콘텐츠 (OTT)
+// =====================================================================
+.tv-screen.tv-detail {
+  align-items: stretch;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: $dark-color-900;
+  text-align: left;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tv-detail-hero {
+  position: relative;
+  flex-shrink: 0;
+  height: 776px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.tv-detail-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-color: $dark-color-800;
+  background-size: cover;
+  background-position: center;
+}
+
+// 배경 어둡게 (시안: 사진 위 검정) · 왼쪽 글자 쪽 · 아래쪽 조금 더
+.tv-detail-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 60%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, rgba($dark-color-900, 0.7) 100%),
+    rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.tv-detail-hero-body {
+  position: absolute;
+  top: 170px;
+  left: 180px;
+  display: flex;
+  flex-direction: column;
+  width: 900px;
+  height: 500px; // 버튼은 맨 아래 (시안 y 540)
+}
+
+.tv-detail-title {
+  @include heading-h1-b;
+  margin: 0;
+  padding: 0;
+  color: $light-color-0;
+}
+
+.tv-detail-subtitle {
+  margin: 40px 0 0;
+  color: $light-color-0;
+  font-family: $font-family-base;
+  font-size: 38px;
+  font-weight: $font-weight-regular;
+  line-height: 46px;
+}
+
+.tv-detail-desc {
+  display: -webkit-box;
+  margin: 30px 0 0;
+  overflow: hidden;
+  color: $light-color-0;
+  font-family: $font-family-base;
+  font-size: 29px;
+  font-weight: $font-weight-medium;
+  line-height: 36px;
+  word-break: keep-all;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+// 버튼: 끝 화면 버튼(.tv-end-actions)을 왼쪽 정렬로
+.tv-end-actions.tv-detail-actions {
+  position: static;
+  margin-top: auto;
+}
+
+.tv-detail-notice {
+  @include heading-h4;
+  position: absolute;
+  bottom: -48px;
+  left: 0;
+  margin: 0;
+  color: $light-color-500;
+}
+
+// 정보 상자 (경기 정보 · 작품 정보)
+.tv-detail-info {
+  position: absolute;
+  top: 170px;
+  right: 120px;
+  width: 560px;
+  padding: 32px;
+  border-radius: $radius-card-sm;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  strong {
+    @include heading-h3-b;
+    display: block;
+    color: $light-color-0;
+  }
+
+  p {
+    @include heading-h5;
+    display: -webkit-box;
+    margin: $space-md 0 0;
+    overflow: hidden;
+    color: $light-color-500;
+    -webkit-line-clamp: 8;
+    line-clamp: 8;
+    -webkit-box-orient: vertical;
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: $space-md $space-lg;
+    margin: $space-lg 0 0;
+  }
+
+  dt {
+    @include heading-h5;
+    color: $light-color-500;
+  }
+
+  dd {
+    @include heading-h5;
+    margin: 0;
+    color: $light-color-0;
+  }
+}
+
+// ---------- 아래 정보 · 관련 콘텐츠 ----------
+.tv-detail-body {
+  padding: 48px 0 80px;
+  background-color: rgba($dark-color-500, 0.9);
+}
+
+.tv-detail-row-title {
+  img {
+    display: none;
+  }
+}
+
+// 등장인물: 사진 원 200 · 이름 · 역할
+.tv-detail-cast {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  text-align: center;
+
+  img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: $dark-color-400;
+  }
+
+  strong {
+    @include body-large-b;
+    max-width: 100%;
+    margin-top: $space-md;
+    overflow: hidden;
+    color: $light-color-0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  span {
+    @include body-small;
+    max-width: 100%;
+    overflow: hidden;
+    color: $light-color-500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+
+// [추가] 스포츠 상세 — 리그 순위 (동부 · 서부 컨퍼런스 표 2개 나란히)
+// - 표 전체가 버튼 (리모컨으로 고르기) · 누르면 상위 5팀 ↔ 전체 15팀
+.tv-detail-standings {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 24px 80px 12px;
+}
+
+.tv-detail-standings-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 820px;
+  padding: 28px 32px;
+  border: 0;
+  border-radius: $tv-card-radius;
+  background-color: rgba($light-color-0, 0.06);
+  color: $light-color-0;
+  text-align: left;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: rgba($light-color-0, 0.1);
+    box-shadow: 0 0 0 4px $light-color-0;
+  }
+}
+
+.tv-detail-standings-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: $space-md;
+
+  strong {
+    @include heading-h2-b;
+  }
+
+  span {
+    @include body-default;
+    color: $light-color-500;
+  }
+}
+
+// 순위 · 구단 · 경기 · 승 · 무 · 패 · 승점
+.tv-detail-standings-row {
+  @include heading-h5;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) repeat(5, 64px);
+  align-items: center;
+  min-height: 52px;
+  border-top: 1px solid rgba($light-color-0, 0.08);
+
+  > span {
+    text-align: center;
+  }
+
+  .rank {
+    color: $light-color-500;
+  }
+
+  .club {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    min-width: 0;
+    overflow: hidden;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    img,
+    .sport-badge-initial {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+  }
+
+  // 머리 줄
+  &.is-label {
+    @include body-small;
+    min-height: 32px;
+    border-top: 0;
+    color: $light-color-500;
+
+    > span:nth-child(2) {
+      text-align: left;
+    }
+  }
+}
+
+
+// [추가] TV 프로필 — 고른 아이콘이 원을 가득 채움 · "+" 프로필 추가 · 프로필 추가 화면 (TvScreens.jsx)
+.tv-profile-avatar {
+  overflow: hidden;
+}
+
+.tv-profile--add .tv-profile-avatar {
+  background-color: $dark-color-300;
+
+  img {
+    width: 40%;
+    height: 40%;
+  }
+}
+
+// 프로필 추가: 자판 화면과 같은 글자 · 버튼 (위아래 여백만 조금 줄임)
+.tv-screen.tv-keyboard.tv-profile-add {
+  padding-top: 96px;
+  padding-bottom: 80px;
+
+  .tv-guide {
+    margin-top: 48px;
+  }
+}
+
+.tv-profile-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tv-profile-icon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &.is-on {
+    box-shadow: 0 0 0 4px $light-color-0;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px $light-color-0, 0 0 0 8px $primary-color-500;
+  }
 }

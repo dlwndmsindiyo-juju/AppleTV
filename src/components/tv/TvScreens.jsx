@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ProfileAvatar, { AVATAR_OPTIONS, sameAvatar, toneOf } from "../profile/ProfileAvatar";
 
 // TV 디자인 화면 (1920 × 1080) — 스타일: TV.scss
 // - TvTerms   : Apple TV 이용 안내 (동의 / 취소)
@@ -25,35 +26,130 @@ export const TvTerms = ({ onAgree, onCancel }) => (
   </main>
 );
 
-// ---------- [추가] 가족 프로필 선택 (PC 로그인과 같음: 아빠 · 엄마 · 아들 · 딸) ----------
+// ---------- [수정] 프로필 선택 · 추가 (웹 로그인과 같음 · 최대 5개) ----------
 // - 로그인하면 먼저 이 화면 · 왼쪽 메뉴 "프로필 변경" · 위쪽 프로필 아이콘으로 언제든 다시
-// - 프로필마다 배경색은 PC 와 같은 순서 (Primary · Sports · Accent · Success)
-const FAMILY = ["아빠", "엄마", "아들", "딸"];
+// - 프로필 옆 "+" → 프로필 추가 화면 (TvProfileAdd)
+// - 아이콘을 고르지 않은 프로필은 순서대로 기본 색 (ProfileAvatar tone)
+export const TvProfiles = ({ profiles, current, onPick, onAdd, max = 5 }) => (
+  <main className="tv-screen tv-profiles">
+    <h1 className="tv-title tv-title--xl">누가 시청하나요?</h1>
+    <p className="tv-desc">시청할 프로필을 선택하거나 새 프로필을 추가하세요.</p>
 
-export const TvProfiles = ({ members, current, onPick }) => {
-  const names = FAMILY.filter((name) => !members || name in members);
+    <ul className="tv-profile-list">
+      {profiles.map((p, i) => (
+        <li key={p.id}>
+          <button
+            type="button"
+            className={`tv-profile${current === p.id ? " is-current" : ""}`}
+            data-tv-autofocus={(current ? current === p.id : i === 0) || undefined}
+            onClick={() => onPick(p.id)}
+          >
+            <span className="tv-profile-avatar" aria-hidden="true">
+              <ProfileAvatar avatar={p.avatar} tone={toneOf(i)} size="sm" />
+            </span>
+            <span className="tv-profile-name">{p.name}</span>
+          </button>
+        </li>
+      ))}
+      {profiles.length < max && (
+        <li>
+          <button type="button" className="tv-profile tv-profile--add" onClick={onAdd}>
+            <span className="tv-profile-avatar" aria-hidden="true">
+              <img src="/icons/plus.svg" alt="" />
+            </span>
+            <span className="tv-profile-name">프로필 추가</span>
+          </button>
+        </li>
+      )}
+    </ul>
+  </main>
+);
+
+// ---------- [추가] 프로필 추가 (이름: 리모컨 자판 · 아이콘: 기존 12개 중) ----------
+const ADD_LETTERS = "abcdefghijklmnopqrstuvwxyz".split("");
+const ADD_DIGITS = "1234567890".split("");
+export const TvProfileAdd = ({ onSave, onCancel, nameMax = 20 }) => {
+  const [name, setName] = useState("");
+  const [upper, setUpper] = useState(false);
+  const [avatar, setAvatar] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  const add = (ch) => setName((v) => (v + ch).slice(0, nameMax));
+  const save = async () => {
+    if (!name.trim()) {
+      setError("프로필 이름을 입력해 주세요.");
+      return;
+    }
+    setBusy(true);
+    const ok = await onSave?.({ name, avatar });
+    setBusy(false);
+    if (!ok) setError("프로필을 추가하지 못했어요.");
+  };
+
   return (
-    <main className="tv-screen tv-profiles">
-      <h1 className="tv-title tv-title--xl">누가 시청하나요?</h1>
-      <p className="tv-desc">시청할 프로필을 선택하세요.</p>
+    <main className="tv-screen tv-keyboard tv-profile-add">
+      <h1 className="tv-title tv-title--xl">프로필 추가</h1>
+      <p className="tv-desc">{error || "이름과 아이콘을 정하세요."}</p>
 
-      <ul className="tv-profile-list">
-        {names.map((name, i) => (
-          <li key={name}>
-            <button
-              type="button"
-              className={`tv-profile tv-profile--${i + 1}${current === name ? " is-current" : ""}`}
-              data-tv-autofocus={(current ? current === name : i === 0) || undefined}
-              onClick={() => onPick(name)}
-            >
-              <span className="tv-profile-avatar" aria-hidden="true">
-                <img src="/icons/profile.svg" alt="" />
-              </span>
-              <span className="tv-profile-name">{name}</span>
+      <p className={`tv-guide${name ? " has-value" : ""}`} aria-live="polite">
+        {name || "프로필 이름"}
+      </p>
+
+      <div className="tv-keys">
+        <div className="tv-key-row">
+          <button type="button" className="tv-key-space" onClick={() => setUpper((v) => !v)}>
+            {upper ? "abc" : "ABC"}
+          </button>
+          {ADD_LETTERS.map((c) => (
+            <button type="button" className="tv-key" key={c} data-tv-autofocus={c === "a" || undefined} onClick={() => add(upper ? c.toUpperCase() : c)}>
+              {upper ? c.toUpperCase() : c}
             </button>
-          </li>
-        ))}
+          ))}
+          <button type="button" className="tv-key tv-key--delete" aria-label="지우기" onClick={() => setName((v) => v.slice(0, -1))}>
+            <img src="/icons/tv/tv-delet-btn.svg" alt="" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="tv-key-row">
+          <button type="button" className="tv-key-space" onClick={() => add(" ")}>
+            공백
+          </button>
+          {ADD_DIGITS.map((c) => (
+            <button type="button" className="tv-key" key={c} onClick={() => add(c)}>
+              {c}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <ul className="tv-profile-icons" role="radiogroup" aria-label="프로필 아이콘">
+        {AVATAR_OPTIONS.map((opt) => {
+          const on = sameAvatar(avatar, opt);
+          return (
+            <li key={`${opt.icon}-${opt.color}`}>
+              <button
+                type="button"
+                role="radio"
+                aria-checked={on}
+                aria-label={opt.label}
+                className={`tv-profile-icon${on ? " is-on" : ""}`}
+                onClick={() => setAvatar(on ? null : opt)}
+              >
+                <ProfileAvatar avatar={opt} size="sm" />
+              </button>
+            </li>
+          );
+        })}
       </ul>
+
+      <div className="tv-actions">
+        <button type="button" className="tv-btn tv-btn--secondary" onClick={onCancel}>
+          취소
+        </button>
+        <button type="button" className="tv-btn tv-btn--secondary" disabled={busy} onClick={save}>
+          {busy ? "추가 중…" : "프로필 추가"}
+        </button>
+      </div>
     </main>
   );
 };
