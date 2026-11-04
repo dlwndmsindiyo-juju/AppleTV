@@ -33,19 +33,25 @@ export const isValidAvatar = (avatar) =>
 
 export const sameAvatar = (a, b) => Boolean(a && b && a.icon === b.icon && a.color === b.color);
 
-// [추가] 가족 프로필별 색 — 로그인 프로필 선택 화면(PC .auth-profile · TV .tv-profile)과 같은 순서 · 같은 색
+// [수정] 프로필별 기본 색 — 아이콘을 고르지 않은 프로필은 순서대로 이 색의 원 + 사람 아이콘
 // - 색 값은 App.scss 의 :root --profile-member-{색} (_variables.scss 토큰)
-export const MEMBER_COLORS = { 아빠: "primary", 엄마: "sports", 아들: "accent", 딸: "success" };
+export const PROFILE_TONES = ["primary", "sports", "accent", "success", "rating"];
+export const toneOf = (index) => PROFILE_TONES[(index >= 0 ? index : 0) % PROFILE_TONES.length];
+
+// [추가] 프로필 목록에서 아이콘 정보 꺼내기 — { avatar, tone }
+export const profileLook = (profiles = [], id) => {
+  const index = Math.max(0, profiles.findIndex((p) => p.id === id));
+  return { avatar: profiles[index]?.avatar || null, tone: toneOf(index) };
+};
 
 // avatar 가 없으면 기존 기본 프로필 이미지(public/icons/profile.svg)
-// member: [추가] 지금 고른 가족 프로필 (아빠 · 엄마 · 아들 · 딸) → 그 프로필 색 원 + 사람 아이콘
-const ProfileAvatar = ({ avatar, member, size = "md", className = "" }) => {
-  if (MEMBER_COLORS[member]) {
+// tone: [추가] 프로필 기본 색 (아이콘을 고르지 않은 프로필) → 그 색 원 + 사람 아이콘
+const ProfileAvatar = ({ avatar, tone, size = "md", className = "" }) => {
+  if (!isValidAvatar(avatar) && tone) {
     return (
       <span
         className={`profile-avatar profile-avatar--${size} profile-avatar--member ${className}`}
-        style={{ backgroundColor: `var(--profile-member-${MEMBER_COLORS[member]})` }}
-        title={member}
+        style={{ backgroundColor: `var(--profile-member-${tone})` }}
       >
         <img src="/icons/profile.svg" alt="" aria-hidden="true" />
       </span>
