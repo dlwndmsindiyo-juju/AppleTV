@@ -53,7 +53,7 @@ $mobile-edge: 20px;
   .member-more {
     @include body-small;
     flex-shrink: 0;
-    color: $text-tertiary;
+    color: $light-color-0;
     text-decoration: none;
     white-space: nowrap;
     transition: color 0.2s ease;
@@ -586,7 +586,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
     .member-more {
       @include body-small;
-      color: $text-secondary;
+      color: $light-color-0;
     }
 
     // ---------- 슬라이드 카드 폭 (간격 24) ----------
@@ -874,7 +874,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
     .member-desc,
     .member-more {
-      color: $text-secondary;
+      color: $light-color-0;
     }
 
     .member-more:hover {
@@ -1354,6 +1354,7 @@ main.member-home .member-mood .member-chips .member-chip {
     margin: $space-xs 0 0;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     overflow: hidden;
   }
@@ -1533,6 +1534,7 @@ main.member-home .subscribe-cta {
 // =====================================================================
 @media (min-width: ($breakpoint-tablet + 1)) {
   main.member-home {
+
     .rail-continue,
     .rail-wish {
       --rail-col: 342px;
@@ -1558,5 +1560,33 @@ main.member-home .subscribe-cta {
   main.member-home .rail-release,
   .upcoming-section .rail-release {
     --rail-col: 342px;
+  }
+}
+
+
+// =====================================================================
+// [추가] 신규출시 카드 버튼 — 데스크톱 시안: [▶ 재생] [♡ 찜] (ReleaseCard.jsx variant="new")
+// - 크기 · 모양은 [N월 공개예정] · [알림 벨] 버튼과 같은 클래스 그대로 (.member-nr-month · .member-nr-bell)
+// - 여기서는 재생 아이콘 · 하트 아이콘만 지정
+// =====================================================================
+.member-home {
+  .member-nr-play {
+    gap: 6px;
+
+    img {
+      display: block;
+      flex-shrink: 0;
+      width: 8px;
+      height: 11px;
+    }
+  }
+
+  .member-nr-heart-icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+    background-color: currentColor;
+    -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+    mask: url("/icons/heart-icon.svg") center / contain no-repeat;
   }
 }

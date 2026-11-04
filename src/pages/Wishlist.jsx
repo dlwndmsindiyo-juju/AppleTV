@@ -8,8 +8,9 @@ import { useAuthStore } from "../store/useAuthStore";
 import { formatCount, useHeartStore } from "../store/useHeartStore";
 import { WishIcon } from "../components/wishlist/WishlistLayer";
 import { detailPath } from "./MovieDetail";
+import { openSubscribeGate } from "../utils/subscribeGate"; // [정리] 로그인 안내 팝업 열기 공용
+import { TMDB_IMG as IMG } from "../utils/tmdb"; // [정리] TMDB 이미지 주소 공용
 
-const IMG = "https://image.tmdb.org/t/p";
 
 const SORTS = [
   { key: "latest", label: "최신 추가순" },
@@ -208,7 +209,7 @@ const Wishlist = () => {
   // 로그인 전: 로그인 안내 팝업 (위시리스트는 계정에 저장)
   useEffect(() => {
     if (authReady && !user) {
-      window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason: "account" } }));
+      openSubscribeGate("account");
     }
   }, [authReady, user]);
 

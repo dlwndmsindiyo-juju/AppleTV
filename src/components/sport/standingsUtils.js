@@ -33,6 +33,7 @@ export const conferenceRows = (standings, key, limit) => {
 // 표에 쓸 구단 이름 · 로고
 export const clubOf = ({ row, info }) => ({
   key: info?.id || row.team?.id || row.team?.name,
-  logo: info?.logo || row.team?.crest,
+  logo: info?.badge || row.team?.crest, // [수정] 배경 없는 뱃지
+  fallback: info?.logo || row.team?.crest,
   name: info?.shortName || row.team?.shortName || row.team?.name,
 });

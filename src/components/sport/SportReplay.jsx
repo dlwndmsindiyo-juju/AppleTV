@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { useSportStore } from "../../store/useSportStore";
 import { REPLAY_LEAGUES, leagueThumb } from "../../data/replayLeagues";
+import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
 
 // 경기 다시보기 — 국가별 1부 리그 영상 모음집 (data/replayLeagues.js)
 // - 리그 공식 YouTube 채널 재생목록을 직접 지정 → API 키 없이 항상 같은 모음집
@@ -34,12 +35,7 @@ const SportReplay = () => {
   return (
     <section className="sport-replay">
       <div className="inner">
-        <div className="sport-section-head">
-          <h3 className="sport-section-title">{TITLE}</h3>
-          <Link className="sport-more" to="/sport/replay">
-            전체 보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-          </Link>
-        </div>
+        <SportSectionHead title={TITLE} to="/sport/replay" />
 
         {REPLAY_LEAGUES.length === 0 ? (
           <p className="sport-empty">다시볼 영상이 없습니다.</p>
@@ -52,6 +48,7 @@ const SportReplay = () => {
             slidesPerView="auto"
             spaceBetween={24}
             breakpoints={{ 0: { spaceBetween: 12 }, 768: { spaceBetween: 24 } }}
+            loop={true}
           >
             {REPLAY_LEAGUES.map((league) => (
               <SwiperSlide key={league.id} className="sport-replay-slide">

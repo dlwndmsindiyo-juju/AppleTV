@@ -5,6 +5,7 @@ import { SPORT_TEAMS, CONFERENCES } from "../../data/sportTeams";
 import { PLAYER_RANKS } from "../../data/mockPlayerRanks";
 import { conferenceRows, clubOf } from "./standingsUtils";
 import SportHero from "./SportHero";
+import TeamBadge from "./TeamBadge"; // [추가] 팀 뱃지 (배경 없이)
 
 // =====================================================================
 // 리그 순위 상세 (/sport/standings)
@@ -117,13 +118,13 @@ const SportStandingsPage = () => {
                   {rows.length === 0 ? (
                     <tr><td colSpan={2 + COLUMNS.length} className="sport-standings-empty">순위 정보를 불러오는 중입니다.</td></tr>
                   ) : rows.map((item, index) => {
-                    const { key, logo, name } = clubOf(item);
+                    const { key, logo, fallback, name } = clubOf(item);
                     return (
                       <tr key={key}>
                         <td className="rank">{pad2(index + 1)}</td>
                         <th scope="row">
                           <span className="sport-standings-club">
-                            {logo && <img src={logo} alt="" loading="lazy" />}
+                            {logo && <TeamBadge src={logo} fallback={fallback} label={name} loading="lazy" />}
                             <span>{name}</span>
                           </span>
                         </th>

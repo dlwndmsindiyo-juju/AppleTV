@@ -1,4 +1,8 @@
-@use "./variables" as *;
+@use "sass:math";
+@use "variables" as *;
+
+$mobile-edge: 20px; // 모바일 좌우 여백
+$trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전 App.scss 에 있던 변수)
 
 // =====================================================================
 // 태블릿 (1024px 이하) · 모바일 (767px 이하) — 화면이 줄어드는 규칙은 모두 이 파일
@@ -6,8 +10,6 @@
 // - App.scss 다음에 불러와야 합니다.  (App.jsx: import "./mobile.scss";)
 // - 모바일 시안이 아직 없어 태블릿 시안을 1열 구조로 줄여서 작성했어요.
 // =====================================================================
-$mobile-edge: 20px; // 모바일 좌우 여백
-$trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전 App.scss 에 있던 변수)
 
 // =====================================================================
 // [이동] App.scss 의 태블릿 · 모바일 규칙 (1024px 이하 · 767px 이하)
@@ -905,7 +907,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   .hero-swiper-container .hero-slide-item .hero-info {
     .hero-chip.hero-chip {
       @include body-small;
-      color: $light-color-0;
     }
 
     .hero-overview.hero-overview {
@@ -932,7 +933,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
   }
 }
-
 
 @media (max-width: $breakpoint-mobile) {
 
@@ -1501,6 +1501,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // 태블릿(768 ~ 1024px): 슬라이드도 좌우 여백 안에서 잘림 (시안) · 카드 폭 시안 기준
 @media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
   main.member-home {
+
     .member-continue .inner,
     .member-wishlist .inner,
     .member-recommend .inner,
@@ -1513,6 +1514,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     .member-wishlist,
     .member-recommend,
     .member-mood {
+
       .member-head,
       .member-chips,
       .member-notice {
@@ -2471,7 +2473,6 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
 }
 
-
 // =====================================================================
 // [추가] 헤더 프로필 버튼 (로그인 후) 모바일 — 검색 아이콘 버튼과 같은 지름 32 원형
 // - 배경 프라이머리 · 기본 아이콘 14px 은 App.scss 규칙 그대로
@@ -2482,7 +2483,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: 32px;
   }
 }
-
 
 // =====================================================================
 // [추가] 히어로 제목 (작품 로고) 크기 — 태블릿 · 모바일 (PC 규칙은 App.scss)
@@ -2502,7 +2502,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: 80px;
   }
 }
-
 
 // =====================================================================
 // [이동] member.scss (로그인 후 메인) 의 모바일 규칙 (767px 이하)
@@ -2578,7 +2577,6 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
 }
 
-
 // =====================================================================
 // [추가] 태블릿 (768 ~ 1024px) 글자 · 버튼 크기 — 시안 (Apple TV 태블릿)
 // - TOP 10 순위 숫자: 195 · 줄 높이 69% (숫자 영역 높이 195 × 0.69 ≈ 135) · 폰트 Noto Sans KR · Black 은 App.scss 공통 규칙
@@ -2631,7 +2629,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     }
   }
 }
-
 
 // =====================================================================
 // [추가] 휴대폰 (767px 이하) 글자 위계 · 버튼 크기 — 시안 (Apple TV 모바일 hi-fi · 390)
@@ -2922,6 +2919,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     // ---------- 글자 빼기 (시안) ----------
     // 이어보기: 남은 시간 · 설명 줄 없이 제목 + 이어보기
     .member-continue {
+
       .member-cw-time,
       .member-cw-card .member-card-meta {
         display: none;
@@ -2972,7 +2970,6 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
 }
 
-
 // =====================================================================
 // [추가] 헤더 로그인 버튼 (로그인 전) 휴대폰 — 시안
 // - 40 × 32 (패딩 좌우 8 포함) · 글자 Caption/default-B · Light/0 · 사람 아이콘 없음
@@ -2994,7 +2991,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     }
   }
 }
-
 
 // =====================================================================
 // [추가] 스포츠 관심있는 구단 — 휴대폰: "전체 구단 보기" 를 제목 줄 오른쪽 끝에 고정
@@ -3023,7 +3019,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     }
   }
 }
-
 
 // =====================================================================
 // [추가] 오른쪽 아래 TV · TOP 버튼 — 휴대폰: 50 × 50 (TOP 화살표: 좌우 패딩 16 → 18 × 10) · 화면 끝 여백 16 (PC 규칙은 App.scss)
@@ -3058,7 +3053,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     bottom: calc(97px + #{$space-md});
   }
 }
-
 
 // =====================================================================
 // [추가] 오른쪽 아래 TV · TOP 버튼 — 태블릿 (768 ~ 1024px) 에서 크게
