@@ -6035,3 +6035,93 @@ main.sport-home {
     }
   }
 }
+
+
+// =====================================================================
+// [추가] 스포츠 히어로 LIVE 경기 카드 — PC 위치 (1025px 이상)
+// - 왼쪽: 헤더 로고와 같은 시작선 $desktop-gutter(5%) · 아래: 히어로 아래에서 56px (시안 캡처 위치)
+// - 다른 규칙의 가운데 정렬 · 여백이 남지 않게 위 · 오른쪽 · 이동값을 모두 초기화
+// - 카드 모양 · 글자 · 버튼은 그대로 / 태블릿 · 휴대폰은 기존 위치 그대로
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+  main.sport-home.sport-home section.sport-hero .sport-hero-card {
+    top: auto;
+    right: auto;
+    bottom: 56px;
+    left: $desktop-gutter;
+    margin: 0;
+    transform: none;
+  }
+}
+
+
+// =====================================================================
+// [추가] 스포츠 히어로 "경기 시청" — 바로 재생 팝업 (SportHero.jsx .sport-hero-popup)
+// - 팝업은 body 에 바로 그려(SportHero.jsx createPortal) 화면 전체에 고정 · 영상은 팝업을 100% 채움 + 왼쪽 위 작은 "← 뒤로" 버튼
+// - "경기 시청" 이 링크 → 버튼으로 바뀌어 브라우저 버튼 기본값(테두리 · 글꼴 · 글자색)만 초기화 → 링크일 때와 같은 모양
+// =====================================================================
+section.sport-hero .sport-hero-actions button.sport-btn {
+  border: none;
+  color: inherit; // 버튼 기본 글자색(검정) 대신 링크일 때와 같은 색
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.detail-popup.sport-hero-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  overflow: hidden;
+  background-color: #000000;
+
+  // 영상: 팝업(화면 전체)을 가로 · 세로 100% 로 채움
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  p {
+    @include body-large;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    color: $text-primary;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// 작은 뒤로가기 버튼 (왼쪽 위 · 영상 위에 반투명)
+.sport-hero-popup .sport-hero-popup-back {
+  @include body-small; // 글자: Body/small · Light/0
+  position: absolute;
+  top: $space-lg;
+  left: $space-lg;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-xs;
+  height: 32px;
+  padding: 0 $space-md;
+  border: 1px solid rgba($light-color-0, 0.3);
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: $light-color-0;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $light-color-0;
+    outline-offset: 2px;
+  }
+}
