@@ -6,6 +6,7 @@ import { useHeartStore, toggleWish, wishKey } from "../../store/useHeartStore"; 
 import Rail from "../common/Rail";
 import { img, detailPath } from "./memberUtils";
 import { useContentInfo, contentMeta, shortGenreName } from "./useContentInfo";
+import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 공용
 
 // 마음에 담아둔 이야기 (위시리스트) — 배경 그라데이션 띠 + 가로 카드 4장 슬라이드
 // - 카드: 포스터 · 제목 · "액션 · 시리즈 · 스릴러" (키워드 · 장르 · 실제 Apple Original 이면 "Apple Original") · +
@@ -87,13 +88,7 @@ const WishlistSection = () => {
   return (
     <section className="member-section band member-wishlist">
       <div className="inner">
-        <div className="member-head">
-          <div>
-            <h2 className="member-title">마음에 담아둔 이야기</h2>
-            <p className="member-desc">관심 있는 작품을 모아두고 언제든 다시 만나보세요.</p>
-          </div>
-          <Link to="/wishlist" className="member-more">더보기</Link>
-        </div>
+        <MemberSectionHead title="마음에 담아둔 이야기" desc="관심 있는 작품을 모아두고 언제든 다시 만나보세요." moreTo="/wishlist" />
 
         {isPhone ? (
           // 휴대폰: 세로 3줄 목록

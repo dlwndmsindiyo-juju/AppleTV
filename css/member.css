@@ -10,6 +10,13 @@
   padding-right: 64px;
   box-sizing: border-box;
 }
+@media (min-width: 1025px) {
+  .member-home .member-section .inner {
+    max-width: none;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
 .member-home .member-section.band {
   background-color: #171717;
 }
@@ -53,7 +60,7 @@
   line-height: 18px;
   letter-spacing: 0;
   flex-shrink: 0;
-  color: #A3A3A3;
+  color: #FFFFFF;
   text-decoration: none;
   white-space: nowrap;
   transition: color 0.2s ease;
@@ -424,107 +431,6 @@
   outline-offset: 2px;
 }
 
-@media (max-width: 1024px) {
-  .member-home .member-section {
-    overflow: hidden;
-  }
-  .member-home .member-section .inner {
-    padding-left: 13%;
-    padding-right: 13%;
-  }
-  .member-home .member-continue .inner,
-  .member-home .member-wishlist .inner,
-  .member-home .member-recommend .inner,
-  .member-home .member-mood .inner {
-    padding-right: 0;
-  }
-  .member-home .member-continue .member-head,
-  .member-home .member-continue .member-chips,
-  .member-home .member-continue .member-notice,
-  .member-home .member-wishlist .member-head,
-  .member-home .member-wishlist .member-chips,
-  .member-home .member-wishlist .member-notice,
-  .member-home .member-recommend .member-head,
-  .member-home .member-recommend .member-chips,
-  .member-home .member-recommend .member-notice,
-  .member-home .member-mood .member-head,
-  .member-home .member-mood .member-chips,
-  .member-home .member-mood .member-notice {
-    margin-right: 13%;
-  }
-  .member-home .rail-continue {
-    --rail-col: 286px;
-  }
-  .member-home .rail-wish {
-    --rail-col: 210px;
-  }
-  .member-home .rail-poster {
-    --rail-col: 200px;
-  }
-  .member-home .rail-mood {
-    --rail-col: 286px;
-  }
-  .member-home .rail-mood .member-thumb.portrait {
-    aspect-ratio: 16/9;
-  }
-  .member-home .member-chips {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .member-home .member-chips::-webkit-scrollbar {
-    display: none;
-  }
-  .member-home .member-chips .member-chip {
-    flex-shrink: 0;
-  }
-  .member-home .member-pair {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  .member-home .member-ecosystem {
-    padding: 48px 0;
-  }
-  .member-home .member-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 34px;
-    line-height: 41px;
-    letter-spacing: 0;
-  }
-  .member-home .upcoming-section .inner {
-    padding-right: 13%;
-  }
-  .member-home .upcoming-section .upcoming-title,
-  .member-home .upcoming-section .upcoming-desc {
-    padding-right: 0;
-  }
-  .member-home .upcoming-section .upcoming-list {
-    grid-auto-flow: row;
-    grid-auto-columns: auto;
-    grid-template-columns: minmax(0, 1fr);
-    overflow: visible;
-    padding-right: 0;
-  }
-  .member-home .upcoming-section .upcoming-thumb {
-    width: 156px;
-  }
-  .member-home .upcoming-section .upcoming-movie-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-  }
-  .member-home .upcoming-section .upcoming-btn:not(.on) {
-    border-color: transparent;
-    background-color: #F5F5F5;
-    color: #171717;
-  }
-  .member-home .upcoming-section .upcoming-btn:not(.on):hover {
-    background-color: #D5D5D5;
-  }
-}
 .member-home .rail-continue {
   --nav-top: 30%;
 }
@@ -570,17 +476,6 @@
   pointer-events: none;
 }
 
-@media (max-width: 1024px) {
-  .member-home .rail-mood {
-    --nav-top: 30%;
-  }
-  .member-home .hero-swiper-container .swiper-button-next,
-  .member-home .hero-swiper-container .swiper-button-prev,
-  .member-home .top10-section .swiper-button-next,
-  .member-home .top10-section .swiper-button-prev {
-    display: flex;
-  }
-}
 @media (min-width: 1025px) {
   main.member-home .member-section,
   main.member-home .member-section.band,
@@ -593,8 +488,8 @@
     padding-top: 164px;
   }
   main.member-home .member-section .inner {
-    padding-left: 12.5%;
-    padding-right: 12.5%;
+    padding-left: 5%;
+    padding-right: 5%;
   }
   main.member-home .member-head {
     margin-bottom: 24px;
@@ -628,7 +523,7 @@
     font-size: 13px;
     line-height: 18px;
     letter-spacing: 0;
-    color: #C8C8C8;
+    color: #FFFFFF;
   }
   main.member-home .rail-continue {
     --rail-col: calc((100% - 72px) / 3.57);
@@ -908,7 +803,7 @@
 }
 .member-home .member-section.member-wishlist .member-desc,
 .member-home .member-section.member-wishlist .member-more {
-  color: #C8C8C8;
+  color: #FFFFFF;
 }
 .member-home .member-section.member-wishlist .member-more:hover {
   color: #FFFFFF;
@@ -1004,26 +899,6 @@
 @media (min-width: 1025px) {
   main.member-home .rail-continue {
     --rail-col: calc((100% - 72px) / 4);
-  }
-}
-@media (max-width: 1024px) {
-  .member-home .rail-wish {
-    --rail-col: 300px;
-  }
-}
-@media (max-width: 767px) {
-  main.member-home .rail-wish {
-    --rail-col: calc((100% - 16px) / 1.15);
-  }
-  main.member-home .member-wl-thumb {
-    width: 48px;
-  }
-  main.member-home .member-wl-name {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
   }
 }
 .member-home .member-rc-card {
@@ -1153,38 +1028,6 @@
     --nav-top: 50%;
   }
 }
-@media (max-width: 1024px) {
-  main.member-home .rail-recommend {
-    --rail-col: 220px;
-    --nav-top: 50%;
-  }
-}
-@media (max-width: 767px) {
-  main.member-home .rail-recommend {
-    --rail-col: 176px;
-  }
-  .member-home .member-rc-info {
-    left: 12px;
-    right: 12px;
-    bottom: 56px;
-  }
-  .member-home .member-rc-actions {
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    gap: 6px;
-  }
-  .member-home .member-rc-play,
-  .member-home .member-rc-rate {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    line-height: 13px;
-    letter-spacing: 0;
-    height: 30px;
-    gap: 4px;
-  }
-}
 .member-home .member-ai-thumb {
   aspect-ratio: 285/178;
   margin-bottom: 12px;
@@ -1287,17 +1130,6 @@ main.member-home .member-mood .member-chip.active {
   main.member-home .rail-ai {
     --rail-col: calc((100% - 72px) / 4);
     --nav-top: 30%;
-  }
-}
-@media (max-width: 1024px) {
-  main.member-home .rail-ai {
-    --rail-col: 286px;
-    --nav-top: 30%;
-  }
-}
-@media (max-width: 767px) {
-  main.member-home .rail-ai {
-    --rail-col: 240px;
   }
 }
 @media (min-width: 1025px) {
@@ -1406,6 +1238,7 @@ main.member-home .member-mood .member-chips .member-chip {
   margin: 4px 0 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
@@ -1485,24 +1318,6 @@ main.member-home .member-mood .member-chips .member-chip {
     --nav-top: 50%;
   }
 }
-@media (max-width: 1024px) {
-  main.member-home .rail-release,
-  .upcoming-section .rail-release {
-    --rail-col: 360px;
-    --nav-top: 50%;
-  }
-}
-@media (max-width: 767px) {
-  main.member-home .rail-release,
-  .upcoming-section .rail-release {
-    --rail-col: 86%;
-  }
-  .member-home .member-nr-card,
-  .upcoming-section .member-nr-card {
-    gap: 12px;
-    padding: 12px;
-  }
-}
 .upcoming-section .member-slider {
   width: 100%;
   --swiper-navigation-size: 18px;
@@ -1547,4 +1362,52 @@ main.member-home .member-mood .member-chips .member-chip {
   .upcoming-section .inner {
     overflow: hidden;
   }
+}
+main.member-home .subscribe-cta {
+  background-color: #171717;
+}
+
+.member-home .member-nr-quick,
+.upcoming-section .member-nr-quick {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  main.member-home .rail-continue,
+  main.member-home .rail-wish {
+    --rail-col: 342px;
+  }
+  main.member-home .rail-poster {
+    --rail-col: 283px;
+  }
+  main.member-home .rail-recommend {
+    --rail-col: 269px;
+  }
+  main.member-home .rail-mood {
+    --rail-col: 281px;
+  }
+  main.member-home .rail-ai {
+    --rail-col: 342px;
+  }
+  main.member-home .rail-release,
+  .upcoming-section .rail-release {
+    --rail-col: 342px;
+  }
+}
+.member-home .member-nr-play {
+  gap: 6px;
+}
+.member-home .member-nr-play img {
+  display: block;
+  flex-shrink: 0;
+  width: 8px;
+  height: 11px;
+}
+.member-home .member-nr-heart-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/heart-icon.svg") center/contain no-repeat;
+  mask: url("/icons/heart-icon.svg") center/contain no-repeat;
 }

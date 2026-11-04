@@ -5,7 +5,8 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { useSportStore } from "../../store/useSportStore";
-import { decodeHtml } from "./sportUtils";
+import { decodeHtml, ytThumb } from "./sportUtils";
+import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
 
 // 하이라이트 (시안: 썸네일 위에 제목 · 설명 · "▶ 하이라이트 · 1분" 이 겹치는 카드 슬라이드)
 // - 데이터: YouTube 카테고리 영상(경기 하이라이트 / 오늘의 골 / 선수 인터뷰 / 이번 주 베스트)
@@ -53,8 +54,7 @@ const SportHighlights = ({ title = "하이라이트" }) => {
           title: decodeHtml(sn.title),
           desc: decodeHtml(sn.description) || sn.channelTitle || "",
           meta: [label, minutesText(video.durationText)].filter(Boolean).join(" · "),
-          thumb:
-            sn.thumbnails?.high?.url || sn.thumbnails?.medium?.url || `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+          thumb: ytThumb(video),
         };
       });
   }, [categories, highlightList]);
@@ -62,12 +62,7 @@ const SportHighlights = ({ title = "하이라이트" }) => {
   return (
     <section className="sport-highlights">
       <div className="inner">
-        <div className="sport-section-head">
-          <h3 className="sport-section-title">{title}</h3>
-          <Link className="sport-more" to="/sport/highlights">
-            전체 보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-          </Link>
-        </div>
+        <SportSectionHead title={title} to="/sport/highlights" />
 
         {items.length === 0 ? (
           <p className="sport-empty">하이라이트 영상이 없습니다.</p>

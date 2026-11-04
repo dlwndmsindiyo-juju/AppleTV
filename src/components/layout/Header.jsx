@@ -35,6 +35,7 @@ const Header = () => {
   const location = useLocation(); // 현재 경로를 파악하기 위해 추가
   // 로그인 여부: 로그인 전 → "로그인" 버튼 / 로그인 후 → 프로필 아이콘
   const user = useAuthStore((state) => state.user);
+  const currentMember = useAuthStore((state) => state.currentMember); // [추가] 고른 가족 프로필 → 프로필 버튼 색
   const onLogout = useAuthStore((state) => state.onLogout);
 
   // 프로필 메뉴 (계정 설정 / 로그아웃)
@@ -221,7 +222,7 @@ const Header = () => {
                     onClick={() => setMenuOpen((v) => !v)}
                   >
                     {/* 계정 설정에서 고른 기본 아이콘 (안 골랐으면 기존 profile.svg) */}
-                    <ProfileAvatar avatar={user.avatar} size="sm" />
+                    <ProfileAvatar avatar={user.avatar} member={currentMember} size="sm" />
                   </button>
 
                   {menuOpen && (

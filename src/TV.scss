@@ -193,6 +193,81 @@
 
 
 // =====================================================================
+// [추가] 가족 프로필 선택 (아빠 · 엄마 · 아들 · 딸) — PC 로그인과 같은 순서 · 같은 색
+// =====================================================================
+.tv-screen.tv-profiles {
+  justify-content: center;
+
+  .tv-desc {
+    margin-top: 36px;
+  }
+}
+
+.tv-profile-list {
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+  margin: 96px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tv-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-xl;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $light-color-0;
+  cursor: pointer;
+
+  // 프로필마다 배경색 (PC .auth-profile 과 같음)
+  &--1 .tv-profile-avatar { background-color: $primary-color-500; }
+  &--2 .tv-profile-avatar { background-color: $sports-color; }
+  &--3 .tv-profile-avatar { background-color: $accent-color; }
+  &--4 .tv-profile-avatar { background-color: $success-color; }
+
+  // 리모컨 포커스 · 마우스: 조금 커지고 흰 테두리
+  &:focus-visible,
+  &:hover {
+    outline: none;
+
+    .tv-profile-avatar {
+      transform: scale(1.08);
+      box-shadow: 0 0 0 6px $light-color-0;
+    }
+  }
+
+  // 지금 쓰는 프로필: 이름 굵게
+  &.is-current .tv-profile-name {
+    font-weight: $font-weight-bold;
+  }
+}
+
+.tv-profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  img {
+    display: block;
+    width: 50%;
+    height: 50%;
+  }
+}
+
+.tv-profile-name {
+  @include display-l;
+}
+
+
+// =====================================================================
 // 3. Apple 계정 로그인 · 계정 정보 입력 — 리모컨 자판
 // =====================================================================
 .tv-screen.tv-keyboard {
@@ -217,6 +292,47 @@
     background-color: $tv-guide-bg;
     color: $light-color-0;
     white-space: nowrap;
+  }
+
+  // [추가] 로그인: 아이디 · 비밀번호 칸 — 리모컨 안내 박스와 같은 크기 · 글자 (715 × 66 · Display/L · Light/0)
+  // - 입력 전에는 PC · 모바일 로그인과 같은 지정 계정 안내 (hi1234@naver.com / 123456)
+  // - 고른 칸(자판으로 입력할 칸)은 안쪽 흰 테두리 · 리모컨 포커스는 다른 TV 버튼처럼 흰 배경
+  .tv-fields {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    margin-top: 76px;
+
+    .tv-guide {
+      margin: 0;
+      border: none;
+      cursor: pointer;
+    }
+
+    .tv-field.is-active {
+      box-shadow: inset 0 0 0 2px $light-color-0;
+    }
+
+    .tv-field:focus-visible,
+    .tv-field.is-focused {
+      outline: none;
+      background-color: $tv-btn-primary-bg;
+      color: $tv-btn-primary-text;
+    }
+  }
+
+  // [추가] 로그인 실패 안내: 설명 문구 자리 · 같은 글자 (색만 Light/0 그대로)
+  .tv-desc--alert {
+    white-space: pre-line;
+  }
+
+  // [추가] 계정 정보 입력: 안내 문구는 오류일 때만 보임 (자리는 남겨 두어 아래 자판 위치 고정)
+  .tv-desc--error {
+    visibility: hidden;
+
+    &.is-visible {
+      visibility: visible;
+    }
   }
 
   // 자판 (글자 줄 · 숫자 줄)
@@ -328,8 +444,8 @@
 
 // =====================================================================
 // [추가] TV 디자인 미리보기 페이지 (/tv · pages/TvPreview.jsx)
-// - 위쪽: 웹 화면으로 돌아가기 + 화면 탭 (이용 안내 · Apple 계정 로그인 · 계정 정보 입력)
-// - TV 화면은 창 전체를 꽉 채움 · 탭 바는 아래 가운데에 작게 떠 있음
+// - 왼쪽: 화면 메뉴 (이용 안내 · Apple 계정 로그인 · 홈 · 스포츠 · 웹 화면으로) · 화살표로 닫고 열기
+// - TV 화면은 메뉴를 뺀 나머지를 꽉 채움 (메뉴를 닫으면 창 전체)
 // =====================================================================
 .tv-preview {
   position: relative;
@@ -348,58 +464,381 @@
   }
 }
 
-// [수정] 화면 탭 바 — TV 화면 아래 칸에 따로 둠 (TV 화면 위에 겹치지 않음)
-// - TV 화면(.tv-preview-area)은 바를 뺀 나머지 높이만 채우므로 TV 버튼이 바보다 위에 놓임
-// - JSX 에서는 바가 먼저 나오지만 order 로 아래에 배치
-.tv-preview-bar {
-  order: 2;
-  flex-shrink: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: $space-sm $space-lg;
-  padding: $space-sm $space-lg;
-  background-color: #000000;
+// [수정] 화면 메뉴 — 아래 바 대신 왼쪽 사이드 메뉴 (Apple TV 사이드 메뉴 시안 형태)
+// - 기본 열림 · 왼쪽 위 화살표로 닫기 (public/icons/nav/left-nav.svg)
+// - 닫으면 TV 화면이 창 전체 · 왼쪽 위 화살표로 다시 열기 (right-nav.svg)
+// - 메뉴 폭: 시안 466 / 1920 비율 (창 크기에 맞춰 220 ~ 466px) · TV 화면은 남은 폭에 맞춰 비율 조정
+// - 영상 재생 중에는 메뉴 · 화살표 모두 숨김 (TvPreview.jsx)
+.tv-preview {
+  flex-direction: row;
 }
 
-.tv-preview-exit {
-  @include body-small-b;
+.tv-side {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: clamp(220px, 24.27vw, 466px);
+  height: 100%;
+  padding: $space-xl $space-lg $space-xl;
+  background-color: $sport-opacity-w; // 시안 Fill: Sports/Opacity-w
+  overflow-y: auto;
+}
+
+// 위쪽: 로고(맨 왼쪽) · 프로필 아이콘 · 닫기 화살표
+.tv-side-head {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  margin-bottom: $space-3xl;
+}
+
+.tv-side-logo {
+  display: block;
+  width: auto;
+  height: 24px;
+  margin-right: auto; // 로고는 맨 왼쪽, 나머지는 오른쪽으로
+}
+
+// 프로필 아이콘 (헤더와 같은 ProfileAvatar) — 로그인 전에는 눌러서 TV 로그인 화면으로
+.tv-side-profile {
+  flex-shrink: 0;
+  display: block;
+  width: 40px;
+  height: 40px;
   padding: 0;
   border: none;
+  border-radius: 50%;
+  overflow: hidden;
   background: transparent;
-  color: $text-secondary;
-  cursor: pointer;
 
-  &:hover {
-    color: $light-color-0;
+  &:is(button) {
+    cursor: pointer;
+  }
+
+  &:is(button):focus-visible {
+    outline: 3px solid $tv-btn-primary-bg;
+    outline-offset: 2px;
   }
 }
 
-.tv-preview-tabs {
+// 닫기 · 열기 화살표 (아이콘 51 × 51 · 파일 그대로)
+.tv-side-toggle {
   display: flex;
-  flex-wrap: wrap;
-  gap: $space-sm;
-}
-
-.tv-preview-tab {
-  @include body-small-b;
-  height: 32px;
-  padding: 0 $space-lg;
-  border: 1px solid $light-color-500;
-  border-radius: 999px;
-  background-color: $sport-opacity-w;
-  color: $light-color-0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: $radius-xs;
+  background: transparent;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
 
-  &:hover {
-    border-color: $light-color-0;
+  img {
+    display: block;
+    width: 40px;
+    height: 40px;
   }
 
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: $dark-color-300;
+  }
+
+  // 메뉴가 닫혔을 때: TV 화면 위 왼쪽 위에 떠 있음
+  &.tv-side-open {
+    position: absolute;
+    top: $space-lg;
+    left: $space-lg;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.55);
+  }
+}
+
+// [추가] 검색창 — 시안: 회색 둥근 칸 · 왼쪽 검색 아이콘(public/icons/search.svg) · "Search"
+// - 배경: TV 보조 버튼 색 (Light/100 · 40%) · 글자: 메뉴와 같은 17 / 19 · Text/Primary
+// - 아이콘 색: Light/0 흰색 (아이콘 파일 모양을 mask 로 사용)
+.tv-side-search {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  height: 52px;
+  margin-bottom: $space-3xl;
+  padding: 0 $space-lg;
+  border-radius: $tv-btn-radius;
+  background-color: $tv-btn-secondary-bg;
+  cursor: text;
+
+  &:focus-within {
+    box-shadow: inset 0 0 0 2px $light-color-0;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: $text-primary;
+    font-family: $font-family-base;
+    font-size: 17px;
+    font-weight: $font-weight-regular;
+    line-height: 19px;
+    letter-spacing: -0.4px;
+
+    &::placeholder {
+      color: $text-primary;
+    }
+
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+  }
+}
+
+.tv-side-search-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background-color: $light-color-0; // [수정] 흰색
+  -webkit-mask: url("/icons/search.svg") center / contain no-repeat;
+  mask: url("/icons/search.svg") center / contain no-repeat;
+}
+
+.tv-side-menu {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+}
+
+// 메뉴 글자: SF Pro Regular 17 / 19 · 자간 -0.4px · Text/Primary (시안)
+.tv-side-item {
+  font-family: $font-family-base;
+  font-size: 17px;
+  font-weight: $font-weight-regular;
+  line-height: 19px;
+  letter-spacing: -0.4px;
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 $space-md;
+  border: none;
+  border-radius: $radius-xs;
+  background: transparent;
+  color: $text-primary;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $dark-color-400;
+  }
+
+  // 지금 보고 있는 화면
   &.is-active {
-    border-color: $primary-color-500;
-    background-color: $primary-color-500;
+    background-color: $dark-color-300;
+  }
+
+  // 리모컨 포커스: TV 버튼과 같은 흰 배경
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+// 메뉴 아이콘 칸 (30 × 28 · 아이콘 파일 그대로 · 가운데 정렬)
+.tv-side-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 28px;
+
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+// [추가] 로그인 전: 프로필 자리에 "로그인" 글자 버튼 (메뉴 글자와 같은 17 / 19)
+.tv-side-login {
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 $space-lg;
+  border: none;
+  border-radius: 999px;
+  background-color: $tv-btn-secondary-bg;
+  color: $text-primary;
+  font-family: $font-family-base;
+  font-size: 17px;
+  font-weight: $font-weight-regular;
+  line-height: 19px;
+  letter-spacing: -0.4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $dark-color-200;
+  }
+
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+// [추가] 로그아웃 — 설정 묶음 맨 아래 (아이콘 없이 · 다른 메뉴 글자와 줄 맞춤)
+.tv-side-logout {
+  padding-left: calc(#{$space-md} + 30px + #{$space-lg}); // 아이콘 칸만큼 들여서 글자 줄 맞춤
+}
+
+// [추가] AI 아이콘 — 진짜 AI 처럼 빛나며 움직이는 그라데이션
+// - 별 모양(public/icons/tv/tv-ai-icon.svg)을 mask 로 쓰고, 안쪽 그라데이션이 계속 흐름
+// - 색: 원래 아이콘의 복숭아색(#FFAA7A) → AI 팝업 보라(#A5ACFF) → Primary/500 → 다시 복숭아색
+// - 바깥 빛(drop-shadow)이 숨 쉬듯 커졌다 작아지고, 살짝 커졌다 작아짐
+// - 움직임 줄이기 설정(prefers-reduced-motion)에서는 멈춤
+$tv-ai-peach: #ffaa7a;
+$tv-ai-lilac: #a5acff;
+
+.tv-side-ai-icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(120deg, $tv-ai-peach 0%, $tv-ai-lilac 30%, $primary-color-500 55%, $tv-ai-lilac 75%, $tv-ai-peach 100%);
+  background-size: 300% 300%;
+  // [수정] 별 모양: public/icons/tv/tv-ai-icon.svg (원래 AI 아이콘과 같은 파일) 을 그대로 mask 로
+  -webkit-mask: url("/icons/tv/tv-ai-icon.svg") center / contain no-repeat;
+  mask: url("/icons/tv/tv-ai-icon.svg") center / contain no-repeat;
+  animation: tv-ai-flow 4s linear infinite;
+}
+
+// 바깥 빛은 아이콘을 감싼 칸에 (mask 안쪽에 두면 빛이 잘려서 안 보임)
+.tv-side-icon--ai {
+  animation: tv-ai-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes tv-ai-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 300% 50%;
+  }
+}
+
+@keyframes tv-ai-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba($tv-ai-lilac, 0.5));
+  }
+
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 8px rgba($tv-ai-peach, 0.9)) drop-shadow(0 0 14px rgba($tv-ai-lilac, 0.6));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tv-side-ai-icon,
+  .tv-side-icon--ai {
+    animation: none;
+  }
+}
+
+// [추가] 관심구단 — 메인 메뉴 아래 팔로우한 팀 이름
+// - 별 아이콘: public/icons/tv/tv-star-icon.svg 모양 · 색 Primary/500 (mask)
+.tv-side-star-icon {
+  display: block;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background-color: $primary-color-500;
+  -webkit-mask: url("/icons/tv/tv-star-icon.svg") center / contain no-repeat;
+  mask: url("/icons/tv/tv-star-icon.svg") center / contain no-repeat;
+}
+
+// [추가] 메뉴 묶음 (시안: Library · Apps) — 제목 Heading/h2-B · Light/0 + 오른쪽 접기 화살표
+.tv-side-group {
+  margin-top: 48px;
+}
+
+.tv-side-group-head {
+  @include heading-h2-b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 $space-md;
+  border: none;
+  border-radius: $radius-xs;
+  background: transparent;
+  color: $light-color-0;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $dark-color-400;
+  }
+
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+
+    .tv-side-group-arrow {
+      background-color: $tv-btn-primary-text;
+    }
+  }
+}
+
+// 화살표: public/icons/nav/left-nav.svg 모양 (흰색) · 펼침 ↓ / 접힘 →
+.tv-side-group-arrow {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background-color: $light-color-0;
+  -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  transform: rotate(180deg);
+  transition: transform 0.2s ease;
+
+  .tv-side-group.is-open & {
+    transform: rotate(-90deg);
+  }
+}
+
+.tv-side-group-body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  margin-top: $space-lg;
+}
+
+
+// 리모컨 안내 — 메뉴 맨 아래
+.tv-side-guide {
+  @include body-small-b;
+  margin: auto 0 0;
+  padding-top: $space-xl;
+  color: $light-color-0;
+
+  span {
+    @include body-small;
+    display: block;
+    margin-top: $space-xs;
+    color: $text-tertiary;
   }
 }
 
@@ -675,4 +1114,1052 @@
 // 스포츠 · 홈의 섹션 영역은 남은 높이만 채우고 안에서 위아래로 이동 (줄어들 수 있어야 함)
 .tv-screen > .tv-sport-body {
   flex-shrink: 1;
+}
+
+
+// =====================================================================
+// [추가] 관심구단 화면 (TvTeam.jsx) — 시안: 구단 히어로 + 그 팀 영상
+// - 구단명 Heading/h1-B · 전적 Heading/h4 · 설명 Heading/h2 (모두 Light/0)
+// - 팀 팔로우: 167 × 52 (패딩 포함) · 별 ↔ 글자 8 · SF Pro Bold 15 / 20
+// - LIVE: PC 라이브 표시와 같은 크기 (별표한 팀이 경기 중일 때만)
+// - 뱃지: 배경 없이 402 × 402 · 히어로 정가운데
+// - 영상 카드: 제목 Body/default-B Light/0 · 설명 Caption/default Light/500 · 정보 Caption/small Light/0
+// =====================================================================
+.tv-screen.tv-team {
+  align-items: stretch;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: $dark-color-900;
+  text-align: left;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ---------- 히어로 ----------
+.tv-team-hero {
+  position: relative;
+  flex-shrink: 0;
+  height: 776px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.tv-team-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+}
+
+// PC 구단 히어로와 같은 어둡게 (왼쪽 글자 · 아래쪽)
+.tv-team-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0) 45%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba($dark-color-900, 0.6) 100%);
+  pointer-events: none;
+}
+
+.tv-team-info {
+  position: absolute;
+  top: 50%;
+  left: 191px;
+  width: 520px;
+  transform: translateY(-50%);
+}
+
+.tv-team-name {
+  @include heading-h1-b;
+  margin: 0;
+  padding: 0;
+  color: $light-color-0;
+}
+
+.tv-team-record {
+  @include heading-h4;
+  margin: 12px 0 0;
+  color: $light-color-0;
+}
+
+.tv-team-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.tv-team-follow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 167px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: $light-color-100;
+  color: $text-inverse;
+  font-family: $font-family-base;
+  font-size: 15px;
+  font-weight: $font-weight-bold;
+  line-height: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &.is-on svg {
+    color: $rating-color;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background: $light-color-0;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba($light-color-0, 0.35);
+  }
+}
+
+// LIVE — PC 라이브 카드 표시와 같은 크기 (14 · 위아래 8 · 좌우 15)
+.tv-team-live {
+  @include label-default-b;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 15px;
+  border-radius: 9999px;
+  background-color: $sports-color;
+  color: $light-color-0;
+  font-size: 14px;
+  line-height: 1;
+
+  img {
+    display: block;
+    width: 1.1em;
+    height: 1.1em;
+  }
+}
+
+.tv-team-desc {
+  @include heading-h2;
+  margin: 40px 0 0;
+  color: $light-color-0;
+  word-break: keep-all;
+}
+
+// 뱃지: 배경 없이 402 × 402 · 히어로 정가운데
+.tv-team-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 402px;
+  height: 402px;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  &.sport-badge-initial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include display-xl-b;
+    color: $light-color-0;
+  }
+}
+
+// ---------- 그 팀 영상 ----------
+.tv-team-body {
+  padding: 40px 0 80px;
+}
+
+.tv-team-row + .tv-team-row {
+  margin-top: 56px;
+}
+
+.tv-team-row-title {
+  @include display-l-b;
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin: 0;
+  padding: 0 80px;
+  color: $light-color-0;
+
+  img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.tv-team-row-desc {
+  @include body-default;
+  margin: $space-xs 0 0;
+  padding: 0 80px;
+  color: $light-color-500;
+}
+
+// 카드 줄: 왼쪽 80 에서 시작 · 오른쪽 끝에서 잘림 (리모컨 이동 시 옆으로 밀림)
+.tv-team-track {
+  display: flex;
+  gap: 30px;
+  padding: 24px 80px 12px;
+  overflow: hidden;
+  scroll-padding: 0 80px;
+}
+
+.tv-team-card {
+  position: relative;
+  flex-shrink: 0;
+  width: 410px;
+  height: 231px;
+  padding: 0;
+  border: 0;
+  border-radius: $tv-card-radius;
+  overflow: hidden;
+  background-color: $dark-color-400;
+  color: $light-color-0;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  // 글자가 잘 보이도록 아래쪽 어둡게
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.85) 100%);
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    transform: scale(1.04);
+    box-shadow: 0 0 0 4px $light-color-0, 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.tv-team-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tv-team-card-text {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  left: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tv-team-card-title {
+  @include body-default-b;
+  color: $light-color-0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tv-team-card-desc {
+  @include caption-default;
+  display: -webkit-box;
+  overflow: hidden;
+  color: $light-color-500;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.tv-team-card-meta {
+  @include caption-small;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: $light-color-0;
+
+  img {
+    width: 8px;
+    height: 10px;
+  }
+}
+
+.tv-team-empty {
+  @include display-M;
+  margin: 0;
+  padding: 40px 80px;
+  color: $text-secondary;
+}
+
+
+// =====================================================================
+// [추가] TV 영상 재생 (TvPlayer.jsx) · 영상 끝 화면 (TvEndScreen.jsx · 시안 10 · 처음부터 보기)
+// - 재생: 웹과 같은 전체 화면 팝업 (.video-popup · App.scss) · 끝 화면에서는 "← 뒤로" 숨김
+// - 끝 화면은 1920 × 1080 기준으로 그리고 창 크기에 맞춰 비율대로 줄임 (JSX 에서 scale)
+// - 시청한 영상 211 × 118 · 아래 제목 Label/default-B · Light/0
+// - "처음부터 보기" Display/XL · Light/0 / "MLS · 경기 하이라이트" Display/M · Light/500
+// - 버튼 142 × 80 (패딩 18 56) · 선택(포커스) Primary · 기본 Dark/300 · 버튼 안 "경기정보" Heading/h3 · Light/0
+// - 버튼 아래 글자 SF Pro Medium 23 / 36 · Dark/200 (선택된 버튼은 Light/0)
+// - 경기 다시보기 · 하이라이트: 다른 TV 섹션과 같은 제목 · 카드 크기(410 × 231) · 글자
+// =====================================================================
+.tv-player-host {
+  position: absolute;
+  inset: 0;
+}
+
+.video-popup.is-ended .video-back-btn {
+  display: none;
+}
+
+.tv-end {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  background-color: #000000;
+  color: $light-color-0;
+  font-family: $font-family-base;
+  text-align: left;
+
+  button {
+    font-family: $font-family-base;
+  }
+}
+
+// [수정] 화면 전체를 채움 — 왼쪽 위 기준으로 비율만 줄이고 폭 · 높이는 화면에 맞춰 늘림 (JSX)
+.tv-end-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  transform-origin: top left;
+}
+
+// 경기장 배경 — TV 스포츠와 같은 효과 (사진 58% + 검정 80%)
+.tv-end-bg {
+  position: absolute;
+  inset: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  &::before {
+    background: var(--tv-end-bg) center / cover no-repeat;
+    opacity: 0.58;
+  }
+
+  &::after {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+// ---------- 위쪽 ----------
+.tv-end-head {
+  position: absolute;
+  top: 58px;
+  left: 66px;
+  width: 1749px; // [수정] 시안 폭 (66 ~ 1815) 고정 — 화면이 넓어져도 버튼이 오른쪽 끝으로 밀려나지 않음
+  height: 160px;
+}
+
+.tv-end-watched {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 211px;
+  margin: 0;
+
+  img,
+  .tv-end-watched-empty {
+    display: block;
+    width: 211px;
+    height: 118px;
+    object-fit: cover;
+    background-color: $dark-color-400;
+  }
+
+  figcaption {
+    @include label-default-b;
+    margin-top: 10px;
+    color: $light-color-0;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.tv-end-title {
+  position: absolute;
+  top: 0;
+  left: 232px;
+
+  h1 {
+    @include display-xl;
+    margin: 0;
+    padding: 0;
+    color: $light-color-0;
+  }
+
+  p {
+    @include display-M;
+    margin: 4px 0 0;
+    color: $light-color-500;
+  }
+}
+
+.tv-end-actions {
+  position: absolute;
+  top: 22px;
+  right: 0;
+  display: flex;
+  gap: 24px;
+}
+
+.tv-end-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tv-end-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 142px;
+  height: 80px;
+  padding: 18px 56px;
+  border: 0;
+  border-radius: $radius-sm;
+  background-color: $dark-color-300;
+  color: $light-color-0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.tv-end-action-label {
+  margin-top: 12px;
+  color: $dark-color-200;
+  font-size: 23px;
+  font-weight: $font-weight-medium;
+  line-height: 36px;
+  white-space: nowrap;
+}
+
+// 선택된(포커스) 버튼: Primary · 아래 글자 Light/0
+.tv-end-action.is-active {
+  .tv-end-btn {
+    background-color: $primary-color-500;
+  }
+
+  .tv-end-action-label {
+    color: $light-color-0;
+    font-weight: $font-weight-bold;
+  }
+}
+
+.tv-end-play {
+  display: block;
+  width: 22px;
+  height: 31px;
+}
+
+// 관심 경기: 흰 원 + 더하기 (담으면 체크)
+.tv-end-plus {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $light-color-0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    background-color: $dark-color-900;
+    -webkit-mask: url("/icons/plus.svg") center / contain no-repeat;
+    mask: url("/icons/plus.svg") center / contain no-repeat;
+  }
+
+  &.is-on::after {
+    -webkit-mask-image: url("/icons/check.svg");
+    mask-image: url("/icons/check.svg");
+  }
+}
+
+.tv-end-btn-text {
+  @include heading-h3;
+  color: $light-color-0;
+  white-space: nowrap;
+}
+
+// 경기정보: 버튼 아래 설명 상자
+.tv-end-info {
+  position: absolute;
+  top: 210px;
+  right: 0;
+  z-index: 2;
+  width: 520px;
+  padding: 24px;
+  border-radius: $radius-card-sm;
+  background-color: rgba(0, 0, 0, 0.8);
+
+  strong {
+    @include heading-h4-b;
+    display: block;
+    color: $light-color-0;
+  }
+
+  p {
+    @include body-default;
+    display: -webkit-box;
+    margin: $space-sm 0 0;
+    overflow: hidden;
+    color: $light-color-500;
+    white-space: pre-line;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+    -webkit-box-orient: vertical;
+  }
+}
+
+// ---------- 아래 (경기 다시보기 · 하이라이트) ----------
+.tv-end-body {
+  position: absolute;
+  top: 355px;
+  right: 0;
+  left: 0;
+}
+
+.tv-end-row + .tv-end-row {
+  margin-top: 44px;
+}
+
+// 다른 TV 섹션 제목과 같음 (Display/L-B · Light/0)
+.tv-end-row-title {
+  @include display-l-b;
+  margin: 0;
+  padding: 0 66px;
+  color: $light-color-0;
+}
+
+.tv-end-track {
+  display: flex;
+  gap: 40px;
+  padding: 24px 66px 12px;
+  overflow: hidden;
+  scroll-padding: 0 66px;
+}
+
+// 경기 다시보기 카드 (두 구단 뱃지 · 점수 · 날짜 · Apple TV 로고)
+// [수정] 하이라이트 카드와 크기(410 × 231) · 모서리($tv-card-radius) 모두 같게
+.tv-end-replay {
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 410px;
+  height: 231px;
+  padding: 0;
+  border: 0;
+  border-radius: $tv-card-radius;
+  overflow: hidden;
+  background-color: $dark-color-800;
+  color: $light-color-0;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    transform: scale(1.04);
+    box-shadow: 0 0 0 4px $light-color-0, 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.tv-end-replay-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  filter: grayscale(1);
+  opacity: 0.45;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 70%);
+  }
+}
+
+.tv-end-replay-logo {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 40px;
+  height: auto;
+}
+
+// 가운데 사선
+.tv-end-replay-line {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  width: 1px;
+  height: 120px;
+  background-color: rgba($light-color-0, 0.45);
+  transform: rotate(35deg);
+}
+
+.tv-end-replay-team {
+  position: absolute;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 140px;
+
+  &.is-home {
+    left: 40px;
+  }
+
+  &.is-away {
+    right: 40px;
+  }
+
+  img,
+  .sport-badge-initial {
+    display: block;
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+  }
+
+  .sport-badge-initial {
+    @include display-M-b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  strong {
+    @include heading-h2-b;
+    margin-top: 10px;
+    color: $light-color-0;
+  }
+
+  span:last-child {
+    @include label-default-b;
+    color: $light-color-0;
+  }
+
+  // 진 팀 점수는 회색
+  &.is-lose strong {
+    color: $light-color-500;
+  }
+}
+
+.tv-end-replay-date {
+  @include label-default-b;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  color: $light-color-0;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.tv-end-notice {
+  @include heading-h4;
+  position: absolute;
+  bottom: 40px;
+  left: 66px;
+  margin: 0;
+  color: $light-color-500;
+}
+
+
+// =====================================================================
+// [추가] TV 검색 (TvSearch.jsx) — 위 메뉴 "검색" · 시안: 검색 (전체 검색 레이아웃)
+// - 제목 "검색" SF Pro Bold 76 · Light/0 (입력하면 입력한 글자)
+// - 자판 종류(abc · ABC · #+-): 432 × 66 · 배경 Light/0 50% · 글자 로그인 자판과 같음 (Display/M-B · Light/0)
+// - 자판: 로그인 자판과 같은 글자 · 크기 (54 × 64 · Heading/h1) · 6칸씩
+// - 공백 · 지우기: SF Pro Medium 29 · 가운데 지우기 아이콘은 로그인 지우기 버튼 (Light/0)
+// - 길게 눌러 검색: Display/M · Light/0 · 마이크 원 40 × 40 Light/0
+// - 전체 · 경기 · 하이라이트: 묶음 500 × 66 · 글자 Display/M-B · Light/500 · 배경 Dark/200 50%
+// - 결과 카드 377 × 212 · 3열 · 아래 제목 (TV 카드 제목과 같음)
+// =====================================================================
+.tv-search-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  padding: 0 80px;
+}
+
+// ---------- 왼쪽 ----------
+.tv-search-left {
+  flex-shrink: 0;
+  width: 432px;
+}
+
+.tv-search-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 6px 0 0;
+  padding: 0;
+  color: $light-color-0;
+  font-family: $font-family-base;
+  font-size: 76px;
+  font-weight: $font-weight-bold;
+  line-height: 96px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  // 입력한 글자가 길면 조금 작게
+  &.has-value {
+    font-size: 56px;
+  }
+}
+
+.tv-search-icon {
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  background-color: $light-color-0;
+  -webkit-mask: url("/icons/search.svg") center / contain no-repeat;
+  mask: url("/icons/search.svg") center / contain no-repeat;
+}
+
+.tv-search-modes {
+  display: flex;
+  width: 432px;
+  height: 66px;
+  margin-top: 36px;
+  border-radius: $tv-btn-radius;
+  overflow: hidden;
+  background-color: rgba($light-color-0, 0.5);
+}
+
+.tv-search-mode {
+  @include display-M-b;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $light-color-0;
+  opacity: 0.55; // 고르지 않은 종류는 흐리게 (시안)
+  cursor: pointer;
+
+  & + .tv-search-mode {
+    border-left: 2px solid $tv-key-mode-divider;
+  }
+
+  &.is-active {
+    opacity: 1;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    opacity: 1;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+// 자판 6칸 × 6줄 (칸 54 × 64 · 가로 간격 20)
+.tv-search-keys {
+  display: grid;
+  grid-template-columns: repeat(6, 54px);
+  justify-content: space-between;
+  row-gap: 2px;
+  margin-top: 23px;
+  padding: 0 4px;
+}
+
+.tv-search-key {
+  @include heading-h1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 64px;
+  padding: 0;
+  border: 0;
+  border-radius: $radius-xs;
+  background: transparent;
+  color: $light-color-0;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+// 공백 · 지우기 아이콘 · 지우기
+.tv-search-edit {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 10px;
+}
+
+.tv-search-edit-btn {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  height: 64px;
+  padding: 0 $space-md;
+  border: 0;
+  border-radius: $radius-xs;
+  background: transparent;
+  color: $light-color-0;
+  font-family: $font-family-base;
+  font-size: 29px;
+  font-weight: $font-weight-medium;
+  line-height: 36px;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+.tv-search-delete {
+  img {
+    display: block;
+    width: 52px;
+    height: 44px;
+  }
+
+  &:hover img,
+  &:focus-visible img {
+    filter: invert(1);
+  }
+}
+
+// ---------- 오른쪽 ----------
+.tv-search-right {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin-left: 118px;
+  padding-top: 135px;
+}
+
+.tv-search-voice {
+  @include display-M;
+  position: absolute;
+  top: 55px;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $light-color-0;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    .tv-search-mic {
+      box-shadow: 0 0 0 4px rgba($light-color-0, 0.45);
+    }
+  }
+
+  &.is-listening .tv-search-mic {
+    background-color: $sports-color;
+    color: $light-color-0;
+  }
+}
+
+.tv-search-mic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $light-color-0;
+  color: $dark-color-900;
+}
+
+// 필터 묶음 + 뒤쪽 가로 선
+.tv-search-filter-line {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background-color: rgba($light-color-0, 0.3);
+  }
+}
+
+.tv-search-filters {
+  position: relative;
+  display: flex;
+  width: 500px;
+  height: 66px;
+  border-radius: $tv-btn-radius;
+  overflow: hidden;
+  background-color: rgba($dark-color-200, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.tv-search-filter {
+  @include display-M-b;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $light-color-500;
+  cursor: pointer;
+
+  & + .tv-search-filter {
+    border-left: 2px solid rgba($dark-color-900, 0.6);
+  }
+
+  &.is-active {
+    color: $light-color-0;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+// 결과: 3열 · 카드 377 × 212 · 가로 40 · 세로 32
+.tv-search-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 377px);
+  justify-content: space-between;
+  align-content: start;
+  gap: 32px 40px;
+  margin-top: 29px;
+  padding: 12px 0 60px;
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tv-search-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 377px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover .tv-search-thumb,
+  &:focus-visible .tv-search-thumb {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 4px $light-color-0, 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    .tv-search-card-title {
+      color: $light-color-0;
+    }
+  }
+}
+
+.tv-search-thumb {
+  display: block;
+  width: 377px;
+  height: 212px;
+  border-radius: $radius-card-sm;
+  overflow: hidden;
+  background-color: $dark-color-400;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.tv-search-card-title {
+  @include tv-card-title;
+  max-width: 100%;
+  color: $tv-card-title-color;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tv-search-empty {
+  @include display-M;
+  grid-column: 1 / -1;
+  margin: 40px 0 0;
+  color: $text-secondary;
+  text-align: center;
 }

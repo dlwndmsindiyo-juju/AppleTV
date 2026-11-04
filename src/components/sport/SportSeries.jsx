@@ -4,6 +4,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
+import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
 
 // 추천 시리즈 (시안: 세로 포스터가 카드를 가득 채우고, 위에 이름 · 분류 · 설명이 겹치는 슬라이드)
 // - 데이터: data/mockSportSeries.js (포스터는 public/images/sport/series-*.webp)
@@ -22,22 +23,21 @@ export default function SportSeries({ title = "추천 시리즈" }) {
         <span className="sport-sc-poster sport-sc-poster--empty" aria-hidden="true" />
       )}
       <div className="sport-sc-body">
-        <h4 className="sport-sc-title">{item.title}</h4>
-        <p className="sport-sc-category">{[SERIES_TYPE, item.category].filter(Boolean).join(" · ")}</p>
-        {item.description && <p className="sport-sc-desc">{item.description}</p>}
-      </div>
+      <p className="sport-sc-category">
+        {[SERIES_TYPE, item.category].filter(Boolean).join(" · ")}
+      </p>
+      <h4 className="sport-sc-title">{item.title}</h4>
+      {item.description && (
+        <p className="sport-sc-desc">{item.description}</p>
+      )}
+    </div>
     </article>
   );
 
   return (
     <section className="sport-series" aria-labelledby="sport-series-title">
       <div className="inner">
-        <div className="sport-section-head">
-          <h3 className="sport-section-title" id="sport-series-title">{title}</h3>
-          <Link className="sport-more" to="/sport/series">
-            전체 보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-          </Link>
-        </div>
+        <SportSectionHead title={title} titleId="sport-series-title" to="/sport/series" />
 
         {series.length === 0 ? (
           <p className="sport-empty">추천 시리즈가 없습니다.</p>

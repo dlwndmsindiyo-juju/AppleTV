@@ -1,5 +1,6 @@
 // 로그인 후 메인(member) 섹션 공용 유틸
-export const IMG_BASE = "https://image.tmdb.org/t/p";
+export { TMDB_IMG as IMG_BASE } from "../../utils/tmdb"; // [정리] TMDB 이미지 주소 공용
+import { TMDB_IMG as IMG_BASE } from "../../utils/tmdb";
 
 export const img = (path, size = "w500") =>
   path ? `${IMG_BASE}/${size}${path}` : "";

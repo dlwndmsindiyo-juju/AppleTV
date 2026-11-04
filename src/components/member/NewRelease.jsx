@@ -3,6 +3,7 @@ import { SwiperSlide } from "swiper/react";
 import { useMovieStore } from "../../store/useMovieStore";
 import Rail from "../common/Rail";
 import ReleaseCard from "./ReleaseCard";
+import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 공용
 
 // 신규출시 — 시안: 지금, 새로운 작품을 만나보세요
 // - 데이터: Apple TV+ 오리지널(useMovieStore.appleOriginals) 중 최근 공개 순
@@ -21,12 +22,7 @@ const NewRelease = () => {
   return (
     <section className="member-section member-newrelease">
       <div className="inner">
-        <div className="member-head">
-          <div>
-            <h2 className="member-title">지금, 새로운 작품을 만나보세요</h2>
-            <p className="member-desc">새롭게 공개된 영화와 시리즈를 지금 바로 만나보세요.</p>
-          </div>
-        </div>
+        <MemberSectionHead title="지금, 새로운 작품을 만나보세요" desc="새롭게 공개된 영화와 시리즈를 지금 바로 만나보세요." />
 
         <Rail className="rail-release" label="신규출시">
           {items.map((tv) => (

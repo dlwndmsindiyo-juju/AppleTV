@@ -8,6 +8,7 @@ import { img, detailPath } from "./memberUtils";
 import { useContentInfo, contentMeta, shortGenres } from "./useContentInfo";
 import { useAuthStore } from "../../store/useAuthStore";
 import { isResumable, useWatchConnect, useWatchStore } from "../../store/useWatchStore";
+import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 공용
 
 // AI 어시스트 — 시안: 기분 칩 → 안내 바(취향 더 반영하기) → 가로형 카드 4장 슬라이드
 // - 작품: 기분별 Apple TV+ 시리즈 + 영화를 번갈아 섞음 (store/moodRecommendations.mjs)
@@ -165,12 +166,7 @@ const MoodAssistant = ({ userName = "회원" }) => {
   return (
     <section className="member-section member-mood">
       <div className="inner">
-        <div className="member-head">
-          <div>
-            <h2 className="member-title">AI 어시스트</h2>
-            <p className="member-desc">지금의 기분에 어울리는 작품을 찾아보세요.</p>
-          </div>
-        </div>
+        <MemberSectionHead title="AI 어시스트" desc="지금의 기분에 어울리는 작품을 찾아보세요." />
 
         <div
           className="member-chips"
