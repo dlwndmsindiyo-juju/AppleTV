@@ -6997,12 +6997,6 @@ section.device-guide.device-guide--watch {
     word-break: keep-all;
   }
 
-  .watch-desc {
-    @include body-large;
-    margin: $space-lg 0 0;
-    color: $light-color-500;
-    word-break: keep-all;
-  }
 
   // ---------- 로고 띠 ----------
   .watch-marquee {
@@ -7056,7 +7050,7 @@ section.device-guide.device-guide--watch {
   }
 
   .watch-subtitle {
-    @include display-l-b;
+    @include display-M;
     margin: 0;
     padding-top: 0;
     color: $light-color-0;
@@ -7517,6 +7511,7 @@ section.device-guide.device-guide--watch {
 // - 저작권: Label/default · color/secondary
 // =====================================================================
 .footer.footer {
+
   .footer-main-menu a,
   .footer-main-menu .arrow {
     @include body-default-b;
@@ -7553,6 +7548,7 @@ section.device-guide.device-guide--watch {
 // - 태블릿 · 모바일은 기존 여백 그대로 (mobile.scss)
 // =====================================================================
 @media (min-width: ($breakpoint-tablet + 1)) {
+
   .inner,
   .account-inner,
   .search-inner,
