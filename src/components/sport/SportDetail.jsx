@@ -7,6 +7,7 @@ import { decodeHtml, ytThumb } from "./sportUtils";
 import { REPLAY_LEAGUES, leagueThumb, playlistEmbedUrl, playlistWatchUrl } from "../../data/replayLeagues";
 import { LeagueCover } from "./SportReplay";
 import SportHero from "./SportHero";
+import { SportBack } from "./SportBack";
 
 // =====================================================================
 // 스포츠 상세 (하나의 컴포넌트로 3개 상세 사용)
@@ -244,7 +245,35 @@ const SportDetail = () => {
   );
 
   // 페이지 이동 시 맨 위로
-  useEffect(() => { window.scrollTo(0, 0); }, [type]);
+  // useEffect(() => { window.scrollTo(0, 0); }, [type]);
+
+  // 영상으로 스크롤 이동
+  useEffect(() => {
+    const timer = requestAnimationFrame(() => {
+      const section = document.querySelector(".sport-detail");
+
+      if (!section) return;
+
+      const headerHeight =
+        document.querySelector("header")?.getBoundingClientRect().height || 0;
+
+      const offset = headerHeight + 80;
+
+      const top =
+        window.scrollY +
+        section.getBoundingClientRect().top -
+        offset;
+
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: "instant",
+      });
+    });
+
+    return () => cancelAnimationFrame(timer);
+  }, [type]);
+
+
 
   if (!config) return <Navigate to="/sport" replace />;
 
@@ -258,8 +287,8 @@ const SportDetail = () => {
 
       <section className={`sport-detail sport-detail--${type}`} aria-labelledby="sport-detail-title">
         <div className="inner">
+          <SportBack />
           <h2 className="sport-sr-only" id="sport-detail-title">{config.title}</h2>
-
           {!current ? (
             <p className="sport-empty">{config.empty}</p>
           ) : (
@@ -331,7 +360,7 @@ const SportDetail = () => {
             </div>
           )}
 
-          <Link className="sport-detail-back" to="/sport">← 스포츠 홈으로</Link>
+
         </div>
       </section>
     </main>
