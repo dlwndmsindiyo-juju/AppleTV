@@ -1,5 +1,0 @@
-// mobile.scss 에서만 쓰던 변수 모음 (여러 파일로 나누면서 한 곳으로 모음 · 값은 그대로)
-@use "../../variables" as *;
-
-$mobile-edge: 20px; // 모바일 좌우 여백
-$trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전 App.scss 에 있던 변수)
