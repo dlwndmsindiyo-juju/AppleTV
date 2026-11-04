@@ -10,7 +10,7 @@ import { TV_REPLAY_MATCHES } from "../../data/tvReplayMatches";
 import { TvDetailHero } from "./TvDetailHero";
 import { PlayIcon, PlusIcon, TextIcon, useInterest } from "./TvActions";
 import { ReplayCard } from "./TvEndScreen";
-import { ottItem, videoItem, matchItem, seriesItem, SPORT_DESC } from "./tvDetailItems";
+import { ottItem, videoItem, matchItem, seriesItem, sportSummary, cleanText } from "./tvDetailItems";
 import { CONFERENCES } from "../../data/sportTeams";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
 import { conferenceRows, clubOf } from "../sport/standingsUtils";
@@ -33,7 +33,7 @@ const VideoCard = ({ item, onClick }) => (
     {item.image && <img className="tv-team-thumb" src={item.image} alt="" loading="lazy" />}
     <span className="tv-team-card-text">
       <strong className="tv-team-card-title">{item.title}</strong>
-      {item.desc && <span className="tv-team-card-desc">{item.desc}</span>}
+      {cleanText(item.desc) && <span className="tv-team-card-desc">{cleanText(item.desc)}</span>}
       {item.meta && (
         <span className="tv-team-card-meta">
           <img src="/icons/play-w.svg" alt="" aria-hidden="true" />
@@ -118,7 +118,14 @@ const SportDetail = ({ item, onOpen }) => {
   const fetchHighlightList = useSportStore((s) => s.onFetchHighlightList);
   const standings = useSportStore((s) => s.standings);
   const fetchStandings = useSportStore((s) => s.onFetchStandings);
-  const { saved, toggle } = useInterest(video?.videoId || item.key);
+  const { saved, toggle } = useInterest(video?.videoId || item.key, {
+    videoId: video?.videoId || item.videoId || null,
+    title: item.title,
+    image: video?.image || item.image,
+    label: item.label,
+    prefix: item.prefix,
+    desc: video?.desc || item.desc,
+  });
 
   useEffect(() => {
     fetchHighlightList();
@@ -139,7 +146,8 @@ const SportDetail = ({ item, onOpen }) => {
     };
   }, [item]);
 
-  const desc = video?.desc || item.desc || SPORT_DESC;
+  // [수정] 줄거리: YouTube 설명 대신 경기 한 줄 요약 (링크 · undefined 가 보이던 문제)
+  const desc = sportSummary(item);
   const related = useMemo(
     () =>
       (highlightList || [])

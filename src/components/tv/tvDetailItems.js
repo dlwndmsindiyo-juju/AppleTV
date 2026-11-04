@@ -9,6 +9,44 @@ import { TMDB_IMG } from "../../utils/tmdb";
 
 export const SPORT_DESC = "MLS의 모든 순간을 Apple TV에서. 실시간 경기와 하이라이트, 다시보기까지 한곳에서 즐겨보세요.";
 
+// [추가] YouTube 설명 정리 — 링크 · 해시태그 · "undefined" 를 지우고 한 줄로 (카드 설명용 · 남는 게 없으면 "")
+export const cleanText = (text = "") => {
+  const s = String(text ?? "")
+    .replace(/undefined|null/gi, " ")
+    .replace(/https?:\/\/\S+|www\.\S+/gi, " ")
+    .replace(/[#@][^\s#@]+/g, " ")
+    .replace(/watch every match on apple tv|subscribe( now)?|the plays here|follow us( on)?|for more/gi, " ")
+    .replace(/(\s*[:|·\-–]\s*)+(?=\s|$)/g, " ")
+    .replace(/[▶►➡→⬇️👉🔔]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return s.length >= 8 ? s : "";
+};
+
+// [추가] 스포츠 상세 줄거리 — YouTube 설명(링크 · undefined 가 섞임) 대신 경기 한 줄 요약
+// - 따로 정한 문구(summary: 리그 다시보기 · 추천 시리즈)가 있으면 그대로
+// - 경기: "A vs B" (팀 이름 · 영상 제목에서) + 종류(하이라이트 · 라이브 · 인터뷰 …)에 맞는 한 줄
+const matchupOf = (item) => {
+  const home = item.homeId && getTeamById(item.homeId);
+  const away = item.awayId && getTeamById(item.awayId);
+  if (home && away) return `${home.name} vs ${away.name}`;
+  const m = String(item.title || "").replace(/^LIVE · /, "").match(/^(.+?)\s+vs\.?\s+(.+?)(?:\s*[|:·\-–(]|$)/i);
+  return m ? `${m[1].trim()} vs ${m[2].trim()}` : "";
+};
+
+export const sportSummary = (item = {}) => {
+  if (item.summary) return item.summary;
+  const vs = matchupOf(item);
+  const label = item.label || "";
+  if (/라이브/.test(label)) return vs ? `${vs}, 지금 진행 중인 경기를 실시간으로 만나보세요.` : "지금 진행 중인 경기를 실시간으로 만나보세요.";
+  if (/인터뷰/.test(label)) return "선수와 감독이 직접 전하는 경기 뒤 이야기를 들어보세요.";
+  if (/예정/.test(label)) return vs ? `${vs}, 다가오는 경기를 미리 확인하고 지난 맞대결 하이라이트를 만나보세요.` : "다가오는 경기를 미리 확인하세요.";
+  if (/다시보기/.test(label)) return vs ? `${vs}, 경기 전체 흐름을 다시보기로 확인하세요.` : "지난 경기를 처음부터 다시 만나보세요.";
+  if (vs) return `${vs}, 골 장면과 승부를 가른 주요 순간을 한눈에 확인하세요.`;
+  if (/하이라이트/.test(label)) return "골 장면과 승부를 가른 주요 순간을 짧게 모은 하이라이트예요.";
+  return SPORT_DESC;
+};
+
 // TMDB 작품 (영화 · 시리즈)
 export const ottItem = (r, type = r.media_type) => ({
   kind: "ott",
@@ -59,11 +97,12 @@ export const leagueItem = (l, thumb) => ({
   kind: "sport",
   key: `league-${l.id}`,
   videoId: l.thumbVideoId,
-  title: `${l.league} 다시보기`,
+  title: `${l.league || l.name || ""} 다시보기`.trim(),
   image: thumb || "",
   label: "경기 다시보기",
   prefix: l.league,
-  desc: `${l.country} ${l.league}의 명경기와 하이라이트를 다시 만나보세요.`,
+  // [수정] 국가(country) 값이 없는 항목(구단 다시보기 등)은 이름만 → "undefined" 가 보이던 문제
+  summary: `${[l.country, l.league || l.name].filter(Boolean).join(" ")}의 명경기와 하이라이트를 다시 만나보세요.`,
 });
 
 // 추천 시리즈 (data/mockSportSeries.js · youtubeUrl)
@@ -75,5 +114,5 @@ export const seriesItem = (s) => ({
   image: s.poster,
   label: s.category || "추천 시리즈",
   prefix: "MLS",
-  desc: s.description,
+  summary: s.description,
 });

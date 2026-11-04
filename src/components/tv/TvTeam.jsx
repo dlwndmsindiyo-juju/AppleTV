@@ -9,6 +9,7 @@ import { decodeHtml, ytThumb } from "../sport/sportUtils";
 import StarIcon from "../sport/StarIcon";
 import TeamBadge from "../sport/TeamBadge";
 import TvPlayer from "./TvPlayer";
+import { cleanText } from "./tvDetailItems";
 
 // TV 관심구단 화면 (1920 × 1080) — 스타일: TV.scss (.tv-team)
 // - 위: 구단 히어로 (PC 팔로우 구단 히어로와 같은 데이터)
@@ -87,7 +88,7 @@ export const TvTeam = ({ team }) => {
           .map((v) => ({
             id: v.id.videoId,
             title: decodeHtml(v.snippet?.title),
-            desc: decodeHtml(v.snippet?.description),
+            desc: cleanText(decodeHtml(v.snippet?.description)), // [수정] 링크 · undefined 지우기
             image: ytThumb(v),
             label: row.label,
             meta: [row.label, minutesText(v.durationText)].filter(Boolean).join(" · "),

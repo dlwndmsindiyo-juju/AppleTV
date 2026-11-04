@@ -43,9 +43,11 @@ export const PlayIcon = () => <img className="tv-end-play" src="/icons/play-w.sv
 export const PlusIcon = ({ on = false }) => <span className={`tv-end-plus${on ? " is-on" : ""}`} aria-hidden="true" />;
 export const TextIcon = ({ children }) => <span className="tv-end-btn-text">{children}</span>;
 
-// 관심 경기 (이 기기에 저장 · 영상 id 목록)
+// 관심 경기 (이 기기에 저장) — [수정] 보관함 "스포츠" 에 보여주려고 제목 · 이미지도 같이 저장
+// - 저장 모양: [{ id, title, image, label, prefix, desc, videoId }] (예전 저장값: 영상 id 문자열)
 const INTEREST_KEY = "tv-interest-videos";
-const readInterest = () => {
+const entryId = (v) => (typeof v === "string" ? v : v?.id);
+export const readInterest = () => {
   try {
     return JSON.parse(localStorage.getItem(INTEREST_KEY) || "[]");
   } catch {
@@ -53,12 +55,13 @@ const readInterest = () => {
   }
 };
 
-export const useInterest = (id) => {
+// meta: 담을 때 같이 저장할 정보 { title, image, label, prefix, desc, videoId }
+export const useInterest = (id, meta = {}) => {
   const [list, setList] = useState(readInterest);
-  const saved = Boolean(id) && list.includes(id);
+  const saved = Boolean(id) && list.some((v) => entryId(v) === id);
   const toggle = () => {
     if (!id) return;
-    const next = saved ? list.filter((v) => v !== id) : [...list, id];
+    const next = saved ? list.filter((v) => entryId(v) !== id) : [...list, { id, ...meta, addedAt: Date.now() }];
     setList(next);
     try {
       localStorage.setItem(INTEREST_KEY, JSON.stringify(next));

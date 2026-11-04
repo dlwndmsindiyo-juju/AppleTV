@@ -4,6 +4,7 @@ import { TV_REPLAY_MATCHES } from "../../data/tvReplayMatches";
 import { TV_SPORT_BG } from "../../data/tvSportData";
 import TeamBadge from "../sport/TeamBadge";
 import { findNext } from "./tvFocus";
+import { sportSummary, cleanText } from "./tvDetailItems";
 import { TvActionButtons, PlayIcon, PlusIcon, TextIcon, useInterest } from "./TvActions"; // [정리] 상세 화면과 같은 버튼
 
 // TV 영상 끝 화면 (시안: 10 · 처음부터 보기) — 영상을 끝까지 보면 TvPlayer 가 보여줌 · 스타일: TV.scss (.tv-end)
@@ -62,7 +63,9 @@ export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch
   const { scale, width, height } = useStageSize();
   const rootRef = useRef(null);
   const [infoOpen, setInfoOpen] = useState(false);
-  const { saved, toggle: toggleInterest } = useInterest(video.id);
+  const { saved, toggle: toggleInterest } = useInterest(video.id, {
+    videoId: video.id, title: video.title, image: video.image, label: video.label, prefix: video.prefix, desc: video.desc,
+  });
 
   useEffect(() => {
     setInfoOpen(false);
@@ -114,7 +117,7 @@ export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch
           {infoOpen && (
             <div className="tv-end-info" role="note">
               <strong>{video.title}</strong>
-              <p>{video.desc || "경기 정보가 없습니다."}</p>
+              <p>{video.prefix === "영화" || video.prefix === "시리즈" ? video.desc || "작품 정보가 없습니다." : sportSummary(video)}</p>
             </div>
           )}
         </div>
@@ -138,7 +141,7 @@ export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch
                     {item.image && <img className="tv-team-thumb" src={item.image} alt="" loading="lazy" />}
                     <span className="tv-team-card-text">
                       <strong className="tv-team-card-title">{item.title}</strong>
-                      {item.desc && <span className="tv-team-card-desc">{item.desc}</span>}
+                      {cleanText(item.desc) && <span className="tv-team-card-desc">{cleanText(item.desc)}</span>}
                       <span className="tv-team-card-meta">
                         <img src="/icons/play-w.svg" alt="" aria-hidden="true" />
                         {item.meta || item.label}

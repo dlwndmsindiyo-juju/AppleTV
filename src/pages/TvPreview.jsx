@@ -10,6 +10,7 @@ import TvSportHome from "../components/tv/TvSportHome";
 import TvTeam from "../components/tv/TvTeam";
 import TvSearch from "../components/tv/TvSearch";
 import TvDetail from "../components/tv/TvDetail";
+import TvLibrary from "../components/tv/TvLibrary";
 import { useTeamStore } from "../store/useTeamStore";
 import { getTeamById } from "../data/sportTeams";
 import TvHome from "../components/tv/TvHome";
@@ -282,6 +283,20 @@ const TvPreview = () => {
               </button>
             ))}
 
+            {/* [추가] 보관함 — 내 위시리스트 · 관심 경기 (영화 · 시리즈 · 애니메이션 · 오리지널스 · 스포츠) */}
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "library"}
+              className={`tv-side-item${tab === "library" ? " is-active" : ""}`}
+              onClick={() => setTab("library")}
+            >
+              <span className="tv-side-icon" aria-hidden="true">
+                <span className="tv-side-heart-icon" />
+              </span>
+              보관함
+            </button>
+
             {/* AI 어시스트: 홈 섹션 대신 메뉴에서 팝업으로 · 아이콘은 그라데이션이 흐르며 반짝임 */}
             <button type="button" className={`tv-side-item${aiOpen ? " is-active" : ""}`} aria-haspopup="dialog" onClick={() => setAiOpen(true)}>
               <span className="tv-side-icon tv-side-icon--ai" aria-hidden="true">
@@ -393,6 +408,7 @@ const TvPreview = () => {
             )}
             {tab === "home" && <TvHome onMenu={setTab} onDetail={openDetail} />}
             {tab === "sport" && <TvSportHome onMenu={setTab} onDetail={openDetail} />}
+            {tab === "library" && <TvLibrary onMenu={setTab} onDetail={openDetail} />}
             {tab === "detail" && detailItem && <TvDetail key={detailItem.key || detailItem.title} item={detailItem} onOpen={openDetail} />}
             {tab === "search" && <TvSearch key={searchKey} onMenu={setTab} onDetail={openDetail} initialQuery={query.trim()} />}
             {screenTeam && <TvTeam key={screenTeam.id} team={screenTeam} />}

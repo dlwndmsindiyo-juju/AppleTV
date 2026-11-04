@@ -768,6 +768,16 @@ $tv-ai-lilac: #a5acff;
   mask: url("/icons/tv/tv-star-icon.svg") center / contain no-repeat;
 }
 
+// [추가] 보관함 메뉴 아이콘 — public/icons/heart-icon.svg 모양 · 다른 메뉴 아이콘과 같은 Primary/500
+.tv-side-heart-icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  background-color: $primary-color-500;
+  -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+  mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+}
+
 // [추가] 메뉴 묶음 (시안: Library · Apps) — 제목 Heading/h2-B · Light/0 + 오른쪽 접기 화살표
 .tv-side-group {
   margin-top: 48px;
