@@ -15,7 +15,7 @@ import { useAuthStore } from "./useAuthStore";
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const API = "https://api.themoviedb.org/3";
 
-export const IMG = "https://image.tmdb.org/t/p";
+export { TMDB_IMG as IMG } from "../utils/tmdb"; // [정리] TMDB 이미지 주소 공용
 
 // TMDB 제공사 id (watch/providers)
 const APPLE_TV_PLUS = [350, 2243]; // Apple TV+ · Apple TV+ (채널)

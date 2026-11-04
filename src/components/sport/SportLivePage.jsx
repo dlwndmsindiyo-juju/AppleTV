@@ -8,6 +8,8 @@ import { useTeamStore, selectHeroTeam } from "../../store/useTeamStore";
 import { getTeamById } from "../../data/sportTeams";
 import SportHero, { TeamHero } from "./SportHero";
 import { getMockLiveMatch, MOCK_LIVE_IDS, buildFromSportsDb, liveRowToEvent, toTeam } from "./liveMatchAdapter";
+import { SportBack } from "./SportBack";
+import TeamBadgeImg from "./TeamBadge"; // [추가] 팀 뱃지 (배경 없이)
 
 // =====================================================================
 // 라이브 상세 (/sport/match/:id) — 시안: 라이브 상세.pdf
@@ -44,31 +46,10 @@ const PlayerPhoto = ({ player, className }) => {
 
 // ---------- 팀 뱃지 (public/images/matches/{파일}.svg) ----------
 // - 경기 카드에서 쓰는 뱃지 파일을 그대로 사용 (파일이 없으면 구단 칩 로고로 대체)
-const MATCH_BADGE_FILE = {
-  atlanta: "atlanta", austin: "austin", cincinnati: "cincinnati", columbus: "columbus",
-  dc: "DC", miami: "miami", minnesota: "minnesota", montreal: "montreal", nashville: "nashville",
-  orlando: "orlando", "red-bulls": "redbull", "san-jose": "sanjose", seattle: "seattle",
-  "st-louis": "st-louis", toronto: "toronto", vancouver: "vancouver",
-};
-const matchBadge = (team) =>
-  MATCH_BADGE_FILE[team.id] ? `/images/matches/${MATCH_BADGE_FILE[team.id]}.svg` : team.logo;
-
-const TeamBadge = ({ team, className }) => {
-  const [failed, setFailed] = useState(false);
-  const src = failed ? team.logo : matchBadge(team);
-  // MLS 외 팀인데 뱃지 주소도 없으면 이름 첫 글자
-  if (!src) {
-    return <span className={`${className || ""} sport-badge-initial`} aria-hidden="true">{team.shortName?.[0]}</span>;
-  }
-  return (
-    <img
-      className={className}
-      src={src}
-      alt=""
-      onError={() => setFailed(true)}
-    />
-  );
-};
+// [수정] 팀 뱃지: 배경 없이 뱃지만 (data/sportTeams.js 의 badge · MLS 외 팀은 API 엠블럼)
+const TeamBadge = ({ team, className }) => (
+  <TeamBadgeImg src={team.badge || team.logo} fallback={team.logo} label={team.shortName} className={className} />
+);
 
 // 데이터가 없는 탭 (API 가 아직 제공하지 않는 경기)
 const EmptyPanel = ({ text }) => <p className="sport-live-empty">{text}</p>;
@@ -122,52 +103,46 @@ const LineupPanel = ({ teams }) => {
   const other = teams.find(({ team }) => team.id !== selected.team.id);
 
   return (
-  <div className="sport-lineup">
-    <div className="sport-lineup-team" key={selected.team.id}>
-      <LineupHead team={selected.team} lineup={selected.lineup} />
-      <Pitch team={selected.team} lineup={selected.lineup} />
-    </div>
-    {other && (
-      <LineupHead team={other.team} lineup={other.lineup} onSelect={() => setSelectedId(other.team.id)} />
-    )}
+    <div className="sport-lineup">
+      <div className="sport-lineup-team" key={selected.team.id}>
+        <LineupHead team={selected.team} lineup={selected.lineup} />
+        <Pitch team={selected.team} lineup={selected.lineup} />
+      </div>
+      {other && (
+        <LineupHead team={other.team} lineup={other.lineup} onSelect={() => setSelectedId(other.team.id)} />
+      )}
 
-    <h3 className="sport-subs-title">후보선수</h3>
-    <div className="sport-subs">
-      {teams.map(({ team, lineup }) => (
-        <div className="sport-subs-col" key={team.id}>
-          <p className="sport-subs-team"><TeamBadge team={team} />{team.shortName}</p>
-          <ul>
-            {lineup.subs.map((player) => (
-              <li key={`${player.num}-${player.name}`}>
-                <PlayerPhoto player={player} className="sport-subs-photo" />
-                <b>{player.num}</b>
-                <span>{player.name}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <h3 className="sport-subs-title">후보선수</h3>
+      <div className="sport-subs">
+        {teams.map(({ team, lineup }) => (
+          <div className="sport-subs-col" key={team.id}>
+            <p className="sport-subs-team"><TeamBadge team={team} />{team.shortName}</p>
+            <ul>
+              {lineup.subs.map((player) => (
+                <li key={`${player.num}-${player.name}`}>
+                  <PlayerPhoto player={player} className="sport-subs-photo" />
+                  <b>{player.num}</b>
+                  <span>{player.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
   );
 };
 
 // ---------- 아이콘 (public/icons/live/) ----------
 const ICON = (name) => `/icons/live/${name}.svg`;
 
-// ---------- 스코어보드 팀 원 ----------
-// - MLS 구단: 구단 칩 이미지(public/images/sport-team/{id}-chip.svg)를 원 전체에 꽉 채움
-// - 그 밖의 팀: 팀색 원 + 가운데 뱃지 (기존 방식)
-const ScoreBadge = ({ team }) =>
-  getTeamById(team.id) ? (
-    <span className="sport-scoreboard-badge is-chip">
-      <img src={team.logo} alt="" />
-    </span>
-  ) : (
-    <span className="sport-scoreboard-badge" style={{ backgroundColor: team.color }}>
-      <TeamBadge team={team} />
-    </span>
-  );
+// ---------- 스코어보드 팀 ----------
+// [수정] 모든 팀 같은 방식: 배경(팀색 원 · 칩) 없이 뱃지만
+const ScoreBadge = ({ team }) => (
+  <span className="sport-scoreboard-badge">
+    <TeamBadge team={team} />
+  </span>
+);
 
 // ---------- 중계 · 기록 공통: 스코어보드 ----------
 // [팀 뱃지(팀색 원)] [점수] : [점수] [팀 뱃지]  · 점수 아래 팀 이름
@@ -538,20 +513,20 @@ const SportLivePage = () => {
     };
     const others = isMock
       ? MOCK_LIVE_IDS.filter((mid) => mid !== match.id).map(getMockLiveMatch).filter(Boolean).map((m) => {
-          const mid = m.id;
-          const h = m.teams[m.homeId], a = m.teams[m.awayId];
-          return { id: mid, title: `${h.shortName} VS ${a.shortName}`, sub: m.minute ? halfLabel(m.minute) : "", note: `${h.name} vs ${a.name}` };
-        })
+        const mid = m.id;
+        const h = m.teams[m.homeId], a = m.teams[m.awayId];
+        return { id: mid, title: `${h.shortName} VS ${a.shortName}`, sub: m.minute ? halfLabel(m.minute) : "", note: `${h.name} vs ${a.name}` };
+      })
       : liveMatches.filter((m) => String(m.id) !== String(match.id)).map((m) => {
-          const h = toListTeam(m.homeTeam), a = toListTeam(m.awayTeam);
-          const sc = m.score?.fullTime || {};
-          return {
-            id: String(m.id),
-            title: `${h.shortName} ${sc.home ?? 0} : ${sc.away ?? 0} ${a.shortName}`,
-            sub: m.minute ? halfLabel(m.minute) : m.competition?.name || "",
-            note: `${h.name} vs ${a.name}`,
-          };
-        });
+        const h = toListTeam(m.homeTeam), a = toListTeam(m.awayTeam);
+        const sc = m.score?.fullTime || {};
+        return {
+          id: String(m.id),
+          title: `${h.shortName} ${sc.home ?? 0} : ${sc.away ?? 0} ${a.shortName}`,
+          sub: m.minute ? halfLabel(m.minute) : m.competition?.name || "",
+          note: `${h.name} vs ${a.name}`,
+        };
+      });
     return [main, ...others.map((o, i) => ({ ...o, video: videoAt(i + 1) }))];
   }, [highlightList, match, isMock, liveMatches]);
 
@@ -590,6 +565,7 @@ const SportLivePage = () => {
       {/* ===== 라이브 영상 + 다른 경기 ===== */}
       <section className="sport-detail sport-live-stage" aria-label="라이브 중계">
         <div className="inner">
+          <SportBack />
           <div className="sport-detail-layout">
             <article className="sport-detail-stage">
               <div className="sport-detail-player">
@@ -662,9 +638,7 @@ const SportLivePage = () => {
         </div>
       </section>
 
-      <div className="inner sport-live-back-wrap">
-        <Link className="sport-detail-back" to="/sport">← 스포츠 홈으로</Link>
-      </div>
+
     </main>
   );
 };

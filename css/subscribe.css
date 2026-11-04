@@ -494,6 +494,13 @@
   padding-right: 64px;
   box-sizing: border-box;
 }
+@media (min-width: 1025px) {
+  .trial-welcome .inner {
+    max-width: none;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
 .trial-welcome .trial-strip {
   display: flex;
   align-items: center;

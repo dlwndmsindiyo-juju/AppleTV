@@ -17,6 +17,7 @@ import {
   writeBatch,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { openSubscribeGate } from "../utils/subscribeGate"; // [정리] 로그인 안내 팝업 열기 공용
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -320,7 +321,7 @@ export const useWish = (type, id) => {
   const onToggle = useHeartStore((s) => s.onToggle);
   const toggle = (content) => {
     if (!uid) {
-      window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason: "account" } }));
+      openSubscribeGate("account");
       return;
     }
     onToggle({ id, type, ...content });
@@ -332,7 +333,7 @@ export const useWish = (type, id) => {
 export const toggleWish = (content) => {
   const s = useHeartStore.getState();
   if (!s.uid) {
-    window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason: "account" } }));
+    openSubscribeGate("account");
     return;
   }
   s.onToggle(content);

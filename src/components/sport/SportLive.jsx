@@ -6,7 +6,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { useSportStore } from "../../store/useSportStore";
 import { getMockLiveMatch, MOCK_LIVE_IDS } from "./liveMatchAdapter";
-import { SPORT_TEAMS } from "../../data/sportTeams";
+import { SPORT_TEAMS, teamBadge } from "../../data/sportTeams";
+import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
+import { ytThumb } from "./sportUtils";
 
 // =====================================================================
 // 라이브 (시안: 영상 썸네일 위에 LIVE 배지 + 아래 스코어보드)
@@ -18,12 +20,6 @@ import { SPORT_TEAMS } from "../../data/sportTeams";
 // =====================================================================
 
 // 팀 뱃지 파일 (public/images/matches/{파일}.svg — 라이브 상세 SportLivePage 와 같은 목록)
-const MATCH_BADGE_FILE = {
-  atlanta: "atlanta", austin: "austin", cincinnati: "cincinnati", columbus: "columbus",
-  dc: "DC", miami: "miami", minnesota: "minnesota", montreal: "montreal", nashville: "nashville",
-  orlando: "orlando", "red-bulls": "redbull", "san-jose": "sanjose", seattle: "seattle",
-  "st-louis": "st-louis", toronto: "toronto", vancouver: "vancouver",
-};
 
 // 엠블럼 아래 팀 약칭 (시안: MA · SD · AT)
 const TEAM_CODE = {
@@ -61,8 +57,9 @@ const clockText = (match) => {
   return `${period} ${displayMinute}분`;
 };
 
-// 엠블럼은 public/images/matches/*.svg 만 사용 · 파일이 없는 팀은 null → 약자 원으로 표시
-const badgeOf = (id) => (MATCH_BADGE_FILE[id] ? `/images/matches/${MATCH_BADGE_FILE[id]}.svg` : null);
+// 엠블럼은 배경 없는 뱃지(public/images/matches/*.svg)만 사용 · 파일이 없는 팀은 null → 약자 원으로 표시
+// [정리] 뱃지 파일 이름은 data/sportTeams.js 의 teamBadge 한 곳에서 관리
+const badgeOf = (id) => teamBadge(id);
 
 // 실제 경기 팀 이름 → 구단 id (영문/한글 이름으로 찾기)
 const norm = (v = "") => v.toLowerCase().replace(/[^a-z0-9가-힣]/g, "");
@@ -120,7 +117,7 @@ export default function SportLive() {
     () =>
       (clips.length > 0 ? clips : sdbVideos)
         .filter((v) => v.id?.videoId)
-        .map((v) => v.snippet?.thumbnails?.high?.url || v.snippet?.thumbnails?.medium?.url || `https://i.ytimg.com/vi/${v.id.videoId}/hqdefault.jpg`),
+        .map(ytThumb), // [정리] 공용 썸네일 (sportUtils.js)
     [clips, sdbVideos]
   );
 
@@ -134,14 +131,7 @@ export default function SportLive() {
   return (
     <section className="sport-live" id="sport-live" aria-labelledby="sport-live-title">
       <div className="inner">
-        <div className="sport-section-head">
-          <h3 className="sport-section-title" id="sport-live-title">라이브</h3>
-          {cards.length > 0 && (
-            <Link className="sport-more" to={`/sport/match/${cards[0].id}`}>
-              전체 보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-            </Link>
-          )}
-        </div>
+        <SportSectionHead title="라이브" titleId="sport-live-title" to={cards.length > 0 ? `/sport/match/${cards[0].id}` : undefined} />
 
         {cards.length === 0 ? (
           <p className="sport-empty" role="status">진행 중인 경기가 없습니다</p>
@@ -154,6 +144,7 @@ export default function SportLive() {
             slidesPerView="auto"
             spaceBetween={32}
             breakpoints={{ 0: { spaceBetween: 12 }, 768: { spaceBetween: 24 }, 1025: { spaceBetween: 32 } }}
+            loop={true}
           >
             {cards.map((card) => (
               <SwiperSlide key={card.id} className="sport-lv-slide">

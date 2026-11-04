@@ -520,6 +520,46 @@ export const useSportStore = create((set, get) => ({
         }
     },
 
+    // [추가] 팀별 영상 (TV 관심구단 화면) — YouTube 에서 그 팀 이름으로 검색 · 6시간 캐시
+    // - goals     : 명장면 모음 (골 · 하이라이트, 4분 이하)
+    // - recaps    : 경기 하이라이트 (경기 요약, 2 ~ 20분)
+    // - interviews: 인터뷰 (있으면)
+    // - 결과: teamVideos[팀 id] = { goals, recaps, interviews } (영상마다 durationText "m:ss")
+    teamVideos: {},
+    onFetchTeamVideos: async (team) => {
+        if (!team?.id || !YOUTUBE_KEY || get().teamVideos[team.id]) return;
+        const name = team.enName || team.name;
+        const searchTeam = (kind, q, minSec, maxSec) =>
+            withCache(`sport-yt-team:${team.id}:${kind}`, async () => {
+                const search = await youtubeGet("search", {
+                    part: "snippet", q, type: "video", videoEmbeddable: "true", maxResults: "20", order: "relevance",
+                });
+                const ids = (search.items || []).map((v) => v.id?.videoId).filter(Boolean);
+                if (!ids.length) return [];
+                const details = await youtubeGet("videos", { part: "contentDetails", id: ids.join(",") });
+                const seconds = Object.fromEntries(
+                    (details.items || []).map((v) => [v.id, durationToSeconds(v.contentDetails?.duration)])
+                );
+                return (search.items || [])
+                    .filter((v) => seconds[v.id?.videoId] >= minSec && seconds[v.id?.videoId] <= maxSec)
+                    .slice(0, 12)
+                    .map((v) => ({ ...v, durationText: formatDuration(seconds[v.id.videoId]) }));
+            });
+
+        const [goals, recaps, interviews] = await Promise.allSettled([
+            searchTeam("goals", `${name} goals highlights MLS`, 20, 240),
+            searchTeam("recaps", `${name} match highlights MLS`, 120, 1200),
+            searchTeam("interviews", `${name} interview MLS`, 30, 1800),
+        ]);
+        const ok = (r) => (r.status === "fulfilled" ? r.value || [] : []);
+        if ([goals, recaps, interviews].some((r) => r.status === "rejected")) {
+            console.error("팀 영상(YouTube) 조회 일부 실패:", team.id);
+        }
+        set((state) => ({
+            teamVideos: { ...state.teamVideos, [team.id]: { goals: ok(goals), recaps: ok(recaps), interviews: ok(interviews) } },
+        }));
+    },
+
     // 7. 숏츠 영상 저장 (#shorts 검색 후 videos API 로 길이 3분 이하만 남김 / 6시간 캐시)
     shortsVideos: [],
     onFetchShorts: async (query = "축구 쇼츠 #shorts") => {

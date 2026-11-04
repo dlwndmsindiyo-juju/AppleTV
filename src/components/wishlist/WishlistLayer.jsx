@@ -13,8 +13,8 @@ import {
   formatCount,
   useHeartStore,
 } from "../../store/useHeartStore";
+import { TMDB_IMG as IMG } from "../../utils/tmdb"; // [정리] TMDB 이미지 주소 공용
 
-const IMG = "https://image.tmdb.org/t/p";
 const TOAST_MS = 4000;
 
 // 위시리스트 아이콘 (public/icons/wishlist/{name}.svg · 글자색을 따라감)

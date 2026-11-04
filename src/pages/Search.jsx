@@ -18,14 +18,14 @@ import {
   useResultEntry,
 } from "../components/search/SearchParts";
 import "../search.scss";
+import { openSubscribeGate } from "../utils/subscribeGate";
 
 const DEBOUNCE_MS = 400;
 const TOP_COUNT = 3; // 인기 검색 결과
 const ROW_COUNT = 16; // TV 프로그램 · 영화 (8칸 x 2줄)
 
-// 로그인 전 안내 팝업 열기 (SubscribeGate 가 받음) — reason: "watch"(구독) | "account"(로그인)
-export const openSubscribeGate = (reason = "watch") =>
-  window.dispatchEvent(new CustomEvent("subscribe-gate:open", { detail: { reason } }));
+// 로그인 전 안내 팝업 열기 — [정리] utils/subscribeGate.js 로 옮김 (예전 import 경로도 그대로 쓸 수 있게 다시 내보냄)
+export { openSubscribeGate };
 
 const Search = () => {
   const [params, setParams] = useSearchParams();

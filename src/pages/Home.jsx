@@ -11,7 +11,6 @@ import SubscribeCTA from "../components/landing/SubscribeCTA"; // 구독 유도 
 import DeviceGuide from "../components/landing/DeviceGuide";
 import MemberHome from "../components/member/MemberHome"; // [추가] 로그인 후 메인
 import { useAuthStore } from "../store/useAuthStore"; // [추가] 로그인 상태
-// import MovieSlider from "../components/common/MovieSlider"; // 영화/TV 슬라이더 (임시 숨김)
 
 const Home = () => {
   // const { popMovie, onFetchPopular, tvs, onFetchTv } = useMovieStore();
@@ -53,13 +52,6 @@ const Home = () => {
       {/* 8. 기기 안내 (마지막 섹션, 아래는 푸터) */}
       <DeviceGuide />
 
-      {/* 인기 영화 슬라이더 (임시 숨김)
-      <MovieSlider movies={popMovie} title="지금 뜨는 영화" />
-      */}
-
-      {/* 인기 TV 프로그램 슬라이더 (임시 숨김)
-      <MovieSlider movies={tvs} title="Apple TV+ 인기 시리즈" />
-      */}
     </main>
   );
 };

@@ -5,6 +5,7 @@ import { SwiperSlide } from "swiper/react";
 import Rail from "../common/Rail";
 import { img, detailPath } from "./memberUtils";
 import { useContentInfo, contentMeta, shortGenres } from "./useContentInfo";
+import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 공용
 
 // Apple이 모두에게 추천하는 작품 — 시안: 포스터 카드 + 아래 그림자 위에 제목 · 설명 · [재생] [★ 평점]
 // - 데이터: 이번 주 인기 영화 + 시리즈를 번갈아 섞음 (useMovieStore.recommendedMix)
@@ -67,12 +68,7 @@ const RecommendSection = () => {
   return (
     <section className="member-section member-recommend">
       <div className="inner">
-        <div className="member-head">
-          <div>
-            <h2 className="member-title">Apple이 모두에게 추천하는 작품</h2>
-            <p className="member-desc">지금 꼭 봐야할, Apple이 엄선한 특별한 콘텐츠를 만나보세요.</p>
-          </div>
-        </div>
+        <MemberSectionHead title="Apple이 모두에게 추천하는 작품" desc="지금 꼭 봐야할, Apple이 엄선한 특별한 콘텐츠를 만나보세요." />
 
         <Rail className="rail-poster rail-recommend" label="Apple이 모두에게 추천하는 작품">
           {items.map((item) => (
