@@ -53,7 +53,7 @@ const useTvSportRows = () => {
       ...(highlightList || []),
     ]
       .filter((v) => v?.id?.videoId && !seen.has(v.id.videoId) && seen.add(v.id.videoId))
-      .map((v) => ({ id: v.id.videoId, title: decodeHtml(v.snippet?.title), image: ytThumb(v) }));
+      .map((v) => ({ id: v.id.videoId, title: decodeHtml(v.snippet?.title), image: ytThumb(v), label: "하이라이트", meta: "하이라이트" }));
 
     return [
       {
@@ -86,19 +86,23 @@ const useTvSportRows = () => {
 
 export const TvSportHome = ({ onMenu }) => {
   const rows = useTvSportRows();
-  const [playing, setPlaying] = useState(null); // [추가] 재생 중인 하이라이트 { id, title }
+  const [playing, setPlaying] = useState(null); // [추가] 재생 중인 하이라이트 (카드 item)
 
   // [추가] 카드를 눌렀을 때
   // - 관심있는 구단 → 그 구단 화면 (팀 팔로우 버튼 · 팀 영상)
   // - 하이라이트 → 그 영상을 화면 가득 바로 재생 ("← 뒤로" 로 닫기)
   const handleItem = (rowId, item) => {
     if (rowId === "teams") onMenu?.(`team:${item.id}`);
-    if (rowId === "highlights") setPlaying({ id: item.id, title: item.title });
+    if (rowId === "highlights") setPlaying(item);
   };
   return (
     <>
       <TvBrowseScreen menu="스포츠" onMenu={onMenu} rows={rows} bg={TV_SPORT_BG} onItem={handleItem} />
-      <TvPlayer videoId={playing?.id} title={playing?.title} onClose={() => setPlaying(null)} />
+      <TvPlayer
+        video={playing}
+        related={rows.find((r) => r.id === "highlights")?.items || []} // 끝 화면 "하이라이트" 줄
+        onClose={() => setPlaying(null)}
+      />
     </>
   );
 };

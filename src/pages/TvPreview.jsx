@@ -5,6 +5,7 @@ import ProfileAvatar from "../components/profile/ProfileAvatar";
 import SubscribeGate from "../components/layout/SubscribeGate";
 import AiAssistantPopup from "../components/ai/AiAssistantPopup";
 import { TvTerms, TvKeyboard, TvProfiles } from "../components/tv/TvScreens";
+import { findNext } from "../components/tv/tvFocus";
 import TvSportHome from "../components/tv/TvSportHome";
 import TvTeam from "../components/tv/TvTeam";
 import { useTeamStore } from "../store/useTeamStore";
@@ -54,46 +55,7 @@ const SideGroup = ({ title, open, empty = false, onToggle, children }) => (
   </div>
 );
 
-// 방향키로 가장 가까운 버튼 찾기 (화면 위치 기준)
-const findNext = (root, current, key) => {
-  const buttons = [...root.querySelectorAll("button:not([disabled])")];
-  if (!current || !buttons.includes(current)) return buttons[0];
-
-  const from = current.getBoundingClientRect();
-  const fx = from.left + from.width / 2;
-  const fy = from.top + from.height / 2;
-
-  let best = null;
-  let bestScore = Infinity;
-
-  buttons.forEach((btn) => {
-    if (btn === current) return;
-    const r = btn.getBoundingClientRect();
-    const x = r.left + r.width / 2;
-    const y = r.top + r.height / 2;
-    const dx = x - fx;
-    const dy = y - fy;
-
-    const ok =
-      (key === "ArrowRight" && dx > 1) ||
-      (key === "ArrowLeft" && dx < -1) ||
-      (key === "ArrowDown" && dy > 1) ||
-      (key === "ArrowUp" && dy < -1);
-    if (!ok) return;
-
-    // 가는 방향 거리 + 옆으로 벗어난 거리(가중치)
-    const main = key === "ArrowLeft" || key === "ArrowRight" ? Math.abs(dx) : Math.abs(dy);
-    const side = key === "ArrowLeft" || key === "ArrowRight" ? Math.abs(dy) : Math.abs(dx);
-    const score = main + side * 3;
-
-    if (score < bestScore) {
-      bestScore = score;
-      best = btn;
-    }
-  });
-
-  return best;
-};
+// [정리] 방향키로 가장 가까운 버튼 찾기 → components/tv/tvFocus.js (영상 끝 화면과 같이 사용)
 
 const TvPreview = () => {
   const navigate = useNavigate();

@@ -56,7 +56,7 @@ export const TvTeam = ({ team }) => {
   const fetchVideos = useSportStore((s) => s.onFetchTeamVideos);
   const loggedOut = useAuthStore((s) => s.authReady && !s.user);
   const live = useTeamLive(team.id);
-  const [playing, setPlaying] = useState(null); // [추가] 재생 중인 영상 { id, title }
+  const [playing, setPlaying] = useState(null); // [추가] 재생 중인 영상 (카드 item)
 
   useEffect(() => {
     fetchStandings();
@@ -89,6 +89,7 @@ export const TvTeam = ({ team }) => {
             title: decodeHtml(v.snippet?.title),
             desc: decodeHtml(v.snippet?.description),
             image: ytThumb(v),
+            label: row.label,
             meta: [row.label, minutesText(v.durationText)].filter(Boolean).join(" · "),
           })),
       })).filter((row) => row.items.length > 0),
@@ -159,7 +160,7 @@ export const TvTeam = ({ team }) => {
                   className="tv-team-card"
                   data-gate={loggedOut ? "watch" : undefined}
                   onFocus={handleFocus}
-                  onClick={() => setPlaying({ id: item.id, title: item.title })}
+                  onClick={() => setPlaying(item)}
                 >
                   <img className="tv-team-thumb" src={item.image} alt="" loading="lazy" />
                   <span className="tv-team-card-text">
@@ -184,7 +185,11 @@ export const TvTeam = ({ team }) => {
       </div>
 
       {/* [추가] 카드를 누르면 그 영상을 화면 가득 바로 재생 · "← 뒤로" 로 닫기 */}
-      <TvPlayer videoId={playing?.id} title={playing?.title} onClose={() => setPlaying(null)} />
+      <TvPlayer
+        video={playing}
+        related={rows.flatMap((row) => row.items)} // 끝 화면 "하이라이트" 줄: 이 팀 영상
+        onClose={() => setPlaying(null)}
+      />
     </main>
   );
 };
