@@ -48,6 +48,7 @@ const SportReplay = () => {
             slidesPerView="auto"
             spaceBetween={24}
             breakpoints={{ 0: { spaceBetween: 12 }, 768: { spaceBetween: 24 } }}
+            loop={true}
           >
             {REPLAY_LEAGUES.map((league) => (
               <SwiperSlide key={league.id} className="sport-replay-slide">
