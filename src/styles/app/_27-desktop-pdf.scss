@@ -1,0 +1,34 @@
+// App.scss 에서 나눈 파일 (27) — 데스크톱 시안(Apple TV hi-fi W-1720) 맞춤: 위치 · 여백만
+@use "../../variables" as *;
+
+// =====================================================================
+// [수정] 데스크톱 시안(1920 · 본문 1720) 과 다르게 들어가 있던 위치 · 여백 (1025px 이상)
+// - 글자 위계 · 버튼 크기는 그대로 (위치 · 여백만 맞춤)
+// - 헤더: 로고 · 토글 · 검색 · 프로필이 이너(90%)가 아니라 화면 양 끝에서 30px
+// - 히어로 글(제목 로고 · 칩 · 소개 · 버튼): 왼쪽 12.5% (1920 기준 240px)
+// - 푸터: 화면 양 끝에서 60px
+// - 섹션 본문(이너 90% ≒ 1720)은 시안과 같아 그대로
+// - 이너 90% 규칙(_24-layout-pc)이 !important 라 같은 방식으로 덮어씀
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+  header .inner {
+    width: 100% !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+
+  header .inner nav {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+
+  .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info {
+    left: 12.5%;
+  }
+
+  .footer .inner {
+    width: 100% !important;
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+  }
+}

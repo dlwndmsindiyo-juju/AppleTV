@@ -7,7 +7,6 @@ import SportHero from "../components/sport/SportHero";
 import SportUpcoming from "../components/sport/SportUpcoming";
 import SportShorts from "../components/sport/SportShorts";
 import SportTeams from "../components/sport/SportTeams";
-import "../sport-member.scss";
 import SportConferenceStandings from "../components/sport/SportConferenceStandings";
 import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
