@@ -13,7 +13,7 @@ import {
   departmentLabel,
   koreanName,
 } from "../components/search/SearchParts";
-import { openSubscribeGate } from "./Search";
+import { openSubscribeGate } from "../utils/subscribeGate"; // [정리] 로그인 안내 팝업 열기 공용
 import "../search.scss";
 
 const FILTERS = [

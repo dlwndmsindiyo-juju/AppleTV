@@ -55,19 +55,41 @@ const ReleaseCard = ({ item, type, variant = "soon" }) => {
         <span className="member-nr-genre">{contentMeta(type, info, shortGenres(type, item.genre_ids))}</span>
         <p className="member-nr-overview">{item.overview || info.tagline || "작품 소개가 곧 공개됩니다."}</p>
 
+        {/* [수정] PC · 태블릿 버튼 — 데스크톱 시안: 신규출시는 [▶ 재생] [♡ 찜] · 공개예정작은 [N월 공개예정] [🔔]
+            (버튼 크기 · 모양은 같은 클래스 그대로) */}
         <div className="member-nr-actions">
-          <Link to={path} className="member-nr-month">
-            {month}
-          </Link>
-          <button
-            type="button"
-            className={`member-nr-bell${on ? " is-on" : ""}`}
-            aria-pressed={on}
-            aria-label={on ? `${title} 알림 끄기` : `${title} 알림 받기`}
-            onClick={() => onToggleAlarm(key)}
-          >
-            <BellIcon on={on} />
-          </button>
+          {variant === "new" ? (
+            <>
+              <Link to={`${path}?play=1`} className="member-nr-month member-nr-play" aria-label={`${title} 재생`}>
+                <img src="/icons/play-w.svg" alt="" aria-hidden="true" />
+                재생
+              </Link>
+              <button
+                type="button"
+                className={`member-nr-bell member-nr-heart${wished ? " is-on" : ""}`}
+                aria-pressed={wished}
+                aria-label={wished ? `${title} 찜 해제` : `${title} 찜하기`}
+                onClick={() => toggle({ title, poster_path: item.poster_path, backdrop_path: item.backdrop_path, overview: item.overview })}
+              >
+                <span className="member-nr-heart-icon" aria-hidden="true" />
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to={path} className="member-nr-month">
+                {month}
+              </Link>
+              <button
+                type="button"
+                className={`member-nr-bell${on ? " is-on" : ""}`}
+                aria-pressed={on}
+                aria-label={on ? `${title} 알림 끄기` : `${title} 알림 받기`}
+                onClick={() => onToggleAlarm(key)}
+              >
+                <BellIcon on={on} />
+              </button>
+            </>
+          )}
         </div>
       </div>
 

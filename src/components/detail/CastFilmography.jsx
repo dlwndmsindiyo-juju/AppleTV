@@ -2,8 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSearchStore } from '../../store/useSearchStore';
 import './CastFilmography.scss';
+import { TMDB_IMG as IMG } from '../../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
 
-const IMG = 'https://image.tmdb.org/t/p';
 
 function Portrait({ person }) {
   return <span className="cast-photo">{person.profile_path

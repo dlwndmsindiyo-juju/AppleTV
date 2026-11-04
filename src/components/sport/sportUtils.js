@@ -36,3 +36,11 @@ export const getScore = (match) => {
   if (home == null || away == null) return null;
   return { home, away };
 };
+
+// YouTube 영상 썸네일 (큰 → 중간 → 영상 id 로 만든 기본 썸네일)
+// - [정리] 하이라이트 · 라이브 · 숏폼 · 상세 · TV 스포츠에 똑같이 있던 코드를 하나로
+export const ytThumb = (video) => {
+  const sn = video?.snippet || {};
+  const id = video?.id?.videoId;
+  return sn.thumbnails?.high?.url || sn.thumbnails?.medium?.url || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "");
+};
