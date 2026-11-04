@@ -3,6 +3,7 @@ import { SwiperSlide } from "swiper/react";
 import { useMovieStore } from "../../store/useMovieStore";
 import Rail from "../common/Rail";
 import ReleaseCard from "./ReleaseCard";
+import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 공용
 
 // 공개예정작 — 시안: 기대해도 좋을 새로운 이야기
 // - 데이터: 개봉 예정 영화(useMovieStore.upcoming) 중 오늘 이후 공개작 (없으면 전체)
@@ -20,12 +21,7 @@ const ComingSoon = () => {
   return (
     <section className="member-section member-coming">
       <div className="inner">
-        <div className="member-head">
-          <div>
-            <h2 className="member-title">기대해도 좋을 새로운 이야기</h2>
-            <p className="member-desc">앞으로 공개될 새로운 영화와 시리즈를 미리 만나보세요.</p>
-          </div>
-        </div>
+        <MemberSectionHead title="기대해도 좋을 새로운 이야기" desc="앞으로 공개될 새로운 영화와 시리즈를 미리 만나보세요." />
 
         <Rail className="rail-release" label="공개예정작">
           {items.map((m) => (

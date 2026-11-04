@@ -4,31 +4,11 @@
 // - startAt: 이어서 볼 위치(초)
 // - onProgress(position, duration): 재생 중 5초마다 · 일시정지 · 끝남 · 팝업 닫을 때 호출
 import React, { useEffect, useRef } from "react";
+import { loadYouTubeApi } from "./youtubeApi"; // [정리] YouTube API 불러오기 공용
 
 const SAVE_EVERY_MS = 5000;
 
-// API 스크립트는 한 번만 불러옴
-let apiPromise = null;
-const loadYouTubeApi = () => {
-  if (window.YT?.Player) return Promise.resolve(window.YT);
-  if (apiPromise) return apiPromise;
-  apiPromise = new Promise((resolve, reject) => {
-    const prevReady = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => {
-      prevReady?.();
-      resolve(window.YT);
-    };
-    const script = document.createElement("script");
-    script.src = "https://www.youtube.com/iframe_api";
-    script.async = true;
-    script.onerror = () => {
-      apiPromise = null;
-      reject(new Error("YouTube API 를 불러오지 못했습니다."));
-    };
-    document.head.appendChild(script);
-  });
-  return apiPromise;
-};
+// API 스크립트 불러오기는 공용 파일 (components/common/youtubeApi.js)
 
 const WatchPlayer = ({ videoKey, startAt = 0, onProgress, title = "영상" }) => {
   const wrapRef = useRef(null);

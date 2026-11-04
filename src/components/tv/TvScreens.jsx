@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // TV 디자인 화면 (1920 × 1080) — 스타일: TV.scss
 // - TvTerms   : Apple TV 이용 안내 (동의 / 취소)
-// - TvKeyboard: Apple 계정 로그인 (암호) · 계정 정보 입력 — 리모컨 자판
+// - TvKeyboard: Apple 계정 로그인 (아이디 · 비밀번호) · 계정 정보 입력 — 리모컨 자판
 // - 버튼 동작은 props 로 받음 (미리보기 화면 TvPreview.jsx 에서 다음 / 이전 화면으로 연결)
 
 // ---------- 이용 안내 ----------
@@ -66,30 +66,108 @@ const COPY = {
   },
 };
 
+// [수정] 로그인: 리모컨 안내 박스 대신 아이디 · 비밀번호 입력 칸 (PC · 모바일 로그인과 같은 지정 계정 안내)
+const LOGIN_FIELDS = [
+  { id: "id", label: "아이디", placeholder: "hi1234@naver.com" },
+  { id: "pw", label: "비밀번호", placeholder: "123456", secret: true },
+];
+
 const GUIDE = "리모컨의 마이크 버튼을 길게 눌러 검색";
 
-// variant: "login" (암호 · 입력값은 ● 로 가림) / "account"
-export const TvKeyboard = ({ variant = "login", onCancel, onSubmit }) => {
-  const [value, setValue] = useState("");
-  const [mode, setMode] = useState(variant === "login" ? "abc" : "ABC");
+// variant: "login" (아이디 · 비밀번호 칸 · 비밀번호는 ● 로 가림) / "account"
+// [수정] 실제 인터넷 연결 상태 (끊기면 false · 다시 연결되면 true)
+const useOnline = () => {
+  const [online, setOnline] = useState(() => (typeof navigator === "undefined" ? true : navigator.onLine));
+  useEffect(() => {
+    const on = () => setOnline(true);
+    const off = () => setOnline(false);
+    window.addEventListener("online", on);
+    window.addEventListener("offline", off);
+    return () => {
+      window.removeEventListener("online", on);
+      window.removeEventListener("offline", off);
+    };
+  }, []);
+  return online;
+};
+
+// variant "account": 네트워크 연결 오류 화면 (로그인 중 연결이 안 됐을 때만 들어옴 · networkError)
+export const TvKeyboard = ({ variant = "login", onCancel, onSubmit, networkError = false }) => {
+  const isLogin = variant === "login";
+  const [values, setValues] = useState({ id: "", pw: "", account: "" });
+  const [field, setField] = useState(isLogin ? "id" : "account"); // 자판으로 입력할 칸
+  const [mode, setMode] = useState(isLogin ? "abc" : "ABC");
+  const online = useOnline();
+  const error = networkError || !online; // [수정] 계정 정보 입력: 연결이 실제로 안 됐을 때만 안내 문구 표시
+  const [busy, setBusy] = useState(false); // 로그인 중 (버튼 잠금)
+  const [loginMsg, setLoginMsg] = useState(""); // 로그인 실패 안내 (설명 문구 자리에 표시)
 
   const rows = rowsFor(variant, mode);
   const modes = MODES[variant];
   const copy = COPY[variant];
-  const shown = variant === "login" ? "●".repeat(value.length) : value;
+  const value = values[field];
 
-  const add = (char) => setValue((v) => v + char);
-  const remove = () => setValue((v) => v.slice(0, -1));
+  const update = (fn) => setValues((v) => ({ ...v, [field]: fn(v[field]) }));
+  const add = (char) => update((v) => v + char);
+  const remove = () => update((v) => v.slice(0, -1));
+
+  // 계속: 연결이 끊긴 동안은 넘어가지 않음 (안내 문구가 보이는 상태)
+  const submitAccount = () => {
+    if (!online) return;
+    onSubmit?.(values.account);
+  };
+
+  // [수정] 로그인: 실제 로그인 (TvPreview 의 onSubmit 이 결과 안내 문구를 돌려줌 · 성공이면 빈 값)
+  const submitLogin = async () => {
+    if (busy) return;
+    setBusy(true);
+    setLoginMsg("");
+    const msg = await onSubmit?.({ id: values.id.trim(), pw: values.pw });
+    setBusy(false);
+    if (msg) setLoginMsg(msg);
+  };
 
   return (
-    <main className="tv-screen tv-keyboard">
+    <main className={`tv-screen tv-keyboard tv-keyboard--${variant}`}>
       <h1 className="tv-title tv-title--xl">{copy.title}</h1>
-      <p className="tv-desc">{copy.desc}</p>
 
-      {/* 입력 전: 리모컨 안내 / 입력 후: 입력한 글자 (암호는 ●) */}
-      <p className={`tv-guide${value ? " has-value" : ""}`} aria-live="polite">
-        {value ? shown : GUIDE}
-      </p>
+      {isLogin ? (
+        // 로그인 실패 시: 설명 문구 자리에 안내 (같은 글자 크기)
+        <p className={`tv-desc${loginMsg ? " tv-desc--alert" : ""}`} role={loginMsg ? "alert" : undefined}>
+          {loginMsg || copy.desc}
+        </p>
+      ) : (
+        // 오류가 없을 때는 자리만 남기고 숨김 (아래 자판 위치가 흔들리지 않게)
+        <p className={`tv-desc tv-desc--error${error ? " is-visible" : ""}`} role="alert" aria-hidden={!error}>
+          {copy.desc}
+        </p>
+      )}
+
+      {isLogin ? (
+        // 아이디 · 비밀번호 칸: 고르면(Enter) 그 칸에 자판 입력 · 입력 전에는 지정 계정 안내
+        <div className="tv-fields">
+          {LOGIN_FIELDS.map((f) => {
+            const v = values[f.id];
+            return (
+              <button
+                type="button"
+                key={f.id}
+                className={`tv-guide tv-field${field === f.id ? " is-active" : ""}${v ? " has-value" : ""}`}
+                aria-label={`${f.label} ${v ? "" : f.placeholder}`}
+                aria-pressed={field === f.id}
+                onClick={() => setField(f.id)}
+              >
+                {v ? (f.secret ? "●".repeat(v.length) : v) : f.placeholder}
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        // 입력 전: 리모컨 안내 / 입력 후: 입력한 글자
+        <p className={`tv-guide${value ? " has-value" : ""}`} aria-live="polite">
+          {value || GUIDE}
+        </p>
+      )}
 
       <div className="tv-keys">
         {rows.map((row, rowIndex) => (
@@ -130,17 +208,17 @@ export const TvKeyboard = ({ variant = "login", onCancel, onSubmit }) => {
       </div>
 
       <div className="tv-actions">
-        {variant === "login" ? (
+        {isLogin ? (
           <>
             <button type="button" className="tv-btn tv-btn--secondary" onClick={onCancel}>
               취소
             </button>
-            <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus onClick={() => onSubmit?.(value)}>
-              로그인
+            <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus disabled={busy} onClick={submitLogin}>
+              {busy ? "로그인 중…" : "로그인"}
             </button>
           </>
         ) : (
-          <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus onClick={() => onSubmit?.(value)}>
+          <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus onClick={submitAccount}>
             계속
           </button>
         )}
