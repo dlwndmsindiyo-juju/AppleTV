@@ -25,6 +25,39 @@ export const TvTerms = ({ onAgree, onCancel }) => (
   </main>
 );
 
+// ---------- [추가] 가족 프로필 선택 (PC 로그인과 같음: 아빠 · 엄마 · 아들 · 딸) ----------
+// - 로그인하면 먼저 이 화면 · 왼쪽 메뉴 "프로필 변경" · 위쪽 프로필 아이콘으로 언제든 다시
+// - 프로필마다 배경색은 PC 와 같은 순서 (Primary · Sports · Accent · Success)
+const FAMILY = ["아빠", "엄마", "아들", "딸"];
+
+export const TvProfiles = ({ members, current, onPick }) => {
+  const names = FAMILY.filter((name) => !members || name in members);
+  return (
+    <main className="tv-screen tv-profiles">
+      <h1 className="tv-title tv-title--xl">누가 시청하나요?</h1>
+      <p className="tv-desc">시청할 프로필을 선택하세요.</p>
+
+      <ul className="tv-profile-list">
+        {names.map((name, i) => (
+          <li key={name}>
+            <button
+              type="button"
+              className={`tv-profile tv-profile--${i + 1}${current === name ? " is-current" : ""}`}
+              data-tv-autofocus={(current ? current === name : i === 0) || undefined}
+              onClick={() => onPick(name)}
+            >
+              <span className="tv-profile-avatar" aria-hidden="true">
+                <img src="/icons/profile.svg" alt="" />
+              </span>
+              <span className="tv-profile-name">{name}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
+};
+
 // ---------- 리모컨 자판 ----------
 const LETTERS = "abcdefghijklmnopqrstuvwxyz".split("");
 const NUMBERS = "1234567890".split("");
