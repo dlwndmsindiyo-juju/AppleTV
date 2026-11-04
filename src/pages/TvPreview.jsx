@@ -4,14 +4,18 @@ import { useAuthStore } from "../store/useAuthStore";
 import ProfileAvatar from "../components/profile/ProfileAvatar";
 import SubscribeGate from "../components/layout/SubscribeGate";
 import AiAssistantPopup from "../components/ai/AiAssistantPopup";
-import aiIcon from "../components/ai/assets/selection-stars.svg";
 import { TvTerms, TvKeyboard, TvProfiles } from "../components/tv/TvScreens";
+import { findNext } from "../components/tv/tvFocus";
 import TvSportHome from "../components/tv/TvSportHome";
+import TvTeam from "../components/tv/TvTeam";
+import TvSearch from "../components/tv/TvSearch";
+import { useTeamStore } from "../store/useTeamStore";
+import { getTeamById } from "../data/sportTeams";
 import TvHome from "../components/tv/TvHome";
 import "../TV.scss";
 
 // TV 디자인 미리보기 (/tv) — 하단 TV 버튼(FloatingActions)으로 들어옴
-// - 왼쪽 메뉴: 이용 안내 · 홈 · 스포츠 · AI · 프로필 변경 · 웹 화면으로 · 로그아웃(웹 화면으로 아래)
+// - 왼쪽 메뉴: 홈 · 스포츠 · AI / 관심구단 묶음(팀 이름) / 설정 묶음(프로필 변경 · 이용 안내 · 웹 화면으로 · 로그아웃)
 //   · 로그인 전: 위쪽 "로그인" 버튼 / 로그인 후: 프로필 아이콘 · 이 기기에서는 다시 로그인하지 않음 (기본 열림 · 화살표로 닫고 열기 · 영상 재생 중에는 숨김)
 // - 화면 버튼도 순서대로 연결: 동의 → 로그인 / 로그인 성공 → 홈 (연결 오류일 때만 네트워크 오류 화면 → 계속 → 로그인)
 //   취소: 이용 안내 → 웹 화면으로 돌아가기 · 로그인 → 이용 안내
@@ -40,46 +44,19 @@ const SideIcon = ({ name, src }) => (
   </span>
 );
 
-// 방향키로 가장 가까운 버튼 찾기 (화면 위치 기준)
-const findNext = (root, current, key) => {
-  const buttons = [...root.querySelectorAll("button:not([disabled])")];
-  if (!current || !buttons.includes(current)) return buttons[0];
+// [추가] 메뉴 묶음 — 제목(Heading/h2-B) + 오른쪽 접기 화살표 (시안: Library · Apps)
+// - 제목을 누르면 접기 / 펼치기 · empty 이면 화살표 없이 제목만
+const SideGroup = ({ title, open, empty = false, onToggle, children }) => (
+  <div className={`tv-side-group${open && !empty ? " is-open" : ""}`}>
+    <button type="button" className="tv-side-group-head" aria-expanded={empty ? undefined : open} onClick={onToggle}>
+      {title}
+      {!empty && <span className="tv-side-group-arrow" aria-hidden="true" />}
+    </button>
+    {open && !empty && <div className="tv-side-group-body">{children}</div>}
+  </div>
+);
 
-  const from = current.getBoundingClientRect();
-  const fx = from.left + from.width / 2;
-  const fy = from.top + from.height / 2;
-
-  let best = null;
-  let bestScore = Infinity;
-
-  buttons.forEach((btn) => {
-    if (btn === current) return;
-    const r = btn.getBoundingClientRect();
-    const x = r.left + r.width / 2;
-    const y = r.top + r.height / 2;
-    const dx = x - fx;
-    const dy = y - fy;
-
-    const ok =
-      (key === "ArrowRight" && dx > 1) ||
-      (key === "ArrowLeft" && dx < -1) ||
-      (key === "ArrowDown" && dy > 1) ||
-      (key === "ArrowUp" && dy < -1);
-    if (!ok) return;
-
-    // 가는 방향 거리 + 옆으로 벗어난 거리(가중치)
-    const main = key === "ArrowLeft" || key === "ArrowRight" ? Math.abs(dx) : Math.abs(dy);
-    const side = key === "ArrowLeft" || key === "ArrowRight" ? Math.abs(dy) : Math.abs(dx);
-    const score = main + side * 3;
-
-    if (score < bestScore) {
-      bestScore = score;
-      best = btn;
-    }
-  });
-
-  return best;
-};
+// [정리] 방향키로 가장 가까운 버튼 찾기 → components/tv/tvFocus.js (영상 끝 화면과 같이 사용)
 
 const TvPreview = () => {
   const navigate = useNavigate();
@@ -91,6 +68,13 @@ const TvPreview = () => {
   const onSetMember = useAuthStore((s) => s.onSetMember);
   const onLogout = useAuthStore((s) => s.onLogout);
   const [aiOpen, setAiOpen] = useState(false); // [추가] 메뉴의 AI → AI 어시스트 팝업
+  const [closedGroups, setClosedGroups] = useState({}); // [추가] 접은 메뉴 묶음 { team, settings }
+  const toggleGroup = (key) => setClosedGroups((g) => ({ ...g, [key]: !g[key] }));
+  // [추가] 관심구단 (팔로우한 순서) — 메뉴 "관심구단" 아래 팀 이름 · 누르면 그 팀 화면 (tab: "team:{id}")
+  const favorites = useTeamStore((s) => s.favorites);
+  const followedTeams = favorites.map(getTeamById).filter(Boolean);
+  const teamTabId = tab.startsWith("team:") ? tab.slice(5) : null;
+  const screenTeam = teamTabId ? getTeamById(teamTabId) : null;
   const [query, setQuery] = useState(""); // [추가] 왼쪽 메뉴 검색창
   const [scale, setScale] = useState(1);
   const [stageW, setStageW] = useState(TV_W);
@@ -137,7 +121,7 @@ const TvPreview = () => {
       const root = previewRef.current;
       const stage = stageRef.current;
       if (!root || !stage) return;
-      if (document.querySelector(".subscribe-gate, .ai-popup")) return; // 팝업이 열려 있으면 팝업 안에서만
+      if (document.querySelector(".subscribe-gate, .ai-popup, .video-popup")) return; // 팝업 · 영상 재생 중에는 팝업 안에서만
       // 검색창에 글자를 쓰는 중: ← → 는 글자 사이 이동으로 둠
       if (document.activeElement?.tagName === "INPUT" && (e.key === "ArrowLeft" || e.key === "ArrowRight")) return;
       e.preventDefault();
@@ -204,11 +188,12 @@ const TvPreview = () => {
     return err || "이메일 또는 비밀번호가 올바르지 않습니다.";
   };
 
-  // [추가] 검색: Enter → 웹 검색 결과 (헤더 검색창과 같은 동작)
+  // [수정] 검색: Enter → TV 검색 화면 (입력한 글자로 바로 검색)
+  const [searchKey, setSearchKey] = useState(0);
   const handleSearch = (e) => {
     if (e.key !== "Enter" || e.nativeEvent.isComposing) return; // 한글 조합 중 Enter 무시
-    const q = query.trim();
-    navigate(q ? `/search?q=${encodeURIComponent(q)}` : "/search");
+    setSearchKey((k) => k + 1);
+    setTab("search");
   };
 
   const exit = () => {
@@ -259,8 +244,10 @@ const TvPreview = () => {
             />
           </label>
 
+          {/* [수정] 메뉴를 묶음으로 (시안: Library · Apps 처럼 제목 + 접기 화살표) */}
           <nav className="tv-side-menu" role="tablist" aria-label="TV 화면">
-            {TABS.map((t) => (
+            {/* 기본 메뉴: 홈 · 스포츠 · AI */}
+            {TABS.filter((t) => t.id !== "terms").map((t) => (
               <button
                 type="button"
                 key={t.id}
@@ -274,42 +261,72 @@ const TvPreview = () => {
               </button>
             ))}
 
-            {/* [추가] AI 어시스트: 홈 섹션 대신 메뉴에서 팝업으로 */}
+            {/* AI 어시스트: 홈 섹션 대신 메뉴에서 팝업으로 · 아이콘은 그라데이션이 흐르며 반짝임 */}
             <button type="button" className={`tv-side-item${aiOpen ? " is-active" : ""}`} aria-haspopup="dialog" onClick={() => setAiOpen(true)}>
-              {/* [수정] AI 아이콘: 별 모양 안에서 그라데이션이 흐르고 빛이 숨 쉬듯 반짝임 (TV.scss .tv-side-ai-icon) */}
               <span className="tv-side-icon tv-side-icon--ai" aria-hidden="true">
-                <span
-                  className="tv-side-ai-icon"
-                  style={{ WebkitMaskImage: `url(${aiIcon})`, maskImage: `url(${aiIcon})` }}
-                />
+                <span className="tv-side-ai-icon" />
               </span>
               AI
             </button>
 
-            {/* [추가] 프로필 변경 (가족 아이콘) — 언제든 아빠 · 엄마 · 아들 · 딸 바꾸기 · 로그인 전에는 로그인 화면 */}
-            <button
-              type="button"
-              role="tab"
-              aria-selected={tab === "profiles"}
-              className={`tv-side-item${tab === "profiles" ? " is-active" : ""}`}
-              onClick={() => (user ? setTab("profiles") : goLogin())}
+            {/* 관심구단 묶음 — 팔로우한 팀 이름 (별 아이콘) · 누르면 그 팀 화면
+                팔로우한 팀이 없으면 제목만 (누르면 스포츠 홈) */}
+            <SideGroup
+              title="관심구단"
+              open={!closedGroups.team}
+              empty={followedTeams.length === 0}
+              onToggle={() => (followedTeams.length ? toggleGroup("team") : setTab("sport"))}
             >
-              <SideIcon name="tv-family-icon.svg" />
-              프로필 변경
-            </button>
+              {followedTeams.map((t) => (
+                <button
+                  type="button"
+                  key={t.id}
+                  role="tab"
+                  aria-selected={teamTabId === t.id}
+                  className={`tv-side-item${teamTabId === t.id ? " is-active" : ""}`}
+                  onClick={() => setTab(`team:${t.id}`)}
+                >
+                  <span className="tv-side-icon" aria-hidden="true">
+                    <span className="tv-side-star-icon" />
+                  </span>
+                  {t.name}
+                </button>
+              ))}
+            </SideGroup>
+
+            {/* 설정 묶음 — 프로필 변경 · 이용 안내 · 웹 화면으로 · 로그아웃(로그인했을 때만) */}
+            <SideGroup title="설정" open={!closedGroups.settings} onToggle={() => toggleGroup("settings")}>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={tab === "profiles"}
+                className={`tv-side-item${tab === "profiles" ? " is-active" : ""}`}
+                onClick={() => (user ? setTab("profiles") : goLogin())}
+              >
+                <SideIcon name="tv-family-icon.svg" />
+                프로필 변경
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={tab === "terms"}
+                className={`tv-side-item${tab === "terms" ? " is-active" : ""}`}
+                onClick={() => setTab("terms")}
+              >
+                <SideIcon name="tv-apple-tv-icon.svg" />
+                이용 안내
+              </button>
+              <button type="button" className="tv-side-item" onClick={exit}>
+                <SideIcon name="tv-show-icon.svg" />
+                웹 화면으로
+              </button>
+              {user && (
+                <button type="button" className="tv-side-item tv-side-logout" onClick={handleLogout}>
+                  로그아웃
+                </button>
+              )}
+            </SideGroup>
           </nav>
-
-          <button type="button" className="tv-side-item tv-side-exit" onClick={exit}>
-            <SideIcon name="tv-show-icon.svg" />
-            웹 화면으로
-          </button>
-
-          {/* [추가] 로그아웃 — 웹 화면으로 바로 아래 (로그인했을 때만) */}
-          {user && (
-            <button type="button" className="tv-side-item tv-side-logout" onClick={handleLogout}>
-              로그아웃
-            </button>
-          )}
 
           {/* 리모컨 안내 — 방향키로 이동 · Enter 로 선택 */}
           <p className="tv-side-guide">
@@ -355,6 +372,8 @@ const TvPreview = () => {
             )}
             {tab === "home" && <TvHome onMenu={setTab} />}
             {tab === "sport" && <TvSportHome onMenu={setTab} />}
+            {tab === "search" && <TvSearch key={searchKey} onMenu={setTab} initialQuery={query.trim()} />}
+            {screenTeam && <TvTeam key={screenTeam.id} team={screenTeam} />}
         </div>
       </div>
 
