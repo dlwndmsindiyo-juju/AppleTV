@@ -1238,6 +1238,7 @@ main.member-home .member-mood .member-chips .member-chip {
   margin: 4px 0 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   overflow: hidden;
 }

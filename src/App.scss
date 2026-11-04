@@ -6628,7 +6628,7 @@ section.top10-section {
     border-radius: 4px;
     box-sizing: border-box;
     background-color: $dark-color-300;
-    color: $light-color-0;
+    color: $dark-color-900;
     white-space: nowrap;
 
     // 연령 등급: 테두리만
@@ -6881,15 +6881,6 @@ section.top10-section {
   .subscribe-banner::after {
     background: none;
   }
-}
-
-// [추가] 가족 프로필 색 (아빠 · 엄마 · 아들 · 딸) — ProfileAvatar 의 member 가 사용
-// - 로그인 프로필 선택 화면(.auth-profile--1~4)과 같은 색
-:root {
-  --profile-member-primary: #{$primary-color-500}; // 아빠
-  --profile-member-sports: #{$sports-color}; // 엄마
-  --profile-member-accent: #{$accent-color}; // 아들
-  --profile-member-success: #{$success-color}; // 딸
 }
 
 // =====================================================================
