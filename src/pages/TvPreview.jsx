@@ -3,13 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import ProfileAvatar from "../components/profile/ProfileAvatar";
 import SubscribeGate from "../components/layout/SubscribeGate";
-import { TvTerms, TvKeyboard } from "../components/tv/TvScreens";
+import AiAssistantPopup from "../components/ai/AiAssistantPopup";
+import aiIcon from "../components/ai/assets/selection-stars.svg";
+import { TvTerms, TvKeyboard, TvProfiles } from "../components/tv/TvScreens";
 import TvSportHome from "../components/tv/TvSportHome";
 import TvHome from "../components/tv/TvHome";
 import "../TV.scss";
 
 // TV 디자인 미리보기 (/tv) — 하단 TV 버튼(FloatingActions)으로 들어옴
-// - 왼쪽 메뉴: 이용 안내 · 홈 · 스포츠 · 웹 화면으로 · 로그인은 위쪽 프로필 아이콘 (기본 열림 · 화살표로 닫고 열기 · 영상 재생 중에는 숨김)
+// - 왼쪽 메뉴: 이용 안내 · 홈 · 스포츠 · AI · 프로필 변경 · 웹 화면으로 · 로그아웃(웹 화면으로 아래)
+//   · 로그인 전: 위쪽 "로그인" 버튼 / 로그인 후: 프로필 아이콘 · 이 기기에서는 다시 로그인하지 않음 (기본 열림 · 화살표로 닫고 열기 · 영상 재생 중에는 숨김)
 // - 화면 버튼도 순서대로 연결: 동의 → 로그인 / 로그인 성공 → 홈 (연결 오류일 때만 네트워크 오류 화면 → 계속 → 로그인)
 //   취소: 이용 안내 → 웹 화면으로 돌아가기 · 로그인 → 이용 안내
 // - TV 화면이 창 전체를 꽉 채움 (테두리 · 바깥 여백 없음)
@@ -30,9 +33,10 @@ const TABS = [
   { id: "sport", label: "스포츠", icon: "tv-movies-icon.svg" },
 ];
 
-const SideIcon = ({ name }) => (
+// name: public/icons/tv/ 파일 이름 · src: 직접 경로
+const SideIcon = ({ name, src }) => (
   <span className="tv-side-icon" aria-hidden="true">
-    <img src={`/icons/tv/${name}`} alt="" />
+    <img src={src || `/icons/tv/${name}`} alt="" />
   </span>
 );
 
@@ -82,6 +86,11 @@ const TvPreview = () => {
   const [tab, setTab] = useState("terms");
   const onEmailAuth = useAuthStore((s) => s.onEmailAuth);
   const user = useAuthStore((s) => s.user);
+  const authReady = useAuthStore((s) => s.authReady);
+  const currentMember = useAuthStore((s) => s.currentMember);
+  const onSetMember = useAuthStore((s) => s.onSetMember);
+  const onLogout = useAuthStore((s) => s.onLogout);
+  const [aiOpen, setAiOpen] = useState(false); // [추가] 메뉴의 AI → AI 어시스트 팝업
   const [query, setQuery] = useState(""); // [추가] 왼쪽 메뉴 검색창
   const [scale, setScale] = useState(1);
   const [stageW, setStageW] = useState(TV_W);
@@ -128,7 +137,7 @@ const TvPreview = () => {
       const root = previewRef.current;
       const stage = stageRef.current;
       if (!root || !stage) return;
-      if (document.querySelector(".subscribe-gate")) return; // 안내 팝업이 열려 있으면 팝업 안에서만
+      if (document.querySelector(".subscribe-gate, .ai-popup")) return; // 팝업이 열려 있으면 팝업 안에서만
       // 검색창에 글자를 쓰는 중: ← → 는 글자 사이 이동으로 둠
       if (document.activeElement?.tagName === "INPUT" && (e.key === "ArrowLeft" || e.key === "ArrowRight")) return;
       e.preventDefault();
@@ -151,8 +160,28 @@ const TvPreview = () => {
 
   const showSide = !playing;
 
+  // [추가] 이 기기에서 이미 로그인했으면 다시 로그인하지 않음
+  // - Firebase 로그인 상태는 이 브라우저에 저장됨 (새로고침 · 다시 들어와도 유지)
+  // - 들어왔을 때 로그인돼 있으면: 이용 안내 · 로그인 화면 대신 바로 홈 (프로필을 아직 안 골랐으면 프로필 선택)
+  const afterLogin = () => setTab(useAuthStore.getState().currentMember ? "home" : "profiles");
+  const startChecked = useRef(false);
+  useEffect(() => {
+    if (!authReady || startChecked.current) return;
+    startChecked.current = true;
+    if (user) afterLogin();
+  }, [authReady, user]);
+
+  // 로그인된 상태에서 로그인 화면으로 가려고 하면 (이용 안내 → 동의 등) 건너뜀
+  const goLogin = () => (useAuthStore.getState().user ? afterLogin() : setTab("login"));
+
+  // [추가] 로그아웃 → 로그인 화면
+  const handleLogout = async () => {
+    await onLogout();
+    setTab("login");
+  };
+
   // [수정] TV 로그인: PC 와 같은 계정으로 실제 로그인
-  // - 성공 → 바로 홈 / 아이디 · 비밀번호 오류 → 로그인 화면에 안내 문구 (돌려준 글자)
+  // - 성공 → 프로필 선택 → 홈 / 아이디 · 비밀번호 오류 → 로그인 화면에 안내 문구 (돌려준 글자)
   // - 연결이 안 됨 → 네트워크 연결 오류 화면 (탭에는 없음 · 이때만 보임)
   const handleLogin = async ({ id, pw }) => {
     if (!navigator.onLine) {
@@ -164,7 +193,7 @@ const TvPreview = () => {
 
     const res = await onEmailAuth("signin", id, pw);
     if (res?.status === "ok" || res?.status === "needCode") {
-      setTab("home");
+      setTab("profiles"); // [수정] PC 와 같이 로그인하면 프로필 선택 (아빠 · 엄마 · 아들 · 딸)
       return "";
     }
     const err = useAuthStore.getState().loginError || "";
@@ -195,14 +224,19 @@ const TvPreview = () => {
           <div className="tv-side-head">
             <img className="tv-side-logo" src="/icons/shorts/logo_w.svg" alt="Apple TV" />
 
-            {/* [수정] 로그인은 메뉴 대신 프로필 아이콘으로 — 로그인 전: 누르면 TV 로그인 화면 / 로그인 후: 고른 프로필 아이콘 */}
+            {/* [수정] 로그인 전: "로그인" 글자 버튼 → TV 로그인 화면 / 로그인 후: 프로필 아이콘 → 프로필 선택 */}
             {user ? (
-              <span className="tv-side-profile" aria-label="로그인됨">
-                <ProfileAvatar avatar={user.avatar} size="sm" />
-              </span>
+              <button
+                type="button"
+                className="tv-side-profile"
+                aria-label={`프로필 ${currentMember || ""} · 프로필 변경`}
+                onClick={() => setTab("profiles")}
+              >
+                <ProfileAvatar avatar={user.avatar} member={currentMember} size="sm" />
+              </button>
             ) : (
-              <button type="button" className="tv-side-profile" aria-label="로그인" onClick={() => setTab("login")}>
-                <ProfileAvatar size="sm" />
+              <button type="button" className="tv-side-login" onClick={goLogin}>
+                로그인
               </button>
             )}
 
@@ -239,6 +273,24 @@ const TvPreview = () => {
                 {t.label}
               </button>
             ))}
+
+            {/* [추가] AI 어시스트: 홈 섹션 대신 메뉴에서 팝업으로 */}
+            <button type="button" className={`tv-side-item${aiOpen ? " is-active" : ""}`} aria-haspopup="dialog" onClick={() => setAiOpen(true)}>
+              <SideIcon src={aiIcon} />
+              AI
+            </button>
+
+            {/* [추가] 프로필 변경 (가족 아이콘) — 언제든 아빠 · 엄마 · 아들 · 딸 바꾸기 · 로그인 전에는 로그인 화면 */}
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "profiles"}
+              className={`tv-side-item${tab === "profiles" ? " is-active" : ""}`}
+              onClick={() => (user ? setTab("profiles") : goLogin())}
+            >
+              <SideIcon name="tv-family-icon.svg" />
+              프로필 변경
+            </button>
           </nav>
 
           <button type="button" className="tv-side-item tv-side-exit" onClick={exit}>
@@ -246,11 +298,19 @@ const TvPreview = () => {
             웹 화면으로
           </button>
 
+          {/* [추가] 로그아웃 — 웹 화면으로 바로 아래 (로그인했을 때만) */}
+          {user && (
+            <button type="button" className="tv-side-item tv-side-logout" onClick={handleLogout}>
+              로그아웃
+            </button>
+          )}
+
           {/* 리모컨 안내 — 방향키로 이동 · Enter 로 선택 */}
           <p className="tv-side-guide">
             리모컨으로 이용해 주세요
             <span>키보드 방향키(← ↑ → ↓)로 이동하고 Enter 로 선택</span>
           </p>
+
         </aside>
       )}
 
@@ -267,7 +327,7 @@ const TvPreview = () => {
           role="tabpanel"
           style={{ width: stageW, height: stageH, transform: `scale(${scale})` }}
         >
-            {tab === "terms" && <TvTerms onAgree={() => setTab("login")} onCancel={exit} />}
+            {tab === "terms" && <TvTerms onAgree={goLogin} onCancel={exit} />}
             {tab === "login" && (
               <TvKeyboard
                 key="login"
@@ -277,13 +337,26 @@ const TvPreview = () => {
               />
             )}
             {tab === "network" && <TvKeyboard key="network" variant="account" networkError onSubmit={() => setTab("login")} />}
+            {tab === "profiles" && (
+              <TvProfiles
+                members={user?.familyMembers}
+                current={currentMember}
+                onPick={(name) => {
+                  onSetMember(name);
+                  setTab("home");
+                }}
+              />
+            )}
             {tab === "home" && <TvHome onMenu={setTab} />}
             {tab === "sport" && <TvSportHome onMenu={setTab} />}
         </div>
       </div>
 
       {/* [추가] 로그인 전: 콘텐츠를 누르면 웹과 같은 안내 팝업 · 로그인 버튼은 TV 로그인 화면으로 */}
-      <SubscribeGate onLogin={() => setTab("login")} />
+      <SubscribeGate onLogin={goLogin} />
+
+      {/* [추가] AI 어시스트 팝업 (웹과 같은 팝업) */}
+      {aiOpen && <AiAssistantPopup onClose={() => setAiOpen(false)} />}
     </div>
   );
 };

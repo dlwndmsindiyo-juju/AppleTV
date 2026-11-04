@@ -910,7 +910,6 @@ $live-tab-content-gap-mobile: $space-4xl; // 48px
   .hero-swiper-container .hero-slide-item .hero-info {
     .hero-chip.hero-chip {
       @include body-small;
-      color: $light-color-0;
     }
 
     .hero-overview.hero-overview {

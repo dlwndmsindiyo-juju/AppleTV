@@ -6577,14 +6577,14 @@ section.top10-section .top10-num-stop-end {
   padding: 0 10px;
   border-radius: 4px;
   box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #C8C8C8;
+  background-color: #3A3A3A;
+  color: #FFFFFF;
   white-space: nowrap;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-chip--rating {
   border: 1px solid #C8C8C8;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #171717;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-overview {
   font-family: "SF Pro", sans-serif;

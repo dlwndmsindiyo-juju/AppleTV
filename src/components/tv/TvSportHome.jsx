@@ -11,7 +11,8 @@ import { decodeHtml, ytThumb } from "../sport/sportUtils"; // [정리] 썸네일
 // TV 스포츠 화면 (1920 × 1080 기준) — 시안: 03 · 스포츠 · 하이라이트 · 스타일: TV.scss (.tv-sport)
 // - 위: TV 헤더 (로고 + 홈 · 스포츠 · 보관함 · 검색, "스포츠" 선택)
 // - 아래: PC 스포츠 홈과 같은 섹션 · 같은 데이터
-//   경기 다시보기 → 하이라이트 → 예정된 경기 → 숏츠 → 추천 시리즈 → 관심있는 구단
+//   경기 다시보기 → 하이라이트 → 예정된 경기 → 추천 시리즈 → 관심있는 구단
+// - [수정] TV 에서는 숏츠 섹션 · 실시간 채팅 없음
 // - 모든 섹션 같은 카드: 리모컨 포커스가 있는 줄 560 × 315 / 나머지 줄 410 × 230 · 아래 제목
 //   · 카드에 포커스가 오면 그 줄이 active 가 되고, 화면 안에 보이도록 위아래 · 옆으로 이동
 // - 방향키 이동은 미리보기(TvPreview.jsx)의 리모컨 처리 그대로 사용
@@ -21,18 +22,15 @@ const useTvSportRows = () => {
   const finishedMatches = useSportStore((s) => s.finishedMatches);
   const highlightList = useSportStore((s) => s.highlightList);
   const categories = useSportStore((s) => s.highlightCategories);
-  const shortsVideos = useSportStore((s) => s.shortsVideos);
   const fetchFinished = useSportStore((s) => s.onFetchFinishedMatches);
   const fetchHighlightList = useSportStore((s) => s.onFetchHighlightList);
   const fetchCategories = useSportStore((s) => s.onFetchHighlightCategories);
-  const fetchShorts = useSportStore((s) => s.onFetchShorts);
 
   const latestMatch = finishedMatches?.[0];
 
   useEffect(() => {
     fetchFinished();
-    fetchShorts();
-  }, [fetchFinished, fetchShorts]);
+  }, [fetchFinished]);
 
   // 하이라이트: PC 와 같은 순서 (목록 → 카테고리)
   useEffect(() => {
@@ -56,10 +54,6 @@ const useTvSportRows = () => {
       .filter((v) => v?.id?.videoId && !seen.has(v.id.videoId) && seen.add(v.id.videoId))
       .map((v) => ({ id: v.id.videoId, title: decodeHtml(v.snippet?.title), image: ytThumb(v) }));
 
-    const shorts = (shortsVideos || [])
-      .filter((v) => v?.id?.videoId)
-      .map((v) => ({ id: v.id.videoId, title: decodeHtml(v.snippet?.title), image: ytThumb(v) }));
-
     return [
       {
         id: "replay",
@@ -74,7 +68,6 @@ const useTvSportRows = () => {
           .slice(0, 8)
           .map((m) => ({ id: m.id, title: matchTitle(m), image: m.image })),
       },
-      { id: "shorts", title: "숏츠", items: shorts },
       {
         id: "series",
         title: "추천 시리즈",
@@ -86,7 +79,7 @@ const useTvSportRows = () => {
         items: SPORT_TEAMS.map((t) => ({ id: t.id, title: t.shortName, image: t.banner, logo: t.logo })),
       },
     ].filter((row) => row.items.length > 0);
-  }, [categories, highlightList, shortsVideos]);
+  }, [categories, highlightList]);
 };
 
 export const TvSportHome = ({ onMenu }) => {
