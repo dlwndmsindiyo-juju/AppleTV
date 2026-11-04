@@ -22,10 +22,14 @@ export default function SportSeries({ title = "추천 시리즈" }) {
         <span className="sport-sc-poster sport-sc-poster--empty" aria-hidden="true" />
       )}
       <div className="sport-sc-body">
-        <h4 className="sport-sc-title">{item.title}</h4>
-        <p className="sport-sc-category">{[SERIES_TYPE, item.category].filter(Boolean).join(" · ")}</p>
-        {item.description && <p className="sport-sc-desc">{item.description}</p>}
-      </div>
+      <p className="sport-sc-category">
+        {[SERIES_TYPE, item.category].filter(Boolean).join(" · ")}
+      </p>
+      <h4 className="sport-sc-title">{item.title}</h4>
+      {item.description && (
+        <p className="sport-sc-desc">{item.description}</p>
+      )}
+    </div>
     </article>
   );
 
