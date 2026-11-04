@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // TV 디자인 화면 (1920 × 1080) — 스타일: TV.scss
 // - TvTerms   : Apple TV 이용 안내 (동의 / 취소)
@@ -75,17 +75,32 @@ const LOGIN_FIELDS = [
 const GUIDE = "리모컨의 마이크 버튼을 길게 눌러 검색";
 
 // variant: "login" (아이디 · 비밀번호 칸 · 비밀번호는 ● 로 가림) / "account"
-// [수정] 지정 계정 (PC · 모바일 로그인과 같음) — 로그인 칸에 이 계정과 다르게 입력하면 계정 정보 입력 화면에 오류 안내
-export const TV_ACCOUNT = { id: "hi1234@naver.com", pw: "123456" };
-export const isTvAccount = (v) => v?.id?.trim() === TV_ACCOUNT.id && v?.pw === TV_ACCOUNT.pw;
+// [수정] 실제 인터넷 연결 상태 (끊기면 false · 다시 연결되면 true)
+const useOnline = () => {
+  const [online, setOnline] = useState(() => (typeof navigator === "undefined" ? true : navigator.onLine));
+  useEffect(() => {
+    const on = () => setOnline(true);
+    const off = () => setOnline(false);
+    window.addEventListener("online", on);
+    window.addEventListener("offline", off);
+    return () => {
+      window.removeEventListener("online", on);
+      window.removeEventListener("offline", off);
+    };
+  }, []);
+  return online;
+};
 
-// loginError: 계정 정보 입력 화면에서 오류 안내를 보일지 (앞 로그인 화면 결과)
-export const TvKeyboard = ({ variant = "login", onCancel, onSubmit, loginError = false }) => {
+// variant "account": 네트워크 연결 오류 화면 (로그인 중 연결이 안 됐을 때만 들어옴 · networkError)
+export const TvKeyboard = ({ variant = "login", onCancel, onSubmit, networkError = false }) => {
   const isLogin = variant === "login";
   const [values, setValues] = useState({ id: "", pw: "", account: "" });
   const [field, setField] = useState(isLogin ? "id" : "account"); // 자판으로 입력할 칸
   const [mode, setMode] = useState(isLogin ? "abc" : "ABC");
-  const [error, setError] = useState(loginError); // [수정] 계정 정보 입력: 오류일 때만 안내 문구 표시
+  const online = useOnline();
+  const error = networkError || !online; // [수정] 계정 정보 입력: 연결이 실제로 안 됐을 때만 안내 문구 표시
+  const [busy, setBusy] = useState(false); // 로그인 중 (버튼 잠금)
+  const [loginMsg, setLoginMsg] = useState(""); // 로그인 실패 안내 (설명 문구 자리에 표시)
 
   const rows = rowsFor(variant, mode);
   const modes = MODES[variant];
@@ -96,10 +111,20 @@ export const TvKeyboard = ({ variant = "login", onCancel, onSubmit, loginError =
   const add = (char) => update((v) => v + char);
   const remove = () => update((v) => v.slice(0, -1));
 
-  // 계속: 오류 안내를 닫고 다음 화면으로
+  // 계속: 연결이 끊긴 동안은 넘어가지 않음 (안내 문구가 보이는 상태)
   const submitAccount = () => {
-    setError(false);
+    if (!online) return;
     onSubmit?.(values.account);
+  };
+
+  // [수정] 로그인: 실제 로그인 (TvPreview 의 onSubmit 이 결과 안내 문구를 돌려줌 · 성공이면 빈 값)
+  const submitLogin = async () => {
+    if (busy) return;
+    setBusy(true);
+    setLoginMsg("");
+    const msg = await onSubmit?.({ id: values.id.trim(), pw: values.pw });
+    setBusy(false);
+    if (msg) setLoginMsg(msg);
   };
 
   return (
@@ -107,7 +132,10 @@ export const TvKeyboard = ({ variant = "login", onCancel, onSubmit, loginError =
       <h1 className="tv-title tv-title--xl">{copy.title}</h1>
 
       {isLogin ? (
-        <p className="tv-desc">{copy.desc}</p>
+        // 로그인 실패 시: 설명 문구 자리에 안내 (같은 글자 크기)
+        <p className={`tv-desc${loginMsg ? " tv-desc--alert" : ""}`} role={loginMsg ? "alert" : undefined}>
+          {loginMsg || copy.desc}
+        </p>
       ) : (
         // 오류가 없을 때는 자리만 남기고 숨김 (아래 자판 위치가 흔들리지 않게)
         <p className={`tv-desc tv-desc--error${error ? " is-visible" : ""}`} role="alert" aria-hidden={!error}>
@@ -185,8 +213,8 @@ export const TvKeyboard = ({ variant = "login", onCancel, onSubmit, loginError =
             <button type="button" className="tv-btn tv-btn--secondary" onClick={onCancel}>
               취소
             </button>
-            <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus onClick={() => onSubmit?.(values)}>
-              로그인
+            <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus disabled={busy} onClick={submitLogin}>
+              {busy ? "로그인 중…" : "로그인"}
             </button>
           </>
         ) : (
