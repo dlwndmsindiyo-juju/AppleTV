@@ -2,21 +2,27 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { TV_SPORT_BG } from "../../data/tvSportData";
 import { mlsMatches, matchTitle } from "../../data/matchesData";
 import { getTeamById } from "../../data/sportTeams";
+import { REPLAY_LEAGUES, leagueThumb } from "../../data/replayLeagues";
+import { getMockLiveMatch, MOCK_LIVE_IDS } from "../sport/liveMatchAdapter";
 import { useSportStore } from "../../store/useSportStore";
 import { useSearchStore } from "../../store/useSearchStore";
 import { useAuthStore } from "../../store/useAuthStore";
 import { TMDB_IMG } from "../../utils/tmdb";
 import { decodeHtml, ytThumb } from "../sport/sportUtils";
 import { TvHeader } from "./TvRows";
-import TvPlayer from "./TvPlayer";
+import { ottItem, videoItem, matchItem, leagueItem } from "./tvDetailItems"; // [추가] 상세 페이지 항목
 
 // TV 검색 (1920 × 1080) — 위 메뉴에서 "검색" 을 고르면 나옴 · 스타일: TV.scss (.tv-search)
 // - 시안은 스포츠 화면이지만 전체 검색: 작품(영화 · 시리즈) + 경기 + 하이라이트
 // - 왼쪽: "검색" 제목(SF Pro Bold 76) · 자판 종류(abc · ABC · #+-) · 리모컨 자판 6줄 · 공백 / 지우기 1글자 / 지우기
 //   · 글자를 입력하면 제목 자리에 입력한 글자
 // - 오른쪽 위: 마이크 "길게 눌러 검색" (브라우저 음성 인식 · 한국어)
-// - 결과: 전체 · 경기 · 하이라이트 (전체 = 작품 + 경기 + 하이라이트) · 3열 카드 + 아래 제목
-// - 카드: 하이라이트 → 바로 재생 / 경기 → 그 경기 하이라이트를 찾아 재생 (로그인 전에는 구독 안내 팝업)
+// - [수정] 결과: 전체 · OTT · SPORT · 3열 카드 + 아래 제목
+//   · 전체: 모든 콘텐츠 (OTT + SPORT)
+//   · OTT : 영화 · 드라마 · 시리즈 (검색어가 없으면 오늘의 인기 작품)
+//   · SPORT: 라이브 → 경기 → 하이라이트 → 경기 다시보기
+// - [수정] 카드를 누르면 영상 상세 페이지 → "시청하기" 로 재생 (로그인 전에는 구독 안내 팝업)
+//   · 작품: 예고편 · 라이브: 라이브 영상 · 경기: 그 경기 하이라이트 · 하이라이트: 그 영상 · 경기 다시보기: 리그 영상
 
 const LETTERS = "abcdefghijklmnopqrstuvwxyz".split("");
 const DIGITS = "1234567890".split("");
@@ -24,8 +30,8 @@ const SYMBOLS = ".-_!@#$%^&*~+=()[]{}?/:;,'\"<>".split("").slice(0, 36);
 const MODES = ["abc", "ABC", "#+-"];
 const FILTERS = [
   { id: "all", label: "전체" },
-  { id: "match", label: "경기" },
-  { id: "highlight", label: "하이라이트" },
+  { id: "ott", label: "OTT" },
+  { id: "sport", label: "SPORT" },
 ];
 
 const keysFor = (mode) => {
@@ -40,27 +46,34 @@ const norm = (v = "") => v.toLowerCase().replace(/\s/g, "");
 const SpeechRecognition = typeof window !== "undefined" ? window.SpeechRecognition || window.webkitSpeechRecognition : null;
 
 // initialQuery: 왼쪽 메뉴 검색창에서 입력하고 들어온 글자
-export const TvSearch = ({ onMenu, initialQuery = "" }) => {
+// onDetail(item): [추가] 영상 상세 페이지 열기
+export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
   const [query, setQuery] = useState(initialQuery);
   const [mode, setMode] = useState("abc");
   const [filter, setFilter] = useState("all");
   const [listening, setListening] = useState(false);
-  const [playing, setPlaying] = useState(null);
   const recRef = useRef(null);
-  const loggedOut = useAuthStore((s) => s.authReady && !s.user);
 
   // 하이라이트 (스포츠 홈과 같은 데이터)
   const highlightList = useSportStore((s) => s.highlightList);
   const fetchHighlightList = useSportStore((s) => s.onFetchHighlightList);
-  const fetchHighlights = useSportStore((s) => s.onFetchHighlights);
+  const liveClips = useSportStore((s) => s.liveClips);
+  const fetchLiveClips = useSportStore((s) => s.onFetchLiveClips);
   useEffect(() => {
     fetchHighlightList();
-  }, [fetchHighlightList]);
+    fetchLiveClips();
+  }, [fetchHighlightList, fetchLiveClips]);
+
 
   // 작품 (웹 검색과 같은 TMDB 검색 · 입력이 멈추고 0.4초 뒤)
   const onSearch = useSearchStore((s) => s.onSearch);
   const results = useSearchStore((s) => s.results);
   const searchQuery = useSearchStore((s) => s.query);
+  const trending = useSearchStore((s) => s.trending);
+  const loadTrending = useSearchStore((s) => s.onLoadTrending);
+  useEffect(() => {
+    loadTrending();
+  }, [loadTrending]);
   useEffect(() => {
     const t = setTimeout(() => onSearch(query), 400);
     return () => clearTimeout(t);
@@ -91,6 +104,29 @@ export const TvSearch = ({ onMenu, initialQuery = "" }) => {
     const q = norm(query);
     const hit = (...texts) => !q || texts.some((t) => norm(t).includes(q));
 
+    // ---------- SPORT ----------
+    // 라이브 (PC 라이브 섹션과 같은 경기 · 영상은 라이브 클립)
+    const clips = (liveClips || []).filter((v) => v?.id?.videoId);
+    const lives = MOCK_LIVE_IDS.map(getMockLiveMatch)
+      .filter(Boolean)
+      .map((m, i) => {
+        const home = m.teams[m.homeId];
+        const away = m.teams[m.awayId];
+        const clip = clips.length ? clips[i % clips.length] : null;
+        return {
+          key: `live-${m.id}`,
+          kind: "live",
+          title: `LIVE · ${home?.shortName} vs. ${away?.shortName}`,
+          image: clip ? ytThumb(clip) : "",
+          id: clip?.id?.videoId,
+          label: "라이브",
+          desc: clip ? decodeHtml(clip.snippet?.description) : "",
+          search: [home?.name, away?.name, home?.enName, away?.enName, "라이브", "live"],
+        };
+      })
+      .filter((c) => hit(c.title, ...c.search));
+
+    // 경기 (MLS 경기 목록)
     const matches = mlsMatches
       .filter((m) => {
         const home = getTeamById(m.homeId);
@@ -99,6 +135,7 @@ export const TvSearch = ({ onMenu, initialQuery = "" }) => {
       })
       .map((m) => ({ key: `match-${m.id}`, kind: "match", title: matchTitle(m), image: m.image, match: m }));
 
+    // 하이라이트
     const highlights = (highlightList || [])
       .filter((v) => v?.id?.videoId)
       .map((v) => ({
@@ -111,46 +148,48 @@ export const TvSearch = ({ onMenu, initialQuery = "" }) => {
         meta: "하이라이트",
         desc: decodeHtml(v.snippet?.description),
       }))
-      .filter((v) => hit(v.title));
+      .filter((v) => hit(v.title, "하이라이트", "highlight"));
 
-    // 작품: 검색어가 있을 때만 (TMDB 결과가 지금 검색어의 결과일 때)
-    const works =
-      q && norm(searchQuery) === q
-        ? [...(results.movie || []), ...(results.tv || [])]
-            .filter((r) => r.backdrop_path || r.poster_path)
-            .slice(0, 18)
-            .map((r) => ({
-              key: `work-${r.media_type}-${r.id}`,
-              kind: "work",
-              title: r.title || r.name,
-              image: `${TMDB_IMG}/w780${r.backdrop_path || r.poster_path}`,
-            }))
-        : [];
+    // 경기 다시보기 (국가별 리그 영상 모음 · 웹 스포츠 "경기 다시보기" 와 같음)
+    const replays = REPLAY_LEAGUES.filter((l) => hit(l.league, l.leagueEn, l.country, "다시보기"))
+      .map((l) => ({
+        key: `replay-${l.id}`,
+        kind: "replay",
+        title: `${l.league} 다시보기`,
+        image: leagueThumb(l),
+        id: l.thumbVideoId,
+        prefix: l.league,
+        label: "경기 다시보기",
+        league: l,
+      }));
 
-    if (filter === "match") return matches;
-    if (filter === "highlight") return highlights;
-    return [...works, ...matches, ...highlights];
-  }, [query, filter, highlightList, results, searchQuery]);
+    // ---------- OTT (영화 · 드라마 · 시리즈) ----------
+    // 검색어가 있으면 TMDB 검색 결과 (지금 검색어의 결과일 때) · 없으면 오늘의 인기 작품
+    const source = q ? (norm(searchQuery) === q ? [...(results.movie || []), ...(results.tv || [])] : []) : trending || [];
+    const works = source
+      .filter((r) => r.backdrop_path || r.poster_path)
+      .slice(0, 18)
+      .map((r) => ({
+        key: `work-${r.media_type}-${r.id}`,
+        kind: "work",
+        work: r,
+        title: r.title || r.name,
+        image: `${TMDB_IMG}/w780${r.backdrop_path || r.poster_path}`,
+      }));
 
-  const highlightCards = useMemo(() => cards.filter((c) => c.kind === "highlight"), [cards]);
+    const sport = [...lives, ...matches, ...highlights, ...replays];
+    if (filter === "ott") return works;
+    if (filter === "sport") return sport;
+    return [...works, ...sport];
+  }, [query, filter, highlightList, liveClips, results, searchQuery, trending]);
 
-  // 카드 누르기
-  const open = async (card) => {
-    if (card.kind === "highlight") {
-      setPlaying(card);
-      return;
-    }
-    if (card.kind === "match") {
-      const m = card.match;
-      const home = getTeamById(m.homeId);
-      const away = getTeamById(m.awayId);
-      const key = `tv-search-${m.id}`;
-      await fetchHighlights(key, `${home?.enName || m.homeTeam} vs ${away?.enName || m.awayTeam}`);
-      const found = (useSportStore.getState().highlights[key] || []).find((v) => v?.id?.videoId);
-      if (found) {
-        setPlaying({ id: found.id.videoId, title: card.title, image: ytThumb(found), label: "경기 하이라이트", desc: decodeHtml(found.snippet?.description) });
-      }
-    }
+  // [수정] 카드 누르기 → 영상 상세 페이지 (TvDetail) → "시청하기" 로 재생
+  const open = (card) => {
+    if (card.kind === "work") onDetail?.(ottItem(card.work));
+    else if (card.kind === "match") onDetail?.(matchItem({ ...card.match, title: card.title }));
+    else if (card.kind === "replay") onDetail?.({ ...leagueItem(card.league, card.image) });
+    // 하이라이트 · 라이브: 영상이 없어도 상세는 열림 (재생할 때 안내)
+    else onDetail?.({ kind: "sport", key: card.key, videoId: card.id || null, title: card.title, image: card.image, desc: card.desc, label: card.label || "하이라이트", prefix: card.prefix || "MLS" });
   };
 
   const keys = keysFor(mode);
@@ -243,7 +282,6 @@ export const TvSearch = ({ onMenu, initialQuery = "" }) => {
                 type="button"
                 key={card.key}
                 className="tv-search-card"
-                data-gate={loggedOut && card.kind !== "work" ? "watch" : undefined}
                 onFocus={(e) => e.currentTarget.scrollIntoView({ block: "nearest" })}
                 onClick={() => open(card)}
               >
@@ -259,7 +297,6 @@ export const TvSearch = ({ onMenu, initialQuery = "" }) => {
         </section>
       </div>
 
-      <TvPlayer video={playing} related={highlightCards} onClose={() => setPlaying(null)} />
     </main>
   );
 };

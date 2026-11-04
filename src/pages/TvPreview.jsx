@@ -9,6 +9,7 @@ import { findNext } from "../components/tv/tvFocus";
 import TvSportHome from "../components/tv/TvSportHome";
 import TvTeam from "../components/tv/TvTeam";
 import TvSearch from "../components/tv/TvSearch";
+import TvDetail from "../components/tv/TvDetail";
 import { useTeamStore } from "../store/useTeamStore";
 import { getTeamById } from "../data/sportTeams";
 import TvHome from "../components/tv/TvHome";
@@ -68,6 +69,15 @@ const TvPreview = () => {
   const onSetMember = useAuthStore((s) => s.onSetMember);
   const onLogout = useAuthStore((s) => s.onLogout);
   const [aiOpen, setAiOpen] = useState(false); // [추가] 메뉴의 AI → AI 어시스트 팝업
+  // [추가] 영상 상세 페이지 (TvDetail) — 카드를 누르면 열림 · Esc 로 보던 화면으로
+  const [detailItem, setDetailItem] = useState(null);
+  const [detailBack, setDetailBack] = useState("home");
+  const openDetail = (item) => {
+    if (!item) return;
+    if (tab !== "detail") setDetailBack(tab);
+    setDetailItem(item);
+    setTab("detail");
+  };
   const [closedGroups, setClosedGroups] = useState({}); // [추가] 접은 메뉴 묶음 { team, settings }
   const toggleGroup = (key) => setClosedGroups((g) => ({ ...g, [key]: !g[key] }));
   // [추가] 관심구단 (팔로우한 순서) — 메뉴 "관심구단" 아래 팀 이름 · 누르면 그 팀 화면 (tab: "team:{id}")
@@ -134,6 +144,17 @@ const TvPreview = () => {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  // [추가] 상세 페이지에서 Esc (리모컨 뒤로) → 보던 화면으로 (팝업 · 영상이 열려 있으면 그쪽이 먼저 닫힘)
+  useEffect(() => {
+    if (tab !== "detail") return undefined;
+    const onKey = (e) => {
+      if (e.key !== "Escape" || document.querySelector(".subscribe-gate, .ai-popup, .video-popup")) return;
+      setTab(detailBack);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [tab, detailBack]);
 
   // [추가] 영상 재생 중(전체 화면) 에는 왼쪽 메뉴를 숨김
   useEffect(() => {
@@ -370,9 +391,10 @@ const TvPreview = () => {
                 }}
               />
             )}
-            {tab === "home" && <TvHome onMenu={setTab} />}
-            {tab === "sport" && <TvSportHome onMenu={setTab} />}
-            {tab === "search" && <TvSearch key={searchKey} onMenu={setTab} initialQuery={query.trim()} />}
+            {tab === "home" && <TvHome onMenu={setTab} onDetail={openDetail} />}
+            {tab === "sport" && <TvSportHome onMenu={setTab} onDetail={openDetail} />}
+            {tab === "detail" && detailItem && <TvDetail key={detailItem.key || detailItem.title} item={detailItem} onOpen={openDetail} />}
+            {tab === "search" && <TvSearch key={searchKey} onMenu={setTab} onDetail={openDetail} initialQuery={query.trim()} />}
             {screenTeam && <TvTeam key={screenTeam.id} team={screenTeam} />}
         </div>
       </div>

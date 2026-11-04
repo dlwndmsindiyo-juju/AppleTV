@@ -52,8 +52,7 @@ export const TvHeader = ({ active, onMenu }) => (
 // onItem: [추가] 카드를 눌렀을 때 (rowId, item)
 export const TvBrowseScreen = ({ menu, onMenu, rows, bg, onItem }) => {
   const [activeRow, setActiveRow] = useState(null);
-  // [추가] 로그인 전: 카드를 누르면 웹과 같은 안내 팝업 (SubscribeGate · data-gate="watch")
-  const loggedOut = useAuthStore((s) => s.authReady && !s.user);
+  // [수정] 카드를 누르면 상세 페이지 (로그인 전 안내 팝업은 상세의 "시청하기" 에서)
   const current = activeRow || rows[0]?.id;
 
   const handleFocus = (rowId) => (e) => {
@@ -77,7 +76,6 @@ export const TvBrowseScreen = ({ menu, onMenu, rows, bg, onItem }) => {
                   key={item.id}
                   className="tv-sport-card"
                   data-tv-autofocus={rowIndex === 0 && i === 0 ? true : undefined}
-                  data-gate={loggedOut ? "watch" : undefined}
                   onFocus={handleFocus(row.id)}
                   onClick={() => onItem?.(row.id, item)}
                 >
