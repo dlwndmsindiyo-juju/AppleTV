@@ -26,7 +26,7 @@ const swapOrHide = (fallback) => (e) => {
 };
 
 // 화면이 있는 메뉴 (나머지는 시안이 나오면 연결)
-const MENU_SCREEN = { 홈: "home", 스포츠: "sport" };
+const MENU_SCREEN = { 홈: "home", 스포츠: "sport", 검색: "search" }; // [추가] 검색
 
 export const TvHeader = ({ active, onMenu }) => (
   <header className="tv-header">

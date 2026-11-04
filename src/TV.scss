@@ -1805,3 +1805,361 @@ $tv-ai-lilac: #a5acff;
   margin: 0;
   color: $light-color-500;
 }
+
+
+// =====================================================================
+// [추가] TV 검색 (TvSearch.jsx) — 위 메뉴 "검색" · 시안: 검색 (전체 검색 레이아웃)
+// - 제목 "검색" SF Pro Bold 76 · Light/0 (입력하면 입력한 글자)
+// - 자판 종류(abc · ABC · #+-): 432 × 66 · 배경 Light/0 50% · 글자 로그인 자판과 같음 (Display/M-B · Light/0)
+// - 자판: 로그인 자판과 같은 글자 · 크기 (54 × 64 · Heading/h1) · 6칸씩
+// - 공백 · 지우기: SF Pro Medium 29 · 가운데 지우기 아이콘은 로그인 지우기 버튼 (Light/0)
+// - 길게 눌러 검색: Display/M · Light/0 · 마이크 원 40 × 40 Light/0
+// - 전체 · 경기 · 하이라이트: 묶음 500 × 66 · 글자 Display/M-B · Light/500 · 배경 Dark/200 50%
+// - 결과 카드 377 × 212 · 3열 · 아래 제목 (TV 카드 제목과 같음)
+// =====================================================================
+.tv-search-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  padding: 0 80px;
+}
+
+// ---------- 왼쪽 ----------
+.tv-search-left {
+  flex-shrink: 0;
+  width: 432px;
+}
+
+.tv-search-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 6px 0 0;
+  padding: 0;
+  color: $light-color-0;
+  font-family: $font-family-base;
+  font-size: 76px;
+  font-weight: $font-weight-bold;
+  line-height: 96px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  // 입력한 글자가 길면 조금 작게
+  &.has-value {
+    font-size: 56px;
+  }
+}
+
+.tv-search-icon {
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  background-color: $light-color-0;
+  -webkit-mask: url("/icons/search.svg") center / contain no-repeat;
+  mask: url("/icons/search.svg") center / contain no-repeat;
+}
+
+.tv-search-modes {
+  display: flex;
+  width: 432px;
+  height: 66px;
+  margin-top: 36px;
+  border-radius: $tv-btn-radius;
+  overflow: hidden;
+  background-color: rgba($light-color-0, 0.5);
+}
+
+.tv-search-mode {
+  @include display-M-b;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $light-color-0;
+  opacity: 0.55; // 고르지 않은 종류는 흐리게 (시안)
+  cursor: pointer;
+
+  & + .tv-search-mode {
+    border-left: 2px solid $tv-key-mode-divider;
+  }
+
+  &.is-active {
+    opacity: 1;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    opacity: 1;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+// 자판 6칸 × 6줄 (칸 54 × 64 · 가로 간격 20)
+.tv-search-keys {
+  display: grid;
+  grid-template-columns: repeat(6, 54px);
+  justify-content: space-between;
+  row-gap: 2px;
+  margin-top: 23px;
+  padding: 0 4px;
+}
+
+.tv-search-key {
+  @include heading-h1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 64px;
+  padding: 0;
+  border: 0;
+  border-radius: $radius-xs;
+  background: transparent;
+  color: $light-color-0;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+// 공백 · 지우기 아이콘 · 지우기
+.tv-search-edit {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 10px;
+}
+
+.tv-search-edit-btn {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  height: 64px;
+  padding: 0 $space-md;
+  border: 0;
+  border-radius: $radius-xs;
+  background: transparent;
+  color: $light-color-0;
+  font-family: $font-family-base;
+  font-size: 29px;
+  font-weight: $font-weight-medium;
+  line-height: 36px;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+.tv-search-delete {
+  img {
+    display: block;
+    width: 52px;
+    height: 44px;
+  }
+
+  &:hover img,
+  &:focus-visible img {
+    filter: invert(1);
+  }
+}
+
+// ---------- 오른쪽 ----------
+.tv-search-right {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin-left: 118px;
+  padding-top: 135px;
+}
+
+.tv-search-voice {
+  @include display-M;
+  position: absolute;
+  top: 55px;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $light-color-0;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    .tv-search-mic {
+      box-shadow: 0 0 0 4px rgba($light-color-0, 0.45);
+    }
+  }
+
+  &.is-listening .tv-search-mic {
+    background-color: $sports-color;
+    color: $light-color-0;
+  }
+}
+
+.tv-search-mic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $light-color-0;
+  color: $dark-color-900;
+}
+
+// 필터 묶음 + 뒤쪽 가로 선
+.tv-search-filter-line {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background-color: rgba($light-color-0, 0.3);
+  }
+}
+
+.tv-search-filters {
+  position: relative;
+  display: flex;
+  width: 500px;
+  height: 66px;
+  border-radius: $tv-btn-radius;
+  overflow: hidden;
+  background-color: rgba($dark-color-200, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.tv-search-filter {
+  @include display-M-b;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $light-color-500;
+  cursor: pointer;
+
+  & + .tv-search-filter {
+    border-left: 2px solid rgba($dark-color-900, 0.6);
+  }
+
+  &.is-active {
+    color: $light-color-0;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+  }
+}
+
+// 결과: 3열 · 카드 377 × 212 · 가로 40 · 세로 32
+.tv-search-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 377px);
+  justify-content: space-between;
+  align-content: start;
+  gap: 32px 40px;
+  margin-top: 29px;
+  padding: 12px 0 60px;
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tv-search-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 377px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover .tv-search-thumb,
+  &:focus-visible .tv-search-thumb {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 4px $light-color-0, 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    .tv-search-card-title {
+      color: $light-color-0;
+    }
+  }
+}
+
+.tv-search-thumb {
+  display: block;
+  width: 377px;
+  height: 212px;
+  border-radius: $radius-card-sm;
+  overflow: hidden;
+  background-color: $dark-color-400;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.tv-search-card-title {
+  @include tv-card-title;
+  max-width: 100%;
+  color: $tv-card-title-color;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tv-search-empty {
+  @include display-M;
+  grid-column: 1 / -1;
+  margin: 40px 0 0;
+  color: $text-secondary;
+  text-align: center;
+}

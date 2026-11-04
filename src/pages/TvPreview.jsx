@@ -8,6 +8,7 @@ import { TvTerms, TvKeyboard, TvProfiles } from "../components/tv/TvScreens";
 import { findNext } from "../components/tv/tvFocus";
 import TvSportHome from "../components/tv/TvSportHome";
 import TvTeam from "../components/tv/TvTeam";
+import TvSearch from "../components/tv/TvSearch";
 import { useTeamStore } from "../store/useTeamStore";
 import { getTeamById } from "../data/sportTeams";
 import TvHome from "../components/tv/TvHome";
@@ -187,11 +188,12 @@ const TvPreview = () => {
     return err || "이메일 또는 비밀번호가 올바르지 않습니다.";
   };
 
-  // [추가] 검색: Enter → 웹 검색 결과 (헤더 검색창과 같은 동작)
+  // [수정] 검색: Enter → TV 검색 화면 (입력한 글자로 바로 검색)
+  const [searchKey, setSearchKey] = useState(0);
   const handleSearch = (e) => {
     if (e.key !== "Enter" || e.nativeEvent.isComposing) return; // 한글 조합 중 Enter 무시
-    const q = query.trim();
-    navigate(q ? `/search?q=${encodeURIComponent(q)}` : "/search");
+    setSearchKey((k) => k + 1);
+    setTab("search");
   };
 
   const exit = () => {
@@ -370,6 +372,7 @@ const TvPreview = () => {
             )}
             {tab === "home" && <TvHome onMenu={setTab} />}
             {tab === "sport" && <TvSportHome onMenu={setTab} />}
+            {tab === "search" && <TvSearch key={searchKey} onMenu={setTab} initialQuery={query.trim()} />}
             {screenTeam && <TvTeam key={screenTeam.id} team={screenTeam} />}
         </div>
       </div>
