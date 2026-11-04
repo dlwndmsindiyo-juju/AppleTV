@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TV_NAV } from "../../data/tvSportData";
+import { useAuthStore } from "../../store/useAuthStore";
 
 // TV 화면 공통 (홈 · 스포츠) — 스타일: TV.scss (.tv-sport · 이름은 스포츠 시안에서 시작해 그대로 사용)
 // - TvHeader     : 로고 + 홈 · 스포츠 · 보관함 · 검색 (선택한 메뉴 강조 · 홈 ↔ 스포츠 이동)
@@ -39,6 +40,8 @@ export const TvHeader = ({ active, onMenu }) => (
 // rows: [{ id, title, items: [{ id, title, image, logo? }] }]
 export const TvBrowseScreen = ({ menu, onMenu, rows, bg }) => {
   const [activeRow, setActiveRow] = useState(null);
+  // [추가] 로그인 전: 카드를 누르면 웹과 같은 안내 팝업 (SubscribeGate · data-gate="watch")
+  const loggedOut = useAuthStore((s) => s.authReady && !s.user);
   const current = activeRow || rows[0]?.id;
 
   const handleFocus = (rowId) => (e) => {
@@ -62,6 +65,7 @@ export const TvBrowseScreen = ({ menu, onMenu, rows, bg }) => {
                   key={item.id}
                   className="tv-sport-card"
                   data-tv-autofocus={rowIndex === 0 && i === 0 ? true : undefined}
+                  data-gate={loggedOut ? "watch" : undefined}
                   onFocus={handleFocus(row.id)}
                 >
                   <span className="tv-sport-thumb">

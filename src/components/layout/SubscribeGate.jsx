@@ -35,7 +35,8 @@ const TEXT = {
   },
 };
 
-const SubscribeGate = () => {
+// onLogin: [추가] 로그인 버튼을 눌렀을 때 웹 로그인 페이지 대신 할 일 (TV 미리보기: TV 로그인 화면으로)
+const SubscribeGate = ({ onLogin } = {}) => {
   const user = useAuthStore((s) => s.user);
   const authReady = useAuthStore((s) => s.authReady);
   const { pathname } = useLocation();
@@ -117,6 +118,10 @@ const SubscribeGate = () => {
 
   const goNext = () => {
     setReason(null);
+    if (onLogin) {
+      onLogin(reason);
+      return;
+    }
     navigate("/login", {
       state: { from: leaveOnClose ? "/sport" : pathname, intent: reason === "watch" ? "subscribe" : "login" },
     });
