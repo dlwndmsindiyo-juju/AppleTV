@@ -298,6 +298,28 @@ const OttDetail = ({ item, onOpen }) => {
     setPlaying({ id: trailer.key, title: item.title, image: bg, prefix: typeLabel, label: "예고편", desc: detail?.overview });
   };
 
+  // [추가] 끝 화면 자동 재생 (계정 설정 "추천 항목 재생"): 추천 콘텐츠 중 아직 안 본 작품의 예고편
+  const nextTrailer = async (current, played) => {
+    for (const r of similar.slice(0, 5)) {
+      await fetchDetail(item.type, r.id);
+      const d = useMovieStore.getState().contentDetails[`${item.type}_${r.id}`];
+      const yt = (d?.videos?.results || []).filter((v) => v.site === "YouTube");
+      const v = yt.find((x) => x.type === "Trailer") || yt.find((x) => x.type === "Teaser") || yt[0];
+      if (v && v.key !== current.id && !played.includes(v.key)) {
+        const next = ottItem(r, item.type);
+        return {
+          id: v.key,
+          title: next.title,
+          image: r.backdrop_path ? `${TMDB_IMG}/w780${r.backdrop_path}` : next.image,
+          prefix: typeLabel,
+          label: "예고편",
+          desc: d?.overview,
+        };
+      }
+    }
+    return null;
+  };
+
   // 관심 콘텐츠 = 위시리스트 (웹과 같은 목록 · 로그인 전에는 로그인 안내)
   const toggleWish = () => {
     const st = useHeartStore.getState();
@@ -391,7 +413,7 @@ const OttDetail = ({ item, onOpen }) => {
         )}
       </div>
 
-      <TvPlayer video={playing} onClose={() => setPlaying(null)} />
+      <TvPlayer video={playing} onClose={() => setPlaying(null)} getNext={nextTrailer} />
     </>
   );
 };

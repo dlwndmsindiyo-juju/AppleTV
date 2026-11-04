@@ -3105,3 +3105,24 @@ header .inner nav .gnb-right ul .search-icon-item {
     justify-content: space-around;
   }
 }
+
+// [추가] 자동 재생 안내 (AutoNext.jsx) — 폰: 썸네일 숨기고 화면 아래 가득
+@media (max-width: $breakpoint-mobile) {
+  .auto-next,
+  .auto-next--inline {
+    right: $space-sm;
+    bottom: $space-sm;
+    left: $space-sm;
+    width: auto;
+    gap: $space-md;
+    padding: $space-md;
+  }
+
+  .auto-next-thumb {
+    display: none;
+  }
+
+  .auto-next-actions {
+    flex-direction: row;
+  }
+}

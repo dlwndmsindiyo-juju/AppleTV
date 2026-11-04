@@ -8067,3 +8067,119 @@ body.has-promo-banner .floating-actions {
     padding-right: 60px !important;
   }
 }
+
+// =====================================================================
+// [추가] 자동 재생 안내 (AutoNext.jsx) — 계정 설정 "다음 에피소드 재생 · 추천 항목 재생"
+// - 영상이 끝나면 영상 팝업 오른쪽 아래에 "5초 후 재생" 카드 · 지금 재생 / 취소
+// - .auto-next--inline: 스포츠 상세 플레이어 안 (조금 작게)
+// =====================================================================
+.auto-next {
+  position: absolute;
+  right: $space-2xl;
+  bottom: $space-2xl;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+  width: min(480px, calc(100% - #{$space-2xl * 2}));
+  padding: $space-lg;
+  border: 1px solid rgba($light-color-0, 0.12);
+  border-radius: $radius-card-sm;
+  background-color: rgba($dark-color-900, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: $text-primary;
+}
+
+.auto-next-thumb {
+  flex: 0 0 auto;
+  width: 128px;
+  aspect-ratio: 16 / 9;
+  border-radius: $radius-xs;
+  object-fit: cover;
+  background-color: $bg-surface;
+}
+
+.auto-next-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.auto-next-kind {
+  @include caption-default;
+  color: $text-tertiary;
+}
+
+.auto-next-title {
+  @include body-default-b;
+  overflow: hidden;
+  color: $text-primary;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auto-next-count {
+  @include caption-default;
+  color: $text-secondary;
+}
+
+.auto-next-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.auto-next-btn {
+  @include body-small-b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-xs;
+  height: 32px;
+  padding: 0 $space-md;
+  border: 1px solid rgba($light-color-0, 0.3);
+  border-radius: $radius-xs;
+  background-color: transparent;
+  color: $text-primary;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  img {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    background-color: rgba($light-color-0, 0.12);
+  }
+
+  &.is-primary {
+    border-color: $brand-primary;
+    background-color: $brand-primary;
+
+    &:hover {
+      background-color: $primary-color-400;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $light-color-0;
+    outline-offset: 2px;
+  }
+}
+
+.auto-next--inline {
+  right: $space-lg;
+  bottom: $space-lg;
+  width: min(420px, calc(100% - #{$space-lg * 2}));
+  padding: $space-md;
+
+  .auto-next-thumb {
+    width: 104px;
+  }
+}

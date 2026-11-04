@@ -5,7 +5,7 @@ import ProfileAvatar from "../components/profile/ProfileAvatar";
 import SubscribeGate from "../components/layout/SubscribeGate";
 import AiAssistantPopup from "../components/ai/AiAssistantPopup";
 import { TvTerms, TvKeyboard, TvProfiles, TvProfileAdd } from "../components/tv/TvScreens";
-import { getProfiles, PROFILE_MAX, PROFILE_NAME_MAX, MAIN_PROFILE_ID } from "../store/useAuthStore";
+import { getProfiles, PROFILE_MAX, PROFILE_NAME_MAX, MAIN_PROFILE_ID, useSettings } from "../store/useAuthStore";
 import { profileLook } from "../components/profile/ProfileAvatar";
 import { findNext } from "../components/tv/tvFocus";
 import TvSportHome from "../components/tv/TvSportHome";
@@ -75,6 +75,7 @@ const TvPreview = () => {
   const currentProfile = profiles.find((p) => p.id === currentProfileId);
   const onLogout = useAuthStore((s) => s.onLogout);
   const [aiOpen, setAiOpen] = useState(false); // [추가] 메뉴의 AI → AI 어시스트 팝업
+  const assistantOn = useSettings().assistant; // [추가] 계정 설정 "Apple Assistant 사용"
   // [추가] 영상 상세 페이지 (TvDetail) — 카드를 누르면 열림 · Esc 로 보던 화면으로
   const [detailItem, setDetailItem] = useState(null);
   const [detailBack, setDetailBack] = useState("home");
@@ -303,12 +304,15 @@ const TvPreview = () => {
             </button>
 
             {/* AI 어시스트: 홈 섹션 대신 메뉴에서 팝업으로 · 아이콘은 그라데이션이 흐르며 반짝임 */}
-            <button type="button" className={`tv-side-item${aiOpen ? " is-active" : ""}`} aria-haspopup="dialog" onClick={() => setAiOpen(true)}>
-              <span className="tv-side-icon tv-side-icon--ai" aria-hidden="true">
-                <span className="tv-side-ai-icon" />
-              </span>
-              AI
-            </button>
+            {/* [수정] 계정 설정에서 Apple Assistant 를 끄면 메뉴에서 숨김 */}
+            {assistantOn && (
+              <button type="button" className={`tv-side-item${aiOpen ? " is-active" : ""}`} aria-haspopup="dialog" onClick={() => setAiOpen(true)}>
+                <span className="tv-side-icon tv-side-icon--ai" aria-hidden="true">
+                  <span className="tv-side-ai-icon" />
+                </span>
+                AI
+              </button>
+            )}
 
             {/* 관심구단 묶음 — 팔로우한 팀 이름 (별 아이콘) · 누르면 그 팀 화면
                 팔로우한 팀이 없으면 제목만 (누르면 스포츠 홈) */}
@@ -438,7 +442,7 @@ const TvPreview = () => {
       <SubscribeGate onLogin={goLogin} />
 
       {/* [추가] AI 어시스트 팝업 (웹과 같은 팝업) */}
-      {aiOpen && <AiAssistantPopup onClose={() => setAiOpen(false)} />}
+      {aiOpen && assistantOn && <AiAssistantPopup onClose={() => setAiOpen(false)} />}
     </div>
   );
 };

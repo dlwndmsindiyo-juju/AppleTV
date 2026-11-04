@@ -6,6 +6,7 @@ import TeamBadge from "../sport/TeamBadge";
 import { findNext } from "./tvFocus";
 import { sportSummary, cleanText } from "./tvDetailItems";
 import { TvActionButtons, PlayIcon, PlusIcon, TextIcon, useInterest } from "./TvActions"; // [정리] 상세 화면과 같은 버튼
+import { useAutoCountdown } from "../common/AutoNext"; // [추가] 5초 뒤 다음 영상
 
 // TV 영상 끝 화면 (시안: 10 · 처음부터 보기) — 영상을 끝까지 보면 TvPlayer 가 보여줌 · 스타일: TV.scss (.tv-end)
 // - 왼쪽 위: 시청한 영상 211 × 118 + 아래 제목 (Label/default-B · Light/0)
@@ -59,10 +60,12 @@ export const ReplayCard = ({ match, onPlay }) => {
 
 // video: { id, title, image, label, desc } · related: 같은 모양 배열 (하이라이트 줄)
 // onReplay: 처음부터 다시 · onPlay(video): 다른 영상 재생 · onPlayMatch(match): 경기 다시보기 카드
-export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch, notice = "" }) => {
+// [추가] upNext: 자동 재생할 다음 영상 (계정 설정 "추천 항목 재생" · 없으면 안내 없음) · onCancelNext: "취소"
+export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch, notice = "", upNext = null, onCancelNext }) => {
   const { scale, width, height } = useStageSize();
   const rootRef = useRef(null);
   const [infoOpen, setInfoOpen] = useState(false);
+  const nextLeft = useAutoCountdown(Boolean(upNext), () => upNext && onPlay(upNext), undefined, upNext?.id); // [추가]
   const { saved, toggle: toggleInterest } = useInterest(video.id, {
     videoId: video.id, title: video.title, image: video.image, label: video.label, prefix: video.prefix, desc: video.desc,
   });
@@ -112,6 +115,19 @@ export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch
 
           {/* 열리면 "시청하기" 에 포커스 (시안: 시청하기가 선택된 상태) */}
           <TvActionButtons actions={actions} focusOn={video.id} />
+
+          {/* [추가] 5초 뒤 다음 영상 (계정 설정 "추천 항목 재생") · 취소하면 이 화면에 머묾 */}
+          {upNext && (
+            <div className="tv-end-next" role="status" aria-live="polite">
+              <span className="tv-end-next-text">
+                <span className="tv-end-next-kind">다음 영상 · {Math.max(0, nextLeft)}초 후 재생</span>
+                <strong className="tv-end-next-title">{upNext.title}</strong>
+              </span>
+              <button type="button" className="tv-end-next-cancel" onClick={onCancelNext}>
+                취소
+              </button>
+            </div>
+          )}
 
           {/* 경기정보: 영상 설명 */}
           {infoOpen && (

@@ -633,3 +633,6 @@ export const useAuthStore = create((set, get) => ({
         set({ user: null, currentProfileId: null, pendingEmail: null, loginError: null });
     },
 }));
+// [추가] 계정 설정 값 읽기 (화면에서 사용) — 로그인 전에는 기본값(모두 켜짐)
+// - autoplayNext: 다음 에피소드 재생 · autoplayRecommend: 추천 항목 재생 · assistant: Apple Assistant 사용
+export const useSettings = () => getSettings(useAuthStore((s) => s.user));

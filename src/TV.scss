@@ -1816,6 +1816,59 @@ $tv-ai-lilac: #a5acff;
   color: $light-color-500;
 }
 
+// [추가] 끝 화면 자동 재생 안내 (계정 설정 "추천 항목 재생") — 제목 아래 · 5초 뒤 다음 영상 · 취소
+.tv-end-next {
+  position: absolute;
+  top: 190px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px 16px 16px 28px;
+  border-radius: $tv-btn-radius;
+  background-color: rgba($dark-color-900, 0.72);
+}
+
+.tv-end-next-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 900px;
+}
+
+.tv-end-next-kind {
+  @include heading-h4;
+  color: $light-color-500;
+}
+
+.tv-end-next-title {
+  @include heading-h3-b;
+  overflow: hidden;
+  color: $light-color-0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tv-end-next-cancel {
+  @include heading-h4-b;
+  height: 64px;
+  padding: 0 36px;
+  border: 0;
+  border-radius: $tv-btn-radius;
+  background-color: $tv-btn-secondary-bg;
+  color: $tv-btn-secondary-text;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+  &:focus-visible,
+  &.is-focused {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+    transform: scale(1.06);
+  }
+}
+
 
 // =====================================================================
 // [추가] TV 검색 (TvSearch.jsx) — 위 메뉴 "검색" · 시안: 검색 (전체 검색 레이아웃)
