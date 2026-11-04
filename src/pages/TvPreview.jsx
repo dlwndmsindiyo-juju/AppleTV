@@ -4,7 +4,9 @@ import { useAuthStore } from "../store/useAuthStore";
 import ProfileAvatar from "../components/profile/ProfileAvatar";
 import SubscribeGate from "../components/layout/SubscribeGate";
 import AiAssistantPopup from "../components/ai/AiAssistantPopup";
-import { TvTerms, TvKeyboard, TvProfiles } from "../components/tv/TvScreens";
+import { TvTerms, TvKeyboard, TvProfiles, TvProfileAdd } from "../components/tv/TvScreens";
+import { getProfiles, PROFILE_MAX, PROFILE_NAME_MAX, MAIN_PROFILE_ID } from "../store/useAuthStore";
+import { profileLook } from "../components/profile/ProfileAvatar";
 import { findNext } from "../components/tv/tvFocus";
 import TvSportHome from "../components/tv/TvSportHome";
 import TvTeam from "../components/tv/TvTeam";
@@ -66,8 +68,11 @@ const TvPreview = () => {
   const onEmailAuth = useAuthStore((s) => s.onEmailAuth);
   const user = useAuthStore((s) => s.user);
   const authReady = useAuthStore((s) => s.authReady);
-  const currentMember = useAuthStore((s) => s.currentMember);
-  const onSetMember = useAuthStore((s) => s.onSetMember);
+  const currentProfileId = useAuthStore((s) => s.currentProfileId); // [수정] 지금 보고 있는 프로필
+  const onSelectProfile = useAuthStore((s) => s.onSelectProfile);
+  const onAddProfile = useAuthStore((s) => s.onAddProfile);
+  const profiles = getProfiles(user);
+  const currentProfile = profiles.find((p) => p.id === currentProfileId);
   const onLogout = useAuthStore((s) => s.onLogout);
   const [aiOpen, setAiOpen] = useState(false); // [추가] 메뉴의 AI → AI 어시스트 팝업
   // [추가] 영상 상세 페이지 (TvDetail) — 카드를 누르면 열림 · Esc 로 보던 화면으로
@@ -169,7 +174,7 @@ const TvPreview = () => {
   // [추가] 이 기기에서 이미 로그인했으면 다시 로그인하지 않음
   // - Firebase 로그인 상태는 이 브라우저에 저장됨 (새로고침 · 다시 들어와도 유지)
   // - 들어왔을 때 로그인돼 있으면: 이용 안내 · 로그인 화면 대신 바로 홈 (프로필을 아직 안 골랐으면 프로필 선택)
-  const afterLogin = () => setTab(useAuthStore.getState().currentMember ? "home" : "profiles");
+  const afterLogin = () => setTab(useAuthStore.getState().currentProfileId ? "home" : "profiles");
   const startChecked = useRef(false);
   useEffect(() => {
     if (!authReady || startChecked.current) return;
@@ -236,10 +241,10 @@ const TvPreview = () => {
               <button
                 type="button"
                 className="tv-side-profile"
-                aria-label={`프로필 ${currentMember || ""} · 프로필 변경`}
+                aria-label={`프로필 ${currentProfile?.name || ""} · 프로필 변경`}
                 onClick={() => setTab("profiles")}
               >
-                <ProfileAvatar avatar={user.avatar} member={currentMember} size="sm" />
+                <ProfileAvatar {...profileLook(profiles, currentProfileId || MAIN_PROFILE_ID)} size="sm" />
               </button>
             ) : (
               <button type="button" className="tv-side-login" onClick={goLogin}>
@@ -398,11 +403,25 @@ const TvPreview = () => {
             {tab === "network" && <TvKeyboard key="network" variant="account" networkError onSubmit={() => setTab("login")} />}
             {tab === "profiles" && (
               <TvProfiles
-                members={user?.familyMembers}
-                current={currentMember}
-                onPick={(name) => {
-                  onSetMember(name);
+                profiles={profiles}
+                current={currentProfileId}
+                max={PROFILE_MAX}
+                onPick={(id) => {
+                  onSelectProfile(id);
                   setTab("home");
+                }}
+                onAdd={() => setTab("profile-add")}
+              />
+            )}
+            {/* [추가] 프로필 추가 → 끝나면 프로필 선택 화면으로 (추가한 프로필이 바로 보임) */}
+            {tab === "profile-add" && (
+              <TvProfileAdd
+                nameMax={PROFILE_NAME_MAX}
+                onCancel={() => setTab("profiles")}
+                onSave={async (v) => {
+                  const id = await onAddProfile(v);
+                  if (id) setTab("profiles");
+                  return Boolean(id);
                 }}
               />
             )}

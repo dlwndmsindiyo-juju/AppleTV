@@ -6879,13 +6879,14 @@ section.top10-section {
   }
 }
 
-// [추가] 가족 프로필 색 (아빠 · 엄마 · 아들 · 딸) — ProfileAvatar 의 member 가 사용
+// [수정] 프로필 기본 색 (첫 번째 ~ 다섯 번째 프로필 순서) — ProfileAvatar 의 tone 이 사용
 // - 로그인 프로필 선택 화면(.auth-profile--1~4)과 같은 색
 :root {
   --profile-member-primary: #{$primary-color-500}; // 아빠
   --profile-member-sports: #{$sports-color}; // 엄마
   --profile-member-accent: #{$accent-color}; // 아들
   --profile-member-success: #{$success-color}; // 딸
+  --profile-member-rating: #{$rating-color}; // [추가] 다섯 번째 프로필
 }
 
 // =====================================================================
@@ -7216,6 +7217,208 @@ section.device-guide.device-guide--watch {
 .auth-profile-name {
   @include body-large-b;
   color: $text-inverse;
+}
+
+// =====================================================================
+// [추가] 프로필 고르기 · 추가 (ProfilePicker.jsx) — 로그인 "누가 시청하나요?" · 계정 설정 "다른 프로필로 보기"
+// - 지금 프로필 선택 화면(.auth-profile)과 같은 모양: 지름 88 원 + 아래 이름 (Body/large-B)
+// - 마지막 칸 "+" (프로필 추가 · 최대 5개) → 이름 · 아이콘(기존 12개) 입력 칸
+// - 태블릿 · 모바일은 mobile.scss
+// =====================================================================
+.profile-picker {
+  margin: $space-2xl auto 0;
+  color: $text-inverse;
+}
+
+.profile-picker-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $space-xl;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-picker-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-md;
+  width: 96px;
+  padding: $space-sm 0;
+  border: none;
+  border-radius: $radius-sm;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $primary-color-500;
+    outline-offset: 2px;
+  }
+
+  &:hover .profile-picker-avatar,
+  &.is-current .profile-picker-avatar {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 3px $light-color-0, 0 0 0 5px $primary-color-500;
+  }
+}
+
+.profile-picker-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+// "+" 프로필 추가
+.profile-picker-add .profile-picker-avatar {
+  background-color: $dark-color-200;
+
+  img {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.profile-picker-name {
+  @include body-large-b;
+  max-width: 100%;
+  overflow: hidden;
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 추가 입력 칸
+.profile-picker-form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  max-width: 520px;
+  margin: $space-2xl auto 0;
+  text-align: left;
+}
+
+.profile-picker-label {
+  @include body-small-b;
+  margin: $space-sm 0 0;
+  color: $auth-light-sub;
+}
+
+.profile-picker-input {
+  @include body-large;
+  height: 52px;
+  padding: 0 $space-lg;
+  border: 1px solid $auth-light-line;
+  border-radius: $radius-sm;
+  background-color: $light-color-0;
+  color: $text-inverse;
+
+  &:focus {
+    outline: 2px solid $primary-color-500;
+    outline-offset: 1px;
+  }
+}
+
+.profile-picker-icons {
+  display: grid;
+  grid-template-columns: repeat(6, 52px);
+  justify-content: space-between;
+  gap: $space-md;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-picker-icon {
+  display: block;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.06);
+  }
+
+  &.is-on {
+    box-shadow: 0 0 0 3px $light-color-0, 0 0 0 5px $primary-color-500;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary-color-500;
+    outline-offset: 3px;
+  }
+}
+
+.profile-picker-error {
+  @include body-small;
+  margin: 0;
+  color: $sports-color;
+}
+
+.profile-picker-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-md;
+  margin-top: $space-md;
+}
+
+.profile-picker-btn {
+  @include body-default-b;
+  height: 44px;
+  padding: 0 $space-xl;
+  border: none;
+  border-radius: 9999px;
+  background-color: $primary-color-500;
+  color: $light-color-0;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  &.is-ghost {
+    background-color: transparent;
+    color: $text-inverse;
+    box-shadow: inset 0 0 0 1px $auth-light-line;
+  }
+}
+
+// 계정 설정 안: 왼쪽 정렬 · 조금 작게
+.profile-picker.account-profile-picker {
+  margin: 0;
+
+  .profile-picker-list {
+    justify-content: flex-start;
+    gap: $space-lg;
+  }
+
+  .profile-picker-item {
+    width: 80px;
+  }
+
+  .profile-picker-avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .profile-picker-name {
+    @include body-small-b;
+  }
+
+  .profile-picker-form {
+    margin: $space-xl 0 0;
+  }
 }
 
 // (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)

@@ -3083,3 +3083,25 @@ header .inner nav .gnb-right ul .search-icon-item {
     }
   }
 }
+
+
+// [추가] 프로필 고르기 · 추가 (ProfilePicker) — 휴대폰: 원 72 · 아이콘 6칸 → 4칸
+@media (max-width: $breakpoint-mobile) {
+  .profile-picker-list {
+    gap: $space-lg;
+  }
+
+  .profile-picker-item {
+    width: 80px;
+  }
+
+  .profile-picker-avatar {
+    width: 72px;
+    height: 72px;
+  }
+
+  .profile-picker-icons {
+    grid-template-columns: repeat(4, 52px);
+    justify-content: space-around;
+  }
+}

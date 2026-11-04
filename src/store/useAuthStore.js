@@ -7,7 +7,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, getDoc, setDoc, updateDoc, Timestamp, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc, deleteField, Timestamp, serverTimestamp } from "firebase/firestore";
 import { httpsCallable } from "firebase/functions";
 import { clearWatchHistory } from "./useWatchStore"; // 이어보기 시청 기록 (users/{uid}/watchHistory)
 
@@ -20,12 +20,19 @@ const DEMO_CODE_ONLY = true;
 /* 공통 유틸                                                           */
 /* ------------------------------------------------------------------ */
 
-const newFamilyMembers = () => ({
-    아빠: { likes: [], watchHistory: [] },
-    엄마: { likes: [], watchHistory: [] },
-    아들: { likes: [], watchHistory: [] },
-    딸: { likes: [], watchHistory: [] },
-});
+// [수정] 가족 프로필 4개 고정(아빠 · 엄마 · 아들 · 딸) → OTT 처럼 프로필 추가 방식 (최대 5개)
+// - users/{uid}.profiles = [{ id, name, avatar: { icon, color } | null }]
+// - 첫 프로필(id "main")은 계정 이름으로 자동 생성 · 이 프로필은 예전 위시리스트 · 시청 기록을 그대로 씀
+// - 다른 프로필의 위시리스트 · 시청 기록은 문서 id 앞에 "{프로필 id}__" 를 붙여 따로 저장 (useHeartStore · useWatchStore)
+export const PROFILE_MAX = 5;
+export const MAIN_PROFILE_ID = "main";
+export const PROFILE_NAME_MAX = 20;
+const accountName = (u) => u?.name || u?.email?.split("@")[0] || "Apple 사용자";
+const newProfiles = (u) => [{ id: MAIN_PROFILE_ID, name: accountName(u), avatar: u?.avatar?.icon ? { icon: u.avatar.icon, color: u.avatar.color } : null }]; // 계정 아이콘은 첫 프로필로
+
+// 저장된 프로필 목록 (예전 계정처럼 없으면 계정 이름으로 1개)
+export const getProfiles = (user) =>
+    Array.isArray(user?.profiles) && user.profiles.length > 0 ? user.profiles.slice(0, PROFILE_MAX) : newProfiles(user);
 
 // 구독 여부: status 가 active/trial 이고 만료 전이면 true
 // (subscription 은 Cloud Functions 만 쓸 수 있는 필드)
@@ -85,7 +92,7 @@ const syncUserDoc = async (fbUser) => {
         name: fbUser.displayName ?? fbUser.email?.split("@")[0] ?? "Apple 사용자",
         photoURL: fbUser.photoURL ?? null,
         phone: fbUser.phoneNumber ?? null,
-        familyMembers: newFamilyMembers(),
+        profiles: [{ id: MAIN_PROFILE_ID, name: fbUser.displayName ?? fbUser.email?.split("@")[0] ?? "Apple 사용자", avatar: null }],
         // subscription / emailCodeVerified 는 클라이언트가 쓸 수 없음 (서버 전용)
     };
     await setDoc(ref, base);
@@ -174,29 +181,42 @@ export const clearLastAccount = () => {
     }
 };
 
-// [추가] 선택한 가족 프로필(아빠 · 엄마 · 아들 · 딸) — 새로고침해도 유지
-export const FAMILY_ORDER = ["아빠", "엄마", "아들", "딸"];
-const memberKey = (uid) => `currentMember:${uid}`;
-const loadMember = (uid) => {
+// [수정] 선택한 프로필 id — 이 기기에 저장 (새로고침해도 유지)
+const profileKey = (uid) => `currentProfile:${uid}`;
+const loadProfile = (uid, profiles) => {
     try {
-        const name = localStorage.getItem(memberKey(uid));
-        return FAMILY_ORDER.includes(name) ? name : null;
+        const id = localStorage.getItem(profileKey(uid));
+        return profiles.some((p) => p.id === id) ? id : null;
     } catch {
         return null;
     }
 };
-const saveMember = (uid, name) => {
+const saveProfile = (uid, id) => {
     try {
-        if (name) localStorage.setItem(memberKey(uid), name);
-        else localStorage.removeItem(memberKey(uid));
+        if (id) localStorage.setItem(profileKey(uid), id);
+        else localStorage.removeItem(profileKey(uid));
     } catch {
         /* noop */
     }
 };
 
+// [추가] 예전 계정 정리: 가족 프로필 4개(familyMembers) → 프로필 1개(profiles)
+const ensureProfiles = async (uid, data) => {
+    if (Array.isArray(data?.profiles) && data.profiles.length > 0) return data;
+    const profiles = newProfiles(data);
+    try {
+        await updateDoc(doc(db, "users", uid), { profiles, familyMembers: deleteField() });
+    } catch (err) {
+        console.log("프로필 정리 에러:", err.code, err.message);
+    }
+    const next = { ...data, profiles };
+    delete next.familyMembers;
+    return next;
+};
+
 // 인증 세션 → 앱 상태 반영
 const applySession = async (fbUser, set) => {
-    const data = await syncUserDoc(fbUser);
+    const data = await ensureProfiles(fbUser.uid, await syncUserDoc(fbUser));
     if (needsCode(fbUser)) {
         set({ user: null, pendingEmail: fbUser.email });
         return { status: "needCode" };
@@ -250,14 +270,78 @@ let emailLoginInFlight = false;
 export const useAuthStore = create((set, get) => ({
     user: null,
     authReady: false, // 새로고침 후 로그인 상태 복원이 끝났는지
-    currentMember: null,
+    currentProfileId: null, // [수정] 지금 보고 있는 프로필 (users/{uid}.profiles 의 id)
     pendingEmail: null,
     loginError: null,
 
-    // [수정] 가족 프로필 선택 → 이 기기에 저장 (새로고침해도 유지)
-    onSetMember: (member) => {
-        if (auth.currentUser) saveMember(auth.currentUser.uid, member);
-        set({ currentMember: member });
+    // [수정] 프로필 선택 → 이 기기에 저장 (새로고침해도 유지)
+    onSelectProfile: (id) => {
+        if (auth.currentUser) saveProfile(auth.currentUser.uid, id);
+        set({ currentProfileId: id });
+    },
+
+    // [추가] 프로필 추가 (최대 5개) — { name, avatar } → 새 프로필 id (실패하면 null)
+    onAddProfile: async ({ name, avatar = null }) => {
+        const fbUser = auth.currentUser;
+        const prev = get().user;
+        if (!fbUser || !prev) return null;
+        const list = getProfiles(prev);
+        const clean = String(name || "").trim().slice(0, PROFILE_NAME_MAX);
+        if (!clean || list.length >= PROFILE_MAX) return null;
+        const profile = { id: `p${Date.now().toString(36)}`, name: clean, avatar: avatar ? { icon: avatar.icon, color: avatar.color } : null };
+        const profiles = [...list, profile];
+        set({ user: { ...prev, profiles } });
+        try {
+            await updateDoc(doc(db, "users", fbUser.uid), { profiles });
+            return profile.id;
+        } catch (err) {
+            console.log("프로필 추가 에러:", err.code, err.message);
+            set({ user: prev });
+            return null;
+        }
+    },
+
+    // [추가] 프로필 이름 · 아이콘 바꾸기
+    onUpdateProfile: async (id, patch) => {
+        const fbUser = auth.currentUser;
+        const prev = get().user;
+        if (!fbUser || !prev) return false;
+        const profiles = getProfiles(prev).map((p) =>
+            p.id === id
+                ? {
+                    ...p,
+                    ...(patch.name !== undefined ? { name: String(patch.name).trim().slice(0, PROFILE_NAME_MAX) || p.name } : {}),
+                    ...(patch.avatar !== undefined ? { avatar: patch.avatar ? { icon: patch.avatar.icon, color: patch.avatar.color } : null } : {}),
+                }
+                : p,
+        );
+        set({ user: { ...prev, profiles } });
+        try {
+            await updateDoc(doc(db, "users", fbUser.uid), { profiles });
+            return true;
+        } catch (err) {
+            console.log("프로필 저장 에러:", err.code, err.message);
+            set({ user: prev });
+            return false;
+        }
+    },
+
+    // [추가] 프로필 삭제 (첫 프로필은 삭제 불가)
+    onDeleteProfile: async (id) => {
+        const fbUser = auth.currentUser;
+        const prev = get().user;
+        if (!fbUser || !prev || id === MAIN_PROFILE_ID) return false;
+        const profiles = getProfiles(prev).filter((p) => p.id !== id);
+        set({ user: { ...prev, profiles } });
+        if (get().currentProfileId === id) get().onSelectProfile(MAIN_PROFILE_ID);
+        try {
+            await updateDoc(doc(db, "users", fbUser.uid), { profiles });
+            return true;
+        } catch (err) {
+            console.log("프로필 삭제 에러:", err.code, err.message);
+            set({ user: prev });
+            return false;
+        }
     },
     clearLoginError: () => set({ loginError: null }),
 
@@ -265,7 +349,7 @@ export const useAuthStore = create((set, get) => ({
     initAuth: () =>
         onAuthStateChanged(auth, async (fbUser) => {
             if (!fbUser) {
-                set({ user: null, currentMember: null, pendingEmail: null, authReady: true });
+                set({ user: null, currentProfileId: null, pendingEmail: null, authReady: true });
                 return;
             }
             if (googleLoginInFlight) return; // 방금 누른 구글 로그인은 onGoogleLogin 이 처리
@@ -275,15 +359,15 @@ export const useAuthStore = create((set, get) => ({
                 // [추가] 다른 브라우저에서 "모든 브라우저에서 로그아웃" 을 누른 뒤라면 이 세션도 종료
                 if (session.status === "ok" && (await isSessionRevoked(fbUser, session.user))) {
                     await signOut(auth).catch(() => { });
-                    set({ user: null, currentMember: null, pendingEmail: null, authReady: true });
+                    set({ user: null, currentProfileId: null, pendingEmail: null, authReady: true });
                     return;
                 }
-                // [추가] 이 기기에서 고른 가족 프로필 복원
-                if (session.status === "ok") set({ currentMember: loadMember(fbUser.uid) });
+                // [수정] 이 기기에서 고른 프로필 복원
+                if (session.status === "ok") set({ currentProfileId: loadProfile(fbUser.uid, getProfiles(session.user)) });
                 // UI 전용 2단계를 마치지 않은 세션은 복원하지 않고 로그인 화면부터 시작
                 if (session.status === "needCode" && !usesRealCode(fbUser)) {
                     await signOut(auth).catch(() => { });
-                    set({ user: null, currentMember: null, pendingEmail: null });
+                    set({ user: null, currentProfileId: null, pendingEmail: null });
                 }
             } catch (err) {
                 console.log("세션 복원 에러:", err.code, err.message);
@@ -510,19 +594,12 @@ export const useAuthStore = create((set, get) => ({
         }
     },
 
-    // 재생 기록 지우기: 이어보기 시청 기록(users/{uid}/watchHistory) + 가족 프로필별 watchHistory 를 모두 비움
+    // [수정] 재생 기록 지우기: 지금 보고 있는 프로필의 시청 기록만 비움
     onClearWatchHistory: async () => {
         const fbUser = auth.currentUser;
-        const prev = get().user;
-        if (!fbUser || !prev) return false;
-        const members = prev.familyMembers || newFamilyMembers();
-        const cleared = Object.fromEntries(
-            Object.entries(members).map(([name, m]) => [name, { ...m, watchHistory: [] }]),
-        );
+        if (!fbUser || !get().user) return false;
         try {
-            await clearWatchHistory(fbUser.uid);
-            await updateDoc(doc(db, "users", fbUser.uid), { familyMembers: cleared });
-            set({ user: { ...get().user, familyMembers: cleared } });
+            await clearWatchHistory(fbUser.uid, get().currentProfileId || MAIN_PROFILE_ID);
             return true;
         } catch (err) {
             console.log("재생 기록 삭제 에러:", err.code, err.message);
@@ -553,6 +630,6 @@ export const useAuthStore = create((set, get) => ({
         } catch (err) {
             console.log("로그아웃 에러:", err.message);
         }
-        set({ user: null, currentMember: null, pendingEmail: null, loginError: null });
+        set({ user: null, currentProfileId: null, pendingEmail: null, loginError: null });
     },
 }));

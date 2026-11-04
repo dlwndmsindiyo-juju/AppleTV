@@ -1,5 +1,5 @@
 // src/store/useWatchStore.js
-// 시청 기록 (이어보기) — 계정 하나에 저장
+// 시청 기록 (이어보기) — [수정] 프로필마다 따로 저장 (문서 id 앞에 프로필 접두어)
 // - Firestore: users/{uid}/watchHistory/{movie_123 | tv_456}
 //   { id, type, title, backdrop_path, poster_path, genre,
 //     season, episode, episodeName,   ← 시리즈만 (영화는 null)
@@ -22,9 +22,15 @@ import {
   writeBatch,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { useAuthStore } from "./useAuthStore";
 
 export const WATCH_DONE_RATIO = 0.95; // 이만큼 보면 다 본 작품 → 이어보기에서 빠짐
 const HISTORY_LIMIT = 30;
+const FETCH_LIMIT = 150; // [추가] 프로필 여러 개의 기록이 한 컬렉션에 있어서 넉넉히 받아 프로필 것만 남김
+
+// [추가] 프로필별 시청 기록 — 문서 id 앞에 "{프로필 id}__" (첫 프로필 "main" 은 예전처럼 접두어 없음)
+const prefixOf = (pid) => (!pid || pid === "main" ? "" : `${pid}__`);
+const ownDoc = (id, pid) => (prefixOf(pid) ? id.startsWith(prefixOf(pid)) : !id.includes("__"));
 
 export const watchKey = (type, id) => `${type === "tv" ? "tv" : "movie"}_${id}`;
 
@@ -38,11 +44,11 @@ export const resumeAt = (h, videoKey) =>
 
 const historyRef = (uid) => collection(db, "users", uid, "watchHistory");
 
-// 재생 기록 지우기 (계정 설정) — 이 계정의 시청 기록 문서를 모두 삭제
-export const clearWatchHistory = async (uid) => {
+// 재생 기록 지우기 (계정 설정) — [수정] 그 프로필의 시청 기록 문서만 삭제
+export const clearWatchHistory = async (uid, pid = "main") => {
   if (!uid) return;
   const snap = await getDocs(historyRef(uid));
-  const docs = snap.docs || [];
+  const docs = (snap.docs || []).filter((d) => ownDoc(d.id, pid));
   // 한 번에 최대 500개까지 묶어서 삭제
   for (let i = 0; i < docs.length; i += 450) {
     const batch = writeBatch(db);
@@ -55,25 +61,30 @@ let unsubscribe = null;
 
 export const useWatchStore = create((set, get) => ({
   uid: null,
+  pid: "main", // [추가] 지금 연결된 프로필
   status: "idle", // idle | loading | ready | error
   items: [], // 최근에 본 순서
 
-  // 로그인 계정의 시청 기록 실시간 연결 (uid 가 없으면 연결 해제)
-  onConnect: (uid) => {
-    if (get().uid === uid && (uid ? unsubscribe : true)) return;
+  // 로그인 계정 · 프로필의 시청 기록 실시간 연결 (uid 가 없으면 연결 해제)
+  onConnect: (uid, pid = "main") => {
+    const profile = pid || "main";
+    if (get().uid === uid && get().pid === profile && (uid ? unsubscribe : true)) return;
     if (unsubscribe) {
       unsubscribe();
       unsubscribe = null;
     }
     if (!uid) {
-      set({ uid: null, status: "idle", items: [] });
+      set({ uid: null, pid: profile, status: "idle", items: [] });
       return;
     }
-    set({ uid, status: "loading", items: [] });
+    set({ uid, pid: profile, status: "loading", items: [] });
     unsubscribe = onSnapshot(
-      query(historyRef(uid), orderBy("updatedAt", "desc"), limit(HISTORY_LIMIT)),
+      query(historyRef(uid), orderBy("updatedAt", "desc"), limit(FETCH_LIMIT)),
       (snap) => {
-        const items = snap.docs.map((d) => d.data({ serverTimestamps: "estimate" }));
+        const items = snap.docs
+          .filter((d) => ownDoc(d.id, profile))
+          .slice(0, HISTORY_LIMIT)
+          .map((d) => d.data({ serverTimestamps: "estimate" }));
         set({ status: "ready", items });
       },
       (error) => {
@@ -107,17 +118,18 @@ export const useWatchStore = create((set, get) => ({
       updatedAt: serverTimestamp(),
     };
     try {
-      await setDoc(doc(db, "users", uid, "watchHistory", watchKey(type, entry.id)), data);
+      await setDoc(doc(db, "users", uid, "watchHistory", prefixOf(get().pid) + watchKey(type, entry.id)), data);
     } catch (error) {
       console.error("시청 기록 저장 실패:", error);
     }
   },
 }));
 
-// 컴포넌트에서: useWatchConnect(user?.uid) — 로그인 · 로그아웃에 맞춰 연결
+// 컴포넌트에서: useWatchConnect(user?.uid) — 로그인 · 로그아웃 · [추가] 프로필 변경에 맞춰 연결
 export const useWatchConnect = (uid) => {
   const onConnect = useWatchStore((s) => s.onConnect);
+  const pid = useAuthStore((s) => s.currentProfileId);
   useEffect(() => {
-    onConnect(uid || null);
-  }, [uid, onConnect]);
+    onConnect(uid || null, pid || "main");
+  }, [uid, pid, onConnect]);
 };

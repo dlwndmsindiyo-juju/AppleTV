@@ -247,14 +247,15 @@ const Toast = () => {
 
 const WishlistLayer = () => {
   const uid = useAuthStore((s) => s.user?.uid || null);
+  const pid = useAuthStore((s) => s.currentProfileId) || "main"; // [추가] 프로필마다 다른 위시리스트
   const onConnect = useHeartStore((s) => s.onConnect);
   const pickerKey = useHeartStore((s) => s.pickerKey);
   const newGroupOpen = useHeartStore((s) => s.newGroupOpen);
 
-  // 로그인 / 로그아웃 할 때 계정의 위시리스트 연결
+  // 로그인 / 로그아웃 · [추가] 프로필을 바꿀 때 그 프로필의 위시리스트 연결
   useEffect(() => {
-    onConnect(uid);
-  }, [uid, onConnect]);
+    onConnect(uid, pid);
+  }, [uid, pid, onConnect]);
 
   return (
     <>
