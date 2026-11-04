@@ -276,7 +276,13 @@ const TvPreview = () => {
 
             {/* [추가] AI 어시스트: 홈 섹션 대신 메뉴에서 팝업으로 */}
             <button type="button" className={`tv-side-item${aiOpen ? " is-active" : ""}`} aria-haspopup="dialog" onClick={() => setAiOpen(true)}>
-              <SideIcon src={aiIcon} />
+              {/* [수정] AI 아이콘: 별 모양 안에서 그라데이션이 흐르고 빛이 숨 쉬듯 반짝임 (TV.scss .tv-side-ai-icon) */}
+              <span className="tv-side-icon tv-side-icon--ai" aria-hidden="true">
+                <span
+                  className="tv-side-ai-icon"
+                  style={{ WebkitMaskImage: `url(${aiIcon})`, maskImage: `url(${aiIcon})` }}
+                />
+              </span>
               AI
             </button>
 

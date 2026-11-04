@@ -12,6 +12,7 @@ import SportReplay from "../components/sport/SportReplay";
 import SportHighlights from "../components/sport/SportHighlights";
 import SportSeries from "../components/sport/SportSeries";
 import SubscribeCTA from "../components/landing/SubscribeCTA"; // [추가] 홍보 배너 (TV 홈과 같은 글자 · 버튼)
+import "../sport-member.scss"; // [복구] 스포츠 스타일 (PC · 태블릿 · 모바일)
 import "./sport-home-banner.css";
 
 const SportHome = () => {
