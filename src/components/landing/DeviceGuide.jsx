@@ -55,7 +55,6 @@ const DeviceGuide = () => {
       <div className="inner watch-head">
         <img className="watch-logo-main" src="/icons/shorts/logo_w.svg" alt="Apple TV" />
         <h3 className="watch-title">TV 화면에서도 시청하세요.</h3>
-        <p className="watch-desc">Apple TV는 Apple 기기, 스마트 TV, Apple TV app 에서도 시청하실 수 있습니다.</p>
       </div>
 
       {/* 흐르는 로고 띠 (화면 전체 폭) */}
@@ -67,7 +66,7 @@ const DeviceGuide = () => {
       </div>
 
       <div className="inner watch-mobile">
-        <h4 className="watch-subtitle">이동 중에도 시청할 수 있습니다.</h4>
+        <h4 className="watch-subtitle">Apple TV는 Apple 기기, 스마트 TV, Apple TV app 에서도 시청하실 수 있습니다. </h4>
         <a className="watch-link" href={HELP_LINK} target="_blank" rel="noopener noreferrer">
           Apple TV를 시청할 수 있는 모든 방법 보기
           <span className="watch-link-arrow" aria-hidden="true">›</span>
