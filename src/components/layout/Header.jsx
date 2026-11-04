@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useAuthStore, getProfiles, MAIN_PROFILE_ID } from "../../store/useAuthStore";
 import SubscribeGate from "./SubscribeGate"; // 로그인 전 안내 팝업 (재생: 구독 / 찜 등: 로그인)
 import { WishIcon } from "../wishlist/WishlistLayer"; // 위시리스트 하트 아이콘
-import ProfileAvatar from "../profile/ProfileAvatar"; // 계정 설정에서 고른 프로필 아이콘
+import ProfileAvatar, { profileLook } from "../profile/ProfileAvatar"; // 계정 설정에서 고른 프로필 아이콘
 
 // TV · 스포츠 양쪽에서 함께 쓰는 페이지 (들어가도 토글이 바뀌지 않음)
 const SHARED_PATHS = ["/login", "/search", "/profile"]; // 검색 · 계정 설정: 들어가기 전 토글(Apple TV / Sport) 유지
@@ -35,7 +35,7 @@ const Header = () => {
   const location = useLocation(); // 현재 경로를 파악하기 위해 추가
   // 로그인 여부: 로그인 전 → "로그인" 버튼 / 로그인 후 → 프로필 아이콘
   const user = useAuthStore((state) => state.user);
-  const currentMember = useAuthStore((state) => state.currentMember); // [추가] 고른 가족 프로필 → 프로필 버튼 색
+  const currentProfileId = useAuthStore((state) => state.currentProfileId); // [수정] 고른 프로필 → 프로필 버튼 아이콘 · 색
   const onLogout = useAuthStore((state) => state.onLogout);
 
   // 프로필 메뉴 (계정 설정 / 로그아웃)
@@ -222,7 +222,7 @@ const Header = () => {
                     onClick={() => setMenuOpen((v) => !v)}
                   >
                     {/* 계정 설정에서 고른 기본 아이콘 (안 골랐으면 기존 profile.svg) */}
-                    <ProfileAvatar avatar={user.avatar} member={currentMember} size="sm" />
+                    <ProfileAvatar {...profileLook(getProfiles(user), currentProfileId || MAIN_PROFILE_ID)} size="sm" />
                   </button>
 
                   {menuOpen && (

@@ -16,11 +16,13 @@ import ContinueWatching from "./ContinueWatching";
 import WishlistSection from "./WishlistSection";
 import RecommendSection from "./RecommendSection";
 import MoodAssistant from "./MoodAssistant";
+import { useSettings } from "../../store/useAuthStore"; // [추가] 계정 설정 "Apple Assistant 사용"
 import NewRelease from "./NewRelease";
 import ComingSoon from "./ComingSoon"; // 공개예정작 (시안: 신규출시와 같은 카드)
 import DeviceGuide from "../landing/DeviceGuide"; // 에코시스템 (시안: 랜딩 홈의 기기 안내와 같은 회색 박스)
 
 const MemberHome = ({ userName = "회원" }) => {
+  const settings = useSettings(); // [추가]
   const { onFetchAppleOriginals, onFetchUpcoming, onFetchRecommended } =
     useMovieStore();
 
@@ -63,7 +65,8 @@ const MemberHome = ({ userName = "회원" }) => {
       <RecommendSection />
 
       {/* 6. AI 어시스턴트 (기분별 추천) */}
-      <MoodAssistant userName={userName} />
+      {/* [수정] 계정 설정에서 Apple Assistant 를 끄면 숨김 */}
+      {settings.assistant && <MoodAssistant userName={userName} />}
 
       {/* 7. 신규 출시 */}
       <NewRelease />
