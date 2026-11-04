@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 // TV 디자인 화면 (1920 × 1080) — 스타일: TV.scss
 // - TvTerms   : Apple TV 이용 안내 (동의 / 취소)
-// - TvKeyboard: Apple 계정 로그인 (암호) · 계정 정보 입력 — 리모컨 자판
+// - TvKeyboard: Apple 계정 로그인 (아이디 · 비밀번호) · 계정 정보 입력 — 리모컨 자판
 // - 버튼 동작은 props 로 받음 (미리보기 화면 TvPreview.jsx 에서 다음 / 이전 화면으로 연결)
 
 // ---------- 이용 안내 ----------
@@ -66,30 +66,80 @@ const COPY = {
   },
 };
 
+// [수정] 로그인: 리모컨 안내 박스 대신 아이디 · 비밀번호 입력 칸 (PC · 모바일 로그인과 같은 지정 계정 안내)
+const LOGIN_FIELDS = [
+  { id: "id", label: "아이디", placeholder: "hi1234@naver.com" },
+  { id: "pw", label: "비밀번호", placeholder: "123456", secret: true },
+];
+
 const GUIDE = "리모컨의 마이크 버튼을 길게 눌러 검색";
 
-// variant: "login" (암호 · 입력값은 ● 로 가림) / "account"
-export const TvKeyboard = ({ variant = "login", onCancel, onSubmit }) => {
-  const [value, setValue] = useState("");
-  const [mode, setMode] = useState(variant === "login" ? "abc" : "ABC");
+// variant: "login" (아이디 · 비밀번호 칸 · 비밀번호는 ● 로 가림) / "account"
+// [수정] 지정 계정 (PC · 모바일 로그인과 같음) — 로그인 칸에 이 계정과 다르게 입력하면 계정 정보 입력 화면에 오류 안내
+export const TV_ACCOUNT = { id: "hi1234@naver.com", pw: "123456" };
+export const isTvAccount = (v) => v?.id?.trim() === TV_ACCOUNT.id && v?.pw === TV_ACCOUNT.pw;
+
+// loginError: 계정 정보 입력 화면에서 오류 안내를 보일지 (앞 로그인 화면 결과)
+export const TvKeyboard = ({ variant = "login", onCancel, onSubmit, loginError = false }) => {
+  const isLogin = variant === "login";
+  const [values, setValues] = useState({ id: "", pw: "", account: "" });
+  const [field, setField] = useState(isLogin ? "id" : "account"); // 자판으로 입력할 칸
+  const [mode, setMode] = useState(isLogin ? "abc" : "ABC");
+  const [error, setError] = useState(loginError); // [수정] 계정 정보 입력: 오류일 때만 안내 문구 표시
 
   const rows = rowsFor(variant, mode);
   const modes = MODES[variant];
   const copy = COPY[variant];
-  const shown = variant === "login" ? "●".repeat(value.length) : value;
+  const value = values[field];
 
-  const add = (char) => setValue((v) => v + char);
-  const remove = () => setValue((v) => v.slice(0, -1));
+  const update = (fn) => setValues((v) => ({ ...v, [field]: fn(v[field]) }));
+  const add = (char) => update((v) => v + char);
+  const remove = () => update((v) => v.slice(0, -1));
+
+  // 계속: 오류 안내를 닫고 다음 화면으로
+  const submitAccount = () => {
+    setError(false);
+    onSubmit?.(values.account);
+  };
 
   return (
-    <main className="tv-screen tv-keyboard">
+    <main className={`tv-screen tv-keyboard tv-keyboard--${variant}`}>
       <h1 className="tv-title tv-title--xl">{copy.title}</h1>
-      <p className="tv-desc">{copy.desc}</p>
 
-      {/* 입력 전: 리모컨 안내 / 입력 후: 입력한 글자 (암호는 ●) */}
-      <p className={`tv-guide${value ? " has-value" : ""}`} aria-live="polite">
-        {value ? shown : GUIDE}
-      </p>
+      {isLogin ? (
+        <p className="tv-desc">{copy.desc}</p>
+      ) : (
+        // 오류가 없을 때는 자리만 남기고 숨김 (아래 자판 위치가 흔들리지 않게)
+        <p className={`tv-desc tv-desc--error${error ? " is-visible" : ""}`} role="alert" aria-hidden={!error}>
+          {copy.desc}
+        </p>
+      )}
+
+      {isLogin ? (
+        // 아이디 · 비밀번호 칸: 고르면(Enter) 그 칸에 자판 입력 · 입력 전에는 지정 계정 안내
+        <div className="tv-fields">
+          {LOGIN_FIELDS.map((f) => {
+            const v = values[f.id];
+            return (
+              <button
+                type="button"
+                key={f.id}
+                className={`tv-guide tv-field${field === f.id ? " is-active" : ""}${v ? " has-value" : ""}`}
+                aria-label={`${f.label} ${v ? "" : f.placeholder}`}
+                aria-pressed={field === f.id}
+                onClick={() => setField(f.id)}
+              >
+                {v ? (f.secret ? "●".repeat(v.length) : v) : f.placeholder}
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        // 입력 전: 리모컨 안내 / 입력 후: 입력한 글자
+        <p className={`tv-guide${value ? " has-value" : ""}`} aria-live="polite">
+          {value || GUIDE}
+        </p>
+      )}
 
       <div className="tv-keys">
         {rows.map((row, rowIndex) => (
@@ -130,17 +180,17 @@ export const TvKeyboard = ({ variant = "login", onCancel, onSubmit }) => {
       </div>
 
       <div className="tv-actions">
-        {variant === "login" ? (
+        {isLogin ? (
           <>
             <button type="button" className="tv-btn tv-btn--secondary" onClick={onCancel}>
               취소
             </button>
-            <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus onClick={() => onSubmit?.(value)}>
+            <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus onClick={() => onSubmit?.(values)}>
               로그인
             </button>
           </>
         ) : (
-          <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus onClick={() => onSubmit?.(value)}>
+          <button type="button" className="tv-btn tv-btn--secondary" data-tv-autofocus onClick={submitAccount}>
             계속
           </button>
         )}

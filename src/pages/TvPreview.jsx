@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TvTerms, TvKeyboard } from "../components/tv/TvScreens";
+import { TvTerms, TvKeyboard, isTvAccount } from "../components/tv/TvScreens";
 import TvSportHome from "../components/tv/TvSportHome";
 import TvHome from "../components/tv/TvHome";
 import "../TV.scss";
@@ -70,6 +70,7 @@ const findNext = (root, current, key) => {
 const TvPreview = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState("terms");
+  const [loginError, setLoginError] = useState(false); // [수정] 로그인 칸이 지정 계정과 다르면 계정 정보 입력 화면에 오류 안내
   const [scale, setScale] = useState(1);
   const [stageW, setStageW] = useState(TV_W);
   const [stageH, setStageH] = useState(TV_H);
@@ -152,9 +153,17 @@ const TvPreview = () => {
         >
             {tab === "terms" && <TvTerms onAgree={() => setTab("login")} onCancel={exit} />}
             {tab === "login" && (
-              <TvKeyboard key="login" variant="login" onCancel={() => setTab("terms")} onSubmit={() => setTab("account")} />
+              <TvKeyboard
+                key="login"
+                variant="login"
+                onCancel={() => setTab("terms")}
+                onSubmit={(v) => {
+                  setLoginError(!isTvAccount(v));
+                  setTab("account");
+                }}
+              />
             )}
-            {tab === "account" && <TvKeyboard key="account" variant="account" onSubmit={() => setTab("terms")} />}
+            {tab === "account" && <TvKeyboard key="account" variant="account" loginError={loginError} onSubmit={() => setTab("terms")} />}
             {tab === "home" && <TvHome onMenu={setTab} />}
             {tab === "sport" && <TvSportHome onMenu={setTab} />}
         </div>
