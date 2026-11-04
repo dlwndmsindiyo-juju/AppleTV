@@ -6887,16 +6887,6 @@ section.device-guide.device-guide--watch .watch-title {
   color: #FFFFFF;
   word-break: keep-all;
 }
-section.device-guide.device-guide--watch .watch-desc {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 22px;
-  letter-spacing: 0;
-  margin: 16px 0 0;
-  color: #C8C8C8;
-  word-break: keep-all;
-}
 section.device-guide.device-guide--watch .watch-marquee {
   position: relative;
   margin-top: 48px;
