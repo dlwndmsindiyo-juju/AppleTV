@@ -398,7 +398,18 @@ main.sport-home {
   }
 
   .sport-replay-thumb {
+    position: relative;
+    width: 100%;
     aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: $radius-card;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   .sport-replay-name {
@@ -532,7 +543,7 @@ main.sport-home {
   // ---------- 태블릿 (로그인 전 / 후 동일) ----------
   @media (max-width: $breakpoint-tablet) {
     >section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide)>.inner {
-      width: calc(100% - 80px);
+      width: min(960px, calc(100% - 64px));
     }
 
     >section.sport-teams {
@@ -557,7 +568,8 @@ main.sport-home {
     }
 
     .sport-conference-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: $space-lg;
     }
 
     .sport-conference-card {
@@ -578,9 +590,9 @@ main.sport-home {
       flex-basis: 300px;
     }
 
-    .sport-live-slide,
-    .sport-replay-list>li {
-      max-width: 80%;
+    .sport-replay .sport-replay-slide {
+      width: calc((100% - 20px) / 2);
+      max-width: none;
     }
   }
 
@@ -588,7 +600,7 @@ main.sport-home {
   @media (max-width: $breakpoint-mobile) {
 
     >section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide)>.inner {
-      width: calc(100% - 40px);
+      width: min(350px, calc(100% - 40px));
       padding: 0;
     }
 
@@ -747,7 +759,7 @@ main.sport-home {
     }
 
     .sport-conference-grid {
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: $space-lg;
     }
 
@@ -840,6 +852,11 @@ main.sport-home {
       @include body-default;
       font-family: inherit;
       font-weight: $font-weight-bold;
+    }
+
+    .sport-replay .sport-replay-slide {
+      width: calc((100% - 12px) / 2);
+      max-width: none;
     }
 
     // 하이라이트: 큰 카드 1장
@@ -1202,6 +1219,10 @@ section.sport-hero {
 // =====================================================================
 main.sport-home.sport-detail-page {
   padding-bottom: 240px;
+
+  .sport-detail {
+    scroll-margin-top: $header-height;
+  }
 
   .sport-detail .inner {
     display: flex;
