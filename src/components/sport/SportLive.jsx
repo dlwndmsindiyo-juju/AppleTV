@@ -7,6 +7,8 @@ import "swiper/css/navigation";
 import { useSportStore } from "../../store/useSportStore";
 import { getMockLiveMatch, MOCK_LIVE_IDS } from "./liveMatchAdapter";
 import { SPORT_TEAMS } from "../../data/sportTeams";
+import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
+import { ytThumb } from "./sportUtils";
 
 // =====================================================================
 // 라이브 (시안: 영상 썸네일 위에 LIVE 배지 + 아래 스코어보드)
@@ -120,7 +122,7 @@ export default function SportLive() {
     () =>
       (clips.length > 0 ? clips : sdbVideos)
         .filter((v) => v.id?.videoId)
-        .map((v) => v.snippet?.thumbnails?.high?.url || v.snippet?.thumbnails?.medium?.url || `https://i.ytimg.com/vi/${v.id.videoId}/hqdefault.jpg`),
+        .map(ytThumb), // [정리] 공용 썸네일 (sportUtils.js)
     [clips, sdbVideos]
   );
 
@@ -134,14 +136,7 @@ export default function SportLive() {
   return (
     <section className="sport-live" id="sport-live" aria-labelledby="sport-live-title">
       <div className="inner">
-        <div className="sport-section-head">
-          <h3 className="sport-section-title" id="sport-live-title">라이브</h3>
-          {cards.length > 0 && (
-            <Link className="sport-more" to={`/sport/match/${cards[0].id}`}>
-              전체 보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-            </Link>
-          )}
-        </div>
+        <SportSectionHead title="라이브" titleId="sport-live-title" to={cards.length > 0 ? `/sport/match/${cards[0].id}` : undefined} />
 
         {cards.length === 0 ? (
           <p className="sport-empty" role="status">진행 중인 경기가 없습니다</p>

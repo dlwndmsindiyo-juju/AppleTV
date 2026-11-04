@@ -6,6 +6,9 @@ import { useAuthStore } from '../store/useAuthStore';
 import { isResumable, resumeAt, useWatchConnect, useWatchStore } from '../store/useWatchStore'; // 이어보기 (시청 기록)
 import CastFilmography from '../components/detail/CastFilmography';
 import WatchPlayer from '../components/common/WatchPlayer'; // 재생 위치를 알 수 있는 유튜브 플레이어
+import VideoPopup from '../components/common/VideoPopup'; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
+import { openSubscribeGate } from '../utils/subscribeGate'; // [정리] 구독 안내 팝업 열기 공용
+import { TMDB_IMG as IMG } from '../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
 
 // =====================================================================
 // 영화 / TV 공통 상세 (Apple TV 토글의 모든 작품 상세)
@@ -15,7 +18,6 @@ import WatchPlayer from '../components/common/WatchPlayer'; // 재생 위치를 
 // - TV  : 에피소드 탭 = 시즌 선택 + 실제 회차 목록 (회차 영상이 없으면 예고편 재생)
 // =====================================================================
 
-const IMG = 'https://image.tmdb.org/t/p';
 
 // 상세 페이지 경로 (카드 링크에서 import 해서 사용: detailPath('tv', 123))
 export const detailPath = (type, id) => `/${type === 'tv' ? 'tv' : 'movie'}/${id}`;
@@ -149,7 +151,7 @@ export const MovieDetail = ({ type: typeProp }) => {
   // 로그인 전: 상세 페이지는 둘러볼 수 있고, 재생할 때만 구독 팝업 (SubscribeGate)
   const authReady = useAuthStore((s) => s.authReady);
   const askSubscribe = () =>
-    window.dispatchEvent(new CustomEvent('subscribe-gate:open', { detail: { reason: 'watch' } }));
+    openSubscribeGate('watch');
 
   // 영상 열기: 같은 영상을 보다 멈췄으면 그 위치부터
   const openPlayer = (key, meta = {}) => {
@@ -567,24 +569,20 @@ export const MovieDetail = ({ type: typeProp }) => {
       </div>
 
       {/* 전체화면 재생 팝업 */}
-      {playing && (
-        <div className="detail-popup">
-          <button className="popup-close" onClick={() => setPlaying(null)}>
-            닫기
-          </button>
-          {playing.key !== 'none' ? (
-            // 재생 위치를 몇 초마다 시청 기록에 저장 (홈 이어보기)
-            <WatchPlayer
-              videoKey={playing.key}
-              startAt={playing.startAt}
-              title={title}
-              onProgress={handleProgress}
-            />
-          ) : (
-            <p>재생할 수 있는 영상이 없습니다.</p>
-          )}
-        </div>
-      )}
+      {/* [수정] 재생 팝업: 공용 VideoPopup (왼쪽 위 "← 뒤로" · body 에 그려 화면 전체에 고정) */}
+      <VideoPopup open={Boolean(playing)} onClose={() => setPlaying(null)} label={`${title} 재생`} className="detail-popup">
+        {playing?.key !== 'none' ? (
+          // 재생 위치를 몇 초마다 시청 기록에 저장 (홈 이어보기)
+          <WatchPlayer
+            videoKey={playing?.key}
+            startAt={playing?.startAt}
+            title={title}
+            onProgress={handleProgress}
+          />
+        ) : (
+          <p>재생할 수 있는 영상이 없습니다.</p>
+        )}
+      </VideoPopup>
     </section>
   )
 }

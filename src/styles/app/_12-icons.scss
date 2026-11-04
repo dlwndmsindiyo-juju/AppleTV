@@ -1,0 +1,130 @@
+// App.scss 에서 나눈 파일 (12) — 공용 아이콘 (별점 · 원형 버튼 · 벨 · 재생)
+@use "../../variables" as *;
+
+// =====================================================================
+// 별점 아이콘 (public/icons/star-icon.svg) — 오리지널스 · 추천작 공용
+// 글자 크기에 맞춰 같은 줄에 놓임
+// =====================================================================
+.star-icon {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  margin-right: 4px;
+  vertical-align: -0.2em;
+  flex-shrink: 0;
+}
+
+.apple-card-meta {
+  display: inline-flex;
+  align-items: center;
+}
+
+// =====================================================================
+// 원형(둥근) 아이콘 버튼: 아이콘을 정가운데로
+// - display: flex + justify-content: center + align-items: center
+// - 안쪽 아이콘(img · svg)은 block 으로 바꿔 글자 기준선 때문에 아래로 밀리는 현상 제거
+// - 글자 아이콘(♥ · ▶ · +)은 행간 1 로 위아래 여백 제거
+// - 재생 ▶ 를 오른쪽으로 밀던 padding-left 도 없애 정가운데 정렬
+// =====================================================================
+.swiper-button-prev,
+.swiper-button-next,
+header .inner nav .gnb-right ul .profile-box,
+.login-page .login-card .login-card-close,
+.movie-detail-page .player-box .icon-btn,
+.movie-detail-page .right-section .episode-card .thumb .thumb-play,
+.movie-detail-page .right-section .cast-photo,
+.sport-upcoming .sport-match-team .sport-crest-empty,
+.sport-shorts .sport-short-play,
+.sport-team-card .sport-team-add,
+.sport-league .sport-league-icon,
+.sport-highlights .sport-highlight-play,
+.member-home .member-heart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: 1;
+  box-sizing: border-box;
+
+  >img,
+  >svg,
+  >span {
+    display: block;
+    flex-shrink: 0;
+  }
+}
+
+// 배경 이미지 아이콘(슬라이드 좌우 버튼)도 가운데 기준
+.swiper-button-prev,
+.swiper-button-next {
+  background-position: center !important;
+}
+
+// =====================================================================
+// 알림 설정됨 벨 아이콘 (public/icons/live/bell-btn.svg)
+// - 파일 색(#171717)과 상관없이 버튼 글자색을 따라감 (보라 버튼 → 흰색, 흰 버튼 → 검정)
+// - 공개예정작(UpcomingSection) · 신규출시(NewRelease) 공용
+// =====================================================================
+.bell-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 13px;
+  height: 16px;
+  margin-right: 2px;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/live/bell-btn.svg") center / contain no-repeat;
+  mask: url("/icons/live/bell-btn.svg") center / contain no-repeat;
+}
+
+// =====================================================================
+// 재생 아이콘 (public/icons/play-w.svg 흰색 · play-b.svg 검정)
+// - 기존 ▶ 글자 자리에 그대로 들어가도록 글자 크기(1em)를 높이로 사용
+//   → 원 크기별 font-size 규칙이 그대로 아이콘 크기를 정함
+// =====================================================================
+.play-icon {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  max-width: none;
+  height: 1em;
+  object-fit: contain; // 썸네일 img 규칙(width: 100%)에 걸려도 모양 유지
+  background: none; // 카드 img 규칙의 회색 배경이 아이콘 뒤에 깔리지 않게
+}
+
+// 글자와 같은 줄에 놓이는 곳 (경기 시청 · 실시간 시청 · 상세 메타)
+.sport-btn,
+.sport-live-watch,
+.sport-detail-info-meta,
+.sport-detail-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+// "경기 시청" 버튼 (스포츠 히어로 · 하단 LIVE 배너): 흰 아이콘 · 글자 크기에 맞게 작게
+.sport-btn .play-icon {
+  height: 12px;
+}
+
+.promo-banner.is-live .promo-banner-btn .play-icon {
+  height: 10px;
+}
+
+.sport-live-watch .play-icon,
+.sport-detail-info-meta .play-icon,
+.sport-detail-meta .play-icon {
+  height: 9px;
+}
+
+// 영화/TV 상세: 에피소드 썸네일 위 재생 (흰 아이콘 24px · 어두운 원)
+.movie-detail-page .right-section .episode-card .thumb .thumb-play {
+  width: $space-4xl;
+  height: $space-4xl;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  .play-icon {
+    width: auto;
+    height: $space-xl;
+  }
+}

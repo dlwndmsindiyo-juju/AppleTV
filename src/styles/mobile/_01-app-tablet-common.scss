@@ -1,0 +1,245 @@
+// mobile.scss 에서 나눈 파일 (01) — App.scss 에서 옮김 — 공통 태블릿 (헤더 · 히어로 · 홈 섹션 · 푸터)
+@use "../../variables" as *;
+
+// =====================================================================
+// [이동] App.scss 의 태블릿 · 모바일 규칙 (1024px 이하 · 767px 이하)
+// - App.scss 는 PC 전용으로 두고, 화면이 줄어드는 규칙은 여기에서 관리
+// - 원래 순서 그대로 옮김 (이 파일의 아래쪽 규칙이 이어서 덮어씀)
+// =====================================================================
+// ▼ App.scss 에서 옮김 — 공통 태블릿 (헤더 · 히어로 · 홈 섹션 · 푸터 등)
+// =====================================================================
+// 태블릿 (1024px 이하) — 시안: 1024 x 3304
+// 모바일(767px 이하)은 이 파일 아래쪽 규칙이 이어서 덮어씀
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+
+  // ---------- 헤더 (좌우 40 / 상하 14) ----------
+  header .inner {
+    padding: $header-pad-y $tablet-edge;
+
+    nav {
+      padding: $header-pad-y $tablet-edge;
+
+      .gnb-center-toggle button {
+        padding: 0 20px;
+        font-size: 16px;
+      }
+
+      .gnb-right ul {
+        gap: $space-md;
+
+        .search-box {
+          width: 141px; // 시안 검색창 폭
+        }
+      }
+    }
+  }
+
+  // ---------- 푸터 (좌우 40 / 상하 14) ----------
+  .footer {
+    padding: $footer-pad-y $tablet-edge;
+  }
+
+  // ---------- 히어로 (화면 높이 100vh 유지, 텍스트는 본문 시작선) ----------
+  .hero-swiper-container {
+    height: 100vh;
+    height: 100svh; // 모바일 브라우저 주소창을 뺀 화면 높이 (지원 안 하면 위 100vh 사용)
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none; // 터치 환경이라 화살표 숨김
+    }
+
+    .hero-slide-item .hero-info {
+      left: $tablet-gutter;
+      max-width: 60%;
+
+      .hero-title {
+        font-size: 48px;
+      }
+    }
+  }
+
+  // ---------- 홈 섹션 공통: 본문 좌우 13% ----------
+  .value-props .inner,
+  .top10-section .inner,
+  .upcoming-section .inner,
+  .apple-originals .inner,
+  .ai-promo .inner,
+  .subscribe-cta .inner,
+  .movie-slider-section .inner {
+    padding-left: $tablet-gutter;
+    padding-right: $tablet-gutter;
+  }
+
+  // ---------- 핵심 혜택: 3칸 유지 ----------
+  .value-props {
+    .value-props-inner {
+      gap: $space-xl;
+    }
+  }
+
+  // ---------- TOP 10: 오른쪽 끝까지 이어지는 슬라이더 (시안: 포스터 4장 + 다음 장 살짝) ----------
+  .top10-section {
+    overflow: hidden;
+
+    .inner {
+      padding-right: 0; // 슬라이더가 화면 오른쪽으로 잘려 나가게
+    }
+
+    .top10-title {
+      @include display-l;
+      padding-right: $tablet-gutter;
+    }
+
+    .top10-slide {
+      width: 190px;
+    }
+
+    .top10-rank {
+      font-size: 104px;
+      bottom: -10px;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none;
+    }
+  }
+
+  // ---------- 공개예정작: 카드 2장 가로 스크롤 (오른쪽 끝까지) ----------
+  .upcoming-section {
+    overflow: hidden;
+
+    .inner {
+      padding-right: 0;
+    }
+
+    .upcoming-title {
+      @include display-l;
+    }
+
+    .upcoming-title,
+    .upcoming-desc {
+      padding-right: $tablet-gutter;
+    }
+
+    .upcoming-list {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 440px;
+      gap: $space-xl;
+      overflow-x: auto;
+      padding-right: $tablet-gutter;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      >li {
+        scroll-snap-align: start;
+      }
+    }
+
+    .upcoming-card {
+      gap: $space-lg;
+      padding: $space-lg;
+    }
+
+    .upcoming-thumb {
+      width: 120px;
+    }
+
+    .upcoming-movie-title {
+      @include heading-h3;
+    }
+
+    // 시안: 알림 받기는 외곽선 버튼
+    .upcoming-btn:not(.on) {
+      border-color: $neutral-color-400;
+      background-color: transparent;
+      color: $text-primary;
+
+      &:hover {
+        border-color: $light-color-0;
+        background-color: rgba($light-color-0, 0.12);
+      }
+    }
+  }
+
+  // ---------- 오리지널스: 오른쪽 끝까지 이어지는 슬라이더 ----------
+  .apple-originals {
+    overflow: hidden;
+
+    .inner {
+      padding-right: 0;
+    }
+
+    .apple-originals-title {
+      @include display-l;
+    }
+
+    .apple-originals-title,
+    .apple-originals-desc {
+      padding-right: $tablet-gutter;
+    }
+
+    .apple-originals-slide {
+      width: 280px;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none;
+    }
+  }
+
+  // ---------- AI 어시스턴트 띠: 글 → 카드 세로 배치 ----------
+  .ai-promo {
+    padding-bottom: $space-5xl;
+
+    .inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $space-2xl;
+      padding-top: $space-4xl;
+      padding-bottom: $space-4xl;
+    }
+
+    .ai-promo-title {
+      @include display-l;
+    }
+  }
+
+  // ---------- 구독 CTA ----------
+  .subscribe-cta {
+    .subscribe-banner {
+      height: 340px;
+    }
+
+    .subscribe-content {
+      left: 6%;
+    }
+  }
+
+  // ---------- 하단 플로팅 프로모션 배너 ----------
+  .promo-banner {
+    .promo-banner-inner {
+      padding-left: $tablet-edge;
+      padding-right: $tablet-edge;
+      gap: $space-xl;
+    }
+
+    .promo-banner-desc {
+      @include body-small;
+      color: rgba($text-primary, 0.75);
+    }
+
+    .promo-banner-btn {
+      min-width: 160px;
+    }
+  }
+
+}

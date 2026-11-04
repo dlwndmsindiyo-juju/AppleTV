@@ -1,0 +1,189 @@
+// App.scss 에서 나눈 파일 (09) — 푸터
+@use "../../variables" as *;
+
+// ===== Footer (Desktop 시안: 좌우 40 / 상하 14) =====
+.footer {
+  background-color: $gnb-bg;
+  color: $text-tertiary;
+  width: 100%;
+  padding: $footer-pad-y $footer-pad-x;
+  box-sizing: border-box;
+
+  .inner {
+    width: 100%;
+    max-width: $inner-width; // 이너 1920px
+    margin: 0 auto;
+    padding: 26px 0; // 14 + 26 = 시안의 상하 여백
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    box-sizing: border-box;
+  }
+
+  // 1. 로고 (맨 위)
+  .footer-logo img {
+    width: auto;
+    height: 22px;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+
+  // 2. 주요 링크
+  .footer-main-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-md $space-2xl;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: $text-secondary;
+      font-size: 15px;
+      font-weight: $font-weight-regular;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+
+    .arrow {
+      font-size: 15px;
+      color: $text-secondary;
+    }
+  }
+
+  // 3. 정책 링크 + 국가/언어 (한 줄)
+  .footer-policy-menu {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-sm 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+
+    a {
+      color: $text-tertiary;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+  }
+
+  // 4. 저작권
+  .footer-copyright {
+    color: $text-tertiary;
+    font-size: 12px;
+  }
+}
+
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
+
+// 스포츠 홈 (로그인 전 / 후 공통): 섹션 사이 여백과 콘텐츠 폭을 한 곳에서 관리합니다.
+// - 기존 .sport-home-member(로그인 후 전용) → .sport-home 으로 바꿔 같은 영역은 똑같이 보이게 함
+// - 로그인 전 전용 섹션(구독 CTA · 기기 안내)은 원래 디자인 유지를 위해 여백 · 폭 규칙에서 제외
+// - 히어로 스타일은 sport-member.scss 의 section.sport-hero 한 곳에서 관리
+// - main.sport-home: 태블릿 · 모바일 공통 규칙과 우선순위가 겹치지 않도록 태그를 붙임
+main.sport-home {
+  display: flex;
+  flex-direction: column;
+  // 섹션 사이 간격은 sport-member.scss 의 "섹션 간격" 규칙(margin-top)으로 관리
+  gap: 0;
+  background: $bg-page;
+
+  // 관심있는 구단(.sport-teams)은 그라데이션 띠 안쪽 여백이 필요해서 패딩 초기화에서 제외
+  >section:not(.subscribe-cta):not(.device-guide):not(.sport-teams) {
+    padding: 0;
+    min-width: 0;
+  }
+
+  >section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide)>.inner {
+    @include inner-wrap;
+    max-width: $container-width;
+    padding-left: $space-lg;
+    padding-right: $space-lg;
+  }
+
+  .sport-teams {
+    padding: 56px 0;
+  }
+
+  .sport-live-slide,
+  .sport-series-slide {
+    width: 312px;
+    max-width: 85%;
+  }
+
+  .sport-live-card {
+    display: block;
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: $radius-card-sm;
+    background: $bg-surface-hover;
+    color: $text-primary;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 40% 0 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, .55));
+      pointer-events: none;
+    }
+  }
+
+  .sport-live-badge,
+  .sport-live-watch {
+    position: absolute;
+    z-index: 1;
+    left: 14px;
+    @include label-default;
+    padding: 5px $space-md;
+  }
+
+  .sport-live-badge {
+    top: 14px;
+    background: $sports-color;
+    border-radius: 30px;
+  }
+
+  .sport-live-watch {
+    bottom: 14px;
+    background: rgba(255, 255, 255, .25);
+    border-radius: 3px;
+  }
+
+  .sport-series-card {
+    display: block;
+    color: $text-primary;
+    text-decoration: none;
+
+    img,
+    .sport-series-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: $radius-card-sm;
+      background: $bg-surface-hover;
+    }
+
+    h4 {
+      margin: $space-md 0 0;
+    }
+  }
+}

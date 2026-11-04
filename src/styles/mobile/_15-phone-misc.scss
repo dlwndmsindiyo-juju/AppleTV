@@ -1,0 +1,119 @@
+// mobile.scss 에서 나눈 파일 (15) — 휴대폰 로그인 버튼 · 관심있는 구단 더보기 · TV · TOP 버튼
+@use "../../variables" as *;
+
+// =====================================================================
+// [추가] 헤더 로그인 버튼 (로그인 전) 휴대폰 — 시안
+// - 40 × 32 (패딩 좌우 8 포함) · 글자 Caption/default-B · Light/0 · 사람 아이콘 없음
+// - 가운데 토글(Apple TV / Sport)과 겹치지 않게 작게 (PC · 태블릿은 기존 버튼 그대로)
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  header .inner nav .gnb-right ul .header-login-btn.header-login-btn {
+    @include caption-default-b;
+    box-sizing: border-box;
+    justify-content: center;
+    gap: 0;
+    width: 40px;
+    height: 32px;
+    padding: 0 8px;
+    color: $light-color-0;
+
+    img {
+      display: none;
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] 스포츠 관심있는 구단 — 휴대폰: "전체 구단 보기" 를 제목 줄 오른쪽 끝에 고정
+// - 제목 · 구단 카드 위치는 그대로 (absolute 로 띄워서 다른 내용을 밀지 않음)
+// - 이너(좌우 20) 기준 맨 위 · 오른쪽 20 / 높이 28 = 제목 한 줄 높이 → 제목과 세로 가운데가 맞음
+// - 제목 오른쪽 120px 은 기존처럼 비워 둬서 버튼과 겹치지 않음
+// - main.sport-home.sport-home section.sport-teams : sport-member.scss 가 나중에 불러와져도 이 규칙이 우선
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  main.sport-home.sport-home section.sport-teams {
+    .inner {
+      position: relative;
+    }
+
+    .sport-team-more {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      left: auto;
+      display: flex;
+      align-items: center;
+      width: auto;
+      height: 28px;
+      margin: 0;
+      white-space: nowrap;
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] 오른쪽 아래 TV · TOP 버튼 — 휴대폰: 50 × 50 (TOP 화살표: 좌우 패딩 16 → 18 × 10) · 화면 끝 여백 16 (PC 규칙은 App.scss)
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .floating-actions {
+    right: $space-lg;
+    bottom: $space-lg;
+  }
+
+  .floating-btn {
+    width: 50px;
+    height: 50px;
+
+    &.floating-btn--tv img {
+      width: 50px;
+      height: 50px;
+    }
+
+    // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 18
+    &.floating-btn--top {
+      padding: 0 16px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  body.has-promo-banner .floating-actions {
+    bottom: calc(97px + #{$space-md});
+  }
+}
+
+
+// =====================================================================
+// [추가] 오른쪽 아래 TV · TOP 버튼 — 태블릿 (768 ~ 1024px) 에서 크게
+// - 60 × 60 · TOP 화살표는 좌우 패딩 19 → 22 × 12 · 버튼 사이 12
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  .floating-actions {
+    gap: $space-md;
+  }
+
+  .floating-btn {
+    width: 60px;
+    height: 60px;
+
+    &.floating-btn--tv img {
+      width: 60px;
+      height: 60px;
+    }
+
+    // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 22
+    &.floating-btn--top {
+      padding: 0 19px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}

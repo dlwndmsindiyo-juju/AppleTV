@@ -1,0 +1,55 @@
+// mobile.scss 에서 나눈 파일 (13) — 태블릿 글자 · 버튼 크기
+@use "../../variables" as *;
+
+// =====================================================================
+// [추가] 태블릿 (768 ~ 1024px) 글자 · 버튼 크기 — 시안 (Apple TV 태블릿)
+// - TOP 10 순위 숫자: 195 · 줄 높이 69% (숫자 영역 높이 195 × 0.69 ≈ 135) · 폰트 Noto Sans KR · Black 은 App.scss 공통 규칙
+// - 섹션 제목 Display/L-B · Light/0 / 소제목 Heading/h3 · Light/500 → 위쪽 태블릿 규칙 그대로
+// - 추천작 카드: 제목 Body/large-B · 설명 Body/small (Light/500) · 버튼 → PC 와 같아서 그대로
+// - AI 어시스트: 기분 칩 Body/default-B · Light/0 · 80 × 40 → PC 와 같아서 그대로
+//   · 안내 문구 Body/large · Light/500
+//   · 카드: 한 줄 소개 Body/small / 제목 Body/large-B / 설명 Body/small / 상세 보기 Body/small-B (모두 Light/500)
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+
+  // ---------- TOP 10 순위 숫자 ----------
+  // SVG viewBox 높이 140 을 135px 로 그림 → 글자 크기 202(viewBox 단위) ≈ 화면 195px
+  section.top10-section .top10-num {
+    height: 135px;
+
+    .top10-num-glyph {
+      font-size: 202px; // 폰트(Noto Sans KR · 900)는 App.scss 공통 규칙
+      letter-spacing: -8px;
+    }
+  }
+
+  // ---------- AI 어시스트 ----------
+  main.member-home .member-mood {
+    .member-notice p {
+      @include body-large;
+      color: $light-color-500;
+    }
+
+    .member-ai-tagline {
+      @include body-small;
+      color: $light-color-500;
+    }
+
+    .member-ai-card {
+      .member-card-title {
+        @include body-large-b;
+        color: $light-color-500;
+      }
+
+      .member-card-meta {
+        @include body-small;
+        color: $light-color-500;
+      }
+
+      .member-card-link {
+        @include body-small-b;
+        color: $light-color-500;
+      }
+    }
+  }
+}

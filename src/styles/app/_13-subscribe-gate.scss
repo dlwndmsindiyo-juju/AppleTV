@@ -1,0 +1,360 @@
+// App.scss 에서 나눈 파일 (13) — 구독 유도 팝업 · 무료 체험 안내
+@use "../../variables" as *;
+@use "tokens" as *;
+
+// =====================================================================
+// 구독 유도 팝업 ("구독 후 이용해주세요." · SubscribeGate.jsx)
+// - 로그인 · 구독 카드와 같은 톤: 어두운 카드 · Apple TV 로고 · 보라 버튼
+// =====================================================================
+.subscribe-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 2000; // 헤더(1000) · 하단 배너 위
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-xl;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  animation: subscribe-gate-fade 0.2s ease both;
+}
+
+.subscribe-gate-card {
+  width: 100%;
+  max-width: 420px;
+  padding: $space-2xl $space-xl $space-xl;
+  border-radius: $radius-lg;
+  background-color: $bg-surface;
+  color: $text-primary;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  animation: subscribe-gate-in 0.25s ease both;
+}
+
+.subscribe-gate-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 52px;
+  margin: 0 auto $space-lg;
+  border-radius: $radius-card-sm;
+  background-color: $bg-input;
+
+  img {
+    display: block;
+    width: auto;
+    height: 22px;
+    filter: brightness(0) invert(1);
+  }
+}
+
+.subscribe-gate-title {
+  @include heading-h2-b;
+  margin: 0 0 $space-sm;
+  padding-top: 0; // main h2 { padding-top: 200px } 영향 제거
+  color: $text-primary;
+}
+
+.subscribe-gate-desc {
+  @include body-default;
+  margin: 0 0 $space-xl;
+  color: $text-secondary;
+  word-break: keep-all;
+}
+
+.subscribe-gate-actions {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.subscribe-gate-btn {
+  @include body-default-b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: $radius-xs;
+  background-color: $primary-color-500;
+  color: $text-primary;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $primary-color-400;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $light-color-0;
+    outline-offset: 2px;
+  }
+
+  &--secondary {
+    background-color: $bg-input;
+
+    &:hover {
+      background-color: $bg-surface-hover;
+    }
+  }
+}
+
+@keyframes subscribe-gate-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes subscribe-gate-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .subscribe-gate,
+  .subscribe-gate-card {
+    animation: none;
+  }
+}
+
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
+
+// ===== 무료 체험 배너: 하루 안 보기 / 일주일 안 보기 =====
+.trial-welcome {
+  .trial-strip {
+    gap: $space-md;
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  .trial-heading {
+    padding: 0;
+  }
+
+  .trial-strip-actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: $space-lg;
+  }
+
+  .trial-strip-hide {
+    @include body-small;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #6e6e73;
+    cursor: pointer;
+
+    &:hover {
+      color: #111;
+      text-decoration: underline;
+    }
+  }
+
+  // 배너를 숨기면 문구가 헤더 바로 아래에서 시작
+  &.is-strip-hidden .trial-heading {
+    margin-top: 0;
+  }
+}
+
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
+
+// ===== 무료 체험 환영 화면: 문구 + TOP 10 슬라이드 + 홈으로 바로가기 =====
+// 간격: 배너 ↔ 문구 128px / 문구 ↔ TOP 10 128px / TOP 10 ↔ 버튼 128px / 버튼 ↔ 푸터 128px
+
+.trial-welcome {
+
+  // 메인 홈(환영 화면 이후)에서는 하얀 배너만 → 아래 여백 줄임
+  &:not(.is-intro) {
+    padding-bottom: $space-md;
+  }
+
+  &.is-intro {
+    display: block;
+    min-height: 0;
+    padding-bottom: $trial-gap;
+
+    .inner {
+      display: block;
+    }
+
+    .trial-heading {
+      margin-top: $trial-gap;
+    }
+
+    // 배너를 숨긴 상태면 헤더 바로 아래에서 시작
+    &.is-strip-hidden .trial-heading {
+      margin-top: $space-2xl;
+    }
+
+    .top10-section {
+      padding: $trial-gap 0 0;
+      background: none;
+    }
+  }
+
+  // 홈으로 바로가기: 아래 가운데 · Pill(토글형) 버튼 · 프라이머리 컬러
+  .inner.trial-home-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: $trial-gap;
+  }
+
+  .trial-home-link {
+    @include body-large-b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-sm;
+    min-width: 220px;
+    height: 56px;
+    padding: 0 $space-2xl;
+    border: 0;
+    border-radius: $radius-pill;
+    background-color: $primary-color-500;
+    color: $text-primary;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    span {
+      font-size: 1.3em;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    &:hover {
+      background-color: $primary-color-400;
+
+      span {
+        transform: translateX(4px);
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $primary-color-200;
+      outline-offset: 3px;
+    }
+  }
+}
+
+// (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
+
+// ===== 공통 아이콘 (public/icons: plus · check · nav/right-nav · right-top) =====
+// - 사용: <span className="ui-icon ui-icon-arrow" aria-hidden="true" />
+// - 크기: 1em → 옆 텍스트 크기와 같음 (텍스트 크기가 바뀌면 아이콘도 함께 바뀜)
+// - mask → 글자색(currentColor)을 그대로 따라감
+.ui-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.ui-icon-plus {
+  -webkit-mask-image: url("/icons/plus.svg");
+  mask-image: url("/icons/plus.svg");
+}
+
+.ui-icon-check {
+  -webkit-mask-image: url("/icons/check.svg");
+  mask-image: url("/icons/check.svg");
+}
+
+// 화살표: JSX 에서 <img src="/icons/nav/right-nav.svg"> 로 직접 사용 (파일 모양 · 색 그대로)
+// - 카드 안 img { width: 100% } 같은 공통 규칙에 늘어나지 않도록 크기 고정 (글자 크기 1em)
+img.ui-icon.ui-icon-arrow {
+  display: inline-block;
+  width: 1em !important;
+  height: 1em !important;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  object-fit: contain;
+  background: none !important;
+  border-radius: 0;
+  transform: none;
+  -webkit-mask: none;
+  mask: none;
+}
+
+// 새 창 링크 ↗ : 원본이 여백 없이 꽉 찬 모양이라 다른 아이콘과 같은 크기로 보이도록 1em 안에서 60%
+.ui-icon-external {
+  -webkit-mask-image: url("/icons/right-top.svg");
+  mask-image: url("/icons/right-top.svg");
+  -webkit-mask-size: 60%;
+  mask-size: 60%;
+}
+
+// 마음에 담아둔 이야기 더보기 색상 변경
+.member-more {
+  color: $light-color-0;
+}
+
+// 글자 + 아이콘 한 줄 가운데 정렬 (align-items: center)
+.member-more,
+.member-card-link,
+.sport-more,
+.sport-league-arrow,
+.trial-strip-title,
+.member-btn,
+.auth-link,
+.login-link-btn,
+.trial-home-link {
+  &:has(> .ui-icon) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+  }
+}
+
+// 홈으로 바로가기: 기존 화살표 규칙(span { font-size: 1.3em })이 아이콘 크기를 키우지 않게 → 버튼 글자 크기와 동일
+.trial-welcome .trial-home-link .ui-icon {
+  font-size: inherit;
+}
+
+// 홈으로 바로가기: 마우스를 올리면 화살표가 오른쪽으로 살짝 이동 (img 로 바뀐 아이콘에도 적용)
+.trial-welcome .trial-home-link:hover img.ui-icon-arrow {
+  transform: translateX(4px);
+  transition: transform 0.2s ease;
+}
+
+// 아이콘 정렬 대상 추가 (푸터 링크 · 로그인/구독 버튼형 링크) + 푸터 화살표도 글자 크기와 동일하게
+.footer-main-menu a,
+.auth-btn {
+  &:has(> .ui-icon) {
+    align-items: center;
+  }
+}
+
+.footer-main-menu .arrow.ui-icon {
+  font-size: inherit;
+}

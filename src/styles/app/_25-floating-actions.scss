@@ -1,0 +1,118 @@
+// App.scss 에서 나눈 파일 (25) — 오른쪽 아래 TV · TOP 버튼 · 네비게이터 숨김
+@use "../../variables" as *;
+
+// =====================================================================
+// [추가] 오른쪽 아래 떠 있는 버튼 묶음 (FloatingActions.jsx) — 모든 페이지 · 항상 표시
+// - 세로로 나란히: 위 TV 디자인 보기 (/tv) · 아래 TOP (맨 위로)
+// - 두 버튼 모두 24 × 24 원형
+//   · TV: 아이콘 원본 그대로 (public/icons/tv/tv-more-btn.svg)
+//   · TOP: 원형 배경 Light/200 + 화살표 아이콘 원본 17 × 9 (public/icons/top-btn.svg)
+// - 하단 LIVE 배너(97px)가 보일 때는 배너 위로 올라감
+// - 휴대폰 위치는 mobile.scss
+// =====================================================================
+.floating-actions {
+  position: fixed;
+  right: $space-xl;
+  bottom: $space-xl;
+  z-index: 1001; // 헤더(1000) 위 · 팝업(2000 이상) 아래
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-sm;
+}
+
+body.has-promo-banner .floating-actions {
+  bottom: calc(97px + #{$space-lg});
+}
+
+.floating-btn {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  overflow: hidden;
+  background: transparent;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+
+  img {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $light-color-0;
+    outline-offset: 2px;
+  }
+
+  // TV 디자인 보기: 아이콘이 원형 버튼 그 자체
+  &.floating-btn--tv img {
+    width: 24px;
+    height: 24px;
+  }
+
+  // TOP: Light/200 원 + 화살표 (원본 17 × 9)
+  &.floating-btn--top {
+    background-color: $light-color-200;
+
+    img {
+      width: 17px;
+      height: 9px;
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] 오른쪽 아래 TV · TOP 버튼 — PC 에서 크게 (1025px 이상)
+// - 70 × 70 · TOP 화살표는 좌우 패딩 22 → 26 × 14 · 버튼 사이 12
+// - 태블릿은 mobile.scss · 휴대폰은 원본 24 그대로
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+  .floating-actions {
+    gap: $space-md;
+  }
+
+  .floating-btn {
+    width: 70px;
+    height: 70px;
+
+    &.floating-btn--tv img {
+      width: 70px;
+      height: 70px;
+    }
+
+    // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 26
+    &.floating-btn--top {
+      padding: 0 22px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] 슬라이드 좌우 네비게이터(화살표) 아이콘 모두 숨김 — PC · 태블릿 · 휴대폰 · 모든 슬라이드
+// - 히어로 · TOP 10 · 오리지널스 · 로그인 후 홈 · 스포츠 등 Swiper 기본 화살표(.swiper-button-prev / next)
+// - 섹션마다 "항상 보이게(display: flex)" 규칙이 있어 !important 로 한 곳에서 숨김
+// - 슬라이드는 마우스 드래그 · 터치로 그대로 넘길 수 있음 / 히어로 아래 점(페이지네이션)은 그대로
+// =====================================================================
+.swiper-button-prev,
+.swiper-button-next {
+  display: none !important;
+}

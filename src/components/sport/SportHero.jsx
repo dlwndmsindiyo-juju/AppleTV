@@ -1,8 +1,10 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import VideoPopup from "../common/VideoPopup"; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import { useSportStore } from "../../store/useSportStore";
+import { useAuthStore } from "../../store/useAuthStore"; // [추가] 경기 시청: 로그인 전에는 구독 안내 팝업
 import { useTeamStore, selectHeroTeam } from "../../store/useTeamStore";
 import { CONFERENCES, getTeamById } from "../../data/sportTeams";
 import { getPresentationMatch, sportTeamLabel } from "./sportPresentation";
@@ -15,6 +17,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import { openSubscribeGate } from "../../utils/subscribeGate"; // [정리] 구독 안내 팝업 열기 공용
 
 // 히어로 슬라이드 이미지 (public/images/sport/ 에 넣어 주세요)
 const SPORT_HERO_SLIDES = [
@@ -118,11 +121,35 @@ export const TeamHero = ({ team }) => {
 // ---------------------------------------------------------------------
 // 기본 히어로 (팔로우한 구단이 없을 때) — 기존 그대로
 // - 이미지 슬라이드(페이드 + 화살표 + 페이지네이션) 위에 경기 카드 고정
+// - [수정] 경기 시청: OTT 히어로 재생처럼 누르면 바로 전체 화면 재생 (페이지 이동 없음)
+//   · 영상은 라이브 상세(SportLivePage)의 첫 영상과 같음: MLS 하이라이트 클립 → 없으면 TheSportsDB 하이라이트
+//   · 로그인 전에는 OTT 와 같이 구독 안내 팝업 · 왼쪽 위 "← 뒤로" · Esc · 브라우저 뒤로가기로 닫기
+//   · 영상은 화면을 꽉 채움 (16:9 영상을 화면 비율에 맞춰 넘치는 부분만 잘림)
 // ---------------------------------------------------------------------
 const MatchHero = () => {
   const liveMatches = useSportStore((state) => state.liveMatches);
   const match = getPresentationMatch(liveMatches);
   const score = getScore(match);
+
+  // [추가] 바로 재생할 영상 (라이브 상세 첫 영상과 같은 규칙)
+  const clips = useSportStore((state) => state.liveClips);
+  const sdbVideos = useSportStore((state) => state.highlightList);
+  const fetchLiveClips = useSportStore((state) => state.onFetchLiveClips);
+  const fetchHighlightList = useSportStore((state) => state.onFetchHighlightList);
+  useEffect(() => { fetchLiveClips(); fetchHighlightList(); }, [fetchLiveClips, fetchHighlightList]);
+  const videoId = ((clips?.length > 0 ? clips : sdbVideos) || [])[0]?.id?.videoId;
+
+  const uid = useAuthStore((state) => state.user?.uid);
+  const [playing, setPlaying] = useState(false);
+
+  const handleWatch = () => {
+    if (!uid) {
+      openSubscribeGate("watch");
+      return;
+    }
+    setPlaying(true);
+  };
+
 
   return (
     <section className="sport-hero">
@@ -179,15 +206,30 @@ const MatchHero = () => {
 
         <div className="sport-hero-actions">
           {/* 하단 LIVE 배너와 같은 경기 → 라이브 상세 */}
-          <Link className="sport-btn primary" to={`/sport/match/${match.id}`}>
+          {/* [수정] 경기 시청: 누르면 바로 재생 (OTT 히어로 ▶ 재생과 같은 방식) */}
+          <button type="button" className="sport-btn primary" onClick={handleWatch}>
             <img className="play-icon" src="/icons/play-w.svg" alt="" aria-hidden="true" />
             경기 시청
-          </Link>
+          </button>
           <Link className="sport-btn secondary" to={`/sport/match/${match.id}`}>
             경기 정보
           </Link>
         </div>
       </div>
+
+      {/* [추가] 전체 화면 재생 팝업 (공용 VideoPopup · 영상은 화면을 100% 채움) */}
+      <VideoPopup open={playing} onClose={() => setPlaying(false)} label="경기 시청">
+        {videoId ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1`}
+            title={`${sportTeamLabel(match.homeTeam)} vs ${sportTeamLabel(match.awayTeam)} 경기 시청`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowFullScreen
+          />
+        ) : (
+          <p>영상을 불러오는 중입니다…</p>
+        )}
+      </VideoPopup>
     </section>
   );
 };

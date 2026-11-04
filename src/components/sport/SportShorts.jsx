@@ -2,9 +2,10 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useSportStore } from "../../store/useSportStore";
 import { SPORT_TEAMS } from "../../data/sportTeams";
-import { decodeHtml } from "./sportUtils";
+import { decodeHtml, ytThumb } from "./sportUtils";
 
 import "swiper/css";
+import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
 
 // =====================================================================
 // 숏폼 (세로 카드 슬라이드)
@@ -117,7 +118,7 @@ const SportShorts = ({ title = "숏폼" }) => {
         meta: [match, v.durationText].filter(Boolean).join(" · "),
         seconds: Number.isFinite(v.seconds) ? v.seconds : 30,
         likeCount: v.likeCount || 0,
-        thumb: sn.thumbnails?.high?.url || sn.thumbnails?.medium?.url || `https://i.ytimg.com/vi/${v.id.videoId}/hqdefault.jpg`,
+        thumb: ytThumb(v),
       };
     }), [shortsVideos]);
 
@@ -144,12 +145,7 @@ const SportShorts = ({ title = "숏폼" }) => {
   return (
     <section className="sport-shorts sport-shortform" aria-labelledby="sport-shortform-title">
       <div className="inner">
-        <div className="sport-section-head">
-          <h3 className="sport-section-title" id="sport-shortform-title">{title}</h3>
-          <a className="sport-more" href="https://www.youtube.com/@MLS/shorts" target="_blank" rel="noreferrer">
-            전체 보기 <img className="ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-          </a>
-        </div>
+        <SportSectionHead title={title} titleId="sport-shortform-title" href="https://www.youtube.com/@MLS/shorts" />
 
         {items.length === 0 ? (
           <p className="sport-empty">숏폼 영상이 없습니다.</p>

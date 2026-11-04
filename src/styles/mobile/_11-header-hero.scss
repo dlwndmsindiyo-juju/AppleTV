@@ -1,0 +1,82 @@
+// mobile.scss 에서 나눈 파일 (11) — 헤더 검색 아이콘 · 프로필 버튼 · 히어로 제목 크기
+@use "../../variables" as *;
+
+// =====================================================================
+// [추가] 헤더 검색: 모바일에서는 검색창 대신 검색 아이콘만 (프로필 옆)
+// - PC · 태블릿: 기존 검색창 그대로, 아이콘 버튼은 숨김
+// - 모바일: 검색창 숨김(기존 규칙) · 프로필과 같은 36px 원형 아이콘 버튼 표시 → /search 로 이동
+// =====================================================================
+header .inner nav .gnb-right ul .search-icon-item {
+  display: none;
+}
+
+@media (max-width: $breakpoint-mobile) {
+  header .inner nav .gnb-right ul {
+    gap: $space-sm; // 검색 아이콘 ↔ 프로필 사이 8px (가운데 토글과 겹치지 않게 오른쪽 묶음을 좁힘)
+
+    .search-icon-item {
+      display: flex;
+    }
+
+    // 프로필(36px)보다 작은 32px → 가운데 토글과 붙지 않게
+    .search-icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: $input-bg;
+      transition: background-color 0.2s ease;
+
+      &:hover,
+      &:focus-visible {
+        background-color: $input-focus-bg;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $light-color-0;
+        outline-offset: 2px;
+      }
+
+      img {
+        width: 14px;
+        height: 14px;
+        display: block;
+        filter: invert(0.7); // 검색창 안 아이콘과 같은 색
+      }
+    }
+  }
+}
+
+
+// =====================================================================
+// [추가] 헤더 프로필 버튼 (로그인 후) 모바일 — 검색 아이콘 버튼과 같은 지름 32 원형
+// - 배경 프라이머리 · 기본 아이콘 14px 은 App.scss 규칙 그대로
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  header .inner nav .gnb-right ul .profile-box.profile-box {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+
+// =====================================================================
+// [추가] 히어로 제목 (작품 로고) 크기 — 태블릿 · 모바일 (PC 규칙은 App.scss)
+// - 태블릿: PC 와 같은 390 × 162 / 모바일: 195 × 80
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-logo {
+    width: 390px;
+    height: 162px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-logo {
+    width: 195px;
+    height: 80px;
+  }
+}
