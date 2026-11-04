@@ -154,11 +154,12 @@ const SportShorts = ({ title = "숏폼" }) => {
             className="sport-sf-swiper"
             slidesPerView="auto"
             spaceBetween={22}
-            centeredSlides
-            loop={items.length >= 6}
+            // centeredSlides
+            // loop={items.length >= 6}
             slideToClickedSlide
-            initialSlide={Math.min(3, items.length - 1)}
+            // initialSlide={Math.min(3, items.length - 1)}
             onSlideChange={() => setPlayingId(null)}
+            loop={true}
           >
             {items.map((item) => {
               const playing = playingId === item.id;

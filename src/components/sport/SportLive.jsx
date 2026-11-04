@@ -149,6 +149,7 @@ export default function SportLive() {
             slidesPerView="auto"
             spaceBetween={32}
             breakpoints={{ 0: { spaceBetween: 12 }, 768: { spaceBetween: 24 }, 1025: { spaceBetween: 32 } }}
+            loop={true}
           >
             {cards.map((card) => (
               <SwiperSlide key={card.id} className="sport-lv-slide">

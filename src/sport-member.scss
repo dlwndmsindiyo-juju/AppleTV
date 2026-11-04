@@ -1502,8 +1502,28 @@ main.sport-home.sport-detail-page {
   .sport-detail-back {
     @include body-small;
     font-family: inherit;
+    position: static;
+    display: inline-flex;
+    align-items: center;
     align-self: flex-start;
+
+    width: fit-content;
+    height: auto;
+
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+
+    order: 0;
+    margin: 0 0 24px;
+    transform: none;
     color: $text-tertiary;
+
+    .sport-detail-layout {
+      order: 1;
+      width: 100%;
+    }
 
     &:hover {
       color: $text-primary;
@@ -3253,7 +3273,7 @@ main.sport-home.sport-live-page {
 
   .sport-live-back-wrap {
     width: min(1280px, calc(100% - 128px));
-    margin: 80px auto 0;
+    // margin: 80px auto 0;
   }
 
   // ---------- 태블릿 ----------
