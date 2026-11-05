@@ -108,8 +108,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 78px;
-  padding: 12px 0;
+  height: 4.875rem;
+  padding: 0.75rem 0;
   border-radius: $tv-btn-radius;
   white-space: nowrap;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
@@ -131,7 +131,7 @@
   &.is-focused {
     outline: none;
     transform: scale(1.05);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
   }
 }
 
@@ -139,7 +139,7 @@
 .tv-screen .tv-actions {
   display: flex;
   justify-content: center;
-  gap: 28px;
+  gap: 1.75rem;
 
   .tv-btn {
     width: 340px; // 시안 340 × 78 (패딩 12 147)
@@ -153,7 +153,7 @@
 
     .tv-btn {
       width: 500px; // 시안 500 × 72 (패딩 12 172 / 12 219)
-      height: 72px;
+      height: 4.5rem;
     }
   }
 }
@@ -166,11 +166,11 @@
   justify-content: center;
 
   .tv-desc {
-    margin-top: 52px;
+    margin-top: 3.25rem;
   }
 
   .tv-actions {
-    margin-top: 83px;
+    margin-top: 5.1875rem;
   }
 }
 
@@ -179,11 +179,11 @@
 // 2. 이용 안내 — 제목 · 설명은 위, 버튼은 화면 아래
 // =====================================================================
 .tv-screen.tv-terms {
-  padding-top: 72px;
-  padding-bottom: 41px;
+  padding-top: 4.5rem;
+  padding-bottom: 2.5625rem;
 
   .tv-desc {
-    margin-top: 62px;
+    margin-top: 3.875rem;
   }
 
   .tv-actions {
@@ -199,15 +199,15 @@
   justify-content: center;
 
   .tv-desc {
-    margin-top: 36px;
+    margin-top: 2.25rem;
   }
 }
 
 .tv-profile-list {
   display: flex;
   justify-content: center;
-  gap: 64px;
-  margin: 96px 0 0;
+  gap: 4rem;
+  margin: 6rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -236,7 +236,7 @@
 
     .tv-profile-avatar {
       transform: scale(1.08);
-      box-shadow: 0 0 0 6px $light-color-0;
+      box-shadow: 0 0 0 0.375rem $light-color-0;
     }
   }
 
@@ -251,7 +251,7 @@
   align-items: center;
   justify-content: center;
   width: 200px;
-  height: 200px;
+  height: 12.5rem;
   border-radius: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
@@ -271,11 +271,11 @@
 // 3. Apple 계정 로그인 · 계정 정보 입력 — 리모컨 자판
 // =====================================================================
 .tv-screen.tv-keyboard {
-  padding-top: 150px;
-  padding-bottom: 148px;
+  padding-top: 9.375rem;
+  padding-bottom: 9.25rem;
 
   .tv-desc {
-    margin-top: 36px;
+    margin-top: 2.25rem;
   }
 
   // 리모컨 안내 박스: 715 × 66 (패딩 12 93) · Display/L · Light/0
@@ -285,9 +285,9 @@
     align-items: center;
     justify-content: center;
     width: 715px;
-    height: 66px;
-    margin: 76px 0 0;
-    padding: 12px 93px;
+    height: 4.125rem;
+    margin: 4.75rem 0 0;
+    padding: 0.75rem 5.8125rem;
     border-radius: $tv-btn-radius;
     background-color: $tv-guide-bg;
     color: $light-color-0;
@@ -301,7 +301,7 @@
     display: flex;
     flex-direction: column;
     gap: $space-md;
-    margin-top: 76px;
+    margin-top: 4.75rem;
 
     .tv-guide {
       margin: 0;
@@ -310,7 +310,7 @@
     }
 
     .tv-field.is-active {
-      box-shadow: inset 0 0 0 2px $light-color-0;
+      box-shadow: inset 0 0 0 0.125rem $light-color-0;
     }
 
     .tv-field:focus-visible,
@@ -341,7 +341,7 @@
     flex-direction: column;
     align-items: center;
     gap: $space-lg;
-    margin-top: 44px;
+    margin-top: 2.75rem;
   }
 
   .tv-key-row {
@@ -357,7 +357,7 @@
     align-items: center;
     justify-content: center;
     width: 54px;
-    height: 64px;
+    height: 4rem;
     padding: 0;
     border-radius: $radius-xs;
     background: transparent;
@@ -372,12 +372,12 @@
 
     // 지우기: 아이콘 칸도 54 × 64 (public/icons/tv/tv-delet-btn.svg)
     &.tv-key--delete {
-      margin-left: 20px;
+      margin-left: 1.25rem;
 
       img {
         display: block;
         width: 52px;
-        height: 44px;
+        height: 2.75rem;
       }
 
       &:focus-visible img,
@@ -391,8 +391,8 @@
   .tv-key-space {
     @include heading-h3-b;
     width: 90px;
-    height: 40px;
-    margin-right: 28px;
+    height: 2.5rem;
+    margin-right: 1.75rem;
     padding: 0;
     border-radius: $radius-xs;
     background-color: $tv-key-space-bg;
@@ -403,8 +403,8 @@
   .tv-key-modes {
     display: flex;
     width: 432px;
-    height: 66px;
-    margin-top: 22px;
+    height: 4.125rem;
+    margin-top: 1.375rem;
     border-radius: $tv-btn-radius;
     overflow: hidden;
     background-color: $tv-key-mode-bg;
@@ -423,7 +423,7 @@
     color: $light-color-0;
 
     & + .tv-key-mode {
-      border-left: 2px solid $tv-key-mode-divider;
+      border-left: 0.125rem solid $tv-key-mode-divider;
     }
 
     &:focus-visible,
@@ -496,7 +496,7 @@
 .tv-side-logo {
   display: block;
   width: auto;
-  height: 24px;
+  height: 1.5rem;
   margin-right: auto; // 로고는 맨 왼쪽, 나머지는 오른쪽으로
 }
 
@@ -505,7 +505,7 @@
   flex-shrink: 0;
   display: block;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -517,8 +517,8 @@
   }
 
   &:is(button):focus-visible {
-    outline: 3px solid $tv-btn-primary-bg;
-    outline-offset: 2px;
+    outline: 0.1875rem solid $tv-btn-primary-bg;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -528,7 +528,7 @@
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   padding: 0;
   border: none;
   border-radius: $radius-xs;
@@ -538,7 +538,7 @@
   img {
     display: block;
     width: 40px;
-    height: 40px;
+    height: 2.5rem;
   }
 
   &:hover,
@@ -564,7 +564,7 @@
   display: flex;
   align-items: center;
   gap: $space-md;
-  height: 52px;
+  height: 3.25rem;
   margin-bottom: $space-3xl;
   padding: 0 $space-lg;
   border-radius: $tv-btn-radius;
@@ -572,7 +572,7 @@
   cursor: text;
 
   &:focus-within {
-    box-shadow: inset 0 0 0 2px $light-color-0;
+    box-shadow: inset 0 0 0 0.125rem $light-color-0;
   }
 
   input {
@@ -585,10 +585,10 @@
     background: transparent;
     color: $text-primary;
     font-family: $font-family-base;
-    font-size: 17px;
+    font-size: 1.0625rem;
     font-weight: $font-weight-regular;
-    line-height: 19px;
-    letter-spacing: -0.4px;
+    line-height: 1.1875rem;
+    letter-spacing: -0.025rem;
 
     &::placeholder {
       color: $text-primary;
@@ -603,7 +603,7 @@
 .tv-side-search-icon {
   flex-shrink: 0;
   width: 22px;
-  height: 22px;
+  height: 1.375rem;
   background-color: $light-color-0; // [수정] 흰색
   -webkit-mask: url("/icons/search.svg") center / contain no-repeat;
   mask: url("/icons/search.svg") center / contain no-repeat;
@@ -618,15 +618,15 @@
 // 메뉴 글자: SF Pro Regular 17 / 19 · 자간 -0.4px · Text/Primary (시안)
 .tv-side-item {
   font-family: $font-family-base;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: $font-weight-regular;
-  line-height: 19px;
-  letter-spacing: -0.4px;
+  line-height: 1.1875rem;
+  letter-spacing: -0.025rem;
   display: flex;
   align-items: center;
   gap: $space-lg;
   width: 100%;
-  min-height: 44px;
+  min-height: 2.75rem;
   padding: 0 $space-md;
   border: none;
   border-radius: $radius-xs;
@@ -660,7 +660,7 @@
   align-items: center;
   justify-content: center;
   width: 30px;
-  height: 28px;
+  height: 1.75rem;
 
   img {
     display: block;
@@ -672,17 +672,17 @@
 // [추가] 로그인 전: 프로필 자리에 "로그인" 글자 버튼 (메뉴 글자와 같은 17 / 19)
 .tv-side-login {
   flex-shrink: 0;
-  height: 40px;
+  height: 2.5rem;
   padding: 0 $space-lg;
   border: none;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background-color: $tv-btn-secondary-bg;
   color: $text-primary;
   font-family: $font-family-base;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: $font-weight-regular;
-  line-height: 19px;
-  letter-spacing: -0.4px;
+  line-height: 1.1875rem;
+  letter-spacing: -0.025rem;
   cursor: pointer;
 
   &:hover {
@@ -698,7 +698,7 @@
 
 // [추가] 로그아웃 — 설정 묶음 맨 아래 (아이콘 없이 · 다른 메뉴 글자와 줄 맞춤)
 .tv-side-logout {
-  padding-left: calc(#{$space-md} + 30px + #{$space-lg}); // 아이콘 칸만큼 들여서 글자 줄 맞춤
+  padding-left: calc(#{$space-md} + 1.875rem + #{$space-lg}); // 아이콘 칸만큼 들여서 글자 줄 맞춤
 }
 
 // [추가] AI 아이콘 — 진짜 AI 처럼 빛나며 움직이는 그라데이션
@@ -712,7 +712,7 @@ $tv-ai-lilac: #a5acff;
 .tv-side-ai-icon {
   display: block;
   width: 26px;
-  height: 26px;
+  height: 1.625rem;
   background: linear-gradient(120deg, $tv-ai-peach 0%, $tv-ai-lilac 30%, $primary-color-500 55%, $tv-ai-lilac 75%, $tv-ai-peach 100%);
   background-size: 300% 300%;
   // [수정] 별 모양: public/icons/tv/tv-ai-icon.svg (원래 AI 아이콘과 같은 파일) 을 그대로 mask 로
@@ -740,12 +740,12 @@ $tv-ai-lilac: #a5acff;
   0%,
   100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 2px rgba($tv-ai-lilac, 0.5));
+    filter: drop-shadow(0 0 0.125rem rgba($tv-ai-lilac, 0.5));
   }
 
   50% {
     transform: scale(1.08);
-    filter: drop-shadow(0 0 8px rgba($tv-ai-peach, 0.9)) drop-shadow(0 0 14px rgba($tv-ai-lilac, 0.6));
+    filter: drop-shadow(0 0 0.5rem rgba($tv-ai-peach, 0.9)) drop-shadow(0 0 0.875rem rgba($tv-ai-lilac, 0.6));
   }
 }
 
@@ -762,7 +762,7 @@ $tv-ai-lilac: #a5acff;
   display: block;
   flex-shrink: 0;
   width: 28px;
-  height: 28px;
+  height: 1.75rem;
   background-color: $primary-color-500;
   -webkit-mask: url("/icons/tv/tv-star-icon.svg") center / contain no-repeat;
   mask: url("/icons/tv/tv-star-icon.svg") center / contain no-repeat;
@@ -772,7 +772,7 @@ $tv-ai-lilac: #a5acff;
 .tv-side-heart-icon {
   display: block;
   width: 26px;
-  height: 26px;
+  height: 1.625rem;
   background-color: $primary-color-500;
   -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
   mask: url("/icons/heart-icon.svg") center / contain no-repeat;
@@ -780,7 +780,7 @@ $tv-ai-lilac: #a5acff;
 
 // [추가] 메뉴 묶음 (시안: Library · Apps) — 제목 Heading/h2-B · Light/0 + 오른쪽 접기 화살표
 .tv-side-group {
-  margin-top: 48px;
+  margin-top: 3rem;
 }
 
 .tv-side-group-head {
@@ -789,7 +789,7 @@ $tv-ai-lilac: #a5acff;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 44px;
+  min-height: 2.75rem;
   padding: 0 $space-md;
   border: none;
   border-radius: $radius-xs;
@@ -817,7 +817,7 @@ $tv-ai-lilac: #a5acff;
 .tv-side-group-arrow {
   flex-shrink: 0;
   width: 24px;
-  height: 24px;
+  height: 1.5rem;
   background-color: $light-color-0;
   -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
   mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
@@ -880,7 +880,7 @@ $tv-ai-lilac: #a5acff;
   // 마우스로 볼 때도 리모컨 포커스와 같은 모양
   .tv-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
   }
 
   .tv-key:hover,
@@ -942,40 +942,40 @@ $tv-ai-lilac: #a5acff;
 .tv-sport .tv-header {
   position: relative;
   flex-shrink: 0;
-  height: 157px;
+  height: 9.8125rem;
 }
 
 .tv-sport .tv-header-logo {
   position: absolute;
-  top: 44px;
-  left: 80px;
+  top: 2.75rem;
+  left: 5rem;
   width: 68px;
-  height: 56px;
+  height: 3.5rem;
   object-fit: contain;
   object-position: left center;
 }
 
 .tv-sport .tv-header-nav {
   position: absolute;
-  top: 38px;
-  left: calc(50% - 296px); // 1920 기준 664 (가운데에서 296 왼쪽) · 화면이 넓어져도 같은 자리
+  top: 2.375rem;
+  left: calc(50% - 18.5rem); // 1920 기준 664 (가운데에서 296 왼쪽) · 화면이 넓어져도 같은 자리
   display: flex;
   align-items: center;
   width: 632px;
-  height: 68px;
-  padding: 6px;
-  border-radius: 34px;
+  height: 4.25rem;
+  padding: 0.375rem;
+  border-radius: 2.125rem;
   background-color: $tv-header-bg;
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(1.875rem);
+  -webkit-backdrop-filter: blur(1.875rem);
 }
 
 .tv-sport .tv-header-tab {
   @include display-M-b;
   flex: 1;
-  height: 56px;
+  height: 3.5rem;
   padding: 0;
-  border-radius: 28px;
+  border-radius: 1.75rem;
   background: transparent;
   color: $light-color-0;
   transition: background-color 0.2s ease;
@@ -997,19 +997,19 @@ $tv-ai-lilac: #a5acff;
 .tv-sport-body {
   flex: 1;
   min-height: 0;
-  padding-top: 72px;
+  padding-top: 4.5rem;
   overflow: hidden;
 }
 
 // 줄 사이 64 = 52 + 카드 줄 아래 여백 12
 .tv-sport-row + .tv-sport-row {
-  margin-top: 52px;
+  margin-top: 3.25rem;
 }
 
 .tv-sport-title {
   @include display-l-b;
-  margin: 0 0 13px; // 25 = 13 + 카드 줄 위 여백 12
-  padding: 0 80px;
+  margin: 0 0 0.8125rem; // 25 = 13 + 카드 줄 위 여백 12
+  padding: 0 5rem;
   color: $light-color-0;
 }
 
@@ -1017,10 +1017,10 @@ $tv-ai-lilac: #a5acff;
 // - 위아래 12 여백: 포커스 카드가 커져도(4%) 잘리지 않게
 .tv-sport-track {
   display: flex;
-  gap: 40px;
-  padding: 12px 80px;
+  gap: 2.5rem;
+  padding: 0.75rem 5rem;
   overflow: hidden;
-  scroll-padding: 0 80px;
+  scroll-padding: 0 5rem;
 }
 
 .tv-sport-card {
@@ -1028,7 +1028,7 @@ $tv-ai-lilac: #a5acff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   width: 410px;
   padding: 0;
   background: transparent;
@@ -1043,7 +1043,7 @@ $tv-ai-lilac: #a5acff;
 .tv-sport-thumb {
   display: block;
   width: 100%;
-  height: 230px;
+  height: 14.375rem;
   border-radius: $tv-card-radius;
   overflow: hidden;
   background-color: $dark-color-400;
@@ -1073,7 +1073,7 @@ $tv-ai-lilac: #a5acff;
   }
 
   .tv-sport-thumb {
-    height: 315px;
+    height: 19.6875rem;
   }
 }
 
@@ -1082,7 +1082,7 @@ $tv-ai-lilac: #a5acff;
 .tv-sport-card:hover {
   .tv-sport-thumb {
     transform: scale(1.04);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.6);
   }
 
   .tv-sport-card-title {
@@ -1101,7 +1101,7 @@ $tv-ai-lilac: #a5acff;
   top: 50%;
   left: 50%;
   width: 96px;
-  height: 96px;
+  height: 6rem;
   object-fit: contain;
   transform: translate(-50%, -50%);
 }
@@ -1111,7 +1111,7 @@ $tv-ai-lilac: #a5acff;
 .tv-sport-empty {
   @include display-M;
   margin: 0;
-  padding: 0 80px;
+  padding: 0 5rem;
   color: $light-color-500;
 }
 
@@ -1153,7 +1153,7 @@ $tv-ai-lilac: #a5acff;
 .tv-team-hero {
   position: relative;
   flex-shrink: 0;
-  height: 776px;
+  height: 48.5rem;
   overflow: hidden;
   isolation: isolate;
 }
@@ -1180,7 +1180,7 @@ $tv-ai-lilac: #a5acff;
 .tv-team-info {
   position: absolute;
   top: 50%;
-  left: 191px;
+  left: 11.9375rem;
   width: 520px;
   transform: translateY(-50%);
 }
@@ -1194,33 +1194,33 @@ $tv-ai-lilac: #a5acff;
 
 .tv-team-record {
   @include heading-h4;
-  margin: 12px 0 0;
+  margin: 0.75rem 0 0;
   color: $light-color-0;
 }
 
 .tv-team-actions {
   display: flex;
   align-items: center;
-  gap: 32px;
-  margin-top: 32px;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
 .tv-team-follow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 0.5rem;
   width: 167px;
-  height: 52px;
+  height: 3.25rem;
   padding: 0;
   border: 0;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background: $light-color-100;
   color: $text-inverse;
   font-family: $font-family-base;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: $font-weight-bold;
-  line-height: 20px;
+  line-height: 1.25rem;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
@@ -1237,7 +1237,7 @@ $tv-ai-lilac: #a5acff;
     outline: none;
     background: $light-color-0;
     transform: scale(1.05);
-    box-shadow: 0 0 0 4px rgba($light-color-0, 0.35);
+    box-shadow: 0 0 0 0.25rem rgba($light-color-0, 0.35);
   }
 }
 
@@ -1246,12 +1246,12 @@ $tv-ai-lilac: #a5acff;
   @include label-default-b;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 15px;
-  border-radius: 9999px;
+  gap: 0.375rem;
+  padding: 0.5rem 0.9375rem;
+  border-radius: 624.9375rem;
   background-color: $sports-color;
   color: $light-color-0;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1;
 
   img {
@@ -1263,7 +1263,7 @@ $tv-ai-lilac: #a5acff;
 
 .tv-team-desc {
   @include heading-h2;
-  margin: 40px 0 0;
+  margin: 2.5rem 0 0;
   color: $light-color-0;
   word-break: keep-all;
 }
@@ -1274,7 +1274,7 @@ $tv-ai-lilac: #a5acff;
   top: 50%;
   left: 50%;
   width: 402px;
-  height: 402px;
+  height: 25.125rem;
   object-fit: contain;
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -1290,11 +1290,11 @@ $tv-ai-lilac: #a5acff;
 
 // ---------- 그 팀 영상 ----------
 .tv-team-body {
-  padding: 40px 0 80px;
+  padding: 2.5rem 0 5rem;
 }
 
 .tv-team-row + .tv-team-row {
-  margin-top: 56px;
+  margin-top: 3.5rem;
 }
 
 .tv-team-row-title {
@@ -1303,36 +1303,36 @@ $tv-ai-lilac: #a5acff;
   align-items: center;
   gap: $space-sm;
   margin: 0;
-  padding: 0 80px;
+  padding: 0 5rem;
   color: $light-color-0;
 
   img {
     width: 34px;
-    height: 34px;
+    height: 2.125rem;
   }
 }
 
 .tv-team-row-desc {
   @include body-default;
   margin: $space-xs 0 0;
-  padding: 0 80px;
+  padding: 0 5rem;
   color: $light-color-500;
 }
 
 // 카드 줄: 왼쪽 80 에서 시작 · 오른쪽 끝에서 잘림 (리모컨 이동 시 옆으로 밀림)
 .tv-team-track {
   display: flex;
-  gap: 30px;
-  padding: 24px 80px 12px;
+  gap: 1.875rem;
+  padding: 1.5rem 5rem 0.75rem;
   overflow: hidden;
-  scroll-padding: 0 80px;
+  scroll-padding: 0 5rem;
 }
 
 .tv-team-card {
   position: relative;
   flex-shrink: 0;
   width: 410px;
-  height: 231px;
+  height: 14.4375rem;
   padding: 0;
   border: 0;
   border-radius: $tv-card-radius;
@@ -1356,7 +1356,7 @@ $tv-ai-lilac: #a5acff;
   &:focus-visible {
     outline: none;
     transform: scale(1.04);
-    box-shadow: 0 0 0 4px $light-color-0, 0 12px 32px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 0 0.25rem $light-color-0, 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
   }
 }
 
@@ -1370,13 +1370,13 @@ $tv-ai-lilac: #a5acff;
 
 .tv-team-card-text {
   position: absolute;
-  right: 20px;
-  bottom: 14px;
-  left: 20px;
+  right: 1.25rem;
+  bottom: 0.875rem;
+  left: 1.25rem;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
 }
 
 .tv-team-card-title {
@@ -1401,20 +1401,20 @@ $tv-ai-lilac: #a5acff;
   @include caption-small;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 6px;
+  gap: 0.375rem;
+  margin-top: 0.375rem;
   color: $light-color-0;
 
   img {
     width: 8px;
-    height: 10px;
+    height: 0.625rem;
   }
 }
 
 .tv-team-empty {
   @include display-M;
   margin: 0;
-  padding: 40px 80px;
+  padding: 2.5rem 5rem;
   color: $text-secondary;
 }
 
@@ -1487,10 +1487,10 @@ $tv-ai-lilac: #a5acff;
 // ---------- 위쪽 ----------
 .tv-end-head {
   position: absolute;
-  top: 58px;
-  left: 66px;
+  top: 3.625rem;
+  left: 4.125rem;
   width: 1749px; // [수정] 시안 폭 (66 ~ 1815) 고정 — 화면이 넓어져도 버튼이 오른쪽 끝으로 밀려나지 않음
-  height: 160px;
+  height: 10rem;
 }
 
 .tv-end-watched {
@@ -1504,14 +1504,14 @@ $tv-ai-lilac: #a5acff;
   .tv-end-watched-empty {
     display: block;
     width: 211px;
-    height: 118px;
+    height: 7.375rem;
     object-fit: cover;
     background-color: $dark-color-400;
   }
 
   figcaption {
     @include label-default-b;
-    margin-top: 10px;
+    margin-top: 0.625rem;
     color: $light-color-0;
     text-align: center;
     white-space: nowrap;
@@ -1523,7 +1523,7 @@ $tv-ai-lilac: #a5acff;
 .tv-end-title {
   position: absolute;
   top: 0;
-  left: 232px;
+  left: 14.5rem;
 
   h1 {
     @include display-xl;
@@ -1534,17 +1534,17 @@ $tv-ai-lilac: #a5acff;
 
   p {
     @include display-M;
-    margin: 4px 0 0;
+    margin: 0.25rem 0 0;
     color: $light-color-500;
   }
 }
 
 .tv-end-actions {
   position: absolute;
-  top: 22px;
+  top: 1.375rem;
   right: 0;
   display: flex;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 .tv-end-action {
@@ -1559,8 +1559,8 @@ $tv-ai-lilac: #a5acff;
   justify-content: center;
   box-sizing: border-box;
   width: 142px;
-  height: 80px;
-  padding: 18px 56px;
+  height: 5rem;
+  padding: 1.125rem 3.5rem;
   border: 0;
   border-radius: $radius-sm;
   background-color: $dark-color-300;
@@ -1574,11 +1574,11 @@ $tv-ai-lilac: #a5acff;
 }
 
 .tv-end-action-label {
-  margin-top: 12px;
+  margin-top: 0.75rem;
   color: $dark-color-200;
-  font-size: 23px;
+  font-size: 1.4375rem;
   font-weight: $font-weight-medium;
-  line-height: 36px;
+  line-height: 2.25rem;
   white-space: nowrap;
 }
 
@@ -1597,7 +1597,7 @@ $tv-ai-lilac: #a5acff;
 .tv-end-play {
   display: block;
   width: 22px;
-  height: 31px;
+  height: 1.9375rem;
 }
 
 // 관심 경기: 흰 원 + 더하기 (담으면 체크)
@@ -1606,14 +1606,14 @@ $tv-ai-lilac: #a5acff;
   display: block;
   flex-shrink: 0;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   border-radius: 50%;
   background-color: $light-color-0;
 
   &::after {
     content: "";
     position: absolute;
-    inset: 6px;
+    inset: 0.375rem;
     background-color: $dark-color-900;
     -webkit-mask: url("/icons/plus.svg") center / contain no-repeat;
     mask: url("/icons/plus.svg") center / contain no-repeat;
@@ -1634,11 +1634,11 @@ $tv-ai-lilac: #a5acff;
 // 경기정보: 버튼 아래 설명 상자
 .tv-end-info {
   position: absolute;
-  top: 210px;
+  top: 13.125rem;
   right: 0;
   z-index: 2;
   width: 520px;
-  padding: 24px;
+  padding: 1.5rem;
   border-radius: $radius-card-sm;
   background-color: rgba(0, 0, 0, 0.8);
 
@@ -1664,29 +1664,29 @@ $tv-ai-lilac: #a5acff;
 // ---------- 아래 (경기 다시보기 · 하이라이트) ----------
 .tv-end-body {
   position: absolute;
-  top: 355px;
+  top: 22.1875rem;
   right: 0;
   left: 0;
 }
 
 .tv-end-row + .tv-end-row {
-  margin-top: 44px;
+  margin-top: 2.75rem;
 }
 
 // 다른 TV 섹션 제목과 같음 (Display/L-B · Light/0)
 .tv-end-row-title {
   @include display-l-b;
   margin: 0;
-  padding: 0 66px;
+  padding: 0 4.125rem;
   color: $light-color-0;
 }
 
 .tv-end-track {
   display: flex;
-  gap: 40px;
-  padding: 24px 66px 12px;
+  gap: 2.5rem;
+  padding: 1.5rem 4.125rem 0.75rem;
   overflow: hidden;
-  scroll-padding: 0 66px;
+  scroll-padding: 0 4.125rem;
 }
 
 // 경기 다시보기 카드 (두 구단 뱃지 · 점수 · 날짜 · Apple TV 로고)
@@ -1696,7 +1696,7 @@ $tv-ai-lilac: #a5acff;
   flex-shrink: 0;
   box-sizing: border-box;
   width: 410px;
-  height: 231px;
+  height: 14.4375rem;
   padding: 0;
   border: 0;
   border-radius: $tv-card-radius;
@@ -1710,7 +1710,7 @@ $tv-ai-lilac: #a5acff;
   &:focus-visible {
     outline: none;
     transform: scale(1.04);
-    box-shadow: 0 0 0 4px $light-color-0, 0 12px 32px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 0 0.25rem $light-color-0, 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
   }
 }
 
@@ -1732,8 +1732,8 @@ $tv-ai-lilac: #a5acff;
 
 .tv-end-replay-logo {
   position: absolute;
-  top: 16px;
-  right: 18px;
+  top: 1rem;
+  right: 1.125rem;
   width: 40px;
   height: auto;
 }
@@ -1741,35 +1741,35 @@ $tv-ai-lilac: #a5acff;
 // 가운데 사선
 .tv-end-replay-line {
   position: absolute;
-  top: 60px;
+  top: 3.75rem;
   left: 50%;
   width: 1px;
-  height: 120px;
+  height: 7.5rem;
   background-color: rgba($light-color-0, 0.45);
   transform: rotate(35deg);
 }
 
 .tv-end-replay-team {
   position: absolute;
-  bottom: 12px;
+  bottom: 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 140px;
 
   &.is-home {
-    left: 40px;
+    left: 2.5rem;
   }
 
   &.is-away {
-    right: 40px;
+    right: 2.5rem;
   }
 
   img,
   .sport-badge-initial {
     display: block;
     width: 96px;
-    height: 96px;
+    height: 6rem;
     object-fit: contain;
   }
 
@@ -1782,7 +1782,7 @@ $tv-ai-lilac: #a5acff;
 
   strong {
     @include heading-h2-b;
-    margin-top: 10px;
+    margin-top: 0.625rem;
     color: $light-color-0;
   }
 
@@ -1800,7 +1800,7 @@ $tv-ai-lilac: #a5acff;
 .tv-end-replay-date {
   @include label-default-b;
   position: absolute;
-  bottom: 30px;
+  bottom: 1.875rem;
   left: 50%;
   color: $light-color-0;
   white-space: nowrap;
@@ -1810,8 +1810,8 @@ $tv-ai-lilac: #a5acff;
 .tv-end-notice {
   @include heading-h4;
   position: absolute;
-  bottom: 40px;
-  left: 66px;
+  bottom: 2.5rem;
+  left: 4.125rem;
   margin: 0;
   color: $light-color-500;
 }
@@ -1819,12 +1819,12 @@ $tv-ai-lilac: #a5acff;
 // [추가] 끝 화면 자동 재생 안내 (계정 설정 "추천 항목 재생") — 제목 아래 · 5초 뒤 다음 영상 · 취소
 .tv-end-next {
   position: absolute;
-  top: 190px;
+  top: 11.875rem;
   left: 0;
   display: flex;
   align-items: center;
-  gap: 32px;
-  padding: 16px 16px 16px 28px;
+  gap: 2rem;
+  padding: 1rem 1rem 1rem 1.75rem;
   border-radius: $tv-btn-radius;
   background-color: rgba($dark-color-900, 0.72);
 }
@@ -1832,7 +1832,7 @@ $tv-ai-lilac: #a5acff;
 .tv-end-next-text {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
   max-width: 900px;
 }
 
@@ -1851,8 +1851,8 @@ $tv-ai-lilac: #a5acff;
 
 .tv-end-next-cancel {
   @include heading-h4-b;
-  height: 64px;
-  padding: 0 36px;
+  height: 4rem;
+  padding: 0 2.25rem;
   border: 0;
   border-radius: $tv-btn-radius;
   background-color: $tv-btn-secondary-bg;
@@ -1885,7 +1885,7 @@ $tv-ai-lilac: #a5acff;
   flex: 1;
   min-height: 0;
   display: flex;
-  padding: 0 80px;
+  padding: 0 5rem;
 }
 
 // ---------- 왼쪽 ----------
@@ -1897,28 +1897,28 @@ $tv-ai-lilac: #a5acff;
 .tv-search-title {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin: 6px 0 0;
+  gap: 0.875rem;
+  margin: 0.375rem 0 0;
   padding: 0;
   color: $light-color-0;
   font-family: $font-family-base;
-  font-size: 76px;
+  font-size: 4.75rem;
   font-weight: $font-weight-bold;
-  line-height: 96px;
+  line-height: 6rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
   // 입력한 글자가 길면 조금 작게
   &.has-value {
-    font-size: 56px;
+    font-size: 3.5rem;
   }
 }
 
 .tv-search-icon {
   flex-shrink: 0;
   width: 70px;
-  height: 70px;
+  height: 4.375rem;
   background-color: $light-color-0;
   -webkit-mask: url("/icons/search.svg") center / contain no-repeat;
   mask: url("/icons/search.svg") center / contain no-repeat;
@@ -1927,8 +1927,8 @@ $tv-ai-lilac: #a5acff;
 .tv-search-modes {
   display: flex;
   width: 432px;
-  height: 66px;
-  margin-top: 36px;
+  height: 4.125rem;
+  margin-top: 2.25rem;
   border-radius: $tv-btn-radius;
   overflow: hidden;
   background-color: rgba($light-color-0, 0.5);
@@ -1945,7 +1945,7 @@ $tv-ai-lilac: #a5acff;
   cursor: pointer;
 
   & + .tv-search-mode {
-    border-left: 2px solid $tv-key-mode-divider;
+    border-left: 0.125rem solid $tv-key-mode-divider;
   }
 
   &.is-active {
@@ -1966,9 +1966,9 @@ $tv-ai-lilac: #a5acff;
   display: grid;
   grid-template-columns: repeat(6, 54px);
   justify-content: space-between;
-  row-gap: 2px;
-  margin-top: 23px;
-  padding: 0 4px;
+  row-gap: 0.125rem;
+  margin-top: 1.4375rem;
+  padding: 0 0.25rem;
 }
 
 .tv-search-key {
@@ -1977,7 +1977,7 @@ $tv-ai-lilac: #a5acff;
   align-items: center;
   justify-content: center;
   width: 54px;
-  height: 64px;
+  height: 4rem;
   padding: 0;
   border: 0;
   border-radius: $radius-xs;
@@ -1997,7 +1997,7 @@ $tv-ai-lilac: #a5acff;
 .tv-search-edit {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .tv-search-edit-btn {
@@ -2006,16 +2006,16 @@ $tv-ai-lilac: #a5acff;
   align-items: center;
   justify-content: center;
   min-width: 90px;
-  height: 64px;
+  height: 4rem;
   padding: 0 $space-md;
   border: 0;
   border-radius: $radius-xs;
   background: transparent;
   color: $light-color-0;
   font-family: $font-family-base;
-  font-size: 29px;
+  font-size: 1.8125rem;
   font-weight: $font-weight-medium;
-  line-height: 36px;
+  line-height: 2.25rem;
   cursor: pointer;
 
   &:hover,
@@ -2030,7 +2030,7 @@ $tv-ai-lilac: #a5acff;
   img {
     display: block;
     width: 52px;
-    height: 44px;
+    height: 2.75rem;
   }
 
   &:hover img,
@@ -2046,18 +2046,18 @@ $tv-ai-lilac: #a5acff;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  margin-left: 118px;
-  padding-top: 135px;
+  margin-left: 7.375rem;
+  padding-top: 8.4375rem;
 }
 
 .tv-search-voice {
   @include display-M;
   position: absolute;
-  top: 55px;
+  top: 3.4375rem;
   right: 0;
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 0.875rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -2072,7 +2072,7 @@ $tv-ai-lilac: #a5acff;
     outline: none;
 
     .tv-search-mic {
-      box-shadow: 0 0 0 4px rgba($light-color-0, 0.45);
+      box-shadow: 0 0 0 0.25rem rgba($light-color-0, 0.45);
     }
   }
 
@@ -2087,7 +2087,7 @@ $tv-ai-lilac: #a5acff;
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   border-radius: 50%;
   background-color: $light-color-0;
   color: $dark-color-900;
@@ -2105,7 +2105,7 @@ $tv-ai-lilac: #a5acff;
     top: 50%;
     right: 0;
     left: 0;
-    height: 1px;
+    height: 0.0625rem;
     background-color: rgba($light-color-0, 0.3);
   }
 }
@@ -2114,12 +2114,12 @@ $tv-ai-lilac: #a5acff;
   position: relative;
   display: flex;
   width: 500px;
-  height: 66px;
+  height: 4.125rem;
   border-radius: $tv-btn-radius;
   overflow: hidden;
   background-color: rgba($dark-color-200, 0.5);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
 }
 
 .tv-search-filter {
@@ -2132,7 +2132,7 @@ $tv-ai-lilac: #a5acff;
   cursor: pointer;
 
   & + .tv-search-filter {
-    border-left: 2px solid rgba($dark-color-900, 0.6);
+    border-left: 0.125rem solid rgba($dark-color-900, 0.6);
   }
 
   &.is-active {
@@ -2155,9 +2155,9 @@ $tv-ai-lilac: #a5acff;
   grid-template-columns: repeat(3, 377px);
   justify-content: space-between;
   align-content: start;
-  gap: 32px 40px;
-  margin-top: 29px;
-  padding: 12px 0 60px;
+  gap: 2rem 2.5rem;
+  margin-top: 1.8125rem;
+  padding: 0.75rem 0 3.75rem;
   overflow-y: auto;
   scrollbar-width: none;
 
@@ -2170,7 +2170,7 @@ $tv-ai-lilac: #a5acff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem;
   width: 377px;
   padding: 0;
   border: 0;
@@ -2181,7 +2181,7 @@ $tv-ai-lilac: #a5acff;
   &:hover .tv-search-thumb,
   &:focus-visible .tv-search-thumb {
     transform: scale(1.04);
-    box-shadow: 0 0 0 4px $light-color-0, 0 12px 32px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 0 0.25rem $light-color-0, 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
   }
 
   &:focus-visible {
@@ -2196,7 +2196,7 @@ $tv-ai-lilac: #a5acff;
 .tv-search-thumb {
   display: block;
   width: 377px;
-  height: 212px;
+  height: 13.25rem;
   border-radius: $radius-card-sm;
   overflow: hidden;
   background-color: $dark-color-400;
@@ -2222,7 +2222,7 @@ $tv-ai-lilac: #a5acff;
 .tv-search-empty {
   @include display-M;
   grid-column: 1 / -1;
-  margin: 40px 0 0;
+  margin: 2.5rem 0 0;
   color: $text-secondary;
   text-align: center;
 }
@@ -2252,7 +2252,7 @@ $tv-ai-lilac: #a5acff;
 .tv-detail-hero {
   position: relative;
   flex-shrink: 0;
-  height: 776px;
+  height: 48.5rem;
   overflow: hidden;
   isolation: isolate;
 }
@@ -2280,12 +2280,12 @@ $tv-ai-lilac: #a5acff;
 
 .tv-detail-hero-body {
   position: absolute;
-  top: 170px;
-  left: 180px;
+  top: 10.625rem;
+  left: 11.25rem;
   display: flex;
   flex-direction: column;
   width: 900px;
-  height: 500px; // 버튼은 맨 아래 (시안 y 540)
+  height: 31.25rem; // 버튼은 맨 아래 (시안 y 540)
 }
 
 .tv-detail-title {
@@ -2296,23 +2296,23 @@ $tv-ai-lilac: #a5acff;
 }
 
 .tv-detail-subtitle {
-  margin: 40px 0 0;
+  margin: 2.5rem 0 0;
   color: $light-color-0;
   font-family: $font-family-base;
-  font-size: 38px;
+  font-size: 2.375rem;
   font-weight: $font-weight-regular;
-  line-height: 46px;
+  line-height: 2.875rem;
 }
 
 .tv-detail-desc {
   display: -webkit-box;
-  margin: 30px 0 0;
+  margin: 1.875rem 0 0;
   overflow: hidden;
   color: $light-color-0;
   font-family: $font-family-base;
-  font-size: 29px;
+  font-size: 1.8125rem;
   font-weight: $font-weight-medium;
-  line-height: 36px;
+  line-height: 2.25rem;
   word-break: keep-all;
   -webkit-line-clamp: 3;
   line-clamp: 3;
@@ -2328,7 +2328,7 @@ $tv-ai-lilac: #a5acff;
 .tv-detail-notice {
   @include heading-h4;
   position: absolute;
-  bottom: -48px;
+  bottom: -3rem;
   left: 0;
   margin: 0;
   color: $light-color-500;
@@ -2337,14 +2337,14 @@ $tv-ai-lilac: #a5acff;
 // 정보 상자 (경기 정보 · 작품 정보)
 .tv-detail-info {
   position: absolute;
-  top: 170px;
-  right: 120px;
+  top: 10.625rem;
+  right: 7.5rem;
   width: 560px;
-  padding: 32px;
+  padding: 2rem;
   border-radius: $radius-card-sm;
   background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
 
   strong {
     @include heading-h3-b;
@@ -2384,7 +2384,7 @@ $tv-ai-lilac: #a5acff;
 
 // ---------- 아래 정보 · 관련 콘텐츠 ----------
 .tv-detail-body {
-  padding: 48px 0 80px;
+  padding: 3rem 0 5rem;
   background-color: rgba($dark-color-500, 0.9);
 }
 
@@ -2406,7 +2406,7 @@ $tv-ai-lilac: #a5acff;
   img {
     display: block;
     width: 200px;
-    height: 200px;
+    height: 12.5rem;
     border-radius: 50%;
     object-fit: cover;
     background-color: $dark-color-400;
@@ -2438,16 +2438,16 @@ $tv-ai-lilac: #a5acff;
 .tv-detail-standings {
   display: flex;
   align-items: flex-start;
-  gap: 40px;
-  padding: 24px 80px 12px;
+  gap: 2.5rem;
+  padding: 1.5rem 5rem 0.75rem;
 }
 
 .tv-detail-standings-card {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
   width: 820px;
-  padding: 28px 32px;
+  padding: 1.75rem 2rem;
   border: 0;
   border-radius: $tv-card-radius;
   background-color: rgba($light-color-0, 0.06);
@@ -2460,7 +2460,7 @@ $tv-ai-lilac: #a5acff;
   &:focus-visible {
     outline: none;
     background-color: rgba($light-color-0, 0.1);
-    box-shadow: 0 0 0 4px $light-color-0;
+    box-shadow: 0 0 0 0.25rem $light-color-0;
   }
 }
 
@@ -2486,8 +2486,8 @@ $tv-ai-lilac: #a5acff;
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr) repeat(5, 64px);
   align-items: center;
-  min-height: 52px;
-  border-top: 1px solid rgba($light-color-0, 0.08);
+  min-height: 3.25rem;
+  border-top: 0.0625rem solid rgba($light-color-0, 0.08);
 
   > span {
     text-align: center;
@@ -2511,7 +2511,7 @@ $tv-ai-lilac: #a5acff;
     .sport-badge-initial {
       flex-shrink: 0;
       width: 36px;
-      height: 36px;
+      height: 2.25rem;
       object-fit: contain;
     }
   }
@@ -2519,7 +2519,7 @@ $tv-ai-lilac: #a5acff;
   // 머리 줄
   &.is-label {
     @include body-small;
-    min-height: 32px;
+    min-height: 2rem;
     border-top: 0;
     color: $light-color-500;
 
@@ -2546,11 +2546,11 @@ $tv-ai-lilac: #a5acff;
 
 // 프로필 추가: 자판 화면과 같은 글자 · 버튼 (위아래 여백만 조금 줄임)
 .tv-screen.tv-keyboard.tv-profile-add {
-  padding-top: 96px;
-  padding-bottom: 80px;
+  padding-top: 6rem;
+  padding-bottom: 5rem;
 
   .tv-guide {
-    margin-top: 48px;
+    margin-top: 3rem;
   }
 }
 
@@ -2558,9 +2558,9 @@ $tv-ai-lilac: #a5acff;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 1.25rem;
   max-width: 1200px;
-  margin: 40px 0 0;
+  margin: 2.5rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -2568,7 +2568,7 @@ $tv-ai-lilac: #a5acff;
 .tv-profile-icon {
   display: block;
   width: 72px;
-  height: 72px;
+  height: 4.5rem;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -2577,13 +2577,13 @@ $tv-ai-lilac: #a5acff;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &.is-on {
-    box-shadow: 0 0 0 4px $light-color-0;
+    box-shadow: 0 0 0 0.25rem $light-color-0;
   }
 
   &:hover,
   &:focus-visible {
     outline: none;
     transform: scale(1.1);
-    box-shadow: 0 0 0 4px $light-color-0, 0 0 0 8px $primary-color-500;
+    box-shadow: 0 0 0 0.25rem $light-color-0, 0 0 0 0.5rem $primary-color-500;
   }
 }

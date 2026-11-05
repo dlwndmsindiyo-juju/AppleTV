@@ -1,7 +1,7 @@
 @use "sass:math";
 @use "variables" as *;
 
-$mobile-edge: 20px; // 모바일 좌우 여백
+$mobile-edge: 1.25rem; // 모바일 좌우 여백
 $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전 App.scss 에 있던 변수)
 
 // =====================================================================
@@ -31,8 +31,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       padding: $header-pad-y $tablet-edge;
 
       .gnb-center-toggle button {
-        padding: 0 20px;
-        font-size: 16px;
+        padding: 0 1.25rem;
+        font-size: 1rem;
       }
 
       .gnb-right ul {
@@ -65,7 +65,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       max-width: 60%;
 
       .hero-title {
-        font-size: 48px;
+        font-size: 3rem;
       }
     }
   }
@@ -107,8 +107,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .top10-rank {
-      font-size: 104px;
-      bottom: -10px;
+      font-size: 6.5rem;
+      bottom: -0.625rem;
     }
 
     .swiper-button-next,
@@ -226,7 +226,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   // ---------- 구독 CTA ----------
   .subscribe-cta {
     .subscribe-banner {
-      height: 340px;
+      height: 21.25rem;
     }
 
     .subscribe-content {
@@ -265,13 +265,13 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 
   .auth-card {
-    padding: $space-5xl 20px $space-2xl;
+    padding: $space-5xl 1.25rem $space-2xl;
   }
 
   .auth-close {
     top: $space-lg;
     left: $space-lg;
-    height: 36px;
+    height: 2.25rem;
     padding: 0 $space-lg;
   }
 
@@ -294,7 +294,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 
   .plan-opt {
-    padding: 20px $space-4xl 20px 20px;
+    padding: 1.25rem $space-4xl 1.25rem 1.25rem;
   }
 
   .plan-opt-name {
@@ -302,8 +302,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 
   .plan-opt-radio {
-    top: 22px;
-    right: 20px;
+    top: 1.375rem;
+    right: 1.25rem;
   }
 
   .plan-benefit-list {
@@ -318,7 +318,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // ▼ App.scss 에서 옮김 — 구독 유도 팝업 ("구독 후 이용해주세요." · SubscribeGate.jsx)
 @media (max-width: $breakpoint-mobile) {
   .subscribe-gate-card {
-    padding: $space-xl 20px 20px;
+    padding: $space-xl 1.25rem 1.25rem;
   }
 
   .subscribe-gate-title {
@@ -396,11 +396,11 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 
   .wish-tab {
-    height: 112px;
+    height: 7rem;
   }
 
   .wish-tab-icon {
-    font-size: 26px;
+    font-size: 1.625rem;
   }
 
   .wish-grid {
@@ -447,7 +447,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 
   .wish-tab {
-    height: 96px;
+    height: 6rem;
 
     strong {
       @include label-default-b;
@@ -472,13 +472,13 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 
   .wish-modal {
-    padding: 20px;
+    padding: 1.25rem;
   }
 
   .wish-icon-btn {
     width: 44px;
-    height: 44px;
-    font-size: 22px;
+    height: 2.75rem;
+    font-size: 1.375rem;
   }
 
   .wish-toast {
@@ -492,8 +492,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
   .wish-toast-icon {
     width: 36px;
-    height: 36px;
-    font-size: 18px;
+    height: 2.25rem;
+    font-size: 1.125rem;
   }
 }
 
@@ -505,7 +505,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     padding-bottom: $space-5xl;
   }
 
-  .account-section {
+  // [수정] 왼쪽 메뉴 칸 200px (예전 섹션 이름 칸과 같은 폭)
+  .account-layout {
     grid-template-columns: 200px minmax(0, 1fr);
   }
 }
@@ -525,10 +526,55 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     padding-bottom: $space-lg;
   }
 
+  // [추가] 모바일: 메뉴는 제목 아래 가로 한 줄 (헤더 바로 아래 고정 · 넘치면 가로 스크롤)
+  .account-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .account-nav {
+    z-index: 10;
+    margin: 0 (-$space-lg);
+    padding: $space-sm $space-lg;
+    background-color: $light-color-100;
+    border-bottom: 0.0625rem solid $light-color-400; // App.scss $account-line 과 같은 색
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .account-nav-list {
+    flex-direction: row;
+    width: max-content;
+  }
+
+  // [수정] 가로 메뉴: 행 대신 작은 알약 (보고 있는 섹션만 연회색 배경 · 세로 막대는 숨김)
+  .account-nav-list {
+    gap: $space-xs;
+  }
+
+  .account-nav-link {
+    @include heading-h5-b;
+    width: auto;
+    padding: $space-sm $space-md;
+    white-space: nowrap;
+
+    &::before {
+      display: none;
+    }
+
+    &.is-active {
+      @include heading-h4-b;
+    }
+  }
+
   .account-section {
     grid-template-columns: minmax(0, 1fr);
     gap: $space-lg;
     padding: $space-2xl 0;
+    scroll-margin-top: calc(#{$header-height} + #{$space-4xl}); // 헤더 + 고정 메뉴 높이
   }
 
   .account-section-title {
@@ -563,7 +609,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 @media (max-width: $breakpoint-mobile) {
   .member-home .member-continue .member-empty {
     @include body-default;
-    margin-right: 20px; // mobile.scss 의 $mobile-edge
+    margin-right: 1.25rem; // mobile.scss 의 $mobile-edge
     padding: $space-2xl $space-lg;
   }
 }
@@ -588,8 +634,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   section.top10-section {
     .top10-desc {
       @include body-small;
-      margin-bottom: 20px;
-      padding-right: 20px;
+      margin-bottom: 1.25rem;
+      padding-right: 1.25rem;
     }
 
     .top10-slide {
@@ -597,7 +643,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .top10-num .top10-num-stroke {
-      stroke-width: 8px; // 숫자가 작아져도 바깥 테두리가 보이게 (viewBox 기준)
+      stroke-width: 0.5rem; // 숫자가 작아져도 바깥 테두리가 보이게 (viewBox 기준)
     }
   }
 }
@@ -607,34 +653,34 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   .hero-swiper-container .hero-slide-item .hero-info {
     .hero-chip {
       @include caption-default;
-      height: 24px;
+      height: 1.5rem;
       padding: 0 $space-sm;
     }
 
     .hero-play {
       @include body-small-b;
       min-width: 100px;
-      height: 36px;
+      height: 2.25rem;
     }
 
     .hero-wish {
       width: 36px;
-      height: 36px;
+      height: 2.25rem;
     }
   }
 }
 
 @media (max-width: 1024px) {
   .hero-swiper-container.movie-home-hero {
-    height: min(740px, calc(100svh - 60px));
-    min-height: 480px;
+    height: min(46.25rem, calc(100svh - 3.75rem));
+    min-height: 30rem;
   }
 }
 
 @media (max-width: 600px) {
   .hero-swiper-container.movie-home-hero {
-    height: min(580px, calc(100svh - 56px));
-    min-height: 400px;
+    height: min(36.25rem, calc(100svh - 3.5rem));
+    min-height: 25rem;
   }
 }
 
@@ -643,7 +689,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 @media (max-width: $breakpoint-tablet) {
   .subscribe-cta.subscribe-cta--tv {
     .subscribe-banner {
-      height: 340px;
+      height: 21.25rem;
     }
 
     .subscribe-content {
@@ -656,13 +702,13 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     .subscribe-posters {
       top: 50%;
-      left: max(55%, 440px);
+      left: max(55%, 27.5rem);
       gap: $space-sm;
       transform: translateY(-50%);
     }
 
     .subscribe-poster {
-      --poster-h: 238px;
+      --poster-h: 14.875rem;
     }
   }
 }
@@ -682,12 +728,12 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       left: auto;
       right: auto;
       transform: none;
-      padding: 0 20px;
+      padding: 0 1.25rem;
     }
 
     .subscribe-logo {
       width: 58px;
-      height: 44px;
+      height: 2.75rem;
     }
 
     .subscribe-title {
@@ -696,7 +742,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .subscribe-btn {
-      margin-top: 20px;
+      margin-top: 1.25rem;
     }
 
     .subscribe-posters {
@@ -705,12 +751,12 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       left: auto;
       transform: none;
       margin-top: $space-xl;
-      padding-left: 20px;
+      padding-left: 1.25rem;
       gap: $space-sm;
     }
 
     .subscribe-poster {
-      --poster-h: 179px;
+      --poster-h: 11.1875rem;
     }
   }
 }
@@ -742,7 +788,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .watch-logo-main {
-      height: 48px;
+      height: 3rem;
     }
 
     .watch-title {
@@ -768,12 +814,12 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     padding: $space-4xl 0;
 
     .inner {
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
     }
 
     .watch-logo-main {
-      height: 40px;
+      height: 2.5rem;
     }
 
     .watch-title {
@@ -823,11 +869,11 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
   .auth-profile-avatar {
     width: 72px;
-    height: 72px;
+    height: 4.5rem;
 
     img {
       width: 26px;
-      height: 26px;
+      height: 1.625rem;
     }
   }
 }
@@ -837,7 +883,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 @media (max-width: $breakpoint-mobile) {
   .auth-card.auth-card--login {
     min-height: 0;
-    padding: 76px 20px $space-2xl;
+    padding: 4.75rem 1.25rem $space-2xl;
 
     .auth-title {
       @include display-M;
@@ -848,11 +894,11 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .auth-login-input {
-      height: 52px;
+      height: 3.25rem;
     }
 
     .auth-code {
-      gap: 6px;
+      gap: 0.375rem;
     }
 
     .auth-code-box {
@@ -861,7 +907,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       flex: 1 1 0;
       min-width: 0;
       max-width: 52px;
-      height: 56px;
+      height: 3.5rem;
     }
 
     .auth-login-links-row {
@@ -941,7 +987,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     padding: $header-pad-y $mobile-edge;
 
     .logo a img {
-      height: 20px;
+      height: 1.25rem;
     }
 
     nav {
@@ -949,9 +995,9 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
       .gnb-center-toggle {
         button {
-          height: 34px;
-          padding: 0 14px;
-          font-size: 14px;
+          height: 2.125rem;
+          padding: 0 0.875rem;
+          font-size: 0.875rem;
         }
       }
 
@@ -962,8 +1008,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
         .profile-box {
           width: 36px;
-          height: 36px;
-          font-size: 14px;
+          height: 2.25rem;
+          font-size: 0.875rem;
         }
 
         // 로그인 버튼: PC 와 같은 크기 (App.scss .header-login-btn)
@@ -976,7 +1022,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     padding: $footer-pad-y $mobile-edge;
 
     .footer-main-menu {
-      gap: 10px 20px;
+      gap: 0.625rem 1.25rem;
     }
   }
 
@@ -1025,14 +1071,14 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       max-width: none;
 
       .hero-title {
-        font-size: 34px;
+        font-size: 2.125rem;
         margin-bottom: $space-lg;
       }
 
       .hero-overview {
         line-clamp: 3;
         -webkit-line-clamp: 3;
-        margin-bottom: 20px;
+        margin-bottom: 1.25rem;
       }
     }
   }
@@ -1053,13 +1099,13 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   .value-props {
     .value-props-inner {
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 1.25rem;
     }
   }
 
   // ---------- TOP 10 (시안: 포스터 2장 + 다음 장 살짝) ----------
   .top10-section {
-    padding: 40px 0;
+    padding: 2.5rem 0;
 
     .inner {
       padding-right: 0;
@@ -1075,14 +1121,14 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .top10-rank {
-      font-size: 80px;
-      bottom: -6px;
+      font-size: 5rem;
+      bottom: -0.375rem;
     }
   }
 
   // ---------- 공개예정작 (시안: 카드 세로 나열 · 썸네일 왼쪽 + 글 오른쪽) ----------
   .upcoming-section {
-    padding: 40px 0;
+    padding: 2.5rem 0;
 
     .inner {
       padding-right: $mobile-edge;
@@ -1099,7 +1145,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     .upcoming-desc {
       @include body-small;
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
     }
 
     .upcoming-list {
@@ -1112,8 +1158,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .upcoming-card {
-      gap: 20px;
-      padding: 20px;
+      gap: 1.25rem;
+      padding: 1.25rem;
     }
 
     .upcoming-thumb {
@@ -1137,15 +1183,15 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .upcoming-btn {
-      height: 32px;
-      padding: 0 14px;
+      height: 2rem;
+      padding: 0 0.875rem;
       margin-top: $space-xs;
     }
   }
 
   // ---------- 오리지널스 (시안: 포스터 2장 + 다음 장 살짝) ----------
   .apple-originals {
-    padding: 40px 0;
+    padding: 2.5rem 0;
 
     .apple-originals-title {
       @include display-M;
@@ -1155,7 +1201,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     .apple-originals-desc {
       @include body-small;
       padding-right: $mobile-edge;
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
     }
 
     .inner {
@@ -1177,12 +1223,12 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
   // ---------- AI 어시스턴트 띠: 글 → 카드(화면 폭 가득) ----------
   .ai-promo {
-    padding: 40px 0;
+    padding: 2.5rem 0;
 
     .inner {
       gap: $space-xl;
-      padding-top: 40px;
-      padding-bottom: 40px;
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
     }
 
     .ai-promo-text {
@@ -1217,8 +1263,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     padding: $space-xl 0 $space-4xl;
 
     .subscribe-banner {
-      height: 300px;
-      border-radius: 16px;
+      height: 18.75rem;
+      border-radius: 1rem;
     }
 
     .subscribe-content {
@@ -1228,11 +1274,11 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .subscribe-title {
-      font-size: 17px;
+      font-size: 1.0625rem;
     }
 
     .subscribe-btn {
-      height: 42px;
+      height: 2.625rem;
       padding: 0 $space-xl;
     }
 
@@ -1542,7 +1588,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 @media (max-width: $breakpoint-mobile) {
   main.member-home {
     .member-section {
-      padding: $space-2xl 0 40px;
+      padding: $space-2xl 0 2.5rem;
 
       .inner {
         padding-left: $mobile-edge;
@@ -1574,8 +1620,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     .member-title {
       @include heading-h1;
-      font-size: 28px;
-      line-height: 34px;
+      font-size: 1.75rem;
+      line-height: 2.125rem;
     }
 
     .member-desc {
@@ -1614,7 +1660,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
         flex-direction: column;
         align-items: center;
         gap: $space-lg;
-        padding: 20px $space-lg;
+        padding: 1.25rem $space-lg;
         text-align: center;
 
         p {
@@ -1623,7 +1669,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
         .member-btn {
           align-self: center;
-          height: 40px;
+          height: 2.5rem;
           padding: 0 $space-xl;
           @include body-default;
         }
@@ -1635,7 +1681,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       }
 
       .member-card {
-        gap: 2px;
+        gap: 0.125rem;
       }
 
       .member-card-title {
@@ -1674,12 +1720,12 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
       .member-heart {
         width: 30px;
-        height: 30px;
+        height: 1.875rem;
       }
 
       .member-heart-icon {
         width: 18px;
-        height: 18px;
+        height: 1.125rem;
       }
     }
 
@@ -1717,23 +1763,23 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
       .member-btn {
         @include caption-default;
-        height: 28px;
+        height: 1.75rem;
         padding: 0 $space-md;
       }
     }
 
     // 공개예정작 (UpcomingSection): 로그인 후 메인 여백에 맞춤
     .upcoming-section {
-      padding: $space-2xl 0 40px;
+      padding: $space-2xl 0 2.5rem;
     }
 
     // ---------- 에코시스템 ----------
     .member-ecosystem {
-      padding: 40px 0;
+      padding: 2.5rem 0;
 
       .member-title {
-        font-size: 22px;
-        line-height: 28px;
+        font-size: 1.375rem;
+        line-height: 1.75rem;
         word-break: keep-all;
       }
     }
@@ -1773,7 +1819,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     // 오른쪽 패널: 고정(sticky) 해제, 높이 고정
     .right-section {
       position: static;
-      height: 640px;
+      height: 40rem;
       min-height: 0;
       max-height: none;
     }
@@ -1783,8 +1829,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // ---------- 모바일 (767px 이하) ----------
 @media (max-width: $breakpoint-mobile) {
   .movie-detail-page {
-    padding-top: calc(#{$header-height} + 16px);
-    padding-bottom: 56px;
+    padding-top: calc(#{$header-height} + 1rem);
+    padding-bottom: 3.5rem;
 
     .inner {
       padding-left: $mobile-edge;
@@ -1806,7 +1852,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
       .title-logo {
         max-width: 160px;
-        max-height: 44px;
+        max-height: 2.75rem;
       }
 
       .title {
@@ -1856,7 +1902,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     // 탭 패널
     .right-section {
-      height: 560px;
+      height: 35rem;
       padding: $space-lg;
 
       .tabs .tab-btn {
@@ -1877,7 +1923,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
       .cast-photo {
         width: 60px;
-        height: 60px;
+        height: 3.75rem;
       }
     }
   }
@@ -1890,19 +1936,19 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
   // 카드 공용
   .sport-team-card {
-    height: 96px;
+    height: 6rem;
     gap: $space-lg;
-    padding: 0 20px 0 $space-lg;
+    padding: 0 1.25rem 0 $space-lg;
 
     .sport-team-logo {
       width: 56px;
-      height: 56px;
+      height: 3.5rem;
     }
   }
 
   // 홈 슬라이드
   .sport-teams {
-    padding: 56px 0;
+    padding: 3.5rem 0;
 
     .inner {
       padding-left: $tablet-edge;
@@ -1946,13 +1992,13 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
   // 카드 공용
   .sport-team-card {
-    height: 80px;
+    height: 5rem;
     gap: $space-md;
     padding: 0 $space-md;
 
     .sport-team-logo {
       width: 48px;
-      height: 48px;
+      height: 3rem;
       border-radius: $radius-xs;
     }
 
@@ -1982,14 +2028,14 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     button {
       @include body-small;
-      height: 34px;
-      padding: 0 14px;
+      height: 2.125rem;
+      padding: 0 0.875rem;
     }
   }
 
   // 홈 슬라이드
   .sport-teams {
-    padding: 40px 0;
+    padding: 2.5rem 0;
 
     .inner {
       padding-left: $mobile-edge;
@@ -2075,12 +2121,12 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   .promo-banner.is-live {
     .live-title {
       @include heading-h4-b;
-      gap: 10px;
+      gap: 0.625rem;
     }
 
     .live-dot {
       width: 14px;
-      height: 14px;
+      height: 0.875rem;
     }
 
     .promo-banner-btn {
@@ -2105,7 +2151,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     .live-dot {
       width: 10px;
-      height: 10px;
+      height: 0.625rem;
     }
 
     .live-score {
@@ -2125,8 +2171,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     .promo-banner-btn {
       @include body-small;
       min-width: 0;
-      height: 32px;
-      padding: 0 14px;
+      height: 2rem;
+      padding: 0 0.875rem;
     }
 
     .promo-banner-note {
@@ -2146,7 +2192,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     // 화면 높이를 꽉 채워서 푸터 아래로 빈 흰 여백이 생기지 않게 (모바일 주소창 제외 높이)
     min-height: 100vh;
     min-height: 100svh;
-    padding: calc(#{$header-height} + 24px) $tablet-edge 64px;
+    padding: calc(#{$header-height} + 1.5rem) $tablet-edge 4rem;
     align-items: center;
 
     // ---------- 카드 공통 ----------
@@ -2156,7 +2202,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     .login-card.plan-card {
       max-width: 560px;
       min-height: 0;
-      padding: 76px $space-xl $space-2xl;
+      padding: 4.75rem $space-xl $space-2xl;
       background-color: $light-color-100;
       border-radius: $radius-card;
       box-shadow: none;
@@ -2165,16 +2211,16 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     // .login-card.login-card : PC 단계별 규칙(--signin / --confirm / .plan-card)보다 우선
     .login-card.login-card {
       .login-card-close {
-        top: 20px;
-        left: 16px;
+        top: 1.25rem;
+        left: 1rem;
         width: 44px;
-        height: 44px;
+        height: 2.75rem;
         background-color: $light-color-0;
         color: $text-inverse;
 
         svg {
           width: 20px;
-          height: 20px;
+          height: 1.25rem;
         }
       }
 
@@ -2183,7 +2229,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
         .login-app-icon {
           width: 50px;
-          height: 50px;
+          height: 3.125rem;
           border-radius: $radius-card;
           background-color: $light-color-400;
         }
@@ -2191,9 +2237,9 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
       .login-title {
         @include heading-h2;
-        margin: 20px 0 10px;
-        font-size: 24px;
-        line-height: 30px;
+        margin: 1.25rem 0 0.625rem;
+        font-size: 1.5rem;
+        line-height: 1.875rem;
         color: $text-inverse;
         word-break: keep-all;
       }
@@ -2215,8 +2261,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
         @include body-default;
         width: 100%;
         max-width: none;
-        height: 48px;
-        border-radius: 6px;
+        height: 3rem;
+        border-radius: 0.375rem;
       }
     }
 
@@ -2228,7 +2274,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
       .login-form .input-field input {
         @include body-default;
-        height: 50px;
+        height: 3.125rem;
       }
 
       .login-links-row {
@@ -2239,21 +2285,21 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     // ---------- 인증번호 (2단계): 6칸이 카드 폭 안에 들어오게 ----------
     .login-card .login-form .code-input-group {
-      gap: 6px;
+      gap: 0.375rem;
 
       .code-box {
         width: auto;
         flex: 1 1 0;
         min-width: 0;
         max-width: 52px;
-        height: 54px;
+        height: 3.375rem;
       }
     }
 
     // ---------- 인증 완료 (3단계): PC 의 큰 여백 줄이기 ----------
     .login-card.login-card--confirm {
       .login-title {
-        margin: 20px 0 10px;
+        margin: 1.25rem 0 0.625rem;
       }
 
       .login-desc {
@@ -2262,7 +2308,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       }
 
       .login-links.row-links {
-        gap: 40px;
+        gap: 2.5rem;
       }
     }
 
@@ -2271,8 +2317,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       .plan-list {
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        padding: 20px $space-lg;
+        gap: 1.25rem;
+        padding: 1.25rem $space-lg;
         border-radius: $radius-card;
       }
 
@@ -2328,8 +2374,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       }
 
       .plan-benefit {
-        gap: 10px;
-        padding: 22px 20px;
+        gap: 0.625rem;
+        padding: 1.375rem 1.25rem;
         border-radius: $radius-card;
 
         strong {
@@ -2357,18 +2403,18 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       // 3. 처리 중 / 4. 완료
       &.plan-card--processing,
       &.plan-card--done {
-        padding-top: 76px;
+        padding-top: 4.75rem;
 
         .login-title {
-          margin: 20px 0 $space-md;
-          font-size: 24px;
-          line-height: 30px;
+          margin: 1.25rem 0 $space-md;
+          font-size: 1.5rem;
+          line-height: 1.875rem;
           font-weight: $font-weight-regular;
         }
 
         .login-desc {
           @include body-large;
-          margin-bottom: 20px;
+          margin-bottom: 1.25rem;
           font-weight: $font-weight-regular;
         }
       }
@@ -2383,7 +2429,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // ---------- 휴대폰 (767px 이하): 화면 좌우 16px 까지 카드 확장 ----------
 @media (max-width: $breakpoint-mobile) {
   .login-page.login-page {
-    padding: calc(#{$header-height} + 16px) 16px 40px;
+    padding: calc(#{$header-height} + 1rem) 1rem 2.5rem;
     background-color: $bg-color;
 
     .login-card,
@@ -2391,12 +2437,12 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     .login-card.login-card--confirm,
     .login-card.plan-card {
       max-width: none;
-      padding: 76px 20px $space-xl;
+      padding: 4.75rem 1.25rem $space-xl;
     }
 
     .login-card.login-card .login-title {
-      font-size: 22px;
-      line-height: 28px;
+      font-size: 1.375rem;
+      line-height: 1.75rem;
     }
 
     .login-card.plan-card {
@@ -2406,16 +2452,16 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
       .plan-option .plan-name {
         @include heading-h4-b;
-        font-size: 18px;
-        line-height: 24px;
+        font-size: 1.125rem;
+        line-height: 1.5rem;
       }
 
       .plan-section-title {
-        margin-top: 28px;
+        margin-top: 1.75rem;
       }
 
       .plan-benefit {
-        padding: 20px;
+        padding: 1.25rem;
       }
 
       .plan-summary-row dd {
@@ -2448,7 +2494,7 @@ header .inner nav .gnb-right ul .search-icon-item {
       align-items: center;
       justify-content: center;
       width: 32px;
-      height: 32px;
+      height: 2rem;
       border-radius: 50%;
       background-color: $input-bg;
       transition: background-color 0.2s ease;
@@ -2459,13 +2505,13 @@ header .inner nav .gnb-right ul .search-icon-item {
       }
 
       &:focus-visible {
-        outline: 2px solid $light-color-0;
-        outline-offset: 2px;
+        outline: 0.125rem solid $light-color-0;
+        outline-offset: 0.125rem;
       }
 
       img {
         width: 14px;
-        height: 14px;
+        height: 0.875rem;
         display: block;
         filter: invert(0.7); // 검색창 안 아이콘과 같은 색
       }
@@ -2480,7 +2526,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 @media (max-width: $breakpoint-mobile) {
   header .inner nav .gnb-right ul .profile-box.profile-box {
     width: 32px;
-    height: 32px;
+    height: 2rem;
   }
 }
 
@@ -2491,7 +2537,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 @media (max-width: $breakpoint-tablet) {
   .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-logo {
     width: 390px;
-    height: 162px;
+    height: 10.125rem;
     max-width: 100%;
   }
 }
@@ -2499,7 +2545,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 @media (max-width: $breakpoint-mobile) {
   .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-logo {
     width: 195px;
-    height: 80px;
+    height: 5rem;
   }
 }
 
@@ -2536,20 +2582,20 @@ header .inner nav .gnb-right ul .search-icon-item {
     .member-rc-info {
       left: $space-md;
       right: $space-md;
-      bottom: 56px;
+      bottom: 3.5rem;
     }
 
     .member-rc-actions {
       left: $space-md;
       right: $space-md;
       bottom: $space-md;
-      gap: 6px;
+      gap: 0.375rem;
     }
 
     .member-rc-play,
     .member-rc-rate {
       @include caption-default-b;
-      height: 30px;
+      height: 1.875rem;
       gap: $space-xs;
     }
   }
@@ -2591,11 +2637,11 @@ header .inner nav .gnb-right ul .search-icon-item {
   // ---------- TOP 10 순위 숫자 ----------
   // SVG viewBox 높이 140 을 135px 로 그림 → 글자 크기 202(viewBox 단위) ≈ 화면 195px
   section.top10-section .top10-num {
-    height: 135px;
+    height: 8.4375rem;
 
     .top10-num-glyph {
-      font-size: 202px; // 폰트(Noto Sans KR · 900)는 App.scss 공통 규칙
-      letter-spacing: -8px;
+      font-size: 12.625rem; // 폰트(Noto Sans KR · 900)는 App.scss 공통 규칙
+      letter-spacing: -0.5rem;
     }
   }
 
@@ -2673,7 +2719,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 
     .subscribe-logo {
       width: 73px;
-      height: 56px;
+      height: 3.5rem;
     }
 
     .subscribe-title {
@@ -2684,8 +2730,8 @@ header .inner nav .gnb-right ul .search-icon-item {
     .subscribe-btn {
       @include body-large-b;
       width: 200px;
-      height: 40px;
-      padding: 7px 36px;
+      height: 2.5rem;
+      padding: 0.4375rem 2.25rem;
       color: $light-color-0;
     }
 
@@ -2749,7 +2795,7 @@ header .inner nav .gnb-right ul .search-icon-item {
       align-items: center;
       justify-content: center;
       width: 25px;
-      height: 25px;
+      height: 1.5625rem;
       padding: 0;
       border: none;
       border-radius: 50%;
@@ -2763,7 +2809,7 @@ header .inner nav .gnb-right ul .search-icon-item {
       img {
         display: block;
         width: 7px;
-        height: 9px;
+        height: 0.5625rem;
       }
     }
 
@@ -2778,7 +2824,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     .member-nr-quick-heart-icon {
       display: block;
       width: 11px;
-      height: 11px;
+      height: 0.6875rem;
       background-color: currentColor;
       -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
       mask: url("/icons/heart-icon.svg") center / contain no-repeat;
@@ -2793,10 +2839,10 @@ header .inner nav .gnb-right ul .search-icon-item {
       justify-content: center;
       gap: $space-xs;
       width: 105px;
-      height: 25px;
-      padding: 5px 10px;
+      height: 1.5625rem;
+      padding: 0.3125rem 0.625rem;
       border: none;
-      border-radius: 999px;
+      border-radius: 62.4375rem;
       background-color: $primary-color-500;
       color: $light-color-0;
       white-space: nowrap;
@@ -2805,7 +2851,7 @@ header .inner nav .gnb-right ul .search-icon-item {
       .member-nr-bell-icon {
         flex-shrink: 0;
         width: 10px;
-        height: 10px;
+        height: 0.625rem;
       }
     }
   }
@@ -2857,13 +2903,13 @@ header .inner nav .gnb-right ul .search-icon-item {
       }
 
       .member-wl-card {
-        height: 70px;
+        height: 4.375rem;
         background-color: $sport-opacity-b;
       }
 
       .member-wl-thumb {
         width: 60px;
-        height: 50px;
+        height: 3.125rem;
         aspect-ratio: auto;
       }
 
@@ -2893,7 +2939,7 @@ header .inner nav .gnb-right ul .search-icon-item {
       .member-rc-play,
       .member-rc-rate {
         @include label-default;
-        height: 25px;
+        height: 1.5625rem;
         color: $light-color-0;
       }
 
@@ -2907,12 +2953,12 @@ header .inner nav .gnb-right ul .search-icon-item {
 
         img {
           width: 7px;
-          height: 9px;
+          height: 0.5625rem;
         }
       }
 
       .member-rc-rate {
-        padding: 0 10px;
+        padding: 0 0.625rem;
       }
     }
 
@@ -2941,8 +2987,8 @@ header .inner nav .gnb-right ul .search-icon-item {
       .member-chips .member-chip.member-chip {
         @include body-small;
         width: 56px;
-        height: 30px;
-        padding: 10px 0;
+        height: 1.875rem;
+        padding: 0.625rem 0;
         color: $light-color-0;
       }
 
@@ -2950,8 +2996,8 @@ header .inner nav .gnb-right ul .search-icon-item {
         @include body-small;
         display: inline-flex;
         align-items: center;
-        height: 30px;
-        padding: 6px 10px;
+        height: 1.875rem;
+        padding: 0.375rem 0.625rem;
         color: $light-color-500;
       }
 
@@ -2982,8 +3028,8 @@ header .inner nav .gnb-right ul .search-icon-item {
     justify-content: center;
     gap: 0;
     width: 40px;
-    height: 32px;
-    padding: 0 8px;
+    height: 2rem;
+    padding: 0 0.5rem;
     color: $light-color-0;
 
     img {
@@ -3008,12 +3054,12 @@ header .inner nav .gnb-right ul .search-icon-item {
     .sport-team-more {
       position: absolute;
       top: 0;
-      right: 20px;
+      right: 1.25rem;
       left: auto;
       display: flex;
       align-items: center;
       width: auto;
-      height: 28px;
+      height: 1.75rem;
       margin: 0;
       white-space: nowrap;
     }
@@ -3031,16 +3077,16 @@ header .inner nav .gnb-right ul .search-icon-item {
 
   .floating-btn {
     width: 50px;
-    height: 50px;
+    height: 3.125rem;
 
     &.floating-btn--tv img {
       width: 50px;
-      height: 50px;
+      height: 3.125rem;
     }
 
     // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 18
     &.floating-btn--top {
-      padding: 0 16px;
+      padding: 0 1rem;
 
       img {
         width: 100%;
@@ -3050,7 +3096,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
 
   body.has-promo-banner .floating-actions {
-    bottom: calc(97px + #{$space-md});
+    bottom: calc(6.0625rem + #{$space-md});
   }
 }
 
@@ -3065,16 +3111,16 @@ header .inner nav .gnb-right ul .search-icon-item {
 
   .floating-btn {
     width: 60px;
-    height: 60px;
+    height: 3.75rem;
 
     &.floating-btn--tv img {
       width: 60px;
-      height: 60px;
+      height: 3.75rem;
     }
 
     // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 22
     &.floating-btn--top {
-      padding: 0 19px;
+      padding: 0 1.1875rem;
 
       img {
         width: 100%;
@@ -3097,7 +3143,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 
   .profile-picker-avatar {
     width: 72px;
-    height: 72px;
+    height: 4.5rem;
   }
 
   .profile-picker-icons {
@@ -3108,6 +3154,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 // [추가] 자동 재생 안내 (AutoNext.jsx) — 폰: 썸네일 숨기고 화면 아래 가득
 @media (max-width: $breakpoint-mobile) {
+
   .auto-next,
   .auto-next--inline {
     right: $space-sm;
@@ -3174,18 +3221,19 @@ header .inner nav .gnb-right ul .search-icon-item {
 // [추가] 핵심 혜택 (ValueProps.jsx) — 휴대폰: 1열이라 칸 사이 구분선을 가로선으로 (App.scss 의 세로 구분선 대신)
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
-  section.value-props.value-props .value-prop-item + .value-prop-item::before {
-    top: -10px; // 칸 사이 간격(20)의 가운데
+  section.value-props.value-props .value-prop-item+.value-prop-item::before {
+    top: -0.625rem; // 칸 사이 간격(20)의 가운데
     bottom: auto;
     left: 25%;
     right: 25%;
     width: auto;
-    height: 1px;
+    height: 0.0625rem;
   }
 }
 
 // [추가] 휴대폰 신규출시 카드 [♡ 찜]: 찜한 상태는 빨간 하트 대신 흰색 채운 하트 (public/icons/active-heart.svg)
 @media (max-width: $breakpoint-mobile) {
+
   main.member-home .member-nr-card.member-nr-card .member-nr-quick-heart.is-on,
   section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-heart.is-on {
     color: $light-color-0;
