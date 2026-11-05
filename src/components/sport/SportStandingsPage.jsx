@@ -6,6 +6,7 @@ import { PLAYER_RANKS } from "../../data/mockPlayerRanks";
 import { conferenceRows, clubOf } from "./standingsUtils";
 import SportHero from "./SportHero";
 import TeamBadge from "./TeamBadge"; // [추가] 팀 뱃지 (배경 없이)
+import { SportBack } from "./SportBack";
 
 // =====================================================================
 // 리그 순위 상세 (/sport/standings)
@@ -88,6 +89,7 @@ const SportStandingsPage = () => {
 
       <section className="sport-standings" aria-labelledby="sport-standings-page-title">
         <div className="inner">
+          <SportBack />
           {/* 페이지 제목 */}
           <div className="sport-standings-head">
             <h2 className="sport-standings-title" id="sport-standings-page-title">{SEASON} 정규시즌 리그 순위</h2>
@@ -155,8 +157,6 @@ const SportStandingsPage = () => {
               ))}
             </ol>
           </div>
-
-          <Link className="sport-detail-back" to="/sport">← 스포츠 홈으로</Link>
         </div>
       </section>
     </main>
