@@ -1647,7 +1647,7 @@ main.member-home .subscribe-cta {
       }
 
       .top10-slide--wide {
-        width: 489px; // 두 자리(10위): 숫자 한 자리 폭(약 111)만큼 넓게
+        width: 469px; // 두 자리(10위): 숫자 한 자리 폭(약 111) − 붙인 글자 사이(20)만큼 넓게
       }
 
       .top10-card {
@@ -1655,7 +1655,7 @@ main.member-home .subscribe-cta {
       }
 
       .top10-slide--wide .top10-card {
-        padding-left: 207px;
+        padding-left: 187px; // 숫자 자리 96 + 111 − 20 (글자 사이를 붙인 만큼 포스터도 숫자 쪽으로)
       }
 
       // SVG viewBox 높이 140 을 140px 로 그림 → 글자 크기 195 = 화면 195px
@@ -1665,7 +1665,7 @@ main.member-home .subscribe-cta {
 
         .top10-num-glyph {
           font-size: 195px;
-          letter-spacing: 0;
+          letter-spacing: $top10-num-letter-spacing; // [수정] 10위의 1 · 0 이 너무 떨어져 보여 붙임 (_variables.scss)
         }
 
         // 시안: 테두리 없음

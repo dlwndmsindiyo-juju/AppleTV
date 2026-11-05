@@ -75,6 +75,7 @@ $card-shadow-gradient: linear-gradient(to top, $card-shadow-start 0%, $card-shad
 // [추가] TOP 10 순위 숫자 그라데이션 (Figma: Linear · 0% #F1F1F1 → 100% #606060 · 위 → 아래)
 $top10-num-gradient-start: #F1F1F1; // 0% (위)
 $top10-num-gradient-end: #606060; // 100% (아래)
+$top10-num-letter-spacing: -20px; // [추가] 순위 숫자 글자 사이 (두 자리 10위의 1 · 0 사이를 붙임 · 한 자리 숫자는 영향 없음)
 
 $thumb-shadow-gradient: linear-gradient(to bottom,
     rgba(0, 0, 0, 0.28) 0%,
