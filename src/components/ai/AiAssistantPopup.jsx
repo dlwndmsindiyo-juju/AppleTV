@@ -6,7 +6,7 @@ import { resolveContentDetail } from "./resolveContentDetail";
 import { DURATIONS, GENRES, MOODS, getContentRecommendations } from "./aiRecommendations";
 import closeIcon from "./assets/close.svg";
 import checkIcon from "./assets/check.svg";
-import starsIcon from "./assets/selection-stars.svg";
+import AiLogo from "./AiLogo"; // [수정] AI 아이콘 공용 (예전 selection-stars.svg)
 import selectionCloseIcon from "./assets/selection-close.svg";
 import selectionCheckIcon from "./assets/selection-check.svg";
 import selectionArrowIcon from "./assets/selection-arrow.svg";
@@ -17,7 +17,11 @@ import "./AiAssistantPopup.scss";
 
 const emptyPreferences = (taste) => ({
   genres: [],
-  mood: ({ "편안한 힐링": "편안한 힐링", "몰입감 있는": "몰입감 있는", "가볍게 웃는": "가볍게 웃고 싶어요" })[taste] || "",
+  // [수정] 홍보 배너 기분 칩(힘든 · 슬픈 · 즐거운 · 화난)도 팝업 분위기로 이어줌
+  mood: ({
+    "편안한 힐링": "편안한 힐링", "몰입감 있는": "몰입감 있는", "가볍게 웃는": "가볍게 웃고 싶어요",
+    "힘든": "편안한 힐링", "슬픈": "따뜻한 감동", "즐거운": "가볍게 웃고 싶어요", "화난": "긴장감 넘치는",
+  })[taste] || "",
   duration: "",
 });
 
@@ -212,7 +216,7 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend })
         </div>
         <div className="ai-popup-footer">
           {step < 2 ? <button type="button" className="ai-popup-skip" disabled={!stepValid} onClick={() => setStep((prev) => prev + 1)}>넘어가기<img className="ai-popup-next-arrow" src={selectionArrowIcon} alt="" /></button> : <>
-            <p className="ai-popup-helper"><span className="ai-popup-sparkle" aria-hidden="true"><img src={starsIcon} alt="" /></span><span>선택한 취향을 바탕으로 맞춤 작품을 찾아드릴게요.</span></p>
+            <p className="ai-popup-helper"><span className="ai-popup-sparkle" aria-hidden="true"><AiLogo size={24} /></span><span>선택한 취향을 바탕으로 맞춤 작품을 찾아드릴게요.</span></p>
             <div className="ai-popup-actions">
               <button type="button" className="ai-popup-reset ai-popup-sr-only" disabled={loading} onClick={() => { setPreferences(emptyPreferences()); setStep(0); setError(""); }}><img src={resetIcon} alt="" />초기화</button>
               <button type="button" className="ai-popup-primary" disabled={!stepValid || loading} onClick={() => {
