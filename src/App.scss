@@ -7694,10 +7694,7 @@ section.device-guide.device-guide--watch {
 // - 로그인 때 고르는 가족 프로필(아빠 · 엄마 · 아들 · 딸)과 같은 색 원형 아이콘 + 이름
 // - 지금 보고 있는 프로필: 프라이머리 테두리 · 이름 굵게
 // =====================================================================
-.account-profile-member {
-  @include body-small-b;
-  color: $primary-color-500;
-}
+
 
 .account-members {
   display: flex;

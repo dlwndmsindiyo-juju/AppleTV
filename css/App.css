@@ -3,7 +3,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 4.5em;
+  height: 4.5rem;
   background-color: #141414;
   z-index: 1000;
   display: flex;
@@ -15,7 +15,7 @@ header .inner {
   max-width: 1920px;
   margin: 0 auto;
   height: 100%;
-  padding: 0.88em 4em;
+  padding: 0.875rem 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,8 +37,8 @@ header .inner .logo a img {
 }
 header .inner .header-login {
   z-index: 10;
-  padding: 0.5em 1.25rem;
-  border-radius: 1.75em;
+  padding: 0.5rem 1.25rem;
+  border-radius: 1.75rem;
   background-color: #F5F5F5;
   color: #171717;
   font-size: 0.875rem;
@@ -56,7 +56,7 @@ header .inner nav {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 0.88em 4em;
+  padding: 0.875rem 4rem;
   pointer-events: none;
   box-sizing: border-box;
 }
@@ -66,8 +66,8 @@ header .inner nav > * {
 header .inner nav .gnb-center-toggle {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
   position: absolute;
@@ -96,7 +96,7 @@ header .inner nav .gnb-center-toggle button {
   position: relative;
   z-index: 1;
   height: 2.5rem;
-  padding: 0 1.5em;
+  padding: 0 1.5rem;
   border: none;
   border-radius: 624.9375rem;
   background: transparent;
@@ -126,7 +126,7 @@ header .inner nav .gnb-right ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 1em;
+  gap: 1rem;
 }
 header .inner nav .gnb-right ul .search-box {
   display: flex;
@@ -145,7 +145,7 @@ header .inner nav .gnb-right ul .search-box:focus-within {
 header .inner nav .gnb-right ul .search-box img {
   width: 14px;
   height: 0.875rem;
-  margin-right: 0.5em;
+  margin-right: 0.5rem;
   flex-shrink: 0;
   filter: invert(0.7);
 }
@@ -166,15 +166,15 @@ header .inner nav .gnb-right ul .login-box {
 header .inner nav .gnb-right ul .header-login-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
   height: 2rem;
-  padding: 0 0.75em;
-  border-radius: 0.5em;
+  padding: 0 0.75rem;
+  border-radius: 0.5rem;
   background-color: #5865F2;
   color: #FFFFFF;
   white-space: nowrap;
@@ -227,12 +227,12 @@ header .inner nav .gnb-right ul .profile-box img {
 }
 header .inner nav .gnb-right ul .profile-menu {
   position: absolute;
-  top: calc(100% + 0.5em);
+  top: calc(100% + 0.5rem);
   right: 0;
   z-index: 1100;
   width: 240px;
-  max-width: calc(100vw - 2em);
-  border-radius: 0.63em;
+  max-width: calc(100vw - 2rem);
+  border-radius: 0.625rem;
   overflow: hidden;
   background-color: rgba(200, 200, 200, 0.92);
   backdrop-filter: blur(1.25rem);
@@ -243,15 +243,15 @@ header .inner nav .gnb-right ul .profile-menu {
 header .inner nav .gnb-right ul .profile-menu-item {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 3.25rem;
-  padding: 0 1em;
+  padding: 0 1rem;
   border: none;
   background: transparent;
   color: #171717;
@@ -274,8 +274,8 @@ header .inner nav .gnb-right ul .profile-menu-item svg {
 header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: block;
   flex-shrink: 0;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 @keyframes profile-menu-in {
@@ -290,7 +290,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .login-page {
   width: 100%;
-  min-height: calc(100vh - 4.5em - 10rem);
+  min-height: calc(100vh - 4.5rem - 10rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -303,8 +303,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   max-width: 580px;
   background-color: #F2F2F2;
-  border-radius: 1.25em;
-  padding: 3em 3.5rem 2.5rem;
+  border-radius: 1.25rem;
+  padding: 3rem 3.5rem 2.5rem;
   box-sizing: border-box;
   text-align: center;
   box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.4);
@@ -333,30 +333,30 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   background-color: rgba(0, 0, 0, 0.1);
 }
 .login-page .login-card .login-logo-area {
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
 }
 .login-page .login-card .login-logo-area .login-app-icon {
   width: 48px;
   height: 3rem;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #D4D4D4;
 }
 .login-page .login-card .login-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #171717;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding: 0;
 }
 .login-page .login-card .login-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #525252;
   margin: 0 0 1.75rem;
@@ -366,18 +366,18 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   max-width: 420px;
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .login-page .login-card .login-form .input-field input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   width: 100%;
   height: 3rem;
-  padding: 0 1em;
-  border-radius: 0.63em;
+  padding: 0 1rem;
+  border-radius: 0.625rem;
   border: 0.0625rem solid #D4D4D4;
   background-color: #FFFFFF;
   color: #171717;
@@ -394,13 +394,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card .login-form .login-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   width: 100%;
   height: 2.875rem;
   margin-top: 0.375rem;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   border: none;
   background-color: #6E7AF4;
   color: #FFFFFF;
@@ -415,13 +415,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   margin-top: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 .login-page .login-card .login-links .login-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #6E7AF4;
   text-decoration: none;
@@ -437,13 +437,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card .login-form .code-input-group {
   display: flex;
   justify-content: center;
-  gap: 0.5em;
-  margin-bottom: 0.5em;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .login-page .login-card .login-form .code-input-group .code-box {
   width: 52px;
   height: 3.625rem;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   border: 0.0625rem solid #D4D4D4;
   background-color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
@@ -462,13 +462,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card .login-links.row-links {
   flex-direction: row;
   justify-content: center;
-  gap: 1.5em;
+  gap: 1.5rem;
 }
 .login-page .login-card .login-links.row-links .login-link-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   background: none;
   border: none;
@@ -485,7 +485,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   min-height: 35rem;
   padding: 5rem 3.5rem 2.5rem;
   background-color: #f5f5f7;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   box-shadow: none;
 }
 .login-page .login-card.login-card--confirm .login-card-close {
@@ -509,11 +509,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--confirm .login-logo-area .login-app-icon {
   width: 50px;
   height: 3.125rem;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #d9d9d9;
 }
 .login-page .login-card.login-card--confirm .login-title {
-  margin: 5.25rem 0 0.75em;
+  margin: 5.25rem 0 0.75rem;
   font-size: 2.125rem;
   line-height: 2.5625rem;
   font-weight: 400;
@@ -553,9 +553,9 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin {
   max-width: 668px;
   min-height: 29.25rem;
-  padding: 4.25rem 3.5rem 2em;
+  padding: 4.25rem 3.5rem 2rem;
   background-color: #F5F5F5;
-  border-radius: 1.25em;
+  border-radius: 1.25rem;
   box-shadow: none;
   justify-content: flex-start;
 }
@@ -580,14 +580,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin .login-logo-area .login-app-icon {
   width: 42px;
   height: 2.625rem;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background-color: #D4D4D4;
 }
 .login-page .login-card.login-card--signin .login-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #171717;
@@ -596,8 +596,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin .login-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   color: #A3A3A3;
   margin: 0 0 1.375rem;
@@ -613,12 +613,12 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin .login-form .input-field input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   height: 3.3125rem;
   padding: 0 1.125rem;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   border: 0.0625rem solid #D4D4D4;
   background-color: #F5F5F5;
 }
@@ -632,13 +632,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin .login-form .login-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   width: 358px;
   max-width: 100%;
   height: 2.5rem;
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
   border-radius: 0.375rem;
   background-color: #6E7AF4;
   color: #FFFFFF;
@@ -655,10 +655,10 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin .login-error {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin: 0.75em 0 0;
+  margin: 0.75rem 0 0;
 }
 .login-page .login-card.login-card--signin .login-notice {
   color: #525252;
@@ -680,8 +680,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin .login-link-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
@@ -783,7 +783,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .hero-swiper-container .swiper-pagination .swiper-pagination-bullet-active {
   background: #FFFFFF !important;
   width: 28px;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
 }
 .hero-swiper-container .hero-slide-item {
   position: relative;
@@ -830,7 +830,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.75em;
+  gap: 0.75rem;
   margin-bottom: 1.25rem;
   color: #C8C8C8;
   font-size: 0.875rem;
@@ -844,20 +844,20 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .hero-swiper-container .hero-slide-item .hero-info .hero-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   font-size: 4rem;
   font-weight: 700;
   line-height: 1.15;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   padding-top: 0;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #D4D4D4;
   line-height: 1.6;
@@ -872,7 +872,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .hero-swiper-container .hero-slide-item .hero-info .hero-actions {
   display: flex;
   justify-content: flex-start;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-actions .hero-btn {
   display: inline-flex;
@@ -904,15 +904,15 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 
 .value-props {
   background-color: #141414;
-  padding: 1.375rem 0 1.5em;
+  padding: 1.375rem 0 1.5rem;
   text-align: center;
 }
 .value-props .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -925,26 +925,26 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .value-props .value-props-inner {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
 }
 .value-props .value-prop-item {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .value-props .value-prop-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
 .value-props .value-prop-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -957,8 +957,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -971,8 +971,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .top10-section .top10-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0 0 1.25rem;
@@ -993,7 +993,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .top10-section .top10-poster {
   position: relative;
   aspect-ratio: 282/400;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #181a21;
 }
@@ -1022,8 +1022,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5em;
-  padding: 1em;
+  gap: 0.5rem;
+  padding: 1rem;
   text-align: center;
   background: rgba(8, 9, 13, 0.7);
   opacity: 0;
@@ -1032,8 +1032,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .top10-section .top10-poster .top10-hover .top10-movie-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
   word-break: keep-all;
@@ -1041,8 +1041,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .top10-section .top10-poster .top10-hover .top10-rating {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -1068,14 +1068,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 
 .upcoming-section {
   background-color: #141414;
-  padding: 4em 0;
+  padding: 4rem 0;
 }
 .upcoming-section .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -1088,28 +1088,28 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   color: #FFFFFF;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
 }
 .upcoming-section .upcoming-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #C8C8C8;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
 }
 .upcoming-section .upcoming-sub {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1em;
-  margin-bottom: 1.5em;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 .upcoming-section .upcoming-sub .upcoming-desc {
   margin: 0;
@@ -1117,8 +1117,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-more {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   flex-shrink: 0;
   color: #A3A3A3;
@@ -1132,7 +1132,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -1140,9 +1140,9 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-card {
   display: flex;
   align-items: center;
-  gap: 1.5em;
+  gap: 1.5rem;
   padding: 1.25rem;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #242424;
   min-width: 0;
   box-sizing: border-box;
@@ -1152,7 +1152,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: block;
   width: 156px;
   aspect-ratio: 156/186;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #2E2E2E;
 }
@@ -1171,22 +1171,22 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5em;
+  gap: 0.5rem;
   min-width: 0;
 }
 .upcoming-section .upcoming-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .upcoming-section .upcoming-movie-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
@@ -1202,8 +1202,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   margin: 0;
@@ -1217,14 +1217,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
   height: 2.25rem;
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
   padding: 0 1.25rem;
   border: 0.0625rem solid transparent;
   border-radius: 624.9375rem;
@@ -1253,15 +1253,15 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   background-color: #141414;
   color: #FFFFFF;
   min-height: 100vh;
-  padding-top: calc(4.5em + 1.5rem);
+  padding-top: calc(4.5rem + 1.5rem);
   padding-bottom: 5rem;
 }
 .movie-detail-page .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -1283,7 +1283,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .content-layout {
   display: flex;
   align-items: flex-start;
-  gap: 1.5em;
+  gap: 1.5rem;
   width: 100%;
 }
 .movie-detail-page .left-section {
@@ -1291,10 +1291,10 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  gap: 1.5rem;
 }
 .movie-detail-page .player-box {
-  border-radius: 1.25em;
+  border-radius: 1.25rem;
   overflow: hidden;
   background-color: #08090d;
 }
@@ -1321,8 +1321,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 2em;
-  padding: 1.25rem 1.75rem 1.5em;
+  gap: 2rem;
+  padding: 1.25rem 1.75rem 1.5rem;
 }
 .movie-detail-page .player-box .info-text {
   min-width: 0;
@@ -1341,8 +1341,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
@@ -1350,8 +1350,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .original-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #EBEBEB;
   text-transform: uppercase;
@@ -1359,20 +1359,20 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .genres {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .movie-detail-page .player-box .overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #E0E0E0;
   max-width: 640px;
-  margin-top: 0.25em;
+  margin-top: 0.25rem;
   word-break: keep-all;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -1385,7 +1385,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 1em;
+  gap: 1rem;
 }
 .movie-detail-page .player-box .icon-btns {
   display: flex;
@@ -1398,8 +1398,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   border: none;
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.31em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
   line-height: 1;
   background-color: rgba(255, 255, 255, 0.16);
@@ -1420,14 +1420,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .btn-play {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   font-weight: 700;
   width: 180px;
   height: 2.5rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #FFFFFF;
   color: #171717;
   cursor: pointer;
@@ -1440,7 +1440,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
-  padding: 0 0.5em;
+  padding: 0 0.5rem;
 }
 .movie-detail-page .rating-section .rating-header {
   display: flex;
@@ -1450,8 +1450,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .rating-header h3 {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
@@ -1459,12 +1459,12 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .rating-header .score-display {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
 }
 .movie-detail-page .rating-section .rating-header .score-display .score-star {
   width: 18px;
@@ -1481,16 +1481,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .rating-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #E0E0E0;
 }
 .movie-detail-page .rating-section .star-picker {
   display: flex;
   justify-content: center;
-  gap: 0.75em;
-  padding: 0.25em 0;
+  gap: 0.75rem;
+  padding: 0.25rem 0;
 }
 .movie-detail-page .rating-section .star-picker .star-item {
   width: 48px;
@@ -1501,7 +1501,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
 }
 .movie-detail-page .rating-section .star-picker .star-item .star {
   display: flex;
@@ -1515,8 +1515,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .star-picker .star-item .label {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
@@ -1532,8 +1532,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .btn-submit-rating {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   align-self: center;
   font-weight: 700;
@@ -1556,8 +1556,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .rating-done {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   text-align: center;
   color: #A3A3A3;
@@ -1566,13 +1566,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   flex: 0 0 34%;
   min-width: 0;
   position: sticky;
-  top: calc(4.5em + 1.5rem);
-  height: calc(100vh - 4.5em - 3rem);
+  top: calc(4.5rem + 1.5rem);
+  height: calc(100vh - 4.5rem - 3rem);
   min-height: 35rem;
   max-height: 57.5rem;
   box-sizing: border-box;
-  padding: 1.25rem 1.5em 0.5em;
-  border-radius: 1.25em;
+  padding: 1.25rem 1.5rem 0.5rem;
+  border-radius: 1.25rem;
   background-color: #1f1f1f;
   display: flex;
   flex-direction: column;
@@ -1586,11 +1586,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .tabs .tab-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.31em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
   position: relative;
-  padding: 0 0.25em 0.75em;
+  padding: 0 0.25rem 0.75rem;
   background: none;
   border: none;
   color: #A3A3A3;
@@ -1616,18 +1616,18 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .filter-bar {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75em;
-  margin-bottom: 1em;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 .movie-detail-page .right-section .filter-bar select {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   font-weight: 700;
   height: 2.25rem;
-  padding: 0 2em 0 0.75em;
+  padding: 0 2rem 0 0.75rem;
   border: none;
   border-radius: 0.375rem;
   background-color: #E0E0E0;
@@ -1642,31 +1642,31 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .season-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #E0E0E0;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.75rem;
 }
 .movie-detail-page .right-section .list-container {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding-right: 0.25em;
+  padding-right: 0.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: #464646 transparent;
 }
 .movie-detail-page .right-section .episode-card {
   display: flex;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 100%;
   padding: 0.375rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background: none;
   color: inherit;
   text-align: left;
@@ -1704,8 +1704,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   border-radius: 50%;
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   background-color: rgba(23, 23, 23, 0.6);
   color: #FFFFFF;
@@ -1724,16 +1724,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .episode-card .info .ep-num {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .movie-detail-page .right-section .episode-card .info .ep-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #EBEBEB;
@@ -1746,32 +1746,32 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .episode-card .info .runtime {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .movie-detail-page .right-section .cast-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem 0.75em;
+  gap: 1.25rem 0.75rem;
   list-style: none;
   margin: 0;
-  padding: 0.25em 0 1em;
+  padding: 0.25rem 0 1rem;
 }
 .movie-detail-page .right-section .cast-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
   text-align: center;
   min-width: 0;
 }
 .movie-detail-page .right-section .cast-photo {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   width: 72px;
   height: 4.5rem;
@@ -1781,7 +1781,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.25em;
+  margin-bottom: 0.25rem;
   color: #A3A3A3;
 }
 .movie-detail-page .right-section .cast-photo img {
@@ -1799,26 +1799,26 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .cast-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #EBEBEB;
 }
 .movie-detail-page .right-section .cast-role {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .movie-detail-page .right-section .similar-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1em 0.75em;
+  gap: 1rem 0.75rem;
   list-style: none;
   margin: 0;
-  padding: 0.25em 0 1em;
+  padding: 0.25rem 0 1rem;
 }
 .movie-detail-page .right-section .similar-grid > li {
   min-width: 0;
@@ -1853,8 +1853,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .similar-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -1863,8 +1863,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .empty-content {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   flex: 1;
   display: flex;
@@ -1889,22 +1889,22 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .detail-popup p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
 .movie-detail-page .detail-popup .popup-close {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
   z-index: 1;
-  padding: 0.5em 1.125rem;
+  padding: 0.5rem 1.125rem;
   border: none;
   border-radius: 624.9375rem;
   background-color: #FFFFFF;
@@ -1915,14 +1915,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 
 .apple-originals {
   background-color: #141414;
-  padding: 4em 0;
+  padding: 4rem 0;
 }
 .apple-originals .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -1935,21 +1935,21 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .apple-originals .apple-originals-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   color: #FFFFFF;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
 }
 .apple-originals .apple-originals-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #A3A3A3;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
 }
 .apple-originals .apple-originals-slide {
   width: 282px;
@@ -1962,16 +1962,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .apple-originals .apple-card {
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
+  gap: 0.25rem;
   text-decoration: none;
   color: #FFFFFF;
 }
 .apple-originals .apple-card-poster {
   aspect-ratio: 282/400;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #1f1f1f;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.75rem;
 }
 .apple-originals .apple-card-poster img {
   width: 100%;
@@ -1986,8 +1986,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .apple-originals .apple-card-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
@@ -1998,24 +1998,24 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .apple-originals .apple-card-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .apple-originals .apple-card-badge {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #FFFFFF;
-  margin-top: 0.25em;
+  margin-top: 0.25rem;
 }
 
 .ai-promo {
   background-color: #141414;
-  padding: 4em 0 8em;
+  padding: 4rem 0 8rem;
 }
 .ai-promo .ai-promo-band {
   background-color: #2E2E2E;
@@ -2024,8 +2024,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2039,9 +2039,9 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4em;
-  padding-top: 4em;
-  padding-bottom: 4em;
+  gap: 4rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
 .ai-promo .ai-promo-text {
   min-width: 0;
@@ -2049,20 +2049,20 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-eyebrow {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   color: #FFFFFF;
   letter-spacing: 0.04em;
 }
 .ai-promo .ai-promo-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
-  margin: 0 0 0.75em;
+  margin: 0 0 0.75rem;
   padding-top: 0;
   color: #FFFFFF;
   word-break: keep-all;
@@ -2070,8 +2070,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   margin: 0;
   color: #C8C8C8;
@@ -2082,7 +2082,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   max-width: 400px;
   padding: 1.25rem;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #FFFFFF;
   color: #171717;
   box-sizing: border-box;
@@ -2090,10 +2090,10 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-card-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
   color: #171717;
 }
@@ -2101,16 +2101,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-question {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   margin: 0;
   color: #525252;
 }
 .ai-promo .ai-promo-chips {
   display: flex;
-  gap: 0.5em;
-  margin: 0.75em 0;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
   padding: 0;
   list-style: none;
 }
@@ -2120,11 +2120,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-chip {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   height: 1.75rem;
-  padding: 0 0.75em;
+  padding: 0 0.75rem;
   border: 0.0625rem solid #A3A3A3;
   border-radius: 624.9375rem;
   background-color: #FFFFFF;
@@ -2144,15 +2144,15 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 2.25rem;
-  margin-top: 0.75em;
+  margin-top: 0.75rem;
   border-radius: 624.9375rem;
   background-color: #5865F2;
   color: #FFFFFF;
@@ -2175,8 +2175,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2189,7 +2189,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .subscribe-cta .subscribe-banner {
   position: relative;
   height: 25.9375rem;
-  border-radius: 1.5em;
+  border-radius: 1.5rem;
   overflow: hidden;
   background-color: #1f1f1f;
   border: 0.0625rem solid #3A3A3A;
@@ -2221,7 +2221,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 1em;
+  gap: 1rem;
 }
 .subscribe-cta .subscribe-logo {
   height: 1.75rem;
@@ -2232,8 +2232,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .subscribe-cta .subscribe-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
@@ -2242,13 +2242,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .subscribe-cta .subscribe-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   height: 3rem;
-  padding: 0 2.25em;
+  padding: 0 2.25rem;
   border-radius: 624.9375rem;
   background-color: #F5F5F5;
   color: #171717;
@@ -2261,8 +2261,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .subscribe-cta .subscribe-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   margin: 0;
@@ -2270,14 +2270,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 
 .sport-upcoming {
   background-color: #141414;
-  padding: 3.5rem 0 2em;
+  padding: 3.5rem 0 2rem;
 }
 .sport-upcoming .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2339,8 +2339,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   z-index: 2;
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #D4D4D4;
   font-weight: 700;
@@ -2352,7 +2352,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2em;
+  gap: 2rem;
 }
 .sport-upcoming .sport-match-card .sport-team {
   width: 90px;
@@ -2406,8 +2406,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2422,7 +2422,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5em;
+  gap: 1.5rem;
   padding-top: 0;
   padding-bottom: 0;
   box-sizing: border-box;
@@ -2437,8 +2437,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .promo-banner .promo-banner-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.31em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
@@ -2451,8 +2451,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .promo-banner .promo-banner-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
@@ -2472,8 +2472,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .promo-banner .promo-banner-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
@@ -2495,8 +2495,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .promo-banner .promo-banner-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: rgba(255, 255, 255, 0.8);
   text-align: center;
@@ -2510,13 +2510,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   border-top: 0.0625rem solid #3A3A3A;
 }
 .promo-banner.is-live .promo-banner-text {
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 .promo-banner.is-live .live-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   display: flex;
@@ -2527,7 +2527,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .promo-banner.is-live .live-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   flex-shrink: 0;
   color: #E91E1B;
 }
@@ -2549,23 +2549,23 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .promo-banner.is-live .live-score {
   flex-shrink: 0;
-  margin: 0 0.25em;
+  margin: 0 0.25rem;
   color: #FFFFFF;
   letter-spacing: 0.125rem;
 }
 .promo-banner.is-live .promo-banner-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .promo-banner.is-live .promo-banner-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   gap: 0.375rem;
   min-width: 164px;
@@ -2580,19 +2580,19 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .promo-banner.is-live .promo-banner-btn .play-icon {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
 }
 .promo-banner.is-live .promo-banner-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   color: #E0E0E0;
 }
 .promo-banner.is-live .promo-banner-note .dot-sep {
@@ -2630,21 +2630,21 @@ body.has-promo-banner .footer {
   width: 100%;
   max-width: 435px;
   box-sizing: border-box;
-  padding: 1.5em;
-  border-radius: 0.75em;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
   background-color: rgba(23, 23, 23, 0.92);
   color: #FFFFFF;
 }
 .sport-hero .sport-hero-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  margin: 0 0 0.75em;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
   color: #FFFFFF;
 }
 .sport-hero .sport-hero-label strong {
@@ -2663,15 +2663,15 @@ body.has-promo-banner .footer {
 .sport-hero .sport-hero-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   font-weight: 700;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.75em;
-  margin: 0 0 0.75em;
+  gap: 0.75rem;
+  margin: 0 0 0.75rem;
   padding-top: 0;
   color: #FFFFFF;
 }
@@ -2681,15 +2681,15 @@ body.has-promo-banner .footer {
 .sport-hero .sport-hero-sub {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   margin: 0 0 1.25rem;
   color: #A3A3A3;
 }
 .sport-hero .sport-hero-actions {
   display: flex;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 
 @keyframes sport-live-blink {
@@ -2703,14 +2703,14 @@ body.has-promo-banner .footer {
 .sport-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 2.5rem;
-  padding: 0 1.5em;
+  padding: 0 1.5rem;
   border-radius: 624.9375rem;
   font-weight: 700;
   text-decoration: none;
@@ -2744,8 +2744,8 @@ body.has-promo-banner .footer {
 .sport-section-head .sport-section-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   margin: 0;
   color: #FFFFFF;
@@ -2753,8 +2753,8 @@ body.has-promo-banner .footer {
 .sport-section-head .sport-more {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   text-decoration: none;
@@ -2767,27 +2767,27 @@ body.has-promo-banner .footer {
 .sport-empty {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
-  padding: 3em 1em;
+  padding: 3rem 1rem;
   text-align: center;
   color: #A3A3A3;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
 }
 
 .sport-upcoming {
   background-color: #141414;
-  padding: 3.5rem 0 2em;
+  padding: 3.5rem 0 2rem;
 }
 .sport-upcoming .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2800,7 +2800,7 @@ body.has-promo-banner .footer {
 .sport-upcoming .sport-match-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -2809,16 +2809,16 @@ body.has-promo-banner .footer {
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
-  padding: 1em;
-  border-radius: 0.75em;
+  padding: 1rem;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
   min-width: 0;
 }
 .sport-upcoming .sport-match-status {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
@@ -2826,7 +2826,7 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .sport-upcoming .sport-match-teams {
   display: flex;
@@ -2852,8 +2852,8 @@ body.has-promo-banner .footer {
 .sport-upcoming .sport-match-team-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #FFFFFF;
   white-space: nowrap;
@@ -2863,8 +2863,8 @@ body.has-promo-banner .footer {
 .sport-upcoming .sport-match-score {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   flex-shrink: 0;
@@ -2873,14 +2873,14 @@ body.has-promo-banner .footer {
 
 .sport-shorts {
   background-color: #141414;
-  padding: 2em 0 4.5rem;
+  padding: 2rem 0 4.5rem;
 }
 .sport-shorts .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2907,7 +2907,7 @@ body.has-promo-banner .footer {
 .sport-shorts .sport-short-thumb {
   position: relative;
   aspect-ratio: 175/190;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   overflow: hidden;
   background-color: #1f1f1f;
   margin-bottom: 0.375rem;
@@ -2942,8 +2942,8 @@ body.has-promo-banner .footer {
 .sport-shorts .sport-short-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
   color: #FFFFFF;
@@ -2956,8 +2956,8 @@ body.has-promo-banner .footer {
 .sport-shorts .sport-short-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   white-space: nowrap;
@@ -2973,8 +2973,8 @@ body.has-promo-banner .footer {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2990,7 +2990,7 @@ body.has-promo-banner .footer {
   justify-content: center;
   aspect-ratio: 1185/348;
   min-height: 12.5rem;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
   overflow: hidden;
 }
@@ -3003,8 +3003,8 @@ body.has-promo-banner .footer {
 .sport-promo .sport-promo-placeholder {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
@@ -3016,7 +3016,7 @@ body.has-promo-banner .footer {
   height: 6.75rem;
   padding: 0 1.75rem 0 1.125rem;
   box-sizing: border-box;
-  border-radius: 1.25em;
+  border-radius: 1.25rem;
   border: 0.0625rem solid transparent;
   background-color: #242424;
   min-width: 0;
@@ -3032,7 +3032,7 @@ body.has-promo-banner .footer {
   flex-shrink: 0;
   width: 64px;
   height: 4rem;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   overflow: hidden;
 }
 .sport-team-card .sport-team-logo img {
@@ -3057,8 +3057,8 @@ body.has-promo-banner .footer {
 .sport-team-card .sport-team-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
@@ -3066,16 +3066,16 @@ body.has-promo-banner .footer {
 .sport-team-card .sport-team-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .sport-team-card .sport-team-add {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   flex-shrink: 0;
   display: flex;
@@ -3098,8 +3098,8 @@ body.has-promo-banner .footer {
 .sport-team-card .sport-team-add.on {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.31em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
   font-weight: 700;
   background-color: #E91E1B;
@@ -3107,7 +3107,7 @@ body.has-promo-banner .footer {
 
 .sport-team-filter {
   display: flex;
-  gap: 0.5em;
+  gap: 0.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3115,8 +3115,8 @@ body.has-promo-banner .footer {
 .sport-team-filter button {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   height: 2.5rem;
   padding: 0 1.125rem;
@@ -3147,12 +3147,12 @@ body.has-promo-banner .footer {
 .sport-team-empty {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   margin: 0;
-  padding: 2.5rem 1em;
-  border-radius: 1.25em;
+  padding: 2.5rem 1rem;
+  border-radius: 1.25rem;
   background-color: rgba(23, 23, 23, 0.45);
   color: #E0E0E0;
   text-align: center;
@@ -3160,14 +3160,14 @@ body.has-promo-banner .footer {
 
 .sport-teams {
   background: linear-gradient(to right, #00047C 0%, #FFAA7A 100%);
-  padding: 4em 0;
+  padding: 4rem 0;
 }
 .sport-teams .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3184,25 +3184,25 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1em;
+  gap: 1rem;
   margin-bottom: 1.25rem;
 }
 .sport-teams .sport-teams-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
   color: #FFFFFF;
 }
 .sport-teams .sport-teams-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
   color: rgba(255, 255, 255, 0.85);
@@ -3210,8 +3210,8 @@ body.has-promo-banner .footer {
 .sport-teams .sport-teams-count {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   flex-shrink: 0;
   margin: 0;
@@ -3222,7 +3222,7 @@ body.has-promo-banner .footer {
   color: #FFFFFF;
 }
 .sport-teams .sport-team-filter {
-  margin-bottom: 1.5em;
+  margin-bottom: 1.5rem;
 }
 .sport-teams .sport-team-swiper {
   width: 100%;
@@ -3234,14 +3234,14 @@ body.has-promo-banner .footer {
 .sport-teams .sport-team-more {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   width: fit-content;
   height: 2.75rem;
-  margin: 2em auto 0;
+  margin: 2rem auto 0;
   padding: 0 1.75rem;
   border: 0.0625rem solid rgba(255, 255, 255, 0.5);
   border-radius: 624.9375rem;
@@ -3257,7 +3257,7 @@ body.has-promo-banner .footer {
 
 .sport-teams-page {
   min-height: 100vh;
-  padding-top: 4.5em;
+  padding-top: 4.5rem;
   padding-bottom: 5rem;
   background-color: #141414;
   color: #FFFFFF;
@@ -3266,8 +3266,8 @@ body.has-promo-banner .footer {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3279,13 +3279,13 @@ body.has-promo-banner .footer {
 }
 .sport-teams-page .sport-teams-hero {
   background: linear-gradient(to right, #00047C 0%, #FFAA7A 100%);
-  padding: 2.5rem 0 3em;
+  padding: 2.5rem 0 3rem;
 }
 .sport-teams-page .sport-teams-back {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   margin-bottom: 1.25rem;
   padding: 0;
@@ -3300,19 +3300,19 @@ body.has-promo-banner .footer {
 .sport-teams-page .sport-teams-page-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   font-weight: 700;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
   color: #FFFFFF;
 }
 .sport-teams-page .sport-teams-page-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0 0 1.25rem;
   color: rgba(255, 255, 255, 0.85);
@@ -3320,12 +3320,12 @@ body.has-promo-banner .footer {
 .sport-teams-page .sport-teams-summary {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 1em;
+  gap: 1rem;
   color: rgba(255, 255, 255, 0.85);
 }
 .sport-teams-page .sport-teams-summary strong {
@@ -3335,8 +3335,8 @@ body.has-promo-banner .footer {
 .sport-teams-page .sport-teams-clear {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   height: 2rem;
   padding: 0 0.875rem;
@@ -3350,14 +3350,14 @@ body.has-promo-banner .footer {
   background-color: rgba(23, 23, 23, 0.3);
 }
 .sport-teams-page .sport-teams-body {
-  padding-top: 2em;
+  padding-top: 2rem;
 }
 .sport-teams-page .sport-teams-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1em;
-  margin-bottom: 2em;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 .sport-teams-page .sport-team-filter button {
   background-color: #242424;
@@ -3373,7 +3373,7 @@ body.has-promo-banner .footer {
   align-items: center;
   width: 280px;
   height: 2.5rem;
-  padding: 0 1em;
+  padding: 0 1rem;
   border-radius: 624.9375rem;
   background-color: #262626;
   box-sizing: border-box;
@@ -3385,15 +3385,15 @@ body.has-promo-banner .footer {
 .sport-teams-page .sport-team-search img {
   width: 14px;
   height: 0.875rem;
-  margin-right: 0.5em;
+  margin-right: 0.5rem;
   flex-shrink: 0;
   filter: invert(0.7);
 }
 .sport-teams-page .sport-team-search input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   width: 100%;
   border: none;
@@ -3405,13 +3405,13 @@ body.has-promo-banner .footer {
   color: #A3A3A3;
 }
 .sport-teams-page .sport-team-group + .sport-team-group {
-  margin-top: 3em;
+  margin-top: 3rem;
 }
 .sport-teams-page .sport-team-group-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   font-weight: 700;
   margin: 0 0 1.25rem;
@@ -3420,16 +3420,16 @@ body.has-promo-banner .footer {
 .sport-teams-page .sport-team-group-title .count {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  margin-left: 0.5em;
+  margin-left: 0.5rem;
   color: #A3A3A3;
 }
 .sport-teams-page .sport-team-list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3446,8 +3446,8 @@ body.has-promo-banner .footer {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3460,7 +3460,7 @@ body.has-promo-banner .footer {
 .sport-league .sport-league-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3468,9 +3468,9 @@ body.has-promo-banner .footer {
 .sport-league .sport-league-card {
   display: flex;
   align-items: center;
-  gap: 1em;
-  padding: 1em;
-  border-radius: 0.75em;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
   text-decoration: none;
   color: #FFFFFF;
@@ -3486,7 +3486,7 @@ body.has-promo-banner .footer {
   justify-content: center;
   width: 52px;
   height: 3.25rem;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background-color: #FFFFFF;
   color: #171717;
   font-size: 1.25rem;
@@ -3496,8 +3496,8 @@ body.has-promo-banner .footer {
 .sport-league .sport-league-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   flex: 1;
   min-width: 0;
@@ -3511,14 +3511,14 @@ body.has-promo-banner .footer {
 
 .sport-replay {
   background-color: #141414;
-  padding: 3.5rem 0 2em;
+  padding: 3.5rem 0 2rem;
 }
 .sport-replay .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3531,7 +3531,7 @@ body.has-promo-banner .footer {
 .sport-replay .sport-replay-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3540,8 +3540,8 @@ body.has-promo-banner .footer {
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
-  padding: 0.75em;
-  border-radius: 0.75em;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
   text-decoration: none;
   color: #FFFFFF;
@@ -3554,9 +3554,9 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   aspect-ratio: 206/104;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background-color: #242424;
   overflow: hidden;
 }
@@ -3569,8 +3569,8 @@ body.has-promo-banner .footer {
 .sport-replay .sport-replay-score {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
@@ -3578,10 +3578,10 @@ body.has-promo-banner .footer {
 .sport-replay .sport-replay-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  padding: 0 0.25em;
+  padding: 0 0.25rem;
   color: #FFFFFF;
   white-space: nowrap;
   overflow: hidden;
@@ -3590,10 +3590,10 @@ body.has-promo-banner .footer {
 .sport-replay .sport-replay-date {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  padding: 0 0.25em 0.25em;
+  padding: 0 0.25rem 0.25rem;
   color: #A3A3A3;
   margin-top: -0.5rem;
 }
@@ -3606,8 +3606,8 @@ body.has-promo-banner .footer {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3620,7 +3620,7 @@ body.has-promo-banner .footer {
 .sport-highlights .sport-highlight-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3635,10 +3635,10 @@ body.has-promo-banner .footer {
 .sport-highlights .sport-highlight-thumb {
   position: relative;
   aspect-ratio: 286/160;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   overflow: hidden;
   background-color: #1f1f1f;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 .sport-highlights .sport-highlight-thumb img {
   width: 100%;
@@ -3670,8 +3670,8 @@ body.has-promo-banner .footer {
 .sport-highlights .sport-highlight-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
   color: #FFFFFF;
@@ -3684,8 +3684,8 @@ body.has-promo-banner .footer {
 .sport-highlights .sport-highlight-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   white-space: nowrap;
@@ -3701,8 +3701,8 @@ body.has-promo-banner .footer {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3716,27 +3716,27 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2em;
-  padding: 3em;
+  gap: 2rem;
+  padding: 3rem;
   border-radius: 1rem;
   background-color: #1f1f1f;
 }
 .sport-notify .sport-notify-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   font-weight: 700;
-  margin: 0 0 0.75em;
+  margin: 0 0 0.75rem;
   color: #FFFFFF;
   word-break: keep-all;
 }
 .sport-notify .sport-notify-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   margin: 0;
   color: #A3A3A3;
@@ -3744,15 +3744,15 @@ body.has-promo-banner .footer {
 .sport-notify .sport-notify-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 2.75rem;
-  padding: 0 2em;
+  padding: 0 2rem;
   border-radius: 624.9375rem;
   background-color: #FFFFFF;
   color: #171717;
@@ -3771,8 +3771,8 @@ body.has-promo-banner .footer {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3805,7 +3805,7 @@ main h2 {
   background-color: #141414;
   color: #A3A3A3;
   width: 100%;
-  padding: 0.88em 2.5em;
+  padding: 0.875rem 2.5rem;
   box-sizing: border-box;
 }
 .footer .inner {
@@ -3828,7 +3828,7 @@ main h2 {
 .footer .footer-main-menu {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75em 2em;
+  gap: 0.75rem 2rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3853,7 +3853,7 @@ main h2 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5em 1.25rem;
+  gap: 0.5rem 1.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3885,8 +3885,8 @@ main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3898,8 +3898,8 @@ main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):
 }
 main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
   max-width: 1200px;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 main.sport-home .sport-teams {
   padding: 3.5rem 0;
@@ -3914,7 +3914,7 @@ main.sport-home .sport-live-card {
   position: relative;
   aspect-ratio: 3/2;
   overflow: hidden;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background: #2E2E2E;
   color: #FFFFFF;
 }
@@ -3937,10 +3937,10 @@ main.sport-home .sport-live-watch {
   left: 0.875rem;
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  padding: 0.3125rem 0.75em;
+  padding: 0.3125rem 0.75rem;
 }
 main.sport-home .sport-live-badge {
   top: 0.875rem;
@@ -3962,11 +3962,11 @@ main.sport-home .sport-series-card .sport-series-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: cover;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background: #2E2E2E;
 }
 main.sport-home .sport-series-card h4 {
-  margin: 0.75em 0 0;
+  margin: 0.75rem 0 0;
 }
 
 @media (min-width: 1025px) {
@@ -3977,49 +3977,49 @@ main.sport-home .sport-series-card h4 {
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.75em;
-    line-height: 1em;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
-    gap: 0.5em;
-    margin-bottom: 0.75em;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
     color: #FFFFFF;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-meta .age-rating {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 4.75em;
-    line-height: 6em;
+    font-size: 4.75rem;
+    line-height: 6rem;
     letter-spacing: 0;
-    margin: 0 0 1em;
+    margin: 0 0 1rem;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-overview {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     -webkit-line-clamp: 2;
     line-clamp: 2;
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5rem;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions {
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions .hero-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     height: 2.5rem;
-    padding: 0 1.5em;
+    padding: 0 1.5rem;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions .hero-btn.primary {
     background-color: #5865F2;
@@ -4033,30 +4033,30 @@ main.sport-home .sport-series-card h4 {
   }
   .value-props {
     background-color: #08090d;
-    padding: 2.25em 0 1.5em;
+    padding: 2.25rem 0 1.5rem;
   }
   .value-props .inner {
-    padding-left: calc(5em + 3em);
-    padding-right: calc(5em + 3em);
+    padding-left: calc(5rem + 3rem);
+    padding-right: calc(5rem + 3rem);
   }
   .value-props .value-props-inner {
-    gap: 1.5em;
+    gap: 1.5rem;
   }
   .value-props .value-prop-item {
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   .value-props .value-prop-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .value-props .value-prop-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -4068,10 +4068,10 @@ main.sport-home .sport-series-card h4 {
   .top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 3em;
-    line-height: 3.5em;
+    font-size: 3rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
-    margin: 0 0 1.5em;
+    margin: 0 0 1.5rem;
   }
   .upcoming-section .inner,
   .apple-originals .inner,
@@ -4110,7 +4110,7 @@ main.sport-home .sport-series-card h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: calc(4.5em + 3em) 1.5em 4em;
+  padding: calc(4.5rem + 3rem) 1.5rem 4rem;
   box-sizing: border-box;
   background-color: #08090d;
 }
@@ -4119,8 +4119,8 @@ main.sport-home .sport-series-card h4 {
   position: relative;
   width: 100%;
   max-width: 800px;
-  padding: 4em 3em 3em;
-  border-radius: 1.5em;
+  padding: 4rem 3rem 3rem;
+  border-radius: 1.5rem;
   background-color: #1f1f1f;
   color: #FFFFFF;
   text-align: center;
@@ -4139,19 +4139,19 @@ main.sport-home .sport-series-card h4 {
 .auth-close {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   position: absolute;
-  top: 1.5em;
-  left: 1.5em;
+  top: 1.5rem;
+  left: 1.5rem;
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
   height: 2.5rem;
-  padding: 0 1.5em;
+  padding: 0 1.5rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #262626;
   color: #FFFFFF;
   cursor: pointer;
@@ -4172,7 +4172,7 @@ main.sport-home .sport-series-card h4 {
   width: 64px;
   height: 3.25rem;
   margin: 0 auto;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #262626;
 }
 .auth-logo img {
@@ -4204,10 +4204,10 @@ main.sport-home .sport-series-card h4 {
 .auth-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
-  margin: 1.5em 0 1em;
+  margin: 1.5rem 0 1rem;
   color: #FFFFFF;
   word-break: keep-all;
 }
@@ -4215,10 +4215,10 @@ main.sport-home .sport-series-card h4 {
 .auth-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   color: #C8C8C8;
   word-break: keep-all;
 }
@@ -4230,23 +4230,23 @@ main.sport-home .sport-series-card h4 {
 .auth-fields {
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  gap: 1.5rem;
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
 }
 .auth-fields--full {
   max-width: none;
-  margin-top: 1.5em;
+  margin-top: 1.5rem;
 }
 
 .auth-field {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
-  padding: 1.125rem 1em;
+  gap: 0.5rem;
+  padding: 1.125rem 1rem;
   border: 0.0625rem solid #525252;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background-color: #262626;
   text-align: left;
   box-sizing: border-box;
@@ -4259,8 +4259,8 @@ main.sport-home .sport-series-card h4 {
 .auth-field input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   width: 100%;
   padding: 0;
@@ -4277,8 +4277,8 @@ main.sport-home .sport-series-card h4 {
 .auth-field-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -4286,8 +4286,8 @@ main.sport-home .sport-series-card h4 {
 .auth-field-value {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
   word-break: break-all;
@@ -4295,50 +4295,50 @@ main.sport-home .sport-series-card h4 {
 
 .auth-privacy {
   max-width: 560px;
-  margin: 2em auto 0;
+  margin: 2rem auto 0;
 }
 .auth-privacy strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: block;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.75rem;
   color: #E0E0E0;
 }
 .auth-privacy p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   color: #C8C8C8;
   word-break: keep-all;
 }
 
 .auth-info {
-  padding: 1.5em;
-  border-radius: 0.75em;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
   background-color: #262626;
   text-align: left;
 }
 .auth-info strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: block;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
   color: #FFFFFF;
 }
 .auth-info p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   margin: 0;
   color: #C8C8C8;
@@ -4349,10 +4349,10 @@ main.sport-home .sport-series-card h4 {
 .auth-message {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 1em 0 0;
+  margin: 1rem 0 0;
   color: #FFFFFF;
   word-break: keep-all;
 }
@@ -4364,20 +4364,20 @@ main.sport-home .sport-series-card h4 {
 .auth-hint {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 1.5em 0 0;
+  margin: 1.5rem 0 0;
   color: #C8C8C8;
 }
 
 .auth-fineprint {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 1.5em 0 0;
+  margin: 1.5rem 0 0;
   color: #C8C8C8;
   text-align: left;
   word-break: keep-all;
@@ -4386,10 +4386,10 @@ main.sport-home .sport-series-card h4 {
 .auth-actions {
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  gap: 1.5rem;
   width: 100%;
   max-width: 428px;
-  margin: 1.5em auto 0;
+  margin: 1.5rem auto 0;
 }
 .auth-actions--row {
   flex-direction: row;
@@ -4406,8 +4406,8 @@ main.sport-home .sport-series-card h4 {
 .auth-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
@@ -4415,9 +4415,9 @@ main.sport-home .sport-series-card h4 {
   gap: 0.375rem;
   width: 100%;
   height: 3rem;
-  padding: 0 1em;
+  padding: 0 1rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #5865F2;
   color: #FFFFFF;
   text-decoration: none;
@@ -4446,14 +4446,14 @@ main.sport-home .sport-series-card h4 {
 .auth-divider {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   max-width: 428px;
-  margin: 1.5em auto 0;
+  margin: 1.5rem auto 0;
   color: #A3A3A3;
 }
 .auth-divider::before, .auth-divider::after {
@@ -4463,7 +4463,7 @@ main.sport-home .sport-series-card h4 {
   background-color: #3A3A3A;
 }
 .auth-divider + .auth-actions {
-  margin-top: 1em;
+  margin-top: 1rem;
 }
 
 .auth-google-icon {
@@ -4476,15 +4476,15 @@ main.sport-home .sport-series-card h4 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3em;
-  margin-top: 2em;
+  gap: 3rem;
+  margin-top: 2rem;
 }
 
 .auth-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   padding: 0;
   border: none;
@@ -4505,7 +4505,7 @@ main.sport-home .sport-series-card h4 {
 .plan-options {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
   text-align: left;
 }
 
@@ -4513,10 +4513,10 @@ main.sport-home .sport-series-card h4 {
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 1em;
-  padding: 1.5em 4em 1.5em 1.5em;
+  gap: 1rem;
+  padding: 1.5rem 4rem 1.5rem 1.5rem;
   border: 0.0625rem solid #525252;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #262626;
   cursor: pointer;
   transition: border-color 0.2s ease;
@@ -4543,15 +4543,15 @@ main.sport-home .sport-series-card h4 {
 .plan-opt-text {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
   min-width: 0;
 }
 
 .plan-opt-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -4559,8 +4559,8 @@ main.sport-home .sport-series-card h4 {
 .plan-opt-price {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -4568,16 +4568,16 @@ main.sport-home .sport-series-card h4 {
 .plan-opt-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
 
 .plan-opt-radio {
   position: absolute;
-  top: 2em;
-  right: 3em;
+  top: 2rem;
+  right: 3rem;
   width: 20px;
   height: 1.25rem;
   border: 0.0625rem solid #525252;
@@ -4593,10 +4593,10 @@ main.sport-home .sport-series-card h4 {
 .plan-benefit-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
-  margin: 2.25em 0 1.5em;
+  margin: 2.25rem 0 1.5rem;
   color: #FFFFFF;
   text-align: left;
 }
@@ -4604,7 +4604,7 @@ main.sport-home .sport-series-card h4 {
 .plan-benefit-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75em;
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -4613,24 +4613,24 @@ main.sport-home .sport-series-card h4 {
 .plan-benefit-list li {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
-  padding: 1.25rem 1em;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
   border: 0.0625rem solid #525252;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
 }
 .plan-benefit-list strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
 .plan-benefit-list span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -4638,10 +4638,10 @@ main.sport-home .sport-series-card h4 {
 .plan-fineprint {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin: 2em 0 0;
+  margin: 2rem 0 0;
   color: #C8C8C8;
   text-align: left;
   word-break: keep-all;
@@ -4774,14 +4774,14 @@ header .inner nav .gnb-right ul .profile-box > span,
 }
 
 .movie-detail-page .right-section .episode-card .thumb .thumb-play {
-  width: 3em;
-  height: 3em;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.6);
 }
 .movie-detail-page .right-section .episode-card .thumb .thumb-play .play-icon {
   width: auto;
-  height: 1.5em;
+  height: 1.5rem;
 }
 
 .subscribe-gate {
@@ -4791,7 +4791,7 @@ header .inner nav .gnb-right ul .profile-box > span,
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5em;
+  padding: 1.5rem;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(0.25rem);
   animation: subscribe-gate-fade 0.2s ease both;
@@ -4800,8 +4800,8 @@ header .inner nav .gnb-right ul .profile-box > span,
 .subscribe-gate-card {
   width: 100%;
   max-width: 420px;
-  padding: 2em 1.5em 1.5em;
-  border-radius: 1.5em;
+  padding: 2rem 1.5rem 1.5rem;
+  border-radius: 1.5rem;
   background-color: #1f1f1f;
   color: #FFFFFF;
   text-align: center;
@@ -4816,8 +4816,8 @@ header .inner nav .gnb-right ul .profile-box > span,
   justify-content: center;
   width: 64px;
   height: 3.25rem;
-  margin: 0 auto 1em;
-  border-radius: 0.75em;
+  margin: 0 auto 1rem;
+  border-radius: 0.75rem;
   background-color: #262626;
 }
 .subscribe-gate-logo img {
@@ -4830,10 +4830,10 @@ header .inner nav .gnb-right ul .profile-box > span,
 .subscribe-gate-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
   color: #FFFFFF;
 }
@@ -4841,10 +4841,10 @@ header .inner nav .gnb-right ul .profile-box > span,
 .subscribe-gate-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   color: #C8C8C8;
   word-break: keep-all;
 }
@@ -4852,14 +4852,14 @@ header .inner nav .gnb-right ul .profile-box > span,
 .subscribe-gate-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 
 .subscribe-gate-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
@@ -4867,7 +4867,7 @@ header .inner nav .gnb-right ul .profile-box > span,
   width: 100%;
   height: 3rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #5865F2;
   color: #FFFFFF;
   cursor: pointer;
@@ -4912,7 +4912,7 @@ header .inner nav .gnb-right ul .profile-box > span,
   }
 }
 .trial-welcome .trial-strip {
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 60%;
   margin: 0 auto;
 }
@@ -4923,13 +4923,13 @@ header .inner nav .gnb-right ul .profile-box > span,
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  gap: 1em;
+  gap: 1rem;
 }
 .trial-welcome .trial-strip-hide {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   padding: 0;
   border: 0;
@@ -4946,7 +4946,7 @@ header .inner nav .gnb-right ul .profile-box > span,
 }
 
 .trial-welcome:not(.is-intro) {
-  padding-bottom: 0.75em;
+  padding-bottom: 0.75rem;
 }
 .trial-welcome.is-intro {
   display: block;
@@ -4960,7 +4960,7 @@ header .inner nav .gnb-right ul .profile-box > span,
   margin-top: 8rem;
 }
 .trial-welcome.is-intro.is-strip-hidden .trial-heading {
-  margin-top: 2em;
+  margin-top: 2rem;
 }
 .trial-welcome.is-intro .top10-section {
   padding: 8rem 0 0;
@@ -4974,18 +4974,18 @@ header .inner nav .gnb-right ul .profile-box > span,
 .trial-welcome .trial-home-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   min-width: 220px;
   height: 3.5rem;
-  padding: 0 2em;
+  padding: 0 2rem;
   border: 0;
-  border-radius: 1.75em;
+  border-radius: 1.75rem;
   background-color: #5865F2;
   color: #FFFFFF;
   cursor: pointer;
@@ -5110,7 +5110,7 @@ img.ui-icon.ui-icon-arrow {
 
 .wish-page {
   min-height: 100vh;
-  padding: calc(4.5em + 5rem) 0 8em;
+  padding: calc(4.5rem + 5rem) 0 8rem;
   box-sizing: border-box;
   background-color: #171717;
   color: #FFFFFF;
@@ -5121,7 +5121,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .wish-inner {
-  width: calc(100% - 5em);
+  width: calc(100% - 5rem);
   max-width: 1728px;
   margin: 0 auto;
 }
@@ -5129,28 +5129,28 @@ img.ui-icon.ui-icon-arrow {
 .wish-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 
 .wish-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
   color: #C8C8C8;
 }
 
 .wish-empty {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  padding: 4em 0;
+  padding: 4rem 0;
   text-align: center;
   color: #A3A3A3;
 }
@@ -5158,19 +5158,19 @@ img.ui-icon.ui-icon-arrow {
 .wish-sort {
   position: relative;
   display: inline-block;
-  margin-top: 4em;
+  margin-top: 4rem;
 }
 
 .wish-sort-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
-  padding: 0.5em 0.25em;
+  gap: 0.25rem;
+  padding: 0.5rem 0.25rem;
   border: none;
   background: none;
   color: #FFFFFF;
@@ -5183,14 +5183,14 @@ img.ui-icon.ui-icon-arrow {
 
 .wish-menu {
   position: absolute;
-  top: calc(100% + 0.25em);
+  top: calc(100% + 0.25rem);
   left: 0;
   z-index: 50;
   min-width: 180px;
   margin: 0;
   padding: 0;
   list-style: none;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   overflow: hidden;
   background-color: rgba(200, 200, 200, 0.95);
   backdrop-filter: blur(1.25rem);
@@ -5208,16 +5208,16 @@ img.ui-icon.ui-icon-arrow {
 .wish-menu-item {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 100%;
   height: 2.75rem;
-  padding: 0 1em;
+  padding: 0 1rem;
   border: none;
   background: transparent;
   color: #171717;
@@ -5242,7 +5242,7 @@ img.ui-icon.ui-icon-arrow {
 .wish-tabs {
   display: flex;
   gap: 1.25rem;
-  margin: 2em 0 0;
+  margin: 2rem 0 0;
   padding: 0;
   list-style: none;
   overflow-x: auto;
@@ -5260,11 +5260,11 @@ img.ui-icon.ui-icon-arrow {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25em;
+  gap: 0.25rem;
   width: 100%;
   height: 8.5rem;
   border: 0.0625rem solid transparent;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background-color: #1f1f1f;
   color: #FFFFFF;
   cursor: pointer;
@@ -5273,16 +5273,16 @@ img.ui-icon.ui-icon-arrow {
 .wish-tab strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
 }
 .wish-tab span:last-child {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -5305,8 +5305,8 @@ img.ui-icon.ui-icon-arrow {
 .wish-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5em;
-  margin: 3em 0 0;
+  gap: 1.5rem;
+  margin: 3rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -5314,10 +5314,10 @@ img.ui-icon.ui-icon-arrow {
 .wish-card {
   position: relative;
   display: flex;
-  gap: 1.5em;
+  gap: 1.5rem;
   min-width: 0;
-  padding: 1.5em;
-  border-radius: 0.63em;
+  padding: 1.5rem;
+  border-radius: 0.625rem;
   background-color: #1f1f1f;
 }
 
@@ -5328,7 +5328,7 @@ img.ui-icon.ui-icon-arrow {
   aspect-ratio: 2/3;
   padding: 0;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #2E2E2E;
   cursor: pointer;
@@ -5347,8 +5347,8 @@ img.ui-icon.ui-icon-arrow {
 .wish-card-noimg {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
@@ -5386,8 +5386,8 @@ img.ui-icon.ui-icon-arrow {
 .wish-card-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   color: #FFFFFF;
   text-decoration: none;
@@ -5405,19 +5405,19 @@ img.ui-icon.ui-icon-arrow {
 .wish-card-genre {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin-top: 0.25em !important;
+  margin-top: 0.25rem !important;
 }
 
 .wish-card-overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin-top: 1em !important;
+  margin-top: 1rem !important;
   color: #C8C8C8;
   word-break: keep-all;
   display: -webkit-box;
@@ -5429,8 +5429,8 @@ img.ui-icon.ui-icon-arrow {
 
 .wish-card-menu {
   position: absolute;
-  top: 1em;
-  right: 1em;
+  top: 1rem;
+  right: 1rem;
 }
 
 .wish-more-btn {
@@ -5458,7 +5458,7 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.6);
   animation: wish-fade 0.2s ease both;
 }
@@ -5468,8 +5468,8 @@ img.ui-icon.ui-icon-arrow {
   flex-direction: column;
   width: min(522px, 100%);
   max-height: 85vh;
-  padding: 1.5em;
-  border-radius: 1.5em;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
   box-sizing: border-box;
   background-color: #1f1f1f;
   color: #FFFFFF;
@@ -5479,8 +5479,8 @@ img.ui-icon.ui-icon-arrow {
 .wish-modal h2 {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   margin: 0;
   padding: 0;
@@ -5498,8 +5498,8 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75em;
-  margin-bottom: 1.5em;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .wish-close {
@@ -5523,7 +5523,7 @@ img.ui-icon.ui-icon-arrow {
 .wish-group-list {
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
+  gap: 0.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -5534,11 +5534,11 @@ img.ui-icon.ui-icon-arrow {
 .wish-group-row {
   display: flex;
   align-items: center;
-  gap: 1em;
+  gap: 1rem;
   width: 100%;
-  padding: 0.75em 1em;
+  padding: 0.75rem 1rem;
   border: none;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background: transparent;
   color: #FFFFFF;
   text-align: left;
@@ -5557,7 +5557,7 @@ img.ui-icon.ui-icon-arrow {
   flex-shrink: 0;
   width: 52px;
   height: 3.25rem;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #3A3A3A;
   font-size: 1.625rem;
@@ -5577,15 +5577,15 @@ img.ui-icon.ui-icon-arrow {
 .wish-group-text strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
 }
 .wish-group-text span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -5598,21 +5598,21 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .wish-modal-foot {
-  margin-top: 1em;
-  padding-top: 1em;
+  margin-top: 1rem;
+  padding-top: 1rem;
   border-top: 0.0625rem solid #2E2E2E;
 }
 
 .wish-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   height: 3rem;
-  padding: 0 1.5em;
+  padding: 0 1.5rem;
   border: none;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   cursor: pointer;
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
@@ -5642,13 +5642,13 @@ img.ui-icon.ui-icon-arrow {
 .wish-input {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   height: 3rem;
-  padding: 0 1em;
+  padding: 0 1rem;
   border: 0.0625rem solid transparent;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background-color: #2E2E2E;
   color: #FFFFFF;
   outline: none;
@@ -5663,13 +5663,13 @@ img.ui-icon.ui-icon-arrow {
 .wish-icon-head {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 1.5em 0 0.75em;
+  margin: 1.5rem 0 0.75rem;
 }
 
 .wish-icon-count {
@@ -5679,7 +5679,7 @@ img.ui-icon.ui-icon-arrow {
 .wish-icon-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0.75em;
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -5715,22 +5715,22 @@ img.ui-icon.ui-icon-arrow {
 .wish-modal-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75em;
-  margin-top: 1.5em;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
 }
 
 .wish-toast {
   position: fixed;
   left: 50%;
-  bottom: 2em;
+  bottom: 2rem;
   z-index: 10600;
   display: flex;
   align-items: center;
-  gap: 1em;
-  width: min(630px, 100% - 2em);
+  gap: 1rem;
+  width: min(630px, 100% - 2rem);
   min-height: 4.5rem;
-  padding: 0.75em 1.5em 0.75em 1em;
-  border-radius: 1.5em;
+  padding: 0.75rem 1.5rem 0.75rem 1rem;
+  border-radius: 1.5rem;
   box-sizing: border-box;
   background-color: rgba(82, 82, 82, 0.92);
   backdrop-filter: blur(1.25rem);
@@ -5743,8 +5743,8 @@ img.ui-icon.ui-icon-arrow {
 .wish-toast p {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   margin: 0;
 }
@@ -5764,8 +5764,8 @@ img.ui-icon.ui-icon-arrow {
 .wish-toast-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   margin-left: auto;
   padding: 0;
@@ -5947,7 +5947,7 @@ img.ui-icon.ui-icon-arrow {
 
 .account-page {
   min-height: 100vh;
-  padding: calc(4.5em + 4em) 0 8em;
+  padding: calc(4.5rem + 4rem) 0 8rem;
   box-sizing: border-box;
   background-color: #F5F5F5;
   color: #171717;
@@ -5961,7 +5961,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-inner {
-  width: calc(100% - 5em);
+  width: calc(100% - 5rem);
   max-width: 1440px;
   margin: 0 auto;
 }
@@ -5969,11 +5969,11 @@ img.ui-icon.ui-icon-arrow {
 .account-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   color: #2E2E2E;
-  padding-bottom: 1.5em;
+  padding-bottom: 1.5rem;
   border-bottom: 0.0625rem solid #D5D5D5;
 }
 
@@ -5985,15 +5985,15 @@ img.ui-icon.ui-icon-arrow {
 
 .account-nav {
   position: sticky;
-  top: 4.5em;
-  padding: 2.25em 1.5em 3em 0;
+  top: 4.5rem;
+  padding: 2.25rem 1.5rem 3rem 0;
 }
 
 .account-nav-list {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.25em;
+  gap: 0.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -6002,15 +6002,15 @@ img.ui-icon.ui-icon-arrow {
 .account-nav-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   position: relative;
   display: block;
   width: 100%;
-  padding: 0.75em 1em;
+  padding: 0.75rem 1rem;
   border: none;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background: none;
   color: #525252;
   text-align: left;
@@ -6022,9 +6022,9 @@ img.ui-icon.ui-icon-arrow {
   position: absolute;
   top: 50%;
   left: 0;
-  height: 1.5em;
+  height: 1.5rem;
   width: 4px;
-  border-radius: 1.75em;
+  border-radius: 1.75rem;
   background-color: #2E2E2E;
   transform: translateY(-50%) scaleY(0);
   transition: transform 0.2s ease;
@@ -6049,16 +6049,16 @@ img.ui-icon.ui-icon-arrow {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
-  padding: 3em 0;
+  padding: 3rem 0;
   border-bottom: 0.0625rem solid #D5D5D5;
-  scroll-margin-top: 4.5em;
+  scroll-margin-top: 4.5rem;
 }
 
 .account-section-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   position: absolute;
   width: 1px;
@@ -6072,7 +6072,7 @@ img.ui-icon.ui-icon-arrow {
 .account-section-body {
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 2rem;
   min-width: 0;
 }
 
@@ -6080,7 +6080,7 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5em;
+  gap: 0.5rem;
   transition: opacity 0.2s ease;
 }
 .account-item.is-muted {
@@ -6090,8 +6090,8 @@ img.ui-icon.ui-icon-arrow {
 .account-item-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1em;
-  line-height: 1.31em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
   color: #2E2E2E;
 }
@@ -6099,8 +6099,8 @@ img.ui-icon.ui-icon-arrow {
 .account-item-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #525252;
   word-break: keep-all;
@@ -6109,17 +6109,17 @@ img.ui-icon.ui-icon-arrow {
 .account-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #525252;
 }
 
 .account-link {
   font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   padding: 0;
   border: none;
@@ -6135,18 +6135,18 @@ img.ui-icon.ui-icon-arrow {
 .account-link:focus-visible {
   outline: 0.125rem solid #5865F2;
   outline-offset: 0.125rem;
-  border-radius: 0.25em;
+  border-radius: 0.25rem;
 }
 
 .account-toggle {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   padding: 0;
   border: none;
   background: none;
@@ -6156,7 +6156,7 @@ img.ui-icon.ui-icon-arrow {
 .account-toggle:focus-visible {
   outline: 0.125rem solid #5865F2;
   outline-offset: 0.25rem;
-  border-radius: 0.25em;
+  border-radius: 0.25rem;
 }
 
 .account-toggle-track {
@@ -6192,7 +6192,7 @@ img.ui-icon.ui-icon-arrow {
 .account-channels {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75em 2em;
+  gap: 0.75rem 2rem;
   margin: 0;
   padding: 0;
   border: none;
@@ -6202,12 +6202,12 @@ img.ui-icon.ui-icon-arrow {
 .account-check {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   cursor: pointer;
 }
 .account-check input {
@@ -6219,7 +6219,7 @@ img.ui-icon.ui-icon-arrow {
   width: 18px;
   height: 1.125rem;
   margin: 0;
-  border-radius: 0.25em;
+  border-radius: 0.25rem;
   background-color: #E0E0E0;
   cursor: pointer;
   transition: background-color 0.15s ease, border-radius 0.15s ease;
@@ -6267,7 +6267,7 @@ img.ui-icon.ui-icon-arrow {
 .account-profile {
   display: flex;
   align-items: center;
-  gap: 1em;
+  gap: 1rem;
 }
 
 .account-profile-text {
@@ -6279,15 +6279,15 @@ img.ui-icon.ui-icon-arrow {
 .account-profile-text strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
 }
 .account-profile-text span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #525252;
   word-break: break-all;
@@ -6296,8 +6296,8 @@ img.ui-icon.ui-icon-arrow {
 .account-avatar-grid {
   display: grid;
   grid-template-columns: repeat(6, 56px);
-  gap: 0.75em;
-  margin: 0.5em 0 0;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -6329,9 +6329,9 @@ img.ui-icon.ui-icon-arrow {
 .account-providers {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
   width: 100%;
-  margin: 0.25em 0 0;
+  margin: 0.25rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -6339,23 +6339,23 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1em;
-  padding: 0.75em 1em;
-  border-radius: 0.75em;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
   background-color: #FFFFFF;
 }
 .account-providers strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
 }
 .account-providers span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #525252;
   word-break: break-all;
@@ -6368,15 +6368,15 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
 .account-dialog {
   width: 100%;
   max-width: 420px;
-  padding: 2em;
-  border-radius: 1.5em;
+  padding: 2rem;
+  border-radius: 1.5rem;
   background-color: #FFFFFF;
   color: #171717;
   box-sizing: border-box;
@@ -6386,17 +6386,17 @@ img.ui-icon.ui-icon-arrow {
 .account-dialog-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 
 .account-dialog-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #525252;
   word-break: keep-all;
@@ -6404,20 +6404,20 @@ img.ui-icon.ui-icon-arrow {
 
 .account-dialog-actions {
   display: flex;
-  gap: 0.75em;
-  margin-top: 1.5em;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
 }
 
 .account-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   flex: 1;
   height: 2.75rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #5865F2;
   color: #FFFFFF;
   cursor: pointer;
@@ -6445,19 +6445,19 @@ img.ui-icon.ui-icon-arrow {
 .account-toast {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   position: fixed;
   left: 50%;
-  bottom: 2em;
+  bottom: 2rem;
   z-index: 1100;
   margin: 0;
-  padding: 0.75em 1.5em;
+  padding: 0.75rem 1.5rem;
   border-radius: 624.9375rem;
   background-color: #171717;
   color: #FFFFFF;
-  transform: translate(-50%, 1em);
+  transform: translate(-50%, 1rem);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
@@ -6534,12 +6534,12 @@ img.ui-icon.ui-icon-arrow {
 .member-home .member-empty {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
-  padding: 4em 1.5em;
-  border-radius: 0.63em;
+  padding: 4rem 1.5rem;
+  border-radius: 0.625rem;
   background-color: #1f1f1f;
   color: #C8C8C8;
   text-align: center;
@@ -6557,15 +6557,15 @@ img.ui-icon.ui-icon-arrow {
 }
 
 section.top10-section .top10-title {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 section.top10-section .top10-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   color: #C8C8C8;
 }
 section.top10-section .top10-slide {
@@ -6615,8 +6615,8 @@ section.top10-section .top10-num-stop-end {
   .apple-originals .apple-originals-desc.apple-originals-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.38em;
-    line-height: 1.75em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -6627,11 +6627,11 @@ section.top10-section .top10-num-stop-end {
   .apple-originals .apple-originals-title.apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 3em;
-    line-height: 3.5em;
+    font-size: 3rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #FFFFFF;
-    margin: 0 0 0.5em;
+    margin: 0 0 0.5rem;
     padding-top: 0;
   }
 }
@@ -6639,16 +6639,16 @@ section.top10-section .top10-num-stop-end {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5em;
-  margin: 0 0 0.75em;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
   padding: 0;
   list-style: none;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-chip {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
@@ -6668,20 +6668,20 @@ section.top10-section .top10-num-stop-end {
 .hero-swiper-container .hero-slide-item .hero-info .hero-overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-actions {
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-play {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
@@ -6689,7 +6689,7 @@ section.top10-section .top10-num-stop-end {
   gap: 0.375rem;
   min-width: 120px;
   height: 2.625rem;
-  padding: 0 1.5em;
+  padding: 0 1.5rem;
   border-radius: 62.4375rem;
   box-sizing: border-box;
   background-color: #5865F2;
@@ -6740,7 +6740,7 @@ section.top10-section .top10-num-stop-end {
 .subscribe-cta.subscribe-cta--tv .subscribe-banner {
   height: 26.25rem;
   border: none;
-  border-radius: 1.25em;
+  border-radius: 1.25rem;
   background-color: #171717;
 }
 .subscribe-cta.subscribe-cta--tv .subscribe-bg {
@@ -6767,24 +6767,24 @@ section.top10-section .top10-num-stop-end {
 .subscribe-cta.subscribe-cta--tv .subscribe-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
-  margin: 1em 0 0;
+  margin: 1rem 0 0;
   word-break: keep-all;
 }
 .subscribe-cta.subscribe-cta--tv .subscribe-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   box-sizing: border-box;
   justify-content: center;
   width: 200px;
   height: 2.5rem;
-  margin-top: 1.5em;
+  margin-top: 1.5rem;
   padding: 0.4375rem 2.25rem;
   border-radius: 62.4375rem;
   background-color: #5865F2;
@@ -6797,11 +6797,11 @@ section.top10-section .top10-num-stop-end {
 .subscribe-cta.subscribe-cta--tv .subscribe-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
-  margin: 0.5em 0 0;
+  margin: 0.5rem 0 0;
 }
 .subscribe-cta.subscribe-cta--tv .subscribe-posters {
   position: absolute;
@@ -6809,7 +6809,7 @@ section.top10-section .top10-num-stop-end {
   left: max(51.2%, 40rem);
   z-index: 2;
   display: flex;
-  gap: 1em;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -6820,7 +6820,7 @@ section.top10-section .top10-num-stop-end {
   flex-shrink: 0;
   width: calc(var(--poster-h) * 0.56);
   height: var(--poster-h);
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   overflow: hidden;
   background-color: #1f1f1f;
   box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.5);
@@ -6849,14 +6849,14 @@ section.top10-section .top10-num-stop-end {
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-posters {
     top: 50%;
     left: max(48%, 32.5rem);
-    gap: 0.75em;
+    gap: 0.75rem;
     transform: translateY(-50%);
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-poster {
@@ -6946,7 +6946,7 @@ section.device-guide.device-guide--watch {
   --icon-scale: 1;
   --marquee-duration: 40s;
   padding: 6rem 0;
-  height: 100%;
+  height: 52.375rem;
   background-color: #141414;
   text-align: center;
   overflow: hidden;
@@ -6955,8 +6955,8 @@ section.device-guide.device-guide--watch .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -6979,17 +6979,17 @@ section.device-guide.device-guide--watch .watch-logo-main {
 section.device-guide.device-guide--watch .watch-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
-  margin: 1.5em 0 0;
+  margin: 1.5rem 0 0;
   padding-top: 0;
   color: #FFFFFF;
   word-break: keep-all;
 }
 section.device-guide.device-guide--watch .watch-marquee {
   position: relative;
-  margin-top: 3em;
+  margin-top: 3rem;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
   mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
@@ -7005,9 +7005,9 @@ section.device-guide.device-guide--watch .watch-marquee:hover .watch-track {
 section.device-guide.device-guide--watch .watch-logo-list {
   display: flex;
   align-items: center;
-  gap: 2em;
+  gap: 2rem;
   margin: 0;
-  padding: 0 2em 0 0;
+  padding: 0 2rem 0 0;
   list-style: none;
 }
 section.device-guide.device-guide--watch .watch-logo {
@@ -7025,15 +7025,15 @@ section.device-guide.device-guide--watch .watch-mobile {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 3em;
+  margin-top: 3rem;
 }
 section.device-guide.device-guide--watch .watch-subtitle {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
-  margin: 0 0 1em 0;
+  margin: 0 0 1rem 0;
   padding-top: 0;
   color: #FFFFFF;
   word-break: keep-all;
@@ -7041,13 +7041,13 @@ section.device-guide.device-guide--watch .watch-subtitle {
 section.device-guide.device-guide--watch .watch-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
-  margin-top: 1em;
+  gap: 0.25rem;
+  margin-top: 1rem;
   color: #5865F2;
   text-decoration: none;
 }
@@ -7064,8 +7064,8 @@ section.device-guide.device-guide--watch .watch-devices {
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: center;
-  gap: 1.5em 4em;
-  margin: 3em 0 0;
+  gap: 1.5rem 4rem;
+  margin: 3rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -7092,9 +7092,9 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-profiles {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.5em;
+  gap: 1.5rem;
   max-width: 520px;
-  margin: 2em auto 0;
+  margin: 2rem auto 0;
   padding: 0;
   list-style: none;
 }
@@ -7103,11 +7103,11 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 100%;
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
   border: none;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background: none;
   cursor: pointer;
 }
@@ -7151,14 +7151,14 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-profile-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #171717;
 }
 
 .profile-picker {
-  margin: 2em auto 0;
+  margin: 2rem auto 0;
   color: #171717;
 }
 
@@ -7166,7 +7166,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5em;
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -7176,11 +7176,11 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 96px;
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
   border: none;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background: none;
   color: inherit;
   cursor: pointer;
@@ -7216,8 +7216,8 @@ section.device-guide.device-guide--watch .watch-device img {
 .profile-picker-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   max-width: 100%;
   overflow: hidden;
@@ -7229,32 +7229,32 @@ section.device-guide.device-guide--watch .watch-device img {
 .profile-picker-form {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
   max-width: 520px;
-  margin: 2em auto 0;
+  margin: 2rem auto 0;
   text-align: left;
 }
 
 .profile-picker-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 0.5em 0 0;
+  margin: 0.5rem 0 0;
   color: #525252;
 }
 
 .profile-picker-input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   height: 3.25rem;
-  padding: 0 1em;
+  padding: 0 1rem;
   border: 0.0625rem solid #D5D5D5;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background-color: #FFFFFF;
   color: #171717;
 }
@@ -7267,7 +7267,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: grid;
   grid-template-columns: repeat(6, 52px);
   justify-content: space-between;
-  gap: 0.75em;
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -7296,8 +7296,8 @@ section.device-guide.device-guide--watch .watch-device img {
 .profile-picker-error {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   margin: 0;
   color: #E91E1B;
@@ -7306,18 +7306,18 @@ section.device-guide.device-guide--watch .watch-device img {
 .profile-picker-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75em;
-  margin-top: 0.75em;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 .profile-picker-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   height: 2.75rem;
-  padding: 0 1.5em;
+  padding: 0 1.5rem;
   border: none;
   border-radius: 624.9375rem;
   background-color: #5865F2;
@@ -7339,7 +7339,7 @@ section.device-guide.device-guide--watch .watch-device img {
 }
 .profile-picker.account-profile-picker .profile-picker-list {
   justify-content: flex-start;
-  gap: 1em;
+  gap: 1rem;
 }
 .profile-picker.account-profile-picker .profile-picker-item {
   width: 80px;
@@ -7351,40 +7351,40 @@ section.device-guide.device-guide--watch .watch-device img {
 .profile-picker.account-profile-picker .profile-picker-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
 }
 .profile-picker.account-profile-picker .profile-picker-form {
-  margin: 1.5em 0 0;
+  margin: 1.5rem 0 0;
 }
 
 .auth-card.auth-card--login {
   max-width: 800px;
   min-height: 35rem;
-  padding: 5rem 3em 3em;
-  border-radius: 0.63em;
+  padding: 5rem 3rem 3rem;
+  border-radius: 0.625rem;
 }
 .auth-card.auth-card--login .auth-logo {
   width: 50px;
   height: 3.125rem;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
 }
 .auth-card.auth-card--login .auth-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
-  margin: 1em 0 0.75em;
+  margin: 1rem 0 0.75rem;
 }
 .auth-card.auth-card--login .auth-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
-  margin: 0 0 2em;
+  margin: 0 0 2rem;
   color: #A3A3A3;
 }
 .auth-card.auth-card--login .auth-login-form {
@@ -7399,19 +7399,19 @@ section.device-guide.device-guide--watch .watch-device img {
   gap: 0.375rem;
   width: 100%;
   max-width: 528px;
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
 }
 .auth-card.auth-card--login .auth-login-input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   width: 100%;
   height: 4rem;
   padding: 0 1.25rem;
   border: 0.0625rem solid #D5D5D5;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #F5F5F5;
   color: #171717;
   box-sizing: border-box;
@@ -7435,10 +7435,10 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-card.auth-card--login .auth-login-notice {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin: 0 0 0.75em;
+  margin: 0 0 0.75rem;
 }
 .auth-card.auth-card--login .auth-login-error {
   color: #ff453a;
@@ -7450,24 +7450,24 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5em;
-  margin-top: 1em;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 .auth-card.auth-card--login .auth-login-links-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5em 3em;
+  gap: 0.5rem 3rem;
 }
 .auth-card.auth-card--login .auth-login-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
   padding: 0;
   border: none;
   background: none;
@@ -7488,20 +7488,20 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-card.auth-card--login .auth-code {
   display: flex;
   justify-content: center;
-  gap: 0.75em;
-  margin-bottom: 2em;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
 }
 .auth-card.auth-card--login .auth-code-box {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   width: 72px;
   height: 4.5rem;
   padding: 0;
   border: 0.0625rem solid #D5D5D5;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #F5F5F5;
   color: #171717;
   text-align: center;
@@ -7517,17 +7517,17 @@ section.device-guide.device-guide--watch .watch-device img {
   opacity: 0.6;
 }
 .auth-card.auth-card--login .auth-done {
-  padding: 3em 0 2em;
+  padding: 3rem 0 2rem;
 }
 .auth-card.auth-card--login .auth-done .auth-desc {
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
 }
 
 .account-profile-member {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #5865F2;
 }
@@ -7535,8 +7535,8 @@ section.device-guide.device-guide--watch .watch-device img {
 .account-members {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5em;
-  margin: 0.5em 0 0;
+  gap: 1.5rem;
+  margin: 0.5rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -7545,7 +7545,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   padding: 0;
   border: none;
   background: none;
@@ -7555,7 +7555,7 @@ section.device-guide.device-guide--watch .watch-device img {
 .account-member:focus-visible {
   outline: 0.125rem solid #5865F2;
   outline-offset: 0.25rem;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
 }
 .account-member:hover .account-member-avatar {
   transform: scale(1.06);
@@ -7599,8 +7599,8 @@ section.device-guide.device-guide--watch .watch-device img {
 .account-member-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
 }
 
@@ -7611,7 +7611,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: none;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo {
-  margin-bottom: 1.5em;
+  margin-bottom: 1.5rem;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-logo {
   display: block;
@@ -7635,8 +7635,8 @@ section.device-guide.device-guide--watch .watch-device img {
 .footer.footer .footer-main-menu .arrow {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -7645,16 +7645,16 @@ section.device-guide.device-guide--watch .watch-device img {
 .footer.footer .footer-policy-menu .footer-region {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
 .footer.footer .footer-copyright {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -7704,17 +7704,17 @@ section.device-guide.device-guide--watch .watch-device img {
 }
 .floating-actions {
   position: fixed;
-  right: 1.5em;
-  bottom: 1.5em;
+  right: 1.5rem;
+  bottom: 1.5rem;
   z-index: 1001;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 
 body.has-promo-banner .floating-actions {
-  bottom: calc(6.0625rem + 1em);
+  bottom: calc(6.0625rem + 1rem);
 }
 
 .floating-btn {
@@ -7759,7 +7759,7 @@ body.has-promo-banner .floating-actions {
 
 @media (min-width: 1025px) {
   .floating-actions {
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .floating-btn {
     width: 70px;
@@ -7809,8 +7809,8 @@ body.has-promo-banner .floating-actions {
 .video-popup p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
   color: #FFFFFF;
@@ -7819,18 +7819,18 @@ body.has-promo-banner .floating-actions {
 .video-popup .video-back-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   position: absolute;
-  top: 1em;
-  left: 1em;
+  top: 1rem;
+  left: 1rem;
   z-index: 2;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
   height: 2rem;
-  padding: 0 0.75em;
+  padding: 0 0.75rem;
   border: 0.0625rem solid rgba(255, 255, 255, 0.3);
   border-radius: 624.9375rem;
   background-color: rgba(0, 0, 0, 0.55);
@@ -7898,16 +7898,16 @@ body.has-promo-banner .floating-actions {
 }
 .auto-next {
   position: absolute;
-  right: 2em;
-  bottom: 2em;
+  right: 2rem;
+  bottom: 2rem;
   z-index: 3;
   display: flex;
   align-items: center;
-  gap: 1em;
-  width: min(480px, 100% - 4em);
-  padding: 1em;
+  gap: 1rem;
+  width: min(480px, 100% - 4rem);
+  padding: 1rem;
   border: 0.0625rem solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: rgba(23, 23, 23, 0.88);
   backdrop-filter: blur(0.75rem);
   -webkit-backdrop-filter: blur(0.75rem);
@@ -7918,7 +7918,7 @@ body.has-promo-banner .floating-actions {
   flex: 0 0 auto;
   width: 128px;
   aspect-ratio: 16/9;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   object-fit: cover;
   background-color: #1f1f1f;
 }
@@ -7934,8 +7934,8 @@ body.has-promo-banner .floating-actions {
 .auto-next-kind {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
@@ -7943,8 +7943,8 @@ body.has-promo-banner .floating-actions {
 .auto-next-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   overflow: hidden;
   color: #FFFFFF;
@@ -7955,8 +7955,8 @@ body.has-promo-banner .floating-actions {
 .auto-next-count {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -7965,23 +7965,23 @@ body.has-promo-banner .floating-actions {
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 
 .auto-next-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.25em;
+  gap: 0.25rem;
   height: 2rem;
-  padding: 0 0.75em;
+  padding: 0 0.75rem;
   border: 0.0625rem solid rgba(255, 255, 255, 0.3);
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: transparent;
   color: #FFFFFF;
   white-space: nowrap;
@@ -8008,10 +8008,10 @@ body.has-promo-banner .floating-actions {
 }
 
 .auto-next--inline {
-  right: 1em;
-  bottom: 1em;
-  width: min(420px, 100% - 2em);
-  padding: 0.75em;
+  right: 1rem;
+  bottom: 1rem;
+  width: min(420px, 100% - 2rem);
+  padding: 0.75rem;
 }
 .auto-next--inline .auto-next-thumb {
   width: 104px;
@@ -8031,7 +8031,7 @@ body.has-promo-banner .floating-actions {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(1.5em / -2);
+  left: calc(1.5rem / -2);
   width: 1px;
   background-color: #FFFFFF;
   pointer-events: none;
@@ -8039,24 +8039,24 @@ body.has-promo-banner .floating-actions {
 
 @media (min-width: 1025px) {
   .value-props.value-props {
-    padding: 1.5em 0;
+    padding: 1.5rem 0;
   }
   .value-props.value-props .value-prop-item {
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   .value-props.value-props .value-prop-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .value-props.value-props .value-prop-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -8068,7 +8068,7 @@ section.device-guide.device-guide--watch .watch-device {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 section.device-guide.device-guide--watch .watch-device-icon {
   display: flex;
@@ -8079,8 +8079,8 @@ section.device-guide.device-guide--watch .watch-device-icon {
 section.device-guide.device-guide--watch .watch-device-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #FFFFFF;
   white-space: nowrap;
@@ -8124,7 +8124,24 @@ section.device-guide.device-guide--watch .watch-device-name {
     margin-bottom: 3.75rem;
   }
   section.device-guide.device-guide--watch .watch-marquee {
-    margin-top: 3.75rem;
+    margin-top: 2.8125rem;
+  }
+  section.device-guide.device-guide--watch .watch-title {
+    margin-top: 2.5rem;
+  }
+  section.device-guide.device-guide--watch .watch-logo-list {
+    gap: 2.5rem;
+    padding-right: 2.5rem;
+  }
+  section.device-guide.device-guide--watch .watch-mobile {
+    margin-top: 2.8125rem;
+  }
+  section.device-guide.device-guide--watch .watch-subtitle {
+    margin-bottom: 1.625rem;
+  }
+  section.device-guide.device-guide--watch .watch-devices {
+    column-gap: 4.375rem;
+    margin-top: 2.8125rem;
   }
 }
 section.device-guide.device-guide--watch .watch-link {

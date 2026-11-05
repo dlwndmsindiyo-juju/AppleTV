@@ -315,7 +315,6 @@ export const Profile = () => {
                 <div className="account-profile-text">
                   <strong>{user.name || "Apple 사용자"}</strong>
                   <span>{user.email}</span>
-                  {currentProfile && <span className="account-profile-member">{currentProfile.name} 프로필로 보는 중</span>}
                 </div>
               </div>
               <Item title="다른 프로필로 보기">
