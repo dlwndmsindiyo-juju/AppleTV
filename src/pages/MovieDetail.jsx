@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import DetailBackLink from '../components/common/DetailBackLink' // [추가] 상세 공용 "← 홈으로"
 import { useMovieStore } from '../store/useMovieStore';
 import { toggleWish, useHeartStore, wishKey } from '../store/useHeartStore'; // 위시리스트 (Firestore)
 import { useAuthStore, useSettings } from '../store/useAuthStore'; // [수정] useSettings: 계정 설정 자동 재생 토글
@@ -351,6 +352,9 @@ export const MovieDetail = ({ type: typeProp }) => {
   return (
     <section className={`sub-page movie-detail-page movie-detail-page--${type}`}>
       <div className="inner">
+        {/* [수정] 홈으로 돌아가기 — 모든 상세 공용 (스포츠 상세 "← 스포츠 홈으로" 와 같은 자리 · 모양) */}
+        <DetailBackLink to="/" label="홈으로" />
+
         <div className="content-layout">
 
           {/* ===== 왼쪽: 플레이어 + 정보 + 평점 ===== */}
@@ -402,7 +406,8 @@ export const MovieDetail = ({ type: typeProp }) => {
                       onClick={handleWish}
                       aria-label={isWished ? '찜 해제' : '찜하기'}
                     >
-                      {isWished ? '♥' : '♡'}
+                      {/* [수정] 글자 하트(♥ ♡) 대신 아이콘 — 담기면 채운 하트(active-heart.svg) */}
+                      <span className={`icon-heart${isWished ? ' is-on' : ''}`} aria-hidden="true" />
                     </button>
                     <button className="icon-btn" onClick={handleShare} aria-label="공유하기">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

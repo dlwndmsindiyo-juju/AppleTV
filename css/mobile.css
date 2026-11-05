@@ -1,22 +1,22 @@
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   header .inner {
-    padding: 14px 40px;
+    padding: 0.875rem 2.5rem;
   }
   header .inner nav {
-    padding: 14px 40px;
+    padding: 0.875rem 2.5rem;
   }
   header .inner nav .gnb-center-toggle button {
-    padding: 0 20px;
-    font-size: 16px;
+    padding: 0 1.25rem;
+    font-size: 1rem;
   }
   header .inner nav .gnb-right ul {
-    gap: 12px;
+    gap: 0.75rem;
   }
   header .inner nav .gnb-right ul .search-box {
     width: 141px;
   }
   .footer {
-    padding: 14px 40px;
+    padding: 0.875rem 2.5rem;
   }
   .hero-swiper-container {
     height: 100vh;
@@ -31,7 +31,7 @@
     max-width: 60%;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-title {
-    font-size: 48px;
+    font-size: 3rem;
   }
   .value-props .inner,
   .top10-section .inner,
@@ -44,7 +44,7 @@
     padding-right: 13%;
   }
   .value-props .value-props-inner {
-    gap: 24px;
+    gap: 1.5rem;
   }
   .top10-section {
     overflow: hidden;
@@ -55,8 +55,8 @@
   .top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
     padding-right: 13%;
   }
@@ -64,8 +64,8 @@
     width: 190px;
   }
   .top10-section .top10-rank {
-    font-size: 104px;
-    bottom: -10px;
+    font-size: 6.5rem;
+    bottom: -0.625rem;
   }
   .top10-section .swiper-button-next,
   .top10-section .swiper-button-prev {
@@ -80,8 +80,8 @@
   .upcoming-section .upcoming-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   .upcoming-section .upcoming-title,
@@ -92,7 +92,7 @@
     grid-template-columns: none;
     grid-auto-flow: column;
     grid-auto-columns: 440px;
-    gap: 24px;
+    gap: 1.5rem;
     overflow-x: auto;
     padding-right: 13%;
     scroll-snap-type: x proximity;
@@ -105,8 +105,8 @@
     scroll-snap-align: start;
   }
   .upcoming-section .upcoming-card {
-    gap: 16px;
-    padding: 16px;
+    gap: 1rem;
+    padding: 1rem;
   }
   .upcoming-section .upcoming-thumb {
     width: 120px;
@@ -114,8 +114,8 @@
   .upcoming-section .upcoming-movie-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
   }
   .upcoming-section .upcoming-btn:not(.on) {
@@ -136,8 +136,8 @@
   .apple-originals .apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   .apple-originals .apple-originals-title,
@@ -152,38 +152,38 @@
     display: none;
   }
   .ai-promo {
-    padding-bottom: 64px;
+    padding-bottom: 4rem;
   }
   .ai-promo .inner {
     flex-direction: column;
     align-items: flex-start;
-    gap: 32px;
-    padding-top: 48px;
-    padding-bottom: 48px;
+    gap: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
   .ai-promo .ai-promo-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   .subscribe-cta .subscribe-banner {
-    height: 340px;
+    height: 21.25rem;
   }
   .subscribe-cta .subscribe-content {
     left: 6%;
   }
   .promo-banner .promo-banner-inner {
-    padding-left: 40px;
-    padding-right: 40px;
-    gap: 24px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    gap: 1.5rem;
   }
   .promo-banner .promo-banner-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: rgba(255, 255, 255, 0.75);
   }
@@ -194,76 +194,76 @@
 @media (max-width: 767px) {
   .auth-page {
     align-items: flex-start;
-    padding: calc(72px + 16px) 16px 48px;
+    padding: calc(4.5rem + 1rem) 1rem 3rem;
   }
   .auth-card {
-    padding: 64px 20px 32px;
+    padding: 4rem 1.25rem 2rem;
   }
   .auth-close {
-    top: 16px;
-    left: 16px;
-    height: 36px;
-    padding: 0 16px;
+    top: 1rem;
+    left: 1rem;
+    height: 2.25rem;
+    padding: 0 1rem;
   }
   .auth-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .auth-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .auth-actions--row {
     flex-direction: column-reverse;
-    gap: 12px;
+    gap: 0.75rem;
   }
   .auth-actions--row .auth-btn:first-child,
   .auth-actions--row .auth-btn:last-child {
     flex: none;
   }
   .plan-opt {
-    padding: 20px 48px 20px 20px;
+    padding: 1.25rem 3rem 1.25rem 1.25rem;
   }
   .plan-opt-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .plan-opt-radio {
-    top: 22px;
-    right: 20px;
+    top: 1.375rem;
+    right: 1.25rem;
   }
   .plan-benefit-list {
     grid-template-columns: minmax(0, 1fr);
   }
   .auth-links {
-    gap: 24px;
+    gap: 1.5rem;
   }
 }
 @media (max-width: 767px) {
   .subscribe-gate-card {
-    padding: 24px 20px 20px;
+    padding: 1.5rem 1.25rem 1.25rem;
   }
   .subscribe-gate-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
   }
   .subscribe-gate-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
 }
@@ -274,60 +274,60 @@
   }
   .trial-welcome .trial-strip-actions {
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 0.75rem;
   }
 }
 @media (max-width: 767px) {
   .trial-welcome.is-intro {
-    padding-bottom: 64px;
+    padding-bottom: 4rem;
   }
   .trial-welcome.is-intro .trial-heading {
-    margin-top: 64px;
+    margin-top: 4rem;
   }
   .trial-welcome.is-intro.is-strip-hidden .trial-heading {
-    margin-top: 24px;
+    margin-top: 1.5rem;
   }
   .trial-welcome.is-intro .top10-section {
-    padding-top: 64px;
+    padding-top: 4rem;
   }
   .trial-welcome .inner.trial-home-actions {
-    margin-top: 64px;
+    margin-top: 4rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .wish-page {
-    padding-top: calc(72px + 48px);
-    padding-bottom: 64px;
+    padding-top: calc(4.5rem + 3rem);
+    padding-bottom: 4rem;
   }
   .wish-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   .wish-sort {
-    margin-top: 32px;
+    margin-top: 2rem;
   }
   .wish-tabs {
-    gap: 12px;
+    gap: 0.75rem;
   }
   .wish-tabs li {
     flex: 0 0 120px;
   }
   .wish-tab {
-    height: 112px;
+    height: 7rem;
   }
   .wish-tab-icon {
-    font-size: 26px;
+    font-size: 1.625rem;
   }
   .wish-grid {
-    gap: 16px;
-    margin-top: 32px;
+    gap: 1rem;
+    margin-top: 2rem;
   }
   .wish-card {
-    gap: 16px;
-    padding: 16px;
+    gap: 1rem;
+    padding: 1rem;
   }
   .wish-card-poster {
     width: 112px;
@@ -335,43 +335,43 @@
   .wish-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
   }
 }
 @media (max-width: 767px) {
   .wish-page {
-    padding-top: calc(72px + 24px);
+    padding-top: calc(4.5rem + 1rem + 1.125rem + 0.75rem);
   }
   .wish-inner {
-    width: calc(100% - 40px);
+    width: calc(100% - 2.5rem);
   }
   .wish-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .wish-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .wish-tabs li {
     flex-basis: 96px;
   }
   .wish-tab {
-    height: 96px;
+    height: 6rem;
   }
   .wish-tab strong {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
   }
   .wish-grid {
@@ -383,8 +383,8 @@
   .wish-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .wish-card-overview {
@@ -392,84 +392,127 @@
     line-clamp: 3;
   }
   .wish-modal {
-    padding: 20px;
+    padding: 1.25rem;
   }
   .wish-icon-btn {
     width: 44px;
-    height: 44px;
-    font-size: 22px;
+    height: 2.75rem;
+    font-size: 1.375rem;
   }
   .wish-toast {
-    gap: 12px;
-    padding: 12px 16px;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
   }
   .wish-toast p {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .wish-toast-icon {
     width: 36px;
-    height: 36px;
-    font-size: 18px;
+    height: 2.25rem;
+    font-size: 1.125rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .account-page {
-    padding-top: calc(72px + 48px);
-    padding-bottom: 64px;
+    padding-top: calc(4.5rem + 3rem);
+    padding-bottom: 4rem;
   }
-  .account-section {
+  .account-layout {
     grid-template-columns: 200px minmax(0, 1fr);
   }
 }
 @media (max-width: 767px) {
   .account-page {
-    padding-top: calc(72px + 24px);
+    padding-top: calc(4.5rem + 1.5rem);
   }
   .account-inner {
-    width: calc(100% - 32px);
+    width: calc(100% - 2rem);
   }
   .account-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
-    padding-bottom: 16px;
+    padding-bottom: 1rem;
+  }
+  .account-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .account-nav {
+    z-index: 10;
+    margin: 0 -1rem;
+    padding: 0.5rem 1rem;
+    background-color: #F5F5F5;
+    border-bottom: 0.0625rem solid #D5D5D5;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .account-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .account-nav-list {
+    flex-direction: row;
+    width: max-content;
+  }
+  .account-nav-list {
+    gap: 0.25rem;
+  }
+  .account-nav-link {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    width: auto;
+    padding: 0.5rem 0.75rem;
+    white-space: nowrap;
+  }
+  .account-nav-link::before {
+    display: none;
+  }
+  .account-nav-link.is-active {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
   }
   .account-section {
     grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-    padding: 32px 0;
+    gap: 1rem;
+    padding: 2rem 0;
+    scroll-margin-top: calc(4.5rem + 3rem);
   }
   .account-section-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .account-section-body {
-    gap: 24px;
+    gap: 1.5rem;
   }
   .account-item-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .account-avatar-grid {
     grid-template-columns: repeat(4, 56px);
   }
   .account-channels {
-    gap: 12px 24px;
+    gap: 0.75rem 1.5rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .member-home .member-continue .member-empty {
     margin-right: 13%;
   }
@@ -478,19 +521,19 @@
   .member-home .member-continue .member-empty {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
-    margin-right: 20px;
-    padding: 32px 16px;
+    margin-right: 1.25rem;
+    padding: 2rem 1rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   section.top10-section .top10-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     padding-right: 13%;
   }
@@ -502,58 +545,58 @@
   section.top10-section .top10-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
-    margin-bottom: 20px;
-    padding-right: 20px;
+    margin-bottom: 1.25rem;
+    padding-right: 1.25rem;
   }
   section.top10-section .top10-slide {
     width: 170px;
   }
   section.top10-section .top10-num .top10-num-stroke {
-    stroke-width: 8px;
+    stroke-width: 0.5rem;
   }
 }
 @media (max-width: 767px) {
   .hero-swiper-container .hero-slide-item .hero-info .hero-chip {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
-    height: 24px;
-    padding: 0 8px;
+    height: 1.5rem;
+    padding: 0 0.5rem;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-play {
     font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    line-height: 18px;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
-    min-width: 100px;
-    height: 36px;
+    min-width: 4.375rem;
+    height: 1.875rem;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-wish {
-    width: 36px;
-    height: 36px;
+    width: 1.875rem;
+    height: 1.875rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .hero-swiper-container.movie-home-hero {
-    height: min(740px, 100svh - 60px);
-    min-height: 480px;
+    height: min(46.25rem, 100svh - 3.75rem);
+    min-height: 30rem;
   }
 }
 @media (max-width: 600px) {
   .hero-swiper-container.movie-home-hero {
-    height: min(580px, 100svh - 56px);
-    min-height: 400px;
+    height: min(36.25rem, 100svh - 3.5rem);
+    min-height: 25rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .subscribe-cta.subscribe-cta--tv .subscribe-banner {
-    height: 340px;
+    height: 21.25rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-content {
     left: 6%;
@@ -561,25 +604,25 @@
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-posters {
     top: 50%;
-    left: max(55%, 440px);
-    gap: 8px;
+    left: max(55%, 27.5rem);
+    gap: 0.5rem;
     transform: translateY(-50%);
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-poster {
-    --poster-h: 238px;
+    --poster-h: 14.875rem;
   }
 }
 @media (max-width: 767px) {
   .subscribe-cta.subscribe-cta--tv .subscribe-banner {
     height: auto;
-    padding: 32px 0;
-    border-radius: 20px;
+    padding: 2rem 0;
+    border-radius: 1.25rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-content {
     position: relative;
@@ -587,37 +630,37 @@
     left: auto;
     right: auto;
     transform: none;
-    padding: 0 20px;
+    padding: 0 1.25rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-logo {
     width: 58px;
-    height: 44px;
+    height: 2.75rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
-    margin-top: 12px;
+    margin-top: 0.75rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-btn {
-    margin-top: 20px;
+    margin-top: 1.25rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-posters {
     position: relative;
     top: auto;
     left: auto;
     transform: none;
-    margin-top: 24px;
-    padding-left: 20px;
-    gap: 8px;
+    margin-top: 1.5rem;
+    padding-left: 1.25rem;
+    gap: 0.5rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-poster {
-    --poster-h: 179px;
+    --poster-h: 11.1875rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   section.top10-section .top10-slide.top10-slide--wide {
     width: 312px;
   }
@@ -627,161 +670,161 @@
     width: 221px;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   section.device-guide.device-guide--watch {
     --logo-scale: 0.75;
-    padding: 64px 0;
+    padding: 4rem 0;
   }
   section.device-guide.device-guide--watch .inner {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
   section.device-guide.device-guide--watch .watch-logo-main {
-    height: 48px;
+    height: 3rem;
   }
   section.device-guide.device-guide--watch .watch-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-subtitle {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-devices {
-    gap: 24px 32px;
+    gap: 1.5rem 2rem;
   }
 }
 @media (max-width: 767px) {
   section.device-guide.device-guide--watch {
     --logo-scale: 0.6;
     --icon-scale: 0.8;
-    padding: 48px 0;
+    padding: 3rem 0;
   }
   section.device-guide.device-guide--watch .inner {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
   section.device-guide.device-guide--watch .watch-logo-main {
-    height: 40px;
+    height: 2.5rem;
   }
   section.device-guide.device-guide--watch .watch-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
-    margin-top: 16px;
+    margin-top: 1rem;
   }
   section.device-guide.device-guide--watch .watch-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-marquee {
-    margin-top: 32px;
+    margin-top: 2rem;
   }
   section.device-guide.device-guide--watch .watch-logo-list {
-    gap: 24px;
-    padding-right: 24px;
+    gap: 1.5rem;
+    padding-right: 1.5rem;
   }
   section.device-guide.device-guide--watch .watch-mobile {
-    margin-top: 32px;
+    margin-top: 2rem;
   }
   section.device-guide.device-guide--watch .watch-subtitle {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-devices {
-    gap: 16px 24px;
-    margin-top: 32px;
+    gap: 1rem 1.5rem;
+    margin-top: 2rem;
   }
 }
 @media (max-width: 767px) {
   .auth-profiles {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: 1rem;
   }
   .auth-profile-avatar {
     width: 72px;
-    height: 72px;
+    height: 4.5rem;
   }
   .auth-profile-avatar img {
     width: 26px;
-    height: 26px;
+    height: 1.625rem;
   }
 }
 @media (max-width: 767px) {
   .auth-card.auth-card--login {
     min-height: 0;
-    padding: 76px 20px 32px;
+    padding: 4.75rem 1.25rem 2rem;
   }
   .auth-card.auth-card--login .auth-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .auth-card.auth-card--login .auth-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .auth-card.auth-card--login .auth-login-input {
-    height: 52px;
+    height: 3.25rem;
   }
   .auth-card.auth-card--login .auth-code {
-    gap: 6px;
+    gap: 0.375rem;
   }
   .auth-card.auth-card--login .auth-code-box {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     width: auto;
     flex: 1 1 0;
     min-width: 0;
     max-width: 52px;
-    height: 56px;
+    height: 3.5rem;
   }
   .auth-card.auth-card--login .auth-login-links-row {
-    gap: 8px 24px;
+    gap: 0.5rem 1.5rem;
   }
   .auth-card.auth-card--login .auth-done {
-    padding: 24px 0 16px;
+    padding: 1.5rem 0 1rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   section.top10-section .top10-title,
   .upcoming-section .upcoming-title.upcoming-title,
   .apple-originals .apple-originals-title.apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
-    margin: 0 0 8px;
+    margin: 0 0 0.5rem;
     padding-top: 0;
     color: #FFFFFF;
     word-break: keep-all;
@@ -791,8 +834,8 @@
   .apple-originals .apple-originals-desc.apple-originals-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
@@ -800,71 +843,71 @@
   .hero-swiper-container .hero-slide-item .hero-info .hero-chip.hero-chip {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-overview.hero-overview {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-play.hero-play {
     font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 20px;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .value-props .value-props-inner .value-prop-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .value-props .value-props-inner .value-prop-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
 }
 @media (max-width: 767px) {
   header .inner {
-    padding: 14px 20px;
+    padding: 0.875rem 1.25rem;
   }
   header .inner .logo a img {
-    height: 20px;
+    height: 1.25rem;
   }
   header .inner nav {
-    padding: 14px 20px;
+    padding: 0.875rem 1.25rem;
   }
   header .inner nav .gnb-center-toggle button {
-    height: 34px;
-    padding: 0 14px;
-    font-size: 14px;
+    height: 2.125rem;
+    padding: 0 0.875rem;
+    font-size: 0.875rem;
   }
   header .inner nav .gnb-right ul .search-box {
     display: none;
   }
   header .inner nav .gnb-right ul .profile-box {
     width: 36px;
-    height: 36px;
-    font-size: 14px;
+    height: 2.25rem;
+    font-size: 0.875rem;
   }
   .footer {
-    padding: 14px 20px;
+    padding: 0.875rem 1.25rem;
   }
   .footer .footer-main-menu {
-    gap: 10px 20px;
+    gap: 0.625rem 1.25rem;
   }
   .hero-swiper-container {
     height: 100vh;
@@ -891,19 +934,18 @@
     background: linear-gradient(to top, #08090d 0%, rgba(8, 9, 13, 0.55) 45%, rgba(8, 9, 13, 0) 100%);
   }
   .hero-swiper-container .hero-slide-item .hero-info {
-    left: 20px;
-    right: 20px;
+    left: 1.25rem;
+    right: 1.25rem;
     width: auto;
     max-width: none;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-title {
-    font-size: 34px;
-    margin-bottom: 16px;
+    font-size: 2.125rem;
+    margin-bottom: 1rem;
   }
+  .hero-swiper-container .hero-slide-item .hero-info .hero-chips,
   .hero-swiper-container .hero-slide-item .hero-info .hero-overview {
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
-    margin-bottom: 20px;
+    display: none;
   }
   .value-props .inner,
   .top10-section .inner,
@@ -912,15 +954,15 @@
   .ai-promo .inner,
   .subscribe-cta .inner,
   .movie-slider-section .inner {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
   .value-props .value-props-inner {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 1.25rem;
   }
   .top10-section {
-    padding: 40px 0;
+    padding: 2.5rem 0;
   }
   .top10-section .inner {
     padding-right: 0;
@@ -928,29 +970,29 @@
   .top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
-    padding-right: 20px;
+    padding-right: 1.25rem;
   }
   .top10-section .top10-slide {
     width: 135px;
   }
   .top10-section .top10-rank {
-    font-size: 80px;
-    bottom: -6px;
+    font-size: 5rem;
+    bottom: -0.375rem;
   }
   .upcoming-section {
-    padding: 40px 0;
+    padding: 2.5rem 0;
   }
   .upcoming-section .inner {
-    padding-right: 20px;
+    padding-right: 1.25rem;
   }
   .upcoming-section .upcoming-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .upcoming-section .upcoming-title,
@@ -960,22 +1002,22 @@
   .upcoming-section .upcoming-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
   }
   .upcoming-section .upcoming-list {
     grid-auto-flow: row;
     grid-auto-columns: auto;
     grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
+    gap: 1rem;
     overflow: visible;
     padding-right: 0;
   }
   .upcoming-section .upcoming-card {
-    gap: 20px;
-    padding: 20px;
+    gap: 1.25rem;
+    padding: 1.25rem;
   }
   .upcoming-section .upcoming-thumb {
     width: 96px;
@@ -983,8 +1025,8 @@
   .upcoming-section .upcoming-movie-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     white-space: normal;
     word-break: keep-all;
@@ -997,29 +1039,29 @@
     display: none;
   }
   .upcoming-section .upcoming-btn {
-    height: 32px;
-    padding: 0 14px;
-    margin-top: 4px;
+    height: 2rem;
+    padding: 0 0.875rem;
+    margin-top: 0.25rem;
   }
   .apple-originals {
-    padding: 40px 0;
+    padding: 2.5rem 0;
   }
   .apple-originals .apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
-    padding-right: 20px;
+    padding-right: 1.25rem;
   }
   .apple-originals .apple-originals-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
-    padding-right: 20px;
-    margin-bottom: 20px;
+    padding-right: 1.25rem;
+    margin-bottom: 1.25rem;
   }
   .apple-originals .inner {
     padding-right: 0;
@@ -1028,22 +1070,22 @@
     width: 140px;
   }
   .apple-originals .apple-card-poster {
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
   }
   .apple-originals .apple-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .ai-promo {
-    padding: 40px 0;
+    padding: 2.5rem 0;
   }
   .ai-promo .inner {
-    gap: 24px;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    gap: 1.5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
   .ai-promo .ai-promo-text {
     width: 100%;
@@ -1051,15 +1093,15 @@
   .ai-promo .ai-promo-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
   }
   .ai-promo .ai-promo-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .ai-promo .ai-promo-card {
@@ -1073,29 +1115,29 @@
     display: none;
   }
   .subscribe-cta {
-    padding: 24px 0 48px;
+    padding: 1.5rem 0 3rem;
   }
   .subscribe-cta .subscribe-banner {
-    height: 300px;
-    border-radius: 16px;
+    height: 18.75rem;
+    border-radius: 1rem;
   }
   .subscribe-cta .subscribe-content {
     left: 5%;
     right: 5%;
-    gap: 12px;
+    gap: 0.75rem;
   }
   .subscribe-cta .subscribe-title {
-    font-size: 17px;
+    font-size: 1.0625rem;
   }
   .subscribe-cta .subscribe-btn {
-    height: 42px;
-    padding: 0 24px;
+    height: 2.625rem;
+    padding: 0 1.5rem;
   }
   .subscribe-cta .subscribe-banner::after {
     background: linear-gradient(to right, rgba(23, 23, 23, 0.92) 0%, rgba(23, 23, 23, 0.7) 60%, rgba(23, 23, 23, 0.2) 100%);
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   main.member-home .member-section {
     overflow: hidden;
   }
@@ -1151,16 +1193,16 @@
   }
   main.member-home .member-pair {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 1.5rem;
   }
   main.member-home .member-ecosystem {
-    padding: 48px 0;
+    padding: 3rem 0;
   }
   main.member-home .member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   main.member-home .upcoming-section .inner {
@@ -1183,8 +1225,8 @@
   main.member-home .upcoming-section .upcoming-movie-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
   }
   main.member-home .upcoming-section .upcoming-btn:not(.on) {
@@ -1196,7 +1238,7 @@
     background-color: #D5D5D5;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   main.member-home .rail-mood {
     --nav-top: 30%;
   }
@@ -1207,38 +1249,38 @@
     display: flex;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   main.member-home .rail-wish {
     --rail-col: 300px;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   main.member-home .rail-recommend {
     --rail-col: 220px;
     --nav-top: 50%;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   main.member-home .rail-ai {
     --rail-col: 286px;
     --nav-top: 30%;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   main.member-home .rail-release,
   section.upcoming-section .rail-release {
     --rail-col: 360px;
     --nav-top: 50%;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   main.member-home .member-section .member-title.member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
-    margin: 0 0 8px;
+    margin: 0 0 0.5rem;
     padding-top: 0;
     color: #FFFFFF;
     word-break: keep-all;
@@ -1246,8 +1288,8 @@
   main.member-home .member-section .member-head .member-desc.member-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
@@ -1255,93 +1297,62 @@
   main.member-home .member-continue .member-cw-time {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-continue .member-cw-card .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-continue .member-cw-card .member-card-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-continue .member-cw-card .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-wishlist .member-wl-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-wishlist .member-wl-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
 }
-@media (min-width: 768px) and (max-width: 1024px) {
-  main.member-home .member-continue .inner,
-  main.member-home .member-wishlist .inner,
-  main.member-home .member-recommend .inner,
-  main.member-home .member-mood .inner {
-    padding-right: 13%;
-    overflow: hidden;
-  }
-  main.member-home .member-continue .member-head,
-  main.member-home .member-continue .member-chips,
-  main.member-home .member-continue .member-notice,
-  main.member-home .member-wishlist .member-head,
-  main.member-home .member-wishlist .member-chips,
-  main.member-home .member-wishlist .member-notice,
-  main.member-home .member-recommend .member-head,
-  main.member-home .member-recommend .member-chips,
-  main.member-home .member-recommend .member-notice,
-  main.member-home .member-mood .member-head,
-  main.member-home .member-mood .member-chips,
-  main.member-home .member-mood .member-notice {
-    margin-right: 0;
-  }
-  main.member-home .rail-continue,
-  main.member-home .rail-wish,
-  main.member-home .rail-ai {
-    --rail-col: 346px;
-  }
-  main.member-home .rail-recommend {
-    --rail-col: 282px;
-  }
-}
 @media (max-width: 767px) {
   main.member-home .member-section {
-    padding: 32px 0 40px;
+    padding: 2rem 0 2.5rem;
   }
   main.member-home .member-section .inner {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
   main.member-home .member-mood .inner {
-    padding-right: 20px;
+    padding-right: 1.25rem;
   }
   main.member-home .member-continue .inner,
   main.member-home .member-wishlist .inner,
@@ -1351,7 +1362,7 @@
   main.member-home .member-continue .member-head,
   main.member-home .member-wishlist .member-head,
   main.member-home .member-recommend .member-head {
-    margin-right: 20px;
+    margin-right: 1.25rem;
   }
   main.member-home .member-head {
     margin-right: 0;
@@ -1359,17 +1370,17 @@
   main.member-home .member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 48px;
-    line-height: 56px;
+    font-size: 3rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
   }
   main.member-home .member-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   main.member-home .rail-continue {
@@ -1385,67 +1396,67 @@
     --rail-col: calc((100% - 16px) / 2);
   }
   main.member-home .member-mood .member-chips {
-    margin-right: -20px;
-    padding-right: 20px;
+    margin-right: -1.25rem;
+    padding-right: 1.25rem;
   }
   main.member-home .member-mood .member-notice {
     margin-right: 0;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    padding: 20px 16px;
+    gap: 1rem;
+    padding: 1.25rem 1rem;
     text-align: center;
   }
   main.member-home .member-mood .member-notice p {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   main.member-home .member-mood .member-notice .member-btn {
     align-self: center;
-    height: 40px;
-    padding: 0 24px;
+    height: 2.5rem;
+    padding: 0 1.5rem;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   main.member-home .member-mood .member-thumb.portrait {
     aspect-ratio: 16/9;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
   }
   main.member-home .member-mood .member-card {
-    gap: 2px;
+    gap: 0.125rem;
   }
   main.member-home .member-mood .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   main.member-home .member-mood .member-card-meta,
   main.member-home .member-mood .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
   main.member-home .member-recommend .member-head {
     align-items: flex-end;
   }
   main.member-home .member-recommend .member-thumb.portrait {
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
   }
   main.member-home .member-recommend .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   main.member-home .member-recommend .member-card-meta,
@@ -1453,8 +1464,8 @@
   main.member-home .member-recommend .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
   main.member-home .member-recommend .member-card-strong {
@@ -1462,20 +1473,20 @@
   }
   main.member-home .member-recommend .member-heart {
     width: 30px;
-    height: 30px;
+    height: 1.875rem;
   }
   main.member-home .member-recommend .member-heart-icon {
     width: 18px;
-    height: 18px;
+    height: 1.125rem;
   }
   main.member-home .member-pair {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 1.5rem;
   }
   main.member-home .member-wide-card {
     flex-direction: row;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
     padding: 0;
     background-color: transparent;
   }
@@ -1491,103 +1502,105 @@
   main.member-home .member-wide-info .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   main.member-home .member-wide-info .member-card-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
   main.member-home .member-wide-info .member-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
-    height: 28px;
-    padding: 0 12px;
+    height: 1.75rem;
+    padding: 0 0.75rem;
   }
   main.member-home .upcoming-section {
-    padding: 32px 0 40px;
+    padding: 2rem 0 2.5rem;
   }
   main.member-home .member-ecosystem {
-    padding: 40px 0;
+    padding: 2.5rem 0;
   }
   main.member-home .member-ecosystem .member-title {
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     word-break: keep-all;
   }
 }
 @media (max-width: 1024px) {
-  .movie-detail-page .inner {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
   .movie-detail-page .content-layout {
     flex-direction: column;
     align-items: stretch;
-    gap: 32px;
+    gap: 2rem;
   }
   .movie-detail-page .left-section,
   .movie-detail-page .right-section {
     width: 100%;
     flex: none;
   }
-  .movie-detail-page .player-box .title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
-    letter-spacing: 0;
-    font-weight: 700;
-  }
   .movie-detail-page .right-section {
     position: static;
-    height: 640px;
+    height: 40rem;
     min-height: 0;
     max-height: none;
   }
 }
 @media (max-width: 767px) {
-  .movie-detail-page {
-    padding-top: calc(72px + 16px);
-    padding-bottom: 56px;
-  }
   .movie-detail-page .inner {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .movie-detail-page .content-layout {
-    gap: 24px;
-  }
-  .movie-detail-page .player-box .player-info {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-    padding: 16px;
-  }
-  .movie-detail-page .player-box .title-logo {
-    max-width: 160px;
-    max-height: 44px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
   .movie-detail-page .player-box .title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
+    letter-spacing: 0;
+    font-weight: 700;
+  }
+}
+@media (max-width: 767px) {
+  .movie-detail-page {
+    padding-top: calc(4.5rem + 1rem);
+    padding-bottom: 3.5rem;
+  }
+  .movie-detail-page .inner {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .movie-detail-page .content-layout {
+    gap: 1.5rem;
+  }
+  .movie-detail-page .player-box .player-info {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .movie-detail-page .player-box .title-logo {
+    max-width: 160px;
+    max-height: 2.75rem;
+  }
+  .movie-detail-page .player-box .title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     font-weight: 700;
   }
   .movie-detail-page .player-box .original-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .movie-detail-page .player-box .overview {
@@ -1598,7 +1611,7 @@
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
   }
   .movie-detail-page .player-box .btn-play {
     width: auto;
@@ -1610,39 +1623,39 @@
   .movie-detail-page .rating-section .rating-header h3 {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .movie-detail-page .rating-section .rating-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .movie-detail-page .rating-section .star-picker {
-    gap: 4px;
+    gap: 0.25rem;
   }
   .movie-detail-page .right-section {
-    height: 560px;
-    padding: 16px;
+    height: 35rem;
+    padding: 1rem;
   }
   .movie-detail-page .right-section .tabs .tab-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .movie-detail-page .right-section .filter-bar {
-    gap: 8px;
+    gap: 0.5rem;
   }
   .movie-detail-page .right-section .season-label {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .movie-detail-page .right-section .episode-card .thumb {
@@ -1650,38 +1663,38 @@
   }
   .movie-detail-page .right-section .cast-photo {
     width: 60px;
-    height: 60px;
+    height: 3.75rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .sport-team-card {
-    height: 96px;
-    gap: 16px;
-    padding: 0 20px 0 16px;
+    height: 6rem;
+    gap: 1rem;
+    padding: 0 1.25rem 0 1rem;
   }
   .sport-team-card .sport-team-logo {
     width: 56px;
-    height: 56px;
+    height: 3.5rem;
   }
   .sport-teams {
-    padding: 56px 0;
+    padding: 3.5rem 0;
   }
   .sport-teams .inner {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
   .sport-teams .sport-team-slide {
     width: 320px;
   }
   .sport-teams-page .inner {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
   .sport-teams-page .sport-teams-page-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 34px;
-    line-height: 41px;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -1694,38 +1707,38 @@
   }
   .sport-teams-page .sport-team-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: 1rem;
   }
 }
 @media (max-width: 767px) {
   .sport-team-card {
-    height: 80px;
-    gap: 12px;
-    padding: 0 12px;
+    height: 5rem;
+    gap: 0.75rem;
+    padding: 0 0.75rem;
   }
   .sport-team-card .sport-team-logo {
     width: 48px;
-    height: 48px;
-    border-radius: 8px;
+    height: 3rem;
+    border-radius: 0.5rem;
   }
   .sport-team-card .sport-team-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .sport-team-card .sport-team-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
   }
   .sport-team-filter {
     overflow-x: auto;
-    margin-right: -20px;
-    padding-right: 20px;
+    margin-right: -1.25rem;
+    padding-right: 1.25rem;
     scrollbar-width: none;
   }
   .sport-team-filter::-webkit-scrollbar {
@@ -1737,29 +1750,29 @@
   .sport-team-filter button {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
-    height: 34px;
-    padding: 0 14px;
+    height: 2.125rem;
+    padding: 0 0.875rem;
   }
   .sport-teams {
-    padding: 40px 0;
+    padding: 2.5rem 0;
   }
   .sport-teams .inner {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
   .sport-teams .sport-teams-head {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 0.5rem;
   }
   .sport-teams .sport-teams-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -1767,8 +1780,8 @@
   .sport-teams .sport-teams-count {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .sport-teams .sport-team-slide {
@@ -1777,68 +1790,68 @@
   .sport-teams .sport-team-more {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     width: 100%;
     justify-content: center;
   }
   .sport-teams-page .inner {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
   .sport-teams-page .sport-teams-hero {
-    padding: 24px 0 32px;
+    padding: 1.5rem 0 2rem;
   }
   .sport-teams-page .sport-teams-page-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
     font-weight: 700;
   }
   .sport-teams-page .sport-teams-page-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .sport-teams-page .sport-teams-body {
-    padding-top: 24px;
+    padding-top: 1.5rem;
   }
   .sport-teams-page .sport-teams-toolbar {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
   }
   .sport-teams-page .sport-team-group + .sport-team-group {
-    margin-top: 32px;
+    margin-top: 2rem;
   }
   .sport-teams-page .sport-team-group-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
   }
   .sport-teams-page .sport-team-list {
     grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
+    gap: 0.75rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .promo-banner.is-live .live-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
-    gap: 10px;
+    gap: 0.625rem;
   }
   .promo-banner.is-live .live-dot {
     width: 14px;
-    height: 14px;
+    height: 0.875rem;
   }
   .promo-banner.is-live .promo-banner-btn {
     min-width: 140px;
@@ -1846,22 +1859,22 @@
 }
 @media (max-width: 767px) {
   .promo-banner.is-live .promo-banner-inner {
-    padding-left: 20px;
-    padding-right: 20px;
-    gap: 12px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    gap: 0.75rem;
   }
   .promo-banner.is-live .live-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     font-weight: 700;
-    gap: 8px;
+    gap: 0.5rem;
   }
   .promo-banner.is-live .live-dot {
     width: 10px;
-    height: 10px;
+    height: 0.625rem;
   }
   .promo-banner.is-live .live-score {
     margin: 0;
@@ -1870,8 +1883,8 @@
   .promo-banner.is-live .promo-banner-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     white-space: normal;
     display: -webkit-box;
@@ -1882,26 +1895,26 @@
   .promo-banner.is-live .promo-banner-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     min-width: 0;
-    height: 32px;
-    padding: 0 14px;
+    height: 2rem;
+    padding: 0 0.875rem;
   }
   .promo-banner.is-live .promo-banner-note {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .login-page.login-page {
     min-height: 100vh;
     min-height: 100svh;
-    padding: calc(72px + 24px) 40px 64px;
+    padding: calc(4.5rem + 1.5rem) 2.5rem 4rem;
     align-items: center;
   }
   .login-page.login-page .login-card,
@@ -1910,51 +1923,51 @@
   .login-page.login-page .login-card.plan-card {
     max-width: 560px;
     min-height: 0;
-    padding: 76px 24px 32px;
+    padding: 4.75rem 1.5rem 2rem;
     background-color: #F5F5F5;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     box-shadow: none;
   }
   .login-page.login-page .login-card.login-card .login-card-close {
-    top: 20px;
-    left: 16px;
+    top: 1.25rem;
+    left: 1rem;
     width: 44px;
-    height: 44px;
+    height: 2.75rem;
     background-color: #FFFFFF;
     color: #171717;
   }
   .login-page.login-page .login-card.login-card .login-card-close svg {
     width: 20px;
-    height: 20px;
+    height: 1.25rem;
   }
   .login-page.login-page .login-card.login-card .login-logo-area {
     margin-bottom: 0;
   }
   .login-page.login-page .login-card.login-card .login-logo-area .login-app-icon {
     width: 50px;
-    height: 50px;
-    border-radius: 20px;
+    height: 3.125rem;
+    border-radius: 1.25rem;
     background-color: #D5D5D5;
   }
   .login-page.login-page .login-card.login-card .login-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
-    margin: 20px 0 10px;
-    font-size: 24px;
-    line-height: 30px;
+    margin: 1.25rem 0 0.625rem;
+    font-size: 1.5rem;
+    line-height: 1.875rem;
     color: #171717;
     word-break: keep-all;
   }
   .login-page.login-page .login-card.login-card .login-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
-    margin: 0 0 24px;
+    margin: 0 0 1.5rem;
     font-weight: 700;
     color: #525252;
     word-break: keep-all;
@@ -1966,13 +1979,13 @@
   .login-page.login-page .login-card.login-card .plan-submit {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     width: 100%;
     max-width: none;
-    height: 48px;
-    border-radius: 6px;
+    height: 3rem;
+    border-radius: 0.375rem;
   }
   .login-page.login-page .login-card.login-card--signin .login-desc {
     font-weight: 400;
@@ -1980,47 +1993,47 @@
   .login-page.login-page .login-card.login-card--signin .login-form .input-field input {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
-    height: 50px;
+    height: 3.125rem;
   }
   .login-page.login-page .login-card.login-card--signin .login-links-row {
     flex-wrap: wrap;
-    gap: 8px 16px;
+    gap: 0.5rem 1rem;
   }
   .login-page.login-page .login-card .login-form .code-input-group {
-    gap: 6px;
+    gap: 0.375rem;
   }
   .login-page.login-page .login-card .login-form .code-input-group .code-box {
     width: auto;
     flex: 1 1 0;
     min-width: 0;
     max-width: 52px;
-    height: 54px;
+    height: 3.375rem;
   }
   .login-page.login-page .login-card.login-card--confirm .login-title {
-    margin: 20px 0 10px;
+    margin: 1.25rem 0 0.625rem;
   }
   .login-page.login-page .login-card.login-card--confirm .login-desc {
-    margin-bottom: 32px;
+    margin-bottom: 2rem;
     font-weight: 400;
   }
   .login-page.login-page .login-card.login-card--confirm .login-links.row-links {
-    gap: 40px;
+    gap: 2.5rem;
   }
   .login-page.login-page .login-card.plan-card .plan-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 20px 16px;
-    border-radius: 20px;
+    gap: 1.25rem;
+    padding: 1.25rem 1rem;
+    border-radius: 1.25rem;
   }
   .login-page.login-page .login-card.plan-card .plan-option {
     grid-template-columns: minmax(0, 1fr) 20px;
     grid-template-areas: "name radio" "price radio" "note radio";
-    column-gap: 16px;
-    row-gap: 8px;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
     height: auto;
     padding: 0;
   }
@@ -2031,8 +2044,8 @@
     grid-area: name;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -2040,16 +2053,16 @@
     grid-area: price;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .login-page.login-page .login-card.plan-card .plan-option .plan-note {
     grid-area: note;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     word-break: keep-all;
   }
@@ -2060,61 +2073,61 @@
   .login-page.login-page .login-card.plan-card .plan-section-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     font-weight: 700;
-    margin: 32px 0 12px;
+    margin: 2rem 0 0.75rem;
   }
   .login-page.login-page .login-card.plan-card .plan-benefits {
     grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
+    gap: 0.75rem;
   }
   .login-page.login-page .login-card.plan-card .plan-benefit {
-    gap: 10px;
-    padding: 22px 20px;
-    border-radius: 20px;
+    gap: 0.625rem;
+    padding: 1.375rem 1.25rem;
+    border-radius: 1.25rem;
   }
   .login-page.login-page .login-card.plan-card .plan-benefit strong {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     font-weight: 700;
   }
   .login-page.login-page .login-card.plan-card .plan-benefit span {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     word-break: keep-all;
   }
   .login-page.login-page .login-card.plan-card .plan-submit {
-    margin-top: 24px;
+    margin-top: 1.5rem;
   }
   .login-page.login-page .login-card.plan-card .plan-links {
     grid-template-columns: 1fr;
-    row-gap: 16px;
-    margin: 24px 0;
+    row-gap: 1rem;
+    margin: 1.5rem 0;
   }
   .login-page.login-page .login-card.plan-card.plan-card--processing, .login-page.login-page .login-card.plan-card.plan-card--done {
-    padding-top: 76px;
+    padding-top: 4.75rem;
   }
   .login-page.login-page .login-card.plan-card.plan-card--processing .login-title, .login-page.login-page .login-card.plan-card.plan-card--done .login-title {
-    margin: 20px 0 12px;
-    font-size: 24px;
-    line-height: 30px;
+    margin: 1.25rem 0 0.75rem;
+    font-size: 1.5rem;
+    line-height: 1.875rem;
     font-weight: 400;
   }
   .login-page.login-page .login-card.plan-card.plan-card--processing .login-desc, .login-page.login-page .login-card.plan-card.plan-card--done .login-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     font-weight: 400;
   }
   .login-page.login-page .login-card.plan-card.plan-card--processing .plan-submit--wait {
@@ -2123,7 +2136,7 @@
 }
 @media (max-width: 767px) {
   .login-page.login-page {
-    padding: calc(72px + 16px) 16px 40px;
+    padding: calc(4.5rem + 1rem) 1rem 2.5rem;
     background-color: #08090d;
   }
   .login-page.login-page .login-card,
@@ -2131,29 +2144,29 @@
   .login-page.login-page .login-card.login-card--confirm,
   .login-page.login-page .login-card.plan-card {
     max-width: none;
-    padding: 76px 20px 24px;
+    padding: 4.75rem 1.25rem 1.5rem;
   }
   .login-page.login-page .login-card.login-card .login-title {
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
   }
   .login-page.login-page .login-card.plan-card .plan-list {
-    gap: 24px;
+    gap: 1.5rem;
   }
   .login-page.login-page .login-card.plan-card .plan-option .plan-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
   }
   .login-page.login-page .login-card.plan-card .plan-section-title {
-    margin-top: 28px;
+    margin-top: 1.75rem;
   }
   .login-page.login-page .login-card.plan-card .plan-benefit {
-    padding: 20px;
+    padding: 1.25rem;
   }
   .login-page.login-page .login-card.plan-card .plan-summary-row dd {
     max-width: 55%;
@@ -2165,7 +2178,12 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 @media (max-width: 767px) {
   header .inner nav .gnb-right ul {
-    gap: 8px;
+    gap: 0.5rem;
+  }
+}
+@media (max-width: 1194px) {
+  header .inner nav .gnb-right ul .search-box {
+    display: none;
   }
   header .inner nav .gnb-right ul .search-icon-item {
     display: flex;
@@ -2174,8 +2192,8 @@ header .inner nav .gnb-right ul .search-icon-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     background-color: #262626;
     transition: background-color 0.2s ease;
@@ -2184,12 +2202,12 @@ header .inner nav .gnb-right ul .search-icon-item {
     background-color: #2E2E2E;
   }
   header .inner nav .gnb-right ul .search-icon-btn:focus-visible {
-    outline: 2px solid #FFFFFF;
-    outline-offset: 2px;
+    outline: 0.125rem solid #FFFFFF;
+    outline-offset: 0.125rem;
   }
   header .inner nav .gnb-right ul .search-icon-btn img {
-    width: 14px;
-    height: 14px;
+    width: 0.875rem;
+    height: 0.875rem;
     display: block;
     filter: invert(0.7);
   }
@@ -2197,20 +2215,20 @@ header .inner nav .gnb-right ul .search-icon-item {
 @media (max-width: 767px) {
   header .inner nav .gnb-right ul .profile-box.profile-box {
     width: 32px;
-    height: 32px;
+    height: 2rem;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-logo {
     width: 390px;
-    height: 162px;
+    height: 10.125rem;
     max-width: 100%;
   }
 }
 @media (max-width: 767px) {
   .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-logo {
     width: 195px;
-    height: 80px;
+    height: 5rem;
   }
 }
 @media (max-width: 767px) {
@@ -2223,8 +2241,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home .member-wl-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
 }
@@ -2233,25 +2251,25 @@ header .inner nav .gnb-right ul .search-icon-item {
     --rail-col: 176px;
   }
   main.member-home .member-rc-info {
-    left: 12px;
-    right: 12px;
-    bottom: 56px;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 3.5rem;
   }
   main.member-home .member-rc-actions {
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    gap: 6px;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    gap: 0.375rem;
   }
   main.member-home .member-rc-play,
   main.member-home .member-rc-rate {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
-    height: 30px;
-    gap: 4px;
+    height: 1.875rem;
+    gap: 0.25rem;
   }
 }
 @media (max-width: 767px) {
@@ -2266,57 +2284,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   main.member-home .member-nr-card,
   section.upcoming-section .member-nr-card {
-    gap: 12px;
-    padding: 12px;
-  }
-}
-@media (min-width: 768px) and (max-width: 1024px) {
-  section.top10-section .top10-num {
-    height: 135px;
-  }
-  section.top10-section .top10-num .top10-num-glyph {
-    font-size: 202px;
-    letter-spacing: -8px;
-  }
-  main.member-home .member-mood .member-notice p {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    color: #C8C8C8;
-  }
-  main.member-home .member-mood .member-ai-tagline {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    color: #C8C8C8;
-  }
-  main.member-home .member-mood .member-ai-card .member-card-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    color: #C8C8C8;
-  }
-  main.member-home .member-mood .member-ai-card .member-card-meta {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    color: #C8C8C8;
-  }
-  main.member-home .member-mood .member-ai-card .member-card-link {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    color: #C8C8C8;
+    gap: 0.75rem;
+    padding: 0.75rem;
   }
 }
 @media (max-width: 767px) {
@@ -2325,8 +2294,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   .apple-originals .apple-originals-title.apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
@@ -2335,8 +2304,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   .apple-originals .apple-originals-desc.apple-originals-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 21px;
+    font-size: 1rem;
+    line-height: 1.3125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -2344,36 +2313,36 @@ header .inner nav .gnb-right ul .search-icon-item {
     display: none;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-content {
-    padding: 0 36px;
+    padding: 0 2.25rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-logo {
     width: 73px;
-    height: 56px;
+    height: 3.5rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     width: 200px;
-    height: 40px;
-    padding: 7px 36px;
+    height: 2.5rem;
+    padding: 0.4375rem 2.25rem;
     color: #FFFFFF;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-note {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -2386,7 +2355,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     position: relative;
     display: block;
     padding: 0;
-    border-radius: 10px;
+    border-radius: 0.625rem;
     overflow: hidden;
     background-color: #2E2E2E;
   }
@@ -2411,12 +2380,12 @@ header .inner nav .gnb-right ul .search-icon-item {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 12px;
+    bottom: 0.75rem;
     z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
   }
   main.member-home .member-nr-card.member-nr-card .member-nr-quick-play,
   main.member-home .member-nr-card.member-nr-card .member-nr-quick-heart,
@@ -2427,7 +2396,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     align-items: center;
     justify-content: center;
     width: 25px;
-    height: 25px;
+    height: 1.5625rem;
     padding: 0;
     border: none;
     border-radius: 50%;
@@ -2442,7 +2411,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-play img {
     display: block;
     width: 7px;
-    height: 9px;
+    height: 0.5625rem;
   }
   main.member-home .member-nr-card.member-nr-card .member-nr-quick-heart,
   section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-heart {
@@ -2456,7 +2425,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-heart-icon {
     display: block;
     width: 11px;
-    height: 11px;
+    height: 0.6875rem;
     background-color: currentColor;
     -webkit-mask: url("/icons/heart-icon.svg") center/contain no-repeat;
     mask: url("/icons/heart-icon.svg") center/contain no-repeat;
@@ -2465,19 +2434,19 @@ header .inner nav .gnb-right ul .search-icon-item {
   section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-month {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 0.25rem;
     width: 105px;
-    height: 25px;
-    padding: 5px 10px;
+    height: 1.5625rem;
+    padding: 0.3125rem 0.625rem;
     border: none;
-    border-radius: 999px;
+    border-radius: 62.4375rem;
     background-color: #5865F2;
     color: #FFFFFF;
     white-space: nowrap;
@@ -2487,46 +2456,46 @@ header .inner nav .gnb-right ul .search-icon-item {
   section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-month .member-nr-bell-icon {
     flex-shrink: 0;
     width: 10px;
-    height: 10px;
+    height: 0.625rem;
   }
   main.member-home .member-section .member-title.member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   main.member-home .member-section .member-head .member-desc.member-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 21px;
+    font-size: 1rem;
+    line-height: 1.3125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-continue .member-cw-card .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   main.member-home .member-continue .member-cw-card .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-wishlist .member-wl-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
     margin: 0;
-    padding: 0 20px 0 0;
+    padding: 0 1.25rem 0 0;
     list-style: none;
   }
   main.member-home .member-wishlist .member-wl-list li {
@@ -2537,19 +2506,19 @@ header .inner nav .gnb-right ul .search-icon-item {
     max-width: 340px;
   }
   main.member-home .member-wishlist .member-wl-card {
-    height: 70px;
+    height: 4.375rem;
     background-color: rgba(0, 0, 0, 0.5);
   }
   main.member-home .member-wishlist .member-wl-thumb {
     width: 60px;
-    height: 50px;
+    height: 3.125rem;
     aspect-ratio: auto;
   }
   main.member-home .member-wishlist .member-wl-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -2563,16 +2532,16 @@ header .inner nav .gnb-right ul .search-icon-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
   }
   main.member-home .member-recommend .member-rc-play,
   main.member-home .member-recommend .member-rc-rate {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
-    height: 25px;
+    height: 1.5625rem;
     color: #FFFFFF;
   }
   main.member-home .member-recommend .member-rc-play {
@@ -2584,10 +2553,10 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   main.member-home .member-recommend .member-rc-play img {
     width: 7px;
-    height: 9px;
+    height: 0.5625rem;
   }
   main.member-home .member-recommend .member-rc-rate {
-    padding: 0 10px;
+    padding: 0 0.625rem;
   }
   main.member-home .member-continue .member-cw-time,
   main.member-home .member-continue .member-cw-card .member-card-meta {
@@ -2602,39 +2571,39 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home .member-mood .member-chips .member-chip.member-chip {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     width: 56px;
-    height: 30px;
-    padding: 10px 0;
+    height: 1.875rem;
+    padding: 0.625rem 0;
     color: #FFFFFF;
   }
   main.member-home .member-mood .member-ai-tagline {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     display: inline-flex;
     align-items: center;
-    height: 30px;
-    padding: 6px 10px;
+    height: 1.875rem;
+    padding: 0.375rem 0.625rem;
     color: #C8C8C8;
   }
   main.member-home .member-mood .member-ai-card .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-mood .member-ai-card .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -2643,15 +2612,15 @@ header .inner nav .gnb-right ul .search-icon-item {
   header .inner nav .gnb-right ul .header-login-btn.header-login-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
     box-sizing: border-box;
     justify-content: center;
     gap: 0;
     width: 40px;
-    height: 32px;
-    padding: 0 8px;
+    height: 2rem;
+    padding: 0 0.5rem;
     color: #FFFFFF;
   }
   header .inner nav .gnb-right ul .header-login-btn.header-login-btn img {
@@ -2665,1884 +2634,540 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.sport-home.sport-home section.sport-teams .sport-team-more {
     position: absolute;
     top: 0;
-    right: 20px;
+    right: 1.25rem;
     left: auto;
     display: flex;
     align-items: center;
     width: auto;
-    height: 28px;
+    height: 1.75rem;
     margin: 0;
     white-space: nowrap;
   }
 }
 @media (max-width: 767px) {
   .floating-actions {
-    right: 16px;
-    bottom: 16px;
+    right: 1rem;
+    bottom: 1rem;
   }
   .floating-btn {
     width: 50px;
-    height: 50px;
+    height: 3.125rem;
   }
   .floating-btn.floating-btn--tv img {
     width: 50px;
-    height: 50px;
+    height: 3.125rem;
   }
   .floating-btn.floating-btn--top {
-    padding: 0 16px;
+    padding: 0 1rem;
   }
   .floating-btn.floating-btn--top img {
     width: 100%;
     height: auto;
   }
   body.has-promo-banner .floating-actions {
-    bottom: calc(97px + 12px);
+    bottom: calc(6.0625rem + 0.75rem);
   }
 }
-@media (min-width: 768px) and (max-width: 1024px) {
-  .floating-actions {
-    gap: 12px;
+@media (max-width: 767px) {
+  .profile-picker-list {
+    gap: 1rem;
   }
-  .floating-btn {
-    width: 60px;
-    height: 60px;
+  .profile-picker-item {
+    width: 80px;
   }
-  .floating-btn.floating-btn--tv img {
-    width: 60px;
-    height: 60px;
+  .profile-picker-avatar {
+    width: 72px;
+    height: 4.5rem;
   }
-  .floating-btn.floating-btn--top {
-    padding: 0 19px;
+  .profile-picker-icons {
+    grid-template-columns: repeat(4, 52px);
+    justify-content: space-around;
   }
-  .floating-btn.floating-btn--top img {
-    width: 100%;
+}
+@media (max-width: 767px) {
+  .auto-next,
+  .auto-next--inline {
+    right: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    width: auto;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+  .auto-next-thumb {
+    display: none;
+  }
+  .auto-next-actions {
+    flex-direction: row;
+  }
+}
+@media (max-width: 767px) {
+  main.member-home.member-browse .member-section .inner {
+    padding-right: 13%;
+  }
+  main.member-home.member-browse .member-head {
+    margin-right: 0;
+  }
+  main.member-home.member-browse .member-browse-grid {
+    --browse-col: 280px;
+    gap: 2rem 1.5rem;
+  }
+  main.member-home.member-browse .member-browse-grid--recommend {
+    --browse-col: 200px;
+  }
+}
+@media (max-width: 767px) {
+  main.member-home.member-browse .member-section {
+    padding-top: calc(1rem + 1.125rem + 0.75rem);
+  }
+  main.member-home.member-browse .member-section .inner {
+    padding-right: 1.25rem;
+  }
+  main.member-home.member-browse .member-browse-grid {
+    --browse-col: 100%;
+    gap: 1.5rem 1rem;
+  }
+  main.member-home.member-browse .member-browse-grid--recommend {
+    --browse-col: 140px;
+  }
+}
+@media (max-width: 767px) {
+  section.value-props.value-props .value-prop-item + .value-prop-item::before {
+    top: -0.625rem;
+    bottom: auto;
+    left: 25%;
+    right: 25%;
+    width: auto;
+    height: 0.0625rem;
+  }
+}
+@media (max-width: 767px) {
+  main.member-home .member-nr-card.member-nr-card .member-nr-quick-heart.is-on,
+  section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-heart.is-on {
+    color: #FFFFFF;
+  }
+  main.member-home .member-nr-card.member-nr-card .member-nr-quick-heart.is-on .member-nr-quick-heart-icon,
+  section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-heart.is-on .member-nr-quick-heart-icon {
+    -webkit-mask-image: url("/icons/active-heart.svg");
+    mask-image: url("/icons/active-heart.svg");
+  }
+}
+@media (max-width: 767px) {
+  section.device-guide.device-guide--watch {
     height: auto;
   }
 }
 @media (max-width: 1024px) {
-  main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
-    width: calc(100% - 80px);
-  }
-  main.sport-home > section.sport-teams {
-    padding: 72px 0 64px;
-  }
-  main.sport-home .sport-teams .inner {
-    padding: 0 40px;
-  }
-  main.sport-home .sport-teams .sport-teams-head {
-    margin-bottom: 32px;
-  }
-  main.sport-home .sport-teams .sport-team-slide {
-    width: 300px;
-    min-width: 0;
-  }
-  main.sport-home .sport-conferences > .inner {
-    width: calc(100% - 80px);
-  }
-  main.sport-home .sport-conference-grid {
-    grid-template-columns: 1fr;
-  }
-  main.sport-home .sport-conference-card {
-    padding: 20px 24px 24px;
-  }
-  main.sport-home .sport-highlight-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  main.sport-home .sport-replay-list {
-    display: flex;
-    grid-template-columns: none;
-  }
-  main.sport-home .sport-replay-list > li {
-    flex-basis: 300px;
-  }
-  main.sport-home .sport-live-slide,
-  main.sport-home .sport-replay-list > li {
-    max-width: 80%;
+  main.member-home .rail-release.rail-showcase.rail-showcase {
+    --rail-col: 282px;
   }
 }
-
 @media (max-width: 767px) {
-  main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
-    width: calc(100% - 40px);
+  main.member-home .rail-release.rail-showcase.rail-showcase {
+    --rail-col: 138px;
+  }
+  main.member-home .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
+    --browse-col: 140px;
+  }
+}
+@media (max-width: 767px) {
+  .inner:not(.sport-home .inner),
+  .account-inner,
+  .search-inner,
+  .wish-inner {
+    box-sizing: border-box !important;
+    width: 90% !important;
+    max-width: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  header .inner nav {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .account-nav {
+    margin: 0 -5.5556%;
+    padding-left: 5.5556%;
+    padding-right: 5.5556%;
+  }
+  .footer.footer.footer {
     padding: 0;
   }
-  main.sport-home .sport-section-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-  main.sport-home .sport-section-title,
-  main.sport-home .sport-teams-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home .sport-more {
-    flex-shrink: 0;
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-    color: #C8C8C8;
-  }
-  main.sport-home .sport-live-slide {
-    width: 72%;
-    max-width: none;
-  }
-  main.sport-home .sport-upcoming-slide {
-    width: 240px !important;
-  }
-  main.sport-home .sport-match-card {
-    width: 100%;
-    height: 140px;
-    padding: 14px;
-    border-radius: 20px;
-  }
-  main.sport-home .sport-match-card .sport-match-content {
-    gap: 28px;
-  }
-  main.sport-home .sport-match-card .sport-team {
-    width: 64px;
-    height: 64px;
-  }
-  main.sport-home .sport-match-card .sport-match-divider {
-    height: 56px;
-  }
-  main.sport-home .sport-short-slide {
-    width: 150px;
-    max-width: none;
-  }
-  main.sport-home .sport-short-play {
-    width: 48px;
-    height: 48px;
-    font-size: 18px;
-  }
-  main.sport-home .sport-short-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    margin: 8px 0 4px;
-  }
-  main.sport-home .sport-short-meta {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home > section.sport-teams {
-    padding: 48px 0 40px;
-  }
-  main.sport-home .sport-teams .inner {
-    padding: 0 20px;
-  }
-  main.sport-home .sport-teams .sport-teams-head {
-    margin-bottom: 20px;
-    padding-right: 120px;
-  }
-  main.sport-home .sport-teams .sport-teams-title {
-    margin: 0;
-  }
-  main.sport-home .sport-teams .sport-teams-desc {
-    display: none;
-  }
-  main.sport-home .sport-teams .sport-team-more {
-    position: absolute;
-    top: 4px;
-    right: 20px;
-    margin: 0;
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home .sport-teams .sport-team-swiper .swiper-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    transform: none !important;
-  }
-  main.sport-home .sport-teams .sport-team-slide {
-    width: 100% !important;
-    min-width: 0;
-    margin-right: 0 !important;
-  }
-  main.sport-home .sport-teams .sport-team-slide:nth-child(n+4) {
-    display: none;
-  }
-  main.sport-home .sport-teams .sport-team-card {
-    height: 64px;
-    padding: 0 16px 0 12px;
-    gap: 12px;
-  }
-  main.sport-home .sport-teams .sport-team-logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-  }
-  main.sport-home .sport-teams .sport-team-name {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home .sport-teams .sport-team-add {
-    width: 32px;
-    height: 32px;
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-  }
-  main.sport-home .sport-conferences > .inner {
-    width: calc(100% - 40px);
-  }
-  main.sport-home .sport-conference-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-  }
-  main.sport-home .sport-conference-card {
-    padding: 16px 12px;
-  }
-  main.sport-home .sport-conference-title {
-    margin-bottom: 8px;
-    gap: 10px;
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home .sport-conference-logo {
-    width: 24px;
-    height: 30px;
-  }
-  main.sport-home .sport-conference-badge {
-    width: 24px;
-    height: 28px;
-  }
-  main.sport-home .sport-conference-table {
-    min-width: 0;
-  }
-  main.sport-home .sport-conference-table .col-rank {
-    width: 9%;
-  }
-  main.sport-home .sport-conference-table .col-club {
-    width: 36%;
-  }
-  main.sport-home .sport-conference-table th,
-  main.sport-home .sport-conference-table td {
-    height: 28px;
-    padding: 0 2px;
-  }
-  main.sport-home .sport-conference-table thead th {
-    height: 32px;
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home .sport-conference-table tbody td,
-  main.sport-home .sport-conference-table tbody th {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home .sport-conference-club {
-    gap: 6px;
-  }
-  main.sport-home .sport-conference-club img {
-    width: 18px;
-    height: 18px;
-  }
-  main.sport-home .sport-conference-club span {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home .sport-replay-list {
-    display: flex;
-    grid-template-columns: none;
-    gap: 12px;
-  }
-  main.sport-home .sport-replay-list > li {
-    flex: 0 0 72%;
-    max-width: none;
-  }
-  main.sport-home .sport-replay-card {
-    padding: 12px;
-  }
-  main.sport-home .sport-replay-name {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home .sport-highlight-list {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-  }
-  main.sport-home .sport-highlight-list > li:nth-child(n+2) {
-    display: none;
-  }
-  main.sport-home .sport-highlight-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    margin: 12px 0 4px;
-  }
-  main.sport-home .sport-highlight-meta {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home .sport-series-slide {
-    width: 140px;
-    max-width: none;
-  }
-  main.sport-home .sport-series-card h4 {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home .sport-series-category {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home .sport-series-description {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home .sport-series-play {
-    width: 36px;
-    height: 36px;
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 1024px) {
-  main.sport-home.sport-home {
-    --sport-section-gap: 96px;
-    padding-bottom: 96px;
-  }
-}
-@media (max-width: 767px) {
-  main.sport-home.sport-home {
-    --sport-section-gap: 64px;
-    padding-bottom: 64px;
-  }
-  main.sport-home.sport-home .sport-section-head {
-    margin-bottom: 16px;
-  }
-}
-
-@media (max-width: 1024px) {
-  section.sport-hero .sport-hero-card {
-    left: 40px;
-    width: min(600px, 100% - 80px);
-    bottom: 32px;
-    padding: 24px;
-  }
-  section.sport-hero .sport-hero-title {
-    font-size: 28px;
-    line-height: 34px;
-  }
-}
-@media (max-width: 767px) {
-  section.sport-hero .sport-hero-card {
-    left: 20px;
-    width: calc(100% - 40px);
-    padding: 16px;
-    bottom: 32px;
-  }
-  section.sport-hero .sport-hero-label {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  section.sport-hero .sport-hero-sub {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  section.sport-hero .sport-hero-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
-  section.sport-hero .sport-hero-actions {
-    gap: 8px;
-    margin-top: 16px;
-  }
-  section.sport-hero .sport-btn {
-    height: 36px;
-    min-height: 36px;
-    padding: 0 16px;
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  section.sport-hero .sport-hero-bg {
-    background-size: cover;
-    background-position: center 40%;
-  }
-}
-@media (max-width: 1024px) {
-  .sport-hero .sport-hero-card {
-    left: 40px;
-  }
-  .sport-upcoming .inner,
-  .sport-shorts .inner,
-  .sport-promo .inner,
-  .sport-teams .inner,
-  .sport-league .inner,
-  .sport-replay .inner,
-  .sport-highlights .inner,
-  .sport-notify .inner {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-  .sport-upcoming .sport-match-list,
-  .sport-teams .sport-team-list,
-  .sport-league .sport-league-list,
-  .sport-highlights .sport-highlight-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .sport-replay .sport-replay-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .sport-notify .sport-notify-banner {
-    padding: 32px;
-  }
-}
-@media (max-width: 767px) {
-  .sport-hero .sport-hero-card {
-    left: 20px;
-    right: 20px;
-    bottom: 32px;
-    width: auto;
-    max-width: none;
-    padding: 20px;
-  }
-  .sport-hero .sport-hero-title {
-    font-size: 20px;
-  }
-  .sport-upcoming .inner,
-  .sport-shorts .inner,
-  .sport-promo .inner,
-  .sport-teams .inner,
-  .sport-league .inner,
-  .sport-replay .inner,
-  .sport-highlights .inner,
-  .sport-notify .inner {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .sport-upcoming .sport-match-list,
-  .sport-teams .sport-team-list,
-  .sport-league .sport-league-list,
-  .sport-highlights .sport-highlight-list {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .sport-replay .sport-replay-list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-  .sport-shorts .sport-short-slide {
-    width: 160px;
-  }
-  .sport-notify .sport-notify-banner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 24px;
-  }
-  .sport-notify .sport-notify-btn {
-    width: 100%;
-  }
-}
-@media (max-width: 1024px) {
-  main.sport-home.sport-detail-page {
-    padding-bottom: 160px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-layout {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-list {
-    height: auto;
-    min-height: 0;
-    max-height: none;
-    overflow: visible;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px 16px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-countdown {
-    aspect-ratio: 16/9;
-  }
-  main.sport-home.sport-detail-page .sport-detail-countdown-unit {
-    min-width: 80px;
-  }
-}
-@media (max-width: 767px) {
-  main.sport-home.sport-detail-page {
-    padding-bottom: 96px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-stage {
-    border-radius: 8px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-info {
-    padding: 16px;
-    gap: 6px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-info-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    gap: 8px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-info-label {
-    padding-right: 8px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-info-desc {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-detail-page .sport-detail-countdown {
-    aspect-ratio: 4/3;
-  }
-  main.sport-home.sport-detail-page .sport-detail-countdown-unit {
-    min-width: 52px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-countdown-unit strong {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 400;
-  }
-  main.sport-home.sport-detail-page .sport-detail-countdown-unit small {
-    font-size: 9px;
-    letter-spacing: 0.08em;
-  }
-  main.sport-home.sport-detail-page .sport-detail-countdown-colon {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    margin-top: 0.3em;
-  }
-  main.sport-home.sport-detail-page .sport-detail-list {
-    grid-template-columns: 1fr;
-  }
-  main.sport-home.sport-detail-page .sport-detail-thumb {
-    flex-basis: 112px;
-  }
-  main.sport-home.sport-detail-page .sport-detail-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-}
-
-@media (max-width: 1024px) {
-  main.sport-home.sport-standings-page {
-    padding-bottom: 160px;
-  }
-  main.sport-home.sport-standings-page .sport-standings .inner {
-    width: calc(100% - 80px);
-    gap: 96px;
-  }
-  main.sport-home.sport-standings-page .sport-standings-head {
-    margin-bottom: -40px;
-  }
-  main.sport-home.sport-standings-page .sport-standings-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-standings-page .sport-player-list {
-    gap: 16px;
-  }
-  main.sport-home.sport-standings-page .sport-player-card {
-    padding: 20px 20px 24px;
-  }
-  main.sport-home.sport-standings-page .sport-player-photo {
-    width: 140px;
-    height: 140px;
-  }
-  main.sport-home.sport-standings-page .sport-player-name {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-}
-@media (max-width: 767px) {
-  main.sport-home.sport-standings-page {
-    padding-bottom: 96px;
-  }
-  main.sport-home.sport-standings-page .sport-standings .inner {
-    width: calc(100% - 40px);
-    gap: 64px;
-  }
-  main.sport-home.sport-standings-page .sport-standings-head {
-    gap: 6px;
-    margin-bottom: -24px;
-  }
-  main.sport-home.sport-standings-page .sport-standings-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-standings-page .sport-standings-sub {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-standings-page .sport-standings-block-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    margin-bottom: 16px;
-  }
-  main.sport-home.sport-standings-page .sport-standings-tabs {
-    gap: 8px;
-    margin-bottom: 16px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  main.sport-home.sport-standings-page .sport-standings-tab {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    padding: 6px 10px 10px;
+  .footer.footer.footer .inner {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+    gap: 2.25rem;
+  }
+  .footer.footer.footer .footer-main-menu {
+    order: 1;
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+  }
+  .footer.footer.footer .footer-main-menu a {
     white-space: nowrap;
   }
-  main.sport-home.sport-standings-page .sport-standings-table {
-    min-width: 0;
+  .footer.footer.footer .footer-logo {
+    order: 2;
   }
-  main.sport-home.sport-standings-page .sport-standings-table .col-rank {
-    width: 36px;
+  .footer.footer.footer .footer-logo img {
+    height: 1.1875rem;
   }
-  main.sport-home.sport-standings-page .sport-standings-table .col-stat {
-    width: 34px;
+  .footer.footer.footer .footer-policy-menu {
+    order: 3;
+    gap: 0.25rem 0.75rem;
   }
-  main.sport-home.sport-standings-page .sport-standings-table th,
-  main.sport-home.sport-standings-page .sport-standings-table td {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
-    letter-spacing: 0;
-    font-family: inherit;
-    padding: 0 4px;
+  .footer.footer.footer .footer-copyright {
+    order: 4;
+    margin-top: -0.75rem;
   }
-  main.sport-home.sport-standings-page .sport-standings-table thead th:first-child,
-  main.sport-home.sport-standings-page .sport-standings-table tbody tr > :first-child {
-    padding-left: 10px;
+  main.member-home.member-home .hero-swiper-container.movie-home-hero {
+    height: 33.75rem;
+    min-height: 0;
   }
-  main.sport-home.sport-standings-page .sport-standings-table tbody td,
-  main.sport-home.sport-standings-page .sport-standings-table tbody th {
-    height: 48px;
+  main.member-home.member-home .hero-swiper-container .hero-slide-item .hero-info {
+    top: auto;
+    bottom: 3.25rem;
+    left: 10%;
+    right: 10%;
+    transform: none;
   }
-  main.sport-home.sport-standings-page .sport-standings-club {
-    gap: 8px;
-  }
-  main.sport-home.sport-standings-page .sport-standings-club img {
-    width: 20px;
-    height: 20px;
-  }
-  main.sport-home.sport-standings-page .sport-standings-club span {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-standings-page .sport-player-list {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  main.sport-home.sport-standings-page .sport-player-card {
-    display: grid;
-    grid-template-columns: 72px 1fr;
-    grid-template-rows: auto auto;
-    column-gap: 16px;
-    align-items: center;
-    padding: 12px 16px;
-  }
-  main.sport-home.sport-standings-page .sport-player-photo {
-    grid-row: 1/span 2;
-    width: 72px;
-    height: 72px;
-    margin: 0;
-  }
-  main.sport-home.sport-standings-page .sport-player-photo--empty {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-standings-page .sport-player-name {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    align-self: end;
-  }
-  main.sport-home.sport-standings-page .sport-player-value {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    align-self: start;
-  }
-  main.sport-home.sport-standings-page .sport-detail-back {
-    margin-top: -40px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .sport-shorts.sport-shortform .sport-sf-slide {
-    width: 200px;
-  }
-}
-@media (max-width: 767px) {
-  .sport-shorts.sport-shortform .sport-sf-slide {
-    width: 160px;
-  }
-  .sport-shorts.sport-shortform .sport-sf-top {
-    top: 8px;
-    left: 8px;
-    right: 4px;
-  }
-  .sport-shorts.sport-shortform .sport-sf-play {
-    width: 36px;
-    height: 36px;
-    font-size: 11px;
-  }
-  .sport-shorts.sport-shortform .sport-sf-info {
-    left: 10px;
-    right: 10px;
-    bottom: 14px;
-  }
-  .sport-shorts.sport-shortform .sport-sf-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-}
-
-@media (max-width: 1024px) {
-  section.sport-hero.sport-hero--team .sport-team-hero-body {
-    padding: 0 40px;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-badge {
-    width: 104px;
-    height: 120px;
-    margin: 0 0 24px 16px;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-name {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 48px;
-    line-height: 56px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 400;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-record {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    margin-top: 14px;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-chips {
-    left: 40px;
-    bottom: 28px;
-    max-width: calc(100% - 80px);
-  }
-}
-@media (max-width: 767px) {
-  section.sport-hero.sport-hero--team .sport-team-hero-body {
-    padding: 0 20px;
-    margin-top: -24px;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-badge {
-    width: 80px;
-    height: 92px;
-    margin: 0 0 16px 8px;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-name {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 34px;
-    line-height: 41px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 400;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-record {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    margin: 10px 0 14px;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-follow {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    height: 40px;
-    padding: 0 24px;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-chips {
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    max-width: none;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-chip {
-    height: 36px;
-    padding: 0 4px;
-  }
-  section.sport-hero.sport-hero--team .sport-team-hero-chip span {
+  main.member-home.member-home .hero-swiper-container .hero-slide-item .hero-info .hero-chips,
+  main.member-home.member-home .hero-swiper-container .hero-slide-item .hero-info .hero-overview {
     display: none;
   }
-}
-
-@media (max-width: 1024px) {
-  main.sport-home.sport-live-page {
-    padding-bottom: 120px;
-  }
-  main.sport-home.sport-live-page .sport-live-tabs-section > .inner,
-  main.sport-home.sport-live-page .sport-live-back-wrap {
-    width: calc(100% - 80px);
-  }
-  main.sport-home.sport-live-page .sport-live-tab {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    height: 56px;
-  }
-  main.sport-home.sport-live-page .sport-live-panel {
-    padding-top: 40px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head {
-    margin-bottom: 24px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head img {
-    width: 56px;
-    height: 56px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head h3,
-  main.sport-home.sport-live-page .sport-lineup-head p {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-pitch-photo {
-    width: 72px;
-    height: 72px;
-  }
-  main.sport-home.sport-live-page .sport-pitch-photo.is-empty {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-pitch-label {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-subs-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    margin-top: 72px;
-  }
-  main.sport-home.sport-live-page .sport-subs {
-    padding: 56px 0 0;
-    gap: 24px;
-  }
-  main.sport-home.sport-live-page .sport-subs-team {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    margin-bottom: 40px;
-    padding-left: 0;
-  }
-  main.sport-home.sport-live-page .sport-subs-team img {
-    width: 64px;
-    height: 64px;
-  }
-  main.sport-home.sport-live-page .sport-subs-col ul {
-    gap: 28px;
-  }
-  main.sport-home.sport-live-page .sport-subs-col li {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    gap: 12px;
-  }
-  main.sport-home.sport-live-page .sport-subs-photo {
-    width: 56px;
-    height: 56px;
-    margin-right: 4px;
-  }
-  main.sport-home.sport-live-page .sport-subs-photo.is-empty {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-}
-@media (max-width: 767px) {
-  main.sport-home.sport-live-page {
-    padding-bottom: 80px;
-  }
-  main.sport-home.sport-live-page .sport-live-tabs-section > .inner,
-  main.sport-home.sport-live-page .sport-live-back-wrap {
-    width: calc(100% - 40px);
-  }
-  main.sport-home.sport-live-page .sport-detail-info {
-    padding: 16px;
-  }
-  main.sport-home.sport-live-page .sport-live-info-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    gap: 10px;
-  }
-  main.sport-home.sport-live-page .sport-live-tab {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    height: 48px;
-  }
-  main.sport-home.sport-live-page .sport-live-panel {
-    padding-top: 28px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-team + .sport-lineup-team {
-    margin-top: 48px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head {
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head img {
-    width: 36px;
-    height: 36px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head h3,
-  main.sport-home.sport-live-page .sport-lineup-head p {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head p span {
-    margin-right: 6px;
-  }
-  main.sport-home.sport-live-page .sport-pitch {
-    aspect-ratio: 3/4;
-    border-radius: 20px;
-  }
-  main.sport-home.sport-live-page .sport-pitch-photo {
-    width: 40px;
-    height: 40px;
-    border-width: 2px;
-  }
-  main.sport-home.sport-live-page .sport-pitch-photo.is-empty {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-pitch-players li {
-    gap: 4px;
-  }
-  main.sport-home.sport-live-page .sport-pitch-label {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-size: 10px;
-  }
-  main.sport-home.sport-live-page .sport-subs-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    margin-top: 48px;
-    padding-bottom: 16px;
-  }
-  main.sport-home.sport-live-page .sport-subs {
-    padding-top: 28px;
-    gap: 16px;
-  }
-  main.sport-home.sport-live-page .sport-subs-team {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-  main.sport-home.sport-live-page .sport-subs-team img {
-    width: 32px;
-    height: 32px;
-  }
-  main.sport-home.sport-live-page .sport-subs-col ul {
-    gap: 16px;
-  }
-  main.sport-home.sport-live-page .sport-subs-col li {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    gap: 6px;
-  }
-  main.sport-home.sport-live-page .sport-subs-photo {
-    width: 36px;
-    height: 36px;
-    border-width: 2px;
-    margin-right: 2px;
-  }
-  main.sport-home.sport-live-page .sport-subs-photo.is-empty {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-commentary li {
-    gap: 10px;
-    padding: 14px 4px;
-  }
-  main.sport-home.sport-live-page .sport-commentary p {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-commentary-min {
-    flex-basis: 36px;
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-chat-list {
-    padding: 16px;
-  }
-}
-@media (max-width: 1024px) {
-  main.sport-home.sport-live-page .sport-lineup-head .sport-lineup-badge {
-    width: 56px;
-    height: 56px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head.is-button {
-    margin-top: 24px;
-  }
-  main.sport-home.sport-live-page .sport-subs-team img {
-    width: 64px;
-    height: 64px;
-  }
-}
-@media (max-width: 767px) {
-  main.sport-home.sport-live-page .sport-lineup-head .sport-lineup-badge {
-    width: 36px;
-    height: 36px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head.is-button {
-    margin-top: 16px;
-    padding: 6px 8px;
-  }
-  main.sport-home.sport-live-page .sport-subs-team img {
-    width: 32px;
-    height: 32px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  main.sport-home.sport-live-page {
-    padding-bottom: 120px;
-  }
-  main.sport-home.sport-live-page .sport-live-stage > .inner {
-    width: calc(100% - 80px);
-  }
-  main.sport-home.sport-live-page .sport-detail-layout {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  main.sport-home.sport-live-page .sport-detail-list {
-    height: auto;
-    min-height: 0;
-    overflow: visible;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px 16px;
-  }
-  main.sport-home.sport-live-page .sport-detail-thumb {
-    flex-basis: 128px;
-  }
-  main.sport-home.sport-live-page .sport-detail-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-detail-meta {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-detail-info {
-    gap: 4px;
-    padding: 16px 24px 24px;
-  }
-  main.sport-home.sport-live-page .sport-live-info-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    gap: 12px;
-  }
-  main.sport-home.sport-live-page .sport-live-info-sub {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-live-info-note {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-live-tabs-section > .inner,
-  main.sport-home.sport-live-page .sport-live-back-wrap {
-    width: calc(100% - 80px);
-  }
-  main.sport-home.sport-live-page .sport-live-tab {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    height: auto;
-    padding: 16px 0;
-  }
-  main.sport-home.sport-live-page .sport-live-panel {
-    padding-top: 36px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head {
-    gap: 12px;
-    margin: 0 0 36px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head .sport-lineup-badge {
-    width: 56px;
-    height: 56px;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head h3 {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head p {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head p span {
-    margin-right: 8px;
-    font-weight: 400;
-    color: #C8C8C8;
-  }
-  main.sport-home.sport-live-page .sport-lineup-head.is-button {
-    margin: 36px 0 0;
-    padding: 0 8px;
-  }
-  main.sport-home.sport-live-page .sport-pitch {
-    border-radius: 20px;
-  }
-  main.sport-home.sport-live-page .sport-pitch-players li {
-    gap: 4px;
-  }
-  main.sport-home.sport-live-page .sport-pitch-photo {
-    width: 72px;
-    height: 72px;
-    border-width: 2px;
-  }
-  main.sport-home.sport-live-page .sport-pitch-photo.is-empty {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-pitch-label {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-subs-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    margin-top: 72px;
-    padding-bottom: 24px;
-  }
-  main.sport-home.sport-live-page .sport-subs {
-    gap: 24px;
-    padding: 48px 4% 0;
-  }
-  main.sport-home.sport-live-page .sport-subs-team {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    gap: 12px;
-    margin-bottom: 36px;
-    padding-left: 0;
-  }
-  main.sport-home.sport-live-page .sport-subs-team img {
-    width: 64px;
-    height: 64px;
-  }
-  main.sport-home.sport-live-page .sport-subs-col ul {
-    gap: 24px;
-  }
-  main.sport-home.sport-live-page .sport-subs-col li {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-    gap: 12px;
-  }
-  main.sport-home.sport-live-page .sport-subs-photo {
-    width: 64px;
-    height: 64px;
-    border-width: 2px;
-    margin-right: 4px;
-  }
-  main.sport-home.sport-live-page .sport-subs-photo.is-empty {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-live-back-wrap {
-    margin-top: 56px;
-  }
-}
-@media (max-width: 1024px) {
-  main.sport-home.sport-live-page .sport-scoreboard {
-    gap: 24px;
-    padding-bottom: 36px;
-  }
-  main.sport-home.sport-live-page .sport-scoreboard-badge {
-    width: 100px;
-    height: 100px;
-  }
-  main.sport-home.sport-live-page .sport-scoreboard-score {
-    gap: 12px;
-  }
-  main.sport-home.sport-live-page .sport-scoreboard-score b {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 400;
-    width: 88px;
-    height: 88px;
-  }
-  main.sport-home.sport-live-page .sport-scoreboard-score span {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-scoreboard-colon {
-    margin-top: 31px;
-  }
-  main.sport-home.sport-live-page .sport-timeline {
-    padding: 36px 0;
-  }
-  main.sport-home.sport-live-page .sport-tl-item {
-    grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
-    column-gap: 12px;
-    min-height: 52px;
-  }
-  main.sport-home.sport-live-page .sport-tl-min {
-    width: 28px;
-    height: 28px;
-    font-size: 10px;
-  }
-  main.sport-home.sport-live-page .sport-tl-sub,
-  main.sport-home.sport-live-page .sport-tl-card {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-tl-sub img {
-    width: 12px;
-    height: 12px;
-  }
-  main.sport-home.sport-live-page .sport-tl-goal strong {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-tl-goal img {
-    width: 14px;
-    height: 14px;
-  }
-  main.sport-home.sport-live-page .sport-tl-half {
-    gap: 36px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-  main.sport-home.sport-live-page .sport-tl-half b {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-tl-half span {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-stats-head {
-    margin-bottom: 48px;
-  }
-  main.sport-home.sport-live-page .sport-stats-list {
-    gap: 16px;
-    padding-top: 36px;
-  }
-  main.sport-home.sport-live-page .sport-stats-list li {
-    column-gap: 36px;
-  }
-  main.sport-home.sport-live-page .sport-stats-label {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-stats-bar {
-    height: 8px;
-  }
-  main.sport-home.sport-live-page .sport-chat-head h3 {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-chat-head p {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-chat-filters {
-    margin: 24px 0 36px;
-  }
-  main.sport-home.sport-live-page .sport-chat-filter {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-    height: 40px;
-    padding: 0 16px;
-  }
-  main.sport-home.sport-live-page .sport-chat-list {
-    padding: 0 16px;
-  }
-  main.sport-home.sport-live-page .sport-chat-list li {
-    grid-template-columns: 52px minmax(0, 1fr) auto;
-    gap: 16px;
-  }
-  main.sport-home.sport-live-page .sport-chat-avatar {
-    width: 52px;
-    height: 52px;
-  }
-  main.sport-home.sport-live-page .sport-chat-form {
-    height: 56px;
-    padding-left: 24px;
-  }
-  main.sport-home.sport-live-page .sport-chat-form button {
-    width: 44px;
-    height: 44px;
-  }
-}
-@media (max-width: 767px) {
-  main.sport-home.sport-live-page .sport-scoreboard {
-    gap: 12px;
-  }
-  main.sport-home.sport-live-page .sport-scoreboard-badge {
-    width: 64px;
-    height: 64px;
-  }
-  main.sport-home.sport-live-page .sport-scoreboard-score b {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    letter-spacing: 0;
-    font-family: inherit;
-    width: 56px;
-    height: 56px;
-  }
-  main.sport-home.sport-live-page .sport-scoreboard-colon {
-    margin-top: 15px;
-  }
-  main.sport-home.sport-live-page .sport-tl-item {
-    column-gap: 8px;
-  }
-  main.sport-home.sport-live-page .sport-tl-half {
-    gap: 24px;
-  }
-  main.sport-home.sport-live-page .sport-tl-half b {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: inherit;
-    font-weight: 700;
-  }
-  main.sport-home.sport-live-page .sport-tl-half span {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: 0;
-    font-family: inherit;
-  }
-  main.sport-home.sport-live-page .sport-stats-list li {
-    column-gap: 16px;
-  }
-  main.sport-home.sport-live-page .sport-chat-list {
+  main.member-home.member-home .hero-swiper-container .hero-slide-item .hero-info .hero-title {
+    margin-bottom: 1.5rem;
+  }
+  main.member-home.member-home .hero-swiper-container .hero-slide-item .hero-info .hero-actions {
+    gap: 0.375rem;
+  }
+  main.member-home.member-home .hero-swiper-container .hero-slide-item .hero-info .hero-play {
+    min-width: 0;
+    width: 4.375rem;
+    height: 1.875rem;
     padding: 0;
   }
-  main.sport-home.sport-live-page .sport-chat-list li {
-    grid-template-columns: 44px minmax(0, 1fr) auto;
-    gap: 12px;
+  main.member-home.member-home .hero-swiper-container .hero-slide-item .hero-info .hero-wish {
+    width: 1.875rem;
+    height: 1.875rem;
   }
-  main.sport-home.sport-live-page .sport-chat-avatar {
-    width: 44px;
-    height: 44px;
+  main.member-home.member-home .member-section,
+  main.member-home.member-home section.top10-section,
+  main.member-home.member-home .subscribe-cta {
+    padding: 3.75rem 0 0;
   }
-  main.sport-home.sport-live-page .sport-chat-filter {
-    height: 36px;
-    padding: 0 12px;
+  main.member-home.member-home .member-section .member-head {
+    margin: 0 0 1rem;
   }
-  main.sport-home.sport-live-page .sport-chat-form {
-    height: 52px;
-    padding-left: 16px;
+  main.member-home.member-home .member-desc,
+  main.member-home.member-home section.top10-section .top10-desc {
+    display: none;
   }
-  main.sport-home.sport-live-page .sport-chat-form button {
-    width: 40px;
-    height: 40px;
+  main.member-home.member-home .member-section.member-wishlist {
+    padding: 2.25rem 0 2rem;
+  }
+  main.member-home.member-home .member-section:has(+ .member-wishlist) {
+    padding-bottom: 3.75rem;
+  }
+  main.member-home.member-home .rail-continue,
+  main.member-home.member-home .rail-mood {
+    --rail-col: calc((100% - 12px) / 2);
+  }
+  main.member-home.member-home .member-cw-card .member-thumb,
+  main.member-home.member-home .member-ai-card .member-thumb {
+    margin-bottom: 0.5rem;
+  }
+  main.member-home.member-home .member-cw-card .member-card-title,
+  main.member-home.member-home .member-cw-card .member-card-link,
+  main.member-home.member-home .member-ai-card .member-card-title,
+  main.member-home.member-home .member-ai-card .member-card-link {
+    padding: 0;
+  }
+  main.member-home.member-home .member-mood .member-thumb.portrait {
+    aspect-ratio: 168/104;
+  }
+  main.member-home.member-home .member-mood .member-ai-tagline {
+    left: 0.75rem;
+    bottom: 0.75rem;
+  }
+  main.member-home.member-home .member-wl-list {
+    gap: 0.375rem;
+  }
+  main.member-home.member-home .member-wl-card {
+    padding: 0.625rem 1rem;
+  }
+  main.member-home.member-home section.top10-section .top10-slide {
+    width: 171px;
+  }
+  main.member-home.member-home section.top10-section .top10-slide--wide {
+    width: 217px;
+  }
+  main.member-home.member-home section.top10-section .top10-card {
+    padding-left: 3rem;
+  }
+  main.member-home.member-home section.top10-section .top10-slide--wide .top10-card {
+    padding-left: 5.84375rem;
+  }
+  main.member-home.member-home section.top10-section .top10-poster {
+    aspect-ratio: 123/201;
+  }
+  main.member-home.member-home .rail-recommend {
+    --rail-col: 130px;
+  }
+  main.member-home.member-home .member-rc-card {
+    aspect-ratio: 130/204;
+  }
+  main.member-home.member-home .member-rc-info {
+    display: none;
+  }
+  main.member-home.member-home .member-rc-actions {
+    left: 0;
+    right: 0;
+    bottom: 0.75rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.375rem;
+  }
+  main.member-home.member-home .member-rc-play,
+  main.member-home.member-home .member-rc-rate {
+    height: 1.5625rem;
+  }
+  main.member-home.member-home .member-rc-play {
+    width: 25px;
+    padding: 0;
+    font-size: 0;
+  }
+  main.member-home.member-home .member-rc-play img {
+    width: 8px;
+    height: 0.6875rem;
+  }
+  main.member-home.member-home .member-rc-rate,
+  main.member-home.member-home .member-rc-rate:hover {
+    padding: 0 0.625rem;
+    border: none;
+  }
+  main.member-home.member-home .member-mood .member-chips {
+    margin-bottom: 0.75rem;
+  }
+  main.member-home.member-home .member-mood .member-chips .member-chip.member-chip {
+    border: none;
+  }
+  main.member-home.member-home .member-mood .member-notice.member-notice {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 3.125rem;
+    margin: 0 0 0.75rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+  }
+  main.member-home.member-home .member-mood .member-notice.member-notice .member-btn {
+    align-self: center;
+    height: 1.875rem;
+    padding: 0 1rem;
+    border: none;
+  }
+  main.member-home.member-home .rail-release.rail-showcase.rail-showcase {
+    --rail-col: 130px;
+  }
+  main.member-home.member-home .member-sc-slot--static .member-sc-card {
+    aspect-ratio: 130/204;
+  }
+  main.member-home.member-home .member-sc-poster-actions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.75rem;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 0.375rem;
+  }
+  main.member-home.member-home .member-sc-poster-play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 1.5625rem;
+    border-radius: 50%;
+    background-color: #5865F2;
+  }
+  main.member-home.member-home .member-sc-poster-play img {
+    display: block;
+    width: 8px;
+    height: 0.6875rem;
+  }
+  main.member-home.member-home .member-sc-poster-actions .member-sc-heart {
+    width: 25px;
+    height: 1.5625rem;
+  }
+  main.member-home.member-home .member-sc-poster-actions .member-sc-heart .member-sc-heart-icon {
+    width: 14px;
+    height: 0.875rem;
+  }
+  main.member-home.member-home .member-sc-poster-actions .member-sc-month {
+    position: static;
+    height: 1.5625rem;
+    min-width: 0;
+    padding: 0 0.5rem;
+    gap: 0.25rem;
+  }
+  main.member-home.member-home .subscribe-cta.subscribe-cta--tv .inner {
+    width: 100% !important;
+  }
+  main.member-home.member-home .subscribe-cta.subscribe-cta--tv .subscribe-banner {
+    position: relative;
+    height: 22.3125rem;
+    padding: 0;
+    border-radius: 0;
+  }
+  main.member-home.member-home .subscribe-cta.subscribe-cta--tv .subscribe-content {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 5%;
+    transform: translateY(-50%);
+    padding: 0;
+  }
+  main.member-home.member-home .subscribe-cta.subscribe-cta--tv .subscribe-logo {
+    width: 71px;
+    height: 2.375rem;
+  }
+  main.member-home.member-home .subscribe-cta.subscribe-cta--tv .subscribe-title {
+    margin-top: 1rem;
+  }
+  main.member-home.member-home .subscribe-cta.subscribe-cta--tv .subscribe-btn {
+    width: 200px;
+    height: 2.5rem;
+    margin-top: 1.5rem;
+  }
+  main.member-home.member-home .subscribe-cta.subscribe-cta--tv .subscribe-note {
+    width: 200px;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  main.member-home.member-home .subscribe-cta.subscribe-cta--tv .subscribe-posters {
+    display: none;
+  }
+  section.device-guide.device-guide--watch.device-guide--watch {
+    --icon-scale: 0.5;
+    height: auto;
+    padding: 6rem 0;
+  }
+  section.device-guide.device-guide--watch.device-guide--watch .watch-logo-main {
+    height: 2.8125rem;
+  }
+  section.device-guide.device-guide--watch.device-guide--watch .watch-title {
+    margin-top: 1.5rem;
+  }
+  section.device-guide.device-guide--watch.device-guide--watch .watch-marquee {
+    margin-top: 3rem;
+  }
+  section.device-guide.device-guide--watch.device-guide--watch .watch-mobile {
+    margin-top: 2.5rem;
+  }
+  section.device-guide.device-guide--watch.device-guide--watch .watch-subtitle {
+    margin-bottom: 0.75rem;
+  }
+  section.device-guide.device-guide--watch.device-guide--watch .watch-devices {
+    max-width: 280px;
+    gap: 1.5rem;
+    margin: 2.25rem auto 0;
   }
 }
-@media (max-width: 1024px) {
-  main.sport-home.sport-live-page .sport-commentary .sport-timeline > .sport-tl-item {
-    column-gap: 12px;
+@media (min-width: 768px) {
+  .member-sc-poster-actions {
+    display: none;
   }
-  main.sport-home.sport-live-page .sport-commentary .sport-timeline > .sport-tl-half {
-    gap: 36px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+}
+@media (max-width: 767px) {
+  main.member-home.member-browse .member-browse-grid.member-browse-grid--recommend,
+  main.member-home.member-browse .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem 0.5rem;
   }
-  main.sport-home.sport-live-page .sport-stats .sport-stats-list {
-    gap: 16px;
-    padding-top: 36px;
+  main.member-home.member-browse .member-browse-grid--recommend .member-rc-rate {
+    padding: 0 0.375rem;
   }
-  main.sport-home.sport-live-page .sport-chat-list .sport-chat-body b {
+  main.member-home.member-browse .member-browse-grid .member-sc-poster-actions .member-sc-month {
+    width: 25px;
+    min-width: 0;
+    height: 1.5625rem;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 0;
+  }
+}
+@media (max-width: 767px) {
+  .ai-banner {
+    padding: 2.5rem 0;
+  }
+  .ai-banner .ai-banner-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ai-banner .ai-banner-box {
+    width: 100%;
+  }
+}
+@media (max-width: 1194px) {
+  header .inner nav .gnb-center-toggle button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+}
+@media (min-width: 768px) and (max-width: 1194px) {
+  header .inner nav .gnb-center-toggle button {
     font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: inherit;
     font-weight: 700;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+    width: 7.5rem;
+    height: 2rem;
   }
 }
 @media (max-width: 767px) {
-  main.sport-home.sport-live-page .sport-commentary .sport-timeline > .sport-tl-item {
-    column-gap: 8px;
-  }
-  main.sport-home.sport-live-page .sport-commentary .sport-timeline > .sport-tl-half {
-    gap: 24px;
-  }
-}
-@media (max-width: 1024px) {
-  main.sport-home.sport-live-page .sport-live-tabs {
-    margin-bottom: 64px;
-  }
-}
-@media (max-width: 767px) {
-  main.sport-home.sport-live-page .sport-live-tabs {
-    margin-bottom: 48px;
-  }
-  main.sport-home.sport-live-page .sport-chat-siren {
-    width: 24px;
-    height: 24px;
-  }
-  main.sport-home.sport-live-page .sport-chat-siren img {
-    width: 16px;
-    height: 16px;
-  }
-}
-
-@media (max-width: 767px) {
-  main.sport-home .sport-detail-thumb .sport-detail-play {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-@media (max-width: 1024px) {
-  main.sport-home .sport-replay .sport-replay-slide {
-    width: 300px;
-    max-width: 80%;
-  }
-}
-@media (max-width: 767px) {
-  main.sport-home .sport-replay .sport-replay-slide {
-    width: 72%;
-    max-width: none;
-  }
-  main.sport-home .sport-replay .swiper-button-next,
-  main.sport-home .sport-replay .swiper-button-prev {
-    display: none;
-  }
-}
-
-@media (max-width: 1024px) {
-  main.sport-home .sport-hl-slide {
-    width: calc((100% - 48px) / 2.3);
-  }
-  main.sport-home .sport-sc-slide {
-    width: calc((100% - 72px) / 3.3);
-  }
-}
-@media (max-width: 767px) {
-  main.sport-home .sport-hl-slide {
-    width: 82%;
-  }
-  main.sport-home .sport-sc-slide {
-    width: 44%;
-  }
-  main.sport-home .sport-hl-body {
-    padding: 24px 16px 12px;
-  }
-  main.sport-home .sport-sc-body {
-    padding: 12px;
-  }
-  main.sport-home .sport-sc-title {
+  header .inner nav .gnb-center-toggle button {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
-    font-family: inherit;
-    margin-bottom: 4px;
-  }
-  main.sport-home .sport-sc-desc {
-    display: none;
-  }
-  main.sport-home .sport-highlights .swiper-button-next,
-  main.sport-home .sport-highlights .swiper-button-prev,
-  main.sport-home .sport-series .swiper-button-next,
-  main.sport-home .sport-series .swiper-button-prev {
-    display: none;
-  }
-}
-@media (max-width: 1024px) {
-  main.sport-home .sport-lv-slide {
-    width: calc((100% - 24px) / 1.6);
+    width: 5rem;
+    height: 1.625rem;
   }
 }
 @media (max-width: 767px) {
-  main.sport-home .sport-lv-slide {
-    width: 86%;
+  main:not(.member-home) .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info {
+    top: auto;
+    bottom: 3.25rem;
+    left: 10%;
+    right: 10%;
+    transform: none;
   }
-  main.sport-home .sport-live .swiper-button-next,
-  main.sport-home .sport-live .swiper-button-prev {
-    display: none;
+  main:not(.member-home) .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-title {
+    margin-bottom: 1.5rem;
   }
-}
-
-@media (max-width: 1024px) {
-  .sport-upcoming .sport-up-slide {
-    width: calc((100% - 32px) / 2.5);
+  main:not(.member-home) .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-actions {
+    gap: 0.375rem;
   }
-}
-@media (max-width: 767px) {
-  .sport-upcoming .sport-up-slide {
-    width: 82%;
+  main:not(.member-home) .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-play {
+    min-width: 0;
+    width: 4.375rem;
+    height: 1.875rem;
+    padding: 0;
   }
-  .sport-upcoming .sport-up-logo {
-    height: 16px;
-  }
-  .sport-upcoming .sport-up-swiper .swiper-button-next,
-  .sport-upcoming .sport-up-swiper .swiper-button-prev {
-    display: none;
+  main:not(.member-home) .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-wish {
+    width: 1.875rem;
+    height: 1.875rem;
   }
 }

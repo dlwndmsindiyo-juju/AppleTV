@@ -109,18 +109,8 @@ const useKrRating = (id) => {
   return state.id === id ? ratingLabel(state.value) : "";
 };
 
-// 찜 하트 (비어 있으면 테두리 · 담기면 채움)
-const HeartIcon = ({ filled }) => (
-  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-    <path
-      d="M12 20.3l-1.3-1.2C6 14.9 3 12.2 3 8.9 3 6.2 5.1 4.2 7.7 4.2c1.6 0 3.1.7 4.3 1.9 1.2-1.2 2.7-1.9 4.3-1.9 2.6 0 4.7 2 4.7 4.7 0 3.3-3 6-7.7 10.2L12 20.3z"
-      fill={filled ? "currentColor" : "none"}
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+// 찜 하트 — [수정] 비어 있으면 테두리(heart-icon.svg) · 담기면 채운 하트(active-heart.svg) · App.scss (.hero-wish-icon)
+const HeartIcon = ({ filled }) => <span className={`hero-wish-icon${filled ? " is-on" : ""}`} aria-hidden="true" />;
 
 // YouTube IFrame API 불러오기는 공용 파일 (components/common/youtubeApi.js) — 영상이 끝났는지 알기 위해 사용
 
