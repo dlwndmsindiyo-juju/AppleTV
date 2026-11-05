@@ -534,7 +534,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   .account-nav {
     z-index: 10;
     margin: 0 (-$space-lg);
-    padding: $space-md $space-lg;
+    padding: $space-sm $space-lg;
     background-color: $light-color-100;
     border-bottom: 0.0625rem solid $light-color-400; // App.scss $account-line 과 같은 색
     overflow-x: auto;
@@ -547,13 +547,23 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
   .account-nav-list {
     flex-direction: row;
-    gap: $space-xl;
     width: max-content;
   }
 
+  // [수정] 가로 메뉴: 행 대신 작은 알약 (보고 있는 섹션만 연회색 배경 · 세로 막대는 숨김)
+  .account-nav-list {
+    gap: $space-xs;
+  }
+
   .account-nav-link {
-    @include heading-h4;
+    @include heading-h5-b;
+    width: auto;
+    padding: $space-sm $space-md;
     white-space: nowrap;
+
+    &::before {
+      display: none;
+    }
 
     &.is-active {
       @include heading-h4-b;
@@ -3144,6 +3154,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 // [추가] 자동 재생 안내 (AutoNext.jsx) — 폰: 썸네일 숨기고 화면 아래 가득
 @media (max-width: $breakpoint-mobile) {
+
   .auto-next,
   .auto-next--inline {
     right: $space-sm;
@@ -3210,7 +3221,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 // [추가] 핵심 혜택 (ValueProps.jsx) — 휴대폰: 1열이라 칸 사이 구분선을 가로선으로 (App.scss 의 세로 구분선 대신)
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
-  section.value-props.value-props .value-prop-item + .value-prop-item::before {
+  section.value-props.value-props .value-prop-item+.value-prop-item::before {
     top: -0.625rem; // 칸 사이 간격(20)의 가운데
     bottom: auto;
     left: 25%;
@@ -3222,6 +3233,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 // [추가] 휴대폰 신규출시 카드 [♡ 찜]: 찜한 상태는 빨간 하트 대신 흰색 채운 하트 (public/icons/active-heart.svg)
 @media (max-width: $breakpoint-mobile) {
+
   main.member-home .member-nr-card.member-nr-card .member-nr-quick-heart.is-on,
   section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-heart.is-on {
     color: $light-color-0;

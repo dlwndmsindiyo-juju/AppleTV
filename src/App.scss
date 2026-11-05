@@ -8,8 +8,10 @@ $wish-poster: 160px;
 $mobile-edge: 1.25rem;
 $auth-light-line: $light-color-400; // 입력 칸 · 플랜 카드 테두리
 $auth-light-sub: $neutral-color-600; // 라벨 · 안내 문구 (밝은 배경 위 가독성)
-$account-width: 840px; // 시안 본문 폭
+$account-width: 1440px; // [수정] 계정 설정 이너 최대 폭 (PC · 다른 화면 이너보다 좁게)
 $account-side: 252px; // 왼쪽 섹션 이름 칸
+$account-inner-pc: 1440px; // [추가] 계정 설정 PC 이너 최대 폭 (다른 화면의 90% 이너보다 좁게)
+$account-inner-max: 1440px; // [추가] PC 계정 설정 이너 최대 폭 (다른 화면 이너 90% 보다 좁게)
 $account-line: $light-color-400; // 구분선 (시안 #D2D2D7)
 $account-sub: $neutral-color-600; // 설명 · 안내 글자 (밝은 배경에서 읽히는 회색)
 
@@ -5988,6 +5990,7 @@ img.ui-icon.ui-icon-arrow {
 
 .account-title {
   @include display-l-b;
+  color: $dark-color-400; // [수정] 시안 Dark/400
   padding-bottom: $space-xl;
   border-bottom: 0.0625rem solid $account-line;
 }
@@ -5999,47 +6002,71 @@ img.ui-icon.ui-icon-arrow {
   align-items: start;
 }
 
-// 왼쪽 메뉴: 스크롤해도 헤더 바로 아래에 고정 (글자 위치 = 섹션 첫 항목과 같은 높이)
+// 왼쪽 메뉴: 스크롤해도 헤더 바로 아래에 고정 (글자 위치 = 섹션 첫 항목과 같은 높이 · 행 위아래 여백 12 만큼 위로)
 .account-nav {
   position: sticky;
   top: $header-height;
-  padding: $space-4xl $space-xl $space-4xl 0;
+  padding: ($space-4xl - $space-md) $space-xl $space-4xl 0;
 }
 
+// [수정] 메뉴 행 세로 나열 (행 폭 = 메뉴 칸 가득)
 .account-nav-list {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: $space-lg;
+  align-items: stretch;
+  gap: $space-xs;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-// 메뉴 글자: 예전 섹션 이름과 같은 크기 · 보고 있는 섹션만 진하게
+// [수정] 메뉴 행 (사이드바 탭형): 글자 Heading/h2-B
+// - 보고 있는 섹션: 연회색 배경 + 왼쪽 세로 막대 · Dark/400 / 나머지: 회색 글자 · 호버 시 배경
 .account-nav-link {
-  @include heading-h3;
-  padding: 0;
+  @include heading-h2-b;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: $space-md $space-lg;
   border: none;
+  border-radius: $radius-card-sm;
   background: none;
   color: $account-sub;
   text-align: left;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
+
+  // 왼쪽 세로 막대 (보고 있는 섹션만)
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: $space-xl;
+    width: 4px;
+    border-radius: $radius-pill;
+    background-color: $dark-color-400;
+    transform: translateY(-50%) scaleY(0);
+    transition: transform 0.2s ease;
+  }
 
   &:hover {
-    color: $text-inverse;
+    background-color: $light-color-200;
+    color: $dark-color-400;
   }
 
   &.is-active {
-    @include heading-h3-b;
-    color: $text-inverse;
+    background-color: $light-color-200;
+    color: $dark-color-400;
+
+    &::before {
+      transform: translateY(-50%) scaleY(1);
+    }
   }
 
   &:focus-visible {
     outline: 0.125rem solid $primary-color-500;
     outline-offset: 0.125rem;
-    border-radius: $space-xs;
   }
 }
 
@@ -6085,24 +6112,26 @@ img.ui-icon.ui-icon-arrow {
   }
 }
 
+// [수정] 항목 제목 Heading/h5-B · Dark/400 / 설명 Body/default · Dark/100 / 맨 아래 안내 Body/small · Dark/100
 .account-item-title {
-  @include body-default-b;
+  @include heading-h5-b;
+  color: $dark-color-400;
 }
 
 .account-item-desc {
   @include body-default;
-  color: $account-sub;
+  color: $dark-color-100;
   word-break: keep-all;
 }
 
 .account-note {
   @include body-small;
-  color: $account-sub;
+  color: $dark-color-100;
 }
 
 // 파란 글자 링크 (모든 브라우저에서 로그아웃 · 연결된 계정 관리 · 재생 기록 지우기)
 .account-link {
-  @include body-default;
+  @include body-default-b;
   padding: 0;
   border: none;
   background: none;
@@ -6131,7 +6160,7 @@ img.ui-icon.ui-icon-arrow {
   padding: 0;
   border: none;
   background: none;
-  color: $text-inverse;
+  color: $dark-color-400; // [수정] 켜기 · 끄기 글자 Body/default · Dark/400
   cursor: pointer;
 
   &:focus-visible {
@@ -7844,6 +7873,21 @@ section.device-guide.device-guide--watch {
     margin-right: auto !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  // [추가] 계정 설정만 이너를 더 좁게: 화면의 90% 이되 최대 1440px
+  .account-inner {
+    max-width: $account-inner-max !important;
+  }
+
+  // [추가] 계정 설정만 이너를 더 좁게: 화면의 90% 이되 최대 1440px
+  .account-page .account-inner {
+    max-width: $account-inner-pc !important;
+  }
+
+  // [추가] 계정 설정만 이너 최대 1440px (90% 폭은 그대로 · 넓은 화면에서 다른 이너보다 좁게)
+  .account-inner.account-inner {
+    max-width: $account-width !important;
   }
 
   // 헤더: 내비게이션(가운데 토글 · 오른쪽 버튼)도 이너 끝선에 맞춤

@@ -28,9 +28,9 @@ const SECTIONS = [
   { id: "account-access", title: "계정 액세스" },
   { id: "account-history", title: "재생 기록" },
   { id: "account-autoplay", title: "자동 재생" },
-  { id: "account-assistant", title: "AI 챗봇" },
-  { id: "account-release", title: "신규 출시 알림" },
-  { id: "account-sport", title: "스포츠 경기 알림" },
+  { id: "account-assistant", title: "AI 어시스트" },
+  { id: "account-release", title: "최신작 알림" },
+  { id: "account-sport", title: "경기 알림" },
 ];
 const SECTION_TITLE = Object.fromEntries(SECTIONS.map((s) => [s.id, s.title]));
 
@@ -135,7 +135,7 @@ const ChannelPicker = ({ name, alert, onChange }) => {
           </label>
         ))}
       </fieldset>
-      <p className="account-note">원하는 방식을 여러 개 선택할 수 있습니다.</p>
+      <p className="account-note">중복 선택이 가능합니다.</p>
     </Item>
   );
 };
@@ -418,7 +418,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
-            {/* ---------- AI 챗봇 ---------- */}
+            {/* ---------- AI ---------- */}
             <Section id="account-assistant">
               <Item
                 title="Apple Assistant 사용"
@@ -436,36 +436,36 @@ export const Profile = () => {
               </Item>
             </Section>
 
-            {/* ---------- 신규 출시 알림 ---------- */}
+            {/* ---------- 최신작 알림 ---------- */}
             <Section id="account-release">
-              <Item title="신규 출시 알림 받기" desc="새로운 영화와 시리즈가 공개되면 선택한 방식으로 알려드립니다.">
+              <Item title="최신작 알림 받기" desc="새로운 영화와 시리즈가 공개되면 선택한 방식으로 알려드립니다.">
                 <Toggle
-                  label="신규 출시 알림 받기"
+                  label="최신작 알림 받기"
                   checked={settings.releaseAlert.on}
                   onChange={(v) => save("releaseAlert", { ...settings.releaseAlert, on: v })}
                 />
               </Item>
               <ChannelPicker
-                name="신규 출시"
+                name="최신작"
                 alert={settings.releaseAlert}
                 onChange={(v) => save("releaseAlert", v)}
               />
             </Section>
 
-            {/* ---------- 스포츠 경기 알림 ---------- */}
+            {/* ---------- 경기 알림 ---------- */}
             <Section id="account-sport">
               <Item
-                title="스포츠 경기 알림 받기"
+                title="경기 알림 받기"
                 desc="관심 있는 팀과 리그의 경기가 시작되기 전에 선택한 방식으로 알려드립니다."
               >
                 <Toggle
-                  label="스포츠 경기 알림 받기"
+                  label="경기 알림 받기"
                   checked={settings.sportAlert.on}
                   onChange={(v) => save("sportAlert", { ...settings.sportAlert, on: v })}
                 />
               </Item>
               <ChannelPicker
-                name="스포츠 경기"
+                name="경기"
                 alert={settings.sportAlert}
                 onChange={(v) => save("sportAlert", v)}
               />

@@ -3,7 +3,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 4.5em;
+  height: 4.5rem;
   background-color: #141414;
   z-index: 1000;
   display: flex;
@@ -15,7 +15,7 @@ header .inner {
   max-width: 1920px;
   margin: 0 auto;
   height: 100%;
-  padding: 0.88em 4em;
+  padding: 0.875rem 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,17 +31,17 @@ header .inner .logo a {
   align-items: center;
 }
 header .inner .logo a img {
-  height: 24px;
+  height: 1.5rem;
   display: block;
   filter: brightness(0) invert(1);
 }
 header .inner .header-login {
   z-index: 10;
-  padding: 0.5em 20px;
-  border-radius: 1.75em;
+  padding: 0.5rem 1.25rem;
+  border-radius: 1.75rem;
   background-color: #F5F5F5;
   color: #171717;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   transition: background-color 0.2s ease;
 }
@@ -56,7 +56,7 @@ header .inner nav {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 0.88em 4em;
+  padding: 0.875rem 4rem;
   pointer-events: none;
   box-sizing: border-box;
 }
@@ -66,8 +66,8 @@ header .inner nav > * {
 header .inner nav .gnb-center-toggle {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
   position: absolute;
@@ -75,14 +75,14 @@ header .inner nav .gnb-center-toggle {
   top: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background-color: #262626;
 }
 header .inner nav .gnb-center-toggle .toggle-indicator {
   position: absolute;
   top: 0;
   height: 100%;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   pointer-events: none;
   background-color: #5865F2;
 }
@@ -95,13 +95,13 @@ header .inner nav .gnb-center-toggle .toggle-indicator.animated {
 header .inner nav .gnb-center-toggle button {
   position: relative;
   z-index: 1;
-  height: 40px;
-  padding: 0 1.5em;
+  height: 2.5rem;
+  padding: 0 1.5rem;
   border: none;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background: transparent;
   color: #FFFFFF;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
@@ -126,15 +126,15 @@ header .inner nav .gnb-right ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 1em;
+  gap: 1rem;
 }
 header .inner nav .gnb-right ul .search-box {
   display: flex;
   align-items: center;
   width: 248px;
-  height: 36px;
-  padding: 0 14px;
-  border-radius: 9999px;
+  height: 2.25rem;
+  padding: 0 0.875rem;
+  border-radius: 624.9375rem;
   background-color: #262626;
   box-sizing: border-box;
   transition: background-color 0.2s ease;
@@ -144,8 +144,8 @@ header .inner nav .gnb-right ul .search-box:focus-within {
 }
 header .inner nav .gnb-right ul .search-box img {
   width: 14px;
-  height: 14px;
-  margin-right: 0.5em;
+  height: 0.875rem;
+  margin-right: 0.5rem;
   flex-shrink: 0;
   filter: invert(0.7);
 }
@@ -155,7 +155,7 @@ header .inner nav .gnb-right ul .search-box input {
   outline: none;
   background: transparent;
   color: #FFFFFF;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 header .inner nav .gnb-right ul .search-box input::placeholder {
   color: #A3A3A3;
@@ -166,15 +166,15 @@ header .inner nav .gnb-right ul .login-box {
 header .inner nav .gnb-right ul .header-login-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 32px;
-  padding: 0 0.75em;
-  border-radius: 0.5em;
+  gap: 0.375rem;
+  height: 2rem;
+  padding: 0 0.75rem;
+  border-radius: 0.5rem;
   background-color: #5865F2;
   color: #FFFFFF;
   white-space: nowrap;
@@ -183,7 +183,7 @@ header .inner nav .gnb-right ul .header-login-btn {
 }
 header .inner nav .gnb-right ul .header-login-btn img {
   width: 10px;
-  height: 11px;
+  height: 0.6875rem;
   display: block;
   flex-shrink: 0;
 }
@@ -191,8 +191,8 @@ header .inner nav .gnb-right ul .header-login-btn:hover {
   background-color: #6E7AF4;
 }
 header .inner nav .gnb-right ul .header-login-btn:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 header .inner nav .gnb-right ul .profile-wrap {
   position: relative;
@@ -204,7 +204,7 @@ header .inner nav .gnb-right ul .profile-box {
   align-items: center;
   justify-content: center;
   width: 36px;
-  height: 36px;
+  height: 2.25rem;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -216,8 +216,8 @@ header .inner nav .gnb-right ul .profile-box:hover {
   background-color: #2E2E2E;
 }
 header .inner nav .gnb-right ul .profile-box:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 header .inner nav .gnb-right ul .profile-box img {
   width: 100%;
@@ -227,31 +227,31 @@ header .inner nav .gnb-right ul .profile-box img {
 }
 header .inner nav .gnb-right ul .profile-menu {
   position: absolute;
-  top: calc(100% + 0.5em);
+  top: calc(100% + 0.5rem);
   right: 0;
   z-index: 1100;
   width: 240px;
-  max-width: calc(100vw - 2em);
-  border-radius: 0.63em;
+  max-width: calc(100vw - 2rem);
+  border-radius: 0.625rem;
   overflow: hidden;
   background-color: rgba(200, 200, 200, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
   animation: profile-menu-in 0.18s ease both;
 }
 header .inner nav .gnb-right ul .profile-menu-item {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 52px;
-  padding: 0 1em;
+  height: 3.25rem;
+  padding: 0 1rem;
   border: none;
   background: transparent;
   color: #171717;
@@ -262,7 +262,7 @@ header .inner nav .gnb-right ul .profile-menu-item {
   transition: background-color 0.15s ease;
 }
 header .inner nav .gnb-right ul .profile-menu-item + .profile-menu-item {
-  border-top: 1px solid rgba(23, 23, 23, 0.15);
+  border-top: 0.0625rem solid rgba(23, 23, 23, 0.15);
 }
 header .inner nav .gnb-right ul .profile-menu-item:hover, header .inner nav .gnb-right ul .profile-menu-item:focus-visible {
   background-color: rgba(255, 255, 255, 0.3);
@@ -274,14 +274,14 @@ header .inner nav .gnb-right ul .profile-menu-item svg {
 header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: block;
   flex-shrink: 0;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 @keyframes profile-menu-in {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-0.25rem);
   }
   to {
     opacity: 1;
@@ -290,11 +290,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .login-page {
   width: 100%;
-  min-height: calc(100vh - 4.5em - 160px);
+  min-height: calc(100vh - 4.5rem - 10rem);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 150px 20px 100px;
+  padding: 9.375rem 1.25rem 6.25rem;
   box-sizing: border-box;
   background-color: #08090d;
 }
@@ -303,11 +303,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   max-width: 580px;
   background-color: #F2F2F2;
-  border-radius: 1.25em;
-  padding: 3em 56px 40px;
+  border-radius: 1.25rem;
+  padding: 3rem 3.5rem 2.5rem;
   box-sizing: border-box;
   text-align: center;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -315,10 +315,10 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .login-page .login-card .login-card-close {
   position: absolute;
-  top: 24px;
-  left: 24px;
+  top: 1.5rem;
+  left: 1.5rem;
   width: 32px;
-  height: 32px;
+  height: 2rem;
   border-radius: 50%;
   border: none;
   background-color: rgba(0, 0, 0, 0.05);
@@ -333,52 +333,52 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   background-color: rgba(0, 0, 0, 0.1);
 }
 .login-page .login-card .login-logo-area {
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
 }
 .login-page .login-card .login-logo-area .login-app-icon {
   width: 48px;
-  height: 48px;
-  border-radius: 0.75em;
+  height: 3rem;
+  border-radius: 0.75rem;
   background-color: #D4D4D4;
 }
 .login-page .login-card .login-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #171717;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding: 0;
 }
 .login-page .login-card .login-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #525252;
-  margin: 0 0 28px;
+  margin: 0 0 1.75rem;
 }
 .login-page .login-card .login-form {
   width: 100%;
   max-width: 420px;
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .login-page .login-card .login-form .input-field input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   width: 100%;
-  height: 48px;
-  padding: 0 1em;
-  border-radius: 0.63em;
-  border: 1px solid #D4D4D4;
+  height: 3rem;
+  padding: 0 1rem;
+  border-radius: 0.625rem;
+  border: 0.0625rem solid #D4D4D4;
   background-color: #FFFFFF;
   color: #171717;
   box-sizing: border-box;
@@ -394,13 +394,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card .login-form .login-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   width: 100%;
-  height: 46px;
-  margin-top: 6px;
-  border-radius: 0.63em;
+  height: 2.875rem;
+  margin-top: 0.375rem;
+  border-radius: 0.625rem;
   border: none;
   background-color: #6E7AF4;
   color: #FFFFFF;
@@ -412,16 +412,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   background-color: rgb(81.5576923077, 95.9115384615, 241.8423076923);
 }
 .login-page .login-card .login-links {
-  margin-top: 20px;
+  margin-top: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 .login-page .login-card .login-links .login-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #6E7AF4;
   text-decoration: none;
@@ -437,17 +437,17 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card .login-form .code-input-group {
   display: flex;
   justify-content: center;
-  gap: 0.5em;
-  margin-bottom: 0.5em;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .login-page .login-card .login-form .code-input-group .code-box {
   width: 52px;
-  height: 58px;
-  border-radius: 0.63em;
-  border: 1px solid #D4D4D4;
+  height: 3.625rem;
+  border-radius: 0.625rem;
+  border: 0.0625rem solid #D4D4D4;
   background-color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
   color: #171717;
@@ -457,18 +457,18 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .login-page .login-card .login-form .code-input-group .code-box:focus {
   border-color: #6E7AF4;
-  box-shadow: 0 0 0 2px rgba(110, 122, 244, 0.2);
+  box-shadow: 0 0 0 0.125rem rgba(110, 122, 244, 0.2);
 }
 .login-page .login-card .login-links.row-links {
   flex-direction: row;
   justify-content: center;
-  gap: 1.5em;
+  gap: 1.5rem;
 }
 .login-page .login-card .login-links.row-links .login-link-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   background: none;
   border: none;
@@ -482,23 +482,23 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 
 .login-page .login-card.login-card--confirm {
   max-width: 800px;
-  min-height: 560px;
-  padding: 80px 56px 40px;
+  min-height: 35rem;
+  padding: 5rem 3.5rem 2.5rem;
   background-color: #f5f5f7;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   box-shadow: none;
 }
 .login-page .login-card.login-card--confirm .login-card-close {
-  top: 26px;
-  left: 26px;
+  top: 1.625rem;
+  left: 1.625rem;
   width: 42px;
-  height: 42px;
+  height: 2.625rem;
   background-color: #fff;
   color: #000;
 }
 .login-page .login-card.login-card--confirm .login-card-close svg {
   width: 20px;
-  height: 20px;
+  height: 1.25rem;
 }
 .login-page .login-card.login-card--confirm .login-card-close:hover {
   background-color: #ececf0;
@@ -508,21 +508,21 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .login-page .login-card.login-card--confirm .login-logo-area .login-app-icon {
   width: 50px;
-  height: 50px;
-  border-radius: 0.75em;
+  height: 3.125rem;
+  border-radius: 0.75rem;
   background-color: #d9d9d9;
 }
 .login-page .login-card.login-card--confirm .login-title {
-  margin: 84px 0 0.75em;
-  font-size: 34px;
-  line-height: 41px;
+  margin: 5.25rem 0 0.75rem;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   font-weight: 400;
   color: #111;
 }
 .login-page .login-card.login-card--confirm .login-desc {
-  margin: 0 0 84px;
-  font-size: 22px;
-  line-height: 29px;
+  margin: 0 0 5.25rem;
+  font-size: 1.375rem;
+  line-height: 1.8125rem;
   color: #a1a1a6;
 }
 .login-page .login-card.login-card--confirm .login-form {
@@ -530,82 +530,82 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   gap: 0;
 }
 .login-page .login-card.login-card--confirm .login-form .login-btn {
-  height: 48px;
+  height: 3rem;
   margin-top: 0;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   background-color: #007aff;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 700;
 }
 .login-page .login-card.login-card--confirm .login-form .login-btn:hover {
   background-color: #0070eb;
 }
 .login-page .login-card.login-card--confirm .login-links.row-links {
-  margin-top: 14px;
-  gap: 112px;
+  margin-top: 0.875rem;
+  gap: 7rem;
 }
 .login-page .login-card.login-card--confirm .login-links.row-links .login-link-btn {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
   color: #007aff;
 }
 
 .login-page .login-card.login-card--signin {
   max-width: 668px;
-  min-height: 468px;
-  padding: 68px 56px 2em;
+  min-height: 29.25rem;
+  padding: 4.25rem 3.5rem 2rem;
   background-color: #F5F5F5;
-  border-radius: 1.25em;
+  border-radius: 1.25rem;
   box-shadow: none;
   justify-content: flex-start;
 }
 .login-page .login-card.login-card--signin .login-card-close {
-  top: 22px;
-  left: 22px;
+  top: 1.375rem;
+  left: 1.375rem;
   width: 36px;
-  height: 36px;
+  height: 2.25rem;
   background-color: #FFFFFF;
   color: #171717;
 }
 .login-page .login-card.login-card--signin .login-card-close svg {
   width: 18px;
-  height: 18px;
+  height: 1.125rem;
 }
 .login-page .login-card.login-card--signin .login-card-close:hover {
   background-color: #E0E0E0;
 }
 .login-page .login-card.login-card--signin .login-logo-area {
-  margin-bottom: 14px;
+  margin-bottom: 0.875rem;
 }
 .login-page .login-card.login-card--signin .login-logo-area .login-app-icon {
   width: 42px;
-  height: 42px;
-  border-radius: 0.63em;
+  height: 2.625rem;
+  border-radius: 0.625rem;
   background-color: #D4D4D4;
 }
 .login-page .login-card.login-card--signin .login-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #171717;
-  margin: 0 0 10px;
+  margin: 0 0 0.625rem;
 }
 .login-page .login-card.login-card--signin .login-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   color: #A3A3A3;
-  margin: 0 0 22px;
+  margin: 0 0 1.375rem;
 }
 .login-page .login-card.login-card--signin .login-form {
   max-width: 440px;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
 }
 .login-page .login-card.login-card--signin .login-form .input-field {
   width: 100%;
@@ -613,13 +613,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin .login-form .input-field input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  height: 53px;
-  padding: 0 18px;
-  border-radius: 0.5em;
-  border: 1px solid #D4D4D4;
+  height: 3.3125rem;
+  padding: 0 1.125rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #D4D4D4;
   background-color: #F5F5F5;
 }
 .login-page .login-card.login-card--signin .login-form .input-field input::placeholder {
@@ -632,14 +632,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin .login-form .login-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   width: 358px;
   max-width: 100%;
-  height: 40px;
-  margin-top: 0.5em;
-  border-radius: 6px;
+  height: 2.5rem;
+  margin-top: 0.5rem;
+  border-radius: 0.375rem;
   background-color: #6E7AF4;
   color: #FFFFFF;
   font-weight: 700;
@@ -655,10 +655,10 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .login-page .login-card.login-card--signin .login-error {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin: 0.75em 0 0;
+  margin: 0.75rem 0 0;
 }
 .login-page .login-card.login-card--signin .login-notice {
   color: #525252;
@@ -667,25 +667,25 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   color: #ff453a;
 }
 .login-page .login-card.login-card--signin .login-links {
-  margin-top: 14px;
+  margin-top: 0.875rem;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
 }
 .login-page .login-card.login-card--signin .login-links-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 1.25rem;
 }
 .login-page .login-card.login-card--signin .login-link-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
   padding: 0;
   border: none;
   background: none;
@@ -701,7 +701,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .login-page .login-card.login-card--signin .login-google-icon {
   width: 14px;
-  height: 14px;
+  height: 0.875rem;
   flex-shrink: 0;
 }
 
@@ -727,7 +727,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 @keyframes login-step-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(0.75rem);
   }
   to {
     opacity: 1;
@@ -751,9 +751,9 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .hero-swiper-container .swiper-button-prev {
   color: #FFFFFF !important;
   width: 52px !important;
-  height: 52px !important;
+  height: 3.25rem !important;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(0.75rem);
   border-radius: 50%;
   transition: all 0.3s ease;
   z-index: 20;
@@ -765,25 +765,25 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .hero-swiper-container .swiper-button-next::after,
 .hero-swiper-container .swiper-button-prev::after {
-  font-size: 20px !important;
+  font-size: 1.25rem !important;
   font-weight: 700;
 }
 .hero-swiper-container .swiper-pagination {
-  bottom: 24px !important;
+  bottom: 1.5rem !important;
   z-index: 20;
 }
 .hero-swiper-container .swiper-pagination .swiper-pagination-bullet {
   background: rgba(255, 255, 255, 0.4) !important;
   opacity: 1;
   width: 8px;
-  height: 8px;
-  margin: 0 5px !important;
+  height: 0.5rem;
+  margin: 0 0.3125rem !important;
   transition: all 0.3s ease;
 }
 .hero-swiper-container .swiper-pagination .swiper-pagination-bullet-active {
   background: #FFFFFF !important;
   width: 28px;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
 }
 .hero-swiper-container .hero-slide-item {
   position: relative;
@@ -830,38 +830,38 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.75em;
-  margin-bottom: 20px;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
   color: #C8C8C8;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-meta .age-rating {
-  border: 1px solid #C8C8C8;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
+  border: 0.0625rem solid #C8C8C8;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
-  font-size: 64px;
+  font-size: 4rem;
   font-weight: 700;
   line-height: 1.15;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   padding-top: 0;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #D4D4D4;
   line-height: 1.6;
-  margin-bottom: 28px;
+  margin-bottom: 1.75rem;
   word-break: keep-all;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -872,16 +872,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .hero-swiper-container .hero-slide-item .hero-info .hero-actions {
   display: flex;
   justify-content: flex-start;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-actions .hero-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  padding: 0 20px;
-  border-radius: 9999px;
-  font-size: 14px;
+  height: 2.5rem;
+  padding: 0 1.25rem;
+  border-radius: 624.9375rem;
+  font-size: 0.875rem;
   font-weight: 700;
   text-decoration: none;
   transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
@@ -894,7 +894,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   background-color: #D4D4D4;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-actions .hero-btn.secondary {
-  border: 1px solid #A3A3A3;
+  border: 0.0625rem solid #A3A3A3;
   color: #FFFFFF;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-actions .hero-btn.secondary:hover {
@@ -904,15 +904,15 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 
 .value-props {
   background-color: #141414;
-  padding: 22px 0 1.5em;
+  padding: 1.375rem 0 1.5rem;
   text-align: center;
 }
 .value-props .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -925,40 +925,40 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .value-props .value-props-inner {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
 }
 .value-props .value-prop-item {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .value-props .value-prop-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
 .value-props .value-prop-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
 
 .top10-section {
   background-color: #141414;
-  padding: 40px 0 56px;
+  padding: 2.5rem 0 3.5rem;
 }
 .top10-section .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -971,11 +971,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .top10-section .top10-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   color: #FFFFFF;
-  margin: 0 0 20px;
+  margin: 0 0 1.25rem;
 }
 .top10-section .swiper-button-next,
 .top10-section .swiper-button-prev {
@@ -993,7 +993,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .top10-section .top10-poster {
   position: relative;
   aspect-ratio: 282/400;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #181a21;
 }
@@ -1022,8 +1022,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5em;
-  padding: 1em;
+  gap: 0.5rem;
+  padding: 1rem;
   text-align: center;
   background: rgba(8, 9, 13, 0.7);
   opacity: 0;
@@ -1032,8 +1032,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .top10-section .top10-poster .top10-hover .top10-movie-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
   word-break: keep-all;
@@ -1041,8 +1041,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .top10-section .top10-poster .top10-hover .top10-rating {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -1054,28 +1054,28 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .top10-section .top10-rank {
   position: absolute;
-  left: 8px;
-  bottom: -12px;
+  left: 0.5rem;
+  bottom: -0.75rem;
   z-index: 2;
   font-family: "SF Pro", sans-serif;
-  font-size: 140px;
+  font-size: 8.75rem;
   font-weight: 700;
   line-height: 1;
   color: #FFFFFF;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 0.125rem 1rem rgba(0, 0, 0, 0.6);
   pointer-events: none;
 }
 
 .upcoming-section {
   background-color: #141414;
-  padding: 4em 0;
+  padding: 4rem 0;
 }
 .upcoming-section .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -1088,28 +1088,28 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   color: #FFFFFF;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
 }
 .upcoming-section .upcoming-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #C8C8C8;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
 }
 .upcoming-section .upcoming-sub {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1em;
-  margin-bottom: 1.5em;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 .upcoming-section .upcoming-sub .upcoming-desc {
   margin: 0;
@@ -1117,8 +1117,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-more {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   flex-shrink: 0;
   color: #A3A3A3;
@@ -1132,7 +1132,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -1140,9 +1140,9 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-card {
   display: flex;
   align-items: center;
-  gap: 1.5em;
-  padding: 20px;
-  border-radius: 0.75em;
+  gap: 1.5rem;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
   background-color: #242424;
   min-width: 0;
   box-sizing: border-box;
@@ -1152,7 +1152,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: block;
   width: 156px;
   aspect-ratio: 156/186;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #2E2E2E;
 }
@@ -1171,22 +1171,22 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5em;
+  gap: 0.5rem;
   min-width: 0;
 }
 .upcoming-section .upcoming-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .upcoming-section .upcoming-movie-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
@@ -1202,8 +1202,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   margin: 0;
@@ -1217,17 +1217,17 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .upcoming-section .upcoming-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
-  height: 36px;
-  margin-top: 0.5em;
-  padding: 0 20px;
-  border: 1px solid transparent;
-  border-radius: 9999px;
+  gap: 0.25rem;
+  height: 2.25rem;
+  margin-top: 0.5rem;
+  padding: 0 1.25rem;
+  border: 0.0625rem solid transparent;
+  border-radius: 624.9375rem;
   background-color: #F5F5F5;
   color: #171717;
   cursor: pointer;
@@ -1245,23 +1245,23 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   background-color: #6E7AF4;
 }
 .upcoming-section .upcoming-btn:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 
 .movie-detail-page {
   background-color: #141414;
   color: #FFFFFF;
   min-height: 100vh;
-  padding-top: calc(4.5em + 24px);
-  padding-bottom: 80px;
+  padding-top: calc(4.5rem + 1.5rem);
+  padding-bottom: 5rem;
 }
 .movie-detail-page .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -1283,7 +1283,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .content-layout {
   display: flex;
   align-items: flex-start;
-  gap: 1.5em;
+  gap: 1.5rem;
   width: 100%;
 }
 .movie-detail-page .left-section {
@@ -1291,10 +1291,10 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  gap: 1.5rem;
 }
 .movie-detail-page .player-box {
-  border-radius: 1.25em;
+  border-radius: 1.25rem;
   overflow: hidden;
   background-color: #08090d;
 }
@@ -1321,28 +1321,28 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 2em;
-  padding: 20px 28px 1.5em;
+  gap: 2rem;
+  padding: 1.25rem 1.75rem 1.5rem;
 }
 .movie-detail-page .player-box .info-text {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
 }
 .movie-detail-page .player-box .title-logo {
   display: block;
   max-width: 200px;
-  max-height: 56px;
+  max-height: 3.5rem;
   object-fit: contain;
   object-position: left center;
-  margin-bottom: 6px;
+  margin-bottom: 0.375rem;
 }
 .movie-detail-page .player-box .title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
@@ -1350,8 +1350,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .original-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #EBEBEB;
   text-transform: uppercase;
@@ -1359,20 +1359,20 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .genres {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .movie-detail-page .player-box .overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #E0E0E0;
   max-width: 640px;
-  margin-top: 0.25em;
+  margin-top: 0.25rem;
   word-break: keep-all;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -1385,21 +1385,21 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 1em;
+  gap: 1rem;
 }
 .movie-detail-page .player-box .icon-btns {
   display: flex;
-  gap: 10px;
+  gap: 0.625rem;
 }
 .movie-detail-page .player-box .icon-btn {
   width: 36px;
-  height: 36px;
+  height: 2.25rem;
   border-radius: 50%;
   border: none;
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.31em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
   line-height: 1;
   background-color: rgba(255, 255, 255, 0.16);
@@ -1420,14 +1420,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .btn-play {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   font-weight: 700;
   width: 180px;
-  height: 40px;
+  height: 2.5rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #FFFFFF;
   color: #171717;
   cursor: pointer;
@@ -1439,8 +1439,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 0 0.5em;
+  gap: 0.625rem;
+  padding: 0 0.5rem;
 }
 .movie-detail-page .rating-section .rating-header {
   display: flex;
@@ -1450,8 +1450,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .rating-header h3 {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
@@ -1459,16 +1459,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .rating-header .score-display {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
 }
 .movie-detail-page .rating-section .rating-header .score-display .score-star {
   width: 18px;
-  height: 18px;
+  height: 1.125rem;
   color: #FFD60A;
   flex-shrink: 0;
 }
@@ -1481,16 +1481,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .rating-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #E0E0E0;
 }
 .movie-detail-page .rating-section .star-picker {
   display: flex;
   justify-content: center;
-  gap: 0.75em;
-  padding: 0.25em 0;
+  gap: 0.75rem;
+  padding: 0.25rem 0;
 }
 .movie-detail-page .rating-section .star-picker .star-item {
   width: 48px;
@@ -1501,7 +1501,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
 }
 .movie-detail-page .rating-section .star-picker .star-item .star {
   display: flex;
@@ -1510,13 +1510,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .movie-detail-page .rating-section .star-picker .star-item .star svg {
   width: 35px;
-  height: 35px;
+  height: 2.1875rem;
 }
 .movie-detail-page .rating-section .star-picker .star-item .label {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
@@ -1532,15 +1532,15 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .btn-submit-rating {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   align-self: center;
   font-weight: 700;
-  height: 40px;
-  padding: 0 28px;
+  height: 2.5rem;
+  padding: 0 1.75rem;
   border: none;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background-color: #F5F5F5;
   color: #171717;
   cursor: pointer;
@@ -1556,8 +1556,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .rating-section .rating-done {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   text-align: center;
   color: #A3A3A3;
@@ -1566,13 +1566,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   flex: 0 0 34%;
   min-width: 0;
   position: sticky;
-  top: calc(4.5em + 24px);
-  height: calc(100vh - 4.5em - 48px);
-  min-height: 560px;
-  max-height: 920px;
+  top: calc(4.5rem + 1.5rem);
+  height: calc(100vh - 4.5rem - 3rem);
+  min-height: 35rem;
+  max-height: 57.5rem;
   box-sizing: border-box;
-  padding: 20px 1.5em 0.5em;
-  border-radius: 1.25em;
+  padding: 1.25rem 1.5rem 0.5rem;
+  border-radius: 1.25rem;
   background-color: #1f1f1f;
   display: flex;
   flex-direction: column;
@@ -1580,17 +1580,17 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .tabs {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #2E2E2E;
-  margin-bottom: 20px;
+  border-bottom: 0.0625rem solid #2E2E2E;
+  margin-bottom: 1.25rem;
 }
 .movie-detail-page .right-section .tabs .tab-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.31em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
   position: relative;
-  padding: 0 0.25em 0.75em;
+  padding: 0 0.25rem 0.75rem;
   background: none;
   border: none;
   color: #A3A3A3;
@@ -1608,28 +1608,28 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -1px;
+  bottom: -0.0625rem;
   width: 100%;
-  height: 2px;
+  height: 0.125rem;
   background-color: #FFFFFF;
 }
 .movie-detail-page .right-section .filter-bar {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75em;
-  margin-bottom: 1em;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 .movie-detail-page .right-section .filter-bar select {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   font-weight: 700;
-  height: 36px;
-  padding: 0 2em 0 0.75em;
+  height: 2.25rem;
+  padding: 0 2rem 0 0.75rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   background-color: #E0E0E0;
   color: #171717;
   outline: none;
@@ -1637,36 +1637,36 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23171717' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 12px center;
+  background-position: right 0.75rem center;
 }
 .movie-detail-page .right-section .season-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #E0E0E0;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.75rem;
 }
 .movie-detail-page .right-section .list-container {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding-right: 0.25em;
+  padding-right: 0.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: #464646 transparent;
 }
 .movie-detail-page .right-section .episode-card {
   display: flex;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 100%;
-  padding: 6px;
+  padding: 0.375rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background: none;
   color: inherit;
   text-align: left;
@@ -1684,7 +1684,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 168px;
   aspect-ratio: 16/9;
   flex-shrink: 0;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   overflow: hidden;
   background-color: #171717;
 }
@@ -1700,12 +1700,12 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 32px;
-  height: 32px;
+  height: 2rem;
   border-radius: 50%;
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   background-color: rgba(23, 23, 23, 0.6);
   color: #FFFFFF;
@@ -1719,21 +1719,21 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 0.1875rem;
 }
 .movie-detail-page .right-section .episode-card .info .ep-num {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .movie-detail-page .right-section .episode-card .info .ep-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #EBEBEB;
@@ -1746,42 +1746,42 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .episode-card .info .runtime {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .movie-detail-page .right-section .cast-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px 0.75em;
+  gap: 1.25rem 0.75rem;
   list-style: none;
   margin: 0;
-  padding: 0.25em 0 1em;
+  padding: 0.25rem 0 1rem;
 }
 .movie-detail-page .right-section .cast-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
   text-align: center;
   min-width: 0;
 }
 .movie-detail-page .right-section .cast-photo {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   width: 72px;
-  height: 72px;
+  height: 4.5rem;
   border-radius: 50%;
   overflow: hidden;
   background-color: #2E2E2E;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.25em;
+  margin-bottom: 0.25rem;
   color: #A3A3A3;
 }
 .movie-detail-page .right-section .cast-photo img {
@@ -1799,26 +1799,26 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .cast-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #EBEBEB;
 }
 .movie-detail-page .right-section .cast-role {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .movie-detail-page .right-section .similar-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1em 0.75em;
+  gap: 1rem 0.75rem;
   list-style: none;
   margin: 0;
-  padding: 0.25em 0 1em;
+  padding: 0.25rem 0 1rem;
 }
 .movie-detail-page .right-section .similar-grid > li {
   min-width: 0;
@@ -1826,7 +1826,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .similar-card {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
   width: 100%;
   min-width: 0;
   text-decoration: none;
@@ -1839,7 +1839,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   aspect-ratio: 2/3;
   flex-shrink: 0;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   overflow: hidden;
   background-color: #242424;
 }
@@ -1853,8 +1853,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .similar-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -1863,8 +1863,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .right-section .empty-content {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   flex: 1;
   display: flex;
@@ -1889,24 +1889,24 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .detail-popup p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
 .movie-detail-page .detail-popup .popup-close {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 1.5rem;
+  right: 1.5rem;
   z-index: 1;
-  padding: 0.5em 18px;
+  padding: 0.5rem 1.125rem;
   border: none;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background-color: #FFFFFF;
   color: #171717;
   font-weight: 700;
@@ -1915,14 +1915,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 
 .apple-originals {
   background-color: #141414;
-  padding: 4em 0;
+  padding: 4rem 0;
 }
 .apple-originals .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -1935,21 +1935,21 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .apple-originals .apple-originals-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   color: #FFFFFF;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
 }
 .apple-originals .apple-originals-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #A3A3A3;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
 }
 .apple-originals .apple-originals-slide {
   width: 282px;
@@ -1957,21 +1957,21 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .apple-originals .swiper-button-next,
 .apple-originals .swiper-button-prev {
   color: #FFFFFF;
-  top: 200px;
+  top: 12.5rem;
 }
 .apple-originals .apple-card {
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
+  gap: 0.25rem;
   text-decoration: none;
   color: #FFFFFF;
 }
 .apple-originals .apple-card-poster {
   aspect-ratio: 282/400;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #1f1f1f;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.75rem;
 }
 .apple-originals .apple-card-poster img {
   width: 100%;
@@ -1986,8 +1986,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .apple-originals .apple-card-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
@@ -1998,24 +1998,24 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .apple-originals .apple-card-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .apple-originals .apple-card-badge {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #FFFFFF;
-  margin-top: 0.25em;
+  margin-top: 0.25rem;
 }
 
 .ai-promo {
   background-color: #141414;
-  padding: 4em 0 8em;
+  padding: 4rem 0 8rem;
 }
 .ai-promo .ai-promo-band {
   background-color: #2E2E2E;
@@ -2024,8 +2024,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2039,9 +2039,9 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4em;
-  padding-top: 4em;
-  padding-bottom: 4em;
+  gap: 4rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
 .ai-promo .ai-promo-text {
   min-width: 0;
@@ -2049,20 +2049,20 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-eyebrow {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   color: #FFFFFF;
   letter-spacing: 0.04em;
 }
 .ai-promo .ai-promo-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
-  margin: 0 0 0.75em;
+  margin: 0 0 0.75rem;
   padding-top: 0;
   color: #FFFFFF;
   word-break: keep-all;
@@ -2070,8 +2070,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   margin: 0;
   color: #C8C8C8;
@@ -2081,8 +2081,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   flex-shrink: 0;
   width: 100%;
   max-width: 400px;
-  padding: 20px;
-  border-radius: 0.75em;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
   background-color: #FFFFFF;
   color: #171717;
   box-sizing: border-box;
@@ -2090,10 +2090,10 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-card-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
   color: #171717;
 }
@@ -2101,16 +2101,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-question {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   margin: 0;
   color: #525252;
 }
 .ai-promo .ai-promo-chips {
   display: flex;
-  gap: 0.5em;
-  margin: 0.75em 0;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
   padding: 0;
   list-style: none;
 }
@@ -2120,13 +2120,13 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-chip {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  height: 28px;
-  padding: 0 0.75em;
-  border: 1px solid #A3A3A3;
-  border-radius: 9999px;
+  height: 1.75rem;
+  padding: 0 0.75rem;
+  border: 0.0625rem solid #A3A3A3;
+  border-radius: 624.9375rem;
   background-color: #FFFFFF;
   color: #171717;
   white-space: nowrap;
@@ -2144,16 +2144,16 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .ai-promo .ai-promo-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 36px;
-  margin-top: 0.75em;
-  border-radius: 9999px;
+  height: 2.25rem;
+  margin-top: 0.75rem;
+  border-radius: 624.9375rem;
   background-color: #5865F2;
   color: #FFFFFF;
   text-decoration: none;
@@ -2163,20 +2163,20 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   background-color: #6E7AF4;
 }
 .ai-promo .ai-promo-btn:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 2px;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.125rem;
 }
 
 .subscribe-cta {
   background-color: #141414;
-  padding: 40px 0 72px;
+  padding: 2.5rem 0 4.5rem;
 }
 .subscribe-cta .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2188,11 +2188,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .subscribe-cta .subscribe-banner {
   position: relative;
-  height: 415px;
-  border-radius: 1.5em;
+  height: 25.9375rem;
+  border-radius: 1.5rem;
   overflow: hidden;
   background-color: #1f1f1f;
-  border: 1px solid #3A3A3A;
+  border: 0.0625rem solid #3A3A3A;
 }
 .subscribe-cta .subscribe-bg {
   position: absolute;
@@ -2221,10 +2221,10 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 1em;
+  gap: 1rem;
 }
 .subscribe-cta .subscribe-logo {
-  height: 28px;
+  height: 1.75rem;
   width: auto;
   display: block;
   filter: brightness(0) invert(1);
@@ -2232,8 +2232,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .subscribe-cta .subscribe-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
@@ -2242,14 +2242,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .subscribe-cta .subscribe-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  height: 48px;
-  padding: 0 2.25em;
-  border-radius: 9999px;
+  height: 3rem;
+  padding: 0 2.25rem;
+  border-radius: 624.9375rem;
   background-color: #F5F5F5;
   color: #171717;
   text-decoration: none;
@@ -2261,8 +2261,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .subscribe-cta .subscribe-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   margin: 0;
@@ -2270,14 +2270,14 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 
 .sport-upcoming {
   background-color: #141414;
-  padding: 56px 0 2em;
+  padding: 3.5rem 0 2rem;
 }
 .sport-upcoming .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2304,18 +2304,18 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   flex-direction: column;
   justify-content: space-between;
   width: 310px;
-  height: 200px;
-  padding: 20px;
-  border-radius: 16px;
+  height: 12.5rem;
+  padding: 1.25rem;
+  border-radius: 1rem;
   overflow: hidden;
   background-color: #1f1f1f;
   box-sizing: border-box;
   cursor: pointer;
   transition: transform 0.3s ease, border-color 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.08);
 }
 .sport-upcoming .sport-match-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-0.25rem);
   border-color: rgba(255, 255, 255, 0.25);
 }
 .sport-upcoming .sport-match-card .sport-match-bg {
@@ -2339,8 +2339,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   z-index: 2;
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #D4D4D4;
   font-weight: 700;
@@ -2352,11 +2352,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2em;
+  gap: 2rem;
 }
 .sport-upcoming .sport-match-card .sport-team {
   width: 90px;
-  height: 90px;
+  height: 5.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2367,15 +2367,15 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   height: 100%;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.75));
+  filter: drop-shadow(0 0.5rem 1rem rgba(0, 0, 0, 0.75));
 }
 .sport-upcoming .sport-match-card .sport-match-divider {
   position: absolute;
   width: 1px;
-  height: 70px;
+  height: 4.375rem;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
   transform: rotate(25deg);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.15);
   pointer-events: none;
 }
 .sport-upcoming .swiper-button-next,
@@ -2388,7 +2388,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 97px;
+  height: 6.0625rem;
   z-index: 999;
   background-color: #6E7AF4;
   transform: translateY(100%);
@@ -2406,8 +2406,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2422,7 +2422,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5em;
+  gap: 1.5rem;
   padding-top: 0;
   padding-bottom: 0;
   box-sizing: border-box;
@@ -2432,18 +2432,18 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 6px;
+  gap: 0.375rem;
 }
 .promo-banner .promo-banner-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.31em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
   margin: 0;
-  font-size: clamp(14px, 1.1vw, 16px);
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2451,12 +2451,12 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .promo-banner .promo-banner-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
-  font-size: clamp(11px, 0.9vw, 13px);
+  font-size: clamp(0.6875rem, 0.9vw, 0.8125rem);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2467,24 +2467,24 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 0.375rem;
 }
 .promo-banner .promo-banner-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 36px;
-  padding: 0 20px;
-  border-radius: 9999px;
+  height: 2.25rem;
+  padding: 0 1.25rem;
+  border-radius: 624.9375rem;
   background-color: #FFFFFF;
   color: #171717;
   font-weight: 700;
-  font-size: clamp(12px, 0.9vw, 13px);
+  font-size: clamp(0.75rem, 0.9vw, 0.8125rem);
   text-decoration: none;
   transition: background-color 0.25s ease;
   white-space: nowrap;
@@ -2495,39 +2495,39 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .promo-banner .promo-banner-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: rgba(255, 255, 255, 0.8);
   text-align: center;
   margin: 0;
-  font-size: clamp(10px, 0.8vw, 11px);
+  font-size: clamp(0.625rem, 0.8vw, 0.6875rem);
   white-space: nowrap;
 }
 
 .promo-banner.is-live {
   background-color: #242424;
-  border-top: 1px solid #3A3A3A;
+  border-top: 0.0625rem solid #3A3A3A;
 }
 .promo-banner.is-live .promo-banner-text {
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 .promo-banner.is-live .live-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 0.875rem;
   min-width: 0;
 }
 .promo-banner.is-live .live-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   flex-shrink: 0;
   color: #E91E1B;
 }
@@ -2536,7 +2536,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .promo-banner.is-live .live-dot {
   width: 18px;
-  height: 18px;
+  height: 1.125rem;
   border-radius: 50%;
   background-color: #E91E1B;
   animation: sport-live-blink 1.4s ease-in-out infinite;
@@ -2549,27 +2549,27 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .promo-banner.is-live .live-score {
   flex-shrink: 0;
-  margin: 0 0.25em;
+  margin: 0 0.25rem;
   color: #FFFFFF;
-  letter-spacing: 2px;
+  letter-spacing: 0.125rem;
 }
 .promo-banner.is-live .promo-banner-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .promo-banner.is-live .promo-banner-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  gap: 6px;
+  gap: 0.375rem;
   min-width: 164px;
-  height: 36px;
+  height: 2.25rem;
   background-color: #E91E1B;
   color: #FFFFFF;
   font-weight: 700;
@@ -2580,19 +2580,19 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .promo-banner.is-live .promo-banner-btn .play-icon {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
 }
 .promo-banner.is-live .promo-banner-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   color: #E0E0E0;
 }
 .promo-banner.is-live .promo-banner-note .dot-sep {
@@ -2600,7 +2600,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 
 body.has-promo-banner .footer {
-  padding-bottom: 115px;
+  padding-bottom: 7.1875rem;
 }
 
 .sport-hero {
@@ -2625,26 +2625,26 @@ body.has-promo-banner .footer {
 .sport-hero .sport-hero-card {
   position: absolute;
   left: 8%;
-  bottom: 64px;
+  bottom: 4rem;
   z-index: 2;
   width: 100%;
   max-width: 435px;
   box-sizing: border-box;
-  padding: 1.5em;
-  border-radius: 0.75em;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
   background-color: rgba(23, 23, 23, 0.92);
   color: #FFFFFF;
 }
 .sport-hero .sport-hero-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  margin: 0 0 0.75em;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
   color: #FFFFFF;
 }
 .sport-hero .sport-hero-label strong {
@@ -2655,7 +2655,7 @@ body.has-promo-banner .footer {
 }
 .sport-hero .sport-live-dot {
   width: 8px;
-  height: 8px;
+  height: 0.5rem;
   border-radius: 50%;
   background-color: #E91E1B;
   animation: sport-live-blink 1.4s ease-in-out infinite;
@@ -2663,15 +2663,15 @@ body.has-promo-banner .footer {
 .sport-hero .sport-hero-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   font-weight: 700;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.75em;
-  margin: 0 0 0.75em;
+  gap: 0.75rem;
+  margin: 0 0 0.75rem;
   padding-top: 0;
   color: #FFFFFF;
 }
@@ -2681,15 +2681,15 @@ body.has-promo-banner .footer {
 .sport-hero .sport-hero-sub {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 0 0 20px;
+  margin: 0 0 1.25rem;
   color: #A3A3A3;
 }
 .sport-hero .sport-hero-actions {
   display: flex;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 
 @keyframes sport-live-blink {
@@ -2703,15 +2703,15 @@ body.has-promo-banner .footer {
 .sport-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  padding: 0 1.5em;
-  border-radius: 9999px;
+  height: 2.5rem;
+  padding: 0 1.5rem;
+  border-radius: 624.9375rem;
   font-weight: 700;
   text-decoration: none;
   transition: background-color 0.25s ease, opacity 0.25s ease;
@@ -2739,13 +2739,13 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 .sport-section-head .sport-section-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   margin: 0;
   color: #FFFFFF;
@@ -2753,8 +2753,8 @@ body.has-promo-banner .footer {
 .sport-section-head .sport-more {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   text-decoration: none;
@@ -2767,27 +2767,27 @@ body.has-promo-banner .footer {
 .sport-empty {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
-  padding: 3em 1em;
+  padding: 3rem 1rem;
   text-align: center;
   color: #A3A3A3;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
 }
 
 .sport-upcoming {
   background-color: #141414;
-  padding: 56px 0 2em;
+  padding: 3.5rem 0 2rem;
 }
 .sport-upcoming .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2800,7 +2800,7 @@ body.has-promo-banner .footer {
 .sport-upcoming .sport-match-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -2808,17 +2808,17 @@ body.has-promo-banner .footer {
 .sport-upcoming .sport-match-card {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 1em;
-  border-radius: 0.75em;
+  gap: 0.875rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
   min-width: 0;
 }
 .sport-upcoming .sport-match-status {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
@@ -2826,24 +2826,24 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .sport-upcoming .sport-match-teams {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.625rem;
   min-width: 0;
 }
 .sport-upcoming .sport-match-team {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
   min-width: 0;
 }
 .sport-upcoming .sport-match-team img,
 .sport-upcoming .sport-match-team .sport-crest-empty {
   width: 28px;
-  height: 28px;
+  height: 1.75rem;
   flex-shrink: 0;
   object-fit: contain;
   border-radius: 50%;
@@ -2852,8 +2852,8 @@ body.has-promo-banner .footer {
 .sport-upcoming .sport-match-team-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #FFFFFF;
   white-space: nowrap;
@@ -2863,8 +2863,8 @@ body.has-promo-banner .footer {
 .sport-upcoming .sport-match-score {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   flex-shrink: 0;
@@ -2873,14 +2873,14 @@ body.has-promo-banner .footer {
 
 .sport-shorts {
   background-color: #141414;
-  padding: 2em 0 72px;
+  padding: 2rem 0 4.5rem;
 }
 .sport-shorts .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2900,17 +2900,17 @@ body.has-promo-banner .footer {
 .sport-shorts .sport-short-card {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
   text-decoration: none;
   color: #FFFFFF;
 }
 .sport-shorts .sport-short-thumb {
   position: relative;
   aspect-ratio: 175/190;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   overflow: hidden;
   background-color: #1f1f1f;
-  margin-bottom: 6px;
+  margin-bottom: 0.375rem;
 }
 .sport-shorts .sport-short-thumb img {
   width: 100%;
@@ -2928,12 +2928,12 @@ body.has-promo-banner .footer {
   align-items: center;
   justify-content: center;
   width: 52px;
-  height: 52px;
+  height: 3.25rem;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.55);
   color: #FFFFFF;
-  font-size: 18px;
-  padding-left: 3px;
+  font-size: 1.125rem;
+  padding-left: 0.1875rem;
   box-sizing: border-box;
 }
 .sport-shorts .sport-short-card:hover .sport-short-thumb img {
@@ -2942,8 +2942,8 @@ body.has-promo-banner .footer {
 .sport-shorts .sport-short-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
   color: #FFFFFF;
@@ -2956,8 +2956,8 @@ body.has-promo-banner .footer {
 .sport-shorts .sport-short-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   white-space: nowrap;
@@ -2967,14 +2967,14 @@ body.has-promo-banner .footer {
 
 .sport-promo {
   background-color: #141414;
-  padding: 0 0 72px;
+  padding: 0 0 4.5rem;
 }
 .sport-promo .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -2989,8 +2989,8 @@ body.has-promo-banner .footer {
   align-items: center;
   justify-content: center;
   aspect-ratio: 1185/348;
-  min-height: 200px;
-  border-radius: 0.75em;
+  min-height: 12.5rem;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
   overflow: hidden;
 }
@@ -3003,8 +3003,8 @@ body.has-promo-banner .footer {
 .sport-promo .sport-promo-placeholder {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
@@ -3012,12 +3012,12 @@ body.has-promo-banner .footer {
 .sport-team-card {
   display: flex;
   align-items: center;
-  gap: 20px;
-  height: 108px;
-  padding: 0 28px 0 18px;
+  gap: 1.25rem;
+  height: 6.75rem;
+  padding: 0 1.75rem 0 1.125rem;
   box-sizing: border-box;
-  border-radius: 1.25em;
-  border: 1px solid transparent;
+  border-radius: 1.25rem;
+  border: 0.0625rem solid transparent;
   background-color: #242424;
   min-width: 0;
   transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -3031,8 +3031,8 @@ body.has-promo-banner .footer {
 .sport-team-card .sport-team-logo {
   flex-shrink: 0;
   width: 64px;
-  height: 64px;
-  border-radius: 0.63em;
+  height: 4rem;
+  border-radius: 0.625rem;
   overflow: hidden;
 }
 .sport-team-card .sport-team-logo img {
@@ -3046,7 +3046,7 @@ body.has-promo-banner .footer {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
 }
 .sport-team-card .sport-team-name,
 .sport-team-card .sport-team-meta {
@@ -3057,8 +3057,8 @@ body.has-promo-banner .footer {
 .sport-team-card .sport-team-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
@@ -3066,23 +3066,23 @@ body.has-promo-banner .footer {
 .sport-team-card .sport-team-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
 .sport-team-card .sport-team-add {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   border: none;
   border-radius: 50%;
   background: transparent;
@@ -3098,8 +3098,8 @@ body.has-promo-banner .footer {
 .sport-team-card .sport-team-add.on {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.31em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
   font-weight: 700;
   background-color: #E91E1B;
@@ -3107,7 +3107,7 @@ body.has-promo-banner .footer {
 
 .sport-team-filter {
   display: flex;
-  gap: 0.5em;
+  gap: 0.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3115,13 +3115,13 @@ body.has-promo-banner .footer {
 .sport-team-filter button {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  height: 40px;
-  padding: 0 18px;
+  height: 2.5rem;
+  padding: 0 1.125rem;
   border: none;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background-color: rgba(23, 23, 23, 0.45);
   color: #E0E0E0;
   cursor: pointer;
@@ -3129,7 +3129,7 @@ body.has-promo-banner .footer {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 .sport-team-filter button .count {
-  margin-left: 6px;
+  margin-left: 0.375rem;
   color: #A3A3A3;
 }
 .sport-team-filter button:hover {
@@ -3147,12 +3147,12 @@ body.has-promo-banner .footer {
 .sport-team-empty {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   margin: 0;
-  padding: 40px 1em;
-  border-radius: 1.25em;
+  padding: 2.5rem 1rem;
+  border-radius: 1.25rem;
   background-color: rgba(23, 23, 23, 0.45);
   color: #E0E0E0;
   text-align: center;
@@ -3160,14 +3160,14 @@ body.has-promo-banner .footer {
 
 .sport-teams {
   background: linear-gradient(to right, #00047C 0%, #FFAA7A 100%);
-  padding: 4em 0;
+  padding: 4rem 0;
 }
 .sport-teams .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3184,25 +3184,25 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1em;
-  margin-bottom: 20px;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 .sport-teams .sport-teams-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
   color: #FFFFFF;
 }
 .sport-teams .sport-teams-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
   color: rgba(255, 255, 255, 0.85);
@@ -3210,8 +3210,8 @@ body.has-promo-banner .footer {
 .sport-teams .sport-teams-count {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   flex-shrink: 0;
   margin: 0;
@@ -3222,7 +3222,7 @@ body.has-promo-banner .footer {
   color: #FFFFFF;
 }
 .sport-teams .sport-team-filter {
-  margin-bottom: 1.5em;
+  margin-bottom: 1.5rem;
 }
 .sport-teams .sport-team-swiper {
   width: 100%;
@@ -3234,17 +3234,17 @@ body.has-promo-banner .footer {
 .sport-teams .sport-team-more {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   width: fit-content;
-  height: 44px;
-  margin: 2em auto 0;
-  padding: 0 28px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 9999px;
+  height: 2.75rem;
+  margin: 2rem auto 0;
+  padding: 0 1.75rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.5);
+  border-radius: 624.9375rem;
   background-color: rgba(23, 23, 23, 0.25);
   color: #FFFFFF;
   text-decoration: none;
@@ -3257,8 +3257,8 @@ body.has-promo-banner .footer {
 
 .sport-teams-page {
   min-height: 100vh;
-  padding-top: 4.5em;
-  padding-bottom: 80px;
+  padding-top: 4.5rem;
+  padding-bottom: 5rem;
   background-color: #141414;
   color: #FFFFFF;
 }
@@ -3266,8 +3266,8 @@ body.has-promo-banner .footer {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3279,15 +3279,15 @@ body.has-promo-banner .footer {
 }
 .sport-teams-page .sport-teams-hero {
   background: linear-gradient(to right, #00047C 0%, #FFAA7A 100%);
-  padding: 40px 0 3em;
+  padding: 2.5rem 0 3rem;
 }
 .sport-teams-page .sport-teams-back {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   padding: 0;
   border: none;
   background: none;
@@ -3300,32 +3300,32 @@ body.has-promo-banner .footer {
 .sport-teams-page .sport-teams-page-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   font-weight: 700;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
   color: #FFFFFF;
 }
 .sport-teams-page .sport-teams-page-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  margin: 0 0 20px;
+  margin: 0 0 1.25rem;
   color: rgba(255, 255, 255, 0.85);
 }
 .sport-teams-page .sport-teams-summary {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 1em;
+  gap: 1rem;
   color: rgba(255, 255, 255, 0.85);
 }
 .sport-teams-page .sport-teams-summary strong {
@@ -3335,13 +3335,13 @@ body.has-promo-banner .footer {
 .sport-teams-page .sport-teams-clear {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  height: 32px;
-  padding: 0 14px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 9999px;
+  height: 2rem;
+  padding: 0 0.875rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.5);
+  border-radius: 624.9375rem;
   background: transparent;
   color: #FFFFFF;
   cursor: pointer;
@@ -3350,14 +3350,14 @@ body.has-promo-banner .footer {
   background-color: rgba(23, 23, 23, 0.3);
 }
 .sport-teams-page .sport-teams-body {
-  padding-top: 2em;
+  padding-top: 2rem;
 }
 .sport-teams-page .sport-teams-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1em;
-  margin-bottom: 2em;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 .sport-teams-page .sport-team-filter button {
   background-color: #242424;
@@ -3372,9 +3372,9 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: center;
   width: 280px;
-  height: 40px;
-  padding: 0 1em;
-  border-radius: 9999px;
+  height: 2.5rem;
+  padding: 0 1rem;
+  border-radius: 624.9375rem;
   background-color: #262626;
   box-sizing: border-box;
   transition: background-color 0.2s ease;
@@ -3384,16 +3384,16 @@ body.has-promo-banner .footer {
 }
 .sport-teams-page .sport-team-search img {
   width: 14px;
-  height: 14px;
-  margin-right: 0.5em;
+  height: 0.875rem;
+  margin-right: 0.5rem;
   flex-shrink: 0;
   filter: invert(0.7);
 }
 .sport-teams-page .sport-team-search input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   width: 100%;
   border: none;
@@ -3405,31 +3405,31 @@ body.has-promo-banner .footer {
   color: #A3A3A3;
 }
 .sport-teams-page .sport-team-group + .sport-team-group {
-  margin-top: 3em;
+  margin-top: 3rem;
 }
 .sport-teams-page .sport-team-group-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   font-weight: 700;
-  margin: 0 0 20px;
+  margin: 0 0 1.25rem;
   color: #FFFFFF;
 }
 .sport-teams-page .sport-team-group-title .count {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  margin-left: 0.5em;
+  margin-left: 0.5rem;
   color: #A3A3A3;
 }
 .sport-teams-page .sport-team-list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3440,14 +3440,14 @@ body.has-promo-banner .footer {
 
 .sport-league {
   background-color: #141414;
-  padding: 56px 0 72px;
+  padding: 3.5rem 0 4.5rem;
 }
 .sport-league .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3460,7 +3460,7 @@ body.has-promo-banner .footer {
 .sport-league .sport-league-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3468,9 +3468,9 @@ body.has-promo-banner .footer {
 .sport-league .sport-league-card {
   display: flex;
   align-items: center;
-  gap: 1em;
-  padding: 1em;
-  border-radius: 0.75em;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
   text-decoration: none;
   color: #FFFFFF;
@@ -3485,19 +3485,19 @@ body.has-promo-banner .footer {
   align-items: center;
   justify-content: center;
   width: 52px;
-  height: 52px;
-  border-radius: 0.63em;
+  height: 3.25rem;
+  border-radius: 0.625rem;
   background-color: #FFFFFF;
   color: #171717;
-  font-size: 20px;
-  padding-left: 2px;
+  font-size: 1.25rem;
+  padding-left: 0.125rem;
   box-sizing: border-box;
 }
 .sport-league .sport-league-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   flex: 1;
   min-width: 0;
@@ -3506,19 +3506,19 @@ body.has-promo-banner .footer {
 .sport-league .sport-league-arrow {
   flex-shrink: 0;
   color: #A3A3A3;
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .sport-replay {
   background-color: #141414;
-  padding: 56px 0 2em;
+  padding: 3.5rem 0 2rem;
 }
 .sport-replay .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3531,7 +3531,7 @@ body.has-promo-banner .footer {
 .sport-replay .sport-replay-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3539,9 +3539,9 @@ body.has-promo-banner .footer {
 .sport-replay .sport-replay-card {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 0.75em;
-  border-radius: 0.75em;
+  gap: 0.875rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
   background-color: #1f1f1f;
   text-decoration: none;
   color: #FFFFFF;
@@ -3554,23 +3554,23 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   aspect-ratio: 206/104;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background-color: #242424;
   overflow: hidden;
 }
 .sport-replay .sport-replay-thumb img {
   width: 44px;
-  height: 44px;
+  height: 2.75rem;
   object-fit: contain;
   display: block;
 }
 .sport-replay .sport-replay-score {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   font-weight: 700;
   color: #FFFFFF;
@@ -3578,10 +3578,10 @@ body.has-promo-banner .footer {
 .sport-replay .sport-replay-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  padding: 0 0.25em;
+  padding: 0 0.25rem;
   color: #FFFFFF;
   white-space: nowrap;
   overflow: hidden;
@@ -3590,24 +3590,24 @@ body.has-promo-banner .footer {
 .sport-replay .sport-replay-date {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  padding: 0 0.25em 0.25em;
+  padding: 0 0.25rem 0.25rem;
   color: #A3A3A3;
-  margin-top: -8px;
+  margin-top: -0.5rem;
 }
 
 .sport-highlights {
   background-color: #141414;
-  padding: 56px 0 72px;
+  padding: 3.5rem 0 4.5rem;
 }
 .sport-highlights .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3620,7 +3620,7 @@ body.has-promo-banner .footer {
 .sport-highlights .sport-highlight-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5em;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3628,17 +3628,17 @@ body.has-promo-banner .footer {
 .sport-highlights .sport-highlight-card {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
   text-decoration: none;
   color: #FFFFFF;
 }
 .sport-highlights .sport-highlight-thumb {
   position: relative;
   aspect-ratio: 286/160;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   overflow: hidden;
   background-color: #1f1f1f;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 .sport-highlights .sport-highlight-thumb img {
   width: 100%;
@@ -3659,19 +3659,19 @@ body.has-promo-banner .footer {
   align-items: center;
   justify-content: center;
   width: 42px;
-  height: 42px;
+  height: 2.625rem;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.7);
   color: #FFFFFF;
-  font-size: 14px;
-  padding-left: 2px;
+  font-size: 0.875rem;
+  padding-left: 0.125rem;
   box-sizing: border-box;
 }
 .sport-highlights .sport-highlight-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
   color: #FFFFFF;
@@ -3684,8 +3684,8 @@ body.has-promo-banner .footer {
 .sport-highlights .sport-highlight-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
   white-space: nowrap;
@@ -3695,14 +3695,14 @@ body.has-promo-banner .footer {
 
 .sport-notify {
   background-color: #141414;
-  padding: 0 0 72px;
+  padding: 0 0 4.5rem;
 }
 .sport-notify .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3716,27 +3716,27 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2em;
-  padding: 3em;
-  border-radius: 16px;
+  gap: 2rem;
+  padding: 3rem;
+  border-radius: 1rem;
   background-color: #1f1f1f;
 }
 .sport-notify .sport-notify-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   font-weight: 700;
-  margin: 0 0 0.75em;
+  margin: 0 0 0.75rem;
   color: #FFFFFF;
   word-break: keep-all;
 }
 .sport-notify .sport-notify-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   margin: 0;
   color: #A3A3A3;
@@ -3744,16 +3744,16 @@ body.has-promo-banner .footer {
 .sport-notify .sport-notify-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
-  padding: 0 2em;
-  border-radius: 9999px;
+  height: 2.75rem;
+  padding: 0 2rem;
+  border-radius: 624.9375rem;
   background-color: #FFFFFF;
   color: #171717;
   font-weight: 700;
@@ -3771,8 +3771,8 @@ body.has-promo-banner .footer {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3790,7 +3790,7 @@ body.has-promo-banner .footer {
 @keyframes page-fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(0.5rem);
   }
   to {
     opacity: 1;
@@ -3798,37 +3798,37 @@ body.has-promo-banner .footer {
   }
 }
 main h2 {
-  padding-top: 200px;
+  padding-top: 12.5rem;
 }
 
 .footer {
   background-color: #141414;
   color: #A3A3A3;
   width: 100%;
-  padding: 0.88em 2.5em;
+  padding: 0.875rem 2.5rem;
   box-sizing: border-box;
 }
 .footer .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding: 26px 0;
+  padding: 1.625rem 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 28px;
+  gap: 1.75rem;
   box-sizing: border-box;
 }
 .footer .footer-logo img {
   width: auto;
-  height: 22px;
+  height: 1.375rem;
   display: block;
   filter: brightness(0) invert(1);
 }
 .footer .footer-main-menu {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75em 2em;
+  gap: 0.75rem 2rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -3836,9 +3836,9 @@ main h2 {
 .footer .footer-main-menu a {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
   color: #C8C8C8;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 400;
   transition: color 0.2s ease;
 }
@@ -3846,18 +3846,18 @@ main h2 {
   color: #FFFFFF;
 }
 .footer .footer-main-menu .arrow {
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: #C8C8C8;
 }
 .footer .footer-policy-menu {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5em 20px;
+  gap: 0.5rem 1.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .footer .footer-policy-menu a {
   color: #A3A3A3;
@@ -3868,7 +3868,7 @@ main h2 {
 }
 .footer .footer-copyright {
   color: #A3A3A3;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 main.sport-home {
@@ -3885,8 +3885,8 @@ main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -3898,11 +3898,11 @@ main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):
 }
 main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
   max-width: 1200px;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 main.sport-home .sport-teams {
-  padding: 56px 0;
+  padding: 3.5rem 0;
 }
 main.sport-home .sport-live-slide,
 main.sport-home .sport-series-slide {
@@ -3914,7 +3914,7 @@ main.sport-home .sport-live-card {
   position: relative;
   aspect-ratio: 3/2;
   overflow: hidden;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background: #2E2E2E;
   color: #FFFFFF;
 }
@@ -3934,23 +3934,23 @@ main.sport-home .sport-live-badge,
 main.sport-home .sport-live-watch {
   position: absolute;
   z-index: 1;
-  left: 14px;
+  left: 0.875rem;
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  padding: 5px 0.75em;
+  padding: 0.3125rem 0.75rem;
 }
 main.sport-home .sport-live-badge {
-  top: 14px;
+  top: 0.875rem;
   background: #E91E1B;
-  border-radius: 30px;
+  border-radius: 1.875rem;
 }
 main.sport-home .sport-live-watch {
-  bottom: 14px;
+  bottom: 0.875rem;
   background: rgba(255, 255, 255, 0.25);
-  border-radius: 3px;
+  border-radius: 0.1875rem;
 }
 main.sport-home .sport-series-card {
   display: block;
@@ -3962,11 +3962,11 @@ main.sport-home .sport-series-card .sport-series-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: cover;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background: #2E2E2E;
 }
 main.sport-home .sport-series-card h4 {
-  margin: 0.75em 0 0;
+  margin: 0.75rem 0 0;
 }
 
 @media (min-width: 1025px) {
@@ -3977,49 +3977,49 @@ main.sport-home .sport-series-card h4 {
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.75em;
-    line-height: 1em;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
-    gap: 0.5em;
-    margin-bottom: 0.75em;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
     color: #FFFFFF;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-meta .age-rating {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 4.75em;
-    line-height: 6em;
+    font-size: 4.75rem;
+    line-height: 6rem;
     letter-spacing: 0;
-    margin: 0 0 1em;
+    margin: 0 0 1rem;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-overview {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     -webkit-line-clamp: 2;
     line-clamp: 2;
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5rem;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions {
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions .hero-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
-    height: 40px;
-    padding: 0 1.5em;
+    height: 2.5rem;
+    padding: 0 1.5rem;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info .hero-actions .hero-btn.primary {
     background-color: #5865F2;
@@ -4033,30 +4033,30 @@ main.sport-home .sport-series-card h4 {
   }
   .value-props {
     background-color: #08090d;
-    padding: 2.25em 0 1.5em;
+    padding: 2.25rem 0 1.5rem;
   }
   .value-props .inner {
-    padding-left: calc(5em + 3em);
-    padding-right: calc(5em + 3em);
+    padding-left: calc(5rem + 3rem);
+    padding-right: calc(5rem + 3rem);
   }
   .value-props .value-props-inner {
-    gap: 1.5em;
+    gap: 1.5rem;
   }
   .value-props .value-prop-item {
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   .value-props .value-prop-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .value-props .value-prop-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -4068,10 +4068,10 @@ main.sport-home .sport-series-card h4 {
   .top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 3em;
-    line-height: 3.5em;
+    font-size: 3rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
-    margin: 0 0 1.5em;
+    margin: 0 0 1.5rem;
   }
   .upcoming-section .inner,
   .apple-originals .inner,
@@ -4110,7 +4110,7 @@ main.sport-home .sport-series-card h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: calc(4.5em + 3em) 1.5em 4em;
+  padding: calc(4.5rem + 3rem) 1.5rem 4rem;
   box-sizing: border-box;
   background-color: #08090d;
 }
@@ -4119,8 +4119,8 @@ main.sport-home .sport-series-card h4 {
   position: relative;
   width: 100%;
   max-width: 800px;
-  padding: 4em 3em 3em;
-  border-radius: 1.5em;
+  padding: 4rem 3rem 3rem;
+  border-radius: 1.5rem;
   background-color: #1f1f1f;
   color: #FFFFFF;
   text-align: center;
@@ -4139,19 +4139,19 @@ main.sport-home .sport-series-card h4 {
 .auth-close {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   position: absolute;
-  top: 1.5em;
-  left: 1.5em;
+  top: 1.5rem;
+  left: 1.5rem;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 40px;
-  padding: 0 1.5em;
+  gap: 0.375rem;
+  height: 2.5rem;
+  padding: 0 1.5rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #262626;
   color: #FFFFFF;
   cursor: pointer;
@@ -4161,8 +4161,8 @@ main.sport-home .sport-series-card h4 {
   background-color: #2E2E2E;
 }
 .auth-close:focus-visible {
-  outline: 2px solid #6E7AF4;
-  outline-offset: 2px;
+  outline: 0.125rem solid #6E7AF4;
+  outline-offset: 0.125rem;
 }
 
 .auth-logo {
@@ -4170,14 +4170,14 @@ main.sport-home .sport-series-card h4 {
   align-items: center;
   justify-content: center;
   width: 64px;
-  height: 52px;
+  height: 3.25rem;
   margin: 0 auto;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background-color: #262626;
 }
 .auth-logo img {
   display: block;
-  height: 22px;
+  height: 1.375rem;
   width: auto;
   filter: brightness(0) invert(1);
 }
@@ -4189,7 +4189,7 @@ main.sport-home .sport-series-card h4 {
 @keyframes auth-step-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(0.75rem);
   }
   to {
     opacity: 1;
@@ -4204,10 +4204,10 @@ main.sport-home .sport-series-card h4 {
 .auth-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
-  margin: 1.5em 0 1em;
+  margin: 1.5rem 0 1rem;
   color: #FFFFFF;
   word-break: keep-all;
 }
@@ -4215,10 +4215,10 @@ main.sport-home .sport-series-card h4 {
 .auth-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   color: #C8C8C8;
   word-break: keep-all;
 }
@@ -4230,23 +4230,23 @@ main.sport-home .sport-series-card h4 {
 .auth-fields {
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  gap: 1.5rem;
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
 }
 .auth-fields--full {
   max-width: none;
-  margin-top: 1.5em;
+  margin-top: 1.5rem;
 }
 
 .auth-field {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
-  padding: 18px 1em;
-  border: 1px solid #525252;
-  border-radius: 0.63em;
+  gap: 0.5rem;
+  padding: 1.125rem 1rem;
+  border: 0.0625rem solid #525252;
+  border-radius: 0.625rem;
   background-color: #262626;
   text-align: left;
   box-sizing: border-box;
@@ -4259,8 +4259,8 @@ main.sport-home .sport-series-card h4 {
 .auth-field input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   width: 100%;
   padding: 0;
@@ -4277,8 +4277,8 @@ main.sport-home .sport-series-card h4 {
 .auth-field-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -4286,8 +4286,8 @@ main.sport-home .sport-series-card h4 {
 .auth-field-value {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
   word-break: break-all;
@@ -4295,50 +4295,50 @@ main.sport-home .sport-series-card h4 {
 
 .auth-privacy {
   max-width: 560px;
-  margin: 2em auto 0;
+  margin: 2rem auto 0;
 }
 .auth-privacy strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: block;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.75rem;
   color: #E0E0E0;
 }
 .auth-privacy p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   color: #C8C8C8;
   word-break: keep-all;
 }
 
 .auth-info {
-  padding: 1.5em;
-  border-radius: 0.75em;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
   background-color: #262626;
   text-align: left;
 }
 .auth-info strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: block;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
   color: #FFFFFF;
 }
 .auth-info p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   margin: 0;
   color: #C8C8C8;
@@ -4349,10 +4349,10 @@ main.sport-home .sport-series-card h4 {
 .auth-message {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 1em 0 0;
+  margin: 1rem 0 0;
   color: #FFFFFF;
   word-break: keep-all;
 }
@@ -4364,20 +4364,20 @@ main.sport-home .sport-series-card h4 {
 .auth-hint {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 1.5em 0 0;
+  margin: 1.5rem 0 0;
   color: #C8C8C8;
 }
 
 .auth-fineprint {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 1.5em 0 0;
+  margin: 1.5rem 0 0;
   color: #C8C8C8;
   text-align: left;
   word-break: keep-all;
@@ -4386,15 +4386,15 @@ main.sport-home .sport-series-card h4 {
 .auth-actions {
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  gap: 1.5rem;
   width: 100%;
   max-width: 428px;
-  margin: 1.5em auto 0;
+  margin: 1.5rem auto 0;
 }
 .auth-actions--row {
   flex-direction: row;
   max-width: none;
-  gap: 20px;
+  gap: 1.25rem;
 }
 .auth-actions--row .auth-btn:first-child {
   flex: 0 0 250px;
@@ -4406,18 +4406,18 @@ main.sport-home .sport-series-card h4 {
 .auth-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 0.375rem;
   width: 100%;
-  height: 48px;
-  padding: 0 1em;
+  height: 3rem;
+  padding: 0 1rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #5865F2;
   color: #FFFFFF;
   text-decoration: none;
@@ -4433,8 +4433,8 @@ main.sport-home .sport-series-card h4 {
   cursor: default;
 }
 .auth-btn:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 .auth-btn--secondary {
   background-color: #262626;
@@ -4446,29 +4446,29 @@ main.sport-home .sport-series-card h4 {
 .auth-divider {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   max-width: 428px;
-  margin: 1.5em auto 0;
+  margin: 1.5rem auto 0;
   color: #A3A3A3;
 }
 .auth-divider::before, .auth-divider::after {
   content: "";
   flex: 1;
-  height: 1px;
+  height: 0.0625rem;
   background-color: #3A3A3A;
 }
 .auth-divider + .auth-actions {
-  margin-top: 1em;
+  margin-top: 1rem;
 }
 
 .auth-google-icon {
   width: 16px;
-  height: 16px;
+  height: 1rem;
   flex-shrink: 0;
 }
 
@@ -4476,15 +4476,15 @@ main.sport-home .sport-series-card h4 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3em;
-  margin-top: 2em;
+  gap: 3rem;
+  margin-top: 2rem;
 }
 
 .auth-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   padding: 0;
   border: none;
@@ -4505,7 +4505,7 @@ main.sport-home .sport-series-card h4 {
 .plan-options {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
   text-align: left;
 }
 
@@ -4513,10 +4513,10 @@ main.sport-home .sport-series-card h4 {
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 1em;
-  padding: 1.5em 4em 1.5em 1.5em;
-  border: 1px solid #525252;
-  border-radius: 0.75em;
+  gap: 1rem;
+  padding: 1.5rem 4rem 1.5rem 1.5rem;
+  border: 0.0625rem solid #525252;
+  border-radius: 0.75rem;
   background-color: #262626;
   cursor: pointer;
   transition: border-color 0.2s ease;
@@ -4524,7 +4524,7 @@ main.sport-home .sport-series-card h4 {
 .plan-opt input {
   position: absolute;
   width: 1px;
-  height: 1px;
+  height: 0.0625rem;
   margin: 0;
   opacity: 0;
 }
@@ -4533,25 +4533,25 @@ main.sport-home .sport-series-card h4 {
 }
 .plan-opt.on {
   border-color: #6E7AF4;
-  box-shadow: 0 0 0 1px #6E7AF4;
+  box-shadow: 0 0 0 0.0625rem #6E7AF4;
 }
 .plan-opt:has(input:focus-visible) {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 
 .plan-opt-text {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
   min-width: 0;
 }
 
 .plan-opt-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -4559,8 +4559,8 @@ main.sport-home .sport-series-card h4 {
 .plan-opt-price {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -4568,19 +4568,19 @@ main.sport-home .sport-series-card h4 {
 .plan-opt-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
 
 .plan-opt-radio {
   position: absolute;
-  top: 2em;
-  right: 3em;
+  top: 2rem;
+  right: 3rem;
   width: 20px;
-  height: 20px;
-  border: 1px solid #525252;
+  height: 1.25rem;
+  border: 0.0625rem solid #525252;
   border-radius: 50%;
   box-sizing: border-box;
   transition: background-color 0.2s ease, border-color 0.2s ease;
@@ -4593,10 +4593,10 @@ main.sport-home .sport-series-card h4 {
 .plan-benefit-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
-  margin: 2.25em 0 1.5em;
+  margin: 2.25rem 0 1.5rem;
   color: #FFFFFF;
   text-align: left;
 }
@@ -4604,7 +4604,7 @@ main.sport-home .sport-series-card h4 {
 .plan-benefit-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75em;
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -4613,24 +4613,24 @@ main.sport-home .sport-series-card h4 {
 .plan-benefit-list li {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
-  padding: 20px 1em;
-  border: 1px solid #525252;
-  border-radius: 0.75em;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
+  border: 0.0625rem solid #525252;
+  border-radius: 0.75rem;
 }
 .plan-benefit-list strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
 .plan-benefit-list span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -4638,10 +4638,10 @@ main.sport-home .sport-series-card h4 {
 .plan-fineprint {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin: 2em 0 0;
+  margin: 2rem 0 0;
   color: #C8C8C8;
   text-align: left;
   word-break: keep-all;
@@ -4651,7 +4651,7 @@ main.sport-home .sport-series-card h4 {
   display: inline-block;
   width: 1.15em;
   height: 1.15em;
-  margin-right: 4px;
+  margin-right: 0.25rem;
   vertical-align: -0.2em;
   flex-shrink: 0;
 }
@@ -4733,8 +4733,8 @@ header .inner nav .gnb-right ul .profile-box > span,
   display: inline-block;
   flex-shrink: 0;
   width: 13px;
-  height: 16px;
-  margin-right: 2px;
+  height: 1rem;
+  margin-right: 0.125rem;
   background-color: currentColor;
   -webkit-mask: url("/icons/live/bell-btn.svg") center/contain no-repeat;
   mask: url("/icons/live/bell-btn.svg") center/contain no-repeat;
@@ -4760,28 +4760,28 @@ header .inner nav .gnb-right ul .profile-box > span,
 }
 
 .sport-btn .play-icon {
-  height: 12px;
+  height: 0.75rem;
 }
 
 .promo-banner.is-live .promo-banner-btn .play-icon {
-  height: 10px;
+  height: 0.625rem;
 }
 
 .sport-live-watch .play-icon,
 .sport-detail-info-meta .play-icon,
 .sport-detail-meta .play-icon {
-  height: 9px;
+  height: 0.5625rem;
 }
 
 .movie-detail-page .right-section .episode-card .thumb .thumb-play {
-  width: 3em;
-  height: 3em;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.6);
 }
 .movie-detail-page .right-section .episode-card .thumb .thumb-play .play-icon {
   width: auto;
-  height: 1.5em;
+  height: 1.5rem;
 }
 
 .subscribe-gate {
@@ -4791,22 +4791,22 @@ header .inner nav .gnb-right ul .profile-box > span,
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5em;
+  padding: 1.5rem;
   background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   animation: subscribe-gate-fade 0.2s ease both;
 }
 
 .subscribe-gate-card {
   width: 100%;
   max-width: 420px;
-  padding: 2em 1.5em 1.5em;
-  border-radius: 1.5em;
+  padding: 2rem 1.5rem 1.5rem;
+  border-radius: 1.5rem;
   background-color: #1f1f1f;
   color: #FFFFFF;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.45);
   animation: subscribe-gate-in 0.25s ease both;
 }
 
@@ -4815,25 +4815,25 @@ header .inner nav .gnb-right ul .profile-box > span,
   align-items: center;
   justify-content: center;
   width: 64px;
-  height: 52px;
-  margin: 0 auto 1em;
-  border-radius: 0.75em;
+  height: 3.25rem;
+  margin: 0 auto 1rem;
+  border-radius: 0.75rem;
   background-color: #262626;
 }
 .subscribe-gate-logo img {
   display: block;
   width: auto;
-  height: 22px;
+  height: 1.375rem;
   filter: brightness(0) invert(1);
 }
 
 .subscribe-gate-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.38em;
-  line-height: 1.75em;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
   letter-spacing: 0;
-  margin: 0 0 0.5em;
+  margin: 0 0 0.5rem;
   padding-top: 0;
   color: #FFFFFF;
 }
@@ -4841,10 +4841,10 @@ header .inner nav .gnb-right ul .profile-box > span,
 .subscribe-gate-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   color: #C8C8C8;
   word-break: keep-all;
 }
@@ -4852,22 +4852,22 @@ header .inner nav .gnb-right ul .profile-box > span,
 .subscribe-gate-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 
 .subscribe-gate-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 48px;
+  height: 3rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #5865F2;
   color: #FFFFFF;
   cursor: pointer;
@@ -4877,8 +4877,8 @@ header .inner nav .gnb-right ul .profile-box > span,
   background-color: #6E7AF4;
 }
 .subscribe-gate-btn:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 .subscribe-gate-btn--secondary {
   background-color: #262626;
@@ -4898,7 +4898,7 @@ header .inner nav .gnb-right ul .profile-box > span,
 @keyframes subscribe-gate-in {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.98);
+    transform: translateY(0.75rem) scale(0.98);
   }
   to {
     opacity: 1;
@@ -4912,7 +4912,7 @@ header .inner nav .gnb-right ul .profile-box > span,
   }
 }
 .trial-welcome .trial-strip {
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 60%;
   margin: 0 auto;
 }
@@ -4923,13 +4923,13 @@ header .inner nav .gnb-right ul .profile-box > span,
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  gap: 1em;
+  gap: 1rem;
 }
 .trial-welcome .trial-strip-hide {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   padding: 0;
   border: 0;
@@ -4946,46 +4946,46 @@ header .inner nav .gnb-right ul .profile-box > span,
 }
 
 .trial-welcome:not(.is-intro) {
-  padding-bottom: 0.75em;
+  padding-bottom: 0.75rem;
 }
 .trial-welcome.is-intro {
   display: block;
   min-height: 0;
-  padding-bottom: 128px;
+  padding-bottom: 8rem;
 }
 .trial-welcome.is-intro .inner {
   display: block;
 }
 .trial-welcome.is-intro .trial-heading {
-  margin-top: 128px;
+  margin-top: 8rem;
 }
 .trial-welcome.is-intro.is-strip-hidden .trial-heading {
-  margin-top: 2em;
+  margin-top: 2rem;
 }
 .trial-welcome.is-intro .top10-section {
-  padding: 128px 0 0;
+  padding: 8rem 0 0;
   background: none;
 }
 .trial-welcome .inner.trial-home-actions {
   display: flex;
   justify-content: center;
-  margin-top: 128px;
+  margin-top: 8rem;
 }
 .trial-welcome .trial-home-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   min-width: 220px;
-  height: 56px;
-  padding: 0 2em;
+  height: 3.5rem;
+  padding: 0 2rem;
   border: 0;
-  border-radius: 1.75em;
+  border-radius: 1.75rem;
   background-color: #5865F2;
   color: #FFFFFF;
   cursor: pointer;
@@ -5000,14 +5000,14 @@ header .inner nav .gnb-right ul .profile-box > span,
   background-color: #6E7AF4;
 }
 .trial-welcome .trial-home-link:hover span {
-  transform: translateX(4px);
+  transform: translateX(0.25rem);
 }
 .trial-welcome .trial-home-link:active {
   transform: scale(0.98);
 }
 .trial-welcome .trial-home-link:focus-visible {
-  outline: 2px solid #9AABF8;
-  outline-offset: 3px;
+  outline: 0.125rem solid #9AABF8;
+  outline-offset: 0.1875rem;
 }
 
 .ui-icon {
@@ -5081,7 +5081,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .trial-welcome .trial-home-link:hover img.ui-icon-arrow {
-  transform: translateX(4px);
+  transform: translateX(0.25rem);
   transition: transform 0.2s ease;
 }
 
@@ -5110,7 +5110,7 @@ img.ui-icon.ui-icon-arrow {
 
 .wish-page {
   min-height: 100vh;
-  padding: calc(4.5em + 80px) 0 8em;
+  padding: calc(4.5rem + 5rem) 0 8rem;
   box-sizing: border-box;
   background-color: #171717;
   color: #FFFFFF;
@@ -5121,7 +5121,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .wish-inner {
-  width: calc(100% - 5em);
+  width: calc(100% - 5rem);
   max-width: 1728px;
   margin: 0 auto;
 }
@@ -5129,28 +5129,28 @@ img.ui-icon.ui-icon-arrow {
 .wish-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 
 .wish-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
   color: #C8C8C8;
 }
 
 .wish-empty {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  padding: 4em 0;
+  padding: 4rem 0;
   text-align: center;
   color: #A3A3A3;
 }
@@ -5158,19 +5158,19 @@ img.ui-icon.ui-icon-arrow {
 .wish-sort {
   position: relative;
   display: inline-block;
-  margin-top: 4em;
+  margin-top: 4rem;
 }
 
 .wish-sort-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
-  padding: 0.5em 0.25em;
+  gap: 0.25rem;
+  padding: 0.5rem 0.25rem;
   border: none;
   background: none;
   color: #FFFFFF;
@@ -5178,46 +5178,46 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .wish-sort-arrow {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .wish-menu {
   position: absolute;
-  top: calc(100% + 0.25em);
+  top: calc(100% + 0.25rem);
   left: 0;
   z-index: 50;
   min-width: 180px;
   margin: 0;
   padding: 0;
   list-style: none;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   overflow: hidden;
   background-color: rgba(200, 200, 200, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
 }
 .wish-menu--right {
   left: auto;
   right: 0;
 }
 .wish-menu li + li .wish-menu-item {
-  border-top: 1px solid rgba(23, 23, 23, 0.15);
+  border-top: 0.0625rem solid rgba(23, 23, 23, 0.15);
 }
 
 .wish-menu-item {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 100%;
-  height: 44px;
-  padding: 0 1em;
+  height: 2.75rem;
+  padding: 0 1rem;
   border: none;
   background: transparent;
   color: #171717;
@@ -5226,7 +5226,7 @@ img.ui-icon.ui-icon-arrow {
   cursor: pointer;
 }
 .wish-menu-item .wish-icon {
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 .wish-menu-item:hover, .wish-menu-item:focus-visible {
   background-color: rgba(255, 255, 255, 0.35);
@@ -5241,8 +5241,8 @@ img.ui-icon.ui-icon-arrow {
 
 .wish-tabs {
   display: flex;
-  gap: 20px;
-  margin: 2em 0 0;
+  gap: 1.25rem;
+  margin: 2rem 0 0;
   padding: 0;
   list-style: none;
   overflow-x: auto;
@@ -5260,11 +5260,11 @@ img.ui-icon.ui-icon-arrow {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25em;
+  gap: 0.25rem;
   width: 100%;
-  height: 136px;
-  border: 1px solid transparent;
-  border-radius: 0.63em;
+  height: 8.5rem;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.625rem;
   background-color: #1f1f1f;
   color: #FFFFFF;
   cursor: pointer;
@@ -5273,16 +5273,16 @@ img.ui-icon.ui-icon-arrow {
 .wish-tab strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
 }
 .wish-tab span:last-child {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -5294,19 +5294,19 @@ img.ui-icon.ui-icon-arrow {
   background-color: #2E2E2E;
 }
 .wish-tab:focus-visible {
-  outline: 2px solid #9AABF8;
-  outline-offset: 2px;
+  outline: 0.125rem solid #9AABF8;
+  outline-offset: 0.125rem;
 }
 
 .wish-tab-icon {
-  font-size: 30px;
+  font-size: 1.875rem;
 }
 
 .wish-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5em;
-  margin: 3em 0 0;
+  gap: 1.5rem;
+  margin: 3rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -5314,10 +5314,10 @@ img.ui-icon.ui-icon-arrow {
 .wish-card {
   position: relative;
   display: flex;
-  gap: 1.5em;
+  gap: 1.5rem;
   min-width: 0;
-  padding: 1.5em;
-  border-radius: 0.63em;
+  padding: 1.5rem;
+  border-radius: 0.625rem;
   background-color: #1f1f1f;
 }
 
@@ -5328,7 +5328,7 @@ img.ui-icon.ui-icon-arrow {
   aspect-ratio: 2/3;
   padding: 0;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #2E2E2E;
   cursor: pointer;
@@ -5347,8 +5347,8 @@ img.ui-icon.ui-icon-arrow {
 .wish-card-noimg {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
@@ -5365,14 +5365,14 @@ img.ui-icon.ui-icon-arrow {
   align-items: center;
   justify-content: center;
   width: 48px;
-  height: 48px;
+  height: 3rem;
   border-radius: 50%;
   background-color: rgba(23, 23, 23, 0.55);
   transform: translate(-50%, -50%);
 }
 .wish-card-play img {
   width: 24px;
-  height: 24px;
+  height: 1.5rem;
   object-fit: contain;
 }
 
@@ -5380,14 +5380,14 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding-right: 40px;
+  padding-right: 2.5rem;
 }
 
 .wish-card-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   color: #FFFFFF;
   text-decoration: none;
@@ -5405,19 +5405,19 @@ img.ui-icon.ui-icon-arrow {
 .wish-card-genre {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin-top: 0.25em !important;
+  margin-top: 0.25rem !important;
 }
 
 .wish-card-overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin-top: 1em !important;
+  margin-top: 1rem !important;
   color: #C8C8C8;
   word-break: keep-all;
   display: -webkit-box;
@@ -5429,8 +5429,8 @@ img.ui-icon.ui-icon-arrow {
 
 .wish-card-menu {
   position: absolute;
-  top: 1em;
-  right: 1em;
+  top: 1rem;
+  right: 1rem;
 }
 
 .wish-more-btn {
@@ -5438,13 +5438,13 @@ img.ui-icon.ui-icon-arrow {
   align-items: center;
   justify-content: center;
   width: 36px;
-  height: 36px;
+  height: 2.25rem;
   padding: 0;
   border: none;
   border-radius: 50%;
   background: transparent;
   color: #FFFFFF;
-  font-size: 30px;
+  font-size: 1.875rem;
   cursor: pointer;
 }
 .wish-more-btn:hover {
@@ -5458,7 +5458,7 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.6);
   animation: wish-fade 0.2s ease both;
 }
@@ -5468,19 +5468,19 @@ img.ui-icon.ui-icon-arrow {
   flex-direction: column;
   width: min(522px, 100%);
   max-height: 85vh;
-  padding: 1.5em;
-  border-radius: 1.5em;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
   box-sizing: border-box;
   background-color: #1f1f1f;
   color: #FFFFFF;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.5);
   animation: wish-up 0.25s ease both;
 }
 .wish-modal h2 {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   margin: 0;
   padding: 0;
@@ -5498,8 +5498,8 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75em;
-  margin-bottom: 1.5em;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .wish-close {
@@ -5508,7 +5508,7 @@ img.ui-icon.ui-icon-arrow {
   justify-content: center;
   flex-shrink: 0;
   width: 32px;
-  height: 32px;
+  height: 2rem;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -5523,7 +5523,7 @@ img.ui-icon.ui-icon-arrow {
 .wish-group-list {
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
+  gap: 0.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -5534,11 +5534,11 @@ img.ui-icon.ui-icon-arrow {
 .wish-group-row {
   display: flex;
   align-items: center;
-  gap: 1em;
+  gap: 1rem;
   width: 100%;
-  padding: 0.75em 1em;
+  padding: 0.75rem 1rem;
   border: none;
-  border-radius: 0.75em;
+  border-radius: 0.75rem;
   background: transparent;
   color: #FFFFFF;
   text-align: left;
@@ -5556,11 +5556,11 @@ img.ui-icon.ui-icon-arrow {
   justify-content: center;
   flex-shrink: 0;
   width: 52px;
-  height: 52px;
-  border-radius: 0.5em;
+  height: 3.25rem;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: #3A3A3A;
-  font-size: 26px;
+  font-size: 1.625rem;
 }
 .wish-group-thumb img {
   width: 100%;
@@ -5571,54 +5571,54 @@ img.ui-icon.ui-icon-arrow {
 .wish-group-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
   min-width: 0;
 }
 .wish-group-text strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
 }
 .wish-group-text span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
 
 .wish-check {
   width: 20px;
-  height: 20px;
+  height: 1.25rem;
   margin-left: auto;
   flex-shrink: 0;
 }
 
 .wish-modal-foot {
-  margin-top: 1em;
-  padding-top: 1em;
-  border-top: 1px solid #2E2E2E;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 0.0625rem solid #2E2E2E;
 }
 
 .wish-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  height: 48px;
-  padding: 0 1.5em;
+  height: 3rem;
+  padding: 0 1.5rem;
   border: none;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   cursor: pointer;
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 .wish-btn--full {
   width: 100%;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
 }
 .wish-btn--white {
   background-color: #FFFFFF;
@@ -5642,13 +5642,13 @@ img.ui-icon.ui-icon-arrow {
 .wish-input {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  height: 48px;
-  padding: 0 1em;
-  border: 1px solid transparent;
-  border-radius: 0.63em;
+  height: 3rem;
+  padding: 0 1rem;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.625rem;
   background-color: #2E2E2E;
   color: #FFFFFF;
   outline: none;
@@ -5663,13 +5663,13 @@ img.ui-icon.ui-icon-arrow {
 .wish-icon-head {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 1.5em 0 0.75em;
+  margin: 1.5rem 0 0.75rem;
 }
 
 .wish-icon-count {
@@ -5679,7 +5679,7 @@ img.ui-icon.ui-icon-arrow {
 .wish-icon-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0.75em;
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -5691,13 +5691,13 @@ img.ui-icon.ui-icon-arrow {
   align-items: center;
   justify-content: center;
   width: 52px;
-  height: 52px;
+  height: 3.25rem;
   padding: 0;
   border: none;
   border-radius: 50%;
   background-color: #525252;
   color: #FFFFFF;
-  font-size: 26px;
+  font-size: 1.625rem;
   cursor: pointer;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -5705,37 +5705,37 @@ img.ui-icon.ui-icon-arrow {
   background-color: #464646;
 }
 .wish-icon-btn.is-selected {
-  box-shadow: 0 0 0 2px #FFFFFF;
+  box-shadow: 0 0 0 0.125rem #FFFFFF;
 }
 .wish-icon-btn:focus-visible {
-  outline: 2px solid #9AABF8;
-  outline-offset: 2px;
+  outline: 0.125rem solid #9AABF8;
+  outline-offset: 0.125rem;
 }
 
 .wish-modal-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75em;
-  margin-top: 1.5em;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
 }
 
 .wish-toast {
   position: fixed;
   left: 50%;
-  bottom: 2em;
+  bottom: 2rem;
   z-index: 10600;
   display: flex;
   align-items: center;
-  gap: 1em;
-  width: min(630px, 100% - 2em);
-  min-height: 72px;
-  padding: 0.75em 1.5em 0.75em 1em;
-  border-radius: 1.5em;
+  gap: 1rem;
+  width: min(630px, 100% - 2rem);
+  min-height: 4.5rem;
+  padding: 0.75rem 1.5rem 0.75rem 1rem;
+  border-radius: 1.5rem;
   box-sizing: border-box;
   background-color: rgba(82, 82, 82, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
   color: #FFFFFF;
   transform: translateX(-50%);
   animation: wish-toast-in 0.3s ease both;
@@ -5743,8 +5743,8 @@ img.ui-icon.ui-icon-arrow {
 .wish-toast p {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   margin: 0;
 }
@@ -5755,17 +5755,17 @@ img.ui-icon.ui-icon-arrow {
   justify-content: center;
   flex-shrink: 0;
   width: 44px;
-  height: 44px;
+  height: 2.75rem;
   border-radius: 50%;
   background-color: #3A3A3A;
-  font-size: 22px;
+  font-size: 1.375rem;
 }
 
 .wish-toast-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   margin-left: auto;
   padding: 0;
@@ -5787,13 +5787,13 @@ img.ui-icon.ui-icon-arrow {
 @keyframes wish-up {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(0.75rem);
   }
 }
 @keyframes wish-toast-in {
   from {
     opacity: 0;
-    transform: translate(-50%, 16px);
+    transform: translate(-50%, 1rem);
   }
 }
 .auth-card {
@@ -5910,7 +5910,7 @@ img.ui-icon.ui-icon-arrow {
 }
 .plan-opt.on {
   border-color: #5865F2;
-  box-shadow: 0 0 0 1px #5865F2;
+  box-shadow: 0 0 0 0.0625rem #5865F2;
   background-color: #FFFFFF;
 }
 .plan-opt:has(input:focus-visible) {
@@ -5947,7 +5947,7 @@ img.ui-icon.ui-icon-arrow {
 
 .account-page {
   min-height: 100vh;
-  padding: calc(4.5em + 4em) 0 8em;
+  padding: calc(4.5rem + 4rem) 0 8rem;
   box-sizing: border-box;
   background-color: #F5F5F5;
   color: #171717;
@@ -5961,41 +5961,118 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-inner {
-  width: calc(100% - 5em);
-  max-width: 840px;
+  width: calc(100% - 5rem);
+  max-width: 1440px;
   margin: 0 auto;
 }
 
 .account-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
-  padding-bottom: 1.5em;
-  border-bottom: 1px solid #D5D5D5;
+  color: #2E2E2E;
+  padding-bottom: 1.5rem;
+  border-bottom: 0.0625rem solid #D5D5D5;
+}
+
+.account-layout {
+  display: grid;
+  grid-template-columns: 252px minmax(0, 1fr);
+  align-items: start;
+}
+
+.account-nav {
+  position: sticky;
+  top: 4.5rem;
+  padding: 2.25rem 1.5rem 3rem 0;
+}
+
+.account-nav-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-nav-link {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: none;
+  color: #525252;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.account-nav-link::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1.5rem;
+  width: 4px;
+  border-radius: 1.75rem;
+  background-color: #2E2E2E;
+  transform: translateY(-50%) scaleY(0);
+  transition: transform 0.2s ease;
+}
+.account-nav-link:hover {
+  background-color: #EBEBEB;
+  color: #2E2E2E;
+}
+.account-nav-link.is-active {
+  background-color: #EBEBEB;
+  color: #2E2E2E;
+}
+.account-nav-link.is-active::before {
+  transform: translateY(-50%) scaleY(1);
+}
+.account-nav-link:focus-visible {
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.125rem;
 }
 
 .account-section {
   display: grid;
-  grid-template-columns: 252px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
-  padding: 3em 0;
-  border-bottom: 1px solid #D5D5D5;
+  padding: 3rem 0;
+  border-bottom: 0.0625rem solid #D5D5D5;
+  scroll-margin-top: 4.5rem;
 }
 
 .account-section-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
+  position: absolute;
+  width: 1px;
+  height: 0.0625rem;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .account-section-body {
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 2rem;
   min-width: 0;
 }
 
@@ -6003,7 +6080,7 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5em;
+  gap: 0.5rem;
   transition: opacity 0.2s ease;
 }
 .account-item.is-muted {
@@ -6013,16 +6090,17 @@ img.ui-icon.ui-icon-arrow {
 .account-item-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 1rem;
+  line-height: 1.3125rem;
   letter-spacing: 0;
+  color: #2E2E2E;
 }
 
 .account-item-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #525252;
   word-break: keep-all;
@@ -6031,17 +6109,17 @@ img.ui-icon.ui-icon-arrow {
 .account-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #525252;
 }
 
 .account-link {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   padding: 0;
   border: none;
@@ -6055,51 +6133,51 @@ img.ui-icon.ui-icon-arrow {
   text-decoration: underline;
 }
 .account-link:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 2px;
-  border-radius: 0.25em;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.125rem;
+  border-radius: 0.25rem;
 }
 
 .account-toggle {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   padding: 0;
   border: none;
   background: none;
-  color: #171717;
+  color: #2E2E2E;
   cursor: pointer;
 }
 .account-toggle:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 4px;
-  border-radius: 0.25em;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.25rem;
+  border-radius: 0.25rem;
 }
 
 .account-toggle-track {
   position: relative;
   flex-shrink: 0;
   width: 36px;
-  height: 20px;
-  border-radius: 9999px;
+  height: 1.25rem;
+  border-radius: 624.9375rem;
   background-color: #E0E0E0;
   transition: background-color 0.2s ease;
 }
 
 .account-toggle-thumb {
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 0.125rem;
+  left: 0.125rem;
   width: 16px;
-  height: 16px;
+  height: 1rem;
   border-radius: 50%;
   background-color: #FFFFFF;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
@@ -6107,14 +6185,14 @@ img.ui-icon.ui-icon-arrow {
   background-color: #5865F2;
 }
 .account-toggle.is-on .account-toggle-thumb {
-  transform: translateX(16px);
+  transform: translateX(1rem);
   background-color: #FFFFFF;
 }
 
 .account-channels {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75em 2em;
+  gap: 0.75rem 2rem;
   margin: 0;
   padding: 0;
   border: none;
@@ -6124,12 +6202,12 @@ img.ui-icon.ui-icon-arrow {
 .account-check {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   cursor: pointer;
 }
 .account-check input {
@@ -6139,9 +6217,9 @@ img.ui-icon.ui-icon-arrow {
   place-items: center;
   flex-shrink: 0;
   width: 18px;
-  height: 18px;
+  height: 1.125rem;
   margin: 0;
-  border-radius: 0.25em;
+  border-radius: 0.25rem;
   background-color: #E0E0E0;
   cursor: pointer;
   transition: background-color 0.15s ease, border-radius 0.15s ease;
@@ -6149,7 +6227,7 @@ img.ui-icon.ui-icon-arrow {
 .account-check input::after {
   content: "";
   width: 12px;
-  height: 12px;
+  height: 0.75rem;
   background-color: #FFFFFF;
   -webkit-mask: url("/icons/check.svg") center/contain no-repeat;
   mask: url("/icons/check.svg") center/contain no-repeat;
@@ -6163,8 +6241,8 @@ img.ui-icon.ui-icon-arrow {
   opacity: 1;
 }
 .account-check input:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 2px;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.125rem;
 }
 
 .account-channels:disabled .account-check {
@@ -6177,9 +6255,9 @@ img.ui-icon.ui-icon-arrow {
 .account-sr-only {
   position: absolute;
   width: 1px;
-  height: 1px;
+  height: 0.0625rem;
   padding: 0;
-  margin: -1px;
+  margin: -0.0625rem;
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
@@ -6189,27 +6267,27 @@ img.ui-icon.ui-icon-arrow {
 .account-profile {
   display: flex;
   align-items: center;
-  gap: 1em;
+  gap: 1rem;
 }
 
 .account-profile-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
   min-width: 0;
 }
 .account-profile-text strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
 }
 .account-profile-text span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #525252;
   word-break: break-all;
@@ -6218,8 +6296,8 @@ img.ui-icon.ui-icon-arrow {
 .account-avatar-grid {
   display: grid;
   grid-template-columns: repeat(6, 56px);
-  gap: 0.75em;
-  margin: 0.5em 0 0;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -6227,7 +6305,7 @@ img.ui-icon.ui-icon-arrow {
 .account-avatar-option {
   display: block;
   padding: 0;
-  border: 2px solid transparent;
+  border: 0.125rem solid transparent;
   border-radius: 50%;
   background: none;
   cursor: pointer;
@@ -6235,7 +6313,7 @@ img.ui-icon.ui-icon-arrow {
 }
 .account-avatar-option .profile-avatar {
   width: 52px;
-  height: 52px;
+  height: 3.25rem;
 }
 .account-avatar-option:hover {
   transform: scale(1.05);
@@ -6244,16 +6322,16 @@ img.ui-icon.ui-icon-arrow {
   border-color: #171717;
 }
 .account-avatar-option:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 2px;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.125rem;
 }
 
 .account-providers {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
   width: 100%;
-  margin: 0.25em 0 0;
+  margin: 0.25rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -6261,23 +6339,23 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1em;
-  padding: 0.75em 1em;
-  border-radius: 0.75em;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
   background-color: #FFFFFF;
 }
 .account-providers strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
 }
 .account-providers span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #525252;
   word-break: break-all;
@@ -6290,15 +6368,15 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
 .account-dialog {
   width: 100%;
   max-width: 420px;
-  padding: 2em;
-  border-radius: 1.5em;
+  padding: 2rem;
+  border-radius: 1.5rem;
   background-color: #FFFFFF;
   color: #171717;
   box-sizing: border-box;
@@ -6308,17 +6386,17 @@ img.ui-icon.ui-icon-arrow {
 .account-dialog-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 
 .account-dialog-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #525252;
   word-break: keep-all;
@@ -6326,20 +6404,20 @@ img.ui-icon.ui-icon-arrow {
 
 .account-dialog-actions {
   display: flex;
-  gap: 0.75em;
-  margin-top: 1.5em;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
 }
 
 .account-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   flex: 1;
-  height: 44px;
+  height: 2.75rem;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   background-color: #5865F2;
   color: #FFFFFF;
   cursor: pointer;
@@ -6353,8 +6431,8 @@ img.ui-icon.ui-icon-arrow {
   cursor: default;
 }
 .account-btn:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 2px;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.125rem;
 }
 .account-btn--secondary {
   background-color: #EBEBEB;
@@ -6367,19 +6445,19 @@ img.ui-icon.ui-icon-arrow {
 .account-toast {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   position: fixed;
   left: 50%;
-  bottom: 2em;
+  bottom: 2rem;
   z-index: 1100;
   margin: 0;
-  padding: 0.75em 1.5em;
-  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 624.9375rem;
   background-color: #171717;
   color: #FFFFFF;
-  transform: translate(-50%, 1em);
+  transform: translate(-50%, 1rem);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
@@ -6405,11 +6483,11 @@ img.ui-icon.ui-icon-arrow {
 }
 .profile-avatar--md {
   width: 52px;
-  height: 52px;
+  height: 3.25rem;
 }
 .profile-avatar--lg {
   width: 72px;
-  height: 72px;
+  height: 4.5rem;
 }
 .profile-avatar img {
   width: 100%;
@@ -6456,12 +6534,12 @@ img.ui-icon.ui-icon-arrow {
 .member-home .member-empty {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
-  padding: 4em 1.5em;
-  border-radius: 0.63em;
+  padding: 4rem 1.5rem;
+  border-radius: 0.625rem;
   background-color: #1f1f1f;
   color: #C8C8C8;
   text-align: center;
@@ -6479,15 +6557,15 @@ img.ui-icon.ui-icon-arrow {
 }
 
 section.top10-section .top10-title {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 section.top10-section .top10-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  margin: 0 0 1.5em;
+  margin: 0 0 1.5rem;
   color: #C8C8C8;
 }
 section.top10-section .top10-slide {
@@ -6516,12 +6594,12 @@ section.top10-section .top10-num {
 section.top10-section .top10-num .top10-num-glyph {
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 900;
-  font-size: 160px;
-  letter-spacing: -8px;
+  font-size: 10rem;
+  letter-spacing: -0.5rem;
 }
 section.top10-section .top10-num .top10-num-stroke {
   stroke: #C8C8C8;
-  stroke-width: 6px;
+  stroke-width: 0.375rem;
   stroke-linejoin: round;
 }
 section.top10-section .top10-num-stop-start {
@@ -6537,8 +6615,8 @@ section.top10-section .top10-num-stop-end {
   .apple-originals .apple-originals-desc.apple-originals-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.38em;
-    line-height: 1.75em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -6549,11 +6627,11 @@ section.top10-section .top10-num-stop-end {
   .apple-originals .apple-originals-title.apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 3em;
-    line-height: 3.5em;
+    font-size: 3rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #FFFFFF;
-    margin: 0 0 0.5em;
+    margin: 0 0 0.5rem;
     padding-top: 0;
   }
 }
@@ -6561,58 +6639,58 @@ section.top10-section .top10-num-stop-end {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5em;
-  margin: 0 0 0.75em;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
   padding: 0;
   list-style: none;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-chip {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  height: 28px;
-  padding: 0 10px;
-  border-radius: 4px;
+  height: 1.75rem;
+  padding: 0 0.625rem;
+  border-radius: 0.25rem;
   box-sizing: border-box;
   background-color: #3A3A3A;
   color: #FFFFFF;
   white-space: nowrap;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-chip--rating {
-  border: 1px solid #C8C8C8;
+  border: 0.0625rem solid #C8C8C8;
   background-color: #FFFFFF;
   color: #171717;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-actions {
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-play {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 0.375rem;
   min-width: 120px;
-  height: 42px;
-  padding: 0 1.5em;
-  border-radius: 999px;
+  height: 2.625rem;
+  padding: 0 1.5rem;
+  border-radius: 62.4375rem;
   box-sizing: border-box;
   background-color: #5865F2;
   color: #FFFFFF;
@@ -6621,7 +6699,7 @@ section.top10-section .top10-num-stop-end {
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-play img {
   width: 10px;
-  height: 14px;
+  height: 0.875rem;
   display: block;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-play:hover {
@@ -6632,7 +6710,7 @@ section.top10-section .top10-num-stop-end {
   align-items: center;
   justify-content: center;
   width: 42px;
-  height: 42px;
+  height: 2.625rem;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -6649,20 +6727,20 @@ section.top10-section .top10-num-stop-end {
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-play:focus-visible,
 .hero-swiper-container .hero-slide-item .hero-info .hero-wish:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 
 .hero-swiper-container.movie-home-hero {
-  height: min(955px, 100svh - 64px);
-  min-height: 620px;
+  height: min(59.6875rem, 100svh - 4rem);
+  min-height: 38.75rem;
   overflow: hidden;
 }
 
 .subscribe-cta.subscribe-cta--tv .subscribe-banner {
-  height: 420px;
+  height: 26.25rem;
   border: none;
-  border-radius: 1.25em;
+  border-radius: 1.25rem;
   background-color: #171717;
 }
 .subscribe-cta.subscribe-cta--tv .subscribe-bg {
@@ -6681,7 +6759,7 @@ section.top10-section .top10-num-stop-end {
 }
 .subscribe-cta.subscribe-cta--tv .subscribe-logo {
   width: 73px;
-  height: 56px;
+  height: 3.5rem;
   object-fit: contain;
   object-position: left center;
   filter: none;
@@ -6689,26 +6767,26 @@ section.top10-section .top10-num-stop-end {
 .subscribe-cta.subscribe-cta--tv .subscribe-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
-  margin: 1em 0 0;
+  margin: 1rem 0 0;
   word-break: keep-all;
 }
 .subscribe-cta.subscribe-cta--tv .subscribe-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   box-sizing: border-box;
   justify-content: center;
   width: 200px;
-  height: 40px;
-  margin-top: 1.5em;
-  padding: 7px 36px;
-  border-radius: 999px;
+  height: 2.5rem;
+  margin-top: 1.5rem;
+  padding: 0.4375rem 2.25rem;
+  border-radius: 62.4375rem;
   background-color: #5865F2;
   color: #FFFFFF;
   white-space: nowrap;
@@ -6719,33 +6797,33 @@ section.top10-section .top10-num-stop-end {
 .subscribe-cta.subscribe-cta--tv .subscribe-note {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
-  margin: 0.5em 0 0;
+  margin: 0.5rem 0 0;
 }
 .subscribe-cta.subscribe-cta--tv .subscribe-posters {
   position: absolute;
-  top: 36px;
-  left: max(51.2%, 640px);
+  top: 2.25rem;
+  left: max(51.2%, 40rem);
   z-index: 2;
   display: flex;
-  gap: 1em;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .subscribe-cta.subscribe-cta--tv .subscribe-poster {
-  --poster-h: 323px;
+  --poster-h: 20.1875rem;
   position: relative;
   flex-shrink: 0;
   width: calc(var(--poster-h) * 0.56);
   height: var(--poster-h);
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   overflow: hidden;
   background-color: #1f1f1f;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.5);
   transform: skewX(-6.2deg);
   transform-origin: left bottom;
 }
@@ -6771,18 +6849,18 @@ section.top10-section .top10-num-stop-end {
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-posters {
     top: 50%;
-    left: max(48%, 520px);
-    gap: 0.75em;
+    left: max(48%, 32.5rem);
+    gap: 0.75rem;
     transform: translateY(-50%);
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-poster {
-    --poster-h: 268px;
+    --poster-h: 16.75rem;
   }
 }
 .subscribe-cta.subscribe-cta--tv.subscribe-cta--sport .subscribe-bg {
@@ -6803,7 +6881,7 @@ section.top10-section .top10-num-stop-end {
 
 header .inner nav .gnb-right ul .profile-box.profile-box {
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   background-color: #5865F2;
 }
 header .inner nav .gnb-right ul .profile-box.profile-box:hover {
@@ -6829,7 +6907,7 @@ header .inner nav .gnb-right ul .profile-box.profile-box img[src$="/profile.svg"
   display: block;
   flex: none;
   width: 14px;
-  height: 14px;
+  height: 0.875rem;
   max-width: none;
   margin: 0;
   transform: none;
@@ -6867,8 +6945,8 @@ section.device-guide.device-guide--watch {
   --logo-scale: 1;
   --icon-scale: 1;
   --marquee-duration: 40s;
-  padding: 96px 0;
-  height: 838px;
+  padding: 6rem 0;
+  height: 52.375rem;
   background-color: #141414;
   text-align: center;
   overflow: hidden;
@@ -6877,8 +6955,8 @@ section.device-guide.device-guide--watch .inner {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-left: 4rem;
+  padding-right: 4rem;
   box-sizing: border-box;
 }
 @media (min-width: 1025px) {
@@ -6895,23 +6973,23 @@ section.device-guide.device-guide--watch .watch-head {
 }
 section.device-guide.device-guide--watch .watch-logo-main {
   display: block;
-  height: 60px;
+  height: 3.75rem;
   width: auto;
 }
 section.device-guide.device-guide--watch .watch-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 3em;
-  line-height: 3.5em;
+  font-size: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
-  margin: 1.5em 0 0;
+  margin: 1.5rem 0 0;
   padding-top: 0;
   color: #FFFFFF;
   word-break: keep-all;
 }
 section.device-guide.device-guide--watch .watch-marquee {
   position: relative;
-  margin-top: 3em;
+  margin-top: 3rem;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
   mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
@@ -6927,9 +7005,9 @@ section.device-guide.device-guide--watch .watch-marquee:hover .watch-track {
 section.device-guide.device-guide--watch .watch-logo-list {
   display: flex;
   align-items: center;
-  gap: 2em;
+  gap: 2rem;
   margin: 0;
-  padding: 0 2em 0 0;
+  padding: 0 2rem 0 0;
   list-style: none;
 }
 section.device-guide.device-guide--watch .watch-logo {
@@ -6940,22 +7018,22 @@ section.device-guide.device-guide--watch .watch-logo {
 section.device-guide.device-guide--watch .watch-logo img {
   display: block;
   width: auto;
-  height: calc(var(--logo-h) * 1px * var(--logo-scale));
+  height: calc(var(--logo-h) * 0.0625rem * var(--logo-scale));
   max-width: none;
 }
 section.device-guide.device-guide--watch .watch-mobile {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 3em;
+  margin-top: 3rem;
 }
 section.device-guide.device-guide--watch .watch-subtitle {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75em;
-  line-height: 2.13em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
-  margin: 0 0 1em 0;
+  margin: 0 0 1rem 0;
   padding-top: 0;
   color: #FFFFFF;
   word-break: keep-all;
@@ -6963,13 +7041,13 @@ section.device-guide.device-guide--watch .watch-subtitle {
 section.device-guide.device-guide--watch .watch-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
-  margin-top: 1em;
+  gap: 0.25rem;
+  margin-top: 1rem;
   color: #5865F2;
   text-decoration: none;
 }
@@ -6986,8 +7064,8 @@ section.device-guide.device-guide--watch .watch-devices {
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: center;
-  gap: 1.5em 4em;
-  margin: 3em 0 0;
+  gap: 1.5rem 4rem;
+  margin: 3rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -7014,9 +7092,9 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-profiles {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.5em;
+  gap: 1.5rem;
   max-width: 520px;
-  margin: 2em auto 0;
+  margin: 2rem auto 0;
   padding: 0;
   list-style: none;
 }
@@ -7025,21 +7103,21 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 100%;
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
   border: none;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background: none;
   cursor: pointer;
 }
 .auth-profile:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 2px;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.125rem;
 }
 .auth-profile:hover .auth-profile-avatar {
   transform: scale(1.06);
-  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 5px #5865F2;
+  box-shadow: 0 0 0 0.1875rem #FFFFFF, 0 0 0 0.3125rem #5865F2;
 }
 .auth-profile--1 .auth-profile-avatar {
   background-color: #5865F2;
@@ -7059,28 +7137,28 @@ section.device-guide.device-guide--watch .watch-device img {
   align-items: center;
   justify-content: center;
   width: 88px;
-  height: 88px;
+  height: 5.5rem;
   border-radius: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .auth-profile-avatar img {
   display: block;
   width: 32px;
-  height: 32px;
+  height: 2rem;
   object-fit: contain;
 }
 
 .auth-profile-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   color: #171717;
 }
 
 .profile-picker {
-  margin: 2em auto 0;
+  margin: 2rem auto 0;
   color: #171717;
 }
 
@@ -7088,7 +7166,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5em;
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -7098,22 +7176,22 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 96px;
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
   border: none;
-  border-radius: 0.63em;
+  border-radius: 0.625rem;
   background: none;
   color: inherit;
   cursor: pointer;
 }
 .profile-picker-item:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 2px;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.125rem;
 }
 .profile-picker-item:hover .profile-picker-avatar, .profile-picker-item.is-current .profile-picker-avatar {
   transform: scale(1.06);
-  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 5px #5865F2;
+  box-shadow: 0 0 0 0.1875rem #FFFFFF, 0 0 0 0.3125rem #5865F2;
 }
 
 .profile-picker-avatar {
@@ -7121,7 +7199,7 @@ section.device-guide.device-guide--watch .watch-device img {
   align-items: center;
   justify-content: center;
   width: 88px;
-  height: 88px;
+  height: 5.5rem;
   border-radius: 50%;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -7132,14 +7210,14 @@ section.device-guide.device-guide--watch .watch-device img {
 }
 .profile-picker-add .profile-picker-avatar img {
   width: 32px;
-  height: 32px;
+  height: 2rem;
 }
 
 .profile-picker-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   max-width: 100%;
   overflow: hidden;
@@ -7151,45 +7229,45 @@ section.device-guide.device-guide--watch .watch-device img {
 .profile-picker-form {
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+  gap: 0.75rem;
   max-width: 520px;
-  margin: 2em auto 0;
+  margin: 2rem auto 0;
   text-align: left;
 }
 
 .profile-picker-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
-  margin: 0.5em 0 0;
+  margin: 0.5rem 0 0;
   color: #525252;
 }
 
 .profile-picker-input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
-  height: 52px;
-  padding: 0 1em;
-  border: 1px solid #D5D5D5;
-  border-radius: 0.63em;
+  height: 3.25rem;
+  padding: 0 1rem;
+  border: 0.0625rem solid #D5D5D5;
+  border-radius: 0.625rem;
   background-color: #FFFFFF;
   color: #171717;
 }
 .profile-picker-input:focus {
-  outline: 2px solid #5865F2;
-  outline-offset: 1px;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.0625rem;
 }
 
 .profile-picker-icons {
   display: grid;
   grid-template-columns: repeat(6, 52px);
   justify-content: space-between;
-  gap: 0.75em;
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -7208,18 +7286,18 @@ section.device-guide.device-guide--watch .watch-device img {
   transform: scale(1.06);
 }
 .profile-picker-icon.is-on {
-  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 5px #5865F2;
+  box-shadow: 0 0 0 0.1875rem #FFFFFF, 0 0 0 0.3125rem #5865F2;
 }
 .profile-picker-icon:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 3px;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.1875rem;
 }
 
 .profile-picker-error {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   margin: 0;
   color: #E91E1B;
@@ -7228,20 +7306,20 @@ section.device-guide.device-guide--watch .watch-device img {
 .profile-picker-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75em;
-  margin-top: 0.75em;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 .profile-picker-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
-  height: 44px;
-  padding: 0 1.5em;
+  height: 2.75rem;
+  padding: 0 1.5rem;
   border: none;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background-color: #5865F2;
   color: #FFFFFF;
   cursor: pointer;
@@ -7253,7 +7331,7 @@ section.device-guide.device-guide--watch .watch-device img {
 .profile-picker-btn.is-ghost {
   background-color: transparent;
   color: #171717;
-  box-shadow: inset 0 0 0 1px #D5D5D5;
+  box-shadow: inset 0 0 0 0.0625rem #D5D5D5;
 }
 
 .profile-picker.account-profile-picker {
@@ -7261,52 +7339,52 @@ section.device-guide.device-guide--watch .watch-device img {
 }
 .profile-picker.account-profile-picker .profile-picker-list {
   justify-content: flex-start;
-  gap: 1em;
+  gap: 1rem;
 }
 .profile-picker.account-profile-picker .profile-picker-item {
   width: 80px;
 }
 .profile-picker.account-profile-picker .profile-picker-avatar {
   width: 64px;
-  height: 64px;
+  height: 4rem;
 }
 .profile-picker.account-profile-picker .profile-picker-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
 }
 .profile-picker.account-profile-picker .profile-picker-form {
-  margin: 1.5em 0 0;
+  margin: 1.5rem 0 0;
 }
 
 .auth-card.auth-card--login {
   max-width: 800px;
-  min-height: 560px;
-  padding: 80px 3em 3em;
-  border-radius: 0.63em;
+  min-height: 35rem;
+  padding: 5rem 3rem 3rem;
+  border-radius: 0.625rem;
 }
 .auth-card.auth-card--login .auth-logo {
   width: 50px;
-  height: 50px;
-  border-radius: 0.75em;
+  height: 3.125rem;
+  border-radius: 0.75rem;
 }
 .auth-card.auth-card--login .auth-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
-  margin: 1em 0 0.75em;
+  margin: 1rem 0 0.75rem;
 }
 .auth-card.auth-card--login .auth-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25em;
-  line-height: 1.56em;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
-  margin: 0 0 2em;
+  margin: 0 0 2rem;
   color: #A3A3A3;
 }
 .auth-card.auth-card--login .auth-login-form {
@@ -7318,22 +7396,22 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-card.auth-card--login .auth-login-fields {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
   width: 100%;
   max-width: 528px;
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
 }
 .auth-card.auth-card--login .auth-login-input {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   width: 100%;
-  height: 64px;
-  padding: 0 20px;
-  border: 1px solid #D5D5D5;
-  border-radius: 0.5em;
+  height: 4rem;
+  padding: 0 1.25rem;
+  border: 0.0625rem solid #D5D5D5;
+  border-radius: 0.5rem;
   background-color: #F5F5F5;
   color: #171717;
   box-sizing: border-box;
@@ -7350,17 +7428,17 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-card.auth-card--login .auth-login-btn {
   width: 100%;
   max-width: 428px;
-  height: 48px;
-  border-radius: 999px;
+  height: 3rem;
+  border-radius: 62.4375rem;
 }
 .auth-card.auth-card--login .auth-login-error,
 .auth-card.auth-card--login .auth-login-notice {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
-  margin: 0 0 0.75em;
+  margin: 0 0 0.75rem;
 }
 .auth-card.auth-card--login .auth-login-error {
   color: #ff453a;
@@ -7372,24 +7450,24 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5em;
-  margin-top: 1em;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 .auth-card.auth-card--login .auth-login-links-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5em 3em;
+  gap: 0.5rem 3rem;
 }
 .auth-card.auth-card--login .auth-login-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.25rem;
   padding: 0;
   border: none;
   background: none;
@@ -7410,20 +7488,20 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-card.auth-card--login .auth-code {
   display: flex;
   justify-content: center;
-  gap: 0.75em;
-  margin-bottom: 2em;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
 }
 .auth-card.auth-card--login .auth-code-box {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 2.13em;
-  line-height: 2.56em;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   width: 72px;
-  height: 72px;
+  height: 4.5rem;
   padding: 0;
-  border: 1px solid #D5D5D5;
-  border-radius: 0.5em;
+  border: 0.0625rem solid #D5D5D5;
+  border-radius: 0.5rem;
   background-color: #F5F5F5;
   color: #171717;
   text-align: center;
@@ -7439,17 +7517,17 @@ section.device-guide.device-guide--watch .watch-device img {
   opacity: 0.6;
 }
 .auth-card.auth-card--login .auth-done {
-  padding: 3em 0 2em;
+  padding: 3rem 0 2rem;
 }
 .auth-card.auth-card--login .auth-done .auth-desc {
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
 }
 
 .account-profile-member {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #5865F2;
 }
@@ -7457,8 +7535,8 @@ section.device-guide.device-guide--watch .watch-device img {
 .account-members {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5em;
-  margin: 0.5em 0 0;
+  gap: 1.5rem;
+  margin: 0.5rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -7467,7 +7545,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
   padding: 0;
   border: none;
   background: none;
@@ -7475,9 +7553,9 @@ section.device-guide.device-guide--watch .watch-device img {
   cursor: pointer;
 }
 .account-member:focus-visible {
-  outline: 2px solid #5865F2;
-  outline-offset: 4px;
-  border-radius: 0.5em;
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.25rem;
+  border-radius: 0.5rem;
 }
 .account-member:hover .account-member-avatar {
   transform: scale(1.06);
@@ -7495,7 +7573,7 @@ section.device-guide.device-guide--watch .watch-device img {
   background-color: #30d158;
 }
 .account-member.is-on .account-member-avatar {
-  box-shadow: 0 0 0 3px #F5F5F5, 0 0 0 5px #5865F2;
+  box-shadow: 0 0 0 0.1875rem #F5F5F5, 0 0 0 0.3125rem #5865F2;
 }
 .account-member.is-on .account-member-name {
   font-weight: 700;
@@ -7507,22 +7585,22 @@ section.device-guide.device-guide--watch .watch-device img {
   align-items: center;
   justify-content: center;
   width: 56px;
-  height: 56px;
+  height: 3.5rem;
   border-radius: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .account-member-avatar img {
   display: block;
   width: 20px;
-  height: 20px;
+  height: 1.25rem;
   object-fit: contain;
 }
 
 .account-member-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
 }
 
@@ -7533,12 +7611,12 @@ section.device-guide.device-guide--watch .watch-device img {
   display: none;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo {
-  margin-bottom: 1.5em;
+  margin-bottom: 1.5rem;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-logo {
   display: block;
   width: 390px;
-  height: 162px;
+  height: 10.125rem;
   max-width: 100%;
   object-fit: contain;
   object-position: left bottom;
@@ -7547,7 +7625,7 @@ section.device-guide.device-guide--watch .watch-device img {
 .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-text {
   position: absolute;
   width: 1px;
-  height: 1px;
+  height: 0.0625rem;
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
@@ -7557,8 +7635,8 @@ section.device-guide.device-guide--watch .watch-device img {
 .footer.footer .footer-main-menu .arrow {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -7567,16 +7645,16 @@ section.device-guide.device-guide--watch .watch-device img {
 .footer.footer .footer-policy-menu .footer-region {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
 .footer.footer .footer-copyright {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.75em;
-  line-height: 1em;
+  font-size: 0.75rem;
+  line-height: 1rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -7598,6 +7676,15 @@ section.device-guide.device-guide--watch .watch-device img {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+  .account-inner {
+    max-width: 1440px !important;
+  }
+  .account-page .account-inner {
+    max-width: 1440px !important;
+  }
+  .account-inner.account-inner {
+    max-width: 1440px !important;
+  }
   header .inner nav {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -7617,17 +7704,17 @@ section.device-guide.device-guide--watch .watch-device img {
 }
 .floating-actions {
   position: fixed;
-  right: 1.5em;
-  bottom: 1.5em;
+  right: 1.5rem;
+  bottom: 1.5rem;
   z-index: 1001;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 
 body.has-promo-banner .floating-actions {
-  bottom: calc(97px + 1em);
+  bottom: calc(6.0625rem + 1rem);
 }
 
 .floating-btn {
@@ -7636,7 +7723,7 @@ body.has-promo-banner .floating-actions {
   align-items: center;
   justify-content: center;
   width: 24px;
-  height: 24px;
+  height: 1.5rem;
   margin: 0;
   padding: 0;
   border: none;
@@ -7644,7 +7731,7 @@ body.has-promo-banner .floating-actions {
   overflow: hidden;
   background: transparent;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease;
 }
 .floating-btn img {
@@ -7655,35 +7742,35 @@ body.has-promo-banner .floating-actions {
   transform: scale(1.1);
 }
 .floating-btn:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 .floating-btn.floating-btn--tv img {
   width: 24px;
-  height: 24px;
+  height: 1.5rem;
 }
 .floating-btn.floating-btn--top {
   background-color: #EBEBEB;
 }
 .floating-btn.floating-btn--top img {
   width: 17px;
-  height: 9px;
+  height: 0.5625rem;
 }
 
 @media (min-width: 1025px) {
   .floating-actions {
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .floating-btn {
     width: 70px;
-    height: 70px;
+    height: 4.375rem;
   }
   .floating-btn.floating-btn--tv img {
     width: 70px;
-    height: 70px;
+    height: 4.375rem;
   }
   .floating-btn.floating-btn--top {
-    padding: 0 22px;
+    padding: 0 1.375rem;
   }
   .floating-btn.floating-btn--top img {
     width: 100%;
@@ -7722,8 +7809,8 @@ body.has-promo-banner .floating-actions {
 .video-popup p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.06em;
-  line-height: 1.38em;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
   letter-spacing: 0;
   margin: 0;
   color: #FFFFFF;
@@ -7732,23 +7819,23 @@ body.has-promo-banner .floating-actions {
 .video-popup .video-back-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   position: absolute;
-  top: 1em;
-  left: 1em;
+  top: 1rem;
+  left: 1rem;
   z-index: 2;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
-  height: 32px;
-  padding: 0 0.75em;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 9999px;
+  gap: 0.25rem;
+  height: 2rem;
+  padding: 0 0.75rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.3);
+  border-radius: 624.9375rem;
   background-color: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
   color: #FFFFFF;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -7757,8 +7844,8 @@ body.has-promo-banner .floating-actions {
   background-color: rgba(0, 0, 0, 0.8);
 }
 .video-popup .video-back-btn:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 
 .hero-swiper-container .hero-slide-item .hero-media-bg .hero-trailer {
@@ -7793,37 +7880,37 @@ body.has-promo-banner .floating-actions {
 @media (min-width: 1025px) {
   header .inner {
     width: 100% !important;
-    padding-left: 30px !important;
-    padding-right: 30px !important;
+    padding-left: 1.875rem !important;
+    padding-right: 1.875rem !important;
   }
   header .inner nav {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
+    padding-left: 1.875rem !important;
+    padding-right: 1.875rem !important;
   }
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info {
     left: 12.5%;
   }
   .footer .inner {
     width: 100% !important;
-    padding-left: 60px !important;
-    padding-right: 60px !important;
+    padding-left: 3.75rem !important;
+    padding-right: 3.75rem !important;
   }
 }
 .auto-next {
   position: absolute;
-  right: 2em;
-  bottom: 2em;
+  right: 2rem;
+  bottom: 2rem;
   z-index: 3;
   display: flex;
   align-items: center;
-  gap: 1em;
-  width: min(480px, 100% - 4em);
-  padding: 1em;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.75em;
+  gap: 1rem;
+  width: min(480px, 100% - 4rem);
+  padding: 1rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.75rem;
   background-color: rgba(23, 23, 23, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(0.75rem);
+  -webkit-backdrop-filter: blur(0.75rem);
   color: #FFFFFF;
 }
 
@@ -7831,7 +7918,7 @@ body.has-promo-banner .floating-actions {
   flex: 0 0 auto;
   width: 128px;
   aspect-ratio: 16/9;
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   object-fit: cover;
   background-color: #1f1f1f;
 }
@@ -7840,15 +7927,15 @@ body.has-promo-banner .floating-actions {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
   min-width: 0;
 }
 
 .auto-next-kind {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #A3A3A3;
 }
@@ -7856,8 +7943,8 @@ body.has-promo-banner .floating-actions {
 .auto-next-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.94em;
-  line-height: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   overflow: hidden;
   color: #FFFFFF;
@@ -7868,8 +7955,8 @@ body.has-promo-banner .floating-actions {
 .auto-next-count {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.69em;
-  line-height: 0.81em;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -7878,23 +7965,23 @@ body.has-promo-banner .floating-actions {
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 
 .auto-next-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.25em;
-  height: 32px;
-  padding: 0 0.75em;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 0.5em;
+  gap: 0.25rem;
+  height: 2rem;
+  padding: 0 0.75rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
   background-color: transparent;
   color: #FFFFFF;
   white-space: nowrap;
@@ -7903,7 +7990,7 @@ body.has-promo-banner .floating-actions {
 }
 .auto-next-btn img {
   width: 12px;
-  height: 12px;
+  height: 0.75rem;
 }
 .auto-next-btn:hover {
   background-color: rgba(255, 255, 255, 0.12);
@@ -7916,15 +8003,15 @@ body.has-promo-banner .floating-actions {
   background-color: #6E7AF4;
 }
 .auto-next-btn:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 
 .auto-next--inline {
-  right: 1em;
-  bottom: 1em;
-  width: min(420px, 100% - 2em);
-  padding: 0.75em;
+  right: 1rem;
+  bottom: 1rem;
+  width: min(420px, 100% - 2rem);
+  padding: 0.75rem;
 }
 .auto-next--inline .auto-next-thumb {
   width: 104px;
@@ -7944,7 +8031,7 @@ body.has-promo-banner .floating-actions {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(1.5em / -2);
+  left: calc(1.5rem / -2);
   width: 1px;
   background-color: #FFFFFF;
   pointer-events: none;
@@ -7952,24 +8039,24 @@ body.has-promo-banner .floating-actions {
 
 @media (min-width: 1025px) {
   .value-props.value-props {
-    padding: 1.5em 0;
+    padding: 1.5rem 0;
   }
   .value-props.value-props .value-prop-item {
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   .value-props.value-props .value-prop-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .value-props.value-props .value-prop-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -7981,19 +8068,19 @@ section.device-guide.device-guide--watch .watch-device {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
 }
 section.device-guide.device-guide--watch .watch-device-icon {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: calc(54px * var(--icon-scale));
+  height: calc(3.375rem * var(--icon-scale));
 }
 section.device-guide.device-guide--watch .watch-device-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.81em;
-  line-height: 1.13em;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   color: #FFFFFF;
   white-space: nowrap;
@@ -8015,12 +8102,12 @@ section.device-guide.device-guide--watch .watch-device-name {
 
 .hero-wish-icon {
   width: 22px;
-  height: 22px;
+  height: 1.375rem;
 }
 
 .movie-detail-page .icon-heart {
   width: 18px;
-  height: 18px;
+  height: 1.125rem;
 }
 .movie-detail-page .player-box .icon-btn.on {
   background-color: rgba(255, 255, 255, 0.16);
@@ -8034,10 +8121,10 @@ section.device-guide.device-guide--watch .watch-device-name {
   section.top10-section .top10-title,
   .upcoming-section .upcoming-title.upcoming-title,
   .apple-originals .apple-originals-title.apple-originals-title {
-    margin-bottom: 60px;
+    margin-bottom: 3.75rem;
   }
   section.device-guide.device-guide--watch .watch-marquee {
-    margin-top: 60px;
+    margin-top: 3.75rem;
   }
 }
 section.device-guide.device-guide--watch .watch-link {
