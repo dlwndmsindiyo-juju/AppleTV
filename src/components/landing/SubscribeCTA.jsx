@@ -41,10 +41,18 @@ const SubscribeCTA = ({ type = "tv" }) => {
 
           <div className="subscribe-content">
             <img className="subscribe-logo" src="/icons/shorts/logo_w.svg" alt="Apple TV" />
+            {/* [수정] 휴대폰은 짧은 문구 (시안: 모바일 hi-fi) — .subscribe-title-long / -short 는 mobile.scss 에서 바꿔 보여줌 */}
             <h3 className="subscribe-title">
-              독점 오리지널 콘텐츠를 한 곳에서,
-              <br />
-              지금 Apple TV로 경험해보세요.
+              <span className="subscribe-title-long">
+                독점 오리지널 콘텐츠를 한 곳에서,
+                <br />
+                지금 Apple TV로 경험해보세요.
+              </span>
+              <span className="subscribe-title-short">
+                Apple TV 오리지널 콘텐츠,
+                <br />
+                지금 만나보세요.
+              </span>
             </h3>
             <Link className="subscribe-btn" to={to}>
               7일 무료 체험하기

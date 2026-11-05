@@ -87,7 +87,10 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
   const hoverMode = useMedia(HOVER_QUERY); // [추가] PC 만 호버 카드
   const poster = img(item.poster_path, "w500") || thumb; // [추가] 태블릿 · 휴대폰: 제목이 들어간 세로 포스터
 
-  // [수정] 태블릿 · 휴대폰: 포스터만 (글자 · 버튼 없음)
+  // [수정] 태블릿 · 휴대폰: 제목이 들어간 세로 포스터
+  // - 태블릿: 포스터만 (글자 · 버튼 없음)
+  // - [추가] 휴대폰 (시안: 모바일 hi-fi): 포스터 아래 가운데 신규출시 [▶] [♡] · 공개예정작 [N월 공개예정 🔔]
+  //   (.member-sc-poster-actions · 태블릿에서는 CSS 로 숨김)
   if (!hoverMode) {
     return (
       <div className={`member-sc-slot member-sc-slot--${variant} member-sc-slot--static`}>
@@ -95,6 +98,36 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
           <Link to={path} className="member-sc-link" aria-label={`${title} 상세 보기`}>
             {poster && <img className="member-sc-thumb" src={poster} alt="" loading="lazy" />}
           </Link>
+
+          <div className="member-sc-poster-actions">
+            {isNew ? (
+              <>
+                <Link to={`${path}?play=1`} className="member-sc-poster-play" aria-label={`${title} 재생`}>
+                  <img src="/icons/play-w.svg" alt="" aria-hidden="true" />
+                </Link>
+                <button
+                  type="button"
+                  className={`member-sc-heart${wished ? " is-on" : ""}`}
+                  aria-pressed={wished}
+                  aria-label={wished ? `${title} 찜 해제` : `${title} 찜하기`}
+                  onClick={() => toggle({ title, poster_path: item.poster_path, backdrop_path: item.backdrop_path, overview: item.overview })}
+                >
+                  <span className="member-sc-heart-icon" aria-hidden="true" />
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                className={`member-sc-month${alarmOn ? " is-on" : ""}`}
+                aria-pressed={alarmOn}
+                aria-label={`${title} ${releaseLabel} · ${alarmOn ? "알림 끄기" : "알림 받기"}`}
+                onClick={() => onToggleAlarm(alarmKey)}
+              >
+                {releaseLabel}
+                <BellIcon on={alarmOn} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );

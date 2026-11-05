@@ -23,7 +23,8 @@ const Rail = ({ className = "", label = "슬라이드", stack = false, bleed = t
     grabCursor
     // 슬라이드 폭은 CSS(--rail-col) 로 지정, 간격 / 끝 여백만 화면 크기별로 지정
     breakpoints={{
-      0: { spaceBetween: stack ? 0 : 16, slidesOffsetAfter: stack || !bleed ? 0 : 20, enabled: !stack },
+      // [수정] 휴대폰: 카드 사이 12 (시안: 모바일 hi-fi) · 이너(90%) 안에서 잘리므로 끝 여백 없음
+      0: { spaceBetween: stack ? 0 : 12, slidesOffsetAfter: 0, enabled: !stack },
       // [수정] 태블릿(768px 이상)도 PC 와 같은 간격
       768: { spaceBetween: desktopGap, slidesOffsetAfter: 0, enabled: true },
     }}

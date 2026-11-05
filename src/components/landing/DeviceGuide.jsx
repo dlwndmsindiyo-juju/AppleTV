@@ -69,7 +69,11 @@ const DeviceGuide = () => {
 
       <div className="inner watch-mobile">
         {/* [수정] 설명 문구 다시 넣음 (시안: 로고 띠 → 설명 → 링크) */}
-        <h4 className="watch-subtitle">Apple TV는 Apple 기기, 스마트 TV, Apple TV app 에서도 시청하실 수 있습니다.</h4>
+        {/* [수정] 휴대폰은 짧은 문구 (시안: 모바일 hi-fi) — mobile.scss 에서 바꿔 보여줌 */}
+        <h4 className="watch-subtitle">
+          <span className="watch-subtitle-long">Apple TV는 Apple 기기, 스마트 TV, Apple TV app 에서도 시청하실 수 있습니다.</span>
+          <span className="watch-subtitle-short">Apple TV는 다양한 기기에서 시청하실 수 있습니다.</span>
+        </h4>
         <a className="watch-link" href={HELP_LINK} target="_blank" rel="noopener noreferrer">
           Apple TV를 시청할 수 있는 모든 방법 보기
           <span className="watch-link-arrow" aria-hidden="true">›</span>

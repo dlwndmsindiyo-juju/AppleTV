@@ -6594,7 +6594,7 @@ img.ui-icon.ui-icon-arrow {
 // [추가] TOP 10 — 시안 "지금 가장 주목받는 작품" (로그인 전 홈 · 로그인 후 홈 · 무료 체험 안내 공용)
 // - 큰 순위 숫자(SVG .top10-num)가 포스터 왼쪽 뒤에 겹침
 //   · 안쪽: [수정] 그라데이션 위 $top10-num-gradient-start → 아래 $top10-num-gradient-end (로그인 후 홈과 같음)
-//   · 테두리: Light/500 3px 바깥쪽 (stroke 6px + paint-order: stroke → 안쪽 절반은 글자에 가려짐)
+//   · [수정] 테두리(스트로크) 없음
 // - PC: 한 줄 4장 + 화살표 / 태블릿 · 모바일: 고정 폭 슬라이드
 // - section.top10-section : 기존 .top10-section 규칙(태블릿 · mobile.scss 포함)보다 우선
 // =====================================================================
@@ -6644,11 +6644,9 @@ section.top10-section {
       letter-spacing: -0.5rem;
     }
 
-    // 테두리 6px 중 안쪽 3px 은 마스크로 지워짐 → 바깥 3px (시안 Outside 3)
+    // [수정] 숫자 테두리(스트로크) 없음 — 로그인 전 · 후 · 모든 화면 공통 (예전: Light/500 바깥 3px)
     .top10-num-stroke {
-      stroke: $light-color-500;
-      stroke-width: 0.375rem;
-      stroke-linejoin: round;
+      display: none;
     }
   }
 
@@ -8154,7 +8152,7 @@ body.has-promo-banner .floating-actions {
 // - 글자 위계 · 버튼 크기는 그대로 (위치 · 여백만 맞춤)
 // - 헤더: 로고 · 토글 · 검색 · 프로필이 이너(90%)가 아니라 화면 양 끝에서 30px
 // - 히어로 글(제목 로고 · 칩 · 소개 · 버튼): 왼쪽 12.5% (1920 기준 240px)
-// - 푸터: 화면 양 끝에서 60px
+// - [수정] 푸터: 다른 이너와 같은 화면 폭의 90% (예전: 화면 양 끝에서 60px)
 // - 섹션 본문(이너 90% ≒ 1720)은 시안과 같아 그대로
 // - 이너 90% 규칙(_24-layout-pc)이 !important 라 같은 방식으로 덮어씀
 // =====================================================================
@@ -8172,12 +8170,6 @@ body.has-promo-banner .floating-actions {
 
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info {
     left: 12.5%;
-  }
-
-  .footer .inner {
-    width: 100% !important;
-    padding-left: 3.75rem !important;
-    padding-right: 3.75rem !important;
   }
 }
 
@@ -8516,4 +8508,14 @@ main.wish-page {
     margin: 0;
     padding: 0;
   }
+}
+
+// =====================================================================
+// [추가] 휴대폰 전용 짧은 문구 (시안: 모바일 hi-fi) — 기본은 긴 문구, 휴대폰(mobile.scss)에서 바꿈
+// - AI 어시스트 안내 · 홍보 배너 제목 · 기기 안내 설명
+// =====================================================================
+.member-notice-short,
+.subscribe-title-short,
+.watch-subtitle-short {
+  display: none;
 }

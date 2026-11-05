@@ -3168,3 +3168,454 @@ header .inner nav .gnb-right ul .search-icon-item {
     --browse-col: 140px;
   }
 }
+
+// =====================================================================
+// [추가] 휴대폰 (767px 이하) — 시안: Apple TV 모바일 hi-fi (390 폭) · OTT 화면 (스포츠 제외)
+// - 이너: 화면 폭의 90% (PC · 태블릿과 같음 · 좌우 5%) — 스포츠(main.sport-home) 안은 그대로
+// - 로그인 후 홈: 섹션 사이 60 · 제목 ↔ 콘텐츠 16 · 카드 사이 12 (Rail.jsx) · "전체 보기" 없음
+// - 글자 위계(크기 · 굵기 · 색)는 기존 그대로 — 배치 · 크기 · 간격만 시안에 맞춤
+// - member.scss 가 이 파일보다 나중에 불러와지므로 main.member-home.member-home 으로 우선순위를 높임
+// =====================================================================
+$m-section-gap: 3.75rem; // 60 · 섹션 사이
+$m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 기준 39 ~ 40)
+
+@media (max-width: $breakpoint-mobile) {
+
+  // ---------- 이너 90% ----------
+  .inner:not(.sport-home .inner),
+  .account-inner,
+  .search-inner,
+  .wish-inner {
+    box-sizing: border-box !important;
+    width: 90% !important;
+    max-width: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  // 헤더: 메뉴도 이너 끝선에 맞춤
+  header .inner nav {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // 계정 설정 가로 메뉴: 이너(90%) 밖 화면 끝까지 (이너 폭의 5.5556% = 화면의 5%)
+  .account-nav {
+    margin: 0 -5.5556%;
+    padding-left: 5.5556%;
+    padding-right: 5.5556%;
+  }
+
+  // ---------- 푸터 (이너 90% · 위아래 36 · 메뉴 → 로고 → 정책 → 저작권) ----------
+  // [수정] 좌우는 다른 이너와 같은 화면 폭의 90% (예전: 좌우 64)
+  .footer.footer.footer {
+    padding: 0;
+
+    .inner {
+      padding-top: $space-3xl !important;
+      padding-bottom: $space-3xl !important;
+      gap: $space-3xl;
+    }
+
+    .footer-main-menu {
+      order: 1;
+      flex-wrap: nowrap;
+      gap: $space-xl;
+
+      a {
+        white-space: nowrap;
+      }
+    }
+
+    .footer-logo {
+      order: 2;
+
+      img {
+        height: 1.1875rem; // 19
+      }
+    }
+
+    .footer-policy-menu {
+      order: 3;
+      gap: $space-xs $space-md;
+
+    }
+
+    .footer-copyright {
+      order: 4;
+      margin-top: -$space-md; // 정책 ↔ 저작권 24
+    }
+  }
+
+  // ---------- 휴대폰 짧은 문구로 바꿈 ----------
+  .member-notice-long,
+  .subscribe-title-long,
+  .watch-subtitle-long {
+    display: none;
+  }
+
+  .member-notice-short,
+  .subscribe-title-short,
+  .watch-subtitle-short {
+    display: inline;
+  }
+
+  // =================================================================
+  // 로그인 후 홈
+  // =================================================================
+  main.member-home.member-home {
+
+    // ---------- 히어로 (시안: 540 · 제목 로고 + [▶ 재생] [♡] · 칩 · 소개 없음) ----------
+    .hero-swiper-container.movie-home-hero {
+      height: 33.75rem;
+      min-height: 0;
+    }
+
+    .hero-swiper-container .hero-slide-item .hero-info {
+      top: auto;
+      bottom: 3.25rem;
+      left: $m-hero-inset;
+      right: $m-hero-inset;
+      transform: none;
+
+      .hero-chips,
+      .hero-overview {
+        display: none;
+      }
+
+      .hero-title {
+        margin-bottom: $space-xl;
+      }
+
+      .hero-actions {
+        gap: $space-md;
+      }
+
+      .hero-play {
+        min-width: 0;
+        width: 70px;
+        height: 1.875rem;
+        padding: 0;
+      }
+
+      .hero-wish {
+        width: 30px;
+        height: 1.875rem;
+      }
+    }
+
+    // ---------- 섹션 공통: 사이 60 · 제목 ↔ 콘텐츠 16 ----------
+    .member-section,
+    section.top10-section,
+    .subscribe-cta {
+      padding: $m-section-gap 0 0;
+    }
+
+    .member-section .member-head {
+      margin: 0 0 $space-lg;
+    }
+
+    .member-more,
+    .member-desc,
+    section.top10-section .top10-desc {
+      display: none; // 시안: 휴대폰은 "전체 보기" · 소제목 없음
+    }
+
+    // 나의 목록 (배경 띠): 띠 안 위 36 · 아래 32
+    // - 띠 위 60 은 바로 앞 섹션의 아래 여백으로 (margin 을 쓰면 띠 위로 페이지 바깥 배경이 비쳐 보임)
+    .member-section.member-wishlist {
+      padding: $space-3xl 0 $space-2xl;
+    }
+
+    .member-section:has(+ .member-wishlist) {
+      padding-bottom: $m-section-gap;
+    }
+
+    // ---------- 이어보기 · AI 어시스트: 한 줄 2장 (사이 12) ----------
+    .rail-continue,
+    .rail-mood {
+      --rail-col: calc((100% - 12px) / 2);
+    }
+
+    .member-cw-card,
+    .member-ai-card {
+      .member-thumb {
+        margin-bottom: $space-sm;
+      }
+
+      .member-card-title,
+      .member-card-link {
+        padding: 0;
+      }
+    }
+
+    // AI 어시스트 썸네일 168 × 104
+    .member-mood .member-thumb.portrait {
+      aspect-ratio: 168 / 104;
+    }
+
+    .member-mood .member-ai-tagline {
+      left: $space-md;
+      bottom: $space-md;
+    }
+
+    // ---------- 나의 목록: 세로 목록 (카드 350 × 70 · 썸네일 60 × 50) ----------
+    .member-wl-list {
+      gap: 0.375rem;
+    }
+
+    .member-wl-card {
+      padding: 0.625rem $space-lg;
+    }
+
+
+    // ---------- 인기 콘텐츠: 숫자 자리 48 + 포스터 123 × 201 (숫자 크기는 그대로 · 테두리 없음은 App.scss 공통) ----------
+    section.top10-section {
+      .top10-slide {
+        width: 171px;
+      }
+
+      .top10-slide--wide {
+        width: 217px; // 두 자리(10위)
+      }
+
+      .top10-card {
+        padding-left: $space-4xl;
+      }
+
+      .top10-slide--wide .top10-card {
+        padding-left: 5.84375rem; // 93.5 (PC 187 × 0.5)
+      }
+
+      .top10-poster {
+        aspect-ratio: 123 / 201;
+      }
+
+    }
+
+    // ---------- Apple 추천: 포스터 130 × 204 · 가운데 [▶] 원 25 + [★ 8.7] (글자 없음) ----------
+    .rail-recommend {
+      --rail-col: 130px;
+    }
+
+    .member-rc-card {
+      aspect-ratio: 130 / 204;
+    }
+
+    .member-rc-info {
+      display: none;
+    }
+
+    .member-rc-actions {
+      left: 0;
+      right: 0;
+      bottom: $space-md;
+      display: flex;
+      justify-content: center;
+      gap: 0.375rem;
+    }
+
+    .member-rc-play,
+    .member-rc-rate {
+      height: 1.5625rem; // 25
+    }
+
+    .member-rc-play {
+      width: 25px;
+      padding: 0;
+      font-size: 0; // "재생" 글자는 숨기고 ▶ 만
+
+      img {
+        width: 8px;
+        height: 0.6875rem;
+      }
+    }
+
+    // [수정] 버튼 테두리(스트로크) 없음 (PC · 태블릿과 같음)
+    .member-rc-rate,
+    .member-rc-rate:hover {
+      padding: 0 0.625rem;
+      border: none;
+    }
+
+    // ---------- AI 어시스트: 기분 칩 56 × 30 (테두리 없음) · 안내 줄 (짧은 문구 + [취향 설정]) ----------
+    .member-mood .member-chips {
+      margin-bottom: $space-md;
+    }
+
+    .member-mood .member-chips .member-chip.member-chip {
+      border: none;
+    }
+
+    .member-mood .member-notice.member-notice {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: $space-md;
+      height: 3.125rem; // 50
+      margin: 0 0 $space-md;
+      padding: 0 1.25rem;
+      border-radius: 0;
+      background-color: $sport-opacity-b;
+      text-align: left;
+
+      .member-btn {
+        align-self: center;
+        height: 1.875rem;
+        padding: 0 $space-lg;
+        border: none;
+      }
+    }
+
+    // ---------- 최신작 · 공개 예정: 포스터 130 × 204 + 포스터 아래 가운데 버튼 ----------
+    .rail-release.rail-showcase.rail-showcase {
+      --rail-col: 130px;
+    }
+
+    .member-sc-slot--static .member-sc-card {
+      aspect-ratio: 130 / 204;
+    }
+
+    .member-sc-poster-actions {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: $space-md;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      gap: 0.375rem;
+    }
+
+    // [▶] 원 25 (프라이머리)
+    .member-sc-poster-play {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 1.5625rem;
+      border-radius: 50%;
+      background-color: $primary-color-500;
+
+      img {
+        display: block;
+        width: 8px;
+        height: 0.6875rem;
+      }
+    }
+
+    // [♡] 원 25
+    .member-sc-poster-actions .member-sc-heart {
+      width: 25px;
+      height: 1.5625rem;
+
+      .member-sc-heart-icon {
+        width: 14px;
+        height: 0.875rem;
+      }
+    }
+
+    // [12월 공개예정 🔔] 배경 Sports/Opacity-b (글자는 PC "N월 공개" 상자와 같음)
+    .member-sc-poster-actions .member-sc-month {
+      position: static;
+      height: 1.5625rem;
+      min-width: 0;
+      padding: 0 $space-sm;
+      gap: $space-xs;
+    }
+
+    // ---------- 홍보 배너: 화면 폭 가득 · 높이 357 · 포스터 줄 없음 ----------
+    .subscribe-cta.subscribe-cta--tv {
+      .inner {
+        width: 100% !important;
+      }
+
+      .subscribe-banner {
+        position: relative;
+        height: 22.3125rem; // 357
+        padding: 0;
+        border-radius: 0;
+      }
+
+      .subscribe-content {
+        position: absolute;
+        top: 50%;
+        left: $m-hero-inset;
+        right: 5%; // 제목 한 줄 ("Apple TV 오리지널 콘텐츠,") 이 줄바꿈되지 않게 오른쪽은 이너 끝선까지
+        transform: translateY(-50%);
+        padding: 0;
+      }
+
+      .subscribe-logo {
+        width: 71px;
+        height: 2.375rem; // 38
+      }
+
+      .subscribe-title {
+        margin-top: $space-lg;
+      }
+
+      .subscribe-btn {
+        width: 200px;
+        height: 2.5rem;
+        margin-top: $space-xl;
+      }
+
+      .subscribe-note {
+        width: 200px;
+        margin-top: $space-sm;
+        text-align: center;
+      }
+
+      .subscribe-posters {
+        display: none;
+      }
+    }
+  }
+
+  // ---------- 기기 안내 (로그인 전 · 후 홈 공통 · 시안: 모바일 hi-fi) ----------
+  section.device-guide.device-guide--watch.device-guide--watch {
+    --icon-scale: 0.5;
+
+    height: auto;
+    padding: 6rem 0;
+
+    .watch-logo-main {
+      height: 2.8125rem; // 45
+    }
+
+    .watch-title {
+      margin-top: $space-xl;
+    }
+
+    .watch-marquee {
+      margin-top: $space-4xl;
+    }
+
+    .watch-mobile {
+      margin-top: 2.5rem;
+    }
+
+    .watch-subtitle {
+      margin-bottom: $space-md;
+    }
+
+    // 시안: 위 3개 (iPhone · iPad · Mac 및 Windows) / 아래 4개 → 줄 폭 280 안에서 줄바꿈
+    .watch-devices {
+      max-width: 280px;
+      gap: $space-xl;
+      margin: $space-3xl auto 0;
+    }
+  }
+
+  // 태블릿에서 숨기는 포스터 버튼 (아래) 은 휴대폰에서 보임
+}
+
+// 태블릿 (768 ~ 1024px): 최신작 · 공개 예정 포스터는 글자 · 버튼 없이 (휴대폰 전용 버튼 숨김)
+@media (min-width: ($breakpoint-mobile + 1)) {
+  .member-sc-poster-actions {
+    display: none;
+  }
+}
