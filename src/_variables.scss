@@ -418,6 +418,18 @@ $watch-gap-text-link: 1.625rem; // 26px · 설명 ↔ 링크
 $watch-logo-gap: 2.5rem; // 40px · 흐르는 로고끼리
 $watch-device-gap: 4.375rem; // 70px · 기기 아이콘끼리
 
+// [추가] AI 어시스트 홍보 배너 (components/ai/AiAssistantPromo.jsx · 로그인 전 홈) — 시안: AI 어시스트_홍보배너
+// - 버튼 · 아이콘 Fill: AI_홍보배너 (Linear 0% #496CF2 · 56% #6654F2 · 100% #8157F5)
+$ai-banner-gradient-start: #496CF2;
+$ai-banner-gradient-mid: #6654F2;
+$ai-banner-gradient-end: #8157F5;
+$ai-banner-gradient: linear-gradient(to right, $ai-banner-gradient-start 0%, $ai-banner-gradient-mid 56%, $ai-banner-gradient-end 100%);
+// - 기분 칩: 기본 #797A84 (시안 화면 기준 불투명도 약 30%) / 선택 0% #41424A → 100% #33343B (위 → 아래)
+$ai-banner-chip-bg: #797A84;
+$ai-banner-chip-active-start: #41424A;
+$ai-banner-chip-active-end: #33343B;
+$ai-banner-chip-active: linear-gradient(to bottom, $ai-banner-chip-active-start 0%, $ai-banner-chip-active-end 100%);
+
 // TV 카드 제목: SF Pro Medium 32 / 46 · 자간 0%
 @mixin tv-card-title {
   @include type-style(2rem, 2.875rem, $font-weight-medium);

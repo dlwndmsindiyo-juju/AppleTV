@@ -3653,3 +3653,22 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     }
   }
 }
+
+// =====================================================================
+// [추가] AI 어시스트 홍보 배너 — 휴대폰 (components/ai/AiAssistantPromo.jsx · PC 스타일은 App.scss .ai-banner)
+// =====================================================================
+// - 위아래 여백만 줄이고 글 → 상자 세로 배치 (상자는 이너 폭 가득)
+@media (max-width: $breakpoint-mobile) {
+  .ai-banner {
+    padding: 2.5rem 0;
+
+    .ai-banner-content {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .ai-banner-box {
+      width: 100%;
+    }
+  }
+}

@@ -20,10 +20,10 @@ import ShowcaseCard from "../components/member/ShowcaseCard";
 import DetailBackLink from "../components/common/DetailBackLink"; // [추가] 상세 공용 "← 홈으로" (같은 자리)
 
 const PAGES = {
-  continue: { title: "이어보기", desc: "마지막으로 감상했던 장면부터 이어서 만나보세요.", empty: "아직 시청 내역이 없습니다." },
-  recommend: { title: "Apple 추천", desc: "지금 꼭 봐야할, Apple이 엄선한 특별한 콘텐츠를 만나보세요." },
-  new: { title: "최신작", desc: "새롭게 공개된 영화와 시리즈를 지금 바로 만나보세요." },
-  soon: { title: "공개 예정", desc: "앞으로 공개될 새로운 영화와 시리즈를 미리 만나보세요." },
+  continue: { title: "이어보기", empty: "아직 시청 내역이 없습니다." },
+  recommend: { title: "Apple 추천" },
+  new: { title: "최신작" },
+  soon: { title: "공개 예정" },
 };
 
 const ALL = Infinity;
@@ -94,7 +94,6 @@ const MemberBrowse = () => {
           <div className="member-head">
             <div>
               <h1 className="member-title">{page.title}</h1>
-              <p className="member-desc">{page.desc}</p>
             </div>
           </div>
 
