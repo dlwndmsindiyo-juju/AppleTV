@@ -6,11 +6,12 @@
 // - 모든 설정은 Firestore users/{uid} 에 바로 저장 (settings · avatar)
 // - 로그인 전에 들어오면 로그인 화면으로
 import React, { useEffect, useRef, useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebase";
-import { useAuthStore, getSettings, ALERT_CHANNELS, getProfiles, MAIN_PROFILE_ID } from "../store/useAuthStore";
+import { useAuthStore, getSettings, ALERT_CHANNELS, getProfiles, MAIN_PROFILE_ID, getPayments, getBilling, BILLING_MAX_LENGTH } from "../store/useAuthStore";
 import ProfileAvatar, { AVATAR_OPTIONS, sameAvatar, profileLook } from "../components/profile/ProfileAvatar";
 import ProfilePicker from "../components/profile/ProfilePicker"; // [추가] 프로필 고르기 · 추가
+import { ConfirmDialog, subscriptionSummary } from "../components/profile/AccountShared"; // [추가] 구독 · 지불 방법 (확인 팝업은 공용으로 옮김)
 // 스타일: App.scss 맨 아래 "계정 설정" (.account-*)
 
 const CHANNEL_LABELS = { email: "이메일", sms: "문자 메시지", push: "앱 푸시 알림" };
@@ -26,6 +27,8 @@ const PROVIDER_LABELS = {
 const SECTIONS = [
   { id: "account-profile", title: "프로필" },
   { id: "account-access", title: "계정 액세스" },
+  { id: "account-subscription", title: "구독" }, // [추가] 구독 관리 (/profile/subscription)
+  { id: "account-payment", title: "지불 방법" }, // [추가] 지불 방법 관리 (/profile/payment)
   { id: "account-history", title: "재생 기록" },
   { id: "account-autoplay", title: "자동 재생" },
   { id: "account-assistant", title: "AI 어시스트" },
@@ -107,7 +110,7 @@ const Toggle = ({ checked, onChange, label }) => (
     onClick={() => onChange(!checked)}
   >
     <span className="account-toggle-track" aria-hidden="true">
-      <span className="accoun t-toggle-thumb" />
+      <span className="account-toggle-thumb" />
     </span>
     <span className="account-toggle-text">{checked ? "켜기" : "끄기"}</span>
   </button>
@@ -140,40 +143,47 @@ const ChannelPicker = ({ name, alert, onChange }) => {
   );
 };
 
-// 확인 팝업 (모든 브라우저에서 로그아웃 · 재생 기록 지우기)
-const ConfirmDialog = ({ title, desc, confirmLabel, busy, onConfirm, onCancel }) => {
-  const cancelRef = useRef(null);
-  const latest = useRef({ busy, onCancel });
-  latest.current = { busy, onCancel };
+// [추가] 청구 주소 입력 (계정 설정 → 지불 방법) — 사용자가 직접 입력한 값만 저장 · 표시
+const BILLING_INPUTS = [
+  { key: "name", label: "이름", autoComplete: "name", required: true },
+  { key: "address1", label: "주소", autoComplete: "address-line1", required: true },
+  { key: "address2", label: "상세 주소", autoComplete: "address-line2" },
+  { key: "postal", label: "우편번호", autoComplete: "postal-code", inputMode: "numeric" },
+  { key: "phone", label: "전화번호", autoComplete: "tel", inputMode: "tel", type: "tel" },
+];
 
-  // 열릴 때 1번: 취소 버튼에 포커스 · Esc 로 닫기 · 뒤 화면 스크롤 막기
-  useEffect(() => {
-    cancelRef.current?.focus();
-    const onKey = (e) => e.key === "Escape" && !latest.current.busy && latest.current.onCancel();
-    document.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, []);
-
+const BillingDialog = ({ initial, busy, onSave, onCancel }) => {
+  const [form, setForm] = useState(() => Object.fromEntries(BILLING_INPUTS.map(({ key }) => [key, initial?.[key] || ""])));
+  const ready = BILLING_INPUTS.every(({ key, required }) => !required || form[key].trim());
   return (
-    <div className="account-dialog-backdrop" onMouseDown={(e) => e.target === e.currentTarget && !busy && onCancel()}>
-      <div className="account-dialog" role="alertdialog" aria-modal="true" aria-labelledby="account-dialog-title">
-        <h2 id="account-dialog-title" className="account-dialog-title">{title}</h2>
-        <p className="account-dialog-desc">{desc}</p>
-        <div className="account-dialog-actions">
-          <button ref={cancelRef} type="button" className="account-btn account-btn--secondary" onClick={onCancel} disabled={busy}>
-            취소
-          </button>
-          <button type="button" className="account-btn" onClick={onConfirm} disabled={busy}>
-            {busy ? "처리 중..." : confirmLabel}
-          </button>
-        </div>
+    <ConfirmDialog
+      title={initial ? "청구 주소 편집" : "청구 주소 추가"}
+      desc="결제에 사용할 이름 · 주소 · 전화번호를 입력해 주세요."
+      confirmLabel="저장"
+      busy={busy}
+      confirmDisabled={!ready}
+      onConfirm={() => ready && onSave(form)}
+      onCancel={onCancel}
+    >
+      <div className="account-form">
+        {BILLING_INPUTS.map(({ key, label, autoComplete, inputMode, type = "text", required }) => (
+          <label key={key} className="account-field">
+            <span className="account-item-title">
+              {label}
+              {!required && <span className="account-field-optional"> (선택)</span>}
+            </span>
+            <input
+              type={type}
+              inputMode={inputMode}
+              autoComplete={autoComplete}
+              maxLength={BILLING_MAX_LENGTH}
+              value={form[key]}
+              onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
+            />
+          </label>
+        ))}
       </div>
-    </div>
+    </ConfirmDialog>
   );
 };
 
@@ -190,10 +200,12 @@ export const Profile = () => {
   const currentProfileId = useAuthStore((s) => s.currentProfileId) || MAIN_PROFILE_ID; // [수정] 지금 보고 있는 프로필
   const onSelectProfile = useAuthStore((s) => s.onSelectProfile);
   const onUpdateProfile = useAuthStore((s) => s.onUpdateProfile);
+  const onSaveBilling = useAuthStore((s) => s.onSaveBilling); // [추가] 청구 주소
 
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [providersOpen, setProvidersOpen] = useState(false);
   const [dialog, setDialog] = useState(null); // "logout" | "history" | null
+  const [billingOpen, setBillingOpen] = useState(false); // [추가] 청구 주소 입력 팝업
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState(""); // 저장 결과 안내 (화면 아래 토스트)
   const leavingRef = useRef(false); // 모든 브라우저 로그아웃 중: 로그인 화면으로 튀지 않고 홈으로
@@ -223,6 +235,16 @@ export const Profile = () => {
     };
   }, [authReady, hasUser]);
 
+  // [추가] 구독 관리 · 지불 방법 화면에서 "뒤로" → 그 섹션으로 바로 (/profile#account-subscription)
+  const hash = location.hash.slice(1);
+  useEffect(() => {
+    if (!authReady || !hasUser || !hash || !SECTION_TITLE[hash]) return;
+    const el = document.getElementById(hash);
+    if (!el) return;
+    setActiveSection(hash);
+    el.scrollIntoView({ block: "start" });
+  }, [authReady, hasUser, hash]);
+
   // 안내 문구는 3초 뒤 사라짐
   useEffect(() => {
     if (!message) return;
@@ -237,6 +259,16 @@ export const Profile = () => {
   }
 
   const settings = getSettings(user);
+  const payments = getPayments(user); // [추가] 지불 방법 (맨 앞이 기본)
+  const billing = getBilling(user); // [추가] 청구 주소 (사용자가 입력한 값 · 없으면 null)
+
+  const saveBilling = async (form) => {
+    setBusy(true);
+    const ok = await onSaveBilling(form);
+    setBusy(false);
+    if (ok) setBillingOpen(false);
+    setMessage(ok ? "청구 주소를 저장했어요." : "청구 주소를 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
+  };
 
   const save = async (key, value) => {
     const ok = await onUpdateSetting(key, value);
@@ -354,6 +386,48 @@ export const Profile = () => {
               </Item>
             </Section>
 
+ {/* ---------- [추가] 지불 방법 ---------- */}
+            {/* - 지불 유형 · 청구 주소 · 국가/지역 한 줄 (휴대폰은 위아래) · 청구 주소는 사용자가 입력한 값만 */}
+            <Section id="account-payment">
+              <div className="account-item-row">
+                <Item
+                  title="지불 유형"
+                  desc={payments[0] ? `${payments[0].brand} •••• ${payments[0].last4}` : "등록된 지불 방법이 없습니다."}
+                >
+                  <Link className="account-link" to="/profile/payment">
+                    지불 방법 관리
+                  </Link>
+                </Item>
+                <Item title="청구 주소">
+                  {billing ? (
+                    <address className="account-address">
+                      {["name", "address1", "address2", "postal", "phone"]
+                        .filter((k) => billing[k])
+                        .map((k) => (
+                          <span key={k}>{billing[k]}</span>
+                        ))}
+                    </address>
+                  ) : (
+                    <p className="account-item-desc">등록된 청구 주소가 없습니다.</p>
+                  )}
+                  <button type="button" className="account-link" onClick={() => setBillingOpen(true)}>
+                    {billing ? "청구 주소 편집" : "청구 주소 추가"}
+                  </button>
+                </Item>
+                <Item title="국가/지역" desc="대한민국" />
+              </div>
+            </Section>
+
+              {/* ---------- [추가] 구독 ---------- */}
+            <Section id="account-subscription">
+              <Item title="구독을 확인 및 관리합니다." desc={subscriptionSummary(user)}>
+                <Link className="account-link" to="/profile/subscription">
+                  관리
+                </Link>
+              </Item>
+            </Section>
+
+           
             {/* ---------- 계정 액세스 ---------- */}
             <Section id="account-access">
               <Item
@@ -386,6 +460,8 @@ export const Profile = () => {
                 )}
               </Item>
             </Section>
+
+          
 
             {/* ---------- 재생 기록 ---------- */}
             <Section id="account-history">
@@ -473,6 +549,9 @@ export const Profile = () => {
         </div>
       </div>
 
+      {billingOpen && (
+        <BillingDialog initial={billing} busy={busy} onSave={saveBilling} onCancel={() => setBillingOpen(false)} />
+      )}
       {dialog === "logout" && (
         <ConfirmDialog
           title="모든 브라우저에서 로그아웃할까요?"

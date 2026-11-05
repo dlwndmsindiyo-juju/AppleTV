@@ -5452,9 +5452,12 @@ img.ui-icon.ui-icon-arrow {
     padding-top: 0;
   }
 
-  button {
-    font-family: inherit;
-  }
+}
+
+// [수정] 우선순위 0 (:where) → 버튼 글자도 각자 텍스트 스타일(믹스인)의 글꼴을 그대로 씀
+// (예전: .account-page button 이 .account-link 등의 글꼴을 덮어써 버튼 글자만 다른 글꼴로 보였음)
+:where(.account-page button) {
+  font-family: inherit;
 }
 
 .account-inner {
@@ -5875,13 +5878,14 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-dialog-title {
-  @include heading-h3-b;
+  @include heading-h2-b; // [수정] 계정 설정 메뉴별 타이틀과 같은 Heading/h2-B · Dark/400
+  color: $dark-color-400;
   margin-bottom: $space-sm;
 }
 
 .account-dialog-desc {
-  @include body-default;
-  color: $account-sub;
+  @include body-default; // 설명 Body/default · Dark/100
+  color: $dark-color-100;
   word-break: keep-all;
 }
 
@@ -5947,6 +5951,466 @@ img.ui-icon.ui-icon-arrow {
     opacity: 1;
     transform: translate(-50%, 0);
   }
+}
+
+// =====================================================================
+// [추가] 계정 설정 — 구독 관리 · 지불 방법 (/profile/subscription · /profile/payment)
+// - pages/AccountSubscription.jsx · pages/AccountPayment.jsx · components/profile/AccountShared.jsx
+// - 글자 위계는 계정 설정과 같음: 화면 제목 Display/L-B · 큰 제목 Heading/h2-B · 항목 제목 Heading/h5-B (Dark/400)
+//   설명 Body/default (Dark/100) · 안내 Body/small (Dark/100)
+// - 파란 버튼 · 링크는 모두 프라이머리 ($primary-color-500)
+// =====================================================================
+$account-icon-size: 4.25rem; // Apple TV 앱 아이콘 68
+
+// ---------- 화면 틀: 제목 + "‹ 뒤로" + 구분선 ----------
+.account-title.account-title--sub {
+  padding-bottom: $space-lg;
+  border-bottom: none;
+}
+
+.account-back-row {
+  padding-bottom: $space-lg;
+  border-bottom: 0.0625rem solid $account-line;
+}
+
+.account-back {
+  @include body-default; // [수정] 다른 계정 설정 링크와 같은 Body/default
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  color: $primary-color-500;
+  text-decoration: none;
+
+  &:hover {
+    color: $primary-color-400;
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+    border-radius: $space-xs;
+  }
+}
+
+.account-back-icon {
+  flex-shrink: 0;
+}
+
+// 화면 안 묶음 (아래 구분선은 --line)
+.account-sub-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-2xl;
+  padding: $space-4xl 0;
+
+  &--line {
+    border-bottom: 0.0625rem solid $account-line;
+  }
+}
+
+// 큰 제목 (Apple TV · 지불 방법): 계정 설정 메뉴 글자와 같은 Heading/h2-B
+.account-sub-heading {
+  @include heading-h2-b;
+  color: $dark-color-400;
+}
+
+.account-sub-app {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+}
+
+.account-sub-app-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: $account-icon-size;
+  height: $account-icon-size;
+  border-radius: $radius-md;
+  background-color: $dark-color-900;
+
+  img {
+    width: 60%;
+    height: auto;
+    display: block;
+  }
+}
+
+// 요금 · 갱신 예정일 (아이콘 + 글자)
+.account-sub-facts {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    @include body-default; // [수정] 설명 Body/default · Dark/100
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    color: $dark-color-100;
+  }
+
+  .account-icon {
+    color: $dark-color-100;
+  }
+}
+
+.account-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+// 취소함: 빨간 안내
+.account-sub-canceled {
+  @include heading-h5-b;
+  color: $live-color;
+}
+
+// 구독 없음: 회색 상자
+.account-sub-empty {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  width: 100%;
+  padding: $space-xl;
+  border: 0.0625rem solid $account-line;
+  border-radius: $radius-card-sm;
+  background-color: $light-color-0;
+  box-sizing: border-box;
+}
+
+.account-sub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+}
+
+// ---------- 버튼: 모두 배경 가득 (갱신 · 가족 설정 · 모든 요금제 보기 · 구독 취소) ----------
+.account-fill-btn,
+.account-outline-btn {
+  @include body-default-b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: $radius-xs;
+  box-sizing: border-box;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+  }
+}
+
+.account-fill-btn {
+  border: none;
+  background-color: $primary-color-500;
+  color: $light-color-0;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-color-400;
+  }
+}
+
+// [수정] 테두리 대신 배경 가득 (프라이머리 · 흰 글자)
+.account-outline-btn {
+  border: none;
+  background-color: $primary-color-500;
+  color: $light-color-0;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-color-400;
+  }
+
+  // 구독 취소: 빨간 배경 가득
+  &--danger {
+    background-color: $live-color;
+
+    &:hover:not(:disabled) {
+      background-color: rgba($live-color, 0.85);
+    }
+  }
+}
+
+// 버튼이 위아래로 이어질 때 사이 (관리: 모든 요금제 보기 → 구독 취소)
+.account-item>.account-outline-btn+.account-outline-btn,
+.account-item>.account-plan-list+.account-outline-btn {
+  margin-top: $space-sm;
+}
+
+// ---------- 요금제 목록 (모든 요금제 보기) ----------
+.account-plan-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  width: 100%;
+  max-width: 420px;
+  margin: $space-xs 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-plan {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: $space-xs $space-lg;
+  width: 100%;
+  padding: $space-md $space-lg;
+  border: 0.0625rem solid $account-line;
+  border-radius: $radius-card-sm;
+  background-color: $light-color-0;
+  color: $dark-color-400;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: $primary-color-500;
+  }
+
+  &.is-on {
+    border-color: $primary-color-500;
+    cursor: default;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+  }
+}
+
+.account-plan-name {
+  @include heading-h5-b;
+  grid-column: 1;
+}
+
+.account-plan-price {
+  @include body-default;
+  grid-column: 1;
+  color: $dark-color-100;
+}
+
+.account-plan-tag {
+  @include body-small; // [수정] 안내 Body/small
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: $primary-color-500;
+}
+
+// ---------- 링크: 글 안 "더 알아보기 ↗" · 아이콘 + 글자 (지불 방법 추가 · 순서 변경) ----------
+.account-link.account-link--inline {
+  display: inline;
+}
+
+.account-link-arrow {
+  display: inline-block;
+  width: 8px;
+  height: 0.5rem;
+  margin-left: $space-xs;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/right-top.svg") center / contain no-repeat;
+  mask: url("/icons/right-top.svg") center / contain no-repeat;
+}
+
+.account-icon-link {
+  @include body-default;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $primary-color-500;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    color: $primary-color-400;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+    border-radius: $space-xs;
+  }
+}
+
+// ---------- 지불 방법 카드 ----------
+.account-pay-layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: $space-xl $space-4xl;
+  width: 100%;
+}
+
+.account-pay-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  width: min(100%, 39rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-pay-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-lg;
+  min-height: 9rem;
+  padding: $space-xl;
+  border: 0.0625rem solid $account-line;
+  border-radius: $radius-card;
+  background-color: $light-color-0;
+  box-shadow: 0 $space-sm $space-xl rgba($dark-color-900, 0.06);
+  box-sizing: border-box;
+}
+
+.account-pay-card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-xs;
+  min-width: 0;
+}
+
+.account-pay-brand {
+  @include heading-h5-b; // [수정] 항목 제목 Heading/h5-B
+  color: $dark-color-400;
+}
+
+.account-pay-number {
+  @include body-default;
+  color: $dark-color-100;
+}
+
+.account-pay-default {
+  @include body-small; // [수정] 안내 Body/small
+  margin-top: $space-xs;
+  color: $primary-color-500;
+}
+
+.account-pay-card-icon {
+  color: $dark-color-100;
+}
+
+// 순서 변경 중: ↑ ↓ 삭제
+.account-pay-order {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  flex-shrink: 0;
+}
+
+.account-pay-move {
+  @include body-default-b;
+  width: 32px;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: $light-color-200;
+  color: $dark-color-400;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background-color: $light-color-300;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.account-pay-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-md;
+  padding-top: $space-sm;
+}
+
+// ---------- 입력 칸 (지불 방법 추가 · 청구 주소 · 팝업 안) ----------
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  margin-top: $space-lg;
+}
+
+.account-field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+
+  input,
+  select {
+    @include body-default;
+    width: 100%;
+    height: 2.75rem;
+    padding: 0 $space-md;
+    border: 0.0625rem solid $account-line;
+    border-radius: $radius-xs;
+    background-color: $light-color-100;
+    color: $dark-color-400;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+
+    &:focus {
+      border-color: $primary-color-500;
+      background-color: $light-color-0;
+    }
+  }
+}
+
+.account-field-optional {
+  @include body-small;
+  color: $dark-color-100;
+}
+
+// ---------- 계정 설정 "지불 방법": 지불 유형 · 청구 주소 · 국가/지역 한 줄 ----------
+.account-item-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $space-2xl;
+}
+
+.account-address {
+  @include body-default;
+  display: flex;
+  flex-direction: column;
+  font-style: normal;
+  color: $dark-color-100;
+  word-break: keep-all;
 }
 
 // =====================================================================

@@ -43,6 +43,20 @@ export const isSubscribed = (user) => {
     return !exp || exp > Date.now();
 };
 
+// [추가] 지불 방법 (계정 설정) — 최대 개수
+export const PAYMENT_MAX = 5;
+export const getPayments = (user) => (Array.isArray(user?.payments) ? user.payments.slice(0, PAYMENT_MAX) : []);
+
+// [추가] 청구 주소 (계정 설정 · 사용자가 직접 입력한 이름 · 주소 · 우편번호 · 전화번호)
+export const BILLING_FIELDS = ["name", "address1", "address2", "postal", "phone"];
+export const BILLING_MAX_LENGTH = 100;
+export const getBilling = (user) => {
+    const b = user?.billing;
+    if (!b || typeof b !== "object") return null;
+    const clean = Object.fromEntries(BILLING_FIELDS.map((k) => [k, typeof b[k] === "string" ? b[k] : ""]));
+    return clean.name || clean.address1 || clean.phone ? clean : null;
+};
+
 // 구독 기간 (UI 전용 구독)
 const DAY_MS = 24 * 60 * 60 * 1000;
 const TRIAL_DAYS = 7;
@@ -502,8 +516,9 @@ export const useAuthStore = create((set, get) => ({
                 expiresAt: Timestamp.fromMillis(now + periodMs),
             };
 
-            await updateDoc(doc(db, "users", fbUser.uid), { trialUsed: true, subscription });
-            const data = { ...current, trialUsed: true, subscription };
+            // [수정] 새로 구독하면 예전 "구독 취소" 표시는 지움
+            await updateDoc(doc(db, "users", fbUser.uid), { trialUsed: true, subscription, subscriptionCanceled: false });
+            const data = { ...current, trialUsed: true, subscription, subscriptionCanceled: false };
             set({ user: data });
             return data;
         } catch (err) {
@@ -576,6 +591,50 @@ export const useAuthStore = create((set, get) => ({
             return false;
         }
     },
+
+    // ---------- [추가] 계정 설정 · 구독 관리 (pages/AccountSubscription.jsx) ----------
+    // users/{uid} 에 바로 저장 · 화면은 바로 바꾸고 실패하면 되돌림 → true / false
+    _saveUserFields: async (fields) => {
+        const fbUser = auth.currentUser;
+        const prev = get().user;
+        if (!fbUser || !prev) return false;
+        set({ user: { ...prev, ...fields } });
+        try {
+            await updateDoc(doc(db, "users", fbUser.uid), fields);
+            return true;
+        } catch (err) {
+            console.log("계정 정보 저장 에러:", err.code, err.message);
+            set({ user: prev });
+            return false;
+        }
+    },
+
+    // 구독 취소: 만료일(subscription.expiresAt)까지는 그대로 이용 · 자동 갱신만 멈춤
+    onCancelSubscription: () => get()._saveUserFields({ subscriptionCanceled: true }),
+
+    // 갱신 (취소 되돌리기): 다시 자동 갱신
+    onRenewSubscription: () => get()._saveUserFields({ subscriptionCanceled: false }),
+
+    // 요금제 바꾸기 (monthly | yearly) — 다음 갱신부터 적용 (지금 기간 · 만료일은 그대로)
+    onChangePlan: async (plan) => {
+        const sub = get().user?.subscription;
+        if (!sub || !["monthly", "yearly"].includes(plan) || sub.plan === plan) return false;
+        return get()._saveUserFields({ subscription: { ...sub, plan } });
+    },
+
+    // ---------- [추가] 지불 방법 (pages/AccountPayment.jsx) ----------
+    // users/{uid}.payments = [{ id, brand, last4 }] · 맨 앞이 기본 지불 방법 (위에서부터 순서대로 결제 시도)
+    // - 데모용: 카드 번호 전체는 받지 않고 카드사 · 끝 4자리만 저장
+    onSavePayments: (payments) =>
+        get()._saveUserFields({ payments: payments.slice(0, PAYMENT_MAX).map(({ id, brand, last4 }) => ({ id, brand, last4 })) }),
+
+    // [추가] 청구 주소 저장 (users/{uid}.billing) — 앞뒤 공백 정리 · 칸마다 최대 100자
+    onSaveBilling: (billing) =>
+        get()._saveUserFields({
+            billing: Object.fromEntries(
+                BILLING_FIELDS.map((k) => [k, String(billing?.[k] ?? "").trim().slice(0, BILLING_MAX_LENGTH)])
+            ),
+        }),
 
     // 프로필 아이콘 저장 — avatar: { icon, color }
     onUpdateAvatar: async (avatar) => {

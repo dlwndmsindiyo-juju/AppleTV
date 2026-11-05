@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuthStore, isSubscribed } from "../../store/useAuthStore";
-import { MANAGE_URL } from "../../data/appleLinks";
+import { Link } from "react-router-dom";
 import "../../subscribe.scss";
 
 /**
@@ -79,9 +79,10 @@ const TrialWelcome = () => {
                   {opt.label}
                 </button>
               ))}
-              <a className="trial-strip-link" href={MANAGE_URL} target="_blank" rel="noreferrer">
+              {/* [수정] 계정 설정 → 구독 관리 화면으로 (예전: Apple 외부 링크) */}
+              <Link className="trial-strip-link" to="/profile/subscription">
                 구독 관리
-              </a>
+              </Link>
             </div>
           </div>
       </div>
