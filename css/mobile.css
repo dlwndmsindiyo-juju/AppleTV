@@ -33,10 +33,7 @@
   .hero-swiper-container .hero-slide-item .hero-info .hero-title {
     font-size: 3rem;
   }
-  .value-props .inner,
   .top10-section .inner,
-  .upcoming-section .inner,
-  .apple-originals .inner,
   .ai-promo .inner,
   .subscribe-cta .inner,
   .movie-slider-section .inner {
@@ -126,30 +123,6 @@
   .upcoming-section .upcoming-btn:not(.on):hover {
     border-color: #FFFFFF;
     background-color: rgba(255, 255, 255, 0.12);
-  }
-  .apple-originals {
-    overflow: hidden;
-  }
-  .apple-originals .inner {
-    padding-right: 0;
-  }
-  .apple-originals .apple-originals-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 2.125rem;
-    line-height: 2.5625rem;
-    letter-spacing: 0;
-  }
-  .apple-originals .apple-originals-title,
-  .apple-originals .apple-originals-desc {
-    padding-right: 13%;
-  }
-  .apple-originals .apple-originals-slide {
-    width: 280px;
-  }
-  .apple-originals .swiper-button-next,
-  .apple-originals .swiper-button-prev {
-    display: none;
   }
   .ai-promo {
     padding-bottom: 4rem;
@@ -816,9 +789,7 @@
   }
 }
 @media (max-width: 767px) {
-  section.top10-section .top10-title,
-  .upcoming-section .upcoming-title.upcoming-title,
-  .apple-originals .apple-originals-title.apple-originals-title {
+  section.top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 2.125rem;
@@ -829,9 +800,7 @@
     color: #FFFFFF;
     word-break: keep-all;
   }
-  section.top10-section .top10-desc,
-  .upcoming-section .upcoming-desc.upcoming-desc,
-  .apple-originals .apple-originals-desc.apple-originals-desc {
+  section.top10-section .top10-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.25rem;
@@ -947,10 +916,7 @@
   .hero-swiper-container .hero-slide-item .hero-info .hero-overview {
     display: none;
   }
-  .value-props .inner,
   .top10-section .inner,
-  .upcoming-section .inner,
-  .apple-originals .inner,
   .ai-promo .inner,
   .subscribe-cta .inner,
   .movie-slider-section .inner {
@@ -1042,42 +1008,6 @@
     height: 2rem;
     padding: 0 0.875rem;
     margin-top: 0.25rem;
-  }
-  .apple-originals {
-    padding: 2.5rem 0;
-  }
-  .apple-originals .apple-originals-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 1.75rem;
-    line-height: 2.125rem;
-    letter-spacing: 0;
-    padding-right: 1.25rem;
-  }
-  .apple-originals .apple-originals-desc {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 0.8125rem;
-    line-height: 1.125rem;
-    letter-spacing: 0;
-    padding-right: 1.25rem;
-    margin-bottom: 1.25rem;
-  }
-  .apple-originals .inner {
-    padding-right: 0;
-  }
-  .apple-originals .apple-originals-slide {
-    width: 140px;
-  }
-  .apple-originals .apple-card-poster {
-    margin-bottom: 0.5rem;
-  }
-  .apple-originals .apple-card-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 1.0625rem;
-    line-height: 1.375rem;
-    letter-spacing: 0;
   }
   .ai-promo {
     padding: 2.5rem 0;
@@ -2289,9 +2219,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
 }
 @media (max-width: 767px) {
-  section.top10-section .top10-title,
-  .upcoming-section .upcoming-title.upcoming-title,
-  .apple-originals .apple-originals-title.apple-originals-title {
+  section.top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.25rem;
@@ -2299,9 +2227,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     letter-spacing: 0;
     color: #FFFFFF;
   }
-  section.top10-section .top10-desc,
-  .upcoming-section .upcoming-desc.upcoming-desc,
-  .apple-originals .apple-originals-desc.apple-originals-desc {
+  section.top10-section .top10-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1rem;
