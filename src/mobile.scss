@@ -3126,3 +3126,80 @@ header .inner nav .gnb-right ul .search-icon-item {
     flex-direction: row;
   }
 }
+
+
+// =====================================================================
+// [추가] 전체 보기 페이지 (pages/MemberBrowse.jsx · /browse/:key) — 태블릿 · 휴대폰
+// - 격자 칸 폭만 줄임 (카드 모양은 홈과 같음)
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  main.member-home.member-browse {
+    .member-section .inner {
+      padding-right: $tablet-gutter;
+    }
+
+    .member-head {
+      margin-right: 0;
+    }
+
+    .member-browse-grid {
+      --browse-col: 280px;
+      gap: $space-2xl $space-xl;
+    }
+
+    .member-browse-grid--recommend {
+      --browse-col: 200px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  main.member-home.member-browse {
+    .member-section .inner {
+      padding-right: $mobile-edge;
+    }
+
+    .member-browse-grid {
+      --browse-col: 100%;
+      gap: $space-xl $space-lg;
+    }
+
+    .member-browse-grid--recommend {
+      --browse-col: 140px;
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 핵심 혜택 (ValueProps.jsx) — 휴대폰: 1열이라 칸 사이 구분선을 가로선으로 (App.scss 의 세로 구분선 대신)
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  section.value-props.value-props .value-prop-item + .value-prop-item::before {
+    top: -10px; // 칸 사이 간격(20)의 가운데
+    bottom: auto;
+    left: 25%;
+    right: 25%;
+    width: auto;
+    height: 1px;
+  }
+}
+
+// [추가] 휴대폰 신규출시 카드 [♡ 찜]: 찜한 상태는 빨간 하트 대신 흰색 채운 하트 (public/icons/active-heart.svg)
+@media (max-width: $breakpoint-mobile) {
+  main.member-home .member-nr-card.member-nr-card .member-nr-quick-heart.is-on,
+  section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-heart.is-on {
+    color: $light-color-0;
+
+    .member-nr-quick-heart-icon {
+      -webkit-mask-image: url("/icons/active-heart.svg");
+      mask-image: url("/icons/active-heart.svg");
+    }
+  }
+}
+
+// [추가] 기기 안내: PC 전체 높이 838px(App.scss)은 PC 에만 — 태블릿 · 휴대폰은 내용 높이 그대로 (잘리지 않게)
+@media (max-width: $breakpoint-tablet) {
+  section.device-guide.device-guide--watch {
+    height: auto;
+  }
+}
