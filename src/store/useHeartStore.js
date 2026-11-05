@@ -72,6 +72,11 @@ export const wishKey = (type, id) => `${type === "tv" ? "tv" : "movie"}_${id}`;
 export const formatCount = (n) => (n > 999 ? "1000+" : String(n));
 
 const userRef = (uid) => doc(db, "users", uid);
+
+// [추가] 프로필별 위시리스트 — 문서 id 앞에 "{프로필 id}__" (첫 프로필 "main" 은 예전처럼 접두어 없음)
+// - 같은 컬렉션(users/{uid}/wishlist · wishGroups)을 그대로 써서 Firestore 보안 규칙을 바꾸지 않아도 됨
+const prefixOf = (pid) => (!pid || pid === "main" ? "" : `${pid}__`);
+const ownDoc = (id, pid) => (prefixOf(pid) ? id.startsWith(prefixOf(pid)) : !id.includes("__"));
 const itemsCol = (uid) => collection(userRef(uid), "wishlist");
 const groupsCol = (uid) => collection(userRef(uid), "wishGroups");
 
@@ -115,6 +120,7 @@ let unsubs = [];
 
 export const useHeartStore = create((set, get) => ({
   uid: null,
+  pid: "main", // [추가] 지금 연결된 프로필
   ready: false,
   items: {}, // { "movie_1": item }
   groups: [], // [{ id, name, icon, order }]
@@ -124,20 +130,23 @@ export const useHeartStore = create((set, get) => ({
   newGroupOpen: false,
   toast: null, // { text, groupId }
 
-  // ---------- 로그인 계정 연결 (App 에서 user 가 바뀔 때 호출) ----------
-  onConnect: (uid) => {
-    if (get().uid === uid) return;
+  // ---------- 로그인 계정 · 프로필 연결 (App 에서 user · 프로필이 바뀔 때 호출) ----------
+  onConnect: (uid, pid = "main") => {
+    const profile = pid || "main";
+    if (get().uid === uid && get().pid === profile) return;
     unsubs.forEach((u) => u());
     unsubs = [];
-    set({ uid, ready: false, items: {}, groups: [], pickerKey: null, newGroupOpen: false, toast: null });
+    set({ uid, pid: profile, ready: false, items: {}, groups: [], pickerKey: null, newGroupOpen: false, toast: null });
     if (!uid) return;
+    const pre = prefixOf(profile);
 
     let firstGroups = true;
     unsubs.push(
       onSnapshot(groupsCol(uid), async (snap) => {
         const groups = snap.docs
+          .filter((d) => ownDoc(d.id, profile))
           .map((d) => {
-            const g = { id: d.id, ...d.data() };
+            const g = { id: d.id.slice(pre.length), ...d.data() };
             // 기본 그룹은 시안 아이콘으로 (예전에 만들어진 그룹 포함)
             const def = DEFAULT_GROUPS.find((x) => x.id === g.id);
             return def && ICON_ALIAS[g.icon] ? { ...g, icon: def.icon } : g;
@@ -148,7 +157,7 @@ export const useHeartStore = create((set, get) => ({
           firstGroups = false;
           const batch = writeBatch(db);
           DEFAULT_GROUPS.forEach((g, i) =>
-            batch.set(doc(groupsCol(uid), g.id), {
+            batch.set(doc(groupsCol(uid), pre + g.id), {
               name: g.name,
               icon: g.icon,
               order: i,
@@ -167,19 +176,20 @@ export const useHeartStore = create((set, get) => ({
     unsubs.push(
       onSnapshot(itemsCol(uid), (snap) => {
         const items = {};
-        snap.docs.forEach((d) => {
+        snap.docs.filter((d) => ownDoc(d.id, profile)).forEach((d) => {
           const data = d.data({ serverTimestamps: "estimate" });
-          items[d.id] = {
+          const key = d.id.slice(pre.length);
+          items[key] = {
             ...data,
-            key: d.id,
+            key,
             groups: data.groups || [],
             addedAt: data.addedAt?.toMillis?.() || Date.now(),
           };
         });
         set({ items, ready: true });
 
-        // 처음 한 번: 이 브라우저에 남은 예전 찜 목록 옮기기
-        if (firstItems) {
+        // 처음 한 번: 이 브라우저에 남은 예전 찜 목록 옮기기 (첫 프로필만)
+        if (firstItems && !pre) {
           firstItems = false;
           const legacy = readLegacy();
           if (legacy.length) {
@@ -220,7 +230,7 @@ export const useHeartStore = create((set, get) => ({
 
     try {
       const detail = await fetchDetail(type, content.id);
-      await setDoc(doc(itemsCol(uid), key), {
+      await setDoc(doc(itemsCol(uid), prefixOf(get().pid) + key), {
         ...base,
         ...Object.fromEntries(Object.entries(detail).filter(([, v]) => v)),
         addedAt: serverTimestamp(),
@@ -247,7 +257,7 @@ export const useHeartStore = create((set, get) => ({
       return { items: next, toast: { text: "위시리스트에서 삭제했어요." } };
     });
     try {
-      await deleteDoc(doc(itemsCol(uid), key));
+      await deleteDoc(doc(itemsCol(uid), prefixOf(get().pid) + key));
     } catch (error) {
       console.error("위시리스트 삭제 실패:", error);
       set((s) => ({ items: { ...s.items, [key]: prev } }));
@@ -278,7 +288,7 @@ export const useHeartStore = create((set, get) => ({
         : { text: `${group?.name || "그룹"} 모음에 추가되었어요.`, groupId },
     }));
     try {
-      await updateDoc(doc(itemsCol(uid), key), { groups: nextGroups });
+      await updateDoc(doc(itemsCol(uid), prefixOf(get().pid) + key), { groups: nextGroups });
     } catch (error) {
       console.error("그룹 변경 실패:", error);
       set((s) => ({ items: { ...s.items, [key]: item } }));
@@ -289,17 +299,19 @@ export const useHeartStore = create((set, get) => ({
     const { uid, groups, pickerKey } = get();
     const clean = name.trim().slice(0, GROUP_NAME_MAX);
     if (!uid || !clean) return null;
-    const ref = doc(groupsCol(uid));
+    const auto = doc(groupsCol(uid)); // 새 id 만들기
+    const gid = auto.id;
+    const ref = doc(groupsCol(uid), prefixOf(get().pid) + gid);
     const order = groups.reduce((m, g) => Math.max(m, g.order ?? 0), 0) + 1;
     try {
       await setDoc(ref, { name: clean, icon, order, createdAt: serverTimestamp() });
       set({ newGroupOpen: false });
       // 그룹 고르던 작품이 있으면 새 그룹에 바로 담기
       if (pickerKey) {
-        set((s) => ({ groups: [...s.groups, { id: ref.id, name: clean, icon, order }] }));
-        await get().onToggleGroup(pickerKey, ref.id);
+        set((s) => ({ groups: [...s.groups, { id: gid, name: clean, icon, order }] }));
+        await get().onToggleGroup(pickerKey, gid);
       }
-      return ref.id;
+      return gid;
     } catch (error) {
       console.error("새 그룹 만들기 실패:", error);
       return null;

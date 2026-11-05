@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useMovieStore } from '../store/useMovieStore';
 import { toggleWish, useHeartStore, wishKey } from '../store/useHeartStore'; // 위시리스트 (Firestore)
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuthStore, useSettings } from '../store/useAuthStore'; // [수정] useSettings: 계정 설정 자동 재생 토글
 import { isResumable, resumeAt, useWatchConnect, useWatchStore } from '../store/useWatchStore'; // 이어보기 (시청 기록)
 import CastFilmography from '../components/detail/CastFilmography';
 import WatchPlayer from '../components/common/WatchPlayer'; // 재생 위치를 알 수 있는 유튜브 플레이어
+import AutoNext from '../components/common/AutoNext'; // [추가] 영상이 끝나면 "5초 후 다음 영상" 안내
 import VideoPopup from '../components/common/VideoPopup'; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { openSubscribeGate } from '../utils/subscribeGate'; // [정리] 구독 안내 팝업 열기 공용
 import { TMDB_IMG as IMG } from '../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
@@ -86,6 +87,9 @@ export const MovieDetail = ({ type: typeProp }) => {
   const [myRating, setMyRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [ratingSaved, setRatingSaved] = useState(false);
+  const [upNext, setUpNext] = useState(null); // [추가] 끝난 뒤 자동 재생할 것 { kind, title, image, run }
+  const settings = useSettings(); // [추가] 계정 설정 (다음 에피소드 · 추천 항목 재생)
+  const navigate = useNavigate();
 
   // 작품이 바뀌면 데이터 불러오고 상태 초기화 (추천 콘텐츠 클릭 시)
   useEffect(() => {
@@ -159,6 +163,7 @@ export const MovieDetail = ({ type: typeProp }) => {
       askSubscribe();
       return;
     }
+    setUpNext(null);
     setPlaying(key ? { key, ...meta, startAt: resumeAt(history, key) } : { key: 'none' });
   };
 
@@ -293,6 +298,46 @@ export const MovieDetail = ({ type: typeProp }) => {
     });
   };
 
+  // [추가] 영상이 끝났을 때 자동 재생 (계정 설정 토글)
+  // - 다음 에피소드 재생: 시리즈 회차를 보던 중이면 같은 시즌의 다음 회차
+  // - 추천 항목 재생: 다음 회차가 없거나(영화 · 예고편 · 마지막 회차) 위 토글이 꺼져 있으면 추천 콘텐츠 첫 번째
+  // - 둘 다 꺼져 있으면 끝난 화면 그대로
+  const handleEnded = () => {
+    if (!playing || playing.key === 'none') return;
+    if (settings.autoplayNext && isTv && playing.episode) {
+      const list = episodes[`${contentId}_${playing.season}`] || [];
+      const ep = list.find((e) => e.episode_number === playing.episode + 1);
+      if (ep) {
+        setUpNext({
+          kind: '다음 에피소드',
+          title: `${ep.episode_number}화 · ${ep.name}`,
+          image: ep.still_path || item?.backdrop_path ? `${IMG}/w300${ep.still_path || item.backdrop_path}` : '',
+          run: () => handlePlayEpisode(ep),
+        });
+        return;
+      }
+    }
+    const next = similar[0];
+    if (settings.autoplayRecommend && next) {
+      setUpNext({
+        kind: '추천 콘텐츠',
+        title: next.title || next.name,
+        image: next.backdrop_path ? `${IMG}/w300${next.backdrop_path}` : `${IMG}/w342${next.poster_path}`,
+        // 그 작품 상세로 가서 바로 재생 (?play=1 · 검색 "지금 보기" 와 같은 방식)
+        run: () => {
+          setPlaying(null);
+          navigate(`${detailPath(type, next.id)}?play=1`);
+        },
+      });
+    }
+  };
+
+  const runUpNext = () => {
+    const run = upNext?.run;
+    setUpNext(null);
+    run?.();
+  };
+
   // 평점 남기기
   const handleSubmitRating = () => {
     if (!myRating) return;
@@ -357,7 +402,8 @@ export const MovieDetail = ({ type: typeProp }) => {
                       onClick={handleWish}
                       aria-label={isWished ? '찜 해제' : '찜하기'}
                     >
-                      {isWished ? '♥' : '♡'}
+                      {/* [수정] 글자 하트(♥ ♡) 대신 아이콘 — 담기면 채운 하트(active-heart.svg) */}
+                      <span className={`icon-heart${isWished ? ' is-on' : ''}`} aria-hidden="true" />
                     </button>
                     <button className="icon-btn" onClick={handleShare} aria-label="공유하기">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -570,17 +616,32 @@ export const MovieDetail = ({ type: typeProp }) => {
 
       {/* 전체화면 재생 팝업 */}
       {/* [수정] 재생 팝업: 공용 VideoPopup (왼쪽 위 "← 뒤로" · body 에 그려 화면 전체에 고정) */}
-      <VideoPopup open={Boolean(playing)} onClose={() => setPlaying(null)} label={`${title} 재생`} className="detail-popup">
+      <VideoPopup
+        open={Boolean(playing)}
+        onClose={() => {
+          setPlaying(null);
+          setUpNext(null);
+        }}
+        label={`${title} 재생`}
+        className="detail-popup"
+      >
         {playing?.key !== 'none' ? (
           // 재생 위치를 몇 초마다 시청 기록에 저장 (홈 이어보기)
+          // [수정] key: 다음 회차가 같은 영상(예고편)이어도 처음부터 다시 재생 · onEnded: 자동 재생
           <WatchPlayer
+            key={`${playing?.key}_${playing?.season ?? ''}_${playing?.episode ?? ''}`}
             videoKey={playing?.key}
             startAt={playing?.startAt}
             title={title}
             onProgress={handleProgress}
+            onEnded={handleEnded}
           />
         ) : (
           <p>재생할 수 있는 영상이 없습니다.</p>
+        )}
+        {/* [추가] 끝나면 5초 뒤 다음 에피소드 · 추천 콘텐츠 (계정 설정 토글) */}
+        {upNext && (
+          <AutoNext kind={upNext.kind} title={upNext.title} image={upNext.image} onPlay={runUpNext} onCancel={() => setUpNext(null)} />
         )}
       </VideoPopup>
     </section>

@@ -3,6 +3,7 @@
 // - YouTube IFrame Player API 사용 (일반 iframe 은 몇 초까지 봤는지 알 수 없음)
 // - startAt: 이어서 볼 위치(초)
 // - onProgress(position, duration): 재생 중 5초마다 · 일시정지 · 끝남 · 팝업 닫을 때 호출
+// - [추가] onEnded(): 영상을 끝까지 봤을 때 (계정 설정 "다음 에피소드 · 추천 항목 재생" 자동 재생용)
 import React, { useEffect, useRef } from "react";
 import { loadYouTubeApi } from "./youtubeApi"; // [정리] YouTube API 불러오기 공용
 
@@ -10,10 +11,12 @@ const SAVE_EVERY_MS = 5000;
 
 // API 스크립트 불러오기는 공용 파일 (components/common/youtubeApi.js)
 
-const WatchPlayer = ({ videoKey, startAt = 0, onProgress, title = "영상" }) => {
+const WatchPlayer = ({ videoKey, startAt = 0, onProgress, onEnded, title = "영상" }) => {
   const wrapRef = useRef(null);
   const progressRef = useRef(onProgress);
   progressRef.current = onProgress;
+  const endedRef = useRef(onEnded); // [추가]
+  endedRef.current = onEnded;
 
   useEffect(() => {
     let player = null;
@@ -53,6 +56,7 @@ const WatchPlayer = ({ videoKey, startAt = 0, onProgress, title = "영상" }) =>
                 timer = setInterval(report, SAVE_EVERY_MS);
               } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
                 report();
+                if (e.data === YT.PlayerState.ENDED) endedRef.current?.(); // [추가] 끝까지 봤을 때
               }
             },
           },
