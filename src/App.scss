@@ -6997,6 +6997,7 @@ section.device-guide.device-guide--watch {
   --marquee-duration: 40s;
 
   padding: 96px 0;
+  height: 838px; // [추가] 기기 안내 전체 높이 (box-sizing: border-box · 위아래 패딩 포함)
   background-color: $dark-color-950;
   text-align: center;
   overflow: hidden;
@@ -8260,5 +8261,45 @@ section.device-guide.device-guide--watch {
     @include body-small;
     color: $light-color-0;
     white-space: nowrap;
+  }
+}
+
+// =====================================================================
+// [추가] 찜 버튼 하트 — 비어 있으면 테두리(heart-icon.svg) · 찜하면 채운 하트(active-heart.svg) · 흰색
+// - 히어로 [♡] (HeroSection.jsx · .hero-wish-icon) · 작품 상세 [♡] (MovieDetail.jsx · .icon-heart)
+// =====================================================================
+.hero-wish-icon,
+.movie-detail-page .icon-heart {
+  display: block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+  mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+
+  &.is-on {
+    -webkit-mask-image: url("/icons/active-heart.svg");
+    mask-image: url("/icons/active-heart.svg");
+  }
+}
+
+.hero-wish-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.movie-detail-page {
+  .icon-heart {
+    width: 18px;
+    height: 18px;
+  }
+
+  // 찜한 상태: 예전 흰 배경 + 빨간 하트 → 배경은 그대로 · 흰색 채운 하트
+  .player-box .icon-btn.on {
+    background-color: rgba($light-color-0, 0.16);
+    color: $light-color-0;
+
+    &:hover {
+      background-color: rgba($light-color-0, 0.28);
+    }
   }
 }

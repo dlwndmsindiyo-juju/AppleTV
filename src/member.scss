@@ -1753,8 +1753,19 @@ main.member-home .subscribe-cta {
       pointer-events: none;
     }
 
-    &:hover .member-sc-thumb {
-      transform: scale(1.05);
+    // [수정] 마우스를 올리면 카드 전체가 커지며 맨 앞으로 (이미지만 커지면 카드 테두리에서 잘려 보였음)
+    .member-sc-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    &:hover,
+    &:focus-within {
+      z-index: 10;
+
+      .member-sc-card {
+        transform: scale(1.05);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      }
     }
   }
 
@@ -1796,7 +1807,7 @@ main.member-home .subscribe-cta {
 
   .member-sc-slot--new:hover,
   .member-sc-slot--new:focus-within {
-    z-index: 3;
+    z-index: 10; // [수정] 커진 카드가 옆 카드 · 화살표보다 앞에
 
     .member-sc-card {
       inset: -66px -52px 0;
@@ -1914,6 +1925,31 @@ main.member-home .subscribe-cta {
     -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
     mask: url("/icons/heart-icon.svg") center / contain no-repeat;
   }
+
+  // [수정] 찜한 상태: 빨간 하트 대신 흰색으로 채운 하트 (public/icons/active-heart.svg · 모든 찜 버튼 공통)
+  .member-sc-heart.is-on {
+    color: $light-color-0;
+
+    .member-sc-heart-icon {
+      -webkit-mask-image: url("/icons/active-heart.svg");
+      mask-image: url("/icons/active-heart.svg");
+    }
+  }
+
+  // [수정] 커진 카드가 맨 앞으로 (옆 카드 · 화살표 · 위 섹션 머리보다 앞)
+  // - Swiper 는 카드 묶음(.swiper-wrapper)을 z-index 1 로, 화살표를 z-index 10 으로 그려서
+  //   카드 쪽 z-index 만 올려서는 묶음 밖으로 나오지 못함
+  //   → 카드에 마우스(또는 키보드 포커스)가 있는 동안만 묶음 · 그 슬라이드를 위로 올림
+  //   (화살표 위에 마우스가 있을 때는 원래대로라 화살표는 그대로 누를 수 있음)
+  .rail-showcase .swiper-wrapper:has(.member-sc-slot:hover),
+  .rail-showcase .swiper-wrapper:has(.member-sc-slot:focus-within) {
+    z-index: 11;
+  }
+
+  .rail-showcase .swiper-slide:has(.member-sc-slot:hover),
+  .rail-showcase .swiper-slide:has(.member-sc-slot:focus-within) {
+    z-index: 10;
+  }
 }
 
 
@@ -1947,5 +1983,23 @@ main.member-home.member-browse {
 
   .member-browse-grid--recommend {
     --browse-col: 282px;
+  }
+}
+
+// =====================================================================
+// [추가] 찜 버튼 — 찜한 상태는 채운 하트 (public/icons/active-heart.svg) · 흰색
+// - 신규출시 카드 [♡ 찜] (PC · 태블릿 .member-nr-heart / 휴대폰 .member-nr-quick-heart)
+// - 버튼 배경 · 크기는 그대로 (아이콘만 바뀜)
+// =====================================================================
+.member-home,
+.upcoming-section {
+  .member-nr-heart.is-on .member-nr-heart-icon,
+  .member-nr-quick-heart.is-on .member-nr-quick-heart-icon {
+    -webkit-mask-image: url("/icons/active-heart.svg");
+    mask-image: url("/icons/active-heart.svg");
+  }
+
+  .member-nr-quick-heart.is-on.is-on {
+    color: $light-color-0; // 예전: 빨간색
   }
 }

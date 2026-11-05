@@ -6868,6 +6868,7 @@ section.device-guide.device-guide--watch {
   --icon-scale: 1;
   --marquee-duration: 40s;
   padding: 96px 0;
+  height: 838px;
   background-color: #141414;
   text-align: center;
   overflow: hidden;
@@ -7927,4 +7928,73 @@ body.has-promo-banner .floating-actions {
 }
 .auto-next--inline .auto-next-thumb {
   width: 104px;
+}
+
+.value-props.value-props {
+  background-color: #000000;
+}
+.value-props.value-props .value-prop-item {
+  position: relative;
+  align-items: center;
+  text-align: center;
+  word-break: keep-all;
+}
+.value-props.value-props .value-prop-item + .value-prop-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(24px / -2);
+  width: 1px;
+  background-color: #FFFFFF;
+  pointer-events: none;
+}
+
+@media (min-width: 1025px) {
+  .value-props.value-props {
+    padding: 24px 0;
+  }
+  .value-props.value-props .value-prop-item {
+    gap: 8px;
+  }
+  .value-props.value-props .value-prop-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .value-props.value-props .value-prop-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0;
+    color: #C8C8C8;
+  }
+}
+section.device-guide.device-guide--watch {
+  background-color: #171717;
+}
+section.device-guide.device-guide--watch .watch-device {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+section.device-guide.device-guide--watch .watch-device-icon {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: calc(54px * var(--icon-scale));
+}
+section.device-guide.device-guide--watch .watch-device-name {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  white-space: nowrap;
 }
