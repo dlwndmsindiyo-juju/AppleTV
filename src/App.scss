@@ -1067,6 +1067,38 @@ header {
   }
 }
 
+// ===== 히어로 아래: 핵심 혜택 (Value Props) =====
+.value-props {
+  background-color: $gnb-bg;
+  padding: 1.375rem 0 $space-xl;
+  text-align: center;
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .value-props-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-xl;
+  }
+
+  .value-prop-item {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  .value-prop-title {
+    @include body-large; // 시안 제목 크기 (17px)
+    color: $light-color-0;
+  }
+
+  .value-prop-desc {
+    @include body-small; // Body Small 13
+    color: $light-color-500;
+  }
+}
 
 // ===== 인기 영화 TOP 10 =====
 .top10-section {
@@ -2228,16 +2260,6 @@ header {
     @include inner-wrap;
   }
 
-  .subscribe-bg-picture {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-
   .subscribe-banner {
     position: relative;
     height: 25.9375rem;
@@ -2298,12 +2320,10 @@ header {
     word-break: keep-all;
   }
 
-
   .subscribe-btn {
     @include body-default;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     height: 3rem;
     padding: 0 $space-3xl;
     border-radius: 624.9375rem;
@@ -2320,10 +2340,7 @@ header {
   .subscribe-note {
     @include body-small;
     color: $text-tertiary;
-    display: block;
-    width: 200px;
     margin: 0;
-    text-align: center;
   }
 }
 
@@ -6812,6 +6829,11 @@ section.top10-section {
 // - 오른쪽 포스터: 비스듬한 카드 4장 (Figma 216 × 323 · X 737 · Y 36 · 모서리 10, 마지막 장은 배너 끝에서 잘림)
 // - 스포츠 구독 배너(.subscribe-cta 기본)는 그대로
 // =====================================================================
+// [추가] 로그인 전 홈: 홍보 배너 뒤 배경 = 페이지 배경색 (로그인 후 홈과 같음 · 시안 #171717)
+main.landing-home .subscribe-cta {
+  background-color: $bg-page;
+}
+
 .subscribe-cta.subscribe-cta--tv {
   .subscribe-banner {
     height: 26.25rem;
@@ -8733,7 +8755,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
   }
 
   // 글자 · 화살표는 빛나는 테두리 위로
-  .ai-banner-btn>* {
+  .ai-banner-btn > * {
     position: relative;
   }
 
@@ -8767,7 +8789,6 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 
 // 질문 앞 점: 색이 흐름
 @keyframes ai-dot-color {
-
   0%,
   100% {
     background-color: $ai-glow-1;
@@ -8784,7 +8805,6 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 
 // 질문 앞 점: 바깥 빛이 숨 쉬듯
 @keyframes ai-dot-glow {
-
   0%,
   100% {
     box-shadow: 0 0 0.125rem $ai-glow-shadow;
@@ -8799,7 +8819,6 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 
 // 버튼: 바깥 보라 빛이 숨 쉬듯
 @keyframes ai-btn-glow {
-
   0%,
   100% {
     box-shadow: 0 0.25rem 0.5rem $ai-glow-shadow;
@@ -8812,7 +8831,6 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 
 // 기기의 "동작 줄이기" 설정: 멈춤
 @media (prefers-reduced-motion: reduce) {
-
   .ai-banner .ai-banner-question::before,
   .ai-banner .ai-banner-btn,
   .ai-banner .ai-banner-btn::before {

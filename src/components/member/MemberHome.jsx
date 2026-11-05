@@ -7,7 +7,7 @@ import "../../member.scss";
 // 기존 랜딩 섹션 재사용 (수정 없음)
 import HeroSection from "../landing/HeroSection";
 import Top10Section from "../landing/Top10Section";
-import TrialWelcome, { useTrialIntro } from "../landing/TrialWelcome"; // 무료 체험 중 안내 (체험 중일 때만 표시)
+import TrialWelcome from "../landing/TrialWelcome"; // 무료 체험 중 안내 (체험 중일 때만 표시)
 import SubscribeCTA from "../landing/SubscribeCTA"; // [추가] 홍보 배너 (시안: 공개예정작 다음) — 구독 중이면 컴포넌트가 알아서 숨김
 
 // 신규 섹션
@@ -31,16 +31,7 @@ const MemberHome = ({ userName = "회원" }) => {
     onFetchRecommended();
   }, [onFetchAppleOriginals, onFetchUpcoming, onFetchRecommended]);
 
-  // 첫 구독(무료 체험) 직후: 환영 화면(문구 + TOP 10 + 홈으로 바로가기)만 보여줌
-  const { showIntro, enterHome } = useTrialIntro();
-
-  if (showIntro) {
-    return (
-      <main className="page-fade member-home member-home--intro">
-        <TrialWelcome intro onEnterHome={enterHome} />
-      </main>
-    );
-  }
+  // [삭제] 첫 구독(무료 체험) 직후 환영 화면(문구 + TOP 10 + 홈으로 바로가기) — 로그인하면 항상 바로 메인 홈
 
   return (
     <main className="page-fade member-home">

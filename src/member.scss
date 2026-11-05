@@ -541,7 +541,7 @@ $mobile-edge: 1.25rem;
 $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
 @media (min-width: ($breakpoint-mobile + 1)) {
-  main.member-home {
+  :is(main, div).member-home {
 
     // ---------- 섹션 공통 ----------
     .member-section,
@@ -975,7 +975,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
 // PC: 이어보기 카드도 찜 카드와 같은 폭 (한 줄 4칸 · 시안)
 @media (min-width: ($breakpoint-mobile + 1)) {
-  main.member-home .rail-continue {
+  :is(main, div).member-home .rail-continue {
     --rail-col: calc((100% - 72px) / 4);
   }
 }
@@ -1122,7 +1122,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
 // PC: 한 줄 5장 (간격 24 × 4) · 화살표는 카드 가운데 높이
 @media (min-width: ($breakpoint-mobile + 1)) {
-  main.member-home .rail-recommend {
+  :is(main, div).member-home .rail-recommend {
     --rail-col: calc((100% - 96px) / 5);
     --nav-top: 50%;
   }
@@ -1201,7 +1201,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 }
 
 // 버튼형 메뉴 (기분 칩 · 취향 더 반영하기) — 기존 PC · 모바일 규칙보다 우선
-main.member-home .member-mood {
+:is(main, div).member-home .member-mood {
 
   .member-chip:not(.active),
   .member-notice .member-btn {
@@ -1231,7 +1231,7 @@ main.member-home .member-mood {
 
 // 슬라이드 폭: PC 4장 / 태블릿 · 모바일 고정 폭 (화살표는 썸네일 가운데 높이)
 @media (min-width: ($breakpoint-mobile + 1)) {
-  main.member-home .rail-ai {
+  :is(main, div).member-home .rail-ai {
     --rail-col: calc((100% - 72px) / 4);
     --nav-top: 30%;
   }
@@ -1247,7 +1247,7 @@ main.member-home .member-mood {
 //   · 섹션 머리(.member-head)의 소제목만 (카드 안 설명 .member-desc.small 등은 그대로)
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
-  main.member-home {
+  :is(main, div).member-home {
     .member-title {
       @include heading-h1-b;
       color: $light-color-0;
@@ -1267,7 +1267,7 @@ main.member-home .member-mood {
 // - 패딩까지 포함한 크기 80 × 40 (위아래 패딩 10 · 글자는 가운데)
 // - 폰트 · 색은 위에 적용된 내용 그대로 (크기만 지정)
 // =====================================================================
-main.member-home .member-mood .member-chips .member-chip {
+:is(main, div).member-home .member-mood .member-chips .member-chip {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -1429,7 +1429,7 @@ main.member-home .member-mood .member-chips .member-chip {
 // PC: 한 줄 4장 (간격 24 × 3) · 화살표는 카드 가운데 높이
 @media (min-width: ($breakpoint-mobile + 1)) {
 
-  main.member-home .rail-release,
+  :is(main, div).member-home .rail-release,
   .upcoming-section .rail-release {
     --rail-col: calc((100% - 72px) / 4);
     --nav-top: 50%;
@@ -1506,7 +1506,7 @@ main.member-home .member-mood .member-chips .member-chip {
 // - 태블릿(768 ~ 1024px): 슬라이드가 이너 폭 안에서 잘림 (시안 · 좌우 여백 같음)
 // - 홍보 배너(SubscribeCTA)는 페이지 배경색에 맞춤
 // =====================================================================
-main.member-home .subscribe-cta {
+:is(main, div).member-home .subscribe-cta {
   background-color: $bg-page;
 }
 
@@ -1533,7 +1533,7 @@ main.member-home .subscribe-cta {
 // - 추천작: (1440 - 96) / 5 = 269
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
-  main.member-home {
+  :is(main, div).member-home {
 
     .rail-continue,
     .rail-wish {
@@ -1557,7 +1557,7 @@ main.member-home .subscribe-cta {
     }
   }
 
-  main.member-home .rail-release,
+  :is(main, div).member-home .rail-release,
   .upcoming-section .rail-release {
     --rail-col: 342px;
   }
@@ -1600,7 +1600,7 @@ main.member-home .subscribe-cta {
 // - TOP 10 순위 숫자: Noto Sans KR Black 195 · 자간 0 · 테두리 없음 · Linear #F1F1F1(위) → #606060(아래)
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
-  main.member-home {
+  :is(main, div).member-home {
 
     // ---------- 섹션 머리 · 전체 보기 ----------
     // [수정] 소제목을 없애고 제목 ↔ 콘텐츠 60px (전체 보기는 제목 줄 오른쪽 · 아래 맞춤)
@@ -2048,7 +2048,7 @@ main.member-home .subscribe-cta {
 // [추가] 전체 보기 페이지 (pages/MemberBrowse.jsx · /browse/:key)
 // - 섹션 카드를 격자로 모두 · 카드 모양은 홈과 같음 · 태블릿 · 휴대폰은 mobile.scss
 // =====================================================================
-main.member-home.member-browse {
+:is(main, div).member-home.member-browse {
   min-height: 100vh;
   padding-top: $header-height;
   background-color: $bg-page;
@@ -2079,6 +2079,20 @@ main.member-home.member-browse {
 
   .member-browse-grid--recommend {
     --browse-col: 282px;
+  }
+
+  // [추가] 포스터 목록 (추천작 · 태블릿 · 휴대폰 최신작 / 공개 예정): 한 줄 4개 격자 (모든 화면)
+  .member-browse-grid.member-browse-grid--recommend,
+  .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+// [추가] 휴대폰: 포스터 4개 격자 사이 간격을 좁게 (위아래 16 · 좌우 12)
+@media (max-width: $breakpoint-mobile) {
+  :is(main, div).member-home.member-browse .member-browse-grid.member-browse-grid--recommend,
+  :is(main, div).member-home.member-browse .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
+    gap: $space-lg $space-md;
   }
 }
 
