@@ -194,7 +194,7 @@ $footer-pad-y: 0.875rem;
 
   // [수정] PC(1025px 이상): 고정 폭(1920) · 고정 여백(64px) 대신 화면 비율
   // → 어떤 해상도에서도 좌우 5% 씩, 콘텐츠 폭 화면의 90%
-  @media (min-width: 1025px) {
+  @media (min-width: 768px) {
     max-width: none;
     padding-left: 5%;
     padding-right: 5%;
