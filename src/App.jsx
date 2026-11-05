@@ -35,6 +35,8 @@ import Wishlist from "./pages/Wishlist";
 import MemberBrowse from "./pages/MemberBrowse"; // [추가] 로그인 후 메인 "전체 보기" (/browse/:key)
 import WishlistLayer from "./components/wishlist/WishlistLayer";
 import { Profile } from "./pages/Profile";
+import AccountSubscription from "./pages/AccountSubscription"; // [추가] 계정 설정 → 구독 관리
+import AccountPayment from "./pages/AccountPayment"; // [추가] 계정 설정 → 지불 방법
 import TvPreview from "./pages/TvPreview"; // [추가] TV 디자인 미리보기 (/tv)
 import FloatingActions from "./components/common/FloatingActions"; // [추가] 하단 TV · TOP 버튼
 
@@ -64,59 +66,6 @@ function App() {
     sessionStorage.setItem("hasSeenIntro", "true");
     setShowIntro(false);
   };
-
-//영상 위치로 이동
-  useEffect(() => {
-    if (!location.pathname.startsWith("/sport/")) return;
-
-    let frame;
-    let observer;
-
-    const scrollToDetail = () => {
-      const section = document.querySelector(
-        ".sport-detail, .sport-live-detail, .sport-short-detail"
-      );
-
-      if (!section) return false;
-
-      const headerHeight =
-        document.querySelector("header")?.getBoundingClientRect().height || 0;
-
-      const offset = headerHeight + 100;
-
-      const top =
-        window.scrollY +
-        section.getBoundingClientRect().top -
-        offset;
-
-      window.scrollTo({
-        top: Math.max(0, top),
-        behavior: "instant",
-      });
-
-      return true;
-    };
-
-    frame = requestAnimationFrame(() => {
-      if (scrollToDetail()) return;
-
-      // 상세 영역이 비동기로 렌더링될 경우 대기
-      observer = new MutationObserver(() => {
-        if (scrollToDetail()) observer.disconnect();
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-    });
-
-    return () => {
-      cancelAnimationFrame(frame);
-      observer?.disconnect();
-    };
-  }, [location.pathname]);
-
 
   return (
     <>
@@ -200,6 +149,16 @@ function App() {
               <Route
                 path="/profile"
                 element={<Profile />}
+              />
+
+              <Route
+                path="/profile/subscription"
+                element={<AccountSubscription />}
+              />
+
+              <Route
+                path="/profile/payment"
+                element={<AccountPayment />}
               />
 
               <Route

@@ -375,14 +375,12 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 }
 
-// ---------- 모바일: 섹션 이름 위 · 항목 아래 ----------
+// ---------- [수정] 휴대폰: PC 와 같은 디자인 (왼쪽 세로 메뉴 고정 + 오른쪽 항목) · 글자 크기만 줄임 ----------
+// - 메뉴 Body/small-B · 항목 제목 Body/default-B · 설명 · 링크 · 토글 Body/small · 안내 Label/default
+// - 색 · 굵기 · 메뉴 모양(보고 있는 섹션 연회색 배경 + 세로 막대)은 PC 그대로
 @media (max-width: $breakpoint-mobile) {
   .account-page {
     padding-top: calc(#{$header-height} + #{$space-xl});
-  }
-
-  .account-inner {
-    width: calc(100% - #{$space-lg * 2});
   }
 
   .account-title {
@@ -390,75 +388,76 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     padding-bottom: $space-lg;
   }
 
-  // [추가] 모바일: 메뉴는 제목 아래 가로 한 줄 (헤더 바로 아래 고정 · 넘치면 가로 스크롤)
   .account-layout {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    column-gap: $space-md;
   }
 
   .account-nav {
-    z-index: 10;
-    margin: 0 (-$space-lg);
-    padding: $space-sm $space-lg;
-    background-color: $light-color-100;
-    border-bottom: 0.0625rem solid $light-color-400; // App.scss $account-line 과 같은 색
-    overflow-x: auto;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    padding: ($space-2xl - $space-sm) 0 $space-2xl;
   }
 
   .account-nav-list {
-    flex-direction: row;
-    width: max-content;
-  }
-
-  // [수정] 가로 메뉴: 행 대신 작은 알약 (보고 있는 섹션만 연회색 배경 · 세로 막대는 숨김)
-  .account-nav-list {
-    gap: $space-xs;
+    gap: 0.125rem;
   }
 
   .account-nav-link {
-    @include heading-h4;
-    width: auto;
-    padding: $space-sm $space-md;
-    white-space: nowrap;
+    @include body-small-b;
+    padding: $space-sm $space-sm $space-sm $space-md;
+    border-radius: $radius-xs;
+    word-break: keep-all;
 
     &::before {
-      display: none;
-    }
-
-    &.is-active {
-      @include heading-h4-b;
+      height: $space-lg;
+      width: 3px;
     }
   }
 
   .account-section {
-    grid-template-columns: minmax(0, 1fr);
-    gap: $space-lg;
     padding: $space-2xl 0;
-    scroll-margin-top: calc(#{$header-height} + #{$space-4xl}); // 헤더 + 고정 메뉴 높이
-  }
-
-  .account-section-title {
-    @include heading-h4-b;
   }
 
   .account-section-body {
     gap: $space-xl;
   }
 
-  .account-item-desc {
+  .account-item {
+    gap: $space-xs;
+  }
+
+  .account-item-title {
+    @include body-default-b;
+  }
+
+  .account-item-desc,
+  .account-link,
+  .account-toggle,
+  .account-check,
+  .account-address,
+  .account-icon-link {
     @include body-small;
   }
 
+  .account-note {
+    @include label-default;
+  }
+
+  .account-profile-text strong {
+    @include body-default-b;
+  }
+
   .account-avatar-grid {
-    grid-template-columns: repeat(4, 56px);
+    grid-template-columns: repeat(4, 44px);
+    gap: $space-sm;
+  }
+
+  .account-avatar-option .profile-avatar {
+    width: 40px;
+    height: 2.5rem;
   }
 
   .account-channels {
-    gap: $space-md $space-xl;
+    gap: $space-sm $space-lg;
   }
 }
 
@@ -2676,13 +2675,6 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     padding-right: 0;
   }
 
-  // 계정 설정 가로 메뉴: 이너(90%) 밖 화면 끝까지 (이너 폭의 5.5556% = 화면의 5%)
-  .account-nav {
-    margin: 0 -5.5556%;
-    padding-left: 5.5556%;
-    padding-right: 5.5556%;
-  }
-
   // ---------- 푸터 (이너 90% · 위아래 36 · 메뉴 → 로고 → 정책 → 저작권) ----------
   // [수정] 좌우는 다른 이너와 같은 화면 폭의 90% (예전: 좌우 64)
   .footer.footer.footer {
@@ -3202,5 +3194,37 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
       width: 1.875rem;
       height: 1.875rem;
     }
+  }
+}
+
+// =====================================================================
+// [추가] 계정 설정 — 구독 관리 · 지불 방법 (휴대폰)
+// - 지불 유형 · 청구 주소 · 국가/지역: 위아래로 · 지불 방법 카드 화면 폭 가득
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .account-item-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $space-xl;
+  }
+
+  .account-sub-body {
+    gap: $space-xl;
+    padding: $space-2xl 0;
+  }
+
+  .account-sub-app-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: $radius-card-sm;
+  }
+
+  .account-pay-layout {
+    flex-direction: column;
+    gap: $space-lg;
+  }
+
+  .account-pay-card {
+    min-height: 0;
+    padding: $space-lg;
   }
 }
