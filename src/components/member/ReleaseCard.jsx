@@ -53,7 +53,7 @@ const ReleaseCard = ({ item, type, variant = "soon" }) => {
       <div className="member-nr-info">
         <Link to={path} className="member-nr-title">{title}</Link>
         <span className="member-nr-genre">{contentMeta(type, info, shortGenres(type, item.genre_ids))}</span>
-        <p className="member-nr-overview">{item.overview || info.tagline || "작품 소개가 곧 공개됩니다."}</p>
+        <p className="member-nr-overview">{item.overview || info?.tagline || "작품 소개가 곧 공개됩니다."}</p>{/* [수정] info?.: 정보를 받기 전(null)에 줄거리 없는 작품에서 화면이 멈추던 문제 */}
 
         {/* [수정] PC · 태블릿 버튼 — 데스크톱 시안: 신규출시는 [▶ 재생] [♡ 찜] · 공개예정작은 [N월 공개예정] [🔔]
             (버튼 크기 · 모양은 같은 클래스 그대로) */}

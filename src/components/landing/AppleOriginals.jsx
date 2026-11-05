@@ -10,10 +10,7 @@ import "swiper/css/navigation";
 // 오리지널스 (TMDB 에서 애플 TV+ 방송사로 분류된 시리즈)
 // - 시안: PC 5장(마지막 장 잘림) / 태블릿 · 모바일은 오른쪽 끝까지 이어지는 슬라이드
 // - 슬라이드 폭은 CSS(.apple-originals-slide): PC 282 / 태블릿 280 / 모바일 140
-const AppleOriginals = ({
-  title = "오리지널스",
-  desc = "Apple TV에서만 만날 수 있는 오리지널 시리즈",
-}) => {
+const AppleOriginals = ({ title = "오리지널스" }) => { // [수정] 소제목(desc) 없앰
   const { appleOriginals, onFetchAppleOriginals } = useMovieStore();
 
   useEffect(() => {
@@ -31,7 +28,6 @@ const AppleOriginals = ({
     <section className="apple-originals">
       <div className="inner">
         <h3 className="apple-originals-title">{title}</h3>
-        {desc && <p className="apple-originals-desc">{desc}</p>}
 
         <Swiper
           className="apple-originals-swiper"

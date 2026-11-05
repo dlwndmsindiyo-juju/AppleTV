@@ -9,7 +9,8 @@ import "swiper/css/navigation";
 // - className(예: rail-continue) 은 슬라이드 너비/버튼 위치용 CSS 변수를 지정
 // - stack: 모바일(767px 이하)에서 슬라이드를 끄고 세로로 쌓는 섹션용 (시안)
 // - bleed: false 면 슬라이드 끝 여백(slidesOffsetAfter)을 0 으로 (좌우 여백이 대칭인 섹션용)
-const Rail = ({ className = "", label = "슬라이드", stack = false, bleed = true, children }) => (
+// - [추가] desktopGap: PC(1025px 이상) 카드 사이 간격 (기본 24 · 로그인 후 메인 시안은 28)
+const Rail = ({ className = "", label = "슬라이드", stack = false, bleed = true, desktopGap = 24, children }) => (
   <Swiper
     className={`member-slider ${className}`}
     modules={[Navigation, A11y]}
@@ -24,7 +25,7 @@ const Rail = ({ className = "", label = "슬라이드", stack = false, bleed = t
     breakpoints={{
       0: { spaceBetween: stack ? 0 : 16, slidesOffsetAfter: stack || !bleed ? 0 : 20, enabled: !stack },
       768: { spaceBetween: 24, slidesOffsetAfter: bleed ? 100 : 0, enabled: true },
-      1025: { spaceBetween: 24, slidesOffsetAfter: 0, enabled: true },
+      1025: { spaceBetween: desktopGap, slidesOffsetAfter: 0, enabled: true },
     }}
   >
     {children}

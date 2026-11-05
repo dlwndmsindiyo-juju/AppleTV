@@ -10,6 +10,7 @@ import SportHero from "./SportHero";
 import WatchPlayer from "../common/WatchPlayer"; // [추가] 영상이 끝난 것을 알기 위해 (YouTube API)
 import AutoNext from "../common/AutoNext"; // [추가] 끝나면 "5초 후 다음 영상"
 import { useSettings } from "../../store/useAuthStore"; // [추가] 계정 설정 "추천 항목 재생"
+import { SportBack } from "./SportBack";
 
 // =====================================================================
 // 스포츠 상세 (하나의 컴포넌트로 3개 상세 사용)
@@ -269,8 +270,6 @@ const SportDetail = () => {
     [config, highlightList, categories]
   );
 
-  // 페이지 이동 시 맨 위로
-  useEffect(() => { window.scrollTo(0, 0); }, [type]);
 
   if (!config) return <Navigate to="/sport" replace />;
 
@@ -284,6 +283,7 @@ const SportDetail = () => {
 
       <section className={`sport-detail sport-detail--${type}`} aria-labelledby="sport-detail-title">
         <div className="inner">
+          <SportBack />
           <h2 className="sport-sr-only" id="sport-detail-title">{config.title}</h2>
 
           {!current ? (
@@ -357,7 +357,6 @@ const SportDetail = () => {
             </div>
           )}
 
-          <Link className="sport-detail-back" to="/sport">← 스포츠 홈으로</Link>
         </div>
       </section>
     </main>
