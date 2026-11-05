@@ -5122,12 +5122,6 @@ img.ui-icon.ui-icon-arrow {
   @include heading-h1-b;
 }
 
-.wish-desc {
-  @include body-large;
-  margin-top: $space-sm;
-  color: $text-secondary;
-}
-
 .wish-empty {
   @include body-default;
   padding: $space-5xl 0;

@@ -30,7 +30,6 @@ const ComingSoon = () => {
       <div className="inner">
         <MemberSectionHead
           title="공개 예정"
-          desc="앞으로 공개될 새로운 영화와 시리즈를 미리 만나보세요."
           moreTo="/browse/soon"
         />
 

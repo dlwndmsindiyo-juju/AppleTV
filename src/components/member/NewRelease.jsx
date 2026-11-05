@@ -31,7 +31,6 @@ const NewRelease = () => {
       <div className="inner">
         <MemberSectionHead
           title="최신작"
-          desc="새롭게 공개된 영화와 시리즈를 지금 바로 만나보세요."
           moreTo="/browse/new"
         />
 

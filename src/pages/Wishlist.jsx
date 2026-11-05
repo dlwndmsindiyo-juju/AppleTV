@@ -247,9 +247,7 @@ const Wishlist = () => {
       {/* [추가] 홈으로 — 상세 페이지와 같은 자리 (헤더 아래 · 이너 왼쪽) */}
       <DetailBackLink to="/" label="홈으로" overlay />
       <div className="wish-inner">
-        <h2 className="wish-title">위시리스트</h2>
-        <p className="wish-desc">보고싶은 작품을 저장하고 나만의 목록을 만들어보세요.</p>
-
+        <h2 className="wish-title">나의 목록</h2>
         <SortMenu value={sort} onChange={(v) => update({ sort: v })} />
 
         {/* 그룹 탭 */}
