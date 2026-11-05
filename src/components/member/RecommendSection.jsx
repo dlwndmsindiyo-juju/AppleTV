@@ -7,7 +7,7 @@ import { img, detailPath } from "./memberUtils";
 import { useContentInfo, contentMeta, shortGenres } from "./useContentInfo";
 import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 공용
 
-// Apple이 모두에게 추천하는 작품 — 시안: 포스터 카드 + 아래 그림자 위에 제목 · 설명 · [재생] [★ 평점]
+// 지금, 놓치지 말아야 할 이야기 (추천작) — 시안: 포스터 카드 + 아래 그림자 위에 제목 · 설명 · [재생] [★ 평점]
 // - 데이터: 이번 주 인기 영화 + 시리즈를 번갈아 섞음 (useMovieStore.recommendedMix)
 //   · 탑텐(Apple TV+ 오리지널)에 있는 작품은 빼서 겹치지 않게
 // - 설명 줄: "액션 · 영화 · 스릴러" / 실제 Apple Original 이면 "스포츠 · 영화 · Apple Original" (useContentInfo)
@@ -15,7 +15,7 @@ import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 �
 // - ★ 평점: 상세 페이지의 "작품 평점"으로 이동 (#rating)
 // - 카드(포스터 · 제목)를 누르면 상세 페이지
 
-const RecommendCard = ({ item }) => {
+export const RecommendCard = ({ item }) => { // [수정] export: 전체 보기 페이지(MemberBrowse)에서도 사용
   const type = item.media_type === "tv" ? "tv" : "movie";
   const title = item.title || item.name;
   const info = useContentInfo(type, item.id);
@@ -48,7 +48,8 @@ const RecommendCard = ({ item }) => {
   );
 };
 
-const RecommendSection = () => {
+// [추가] 추천작 목록 (홈 섹션 · 전체 보기 페이지 공용) — 탑텐(Apple TV+ 오리지널 시리즈)과 겹치지 않게
+export const useRecommendItems = (limit = 10) => {
   const recommendedMix = useMovieStore((s) => s.recommendedMix);
   const onFetchRecommendedMix = useMovieStore((s) => s.onFetchRecommendedMix);
   const appleOriginals = useMovieStore((s) => s.appleOriginals);
@@ -57,20 +58,28 @@ const RecommendSection = () => {
     onFetchRecommendedMix();
   }, [onFetchRecommendedMix]);
 
-  // 탑텐(Apple TV+ 오리지널 시리즈)과 겹치지 않게
   const originalIds = new Set(appleOriginals.map((tv) => tv.id));
-  const items = recommendedMix
+  return recommendedMix
     .filter((item) => !(item.media_type === "tv" && originalIds.has(item.id)))
-    .slice(0, 10);
+    .slice(0, limit);
+};
+
+const RecommendSection = () => {
+  const items = useRecommendItems(10);
 
   if (items.length === 0) return null;
 
   return (
     <section className="member-section member-recommend">
       <div className="inner">
-        <MemberSectionHead title="Apple이 모두에게 추천하는 작품" desc="지금 꼭 봐야할, Apple이 엄선한 특별한 콘텐츠를 만나보세요." />
+        {/* [수정] 시안 제목 · 전체 보기 */}
+        <MemberSectionHead
+          title="Apple 추천"
+          desc="지금 꼭 봐야할, Apple이 엄선한 특별한 콘텐츠를 만나보세요."
+          moreTo="/browse/recommend"
+        />
 
-        <Rail className="rail-poster rail-recommend" label="Apple이 모두에게 추천하는 작품">
+        <Rail className="rail-poster rail-recommend" label="지금, 놓치지 말아야 할 이야기" desktopGap={28}>
           {items.map((item) => (
             <SwiperSlide key={`${item.media_type}_${item.id}`}>
               <RecommendCard item={item} />
