@@ -32,6 +32,7 @@ import Search from "./pages/Search";
 import SearchPerson from "./pages/SearchPerson";
 import SearchTitle from "./pages/SearchTitle";
 import Wishlist from "./pages/Wishlist";
+import MemberBrowse from "./pages/MemberBrowse"; // [추가] 로그인 후 메인 "전체 보기" (/browse/:key)
 import WishlistLayer from "./components/wishlist/WishlistLayer";
 import { Profile } from "./pages/Profile";
 import TvPreview from "./pages/TvPreview"; // [추가] TV 디자인 미리보기 (/tv)
@@ -63,64 +64,6 @@ function App() {
     sessionStorage.setItem("hasSeenIntro", "true");
     setShowIntro(false);
   };
-
-  // 영상으로 스크롤 이동
-
-  useEffect(() => {
-    if (!location.pathname.startsWith("/sport/")) return;
-
-    let frame;
-    let observer;
-
-    const scrollToDetail = () => {
-      const section = document.querySelector(
-        ".sport-detail-back, .sport-detail, .sport-live-detail, .sport-short-detail"
-      );
-
-      if (!section) return false;
-
-      const headerHeight =
-        document.querySelector("header")?.getBoundingClientRect().height || 0;
-
-      const offset = headerHeight + 70;
-
-      const top =
-        window.scrollY +
-        section.getBoundingClientRect().top -
-        offset;
-
-      window.scrollTo({
-        top: Math.max(0, top),
-        behavior: "instant",
-      });
-
-      return true;
-    };
-
-    frame = requestAnimationFrame(() => {
-      if (scrollToDetail()) return;
-
-      // 상세 영역이 비동기로 렌더링될 경우 대기
-      observer = new MutationObserver(() => {
-        if (scrollToDetail()) observer.disconnect();
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-    });
-
-    return () => {
-      cancelAnimationFrame(frame);
-      observer?.disconnect();
-    };
-  }, [location.pathname]);
-
-
-
-
-
 
   return (
     <>
@@ -194,6 +137,11 @@ function App() {
               <Route
                 path="/wishlist"
                 element={<Wishlist />}
+              />
+
+              <Route
+                path="/browse/:key"
+                element={<MemberBrowse />}
               />
 
               <Route

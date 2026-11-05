@@ -402,7 +402,8 @@ export const MovieDetail = ({ type: typeProp }) => {
                       onClick={handleWish}
                       aria-label={isWished ? '찜 해제' : '찜하기'}
                     >
-                      {isWished ? '♥' : '♡'}
+                      {/* [수정] 글자 하트(♥ ♡) 대신 아이콘 — 담기면 채운 하트(active-heart.svg) */}
+                      <span className={`icon-heart${isWished ? ' is-on' : ''}`} aria-hidden="true" />
                     </button>
                     <button className="icon-btn" onClick={handleShare} aria-label="공유하기">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
