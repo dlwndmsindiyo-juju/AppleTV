@@ -40,6 +40,23 @@ service cloud.firestore {
         && (!('sportAlert' in s) || validAlert(s.sportAlert));
     }
 
+    // [추가] 계정 설정: 지불 방법 [{ id, brand, last4 }] (카드사 · 끝 4자리만 · 최대 5개)
+    function validPayments(list) {
+      return list is list && list.size() <= 5;
+    }
+
+    // [추가] 계정 설정: 청구 주소 { name, address1, address2, postal, phone } (글자 · 칸마다 100자 이하)
+    function validBillingField(b, k) {
+      return !(k in b) || (b[k] is string && b[k].size() <= 100);
+    }
+
+    function validBilling(b) {
+      return b is map
+        && b.keys().hasOnly(['name', 'address1', 'address2', 'postal', 'phone'])
+        && validBillingField(b, 'name') && validBillingField(b, 'address1') && validBillingField(b, 'address2')
+        && validBillingField(b, 'postal') && validBillingField(b, 'phone');
+    }
+
     match /users/{uid} {
       allow read: if request.auth != null && request.auth.uid == uid;
 
@@ -61,6 +78,12 @@ service cloud.firestore {
             || validAvatar(request.resource.data.avatar))
         && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['settings'])
             || validSettings(request.resource.data.settings))
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['subscriptionCanceled'])
+            || request.resource.data.subscriptionCanceled is bool)
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['payments'])
+            || validPayments(request.resource.data.payments))
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['billing'])
+            || validBilling(request.resource.data.billing))
         && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['sessionsRevokedAt'])
             || request.resource.data.sessionsRevokedAt == request.time);
 
