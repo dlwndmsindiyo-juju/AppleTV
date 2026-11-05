@@ -7523,15 +7523,6 @@ section.device-guide.device-guide--watch .watch-device img {
   margin-bottom: 2rem;
 }
 
-.account-profile-member {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 0.8125rem;
-  line-height: 1.125rem;
-  letter-spacing: 0;
-  color: #5865F2;
-}
-
 .account-members {
   display: flex;
   flex-wrap: wrap;
