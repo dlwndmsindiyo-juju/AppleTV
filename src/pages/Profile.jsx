@@ -218,10 +218,10 @@ export const Profile = () => {
               {currentProfile && <span className="account-profile-member">{currentProfile.name} 프로필로 보는 중</span>}
             </div>
           </div>
-          <Item title="다른 프로필로 보기" desc="프로필을 고르면 바로 그 프로필로 바뀝니다. 프로필마다 위시리스트와 시청 기록이 따로 저장돼요. (최대 5개)">
+          <Item title="다른 프로필로 보기" >
             <ProfilePicker className="account-profile-picker" current={currentProfileId} onPick={pickProfile} />
           </Item>
-          <Item title="프로필 아이콘" desc="지금 보고 있는 프로필의 아이콘을 기본 아이콘 중에서 고를 수 있습니다.">
+          <Item title="프로필 아이콘" desc="현재 프로필에 적용된 아이콘이 아닌 다른 아이콘을 선택하여 변경할 수 있습니다.">
             <button
               type="button"
               className="account-link"
@@ -259,13 +259,13 @@ export const Profile = () => {
         <Section title="계정 액세스">
           <Item
             title="웹용 Apple TV, Apple Music 및 Apple 팟캐스트"
-            desc="웹 브라우저에서 Apple TV에 로그인하면 자동으로 Apple Music과 Apple 팟캐스트에 로그인되며 웹에서 팟캐스트 및 음악을 재생할 수 있게 됩니다. 또한 언제든지 모든 서비스와 브라우저에서 로그아웃할 수 있습니다."
+            desc="웹 브라우저에서 Apple TV에 로그인하면 Apple 어플리케이션에 자동으로 로그인 되어 이 연결을 해제할 수 있습니다."
           >
             <button type="button" className="account-link" onClick={() => setDialog("logout")}>
               모든 브라우저에서 로그아웃
             </button>
           </Item>
-          <Item title="연결된 계정" desc="계정에 연결한 앱 및 서비스를 관리하십시오.">
+          <Item title="연결된 계정" desc="계정에 연결한 앱 및 서비스를 관리해보세요.">
             <button
               type="button"
               className="account-link"
