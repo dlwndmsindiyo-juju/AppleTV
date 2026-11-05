@@ -3630,6 +3630,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
   main.member-home.member-browse {
+
     .member-browse-grid.member-browse-grid--recommend,
     .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
       grid-template-columns: repeat(4, minmax(0, 1fr));
