@@ -73,23 +73,13 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 
   // ---------- 홈 섹션 공통: 본문 좌우 13% ----------
-  .value-props .inner,
   .top10-section .inner,
-  .upcoming-section .inner,
-  .apple-originals .inner,
-  .ai-promo .inner,
   .subscribe-cta .inner,
   .movie-slider-section .inner {
     padding-left: $tablet-gutter;
     padding-right: $tablet-gutter;
   }
 
-  // ---------- 핵심 혜택: 3칸 유지 ----------
-  .value-props {
-    .value-props-inner {
-      gap: $space-xl;
-    }
-  }
 
   // ---------- TOP 10: 오른쪽 끝까지 이어지는 슬라이더 (시안: 포스터 4장 + 다음 장 살짝) ----------
   .top10-section {
@@ -119,111 +109,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
   }
 
-  // ---------- 공개예정작: 카드 2장 가로 스크롤 (오른쪽 끝까지) ----------
-  .upcoming-section {
-    overflow: hidden;
-
-    .inner {
-      padding-right: 0;
-    }
-
-    .upcoming-title {
-      @include display-l;
-    }
-
-    .upcoming-title,
-    .upcoming-desc {
-      padding-right: $tablet-gutter;
-    }
-
-    .upcoming-list {
-      grid-template-columns: none;
-      grid-auto-flow: column;
-      grid-auto-columns: 440px;
-      gap: $space-xl;
-      overflow-x: auto;
-      padding-right: $tablet-gutter;
-      scroll-snap-type: x proximity;
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
-      >li {
-        scroll-snap-align: start;
-      }
-    }
-
-    .upcoming-card {
-      gap: $space-lg;
-      padding: $space-lg;
-    }
-
-    .upcoming-thumb {
-      width: 120px;
-    }
-
-    .upcoming-movie-title {
-      @include heading-h3;
-    }
-
-    // 시안: 알림 받기는 외곽선 버튼
-    .upcoming-btn:not(.on) {
-      border-color: $neutral-color-400;
-      background-color: transparent;
-      color: $text-primary;
-
-      &:hover {
-        border-color: $light-color-0;
-        background-color: rgba($light-color-0, 0.12);
-      }
-    }
-  }
-
-  // ---------- 오리지널스: 오른쪽 끝까지 이어지는 슬라이더 ----------
-  .apple-originals {
-    overflow: hidden;
-
-    .inner {
-      padding-right: 0;
-    }
-
-    .apple-originals-title {
-      @include display-l;
-    }
-
-    .apple-originals-title,
-    .apple-originals-desc {
-      padding-right: $tablet-gutter;
-    }
-
-    .apple-originals-slide {
-      width: 280px;
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-      display: none;
-    }
-  }
-
-  // ---------- AI 어시스턴트 띠: 글 → 카드 세로 배치 ----------
-  .ai-promo {
-    padding-bottom: $space-5xl;
-
-    .inner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: $space-2xl;
-      padding-top: $space-4xl;
-      padding-bottom: $space-4xl;
-    }
-
-    .ai-promo-title {
-      @include display-l;
-    }
-  }
 
   // ---------- 구독 CTA ----------
   .subscribe-cta {
@@ -346,30 +231,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 }
 
-// ▼ App.scss 에서 옮김 — 간격: 배너 ↔ 문구 128px / 문구 ↔ TOP 10 128px / TOP 10 ↔ 버튼 128px / 버튼 ↔ 푸터 128px
-@media (max-width: $breakpoint-mobile) {
-  .trial-welcome {
-    &.is-intro {
-      padding-bottom: $trial-gap-mobile;
-
-      .trial-heading {
-        margin-top: $trial-gap-mobile;
-      }
-
-      &.is-strip-hidden .trial-heading {
-        margin-top: $space-xl;
-      }
-
-      .top10-section {
-        padding-top: $trial-gap-mobile;
-      }
-    }
-
-    .inner.trial-home-actions {
-      margin-top: $trial-gap-mobile;
-    }
-  }
-}
 
 // ▼ App.scss 에서 옮김 — 토스트 ("호러 모음에 추가되었어요." + 그룹으로 이동)
 // =====================================================================
@@ -934,9 +795,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 @media (max-width: $breakpoint-mobile) {
 
   // ---------- 섹션 제목 · 소제목 ----------
-  section.top10-section .top10-title,
-  .upcoming-section .upcoming-title.upcoming-title,
-  .apple-originals .apple-originals-title.apple-originals-title {
+  section.top10-section .top10-title {
     @include display-l-b;
     margin: 0 0 $space-sm;
     padding-top: 0;
@@ -944,9 +803,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     word-break: keep-all;
   }
 
-  section.top10-section .top10-desc,
-  .upcoming-section .upcoming-desc.upcoming-desc,
-  .apple-originals .apple-originals-desc.apple-originals-desc {
+  section.top10-section .top10-desc {
     @include heading-h3;
     color: $light-color-500;
     word-break: keep-all;
@@ -969,18 +826,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
   }
 
-  // ---------- 핵심 혜택 ----------
-  .value-props .value-props-inner {
-    .value-prop-title {
-      @include body-large-b;
-      color: $light-color-0;
-    }
 
-    .value-prop-desc {
-      @include body-small;
-      color: $light-color-500;
-    }
-  }
 }
 
 @media (max-width: $breakpoint-mobile) {
@@ -1087,24 +933,13 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 
   // ---------- 홈 섹션 공통 좌우 여백 ----------
-  .value-props .inner,
   .top10-section .inner,
-  .upcoming-section .inner,
-  .apple-originals .inner,
-  .ai-promo .inner,
   .subscribe-cta .inner,
   .movie-slider-section .inner {
     padding-left: $mobile-edge;
     padding-right: $mobile-edge;
   }
 
-  // ---------- 핵심 혜택: 1열 ----------
-  .value-props {
-    .value-props-inner {
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-    }
-  }
 
   // ---------- TOP 10 (시안: 포스터 2장 + 다음 장 살짝) ----------
   .top10-section {
@@ -1129,137 +964,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
   }
 
-  // ---------- 공개예정작 (시안: 카드 세로 나열 · 썸네일 왼쪽 + 글 오른쪽) ----------
-  .upcoming-section {
-    padding: 2.5rem 0;
-
-    .inner {
-      padding-right: $mobile-edge;
-    }
-
-    .upcoming-title {
-      @include display-M;
-    }
-
-    .upcoming-title,
-    .upcoming-desc {
-      padding-right: 0;
-    }
-
-    .upcoming-desc {
-      @include body-small;
-      margin-bottom: 1.25rem;
-    }
-
-    .upcoming-list {
-      grid-auto-flow: row;
-      grid-auto-columns: auto;
-      grid-template-columns: minmax(0, 1fr);
-      gap: $space-lg;
-      overflow: visible;
-      padding-right: 0;
-    }
-
-    .upcoming-card {
-      gap: 1.25rem;
-      padding: 1.25rem;
-    }
-
-    .upcoming-thumb {
-      width: 96px;
-    }
-
-    // 제목은 두 줄까지 (시안: "딩크 / the Dink")
-    .upcoming-movie-title {
-      @include heading-h4;
-      white-space: normal;
-      word-break: keep-all;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    // 시안: 모바일은 줄거리 없이 장르 · 제목 · 버튼만
-    .upcoming-overview {
-      display: none;
-    }
-
-    .upcoming-btn {
-      height: 2rem;
-      padding: 0 0.875rem;
-      margin-top: $space-xs;
-    }
-  }
-
-  // ---------- 오리지널스 (시안: 포스터 2장 + 다음 장 살짝) ----------
-  .apple-originals {
-    padding: 2.5rem 0;
-
-    .apple-originals-title {
-      @include display-M;
-      padding-right: $mobile-edge;
-    }
-
-    .apple-originals-desc {
-      @include body-small;
-      padding-right: $mobile-edge;
-      margin-bottom: 1.25rem;
-    }
-
-    .inner {
-      padding-right: 0;
-    }
-
-    .apple-originals-slide {
-      width: 140px;
-    }
-
-    .apple-card-poster {
-      margin-bottom: $space-sm;
-    }
-
-    .apple-card-title {
-      @include heading-h4;
-    }
-  }
-
-  // ---------- AI 어시스턴트 띠: 글 → 카드(화면 폭 가득) ----------
-  .ai-promo {
-    padding: 2.5rem 0;
-
-    .inner {
-      gap: $space-xl;
-      padding-top: 2.5rem;
-      padding-bottom: 2.5rem;
-    }
-
-    .ai-promo-text {
-      width: 100%;
-    }
-
-    .ai-promo-title {
-      @include heading-h2-b;
-    }
-
-    .ai-promo-desc {
-      @include body-small;
-    }
-
-    .ai-promo-card {
-      max-width: none;
-    }
-
-    // 칩이 넘치면 카드 안에서 가로 스크롤
-    .ai-promo-chips {
-      overflow-x: auto;
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-  }
 
   // ---------- 구독 CTA: 이미지 위에 텍스트 ----------
   .subscribe-cta {
@@ -1300,7 +1004,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
 // =====================================================================
 // [이동] member.scss (로그인 후 메인) 의 태블릿 규칙 (1024px 이하)
-// - member.scss 는 이 파일보다 나중에 불러오므로 main.member-home · section.upcoming-section 으로
+// - member.scss 는 이 파일보다 나중에 불러오므로 :is(main, div).member-home 으로
 //   우선순위를 한 단계 높여, 옮기기 전과 똑같이 적용되게 함
 // =====================================================================
 // ▼ member.scss 에서 옮김 — 로그인 후 메인 (Desktop.pdf 시안) — 신규 섹션 전용 스타일
@@ -1310,7 +1014,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // 모바일(767px 이하)은 mobile.scss 에서 이어서 덮어씀
 // ---------------------------------------------------------------------
 @media (max-width: $breakpoint-mobile) {
-  main.member-home {
+  :is(main, div).member-home {
     .member-section {
       overflow: hidden;
 
@@ -1379,65 +1083,19 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     // ---------- 찜 / 신규 출시 / 공개예정작 ----------
 
-    .member-pair {
-      grid-template-columns: 1fr;
-      gap: $space-xl;
-    }
-
-    // ---------- 에코시스템 ----------
-    .member-ecosystem {
-      padding: $space-4xl 0;
-    }
 
     // ---------- 섹션 제목 (시안: 크게) ----------
     .member-title {
       @include display-l;
     }
 
-    // ---------- 공개예정작: 카드 세로 2장 (로그인 전 메인의 가로 스크롤 대신) ----------
-    .upcoming-section {
-      .inner {
-        padding-right: $tablet-gutter;
-      }
 
-      .upcoming-title,
-      .upcoming-desc {
-        padding-right: 0;
-      }
-
-      .upcoming-list {
-        grid-auto-flow: row;
-        grid-auto-columns: auto;
-        grid-template-columns: minmax(0, 1fr);
-        overflow: visible;
-        padding-right: 0;
-      }
-
-      .upcoming-thumb {
-        width: 156px;
-      }
-
-      .upcoming-movie-title {
-        @include heading-h3-b;
-      }
-
-      // 시안: 태블릿도 흰 알약 버튼
-      .upcoming-btn:not(.on) {
-        border-color: transparent;
-        background-color: $light-color-100;
-        color: $text-inverse;
-
-        &:hover {
-          background-color: $light-color-400;
-        }
-      }
-    }
   }
 }
 
 // ▼ member.scss 에서 옮김 — 가로 슬라이드 좌우 네비게이터 (Swiper 기본 버튼 커스텀)
 @media (max-width: $breakpoint-mobile) {
-  main.member-home {
+  :is(main, div).member-home {
 
     // 태블릿 기분별 추천은 가로형 카드라 버튼 위치가 더 위쪽
     .rail-mood {
@@ -1458,7 +1116,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // ▼ member.scss 에서 옮김 — [추가] 멈춘 순간부터 다시 (이어보기) · 마음에 담아둔 이야기 (찜) — 시안
 // 태블릿: 찜 가로 카드가 좁아지지 않게
 @media (max-width: $breakpoint-mobile) {
-  main.member-home .rail-wish {
+  :is(main, div).member-home .rail-wish {
     --rail-col: 300px;
   }
 }
@@ -1466,7 +1124,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // ▼ member.scss 에서 옮김 — [추가] Apple이 모두에게 추천하는 작품 (추천작) — 시안
 // 태블릿 · 모바일: 버튼 두 개가 들어가는 폭
 @media (max-width: $breakpoint-mobile) {
-  main.member-home .rail-recommend {
+  :is(main, div).member-home .rail-recommend {
     --rail-col: 220px;
     --nav-top: 50%;
   }
@@ -1474,7 +1132,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
 // ▼ member.scss 에서 옮김 — [추가] AI 어시스트 — 시안
 @media (max-width: $breakpoint-mobile) {
-  main.member-home .rail-ai {
+  :is(main, div).member-home .rail-ai {
     --rail-col: 286px;
     --nav-top: 30%;
   }
@@ -1483,8 +1141,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // ▼ member.scss 에서 옮김 — [추가] 신규출시 · 공개예정작 — 시안 (ReleaseCard.jsx 공용)
 @media (max-width: $breakpoint-mobile) {
 
-  main.member-home .rail-release,
-  section.upcoming-section .rail-release {
+  :is(main, div).member-home .rail-release {
     --rail-col: 360px;
     --nav-top: 50%;
   }
@@ -1492,7 +1149,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
 // ▼ member.scss 에서 옮김 — [추가] 로그인 후 메인 — 태블릿 · 모바일 (시안: Apple TV 모바일 hi-fi · 1024px 이하)
 @media (max-width: $breakpoint-mobile) {
-  main.member-home {
+  :is(main, div).member-home {
 
     // ---------- 섹션 제목 · 소제목 ----------
     .member-section .member-title.member-title {
@@ -1551,10 +1208,10 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
 // =====================================================================
 // [추가] 로그인 후 메인 (member) 모바일 — 시안: Mobile.pdf (390 폭)
-// - member.scss 의 태블릿 규칙을 덮어쓰므로 main.member-home 으로 우선순위를 높임
+// - member.scss 의 태블릿 규칙을 덮어쓰므로 :is(main, div).member-home 으로 우선순위를 높임
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
-  main.member-home {
+  :is(main, div).member-home {
     .member-section {
       padding: $space-2xl 0 2.5rem;
 
@@ -1697,60 +1354,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       }
     }
 
-    // ---------- 신규출시 (시안: 배경 없이 작은 썸네일 왼쪽 + 글 오른쪽, 세로 나열) ----------
-    .member-pair {
-      grid-template-columns: 1fr;
-      gap: $space-xl;
-    }
 
-    .member-wide-card {
-      flex-direction: row;
-      align-items: center;
-      gap: $space-md;
-      padding: 0;
-      background-color: transparent;
-    }
-
-    .member-wide-thumb {
-      width: 80px;
-      height: auto;
-      aspect-ratio: 3 / 2;
-    }
-
-    .member-wide-info {
-      flex: 1;
-      min-width: 0;
-
-      .member-card-title {
-        @include body-small-b;
-      }
-
-      .member-card-meta {
-        @include caption-default;
-      }
-
-      .member-btn {
-        @include caption-default;
-        height: 1.75rem;
-        padding: 0 $space-md;
-      }
-    }
-
-    // 공개예정작 (UpcomingSection): 로그인 후 메인 여백에 맞춤
-    .upcoming-section {
-      padding: $space-2xl 0 2.5rem;
-    }
-
-    // ---------- 에코시스템 ----------
-    .member-ecosystem {
-      padding: 2.5rem 0;
-
-      .member-title {
-        font-size: 1.375rem;
-        line-height: 1.75rem;
-        word-break: keep-all;
-      }
-    }
   }
 }
 
@@ -2534,13 +2138,13 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 // =====================================================================
 // [이동] member.scss (로그인 후 메인) 의 모바일 규칙 (767px 이하)
-// - member.scss 는 이 파일보다 나중에 불러오므로 main.member-home · section.upcoming-section 으로
+// - member.scss 는 이 파일보다 나중에 불러오므로 :is(main, div).member-home 으로
 //   우선순위를 한 단계 높여, 옮기기 전과 똑같이 적용되게 함
 // =====================================================================
 // ▼ member.scss 에서 옮김 — [추가] 멈춘 순간부터 다시 (이어보기) · 마음에 담아둔 이야기 (찜) — 시안
 // 모바일
 @media (max-width: $breakpoint-mobile) {
-  main.member-home {
+  :is(main, div).member-home {
     .rail-wish {
       --rail-col: calc((100% - 16px) / 1.15);
     }
@@ -2557,11 +2161,11 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 // ▼ member.scss 에서 옮김 — [추가] Apple이 모두에게 추천하는 작품 (추천작) — 시안
 @media (max-width: $breakpoint-mobile) {
-  main.member-home .rail-recommend {
+  :is(main, div).member-home .rail-recommend {
     --rail-col: 176px;
   }
 
-  main.member-home {
+  :is(main, div).member-home {
     .member-rc-info {
       left: $space-md;
       right: $space-md;
@@ -2586,7 +2190,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 // ▼ member.scss 에서 옮김 — [추가] AI 어시스트 — 시안
 @media (max-width: $breakpoint-mobile) {
-  main.member-home .rail-ai {
+  :is(main, div).member-home .rail-ai {
     --rail-col: 240px;
   }
 }
@@ -2594,16 +2198,11 @@ header .inner nav .gnb-right ul .search-icon-item {
 // ▼ member.scss 에서 옮김 — [추가] 신규출시 · 공개예정작 — 시안 (ReleaseCard.jsx 공용)
 @media (max-width: $breakpoint-mobile) {
 
-  main.member-home .rail-release,
-  section.upcoming-section .rail-release {
+  :is(main, div).member-home .rail-release {
     --rail-col: 86%;
   }
 
-  main.member-home .member-nr-card,
-  section.upcoming-section .member-nr-card {
-    gap: $space-md;
-    padding: $space-md;
-  }
+
 }
 
 // [삭제] 태블릿 전용 규칙 (768 ~ 1024px) — 태블릿도 PC 규칙을 따름 (이너 90% · PC 텍스트 위계)
@@ -2624,16 +2223,12 @@ header .inner nav .gnb-right ul .search-icon-item {
 @media (max-width: $breakpoint-mobile) {
 
   // ---------- 섹션 제목 · 소제목 (로그인 전 홈) ----------
-  section.top10-section .top10-title,
-  .upcoming-section .upcoming-title.upcoming-title,
-  .apple-originals .apple-originals-title.apple-originals-title {
+  section.top10-section .top10-title {
     @include heading-h3-b;
     color: $light-color-0;
   }
 
-  section.top10-section .top10-desc,
-  .upcoming-section .upcoming-desc.upcoming-desc,
-  .apple-originals .apple-originals-desc.apple-originals-desc {
+  section.top10-section .top10-desc {
     @include heading-h5;
     color: $light-color-500;
   }
@@ -2675,120 +2270,12 @@ header .inner nav .gnb-right ul .search-icon-item {
 
   // ---------- 신규출시 · 공개예정작 (로그인 전 · 후 홈 공통 카드) ----------
   // 시안: 글자 없이 포스터만 + 아래 가운데 버튼 (포스터 폭 130 · 다음 장 일부 보임)
-  main.member-home .rail-release.rail-release,
-  section.upcoming-section .rail-release.rail-release {
+  :is(main, div).member-home .rail-release.rail-release {
     --rail-col: 130px;
   }
 
-  main.member-home .member-nr-card.member-nr-card,
-  section.upcoming-section .member-nr-card.member-nr-card {
-    position: relative;
-    display: block;
-    padding: 0;
-    border-radius: $radius-sm;
-    overflow: hidden;
-    background-color: $dark-color-400;
 
-    // 버튼이 잘 보이도록 포스터 아래쪽 그림자
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: $card-shadow-gradient;
-      pointer-events: none;
-    }
-
-    .member-nr-poster {
-      border-radius: 0;
-    }
-
-    // 제목 · 장르 · 소개 · PC 버튼은 휴대폰에서 숨김
-    .member-nr-info {
-      display: none;
-    }
-
-    .member-nr-quick {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: $space-md;
-      z-index: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: $space-sm;
-    }
-
-    // [재생] · [찜]: 25 × 25 원형 · 아이콘 7 × 9
-    .member-nr-quick-play,
-    .member-nr-quick-heart {
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 25px;
-      height: 1.5625rem;
-      padding: 0;
-      border: none;
-      border-radius: 50%;
-      color: $light-color-0;
-      cursor: pointer;
-    }
-
-    .member-nr-quick-play {
-      background-color: $primary-color-500;
-
-      img {
-        display: block;
-        width: 7px;
-        height: 0.5625rem;
-      }
-    }
-
-    .member-nr-quick-heart {
-      background-color: $sport-opacity-b;
-
-      &.is-on {
-        color: $live-color;
-      }
-    }
-
-    .member-nr-quick-heart-icon {
-      display: block;
-      width: 11px;
-      height: 0.6875rem;
-      background-color: currentColor;
-      -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
-      mask: url("/icons/heart-icon.svg") center / contain no-repeat;
-    }
-
-    // [N월 공개예정 🔔]: 105 × 25 (패딩 5 10) · Label/default · Light/0 · 프라이머리
-    .member-nr-quick-month {
-      @include label-default;
-      box-sizing: border-box;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: $space-xs;
-      width: 105px;
-      height: 1.5625rem;
-      padding: 0.3125rem 0.625rem;
-      border: none;
-      border-radius: 62.4375rem;
-      background-color: $primary-color-500;
-      color: $light-color-0;
-      white-space: nowrap;
-      cursor: pointer;
-
-      .member-nr-bell-icon {
-        flex-shrink: 0;
-        width: 10px;
-        height: 0.625rem;
-      }
-    }
-  }
-
-  main.member-home {
+  :is(main, div).member-home {
 
     // ---------- 섹션 제목 · 소제목 (로그인 후 홈) ----------
     .member-section .member-title.member-title {
@@ -3084,7 +2571,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 // - 격자 칸 폭만 줄임 (카드 모양은 홈과 같음)
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
-  main.member-home.member-browse {
+  :is(main, div).member-home.member-browse {
     .member-section .inner {
       padding-right: $tablet-gutter;
     }
@@ -3105,7 +2592,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 }
 
 @media (max-width: $breakpoint-mobile) {
-  main.member-home.member-browse {
+  :is(main, div).member-home.member-browse {
 
     // [추가] "← 홈으로"(헤더 아래 16 · 글자 18) 아래 12 에서 제목 시작 (영화 상세와 같은 간격)
     .member-section {
@@ -3127,33 +2614,6 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
 }
 
-// =====================================================================
-// [추가] 핵심 혜택 (ValueProps.jsx) — 휴대폰: 1열이라 칸 사이 구분선을 가로선으로 (App.scss 의 세로 구분선 대신)
-// =====================================================================
-@media (max-width: $breakpoint-mobile) {
-  section.value-props.value-props .value-prop-item+.value-prop-item::before {
-    top: -0.625rem; // 칸 사이 간격(20)의 가운데
-    bottom: auto;
-    left: 25%;
-    right: 25%;
-    width: auto;
-    height: 0.0625rem;
-  }
-}
-
-// [추가] 휴대폰 신규출시 카드 [♡ 찜]: 찜한 상태는 빨간 하트 대신 흰색 채운 하트 (public/icons/active-heart.svg)
-@media (max-width: $breakpoint-mobile) {
-
-  main.member-home .member-nr-card.member-nr-card .member-nr-quick-heart.is-on,
-  section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-heart.is-on {
-    color: $light-color-0;
-
-    .member-nr-quick-heart-icon {
-      -webkit-mask-image: url("/icons/active-heart.svg");
-      mask-image: url("/icons/active-heart.svg");
-    }
-  }
-}
 
 // [추가] 기기 안내: PC 전체 높이 838px(App.scss)은 PC 에만 — 태블릿 · 휴대폰은 내용 높이 그대로 (잘리지 않게)
 @media (max-width: $breakpoint-mobile) {
@@ -3165,20 +2625,20 @@ header .inner nav .gnb-right ul .search-icon-item {
 // =====================================================================
 // [수정] 최신작 · 공개 예정 — 태블릿 · 휴대폰 (ShowcaseCard .member-sc-slot--static · 제목이 들어간 세로 포스터만)
 // - 카드 폭: 태블릿 282 (추천작 포스터와 같음) / 휴대폰 138 (추천작 포스터와 같음)
-// - member.scss 가 이 파일보다 나중에 불러와지므로 main.member-home · 클래스 두 번으로 우선순위를 높임
+// - member.scss 가 이 파일보다 나중에 불러와지므로 :is(main, div).member-home · 클래스 두 번으로 우선순위를 높임
 // =====================================================================
 @media (max-width: $breakpoint-tablet) {
-  main.member-home .rail-release.rail-showcase.rail-showcase {
+  :is(main, div).member-home .rail-release.rail-showcase.rail-showcase {
     --rail-col: 282px;
   }
 }
 
 @media (max-width: $breakpoint-mobile) {
-  main.member-home .rail-release.rail-showcase.rail-showcase {
+  :is(main, div).member-home .rail-release.rail-showcase.rail-showcase {
     --rail-col: 138px;
   }
 
-  main.member-home .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
+  :is(main, div).member-home .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
     --browse-col: 140px;
   }
 }
@@ -3188,7 +2648,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 // - 이너: 화면 폭의 90% (PC · 태블릿과 같음 · 좌우 5%) — 스포츠(main.sport-home) 안은 그대로
 // - 로그인 후 홈: 섹션 사이 60 · 제목 ↔ 콘텐츠 16 · 카드 사이 12 (Rail.jsx) · "전체 보기" 있음
 // - 글자 위계(크기 · 굵기 · 색)는 기존 그대로 — 배치 · 크기 · 간격만 시안에 맞춤
-// - member.scss 가 이 파일보다 나중에 불러와지므로 main.member-home.member-home 으로 우선순위를 높임
+// - member.scss 가 이 파일보다 나중에 불러와지므로 :is(main, div).member-home.member-home 으로 우선순위를 높임
 // =====================================================================
 $m-section-gap: 3.75rem; // 60 · 섹션 사이
 $m-hero-action-gap: 0.375rem; // [추가] 히어로 [재생] ↔ [찜] 사이 6 (시안 사진 기준)
@@ -3267,7 +2727,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
   // =================================================================
   // 로그인 후 홈
   // =================================================================
-  main.member-home.member-home {
+  :is(main, div).member-home.member-home {
 
     // ---------- 히어로 (시안: 540 · 제목 로고 + [▶ 재생] [♡] · 칩 · 소개 없음) ----------
     .hero-swiper-container.movie-home-hero {
@@ -3629,7 +3089,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
 // - 칸이 좁아(약 80px) 포스터 위 버튼은 작게: 공개 예정 "N월 공개예정 🔔" 은 벨 아이콘만 (누르면 알림)
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
-  main.member-home.member-browse {
+  :is(main, div).member-home.member-browse {
 
     .member-browse-grid.member-browse-grid--recommend,
     .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
