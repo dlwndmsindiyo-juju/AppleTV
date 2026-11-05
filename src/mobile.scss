@@ -3252,19 +3252,6 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     }
   }
 
-  // ---------- 휴대폰 짧은 문구로 바꿈 ----------
-  .member-notice-long,
-  .subscribe-title-long,
-  .watch-subtitle-long {
-    display: none;
-  }
-
-  .member-notice-short,
-  .subscribe-title-short,
-  .watch-subtitle-short {
-    display: inline;
-  }
-
   // =================================================================
   // 로그인 후 홈
   // =================================================================
@@ -3457,9 +3444,9 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
       align-items: center;
       justify-content: space-between;
       gap: $space-md;
-      height: 3.125rem; // 50
+      min-height: 3.125rem; // 50 (안내 문구가 두 줄이면 늘어남)
       margin: 0 0 $space-md;
-      padding: 0 1.25rem;
+      padding: $space-sm 1.25rem;
       border-radius: 0;
       background-color: $sport-opacity-b;
       text-align: left;
