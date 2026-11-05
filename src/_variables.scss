@@ -75,7 +75,7 @@ $card-shadow-gradient: linear-gradient(to top, $card-shadow-start 0%, $card-shad
 // [추가] TOP 10 순위 숫자 그라데이션 (Figma: Linear · 0% #F1F1F1 → 100% #606060 · 위 → 아래)
 $top10-num-gradient-start: #F1F1F1; // 0% (위)
 $top10-num-gradient-end: #606060; // 100% (아래)
-$top10-num-letter-spacing: -20px; // [추가] 순위 숫자 글자 사이 (두 자리 10위의 1 · 0 사이를 붙임 · 한 자리 숫자는 영향 없음)
+$top10-num-letter-spacing: -1.25em; // [추가] 순위 숫자 글자 사이 (두 자리 10위의 1 · 0 사이를 붙임 · 한 자리 숫자는 영향 없음)
 
 $thumb-shadow-gradient: linear-gradient(to bottom,
     rgba(0, 0, 0, 0.28) 0%,
@@ -143,46 +143,46 @@ $toggle-active-hover: color.adjust($toggle-active-bg, $lightness: -12%); // 흰 
 // =====================================================================
 
 // ---------- Spacing ----------
-$base-unit: 8px; // 기본 단위
-$space-xs: 4px;
-$space-sm: 8px;
-$space-md: 12px;
-$space-lg: 16px;
-$space-xl: 24px;
-$space-2xl: 32px;
-$space-3xl: 36px;
-$space-4xl: 48px;
-$space-5xl: 64px;
+$base-unit: 0.50em; // 기본 단위
+$space-xs: 0.25em;
+$space-sm: 0.50em;
+$space-md: 0.75em;
+$space-lg: 1em;
+$space-xl: 1.5em;
+$space-2xl: 2em;
+$space-3xl: 2.25em;
+$space-4xl: 3em;
+$space-5xl: 4em;
 
 // ---------- Radius (용도로 선택) ----------
-$radius-xs: 8px; // 작은 버튼
-$radius-sm: 10px; // 기본 버튼
-$radius-card-sm: 12px; // 작은 카드
-$radius-md: 20px; // 기본 카드
-$radius-lg: 24px; // 모달
-$radius-pill: 28px; // Pill 컨트롤
+$radius-xs: 0.50em; // 작은 버튼
+$radius-sm: 0.63em; // 기본 버튼
+$radius-card-sm: 0.75em; // 작은 카드
+$radius-md: 1.25em; // 기본 카드
+$radius-lg: 1.5em; // 모달
+$radius-pill: 1.75em; // Pill 컨트롤
 
 $radius-card: $radius-md; // 카드 (기본 카드 20px)
 $radius-control: $radius-pill; // Pill 컨트롤 (기존 이름)
 
 // ---------- Grid (12 Columns · 24 Gutter · 80 Margin) ----------
 $grid-columns: 12;
-$grid-gutter: 24px; // 기본 그리드 간격
-$grid-gutter-wide: 36px; // 넓은 레이아웃 간격
-$grid-margin: 80px; // 화면 좌우 여백
+$grid-gutter: 1.5em; // 기본 그리드 간격
+$grid-gutter-wide: 2.25em; // 넓은 레이아웃 간격
+$grid-margin: 5em; // 화면 좌우 여백
 
 // landing 전용
 $container-width: 1200px;
-$header-height: 72px; // App.scss 의 fixed header 높이 (상하 14 + 프로필 44)
+$header-height: 4.5em; // App.scss 의 fixed header 높이 (상하 14 + 프로필 44)
 
 // 이너 (히어로 제외 공통 콘텐츠 폭)
 $inner-width: 1920px;
 
 // header / footer 시안 (Desktop)
-$header-pad-x: 64px;
-$header-pad-y: 14px;
-$footer-pad-x: 40px;
-$footer-pad-y: 14px;
+$header-pad-x: 4em;
+$header-pad-y: 0.88em;
+$footer-pad-x: 2.5em;
+$footer-pad-y: 0.88em;
 
 @mixin inner-wrap {
   width: 100%;
@@ -227,147 +227,147 @@ $font-family-base: "SF Pro", sans-serif;
 // ---------- Display ----------
 // Display XL 76 / 96 · 대형 히어로 타이틀
 @mixin display-xl {
-  @include type-style(76px, 96px);
+  @include type-style(4.75em, 6em);
 }
 
 @mixin display-xl-b {
-  @include type-style(76px, 96px, $font-weight-bold);
+  @include type-style(4.75em, 6em, $font-weight-bold);
 }
 
 // Display L 34 / 41 · 메인 타이틀
 @mixin display-l {
-  @include type-style(34px, 41px);
+  @include type-style(2.13em, 2.56em);
 }
 
 @mixin display-l-b {
-  @include type-style(34px, 41px, $font-weight-bold);
+  @include type-style(2.13em, 2.56em, $font-weight-bold);
 }
 
 // Display M 28 / 34 · 주요 섹션 강조
 @mixin display-M {
-  @include type-style(28px, 34px);
+  @include type-style(1.75em, 2.13em);
 }
 
 @mixin display-M-b {
-  @include type-style(28px, 34px, $font-weight-bold);
+  @include type-style(1.75em, 2.13em, $font-weight-bold);
 }
 
 // ---------- Heading ----------
 // H1 48 / 56 · 페이지 제목
 @mixin heading-h1 {
-  @include type-style(48px, 56px);
+  @include type-style(3em, 3.5em);
 }
 
 @mixin heading-h1-b {
-  @include type-style(48px, 56px, $font-weight-bold);
+  @include type-style(3em, 3.5em, $font-weight-bold);
 }
 
 // H2 22 / 28 · 섹션 헤더
 @mixin heading-h2 {
-  @include type-style(22px, 28px);
+  @include type-style(1.38em, 1.75em);
 }
 
 @mixin heading-h2-b {
-  @include type-style(22px, 28px, $font-weight-bold);
+  @include type-style(1.38em, 1.75em, $font-weight-bold);
 }
 
 // H3 20 / 25 · 콘텐츠 그룹 제목
 @mixin heading-h3 {
-  @include type-style(20px, 25px);
+  @include type-style(1.25em, 1.56em);
 }
 
 @mixin heading-h3-b {
-  @include type-style(20px, 25px, $font-weight-bold);
+  @include type-style(1.25em, 1.56em, $font-weight-bold);
 }
 
 // H4 17 / 22 · 카드와 모듈 제목
 @mixin heading-h4 {
-  @include type-style(17px, 22px);
+  @include type-style(1.06em, 1.38em);
 }
 
 @mixin heading-h4-b {
-  @include type-style(17px, 22px, $font-weight-bold);
+  @include type-style(1.06em, 1.38em, $font-weight-bold);
 }
 
 // H5 16 / 21 · 보조 헤딩
 @mixin heading-h5 {
-  @include type-style(16px, 21px);
+  @include type-style(1em, 1.31em);
 }
 
 @mixin heading-h5-b {
-  @include type-style(16px, 21px, $font-weight-bold);
+  @include type-style(1em, 1.31em, $font-weight-bold);
 }
 
 // ---------- Body ----------
 // Body Large 17 / 22 · 소개와 주요 설명
 @mixin body-large {
-  @include type-style(17px, 22px);
+  @include type-style(1.06em, 1.38em);
 }
 
 @mixin body-large-b {
-  @include type-style(17px, 22px, $font-weight-bold);
+  @include type-style(1.06em, 1.38em, $font-weight-bold);
 }
 
 // Body Default 15 / 20 · 기본 본문
 @mixin body-default {
-  @include type-style(15px, 20px);
+  @include type-style(0.94em, 1.25em);
 }
 
 @mixin body-default-b {
-  @include type-style(15px, 20px, $font-weight-bold);
+  @include type-style(0.94em, 1.25em, $font-weight-bold);
 }
 
 // Body Small 13 / 18 · 보조 설명
 @mixin body-small {
-  @include type-style(13px, 18px);
+  @include type-style(0.81em, 1.13em);
 }
 
 @mixin body-small-b {
-  @include type-style(13px, 18px, $font-weight-bold);
+  @include type-style(0.81em, 1.13em, $font-weight-bold);
 }
 
 // Body Small M 13 / 18 · SF Pro Medium · 자간 0% (카드 소개 글)
 @mixin body-small-m {
-  @include type-style(13px, 18px, $font-weight-medium);
+  @include type-style(0.81em, 1.13em, $font-weight-medium);
 }
 
 // ---------- Label ----------
 // Label Default 12 / 16 · 버튼과 상태
 @mixin label-default {
-  @include type-style(12px, 16px);
+  @include type-style(0.75em, 1em);
 }
 
 @mixin label-default-b {
-  @include type-style(12px, 16px, $font-weight-bold);
+  @include type-style(0.75em, 1em, $font-weight-bold);
 }
 
 // ---------- Caption ----------
 // Caption Default 11 / 13 · 주석과 부가 정보
 @mixin caption-default {
-  @include type-style(11px, 13px);
+  @include type-style(0.69em, 0.81em);
 }
 
 @mixin caption-default-b {
-  @include type-style(11px, 13px, $font-weight-bold);
+  @include type-style(0.69em, 0.81em, $font-weight-bold);
 }
 
 // Caption Small 9 / Auto · 작은 캡션
 @mixin caption-small {
-  @include type-style(9px, normal);
+  @include type-style(0.56em, normal);
 }
 
 @mixin caption-small-b {
-  @include type-style(9px, normal, $font-weight-bold);
+  @include type-style(0.56em, normal, $font-weight-bold);
 }
 
 // ---------- TV 1920 / Control ----------
 // 20 / 125 · TV 리모컨 포커스 영역과 컨트롤 (Regular: 일반 컨트롤 · Bold: 선택 · 포커스 상태)
 @mixin tv-control {
-  @include type-style(20px, 125px);
+  @include type-style(1.25em, 7.81em);
 }
 
 @mixin tv-control-b {
-  @include type-style(20px, 125px, $font-weight-bold);
+  @include type-style(1.25em, 7.81em, $font-weight-bold);
 }
 
 // =====================================================================
@@ -378,7 +378,7 @@ $breakpoint-mobile: 767px; // 모바일 (mobile.scss 에서 사용)
 
 // 태블릿 시안: 본문 좌우 여백 (1024 기준 약 134px ≒ 13%)
 $tablet-gutter: 13%;
-$tablet-edge: 40px; // 헤더·푸터·스포츠 섹션 좌우 여백
+$tablet-edge: 2.5em; // 헤더·푸터·스포츠 섹션 좌우 여백
 
 // 데스크톱(PC · 1025px 이상): 본문 좌우 여백 5% 씩 → 콘텐츠 폭 화면의 90% (1920 기준 96px · 콘텐츠 1728)
 // - [수정] 예전 값 12.5% (콘텐츠 75% · 1440)
@@ -408,10 +408,10 @@ $tv-key-space-text: $dark-color-900;
 // TV 스포츠 화면 (시안: 03 · 스포츠 · 하이라이트)
 $tv-header-bg: #000000; // TV 헤더 메뉴 바 (Dark/Black · 배경 흐림 30)
 $tv-header-tab-active-bg: $dark-color-200; // 선택된 메뉴 (Dark/200)
-$tv-card-radius: 30px; // 섹션 카드 모서리
+$tv-card-radius: 1.88em; // 섹션 카드 모서리
 $tv-card-title-color: $text-tertiary; // 카드 제목 (시안 회색 #8E8E8E 에 가장 가까운 토큰)
 
 // TV 카드 제목: SF Pro Medium 32 / 46 · 자간 0%
 @mixin tv-card-title {
-  @include type-style(32px, 46px, $font-weight-medium);
+  @include type-style(2em, 2.88em, $font-weight-medium);
 }

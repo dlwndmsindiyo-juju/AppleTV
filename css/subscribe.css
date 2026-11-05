@@ -2,7 +2,7 @@
   max-width: 800px;
   padding: 54px 44px 52px;
   background-color: #f5f5f7;
-  border-radius: 12px;
+  border-radius: 0.75em;
   box-shadow: none;
 }
 .login-page .login-card.plan-card .login-card-close {
@@ -46,7 +46,7 @@
 }
 .login-page .login-card.plan-card .plan-list {
   border: 1px solid #8e8e93;
-  border-radius: 8px;
+  border-radius: 0.5em;
   padding: 13px 20px;
 }
 .login-page .login-card.plan-card .plan-option {
@@ -122,7 +122,7 @@
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px 12px;
+  gap: 0.5em 0.75em;
 }
 .login-page .login-card.plan-card .plan-benefit {
   display: flex;
@@ -130,7 +130,7 @@
   gap: 10px;
   padding: 22px 20px;
   border: 1px solid #8e8e93;
-  border-radius: 8px;
+  border-radius: 0.5em;
   box-sizing: border-box;
 }
 .login-page .login-card.plan-card .plan-benefit strong {
@@ -170,7 +170,7 @@
   width: 100%;
   max-width: 428px;
   height: 48px;
-  margin: 24px auto 0;
+  margin: 1.5em auto 0;
   border: none;
   border-radius: 6px;
   background-color: #007aff;
@@ -189,8 +189,8 @@
 
 @media (max-width: 1024px) {
   .login-page .login-card.plan-card {
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-left: 2em;
+    padding-right: 2em;
   }
   .login-page .login-card.plan-card .plan-option {
     grid-template-columns: 170px 1fr 20px;
@@ -214,7 +214,7 @@
 }
 @media (max-width: 767px) {
   .login-page .login-card.plan-card {
-    padding: 76px 20px 32px;
+    padding: 76px 20px 2em;
   }
   .login-page .login-card.plan-card .login-card-close {
     top: 16px;
@@ -231,7 +231,7 @@
     word-break: keep-all;
   }
   .login-page .login-card.plan-card .plan-list {
-    padding: 4px 16px;
+    padding: 0.25em 1em;
   }
   .login-page .login-card.plan-card .plan-option {
     grid-template-columns: 1fr 20px;
@@ -245,7 +245,7 @@
     grid-template-columns: 1fr;
   }
   .login-page .login-card.plan-card .plan-benefit {
-    padding: 16px;
+    padding: 1em;
     gap: 6px;
   }
   .login-page .login-card.plan-card .plan-submit {
@@ -261,7 +261,7 @@
 .login-page .login-card.plan-card .plan-summary {
   margin: 0;
   padding: 14px 20px;
-  border-radius: 12px;
+  border-radius: 0.75em;
   background-color: #d9d9d9;
 }
 .login-page .login-card.plan-card .plan-summary-row {
@@ -292,14 +292,14 @@
 .login-page .login-card.plan-card .plan-field {
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
-  padding: 18px 16px 17px;
+  margin-top: 0.75em;
+  padding: 18px 1em 17px;
   border: 1px solid #8e8e93;
-  border-radius: 12px;
+  border-radius: 0.75em;
   box-sizing: border-box;
 }
 .login-page .login-card.plan-card .plan-field:first-of-type {
-  margin-top: 16px;
+  margin-top: 1em;
 }
 .login-page .login-card.plan-card .plan-field .plan-field-label {
   font-family: "SF Pro", sans-serif;
@@ -353,7 +353,7 @@
   padding-top: 82px;
 }
 .login-page .login-card.plan-card.plan-card--processing .login-title, .login-page .login-card.plan-card.plan-card--done .login-title {
-  margin: 14px 0 24px;
+  margin: 14px 0 1.5em;
   font-size: 34px;
   line-height: 41px;
   font-weight: 400;
@@ -373,7 +373,7 @@
 .login-page .login-card.plan-card.plan-card--processing .plan-spinner {
   width: 50px;
   height: 50px;
-  margin: 24px 0 24px;
+  margin: 1.5em 0 1.5em;
   box-sizing: border-box;
   border-radius: 50%;
   border: 3px solid #d9d9d9;
@@ -406,7 +406,7 @@
   padding-bottom: 51px;
 }
 .login-page .login-card.plan-card.plan-card--done .login-title {
-  margin-top: 16px;
+  margin-top: 1em;
 }
 .login-page .login-card.plan-card.plan-card--done .login-desc {
   margin-bottom: 17px;
@@ -414,8 +414,8 @@
 .login-page .login-card.plan-card.plan-card--done .plan-done-box {
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  border-radius: 12px;
+  padding: 1.5em;
+  border-radius: 0.75em;
   background-color: #d9d9d9;
 }
 .login-page .login-card.plan-card.plan-card--done .plan-done-box strong {
@@ -437,7 +437,7 @@
   color: #86868b;
 }
 .login-page .login-card.plan-card.plan-card--done .plan-done-box strong + span {
-  margin-top: 8px;
+  margin-top: 0.5em;
 }
 .login-page .login-card.plan-card.plan-card--done .plan-done-box span + span {
   margin-top: 3px;
@@ -506,7 +506,7 @@
   align-items: center;
   justify-content: space-between;
   height: 96px;
-  padding: 0 72px 0 24px;
+  padding: 0 72px 0 1.5em;
   border-radius: 16px;
   background-color: #f5f5f7;
   box-sizing: border-box;
@@ -576,7 +576,7 @@
   }
   .login-page .login-card.plan-card .plan-links {
     grid-template-columns: 1fr;
-    row-gap: 16px;
+    row-gap: 1em;
   }
   .trial-welcome {
     padding-bottom: 20px;
