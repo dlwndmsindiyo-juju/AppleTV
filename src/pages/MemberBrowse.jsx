@@ -19,10 +19,10 @@ import { useComingSoonItems } from "../components/member/ComingSoon";
 import ShowcaseCard from "../components/member/ShowcaseCard";
 
 const PAGES = {
-  continue: { title: "이어서 감상하기", desc: "마지막으로 감상했던 장면부터 이어서 만나보세요.", empty: "아직 시청 내역이 없습니다." },
-  recommend: { title: "지금, 놓치지 말아야 할 이야기", desc: "지금 꼭 봐야할, Apple이 엄선한 특별한 콘텐츠를 만나보세요." },
-  new: { title: "지금, 새로운 작품을 만나보세요", desc: "새롭게 공개된 영화와 시리즈를 지금 바로 만나보세요." },
-  soon: { title: "곧 찾아올 새로운 이야기", desc: "앞으로 공개될 새로운 영화와 시리즈를 미리 만나보세요." },
+  continue: { title: "이어보기", desc: "마지막으로 감상했던 장면부터 이어서 만나보세요.", empty: "아직 시청 내역이 없습니다." },
+  recommend: { title: "Apple 추천", desc: "지금 꼭 봐야할, Apple이 엄선한 특별한 콘텐츠를 만나보세요." },
+  new: { title: "최신작", desc: "새롭게 공개된 영화와 시리즈를 지금 바로 만나보세요." },
+  soon: { title: "공개 예정", desc: "앞으로 공개될 새로운 영화와 시리즈를 미리 만나보세요." },
 };
 
 const ALL = Infinity;

@@ -32,7 +32,7 @@ const NewRelease = () => {
     <section className="member-section member-newrelease">
       <div className="inner">
         <MemberSectionHead
-          title="지금, 새로운 작품을 만나보세요"
+          title="최신작"
           desc="새롭게 공개된 영화와 시리즈를 지금 바로 만나보세요."
           moreTo="/browse/new"
         />

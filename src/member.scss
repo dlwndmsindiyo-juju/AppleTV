@@ -1758,42 +1758,55 @@ main.member-home .subscribe-cta {
       pointer-events: none;
     }
 
-    // [수정] 마우스를 올리면 카드 전체가 커지며 맨 앞으로 (이미지만 커지면 카드 테두리에서 잘려 보였음)
-    .member-sc-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    &:hover,
-    &:focus-within {
-      z-index: 10;
-
-      .member-sc-card {
-        transform: scale(1.05);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-      }
+    // [수정] 마우스를 올리면 신규출시와 같은 커지는 카드 (아래 .member-sc-slot:hover 공용) → "N월 공개" 상자는 숨김
+    &:hover .member-sc-month,
+    &:focus-within .member-sc-month {
+      opacity: 0;
+      visibility: hidden;
     }
   }
 
+  // [수정] "N월 공개 🔔" 버튼 — 배경 Sports/Opacity-b · 글자 · 아이콘 Light/0 · Body/small-B (누르면 알림 켜고 끄기)
   .member-sc-month {
-    @include body-small;
+    @include body-small-b;
     position: absolute;
     left: $space-md;
     bottom: $space-md;
-    z-index: 1;
+    z-index: 2; // 카드 링크 위
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     min-width: 70px;
     height: 30px;
     padding: 6px 10px;
+    border: none;
     border-radius: 4px;
     background-color: $sport-opacity-b;
     color: $light-color-0;
     white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease, visibility 0.2s ease;
+
+    &:hover {
+      background-color: rgba($dark-color-black, 0.7);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $light-color-0;
+      outline-offset: 2px;
+    }
   }
 
-  // ---------- 신규출시: 마우스를 올리면 커지는 카드 ----------
+  .member-sc-bell {
+    display: block;
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+  }
+
+  // ---------- 신규출시 · 공개예정작: 마우스를 올리면 커지는 카드 (ShowcaseHover 공용) ----------
   .member-sc-hover {
     position: absolute;
     inset: 0;
@@ -1810,9 +1823,9 @@ main.member-home .subscribe-cta {
     transition: opacity 0.25s ease, visibility 0.25s ease;
   }
 
-  .member-sc-slot--new:hover,
-  .member-sc-slot--new:focus-within {
-    z-index: 10; // [수정] 커진 카드가 옆 카드 · 화살표보다 앞에
+  .member-sc-slot:hover,
+  .member-sc-slot:focus-within {
+    z-index: 10; // [수정] 커진 카드가 옆 카드 · 화살표보다 앞에 · [수정] 공개예정작도 같은 카드
 
     .member-sc-card {
       inset: -66px -52px 0;
@@ -1825,8 +1838,8 @@ main.member-home .subscribe-cta {
     }
   }
 
-  .swiper-slide-active .member-sc-slot--new:hover .member-sc-card,
-  .swiper-slide-active .member-sc-slot--new:focus-within .member-sc-card {
+  .swiper-slide-active .member-sc-slot:hover .member-sc-card,
+  .swiper-slide-active .member-sc-slot:focus-within .member-sc-card {
     left: 0;
     right: -104px;
   }
@@ -1893,6 +1906,55 @@ main.member-home .subscribe-cta {
 
     &:hover {
       background-color: $primary-color-400;
+    }
+  }
+
+  // [추가] 공개예정작 [N월 공개예정]: 120 × 40 (패딩 14 6 포함) · Body/default · Light/0 · 프라이머리 · 누르면 상세
+  .member-sc-release {
+    @include body-default;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    height: 40px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background-color: $primary-color-500;
+    color: $light-color-0;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $primary-color-400;
+    }
+  }
+
+  // [추가] 공개예정작 [🔔]: 찜 버튼과 같은 원 40 × 40 · 벨 24 × 24 (누르면 알림 켜기 / 끄기 · 켜지면 채운 벨)
+  .member-sc-alarm {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: $sport-opacity-b;
+    color: $light-color-0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba($light-color-0, 0.2);
+    }
+
+    .member-sc-bell {
+      width: 24px;
+      height: 24px;
     }
   }
 

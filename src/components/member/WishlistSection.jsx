@@ -76,11 +76,11 @@ const WishlistSection = () => {
     wishlist.length > 0
       ? wishlist
       : appleOriginals.map((tv) => ({
-          id: tv.id,
-          name: tv.name,
-          poster_path: tv.poster_path,
-          type: "tv",
-        }))
+        id: tv.id,
+        name: tv.name,
+        poster_path: tv.poster_path,
+        type: "tv",
+      }))
   ).slice(0, 10);
 
   if (items.length === 0) return null;
@@ -88,7 +88,7 @@ const WishlistSection = () => {
   return (
     <section className="member-section band member-wishlist">
       <div className="inner">
-        <MemberSectionHead title="마음에 담아둔 이야기" desc="관심 있는 작품을 모아두고 언제든 다시 만나보세요." moreTo="/wishlist" />
+        <MemberSectionHead title="나의 목록" desc="관심 있는 작품을 모아두고 언제든 다시 만나보세요." moreTo="/wishlist" />
 
         {isPhone ? (
           // 휴대폰: 세로 3줄 목록

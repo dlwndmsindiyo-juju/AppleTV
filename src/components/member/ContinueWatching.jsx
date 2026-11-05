@@ -74,7 +74,7 @@ const ContinueWatching = () => {
       <div className="inner">
         {/* [수정] 시안 제목 · 전체 보기 (기록이 있을 때만) */}
         <MemberSectionHead
-          title="이어서 감상하기"
+          title="이어보기"
           desc="마지막으로 감상했던 장면부터 이어서 만나보세요."
           moreTo={items.length > 0 ? "/browse/continue" : undefined}
         />
