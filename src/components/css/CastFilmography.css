@@ -199,7 +199,7 @@
   outline: 2px solid #7477ff;
   outline-offset: -2px;
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .movie-detail-page .cast-browser .cast-work-title {
     font-size: 12px;
   }
@@ -407,7 +407,7 @@
   font-size: 14px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .cast-list-container .cast-browser.has-selection .cast-filmography-person p,
   .movie-detail-page .cast-browser.has-selection .cast-filmography-person p {
     font-size: 11px;
@@ -465,7 +465,7 @@
   padding-top: 10px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .cast-list-container .cast-browser.has-selection .cast-filmography-person {
     padding: 17px 10px 14px;
     gap: 7px;

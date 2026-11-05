@@ -5,14 +5,14 @@
 // - .member-home 안에서만 적용되므로 기존 스타일에 영향 없음
 // - App.jsx 의 import 순서와 무관하게 MemberHome.jsx 에서 직접 불러옴
 // =====================================================================
-$mobile-edge: 20px;
+$mobile-edge: 1.25rem;
 
 .member-home {
 
   // ---------- 섹션 공통 ----------
   .member-section {
     background-color: $gnb-bg;
-    padding: 40px 0 56px;
+    padding: 2.5rem 0 3.5rem;
 
     .inner {
       @include inner-wrap;
@@ -43,7 +43,7 @@ $mobile-edge: 20px;
   .member-desc {
     @include body-large;
     color: $text-tertiary;
-    margin: 0;
+    margin: $space-sm 0 0;
 
     &.small {
       @include body-small;
@@ -135,7 +135,7 @@ $mobile-edge: 20px;
 
     // 로딩 자리표시 (시안의 체크무늬)
     &.skeleton {
-      background: repeating-conic-gradient($dark-color-800 0% 25%, $dark-color-500 0% 50%) 50% / 24px 24px;
+      background: repeating-conic-gradient($dark-color-800 0% 25%, $dark-color-500 0% 50%) 50% / 1.5rem 1.5rem;
     }
   }
 
@@ -179,16 +179,16 @@ $mobile-edge: 20px;
   }
 
   .member-progress {
-    height: 4px;
+    height: 0.25rem;
     margin-bottom: $space-md;
-    border-radius: 2px;
+    border-radius: 0.125rem;
     overflow: hidden;
     background-color: $dark-color-300;
 
     span {
       display: block;
       height: 100%;
-      border-radius: 2px;
+      border-radius: 0.125rem;
       background-color: $light-color-0;
     }
   }
@@ -216,12 +216,12 @@ $mobile-edge: 20px;
     align-items: center;
     justify-content: center;
     align-self: flex-start;
-    gap: 6px; // 알림 설정됨 벨 아이콘과 글자 사이
-    height: 36px;
-    margin-top: 6px;
+    gap: 0.375rem; // 알림 설정됨 벨 아이콘과 글자 사이
+    height: 2.25rem;
+    margin-top: 0.375rem;
     padding: 0 $space-lg;
-    border: 1px solid $neutral-color-400;
-    border-radius: 9999px;
+    border: 0.0625rem solid $neutral-color-400;
+    border-radius: 624.9375rem;
     background: transparent;
     color: $text-primary;
     cursor: pointer;
@@ -256,7 +256,7 @@ $mobile-edge: 20px;
     align-items: center;
     justify-content: center;
     width: 36px;
-    height: 36px;
+    height: 2.25rem;
     padding: 0;
     border: none;
     border-radius: 50%;
@@ -279,7 +279,7 @@ $mobile-edge: 20px;
   .member-heart-icon {
     display: block;
     width: 22px;
-    height: 22px;
+    height: 1.375rem;
     background-color: currentColor;
     -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
     mask: url("/icons/heart-icon.svg") center / contain no-repeat;
@@ -318,8 +318,8 @@ $mobile-edge: 20px;
   .member-wish-thumb {
     flex-shrink: 0;
     width: 52px;
-    height: 72px;
-    border-radius: 6px;
+    height: 4.5rem;
+    border-radius: 0.375rem;
     overflow: hidden;
     background-color: $dark-color-300;
 
@@ -334,7 +334,7 @@ $mobile-edge: 20px;
   .member-wish-info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0.125rem;
     min-width: 0;
   }
 
@@ -356,10 +356,10 @@ $mobile-edge: 20px;
 
   .member-chip {
     @include body-small;
-    height: 32px;
+    height: 2rem;
     padding: 0 $space-lg;
     border: none;
-    border-radius: 9999px;
+    border-radius: 624.9375rem;
     background-color: $toggle-inactive-bg;
     color: $text-primary;
     cursor: pointer;
@@ -382,20 +382,20 @@ $mobile-edge: 20px;
     justify-content: space-between;
     gap: $space-lg;
     margin-bottom: $space-xl;
-    padding: $space-md 20px;
+    padding: $space-md 1.25rem;
     border-radius: $radius-card;
     background-color: $bg-surface;
 
     p {
-      @include body-small;
+      @include body-default-b;
       margin: 0;
       color: $neutral-color-300;
     }
 
     .member-btn {
       margin-top: 0;
-      height: 32px;
-      @include body-small;
+      height: 2rem;
+      @include body-small-b;
     }
   }
 
@@ -427,8 +427,8 @@ $mobile-edge: 20px;
     flex-shrink: 0;
     display: block;
     width: 150px;
-    height: 96px;
-    border-radius: 4px;
+    height: 6rem;
+    border-radius: 0.25rem;
     overflow: hidden;
     background-color: $surface-color;
 
@@ -463,8 +463,8 @@ $mobile-edge: 20px;
   // ---------- 키보드 포커스 ----------
   a:focus-visible,
   button:focus-visible {
-    outline: 2px solid $accent-color;
-    outline-offset: 2px;
+    outline: 0.125rem solid $accent-color;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -488,7 +488,7 @@ $mobile-edge: 20px;
   }
 
   .member-slider {
-    --swiper-navigation-size: 18px;
+    --swiper-navigation-size: 1.125rem;
     --swiper-navigation-color: #{$text-primary};
 
     .swiper-button-prev,
@@ -497,14 +497,14 @@ $mobile-edge: 20px;
       margin-top: 0;
       transform: translateY(-50%);
       width: 44px;
-      height: 44px;
+      height: 2.75rem;
       border-radius: 50%;
       background-color: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(0.5rem);
       transition: background-color 0.25s ease, opacity 0.25s ease;
 
       &::after {
-        font-size: 16px;
+        font-size: 1rem;
         font-weight: $font-weight-bold;
       }
 
@@ -514,11 +514,11 @@ $mobile-edge: 20px;
     }
 
     .swiper-button-prev {
-      left: 8px;
+      left: 0.5rem;
     }
 
     .swiper-button-next {
-      right: 8px;
+      right: 0.5rem;
     }
 
     // 끝에 도달 / 슬라이드가 적을 때: 숨기지 않고 흐리게
@@ -540,7 +540,7 @@ $mobile-edge: 20px;
 // =====================================================================
 $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home {
 
     // ---------- 섹션 공통 ----------
@@ -653,9 +653,9 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
     .member-chip {
       @include body-small;
-      height: 36px;
+      height: 2.25rem;
       padding: 0 $space-lg;
-      border: 1px solid $light-color-0;
+      border: 0.0625rem solid $light-color-0;
       background-color: transparent;
 
       &:hover {
@@ -682,8 +682,8 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
       }
 
       .member-btn {
-        @include body-small;
-        height: 36px;
+        @include body-small-b;
+        height: 2.25rem;
         padding: 0 $space-lg;
         border-color: $light-color-0;
       }
@@ -721,8 +721,8 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
       // 신규출시: 흰 테두리 버튼
       .member-btn {
-        @include body-small;
-        height: 40px;
+        @include body-small-b;
+        height: 2.5rem;
         margin-top: $space-sm;
         padding: 0 $space-lg;
         border-color: $light-color-0;
@@ -731,7 +731,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
     .member-wide-thumb {
       width: 152px;
-      height: 96px;
+      height: 6rem;
     }
 
     // 공개예정작 (세로 포스터 카드): 흰 버튼 → 알림 설정 후 보라색
@@ -750,7 +750,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
       .member-btn {
         min-width: 152px;
-        height: 48px;
+        height: 3rem;
         border-color: $light-color-100;
         background-color: $light-color-100;
         color: $text-inverse;
@@ -831,7 +831,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     right: 0;
     bottom: 0;
     z-index: 1;
-    height: 3px;
+    height: 0.1875rem;
     background-color: rgba($light-color-0, 0.25);
 
     span {
@@ -890,8 +890,8 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     padding: $space-sm $space-sm $space-sm $space-md;
     border-radius: $radius-xs;
     background-color: rgba($dark-color-900, 0.55);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(0.75rem);
+    -webkit-backdrop-filter: blur(0.75rem);
     color: $text-primary;
     box-sizing: border-box;
     transition: background-color 0.25s ease;
@@ -915,7 +915,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     flex-shrink: 0;
     width: 60px;
     aspect-ratio: 2 / 3;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     overflow: hidden;
     background-color: $dark-color-300;
 
@@ -957,13 +957,13 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     align-items: center;
     justify-content: center;
     width: 40px;
-    height: 40px;
+    height: 2.5rem;
     padding: 0;
     border: none;
     border-radius: 50%;
     background: transparent;
     color: $text-primary;
-    font-size: 20px;
+    font-size: 1.25rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
 
@@ -974,7 +974,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 }
 
 // PC: 이어보기 카드도 찜 카드와 같은 폭 (한 줄 4칸 · 시안)
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home .rail-continue {
     --rail-col: calc((100% - 72px) / 4);
   }
@@ -1034,7 +1034,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     position: absolute;
     left: $space-lg;
     right: $space-lg;
-    bottom: 72px; // 버튼(40) + 아래 여백(16) + 간격(16)
+    bottom: 4.5rem; // 버튼(40) + 아래 여백(16) + 간격(16)
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -1076,10 +1076,10 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    height: 40px; // 시안 115 × 40
+    gap: 0.375rem;
+    height: 2.5rem; // 시안 115 × 40
     box-sizing: border-box;
-    border-radius: 999px;
+    border-radius: 62.4375rem;
     color: $light-color-0;
     text-decoration: none;
     white-space: nowrap;
@@ -1092,7 +1092,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
     img {
       width: 8px;
-      height: 11px;
+      height: 0.6875rem;
       display: block;
     }
 
@@ -1103,7 +1103,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
   // ★ 평점 (시안: Fill Sports/Opacity-w · Stroke Light/500 1px Inside) → 작품 평점으로 이동
   .member-rc-rate {
-    border: 1px solid $light-color-500; // border-box 라 버튼 안쪽에 그려짐 (Inside)
+    border: 0.0625rem solid $light-color-500; // border-box 라 버튼 안쪽에 그려짐 (Inside)
     background-color: $sport-opacity-w;
 
     &:hover {
@@ -1114,14 +1114,14 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
   .member-rc-star {
     width: 12px;
-    height: 12px;
+    height: 0.75rem;
     display: block;
     flex-shrink: 0;
   }
 }
 
 // PC: 한 줄 5장 (간격 24 × 4) · 화살표는 카드 가운데 높이
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home .rail-recommend {
     --rail-col: calc((100% - 96px) / 5);
     --nav-top: 50%;
@@ -1164,8 +1164,8 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
     bottom: $space-md;
     z-index: 2;
     max-width: calc(100% - #{$space-md * 2});
-    padding: 6px $space-sm;
-    border-radius: 4px;
+    padding: 0.375rem $space-sm;
+    border-radius: 0.25rem;
     background-color: $sport-opacity-b;
     color: $text-secondary;
     white-space: nowrap;
@@ -1205,10 +1205,10 @@ main.member-home .member-mood {
 
   .member-chip:not(.active),
   .member-notice .member-btn {
-    @include body-default-b;
+    @include body-small-b;
     box-sizing: border-box;
-    border: 1px solid $light-color-500; // Inside
-    border-radius: 999px;
+    border: 0.0625rem solid $light-color-500; // Inside
+    border-radius: 62.4375rem;
     background-color: $sport-opacity-w;
     color: $light-color-0;
 
@@ -1222,15 +1222,15 @@ main.member-home .member-mood {
   .member-chip.active {
     @include body-default-b;
     box-sizing: border-box;
-    border: 1px solid $primary-color-500;
-    border-radius: 999px;
+    border: 0.0625rem solid $primary-color-500;
+    border-radius: 62.4375rem;
     background-color: $primary-color-500;
     color: $light-color-0;
   }
 }
 
 // 슬라이드 폭: PC 4장 / 태블릿 · 모바일 고정 폭 (화살표는 썸네일 가운데 높이)
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home .rail-ai {
     --rail-col: calc((100% - 72px) / 4);
     --nav-top: 30%;
@@ -1246,7 +1246,7 @@ main.member-home .member-mood {
 // - 소제목 .member-desc: Heading/h2 · Light/500 (기존 믹스인 heading-h2)
 //   · 섹션 머리(.member-head)의 소제목만 (카드 안 설명 .member-desc.small 등은 그대로)
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home {
     .member-title {
       @include heading-h1-b;
@@ -1274,8 +1274,8 @@ main.member-home .member-mood .member-chips .member-chip {
   justify-content: center;
   flex-shrink: 0;
   width: 80px;
-  height: 40px;
-  padding: 10px 0;
+  height: 2.5rem;
+  padding: 0.625rem 0;
   white-space: nowrap;
 }
 
@@ -1377,9 +1377,9 @@ main.member-home .member-mood .member-chips .member-chip {
     justify-content: center;
     flex-shrink: 0;
     width: 118px;
-    height: 40px;
-    padding: 6px 14px;
-    border-radius: 999px;
+    height: 2.5rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 62.4375rem;
     background-color: $primary-color-500;
     color: $light-color-0;
     text-decoration: none;
@@ -1399,9 +1399,9 @@ main.member-home .member-mood .member-chips .member-chip {
     justify-content: center;
     flex-shrink: 0;
     width: 40px;
-    height: 40px;
+    height: 2.5rem;
     padding: 0;
-    border: 1px solid $light-color-500;
+    border: 0.0625rem solid $light-color-500;
     border-radius: 50%;
     background-color: $sport-opacity-w;
     color: $light-color-0;
@@ -1422,12 +1422,12 @@ main.member-home .member-mood .member-chips .member-chip {
   .member-nr-bell-icon {
     display: block;
     width: 18px;
-    height: 18px;
+    height: 1.125rem;
   }
 }
 
 // PC: 한 줄 4장 (간격 24 × 3) · 화살표는 카드 가운데 높이
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
 
   main.member-home .rail-release,
   .upcoming-section .rail-release {
@@ -1446,7 +1446,7 @@ main.member-home .member-mood .member-chips .member-chip {
 .upcoming-section {
   .member-slider {
     width: 100%;
-    --swiper-navigation-size: 18px;
+    --swiper-navigation-size: 1.125rem;
     --swiper-navigation-color: #{$text-primary};
 
     .swiper-slide {
@@ -1462,10 +1462,10 @@ main.member-home .member-mood .member-chips .member-chip {
       margin-top: 0;
       transform: translateY(-50%);
       width: 44px;
-      height: 44px;
+      height: 2.75rem;
       border-radius: 50%;
       background-color: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(0.5rem);
       transition: background-color 0.25s ease, opacity 0.25s ease;
 
       &:hover {
@@ -1474,11 +1474,11 @@ main.member-home .member-mood .member-chips .member-chip {
     }
 
     .swiper-button-prev {
-      left: 8px;
+      left: 0.5rem;
     }
 
     .swiper-button-next {
-      right: 8px;
+      right: 0.5rem;
     }
 
     .swiper-button-disabled,
@@ -1491,7 +1491,7 @@ main.member-home .member-mood .member-chips .member-chip {
 }
 
 // PC: 이너 폭 안에서 잘리게 (로그인 후 메인과 같음)
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   .upcoming-section .inner {
     overflow: hidden;
   }
@@ -1532,7 +1532,7 @@ main.member-home .subscribe-cta {
 // - 이어보기 · 찜 · AI 어시스트 · 신규출시 · 공개예정작: (1440 - 72) / 4 = 342
 // - 추천작: (1440 - 96) / 5 = 269
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home {
 
     .rail-continue,
@@ -1571,20 +1571,20 @@ main.member-home .subscribe-cta {
 // =====================================================================
 .member-home {
   .member-nr-play {
-    gap: 6px;
+    gap: 0.375rem;
 
     img {
       display: block;
       flex-shrink: 0;
       width: 8px;
-      height: 11px;
+      height: 0.6875rem;
     }
   }
 
   .member-nr-heart-icon {
     display: block;
     width: 18px;
-    height: 18px;
+    height: 1.125rem;
     background-color: currentColor;
     -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
     mask: url("/icons/heart-icon.svg") center / contain no-repeat;
@@ -1599,13 +1599,13 @@ main.member-home .subscribe-cta {
 // - 버튼 테두리(스트로크) 없음: ★ 평점 · 기분 칩 · 취향 더 반영하기
 // - TOP 10 순위 숫자: Noto Sans KR Black 195 · 자간 0 · 테두리 없음 · Linear #F1F1F1(위) → #606060(아래)
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home {
 
     // ---------- 섹션 머리 · 전체 보기 ----------
     // [수정] 소제목을 없애고 제목 ↔ 콘텐츠 60px (전체 보기는 제목 줄 오른쪽 · 아래 맞춤)
     .member-head {
-      margin-bottom: 60px;
+      margin-bottom: 3.75rem;
     }
 
     .member-title {
@@ -1656,20 +1656,20 @@ main.member-home .subscribe-cta {
       }
 
       .top10-card {
-        padding-left: 96px;
+        padding-left: 6rem;
       }
 
       .top10-slide--wide .top10-card {
-        padding-left: 187px; // 숫자 자리 96 + 111 − 20 (글자 사이를 붙인 만큼 포스터도 숫자 쪽으로)
+        padding-left: 11.6875rem; // 숫자 자리 96 + 111 − 20 (글자 사이를 붙인 만큼 포스터도 숫자 쪽으로)
       }
 
       // SVG viewBox 높이 140 을 140px 로 그림 → 글자 크기 195 = 화면 195px
       .top10-num {
-        height: 140px;
-        bottom: 8px;
+        height: 8.75rem;
+        bottom: 0.5rem;
 
         .top10-num-glyph {
-          font-size: 195px;
+          font-size: 12.1875rem;
           letter-spacing: $top10-num-letter-spacing; // [수정] 10위의 1 · 0 이 너무 떨어져 보여 붙임 (_variables.scss)
         }
 
@@ -1748,19 +1748,21 @@ main.member-home .subscribe-cta {
     pointer-events: none;
   }
 
+  // [수정] 카드 아래쪽 그림자: 최신작 · 공개 예정 같은 카드 (예전에는 공개 예정에만 있었음)
+  .member-sc-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, $opacity-b-55 0%, rgba($dark-color-900, 0) 45%);
+    pointer-events: none;
+  }
+
   // ---------- 공개예정작: N월 공개 ----------
   .member-sc-slot--soon {
-    .member-sc-link::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, $opacity-b-55 0%, rgba($dark-color-900, 0) 45%);
-      pointer-events: none;
-    }
 
     // [수정] 마우스를 올리면 신규출시와 같은 커지는 카드 (아래 .member-sc-slot:hover 공용) → "N월 공개" 상자는 숨김
-    &:hover .member-sc-month,
-    &:focus-within .member-sc-month {
+    &:not(.member-sc-slot--static):hover .member-sc-month,
+    &:not(.member-sc-slot--static):focus-within .member-sc-month {
       opacity: 0;
       visibility: hidden;
     }
@@ -1777,12 +1779,12 @@ main.member-home .subscribe-cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 0.375rem;
     min-width: 70px;
-    height: 30px;
-    padding: 6px 10px;
+    height: 1.875rem;
+    padding: 0.375rem 0.625rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     background-color: $sport-opacity-b;
     color: $light-color-0;
     white-space: nowrap;
@@ -1794,8 +1796,8 @@ main.member-home .subscribe-cta {
     }
 
     &:focus-visible {
-      outline: 2px solid $light-color-0;
-      outline-offset: 2px;
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.125rem;
     }
   }
 
@@ -1803,7 +1805,7 @@ main.member-home .subscribe-cta {
     display: block;
     flex-shrink: 0;
     width: 14px;
-    height: 14px;
+    height: 0.875rem;
   }
 
   // ---------- 신규출시 · 공개예정작: 마우스를 올리면 커지는 카드 (ShowcaseHover 공용) ----------
@@ -1823,13 +1825,13 @@ main.member-home .subscribe-cta {
     transition: opacity 0.25s ease, visibility 0.25s ease;
   }
 
-  .member-sc-slot:hover,
-  .member-sc-slot:focus-within {
+  .member-sc-slot:not(.member-sc-slot--static):hover,
+  .member-sc-slot:not(.member-sc-slot--static):focus-within {
     z-index: 10; // [수정] 커진 카드가 옆 카드 · 화살표보다 앞에 · [수정] 공개예정작도 같은 카드
 
     .member-sc-card {
-      inset: -66px -52px 0;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      inset: -4.125rem -3.25rem 0;
+      box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.5);
     }
 
     .member-sc-hover {
@@ -1838,10 +1840,10 @@ main.member-home .subscribe-cta {
     }
   }
 
-  .swiper-slide-active .member-sc-slot:hover .member-sc-card,
-  .swiper-slide-active .member-sc-slot:focus-within .member-sc-card {
+  .swiper-slide-active .member-sc-slot:not(.member-sc-slot--static):hover .member-sc-card,
+  .swiper-slide-active .member-sc-slot:not(.member-sc-slot--static):focus-within .member-sc-card {
     left: 0;
-    right: -104px;
+    right: -6.5rem;
   }
 
   .member-sc-title {
@@ -1888,10 +1890,10 @@ main.member-home .subscribe-cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 0.375rem;
     width: 115px;
-    height: 40px;
-    border-radius: 999px;
+    height: 2.5rem;
+    border-radius: 62.4375rem;
     background-color: $primary-color-500;
     color: $light-color-0;
     text-decoration: none;
@@ -1901,7 +1903,7 @@ main.member-home .subscribe-cta {
     img {
       display: block;
       width: 8px;
-      height: 11px;
+      height: 0.6875rem;
     }
 
     &:hover {
@@ -1917,9 +1919,9 @@ main.member-home .subscribe-cta {
     align-items: center;
     justify-content: center;
     min-width: 120px;
-    height: 40px;
-    padding: 6px 14px;
-    border-radius: 999px;
+    height: 2.5rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 62.4375rem;
     background-color: $primary-color-500;
     color: $light-color-0;
     text-decoration: none;
@@ -1939,7 +1941,7 @@ main.member-home .subscribe-cta {
     justify-content: center;
     flex-shrink: 0;
     width: 40px;
-    height: 40px;
+    height: 2.5rem;
     padding: 0;
     border: none;
     border-radius: 50%;
@@ -1954,7 +1956,7 @@ main.member-home .subscribe-cta {
 
     .member-sc-bell {
       width: 24px;
-      height: 24px;
+      height: 1.5rem;
     }
   }
 
@@ -1966,7 +1968,7 @@ main.member-home .subscribe-cta {
     justify-content: center;
     flex-shrink: 0;
     width: 40px;
-    height: 40px;
+    height: 2.5rem;
     padding: 0;
     border: none;
     border-radius: 50%;
@@ -1987,7 +1989,7 @@ main.member-home .subscribe-cta {
   .member-sc-heart-icon {
     display: block;
     width: 20px;
-    height: 20px;
+    height: 1.25rem;
     background-color: currentColor;
     -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
     mask: url("/icons/heart-icon.svg") center / contain no-repeat;
@@ -2008,14 +2010,36 @@ main.member-home .subscribe-cta {
   //   카드 쪽 z-index 만 올려서는 묶음 밖으로 나오지 못함
   //   → 카드에 마우스(또는 키보드 포커스)가 있는 동안만 묶음 · 그 슬라이드를 위로 올림
   //   (화살표 위에 마우스가 있을 때는 원래대로라 화살표는 그대로 누를 수 있음)
-  .rail-showcase .swiper-wrapper:has(.member-sc-slot:hover),
-  .rail-showcase .swiper-wrapper:has(.member-sc-slot:focus-within) {
+  .rail-showcase .swiper-wrapper:has(.member-sc-slot:not(.member-sc-slot--static):hover),
+  .rail-showcase .swiper-wrapper:has(.member-sc-slot:not(.member-sc-slot--static):focus-within) {
     z-index: 11;
   }
 
-  .rail-showcase .swiper-slide:has(.member-sc-slot:hover),
-  .rail-showcase .swiper-slide:has(.member-sc-slot:focus-within) {
+  .rail-showcase .swiper-slide:has(.member-sc-slot:not(.member-sc-slot--static):hover),
+  .rail-showcase .swiper-slide:has(.member-sc-slot:not(.member-sc-slot--static):focus-within) {
     z-index: 10;
+  }
+
+  // ---------- [수정] 태블릿 · 휴대폰 (1024px 이하 · ShowcaseCard 가 .member-sc-slot--static 을 붙임) ----------
+  // - 글자 · 버튼 없이 제목이 들어간 세로 포스터(2 : 3)만 · 누르면 상세 페이지 · 호버 없음
+  // - 카드 폭: 태블릿 282 (추천작 포스터와 같음) · 휴대폰 138 (mobile.scss)
+  .rail-showcase:has(.member-sc-slot--static) {
+    --nav-top: 50%; // 화살표는 포스터 가운데 높이
+  }
+
+  .member-sc-slot--static {
+    aspect-ratio: auto;
+
+    .member-sc-card {
+      position: relative;
+      inset: auto;
+      aspect-ratio: 2 / 3;
+    }
+
+    // 포스터 위 그림자는 뺌 (포스터 글자가 어두워지지 않게)
+    .member-sc-link::after {
+      display: none;
+    }
   }
 }
 
@@ -2038,14 +2062,19 @@ main.member-home.member-browse {
 
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(var(--browse-col), 100%), 1fr));
-    gap: 40px 28px;
+    gap: 2.5rem 1.75rem;
     margin: 0;
     padding: 0;
     list-style: none;
 
-    > li {
+    >li {
       min-width: 0;
     }
+  }
+
+  // [추가] 태블릿 · 휴대폰 최신작 · 공개 예정: 세로 포스터 → 추천작과 같은 칸 폭
+  .member-browse-grid:has(.member-sc-slot--static) {
+    --browse-col: 282px;
   }
 
   .member-browse-grid--recommend {
@@ -2060,6 +2089,7 @@ main.member-home.member-browse {
 // =====================================================================
 .member-home,
 .upcoming-section {
+
   .member-nr-heart.is-on .member-nr-heart-icon,
   .member-nr-quick-heart.is-on .member-nr-quick-heart-icon {
     -webkit-mask-image: url("/icons/active-heart.svg");

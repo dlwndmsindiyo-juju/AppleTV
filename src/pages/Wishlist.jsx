@@ -7,6 +7,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import { formatCount, useHeartStore } from "../store/useHeartStore";
 import { WishIcon } from "../components/wishlist/WishlistLayer";
+import DetailBackLink from "../components/common/DetailBackLink"; // [추가] 상세 공용 "← 홈으로" (같은 자리)
 import { detailPath } from "./MovieDetail";
 import { openSubscribeGate } from "../utils/subscribeGate"; // [정리] 로그인 안내 팝업 열기 공용
 import { TMDB_IMG as IMG } from "../utils/tmdb"; // [정리] TMDB 이미지 주소 공용
@@ -243,10 +244,10 @@ const Wishlist = () => {
 
   return (
     <main className="wish-page">
+      {/* [추가] 홈으로 — 상세 페이지와 같은 자리 (헤더 아래 · 이너 왼쪽) */}
+      <DetailBackLink to="/" label="홈으로" overlay />
       <div className="wish-inner">
-        <h2 className="wish-title">위시리스트</h2>
-        <p className="wish-desc">보고싶은 작품을 저장하고 나만의 목록을 만들어보세요.</p>
-
+        <h2 className="wish-title">나의 목록</h2>
         <SortMenu value={sort} onChange={(v) => update({ sort: v })} />
 
         {/* 그룹 탭 */}

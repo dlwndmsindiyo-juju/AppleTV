@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
 import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
+import { SportBack } from "./SportBack";
 
 // 추천 시리즈 (시안: 세로 포스터가 카드를 가득 채우고, 위에 이름 · 분류 · 설명이 겹치는 슬라이드)
 // - 데이터: data/mockSportSeries.js (포스터는 public/images/sport/series-*.webp)

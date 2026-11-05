@@ -7,7 +7,7 @@
 // - 로그인 전에는 로그인 화면으로 · 모르는 key 는 홈으로
 // - 스타일: member.scss (.member-browse) · mobile.scss
 import React, { useEffect } from "react";
-import { Link, Navigate, useLocation, useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import "../member.scss";
 import { useAuthStore } from "../store/useAuthStore";
 import { useMovieStore } from "../store/useMovieStore";
@@ -17,12 +17,13 @@ import { RecommendCard, useRecommendItems } from "../components/member/Recommend
 import { useNewReleaseItems } from "../components/member/NewRelease";
 import { useComingSoonItems } from "../components/member/ComingSoon";
 import ShowcaseCard from "../components/member/ShowcaseCard";
+import DetailBackLink from "../components/common/DetailBackLink"; // [추가] 상세 공용 "← 홈으로" (같은 자리)
 
 const PAGES = {
-  continue: { title: "이어보기", desc: "마지막으로 감상했던 장면부터 이어서 만나보세요.", empty: "아직 시청 내역이 없습니다." },
-  recommend: { title: "Apple 추천", desc: "지금 꼭 봐야할, Apple이 엄선한 특별한 콘텐츠를 만나보세요." },
-  new: { title: "최신작", desc: "새롭게 공개된 영화와 시리즈를 지금 바로 만나보세요." },
-  soon: { title: "공개 예정", desc: "앞으로 공개될 새로운 영화와 시리즈를 미리 만나보세요." },
+  continue: { title: "이어보기", empty: "아직 시청 내역이 없습니다." },
+  recommend: { title: "Apple 추천" },
+  new: { title: "최신작" },
+  soon: { title: "공개 예정" },
 };
 
 const ALL = Infinity;
@@ -86,17 +87,14 @@ const MemberBrowse = () => {
 
   return (
     <main className="page-fade member-home member-browse">
+      {/* [수정] 홈으로 — 상세 페이지와 같은 자리 (헤더 아래 · 이너 왼쪽) · 예전 제목 오른쪽 "홈으로 →" 는 뺌 */}
+      <DetailBackLink to="/" label="홈으로" overlay />
       <section className="member-section">
         <div className="inner">
           <div className="member-head">
             <div>
               <h1 className="member-title">{page.title}</h1>
-              <p className="member-desc">{page.desc}</p>
             </div>
-            <Link to="/" className="member-more">
-              홈으로
-              <img className="ui-icon ui-icon-arrow" src="/icons/nav/more-right-icon.svg" alt="" aria-hidden="true" />
-            </Link>
           </div>
 
           <BrowseGrid kind={key} />

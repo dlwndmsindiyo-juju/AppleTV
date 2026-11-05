@@ -62,8 +62,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 78px;
-  padding: 12px 0;
+  height: 4.875rem;
+  padding: 0.75rem 0;
   border-radius: 12px;
   white-space: nowrap;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
@@ -79,13 +79,13 @@
 .tv-screen .tv-btn:focus-visible, .tv-screen .tv-btn.is-focused {
   outline: none;
   transform: scale(1.05);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
 }
 
 .tv-screen .tv-actions {
   display: flex;
   justify-content: center;
-  gap: 28px;
+  gap: 1.75rem;
 }
 .tv-screen .tv-actions .tv-btn {
   width: 340px;
@@ -97,25 +97,25 @@
 }
 .tv-screen .tv-actions.tv-actions--column .tv-btn {
   width: 500px;
-  height: 72px;
+  height: 4.5rem;
 }
 
 .tv-screen.tv-error {
   justify-content: center;
 }
 .tv-screen.tv-error .tv-desc {
-  margin-top: 52px;
+  margin-top: 3.25rem;
 }
 .tv-screen.tv-error .tv-actions {
-  margin-top: 83px;
+  margin-top: 5.1875rem;
 }
 
 .tv-screen.tv-terms {
-  padding-top: 72px;
-  padding-bottom: 41px;
+  padding-top: 4.5rem;
+  padding-bottom: 2.5625rem;
 }
 .tv-screen.tv-terms .tv-desc {
-  margin-top: 62px;
+  margin-top: 3.875rem;
 }
 .tv-screen.tv-terms .tv-actions {
   margin-top: auto;
@@ -125,14 +125,14 @@
   justify-content: center;
 }
 .tv-screen.tv-profiles .tv-desc {
-  margin-top: 36px;
+  margin-top: 2.25rem;
 }
 
 .tv-profile-list {
   display: flex;
   justify-content: center;
-  gap: 64px;
-  margin: 96px 0 0;
+  gap: 4rem;
+  margin: 6rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -165,7 +165,7 @@
 }
 .tv-profile:focus-visible .tv-profile-avatar, .tv-profile:hover .tv-profile-avatar {
   transform: scale(1.08);
-  box-shadow: 0 0 0 6px #FFFFFF;
+  box-shadow: 0 0 0 0.375rem #FFFFFF;
 }
 .tv-profile.is-current .tv-profile-name {
   font-weight: 700;
@@ -176,7 +176,7 @@
   align-items: center;
   justify-content: center;
   width: 200px;
-  height: 200px;
+  height: 12.5rem;
   border-radius: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -195,11 +195,11 @@
 }
 
 .tv-screen.tv-keyboard {
-  padding-top: 150px;
-  padding-bottom: 148px;
+  padding-top: 9.375rem;
+  padding-bottom: 9.25rem;
 }
 .tv-screen.tv-keyboard .tv-desc {
-  margin-top: 36px;
+  margin-top: 2.25rem;
 }
 .tv-screen.tv-keyboard .tv-guide {
   font-family: "SF Pro", sans-serif;
@@ -211,9 +211,9 @@
   align-items: center;
   justify-content: center;
   width: 715px;
-  height: 66px;
-  margin: 76px 0 0;
-  padding: 12px 93px;
+  height: 4.125rem;
+  margin: 4.75rem 0 0;
+  padding: 0.75rem 5.8125rem;
   border-radius: 12px;
   background-color: #525252;
   color: #FFFFFF;
@@ -223,7 +223,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 76px;
+  margin-top: 4.75rem;
 }
 .tv-screen.tv-keyboard .tv-fields .tv-guide {
   margin: 0;
@@ -231,7 +231,7 @@
   cursor: pointer;
 }
 .tv-screen.tv-keyboard .tv-fields .tv-field.is-active {
-  box-shadow: inset 0 0 0 2px #FFFFFF;
+  box-shadow: inset 0 0 0 0.125rem #FFFFFF;
 }
 .tv-screen.tv-keyboard .tv-fields .tv-field:focus-visible,
 .tv-screen.tv-keyboard .tv-fields .tv-field.is-focused {
@@ -253,7 +253,7 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  margin-top: 44px;
+  margin-top: 2.75rem;
 }
 .tv-screen.tv-keyboard .tv-key-row {
   display: flex;
@@ -270,7 +270,7 @@
   align-items: center;
   justify-content: center;
   width: 54px;
-  height: 64px;
+  height: 4rem;
   padding: 0;
   border-radius: 8px;
   background: transparent;
@@ -282,12 +282,12 @@
   color: #171717;
 }
 .tv-screen.tv-keyboard .tv-key.tv-key--delete {
-  margin-left: 20px;
+  margin-left: 1.25rem;
 }
 .tv-screen.tv-keyboard .tv-key.tv-key--delete img {
   display: block;
   width: 52px;
-  height: 44px;
+  height: 2.75rem;
 }
 .tv-screen.tv-keyboard .tv-key.tv-key--delete:focus-visible img, .tv-screen.tv-keyboard .tv-key.tv-key--delete.is-focused img {
   filter: invert(1);
@@ -299,8 +299,8 @@
   line-height: 25px;
   letter-spacing: 0;
   width: 90px;
-  height: 40px;
-  margin-right: 28px;
+  height: 2.5rem;
+  margin-right: 1.75rem;
   padding: 0;
   border-radius: 8px;
   background-color: #FFFFFF;
@@ -309,8 +309,8 @@
 .tv-screen.tv-keyboard .tv-key-modes {
   display: flex;
   width: 432px;
-  height: 66px;
-  margin-top: 22px;
+  height: 4.125rem;
+  margin-top: 1.375rem;
   border-radius: 12px;
   overflow: hidden;
   background-color: #3A3A3A;
@@ -330,7 +330,7 @@
   color: #FFFFFF;
 }
 .tv-screen.tv-keyboard .tv-key-mode + .tv-key-mode {
-  border-left: 2px solid #171717;
+  border-left: 0.125rem solid #171717;
 }
 .tv-screen.tv-keyboard .tv-key-mode:focus-visible, .tv-screen.tv-keyboard .tv-key-mode.is-focused {
   outline: none;
@@ -383,7 +383,7 @@
 .tv-side-logo {
   display: block;
   width: auto;
-  height: 24px;
+  height: 1.5rem;
   margin-right: auto;
 }
 
@@ -391,7 +391,7 @@
   flex-shrink: 0;
   display: block;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -402,8 +402,8 @@
   cursor: pointer;
 }
 .tv-side-profile:is(button):focus-visible {
-  outline: 3px solid #FFFFFF;
-  outline-offset: 2px;
+  outline: 0.1875rem solid #FFFFFF;
+  outline-offset: 0.125rem;
 }
 
 .tv-side-toggle {
@@ -411,7 +411,7 @@
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   padding: 0;
   border: none;
   border-radius: 8px;
@@ -421,7 +421,7 @@
 .tv-side-toggle img {
   display: block;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
 }
 .tv-side-toggle:hover, .tv-side-toggle:focus-visible {
   outline: none;
@@ -439,7 +439,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  height: 52px;
+  height: 3.25rem;
   margin-bottom: 36px;
   padding: 0 16px;
   border-radius: 12px;
@@ -447,7 +447,7 @@
   cursor: text;
 }
 .tv-side-search:focus-within {
-  box-shadow: inset 0 0 0 2px #FFFFFF;
+  box-shadow: inset 0 0 0 0.125rem #FFFFFF;
 }
 .tv-side-search input {
   flex: 1;
@@ -459,10 +459,10 @@
   background: transparent;
   color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 400;
-  line-height: 19px;
-  letter-spacing: -0.4px;
+  line-height: 1.1875rem;
+  letter-spacing: -0.025rem;
 }
 .tv-side-search input::placeholder {
   color: #FFFFFF;
@@ -474,7 +474,7 @@
 .tv-side-search-icon {
   flex-shrink: 0;
   width: 22px;
-  height: 22px;
+  height: 1.375rem;
   background-color: #FFFFFF;
   -webkit-mask: url("/icons/search.svg") center/contain no-repeat;
   mask: url("/icons/search.svg") center/contain no-repeat;
@@ -488,15 +488,15 @@
 
 .tv-side-item {
   font-family: "SF Pro", sans-serif;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 400;
-  line-height: 19px;
-  letter-spacing: -0.4px;
+  line-height: 1.1875rem;
+  letter-spacing: -0.025rem;
   display: flex;
   align-items: center;
   gap: 16px;
   width: 100%;
-  min-height: 44px;
+  min-height: 2.75rem;
   padding: 0 12px;
   border: none;
   border-radius: 8px;
@@ -524,7 +524,7 @@
   align-items: center;
   justify-content: center;
   width: 30px;
-  height: 28px;
+  height: 1.75rem;
 }
 .tv-side-icon img {
   display: block;
@@ -534,17 +534,17 @@
 
 .tv-side-login {
   flex-shrink: 0;
-  height: 40px;
+  height: 2.5rem;
   padding: 0 16px;
   border: none;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background-color: rgba(245, 245, 245, 0.4);
   color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 400;
-  line-height: 19px;
-  letter-spacing: -0.4px;
+  line-height: 1.1875rem;
+  letter-spacing: -0.025rem;
   cursor: pointer;
 }
 .tv-side-login:hover {
@@ -557,53 +557,14 @@
 }
 
 .tv-side-logout {
-  padding-left: calc(12px + 30px + 16px);
+  padding-left: calc(12px + 1.875rem + 16px);
 }
 
-.tv-side-ai-icon {
-  display: block;
-  width: 26px;
-  height: 26px;
-  background: linear-gradient(120deg, #ffaa7a 0%, #a5acff 30%, #5865F2 55%, #a5acff 75%, #ffaa7a 100%);
-  background-size: 300% 300%;
-  -webkit-mask: url("/icons/tv/tv-ai-icon.svg") center/contain no-repeat;
-  mask: url("/icons/tv/tv-ai-icon.svg") center/contain no-repeat;
-  animation: tv-ai-flow 4s linear infinite;
-}
-
-.tv-side-icon--ai {
-  animation: tv-ai-glow 2.4s ease-in-out infinite;
-}
-
-@keyframes tv-ai-flow {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 300% 50%;
-  }
-}
-@keyframes tv-ai-glow {
-  0%, 100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 2px rgba(165, 172, 255, 0.5));
-  }
-  50% {
-    transform: scale(1.08);
-    filter: drop-shadow(0 0 8px rgba(255, 170, 122, 0.9)) drop-shadow(0 0 14px rgba(165, 172, 255, 0.6));
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .tv-side-ai-icon,
-  .tv-side-icon--ai {
-    animation: none;
-  }
-}
 .tv-side-star-icon {
   display: block;
   flex-shrink: 0;
   width: 28px;
-  height: 28px;
+  height: 1.75rem;
   background-color: #5865F2;
   -webkit-mask: url("/icons/tv/tv-star-icon.svg") center/contain no-repeat;
   mask: url("/icons/tv/tv-star-icon.svg") center/contain no-repeat;
@@ -612,14 +573,14 @@
 .tv-side-heart-icon {
   display: block;
   width: 26px;
-  height: 26px;
+  height: 1.625rem;
   background-color: #5865F2;
   -webkit-mask: url("/icons/heart-icon.svg") center/contain no-repeat;
   mask: url("/icons/heart-icon.svg") center/contain no-repeat;
 }
 
 .tv-side-group {
-  margin-top: 48px;
+  margin-top: 3rem;
 }
 
 .tv-side-group-head {
@@ -632,7 +593,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 44px;
+  min-height: 2.75rem;
   padding: 0 12px;
   border: none;
   border-radius: 8px;
@@ -656,7 +617,7 @@
 .tv-side-group-arrow {
   flex-shrink: 0;
   width: 24px;
-  height: 24px;
+  height: 1.5rem;
   background-color: #FFFFFF;
   -webkit-mask: url("/icons/nav/left-nav.svg") center/contain no-repeat;
   mask: url("/icons/nav/left-nav.svg") center/contain no-repeat;
@@ -717,7 +678,7 @@
 }
 .tv-preview-stage .tv-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
 }
 .tv-preview-stage .tv-key:hover,
 .tv-preview-stage .tv-key-mode:hover {
@@ -757,32 +718,32 @@
 .tv-sport .tv-header {
   position: relative;
   flex-shrink: 0;
-  height: 157px;
+  height: 9.8125rem;
 }
 
 .tv-sport .tv-header-logo {
   position: absolute;
-  top: 44px;
-  left: 80px;
+  top: 2.75rem;
+  left: 5rem;
   width: 68px;
-  height: 56px;
+  height: 3.5rem;
   object-fit: contain;
   object-position: left center;
 }
 
 .tv-sport .tv-header-nav {
   position: absolute;
-  top: 38px;
-  left: calc(50% - 296px);
+  top: 2.375rem;
+  left: calc(50% - 18.5rem);
   display: flex;
   align-items: center;
   width: 632px;
-  height: 68px;
-  padding: 6px;
-  border-radius: 34px;
+  height: 4.25rem;
+  padding: 0.375rem;
+  border-radius: 2.125rem;
   background-color: #000000;
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(1.875rem);
+  -webkit-backdrop-filter: blur(1.875rem);
 }
 
 .tv-sport .tv-header-tab {
@@ -792,9 +753,9 @@
   line-height: 34px;
   letter-spacing: 0;
   flex: 1;
-  height: 56px;
+  height: 3.5rem;
   padding: 0;
-  border-radius: 28px;
+  border-radius: 1.75rem;
   background: transparent;
   color: #FFFFFF;
   transition: background-color 0.2s ease;
@@ -811,12 +772,12 @@
 .tv-sport-body {
   flex: 1;
   min-height: 0;
-  padding-top: 72px;
+  padding-top: 4.5rem;
   overflow: hidden;
 }
 
 .tv-sport-row + .tv-sport-row {
-  margin-top: 52px;
+  margin-top: 3.25rem;
 }
 
 .tv-sport-title {
@@ -825,17 +786,17 @@
   font-size: 34px;
   line-height: 41px;
   letter-spacing: 0;
-  margin: 0 0 13px;
-  padding: 0 80px;
+  margin: 0 0 0.8125rem;
+  padding: 0 5rem;
   color: #FFFFFF;
 }
 
 .tv-sport-track {
   display: flex;
-  gap: 40px;
-  padding: 12px 80px;
+  gap: 2.5rem;
+  padding: 0.75rem 5rem;
   overflow: hidden;
-  scroll-padding: 0 80px;
+  scroll-padding: 0 5rem;
 }
 
 .tv-sport-card {
@@ -843,7 +804,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   width: 410px;
   padding: 0;
   background: transparent;
@@ -857,7 +818,7 @@
 .tv-sport-thumb {
   display: block;
   width: 100%;
-  height: 230px;
+  height: 14.375rem;
   border-radius: 30px;
   overflow: hidden;
   background-color: #2E2E2E;
@@ -887,13 +848,13 @@
   width: 560px;
 }
 .tv-sport-row.is-active .tv-sport-thumb {
-  height: 315px;
+  height: 19.6875rem;
 }
 
 .tv-sport-card:focus-visible .tv-sport-thumb,
 .tv-sport-card:hover .tv-sport-thumb {
   transform: scale(1.04);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.6);
 }
 .tv-sport-card:focus-visible .tv-sport-card-title,
 .tv-sport-card:hover .tv-sport-card-title {
@@ -909,7 +870,7 @@
   top: 50%;
   left: 50%;
   width: 96px;
-  height: 96px;
+  height: 6rem;
   object-fit: contain;
   transform: translate(-50%, -50%);
 }
@@ -921,7 +882,7 @@
   line-height: 34px;
   letter-spacing: 0;
   margin: 0;
-  padding: 0 80px;
+  padding: 0 5rem;
   color: #C8C8C8;
 }
 
@@ -949,7 +910,7 @@
 .tv-team-hero {
   position: relative;
   flex-shrink: 0;
-  height: 776px;
+  height: 48.5rem;
   overflow: hidden;
   isolation: isolate;
 }
@@ -973,7 +934,7 @@
 .tv-team-info {
   position: absolute;
   top: 50%;
-  left: 191px;
+  left: 11.9375rem;
   width: 520px;
   transform: translateY(-50%);
 }
@@ -995,33 +956,33 @@
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
-  margin: 12px 0 0;
+  margin: 0.75rem 0 0;
   color: #FFFFFF;
 }
 
 .tv-team-actions {
   display: flex;
   align-items: center;
-  gap: 32px;
-  margin-top: 32px;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
 .tv-team-follow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 0.5rem;
   width: 167px;
-  height: 52px;
+  height: 3.25rem;
   padding: 0;
   border: 0;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background: #F5F5F5;
   color: #171717;
   font-family: "SF Pro", sans-serif;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
-  line-height: 20px;
+  line-height: 1.25rem;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -1035,7 +996,7 @@
   outline: none;
   background: #FFFFFF;
   transform: scale(1.05);
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.35);
 }
 
 .tv-team-live {
@@ -1046,12 +1007,12 @@
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 15px;
-  border-radius: 9999px;
+  gap: 0.375rem;
+  padding: 0.5rem 0.9375rem;
+  border-radius: 624.9375rem;
   background-color: #E91E1B;
   color: #FFFFFF;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1;
 }
 .tv-team-live img {
@@ -1066,7 +1027,7 @@
   font-size: 22px;
   line-height: 28px;
   letter-spacing: 0;
-  margin: 40px 0 0;
+  margin: 2.5rem 0 0;
   color: #FFFFFF;
   word-break: keep-all;
 }
@@ -1076,7 +1037,7 @@
   top: 50%;
   left: 50%;
   width: 402px;
-  height: 402px;
+  height: 25.125rem;
   object-fit: contain;
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -1094,11 +1055,11 @@
 }
 
 .tv-team-body {
-  padding: 40px 0 80px;
+  padding: 2.5rem 0 5rem;
 }
 
 .tv-team-row + .tv-team-row {
-  margin-top: 56px;
+  margin-top: 3.5rem;
 }
 
 .tv-team-row-title {
@@ -1111,12 +1072,12 @@
   align-items: center;
   gap: 8px;
   margin: 0;
-  padding: 0 80px;
+  padding: 0 5rem;
   color: #FFFFFF;
 }
 .tv-team-row-title img {
   width: 34px;
-  height: 34px;
+  height: 2.125rem;
 }
 
 .tv-team-row-desc {
@@ -1126,23 +1087,23 @@
   line-height: 20px;
   letter-spacing: 0;
   margin: 4px 0 0;
-  padding: 0 80px;
+  padding: 0 5rem;
   color: #C8C8C8;
 }
 
 .tv-team-track {
   display: flex;
-  gap: 30px;
-  padding: 24px 80px 12px;
+  gap: 1.875rem;
+  padding: 1.5rem 5rem 0.75rem;
   overflow: hidden;
-  scroll-padding: 0 80px;
+  scroll-padding: 0 5rem;
 }
 
 .tv-team-card {
   position: relative;
   flex-shrink: 0;
   width: 410px;
-  height: 231px;
+  height: 14.4375rem;
   padding: 0;
   border: 0;
   border-radius: 30px;
@@ -1163,7 +1124,7 @@
 .tv-team-card:hover, .tv-team-card:focus-visible {
   outline: none;
   transform: scale(1.04);
-  box-shadow: 0 0 0 4px #FFFFFF, 0 12px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 0 0.25rem #FFFFFF, 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
 }
 
 .tv-team-thumb {
@@ -1176,13 +1137,13 @@
 
 .tv-team-card-text {
   position: absolute;
-  right: 20px;
-  bottom: 14px;
-  left: 20px;
+  right: 1.25rem;
+  bottom: 0.875rem;
+  left: 1.25rem;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
 }
 
 .tv-team-card-title {
@@ -1219,13 +1180,13 @@
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 6px;
+  gap: 0.375rem;
+  margin-top: 0.375rem;
   color: #FFFFFF;
 }
 .tv-team-card-meta img {
   width: 8px;
-  height: 10px;
+  height: 0.625rem;
 }
 
 .tv-team-empty {
@@ -1235,7 +1196,7 @@
   line-height: 34px;
   letter-spacing: 0;
   margin: 0;
-  padding: 40px 80px;
+  padding: 2.5rem 5rem;
   color: #C8C8C8;
 }
 
@@ -1289,10 +1250,10 @@
 
 .tv-end-head {
   position: absolute;
-  top: 58px;
-  left: 66px;
+  top: 3.625rem;
+  left: 4.125rem;
   width: 1749px;
-  height: 160px;
+  height: 10rem;
 }
 
 .tv-end-watched {
@@ -1306,7 +1267,7 @@
 .tv-end-watched .tv-end-watched-empty {
   display: block;
   width: 211px;
-  height: 118px;
+  height: 7.375rem;
   object-fit: cover;
   background-color: #2E2E2E;
 }
@@ -1316,7 +1277,7 @@
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0;
-  margin-top: 10px;
+  margin-top: 0.625rem;
   color: #FFFFFF;
   text-align: center;
   white-space: nowrap;
@@ -1327,7 +1288,7 @@
 .tv-end-title {
   position: absolute;
   top: 0;
-  left: 232px;
+  left: 14.5rem;
 }
 .tv-end-title h1 {
   font-family: "SF Pro", sans-serif;
@@ -1345,16 +1306,16 @@
   font-size: 28px;
   line-height: 34px;
   letter-spacing: 0;
-  margin: 4px 0 0;
+  margin: 0.25rem 0 0;
   color: #C8C8C8;
 }
 
 .tv-end-actions {
   position: absolute;
-  top: 22px;
+  top: 1.375rem;
   right: 0;
   display: flex;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 .tv-end-action {
@@ -1369,8 +1330,8 @@
   justify-content: center;
   box-sizing: border-box;
   width: 142px;
-  height: 80px;
-  padding: 18px 56px;
+  height: 5rem;
+  padding: 1.125rem 3.5rem;
   border: 0;
   border-radius: 10px;
   background-color: #3A3A3A;
@@ -1383,11 +1344,11 @@
 }
 
 .tv-end-action-label {
-  margin-top: 12px;
+  margin-top: 0.75rem;
   color: #464646;
-  font-size: 23px;
+  font-size: 1.4375rem;
   font-weight: 500;
-  line-height: 36px;
+  line-height: 2.25rem;
   white-space: nowrap;
 }
 
@@ -1402,7 +1363,7 @@
 .tv-end-play {
   display: block;
   width: 22px;
-  height: 31px;
+  height: 1.9375rem;
 }
 
 .tv-end-plus {
@@ -1410,14 +1371,14 @@
   display: block;
   flex-shrink: 0;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   border-radius: 50%;
   background-color: #FFFFFF;
 }
 .tv-end-plus::after {
   content: "";
   position: absolute;
-  inset: 6px;
+  inset: 0.375rem;
   background-color: #171717;
   -webkit-mask: url("/icons/plus.svg") center/contain no-repeat;
   mask: url("/icons/plus.svg") center/contain no-repeat;
@@ -1439,11 +1400,11 @@
 
 .tv-end-info {
   position: absolute;
-  top: 210px;
+  top: 13.125rem;
   right: 0;
   z-index: 2;
   width: 520px;
-  padding: 24px;
+  padding: 1.5rem;
   border-radius: 12px;
   background-color: rgba(0, 0, 0, 0.8);
 }
@@ -1474,13 +1435,13 @@
 
 .tv-end-body {
   position: absolute;
-  top: 355px;
+  top: 22.1875rem;
   right: 0;
   left: 0;
 }
 
 .tv-end-row + .tv-end-row {
-  margin-top: 44px;
+  margin-top: 2.75rem;
 }
 
 .tv-end-row-title {
@@ -1490,16 +1451,16 @@
   line-height: 41px;
   letter-spacing: 0;
   margin: 0;
-  padding: 0 66px;
+  padding: 0 4.125rem;
   color: #FFFFFF;
 }
 
 .tv-end-track {
   display: flex;
-  gap: 40px;
-  padding: 24px 66px 12px;
+  gap: 2.5rem;
+  padding: 1.5rem 4.125rem 0.75rem;
   overflow: hidden;
-  scroll-padding: 0 66px;
+  scroll-padding: 0 4.125rem;
 }
 
 .tv-end-replay {
@@ -1507,7 +1468,7 @@
   flex-shrink: 0;
   box-sizing: border-box;
   width: 410px;
-  height: 231px;
+  height: 14.4375rem;
   padding: 0;
   border: 0;
   border-radius: 30px;
@@ -1520,7 +1481,7 @@
 .tv-end-replay:hover, .tv-end-replay:focus-visible {
   outline: none;
   transform: scale(1.04);
-  box-shadow: 0 0 0 4px #FFFFFF, 0 12px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 0 0.25rem #FFFFFF, 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
 }
 
 .tv-end-replay-bg {
@@ -1540,41 +1501,41 @@
 
 .tv-end-replay-logo {
   position: absolute;
-  top: 16px;
-  right: 18px;
+  top: 1rem;
+  right: 1.125rem;
   width: 40px;
   height: auto;
 }
 
 .tv-end-replay-line {
   position: absolute;
-  top: 60px;
+  top: 3.75rem;
   left: 50%;
   width: 1px;
-  height: 120px;
+  height: 7.5rem;
   background-color: rgba(255, 255, 255, 0.45);
   transform: rotate(35deg);
 }
 
 .tv-end-replay-team {
   position: absolute;
-  bottom: 12px;
+  bottom: 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 140px;
 }
 .tv-end-replay-team.is-home {
-  left: 40px;
+  left: 2.5rem;
 }
 .tv-end-replay-team.is-away {
-  right: 40px;
+  right: 2.5rem;
 }
 .tv-end-replay-team img,
 .tv-end-replay-team .sport-badge-initial {
   display: block;
   width: 96px;
-  height: 96px;
+  height: 6rem;
   object-fit: contain;
 }
 .tv-end-replay-team .sport-badge-initial {
@@ -1593,7 +1554,7 @@
   font-size: 22px;
   line-height: 28px;
   letter-spacing: 0;
-  margin-top: 10px;
+  margin-top: 0.625rem;
   color: #FFFFFF;
 }
 .tv-end-replay-team span:last-child {
@@ -1615,7 +1576,7 @@
   line-height: 16px;
   letter-spacing: 0;
   position: absolute;
-  bottom: 30px;
+  bottom: 1.875rem;
   left: 50%;
   color: #FFFFFF;
   white-space: nowrap;
@@ -1629,20 +1590,20 @@
   line-height: 22px;
   letter-spacing: 0;
   position: absolute;
-  bottom: 40px;
-  left: 66px;
+  bottom: 2.5rem;
+  left: 4.125rem;
   margin: 0;
   color: #C8C8C8;
 }
 
 .tv-end-next {
   position: absolute;
-  top: 190px;
+  top: 11.875rem;
   left: 0;
   display: flex;
   align-items: center;
-  gap: 32px;
-  padding: 16px 16px 16px 28px;
+  gap: 2rem;
+  padding: 1rem 1rem 1rem 1.75rem;
   border-radius: 12px;
   background-color: rgba(23, 23, 23, 0.72);
 }
@@ -1650,7 +1611,7 @@
 .tv-end-next-text {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
   max-width: 900px;
 }
 
@@ -1681,8 +1642,8 @@
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0;
-  height: 64px;
-  padding: 0 36px;
+  height: 4rem;
+  padding: 0 2.25rem;
   border: 0;
   border-radius: 12px;
   background-color: rgba(245, 245, 245, 0.4);
@@ -1702,7 +1663,7 @@
   flex: 1;
   min-height: 0;
   display: flex;
-  padding: 0 80px;
+  padding: 0 5rem;
 }
 
 .tv-search-left {
@@ -1713,26 +1674,26 @@
 .tv-search-title {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin: 6px 0 0;
+  gap: 0.875rem;
+  margin: 0.375rem 0 0;
   padding: 0;
   color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
-  font-size: 76px;
+  font-size: 4.75rem;
   font-weight: 700;
-  line-height: 96px;
+  line-height: 6rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .tv-search-title.has-value {
-  font-size: 56px;
+  font-size: 3.5rem;
 }
 
 .tv-search-icon {
   flex-shrink: 0;
   width: 70px;
-  height: 70px;
+  height: 4.375rem;
   background-color: #FFFFFF;
   -webkit-mask: url("/icons/search.svg") center/contain no-repeat;
   mask: url("/icons/search.svg") center/contain no-repeat;
@@ -1741,8 +1702,8 @@
 .tv-search-modes {
   display: flex;
   width: 432px;
-  height: 66px;
-  margin-top: 36px;
+  height: 4.125rem;
+  margin-top: 2.25rem;
   border-radius: 12px;
   overflow: hidden;
   background-color: rgba(255, 255, 255, 0.5);
@@ -1763,7 +1724,7 @@
   cursor: pointer;
 }
 .tv-search-mode + .tv-search-mode {
-  border-left: 2px solid #171717;
+  border-left: 0.125rem solid #171717;
 }
 .tv-search-mode.is-active {
   opacity: 1;
@@ -1779,9 +1740,9 @@
   display: grid;
   grid-template-columns: repeat(6, 54px);
   justify-content: space-between;
-  row-gap: 2px;
-  margin-top: 23px;
-  padding: 0 4px;
+  row-gap: 0.125rem;
+  margin-top: 1.4375rem;
+  padding: 0 0.25rem;
 }
 
 .tv-search-key {
@@ -1794,7 +1755,7 @@
   align-items: center;
   justify-content: center;
   width: 54px;
-  height: 64px;
+  height: 4rem;
   padding: 0;
   border: 0;
   border-radius: 8px;
@@ -1811,7 +1772,7 @@
 .tv-search-edit {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .tv-search-edit-btn {
@@ -1820,16 +1781,16 @@
   align-items: center;
   justify-content: center;
   min-width: 90px;
-  height: 64px;
+  height: 4rem;
   padding: 0 12px;
   border: 0;
   border-radius: 8px;
   background: transparent;
   color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
-  font-size: 29px;
+  font-size: 1.8125rem;
   font-weight: 500;
-  line-height: 36px;
+  line-height: 2.25rem;
   cursor: pointer;
 }
 .tv-search-edit-btn:hover, .tv-search-edit-btn:focus-visible {
@@ -1841,7 +1802,7 @@
 .tv-search-delete img {
   display: block;
   width: 52px;
-  height: 44px;
+  height: 2.75rem;
 }
 .tv-search-delete:hover img, .tv-search-delete:focus-visible img {
   filter: invert(1);
@@ -1853,8 +1814,8 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  margin-left: 118px;
-  padding-top: 135px;
+  margin-left: 7.375rem;
+  padding-top: 8.4375rem;
 }
 
 .tv-search-voice {
@@ -1864,11 +1825,11 @@
   line-height: 34px;
   letter-spacing: 0;
   position: absolute;
-  top: 55px;
+  top: 3.4375rem;
   right: 0;
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 0.875rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -1882,7 +1843,7 @@
   outline: none;
 }
 .tv-search-voice:focus-visible .tv-search-mic {
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.45);
 }
 .tv-search-voice.is-listening .tv-search-mic {
   background-color: #E91E1B;
@@ -1894,7 +1855,7 @@
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   border-radius: 50%;
   background-color: #FFFFFF;
   color: #171717;
@@ -1911,7 +1872,7 @@
   top: 50%;
   right: 0;
   left: 0;
-  height: 1px;
+  height: 0.0625rem;
   background-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -1919,12 +1880,12 @@
   position: relative;
   display: flex;
   width: 500px;
-  height: 66px;
+  height: 4.125rem;
   border-radius: 12px;
   overflow: hidden;
   background-color: rgba(70, 70, 70, 0.5);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
 }
 
 .tv-search-filter {
@@ -1941,7 +1902,7 @@
   cursor: pointer;
 }
 .tv-search-filter + .tv-search-filter {
-  border-left: 2px solid rgba(23, 23, 23, 0.6);
+  border-left: 0.125rem solid rgba(23, 23, 23, 0.6);
 }
 .tv-search-filter.is-active {
   color: #FFFFFF;
@@ -1959,9 +1920,9 @@
   grid-template-columns: repeat(3, 377px);
   justify-content: space-between;
   align-content: start;
-  gap: 32px 40px;
-  margin-top: 29px;
-  padding: 12px 0 60px;
+  gap: 2rem 2.5rem;
+  margin-top: 1.8125rem;
+  padding: 0.75rem 0 3.75rem;
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -1973,7 +1934,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem;
   width: 377px;
   padding: 0;
   border: 0;
@@ -1983,7 +1944,7 @@
 }
 .tv-search-card:hover .tv-search-thumb, .tv-search-card:focus-visible .tv-search-thumb {
   transform: scale(1.04);
-  box-shadow: 0 0 0 4px #FFFFFF, 0 12px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 0 0.25rem #FFFFFF, 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
 }
 .tv-search-card:focus-visible {
   outline: none;
@@ -1995,7 +1956,7 @@
 .tv-search-thumb {
   display: block;
   width: 377px;
-  height: 212px;
+  height: 13.25rem;
   border-radius: 12px;
   overflow: hidden;
   background-color: #2E2E2E;
@@ -2028,7 +1989,7 @@
   line-height: 34px;
   letter-spacing: 0;
   grid-column: 1/-1;
-  margin: 40px 0 0;
+  margin: 2.5rem 0 0;
   color: #C8C8C8;
   text-align: center;
 }
@@ -2049,7 +2010,7 @@
 .tv-detail-hero {
   position: relative;
   flex-shrink: 0;
-  height: 776px;
+  height: 48.5rem;
   overflow: hidden;
   isolation: isolate;
 }
@@ -2073,12 +2034,12 @@
 
 .tv-detail-hero-body {
   position: absolute;
-  top: 170px;
-  left: 180px;
+  top: 10.625rem;
+  left: 11.25rem;
   display: flex;
   flex-direction: column;
   width: 900px;
-  height: 500px;
+  height: 31.25rem;
 }
 
 .tv-detail-title {
@@ -2093,23 +2054,23 @@
 }
 
 .tv-detail-subtitle {
-  margin: 40px 0 0;
+  margin: 2.5rem 0 0;
   color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
-  font-size: 38px;
+  font-size: 2.375rem;
   font-weight: 400;
-  line-height: 46px;
+  line-height: 2.875rem;
 }
 
 .tv-detail-desc {
   display: -webkit-box;
-  margin: 30px 0 0;
+  margin: 1.875rem 0 0;
   overflow: hidden;
   color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
-  font-size: 29px;
+  font-size: 1.8125rem;
   font-weight: 500;
-  line-height: 36px;
+  line-height: 2.25rem;
   word-break: keep-all;
   -webkit-line-clamp: 3;
   line-clamp: 3;
@@ -2128,7 +2089,7 @@
   line-height: 22px;
   letter-spacing: 0;
   position: absolute;
-  bottom: -48px;
+  bottom: -3rem;
   left: 0;
   margin: 0;
   color: #C8C8C8;
@@ -2136,14 +2097,14 @@
 
 .tv-detail-info {
   position: absolute;
-  top: 170px;
-  right: 120px;
+  top: 10.625rem;
+  right: 7.5rem;
   width: 560px;
-  padding: 32px;
+  padding: 2rem;
   border-radius: 12px;
   background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
 }
 .tv-detail-info strong {
   font-family: "SF Pro", sans-serif;
@@ -2193,7 +2154,7 @@
 }
 
 .tv-detail-body {
-  padding: 48px 0 80px;
+  padding: 3rem 0 5rem;
   background-color: rgba(36, 36, 36, 0.9);
 }
 
@@ -2212,7 +2173,7 @@
 .tv-detail-cast img {
   display: block;
   width: 200px;
-  height: 200px;
+  height: 12.5rem;
   border-radius: 50%;
   object-fit: cover;
   background-color: #2E2E2E;
@@ -2246,16 +2207,16 @@
 .tv-detail-standings {
   display: flex;
   align-items: flex-start;
-  gap: 40px;
-  padding: 24px 80px 12px;
+  gap: 2.5rem;
+  padding: 1.5rem 5rem 0.75rem;
 }
 
 .tv-detail-standings-card {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
   width: 820px;
-  padding: 28px 32px;
+  padding: 1.75rem 2rem;
   border: 0;
   border-radius: 30px;
   background-color: rgba(255, 255, 255, 0.06);
@@ -2267,7 +2228,7 @@
 .tv-detail-standings-card:hover, .tv-detail-standings-card:focus-visible {
   outline: none;
   background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 4px #FFFFFF;
+  box-shadow: 0 0 0 0.25rem #FFFFFF;
 }
 
 .tv-detail-standings-head {
@@ -2301,8 +2262,8 @@
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr) repeat(5, 64px);
   align-items: center;
-  min-height: 52px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 3.25rem;
+  border-top: 0.0625rem solid rgba(255, 255, 255, 0.08);
 }
 .tv-detail-standings-row > span {
   text-align: center;
@@ -2324,7 +2285,7 @@
 .tv-detail-standings-row .club .sport-badge-initial {
   flex-shrink: 0;
   width: 36px;
-  height: 36px;
+  height: 2.25rem;
   object-fit: contain;
 }
 .tv-detail-standings-row.is-label {
@@ -2333,7 +2294,7 @@
   font-size: 13px;
   line-height: 18px;
   letter-spacing: 0;
-  min-height: 32px;
+  min-height: 2rem;
   border-top: 0;
   color: #C8C8C8;
 }
@@ -2354,20 +2315,20 @@
 }
 
 .tv-screen.tv-keyboard.tv-profile-add {
-  padding-top: 96px;
-  padding-bottom: 80px;
+  padding-top: 6rem;
+  padding-bottom: 5rem;
 }
 .tv-screen.tv-keyboard.tv-profile-add .tv-guide {
-  margin-top: 48px;
+  margin-top: 3rem;
 }
 
 .tv-profile-icons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 1.25rem;
   max-width: 1200px;
-  margin: 40px 0 0;
+  margin: 2.5rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -2375,7 +2336,7 @@
 .tv-profile-icon {
   display: block;
   width: 72px;
-  height: 72px;
+  height: 4.5rem;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -2384,10 +2345,10 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .tv-profile-icon.is-on {
-  box-shadow: 0 0 0 4px #FFFFFF;
+  box-shadow: 0 0 0 0.25rem #FFFFFF;
 }
 .tv-profile-icon:hover, .tv-profile-icon:focus-visible {
   outline: none;
   transform: scale(1.1);
-  box-shadow: 0 0 0 4px #FFFFFF, 0 0 0 8px #5865F2;
+  box-shadow: 0 0 0 0.25rem #FFFFFF, 0 0 0 0.5rem #5865F2;
 }
