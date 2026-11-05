@@ -1,0 +1,44 @@
+// src/components/ai/AiLogo.scss
+// [추가] AI 아이콘 공용 (AiLogo.jsx) — 바깥 보라 빛이 숨 쉬듯 커졌다 작아지며 살짝 커짐
+// - 빛 색: 원본 ai-logo.svg 의 그림자 색 (#5F46E4 · 36%) → 밝을 때 그라데이션 가운데 색 (#7C45EF)
+// - 크기는 AiLogo 의 size (--ai-logo-size)
+@use "../../variables" as *;
+
+$ai-logo-shadow: $ai-glow-shadow; // 원본 svg drop shadow (#5F46E4 · 36%) · _variables.scss
+$ai-logo-glow: $ai-glow-bright; // 그라데이션 가운데 색 #7C45EF · 75%
+
+.ai-logo {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--ai-logo-size, 24px);
+  height: var(--ai-logo-size, 24px);
+  border-radius: 29%;
+  animation: ai-logo-glow 2.4s ease-in-out infinite;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+}
+
+@keyframes ai-logo-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0.25rem 0.5rem $ai-logo-shadow) brightness(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 0.625rem $ai-logo-glow) brightness(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-logo {
+    animation: none;
+    filter: drop-shadow(0 0.25rem 0.5rem $ai-logo-shadow);
+  }
+}

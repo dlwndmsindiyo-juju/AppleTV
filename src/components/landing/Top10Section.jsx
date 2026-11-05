@@ -75,8 +75,7 @@ const Top10Section = () => {
           slidesPerView="auto"
           spaceBetween={16} // 모바일
           breakpoints={{
-            768: { spaceBetween: 24 }, // 태블릿
-            1025: { spaceBetween: 24 }, // 데스크톱
+            768: { spaceBetween: 24 }, // [수정] 태블릿 · 데스크톱 (태블릿도 PC 와 같음)
           }}
         >
           {top10.map((tv, index) => (

@@ -144,6 +144,7 @@ $toggle-active-hover: color.adjust($toggle-active-bg, $lightness: -12%); // 흰 
 
 // ---------- Spacing ----------
 $base-unit: 0.5rem; // 기본 단위
+$space-xxs: 0.1rem;
 $space-xs: 0.25rem;
 $space-sm: 0.5rem;
 $space-md: 0.75rem;
@@ -194,7 +195,7 @@ $footer-pad-y: 0.875rem;
 
   // [수정] PC(1025px 이상): 고정 폭(1920) · 고정 여백(64px) 대신 화면 비율
   // → 어떤 해상도에서도 좌우 5% 씩, 콘텐츠 폭 화면의 90%
-  @media (min-width: 1025px) {
+  @media (min-width: 768px) {
     max-width: none;
     padding-left: 5%;
     padding-right: 5%;
@@ -417,6 +418,26 @@ $watch-gap-block: 2.8125rem; // 45px · 제목 ↔ 로고 띠 / 로고 띠 ↔ �
 $watch-gap-text-link: 1.625rem; // 26px · 설명 ↔ 링크
 $watch-logo-gap: 2.5rem; // 40px · 흐르는 로고끼리
 $watch-device-gap: 4.375rem; // 70px · 기기 아이콘끼리
+
+// [추가] AI 어시스트 홍보 배너 (components/ai/AiAssistantPromo.jsx · 로그인 전 홈) — 시안: AI 어시스트_홍보배너
+// - 버튼 · 아이콘 Fill: AI_홍보배너 (Linear 0% #496CF2 · 56% #6654F2 · 100% #8157F5)
+$ai-banner-gradient-start: #496CF2;
+$ai-banner-gradient-mid: #6654F2;
+$ai-banner-gradient-end: #8157F5;
+$ai-banner-gradient: linear-gradient(to right, $ai-banner-gradient-start 0%, $ai-banner-gradient-mid 56%, $ai-banner-gradient-end 100%);
+// - 기분 칩: 기본 #797A84 (시안 화면 기준 불투명도 약 30%) / 선택 0% #41424A → 100% #33343B (위 → 아래)
+$ai-banner-chip-bg: #797A84;
+$ai-banner-chip-active-start: #41424A;
+$ai-banner-chip-active-end: #33343B;
+$ai-banner-chip-active: linear-gradient(to bottom, $ai-banner-chip-active-start 0%, $ai-banner-chip-active-end 100%);
+
+// [추가] AI 반짝이 효과 공용 색 (AI 아이콘 components/ai/assets/ai-logo.svg 의 그라데이션 · 그림자 색)
+// - 쓰는 곳: AiLogo.scss (AI 아이콘) · App.scss AI 홍보 배너 질문 앞 점 · [취향 더 반영하기] 빛나는 테두리
+$ai-glow-1: #6282FF; // 0%
+$ai-glow-2: #7C45EF; // 58%
+$ai-glow-3: #A448E8; // 100%
+$ai-glow-shadow: rgba(95, 70, 228, 0.36); // 원본 그림자 #5F46E4 · 36%
+$ai-glow-bright: rgba(124, 69, 239, 0.75); // 밝게 빛날 때 ($ai-glow-2 · 75%)
 
 // TV 카드 제목: SF Pro Medium 32 / 46 · 자간 0%
 @mixin tv-card-title {

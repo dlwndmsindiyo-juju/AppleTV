@@ -815,7 +815,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .search-page {
     padding-top: calc(72px + 48px);
     padding-bottom: 64px;

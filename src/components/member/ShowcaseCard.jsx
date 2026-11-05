@@ -16,24 +16,26 @@ import { useContentInfo, contentMeta, shortGenres } from "./useContentInfo";
 //   · [수정] 마우스를 올리면 신규출시와 같은 커지는 카드 (ShowcaseHover 공용) — 버튼만 다름
 //     [N월 공개예정] 120 × 40 (패딩 14 6 · Body/default · Light/0 · 프라이머리 · 누르면 상세) + [🔔] 원 40 × 40 · 벨 24 × 24 (누르면 알림)
 // - 카드(이미지)를 누르면 상세 페이지
-// - 태블릿 · 휴대폰은 기존 카드(ReleaseCard) 그대로 → useIsDesktop 으로 나눔
+// - [수정] 태블릿 · 휴대폰(1024px 이하): 글자 · 버튼 없이 제목이 들어간 세로 포스터(poster_path)만 · 누르면 상세
+//   (마우스 호버 없음 · 스타일: member.scss · mobile.scss .member-sc-slot--static)
 
-const DESKTOP_QUERY = "(min-width: 1025px)";
+const HOVER_QUERY = "(min-width: 1025px)"; // [추가] PC: 마우스를 올리면 커지는 카드
 
-// PC(1025px 이상) 화면인지 (화면 폭이 바뀌면 다시 계산)
-export const useIsDesktop = () => {
-  const [isDesktop, setIsDesktop] = useState(
-    () => typeof window !== "undefined" && window.matchMedia(DESKTOP_QUERY).matches
+// [수정] 화면 폭 조건이 맞는지 (화면 폭이 바뀌면 다시 계산)
+const useMedia = (query) => {
+  const [matches, setMatches] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(query).matches
   );
 
   useEffect(() => {
-    const mq = window.matchMedia(DESKTOP_QUERY);
-    const onChange = (e) => setIsDesktop(e.matches);
+    const mq = window.matchMedia(query);
+    const onChange = (e) => setMatches(e.matches);
+    setMatches(mq.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
-  }, []);
+  }, [query]);
 
-  return isDesktop;
+  return matches;
 };
 
 // 알림 벨 (꺼짐: 테두리 · 켜짐: 채움) — 색은 글자색(currentColor)
@@ -56,7 +58,7 @@ const ShowcaseHover = ({ title, meta, overview, children }) => (
   <div className="member-sc-hover">
     <strong className="member-sc-title">{title}</strong>
     <span className="member-sc-genre">{meta}</span>
-    <p className="member-sc-overview">{overview}</p>
+    {overview && <p className="member-sc-overview">{overview}</p>}
     <div className="member-sc-actions">{children}</div>
   </div>
 );
@@ -82,6 +84,93 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
   const releaseLabel = month.endsWith("월 공개") ? `${month}예정` : month; // "11월 공개예정" (날짜 없으면 "공개 예정")
   const meta = contentMeta(type, info, shortGenres(type, item.genre_ids));
   const overview = item.overview || info?.tagline || "작품 소개가 곧 공개됩니다.";
+  const hoverMode = useMedia(HOVER_QUERY); // [추가] PC 만 호버 카드
+  const poster = img(item.poster_path, "w500") || thumb; // [추가] 태블릿 · 휴대폰: 제목이 들어간 세로 포스터
+
+  // [수정] 태블릿 · 휴대폰: 제목이 들어간 세로 포스터
+  // - 태블릿: 포스터만 (글자 · 버튼 없음)
+  // - [추가] 휴대폰 (시안: 모바일 hi-fi): 포스터 아래 가운데 신규출시 [▶] [♡] · 공개예정작 [N월 공개예정 🔔]
+  //   (.member-sc-poster-actions · 태블릿에서는 CSS 로 숨김)
+  if (!hoverMode) {
+    return (
+      <div className={`member-sc-slot member-sc-slot--${variant} member-sc-slot--static`}>
+        <div className="member-sc-card">
+          <Link to={path} className="member-sc-link" aria-label={`${title} 상세 보기`}>
+            {poster && <img className="member-sc-thumb" src={poster} alt="" loading="lazy" />}
+          </Link>
+
+          <div className="member-sc-poster-actions">
+            {isNew ? (
+              <>
+                <Link to={`${path}?play=1`} className="member-sc-poster-play" aria-label={`${title} 재생`}>
+                  <img src="/icons/play-w.svg" alt="" aria-hidden="true" />
+                </Link>
+                <button
+                  type="button"
+                  className={`member-sc-heart${wished ? " is-on" : ""}`}
+                  aria-pressed={wished}
+                  aria-label={wished ? `${title} 찜 해제` : `${title} 찜하기`}
+                  onClick={() => toggle({ title, poster_path: item.poster_path, backdrop_path: item.backdrop_path, overview: item.overview })}
+                >
+                  <span className="member-sc-heart-icon" aria-hidden="true" />
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                className={`member-sc-month${alarmOn ? " is-on" : ""}`}
+                aria-pressed={alarmOn}
+                aria-label={`${title} ${releaseLabel} · ${alarmOn ? "알림 끄기" : "알림 받기"}`}
+                onClick={() => onToggleAlarm(alarmKey)}
+              >
+                {releaseLabel}
+                <BellIcon on={alarmOn} />
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 제목 · 장르 · 줄거리 + 버튼 — 신규출시: [▶ 재생] [♡ 찜] / 공개예정작: [N월 공개예정] [🔔]
+  // - PC: 카드 안에서 마우스를 올리면 보임 (.member-sc-hover)
+  const details = (
+    <ShowcaseHover title={title} meta={meta} overview={overview}>
+      {isNew ? (
+        <>
+          <Link to={`${path}?play=1`} className="member-sc-play" aria-label={`${title} 재생`}>
+            <img src="/icons/play-w.svg" alt="" aria-hidden="true" />
+            재생
+          </Link>
+          <button
+            type="button"
+            className={`member-sc-heart${wished ? " is-on" : ""}`}
+            aria-pressed={wished}
+            aria-label={wished ? `${title} 찜 해제` : `${title} 찜하기`}
+            onClick={() => toggle({ title, poster_path: item.poster_path, backdrop_path: item.backdrop_path, overview: item.overview })}
+          >
+            <span className="member-sc-heart-icon" aria-hidden="true" />
+          </button>
+        </>
+      ) : (
+        <>
+          <Link to={path} className="member-sc-release" aria-label={`${title} ${releaseLabel} · 상세 보기`}>
+            {releaseLabel}
+          </Link>
+          <button
+            type="button"
+            className={`member-sc-alarm${alarmOn ? " is-on" : ""}`}
+            aria-pressed={alarmOn}
+            aria-label={alarmOn ? `${title} 알림 끄기` : `${title} 알림 받기`}
+            onClick={() => onToggleAlarm(alarmKey)}
+          >
+            <BellIcon on={alarmOn} />
+          </button>
+        </>
+      )}
+    </ShowcaseHover>
+  );
 
   return (
     <div className={`member-sc-slot member-sc-slot--${variant}`}>
@@ -105,41 +194,7 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
           </button>
         )}
 
-        {/* 마우스를 올리면 보이는 카드 — 신규출시: [▶ 재생] [♡ 찜] / 공개예정작: [N월 공개예정] [🔔] */}
-        <ShowcaseHover title={title} meta={meta} overview={overview}>
-          {isNew ? (
-            <>
-              <Link to={`${path}?play=1`} className="member-sc-play" aria-label={`${title} 재생`}>
-                <img src="/icons/play-w.svg" alt="" aria-hidden="true" />
-                재생
-              </Link>
-              <button
-                type="button"
-                className={`member-sc-heart${wished ? " is-on" : ""}`}
-                aria-pressed={wished}
-                aria-label={wished ? `${title} 찜 해제` : `${title} 찜하기`}
-                onClick={() => toggle({ title, poster_path: item.poster_path, backdrop_path: item.backdrop_path, overview: item.overview })}
-              >
-                <span className="member-sc-heart-icon" aria-hidden="true" />
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to={path} className="member-sc-release" aria-label={`${title} ${releaseLabel} · 상세 보기`}>
-                {releaseLabel}
-              </Link>
-              <button
-                type="button"
-                className={`member-sc-alarm${alarmOn ? " is-on" : ""}`}
-                aria-pressed={alarmOn}
-                aria-label={alarmOn ? `${title} 알림 끄기` : `${title} 알림 받기`}
-                onClick={() => onToggleAlarm(alarmKey)}
-              >
-                <BellIcon on={alarmOn} />
-              </button>
-            </>
-          )}
-        </ShowcaseHover>
+        {details}
       </div>
     </div>
   );

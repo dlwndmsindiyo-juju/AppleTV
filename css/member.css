@@ -10,7 +10,7 @@
   padding-right: 64px;
   box-sizing: border-box;
 }
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   .member-home .member-section .inner {
     max-width: none;
     padding-left: 5%;
@@ -44,7 +44,7 @@
   line-height: 22px;
   letter-spacing: 0;
   color: #A3A3A3;
-  margin: 0;
+  margin: 0.5rem 0 0;
 }
 .member-home .member-desc.small {
   font-family: "SF Pro", sans-serif;
@@ -476,7 +476,7 @@
   pointer-events: none;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   main.member-home .member-section,
   main.member-home .member-section.band,
   main.member-home .top10-section,
@@ -896,7 +896,7 @@
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   main.member-home .rail-continue {
     --rail-col: calc((100% - 72px) / 4);
   }
@@ -1022,7 +1022,7 @@
   flex-shrink: 0;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   main.member-home .rail-recommend {
     --rail-col: calc((100% - 96px) / 5);
     --nav-top: 50%;
@@ -1126,13 +1126,13 @@ main.member-home .member-mood .member-chip.active {
   color: #FFFFFF;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   main.member-home .rail-ai {
     --rail-col: calc((100% - 72px) / 4);
     --nav-top: 30%;
   }
 }
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   main.member-home .member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
@@ -1311,7 +1311,7 @@ main.member-home .member-mood .member-chips .member-chip {
   height: 1.125rem;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   main.member-home .rail-release,
   .upcoming-section .rail-release {
     --rail-col: calc((100% - 72px) / 4);
@@ -1358,7 +1358,7 @@ main.member-home .member-mood .member-chips .member-chip {
   pointer-events: none;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   .upcoming-section .inner {
     overflow: hidden;
   }
@@ -1372,7 +1372,7 @@ main.member-home .subscribe-cta {
   display: none;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   main.member-home .rail-continue,
   main.member-home .rail-wish {
     --rail-col: 342px;
@@ -1412,7 +1412,7 @@ main.member-home .subscribe-cta {
   mask: url("/icons/heart-icon.svg") center/contain no-repeat;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   main.member-home .member-head {
     margin-bottom: 3.75rem;
   }
@@ -1519,14 +1519,14 @@ main.member-home .subscribe-cta {
   opacity: 0.85;
   pointer-events: none;
 }
-.member-home .member-sc-slot--soon .member-sc-link::after {
+.member-home .member-sc-link::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(23, 23, 23, 0) 45%);
   pointer-events: none;
 }
-.member-home .member-sc-slot--soon:hover .member-sc-month, .member-home .member-sc-slot--soon:focus-within .member-sc-month {
+.member-home .member-sc-slot--soon:not(.member-sc-slot--static):hover .member-sc-month, .member-home .member-sc-slot--soon:not(.member-sc-slot--static):focus-within .member-sc-month {
   opacity: 0;
   visibility: hidden;
 }
@@ -1584,22 +1584,22 @@ main.member-home .subscribe-cta {
   pointer-events: none;
   transition: opacity 0.25s ease, visibility 0.25s ease;
 }
-.member-home .member-sc-slot:hover,
-.member-home .member-sc-slot:focus-within {
+.member-home .member-sc-slot:not(.member-sc-slot--static):hover,
+.member-home .member-sc-slot:not(.member-sc-slot--static):focus-within {
   z-index: 10;
 }
-.member-home .member-sc-slot:hover .member-sc-card,
-.member-home .member-sc-slot:focus-within .member-sc-card {
+.member-home .member-sc-slot:not(.member-sc-slot--static):hover .member-sc-card,
+.member-home .member-sc-slot:not(.member-sc-slot--static):focus-within .member-sc-card {
   inset: -4.125rem -3.25rem 0;
   box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.5);
 }
-.member-home .member-sc-slot:hover .member-sc-hover,
-.member-home .member-sc-slot:focus-within .member-sc-hover {
+.member-home .member-sc-slot:not(.member-sc-slot--static):hover .member-sc-hover,
+.member-home .member-sc-slot:not(.member-sc-slot--static):focus-within .member-sc-hover {
   opacity: 1;
   visibility: visible;
 }
-.member-home .swiper-slide-active .member-sc-slot:hover .member-sc-card,
-.member-home .swiper-slide-active .member-sc-slot:focus-within .member-sc-card {
+.member-home .swiper-slide-active .member-sc-slot:not(.member-sc-slot--static):hover .member-sc-card,
+.member-home .swiper-slide-active .member-sc-slot:not(.member-sc-slot--static):focus-within .member-sc-card {
   left: 0;
   right: -6.5rem;
 }
@@ -1759,13 +1759,27 @@ main.member-home .subscribe-cta {
   -webkit-mask-image: url("/icons/active-heart.svg");
   mask-image: url("/icons/active-heart.svg");
 }
-.member-home .rail-showcase .swiper-wrapper:has(.member-sc-slot:hover),
-.member-home .rail-showcase .swiper-wrapper:has(.member-sc-slot:focus-within) {
+.member-home .rail-showcase .swiper-wrapper:has(.member-sc-slot:not(.member-sc-slot--static):hover),
+.member-home .rail-showcase .swiper-wrapper:has(.member-sc-slot:not(.member-sc-slot--static):focus-within) {
   z-index: 11;
 }
-.member-home .rail-showcase .swiper-slide:has(.member-sc-slot:hover),
-.member-home .rail-showcase .swiper-slide:has(.member-sc-slot:focus-within) {
+.member-home .rail-showcase .swiper-slide:has(.member-sc-slot:not(.member-sc-slot--static):hover),
+.member-home .rail-showcase .swiper-slide:has(.member-sc-slot:not(.member-sc-slot--static):focus-within) {
   z-index: 10;
+}
+.member-home .rail-showcase:has(.member-sc-slot--static) {
+  --nav-top: 50%;
+}
+.member-home .member-sc-slot--static {
+  aspect-ratio: auto;
+}
+.member-home .member-sc-slot--static .member-sc-card {
+  position: relative;
+  inset: auto;
+  aspect-ratio: 2/3;
+}
+.member-home .member-sc-slot--static .member-sc-link::after {
+  display: none;
 }
 
 main.member-home.member-browse {
@@ -1787,6 +1801,9 @@ main.member-home.member-browse .member-browse-grid {
 }
 main.member-home.member-browse .member-browse-grid > li {
   min-width: 0;
+}
+main.member-home.member-browse .member-browse-grid:has(.member-sc-slot--static) {
+  --browse-col: 282px;
 }
 main.member-home.member-browse .member-browse-grid--recommend {
   --browse-col: 282px;

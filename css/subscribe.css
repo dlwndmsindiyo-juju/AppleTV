@@ -187,7 +187,7 @@
   cursor: default;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .login-page .login-card.plan-card {
     padding-left: 32px;
     padding-right: 32px;
@@ -494,7 +494,7 @@
   padding-right: 64px;
   box-sizing: border-box;
 }
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   .trial-welcome .inner {
     max-width: none;
     padding-left: 5%;
