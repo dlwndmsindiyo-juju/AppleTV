@@ -505,7 +505,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     padding-bottom: $space-5xl;
   }
 
-  .account-section {
+  // [수정] 왼쪽 메뉴 칸 200px (예전 섹션 이름 칸과 같은 폭)
+  .account-layout {
     grid-template-columns: 200px minmax(0, 1fr);
   }
 }
@@ -525,10 +526,45 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     padding-bottom: $space-lg;
   }
 
+  // [추가] 모바일: 메뉴는 제목 아래 가로 한 줄 (헤더 바로 아래 고정 · 넘치면 가로 스크롤)
+  .account-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .account-nav {
+    z-index: 10;
+    margin: 0 (-$space-lg);
+    padding: $space-md $space-lg;
+    background-color: $light-color-100;
+    border-bottom: 0.0625rem solid $light-color-400; // App.scss $account-line 과 같은 색
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .account-nav-list {
+    flex-direction: row;
+    gap: $space-xl;
+    width: max-content;
+  }
+
+  .account-nav-link {
+    @include heading-h4;
+    white-space: nowrap;
+
+    &.is-active {
+      @include heading-h4-b;
+    }
+  }
+
   .account-section {
     grid-template-columns: minmax(0, 1fr);
     gap: $space-lg;
     padding: $space-2xl 0;
+    scroll-margin-top: calc(#{$header-height} + #{$space-4xl}); // 헤더 + 고정 메뉴 높이
   }
 
   .account-section-title {

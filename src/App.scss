@@ -5958,7 +5958,7 @@ img.ui-icon.ui-icon-arrow {
 // =====================================================================
 // [추가] 계정 설정 (/profile · pages/Profile.jsx)
 // - 시안: 계정 설정 · 기존 항목 + 신규 설정 전체 / AI 및 알림 켜짐 · 꺼짐 (1440 기준 본문 840)
-// - 왼쪽 섹션 이름 + 오른쪽 항목 · 섹션 사이 구분선
+// - [수정] 왼쪽 섹션 메뉴(스크롤 중 고정 · 누르면 그 섹션으로 이동) + 오른쪽 항목 · 섹션 사이 구분선
 // - 시안처럼 밝은 배경($light-color-100) + 어두운 글자
 // =====================================================================
 
@@ -5992,17 +5992,77 @@ img.ui-icon.ui-icon-arrow {
   border-bottom: 0.0625rem solid $account-line;
 }
 
-// ---------- 섹션: 왼쪽 이름 + 오른쪽 항목 ----------
-.account-section {
+// ---------- [추가] 왼쪽 메뉴 + 오른쪽 섹션 ----------
+.account-layout {
   display: grid;
   grid-template-columns: $account-side minmax(0, 1fr);
   align-items: start;
-  padding: $space-4xl 0;
-  border-bottom: 0.0625rem solid $account-line;
 }
 
+// 왼쪽 메뉴: 스크롤해도 헤더 바로 아래에 고정 (글자 위치 = 섹션 첫 항목과 같은 높이)
+.account-nav {
+  position: sticky;
+  top: $header-height;
+  padding: $space-4xl $space-xl $space-4xl 0;
+}
+
+.account-nav-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-lg;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// 메뉴 글자: 예전 섹션 이름과 같은 크기 · 보고 있는 섹션만 진하게
+.account-nav-link {
+  @include heading-h3;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $account-sub;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $text-inverse;
+  }
+
+  &.is-active {
+    @include heading-h3-b;
+    color: $text-inverse;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+    border-radius: $space-xs;
+  }
+}
+
+// ---------- 섹션: 오른쪽 항목 (섹션 이름은 왼쪽 메뉴가 대신함) ----------
+.account-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  padding: $space-4xl 0;
+  border-bottom: 0.0625rem solid $account-line;
+  scroll-margin-top: $header-height; // 메뉴로 이동했을 때 헤더에 가리지 않게
+}
+
+// [수정] 섹션 이름은 화면 읽기 프로그램용으로만 남김 (보이는 이름은 왼쪽 메뉴)
 .account-section-title {
   @include heading-h3-b;
+  position: absolute;
+  width: 1px;
+  height: 0.0625rem;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .account-section-body {
