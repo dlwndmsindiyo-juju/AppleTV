@@ -427,7 +427,7 @@
 }
 .member-home a:focus-visible,
 .member-home button:focus-visible {
-  outline: 0.125rem solid #5865F2;
+  outline: 0.125rem solid #6E7AF4;
   outline-offset: 0.125rem;
 }
 

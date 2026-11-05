@@ -1,6 +1,8 @@
 @use "sass:math";
 @use "variables" as *;
 
+$breakpoint-tablet-wide: 1194px !default; // _variables.scss 에 없을 때를 대비한 기본값 (헤더 토글 · 검색창)
+
 $mobile-edge: 1.25rem; // 모바일 좌우 여백
 $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전 App.scss 에 있던 변수)
 
@@ -2455,6 +2457,15 @@ header .inner nav .gnb-right ul .search-icon-item {
 @media (max-width: $breakpoint-mobile) {
   header .inner nav .gnb-right ul {
     gap: $space-sm; // 검색 아이콘 ↔ 프로필 사이 8px (가운데 토글과 겹치지 않게 오른쪽 묶음을 좁힘)
+  }
+}
+
+// [수정] 태블릿(~1194px)도 휴대폰처럼 검색창 대신 검색 아이콘만
+@media (max-width: $breakpoint-tablet-wide) {
+  header .inner nav .gnb-right ul {
+    .search-box {
+      display: none;
+    }
 
     .search-icon-item {
       display: flex;
@@ -2465,7 +2476,7 @@ header .inner nav .gnb-right ul .search-icon-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
+      width: 2rem;
       height: 2rem;
       border-radius: 50%;
       background-color: $input-bg;
@@ -2482,7 +2493,7 @@ header .inner nav .gnb-right ul .search-icon-item {
       }
 
       img {
-        width: 14px;
+        width: 0.875rem;
         height: 0.875rem;
         display: block;
         filter: invert(0.7); // 검색창 안 아이콘과 같은 색
@@ -3657,5 +3668,42 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     .ai-banner-box {
       width: 100%;
     }
+  }
+}
+
+// =====================================================================
+// [추가] 헤더 가운데 토글 (Apple TV · Sport) · 검색창 크기 — 태블릿 · 휴대폰
+// - 태블릿 (768 ~ 1194px · 아이패드 미니 · 에어 · 프로 11 세로 · 가로): 토글 버튼 7.5rem × 2rem (120 × 32 · 패딩은 그대로)
+// - [수정] 태블릿 검색: 검색창 대신 휴대폰과 같은 검색 아이콘만 (위 검색 아이콘 블록)
+// - 휴대폰 (767px 이하): 토글 버튼 5rem × 1.625rem (80 × 26 · 패딩은 그대로)
+// - [수정] 토글 글자: 태블릿 Body/default-B · 휴대폰 Label/default-B
+// - 선택 표시(파란 알약)는 Header.jsx 가 버튼 크기를 재서 맞춤
+// =====================================================================
+@media (max-width: $breakpoint-tablet-wide) {
+  header .inner nav .gnb-center-toggle button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet-wide) {
+  header .inner nav {
+    .gnb-center-toggle button {
+      @include body-default-b;
+      width: 7.5rem;
+      height: 2rem;
+    }
+
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  header .inner nav .gnb-center-toggle button {
+    @include label-default-b;
+    width: 5rem;
+    height: 1.625rem;
   }
 }

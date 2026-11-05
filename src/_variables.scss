@@ -144,6 +144,7 @@ $toggle-active-hover: color.adjust($toggle-active-bg, $lightness: -12%); // 흰 
 
 // ---------- Spacing ----------
 $base-unit: 0.5rem; // 기본 단위
+$space-xxs: 0.1rem;
 $space-xs: 0.25rem;
 $space-sm: 0.5rem;
 $space-md: 0.75rem;

@@ -10,7 +10,7 @@
     font-size: 1rem;
   }
   header .inner nav .gnb-right ul {
-    gap: 0.75rem;
+    gap: 0.1rem;
   }
   header .inner nav .gnb-right ul .search-box {
     width: 141px;
@@ -2818,16 +2818,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     order: 4;
     margin-top: -0.75rem;
   }
-  .member-notice-long,
-  .subscribe-title-long,
-  .watch-subtitle-long {
-    display: none;
-  }
-  .member-notice-short,
-  .subscribe-title-short,
-  .watch-subtitle-short {
-    display: inline;
-  }
   main.member-home.member-home .hero-swiper-container.movie-home-hero {
     height: 33.75rem;
     min-height: 0;
@@ -2965,9 +2955,9 @@ header .inner nav .gnb-right ul .search-icon-item {
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
-    height: 3.125rem;
+    min-height: 3.125rem;
     margin: 0 0 0.75rem;
-    padding: 0 1.25rem;
+    padding: 0.5rem 1.25rem;
     border-radius: 0;
     background-color: rgba(0, 0, 0, 0.5);
     text-align: left;
@@ -3119,5 +3109,47 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   .ai-banner .ai-banner-box {
     width: 100%;
+  }
+}
+@media (max-width: 1194px) {
+  header .inner nav .gnb-center-toggle button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+}
+@media (min-width: 768px) and (max-width: 1194px) {
+  header .inner nav .gnb-center-toggle button {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+    width: 120px;
+    height: 2rem;
+  }
+  header .inner nav .gnb-right ul .search-box {
+    width: 145px;
+    height: 2rem;
+  }
+  header .inner nav .gnb-right ul .search-box input {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+  }
+}
+@media (max-width: 767px) {
+  header .inner nav .gnb-center-toggle button {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0;
+    width: 86px;
+    height: 1.625rem;
   }
 }

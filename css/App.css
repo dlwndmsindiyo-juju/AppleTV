@@ -2242,9 +2242,9 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .subscribe-cta .subscribe-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 2.125rem;
-  line-height: 2.5625rem;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
@@ -8201,12 +8201,6 @@ main.wish-page {
     padding: 0;
   }
 }
-.member-notice-short,
-.subscribe-title-short,
-.watch-subtitle-short {
-  display: none;
-}
-
 .ai-banner {
   background-color: #141414;
   padding: 4rem 0 8rem;
