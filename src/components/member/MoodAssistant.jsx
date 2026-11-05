@@ -206,6 +206,7 @@ const MoodAssistant = ({ userName = "회원" }) => {
           bleed={false}
           key={mood}
           className="rail-mood rail-ai"
+          desktopGap={28}
           label="기분별 추천"
         >
           {(list ? list.slice(0, 10) : error ? [] : Array.from({ length: 4 })).map(

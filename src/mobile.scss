@@ -3126,3 +3126,60 @@ header .inner nav .gnb-right ul .search-icon-item {
     flex-direction: row;
   }
 }
+
+
+// =====================================================================
+// [추가] 전체 보기 페이지 (pages/MemberBrowse.jsx · /browse/:key) — 태블릿 · 휴대폰
+// - 격자 칸 폭만 줄임 (카드 모양은 홈과 같음)
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  main.member-home.member-browse {
+    .member-section .inner {
+      padding-right: $tablet-gutter;
+    }
+
+    .member-head {
+      margin-right: 0;
+    }
+
+    .member-browse-grid {
+      --browse-col: 280px;
+      gap: $space-2xl $space-xl;
+    }
+
+    .member-browse-grid--recommend {
+      --browse-col: 200px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  main.member-home.member-browse {
+    .member-section .inner {
+      padding-right: $mobile-edge;
+    }
+
+    .member-browse-grid {
+      --browse-col: 100%;
+      gap: $space-xl $space-lg;
+    }
+
+    .member-browse-grid--recommend {
+      --browse-col: 140px;
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 핵심 혜택 (ValueProps.jsx) — 휴대폰: 1열이라 칸 사이 구분선을 가로선으로 (App.scss 의 세로 구분선 대신)
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  section.value-props.value-props .value-prop-item + .value-prop-item::before {
+    top: -10px; // 칸 사이 간격(20)의 가운데
+    bottom: auto;
+    left: 25%;
+    right: 25%;
+    width: auto;
+    height: 1px;
+  }
+}

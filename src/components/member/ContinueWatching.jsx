@@ -8,7 +8,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { isResumable, useWatchConnect, useWatchStore } from "../../store/useWatchStore";
 import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 공용
 
-// 멈춘 순간부터 다시 (이어보기) — 실제 시청 기록 (Firestore users/{uid}/watchHistory · 계정 하나에 저장)
+// 이어서 감상하기 (이어보기) — 실제 시청 기록 (Firestore users/{uid}/watchHistory · 계정 하나에 저장)
 // - 상세 페이지 재생 팝업에서 본 위치가 저장되고, 가장 최근에 본 작품이 맨 앞
 // - 끝까지 본 작품(95% 이상)은 빠짐
 // - 기록이 없으면(처음 구독 등) "아직 시청 내역이 없습니다."
@@ -21,7 +21,7 @@ const remainText = (h) => {
   return left < 60 ? "1분 미만 남음" : `${Math.round(left / 60)}분 남음`;
 };
 
-const ContinueCard = ({ h }) => {
+export const ContinueCard = ({ h }) => { // [수정] export: 전체 보기 페이지(MemberBrowse)에서도 사용
   const info = useContentInfo(h.type, h.id);
   const progress = Math.min(1, h.position / h.duration);
   const isTv = h.type === "tv";
@@ -72,12 +72,17 @@ const ContinueWatching = () => {
   return (
     <section className="member-section member-continue">
       <div className="inner">
-        <MemberSectionHead title="멈춘 순간부터 다시" desc="마지막으로 감상했던 장면부터 이어서 만나보세요." />
+        {/* [수정] 시안 제목 · 전체 보기 (기록이 있을 때만) */}
+        <MemberSectionHead
+          title="이어서 감상하기"
+          desc="마지막으로 감상했던 장면부터 이어서 만나보세요."
+          moreTo={items.length > 0 ? "/browse/continue" : undefined}
+        />
 
         {loading ? null : items.length === 0 ? (
           <p className="member-empty">아직 시청 내역이 없습니다.</p>
         ) : (
-          <Rail className="rail-continue" label="이어보기">
+          <Rail className="rail-continue" label="이어보기" desktopGap={28}>
             {items.map((h) => (
               <SwiperSlide key={`${h.type}_${h.id}`}>
                 <ContinueCard h={h} />

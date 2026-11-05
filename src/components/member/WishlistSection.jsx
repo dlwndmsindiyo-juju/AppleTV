@@ -100,7 +100,7 @@ const WishlistSection = () => {
             ))}
           </ul>
         ) : (
-          <Rail bleed={false} className="rail-wish" label="마음에 담아둔 이야기">
+          <Rail bleed={false} className="rail-wish" label="마음에 담아둔 이야기" desktopGap={28}>
             {items.map((item) => (
               <SwiperSlide key={`${item.type}_${item.id}`}>
                 <WishCard item={item} />

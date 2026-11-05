@@ -5,7 +5,8 @@ import React from "react";
 // - 가운데: Apple TV 로고 → 제목 → 설명
 // - TV · 스트리밍 기기 로고 띠: 화면 끝에서 끝까지 왼쪽으로 계속 흘러감 (같은 목록을 두 번 이어 붙여 끊김 없이 반복)
 //   · 마우스를 올리면 멈춤 / 기기의 '동작 줄이기' 설정이면 멈춘 상태로 표시
-// - 아래: 이동 중 시청 안내 + Apple 지원 페이지 링크(새 탭) + 기기 아이콘 7개 (아이콘 안에 이름 포함)
+// - 아래: 이동 중 시청 안내 + Apple 지원 페이지 링크(새 탭) + 기기 아이콘 7개
+//   · [수정] 새 아이콘(device-*.svg · 이름 글자 없음) + 아래 기기 이름 글자 (Body/small · Light/0)
 // - 이미지: public/icons/devices/*.svg
 
 // 흐르는 로고 (h: svg 원래 높이 — 같은 비율로 줄이기 위해 사용)
@@ -25,15 +26,16 @@ const TV_LOGOS = [
   { file: "tcl.svg", name: "TCL", h: 82 },
 ];
 
-// 이동 중 시청 기기 (아이콘 안에 이름 글자가 들어 있음 · w: svg 원래 폭 — 같은 비율로 줄이기 위해 사용)
+// 이동 중 시청 기기 (w: svg 원래 폭 — 같은 비율로 줄이기 위해 사용)
+// - [수정] 새 아이콘 (이름 글자 없음 → 아래에 글자로 표시)
 const MOBILE_DEVICES = [
-  { file: "iphone.svg", w: 70, name: "iPhone" },
-  { file: "ipad.svg", w: 72, name: "iPad" },
-  { file: "mac-window.svg", w: 102, name: "Mac 및 Windows" },
-  { file: "apple-vision-pro.svg", w: 102, name: "Apple Vision Pro" },
-  { file: "airplay.svg", w: 43, name: "AirPlay" },
-  { file: "android.svg", w: 49, name: "Android" },
-  { file: "web.svg", w: 42, name: "웹" },
+  { file: "device-phone.svg", w: 55, name: "iPhone" },
+  { file: "device-ipad.svg", w: 59, name: "iPad" },
+  { file: "device-notebook.svg", w: 90, name: "Mac 및 Windows" },
+  { file: "device-apple-vision.svg", w: 71, name: "Apple Vision Pro" },
+  { file: "device-airplay.svg", w: 43, name: "AirPlay" },
+  { file: "device-android.svg", w: 20, name: "Android" },
+  { file: "device-web.svg", w: 42, name: "웹" },
 ];
 
 const ICON_PATH = "/icons/devices/";
@@ -75,7 +77,10 @@ const DeviceGuide = () => {
         <ul className="watch-devices">
           {MOBILE_DEVICES.map((device) => (
             <li key={device.file} className="watch-device" style={{ "--icon-w": device.w }}>
-              <img src={`${ICON_PATH}${device.file}`} alt={device.name} loading="lazy" />
+              <span className="watch-device-icon">
+                <img src={`${ICON_PATH}${device.file}`} alt="" aria-hidden="true" loading="lazy" />
+              </span>
+              <span className="watch-device-name">{device.name}</span>
             </li>
           ))}
         </ul>

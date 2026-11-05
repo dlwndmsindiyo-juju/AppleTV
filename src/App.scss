@@ -1058,6 +1058,7 @@ header {
 .value-props {
   background-color: $gnb-bg;
   padding: 22px 0 $space-xl;
+  text-align: center;
 
   .inner {
     @include inner-wrap;
@@ -8181,5 +8182,83 @@ body.has-promo-banner .floating-actions {
 
   .auto-next-thumb {
     width: 104px;
+  }
+}
+
+// =====================================================================
+// [추가] 핵심 혜택 (ValueProps.jsx) — 시안: 검은 띠(#000 · Dark/Black) · 3칸 가운데 정렬 · 칸 사이 세로 구분선
+// - 구분선: Light/0 1px · 글자 높이만큼 (칸 사이 간격의 가운데)
+// - 제목 Body/large-B · Light/0 / 설명 Body/small-B · Light/500 (PC)
+// - 휴대폰(1열)은 mobile.scss 에서 가로 구분선으로
+// =====================================================================
+.value-props.value-props {
+  background-color: $dark-color-black;
+
+  .value-prop-item {
+    position: relative;
+    align-items: center;
+    text-align: center;
+    word-break: keep-all;
+  }
+
+  .value-prop-item + .value-prop-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(#{$grid-gutter} / -2);
+    width: 1px;
+    background-color: $light-color-0;
+    pointer-events: none;
+  }
+}
+
+@media (min-width: ($breakpoint-tablet + 1)) {
+  .value-props.value-props {
+    padding: $space-xl 0;
+
+    .value-prop-item {
+      gap: $space-sm;
+    }
+
+    .value-prop-title {
+      @include body-large-b;
+      color: $light-color-0;
+    }
+
+    .value-prop-desc {
+      @include body-small-b;
+      color: $light-color-500;
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 기기 안내 (DeviceGuide.jsx) — 배경을 페이지 배경과 같게 · 새 기기 아이콘 + 아래 이름 글자
+// - 배경: $bg-page (페이지 배경 · Dark/900)
+// - 아이콘: svg 원래 크기 × --icon-scale · 가장 큰 아이콘 높이(54) 칸에 아래 맞춤 → 이름 줄이 한 줄로 맞음
+// - 이름: Body/small · Light/0
+// =====================================================================
+section.device-guide.device-guide--watch {
+  background-color: $bg-page;
+
+  .watch-device {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-md;
+  }
+
+  .watch-device-icon {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: calc(54px * var(--icon-scale));
+  }
+
+  .watch-device-name {
+    @include body-small;
+    color: $light-color-0;
+    white-space: nowrap;
   }
 }
