@@ -75,7 +75,6 @@ const RecommendSection = () => {
         {/* [수정] 시안 제목 · 전체 보기 */}
         <MemberSectionHead
           title="Apple 추천"
-          desc="지금 꼭 봐야할, Apple이 엄선한 특별한 콘텐츠를 만나보세요."
           moreTo="/browse/recommend"
         />
 

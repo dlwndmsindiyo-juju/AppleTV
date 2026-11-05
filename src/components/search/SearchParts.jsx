@@ -78,6 +78,9 @@ export const useAvailability = (type, id) =>
 export const availabilityText = (value) =>
   value && value !== "loading" ? AVAILABILITY[value].card : "이용 정보 확인 중";
 
+// [수정] 작품을 누르면 영화 상세 페이지로 통일 (/movie/:id · /tv/:id → MovieDetail)
+const titlePath = (type, id) => `/${type === "tv" ? "tv" : "movie"}/${id}`;
+
 // ---------- 작품 카드 (16:9) ----------
 export const ContentCard = ({ item, backTo }) => {
   const type = item.media_type === "tv" ? "tv" : "movie";
@@ -88,7 +91,7 @@ export const ContentCard = ({ item, backTo }) => {
 
   return (
     <li className="search-card">
-      <Link to={`/search/title/${type}/${item.id}`} state={{ backTo }} className="search-card-link">
+      <Link to={titlePath(type, item.id)} state={{ backTo }} className="search-card-link">
         <span className={`search-card-thumb${image ? "" : " is-empty"}`}>
           {image ? (
             <img src={`${IMG}/w500${image}`} alt="" loading="lazy" />
@@ -122,7 +125,7 @@ export const PosterGrid = ({ items, backTo, onPick }) => (
       return (
         <li key={itemKey(type, item.id)} className="search-poster-item">
           <Link
-            to={`/search/title/${type}/${item.id}`}
+            to={titlePath(type, item.id)}
             state={{ backTo }}
             className="search-poster"
             aria-label={title}
@@ -201,7 +204,7 @@ export const useResultEntry = () => {
 };
 
 export const entryPath = (entry) =>
-  entry.type === "person" ? `/search/person/${entry.id}` : `/search/title/${entry.type}/${entry.id}`;
+  entry.type === "person" ? `/search/person/${entry.id}` : titlePath(entry.type, entry.id);
 
 export const ResultCard = ({ entry, backTo, onPick }) => (
   <li>

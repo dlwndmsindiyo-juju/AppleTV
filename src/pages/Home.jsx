@@ -6,7 +6,7 @@ import ValueProps from "../components/landing/ValueProps";
 import Top10Section from "../components/landing/Top10Section";
 import UpcomingSection from "../components/landing/UpcomingSection";
 import AppleOriginals from "../components/landing/AppleOriginals";
-import AiAssistantPromo from "../components/landing/AiAssistantPromo";
+import AiAssistantPromo from "../components/ai/AiAssistantPromo"; // [이동] AI 관련 파일은 components/ai 폴더
 import SubscribeCTA from "../components/landing/SubscribeCTA"; // 구독 유도 CTA (로그인 전 메인에만 표시)
 import DeviceGuide from "../components/landing/DeviceGuide";
 import MemberHome from "../components/member/MemberHome"; // [추가] 로그인 후 메인

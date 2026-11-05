@@ -803,7 +803,7 @@ $search-content: math.div($inner-width * (100% - $desktop-gutter * 2), 100%); //
 // =====================================================================
 // 태블릿 (1024px 이하): 포스터 6칸 · 작품 위아래 배치
 // =====================================================================
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: $breakpoint-mobile) {
   .search-page {
     padding-top: calc(#{$header-height} + #{$space-4xl});
     padding-bottom: $space-5xl;

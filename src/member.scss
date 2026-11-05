@@ -43,7 +43,7 @@ $mobile-edge: 1.25rem;
   .member-desc {
     @include body-large;
     color: $text-tertiary;
-    margin: 0;
+    margin: $space-sm 0 0;
 
     &.small {
       @include body-small;
@@ -387,7 +387,7 @@ $mobile-edge: 1.25rem;
     background-color: $bg-surface;
 
     p {
-      @include body-small;
+      @include body-default-b;
       margin: 0;
       color: $neutral-color-300;
     }
@@ -395,7 +395,7 @@ $mobile-edge: 1.25rem;
     .member-btn {
       margin-top: 0;
       height: 2rem;
-      @include body-small;
+      @include body-small-b;
     }
   }
 
@@ -540,7 +540,7 @@ $mobile-edge: 1.25rem;
 // =====================================================================
 $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home {
 
     // ---------- 섹션 공통 ----------
@@ -682,7 +682,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
       }
 
       .member-btn {
-        @include body-small;
+        @include body-small-b;
         height: 2.25rem;
         padding: 0 $space-lg;
         border-color: $light-color-0;
@@ -721,7 +721,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
       // 신규출시: 흰 테두리 버튼
       .member-btn {
-        @include body-small;
+        @include body-small-b;
         height: 2.5rem;
         margin-top: $space-sm;
         padding: 0 $space-lg;
@@ -974,7 +974,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 }
 
 // PC: 이어보기 카드도 찜 카드와 같은 폭 (한 줄 4칸 · 시안)
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home .rail-continue {
     --rail-col: calc((100% - 72px) / 4);
   }
@@ -1121,7 +1121,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 }
 
 // PC: 한 줄 5장 (간격 24 × 4) · 화살표는 카드 가운데 높이
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home .rail-recommend {
     --rail-col: calc((100% - 96px) / 5);
     --nav-top: 50%;
@@ -1205,7 +1205,7 @@ main.member-home .member-mood {
 
   .member-chip:not(.active),
   .member-notice .member-btn {
-    @include body-default-b;
+    @include body-small-b;
     box-sizing: border-box;
     border: 0.0625rem solid $light-color-500; // Inside
     border-radius: 62.4375rem;
@@ -1230,7 +1230,7 @@ main.member-home .member-mood {
 }
 
 // 슬라이드 폭: PC 4장 / 태블릿 · 모바일 고정 폭 (화살표는 썸네일 가운데 높이)
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home .rail-ai {
     --rail-col: calc((100% - 72px) / 4);
     --nav-top: 30%;
@@ -1246,7 +1246,7 @@ main.member-home .member-mood {
 // - 소제목 .member-desc: Heading/h2 · Light/500 (기존 믹스인 heading-h2)
 //   · 섹션 머리(.member-head)의 소제목만 (카드 안 설명 .member-desc.small 등은 그대로)
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home {
     .member-title {
       @include heading-h1-b;
@@ -1427,7 +1427,7 @@ main.member-home .member-mood .member-chips .member-chip {
 }
 
 // PC: 한 줄 4장 (간격 24 × 3) · 화살표는 카드 가운데 높이
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
 
   main.member-home .rail-release,
   .upcoming-section .rail-release {
@@ -1491,7 +1491,7 @@ main.member-home .member-mood .member-chips .member-chip {
 }
 
 // PC: 이너 폭 안에서 잘리게 (로그인 후 메인과 같음)
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   .upcoming-section .inner {
     overflow: hidden;
   }
@@ -1532,7 +1532,7 @@ main.member-home .subscribe-cta {
 // - 이어보기 · 찜 · AI 어시스트 · 신규출시 · 공개예정작: (1440 - 72) / 4 = 342
 // - 추천작: (1440 - 96) / 5 = 269
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home {
 
     .rail-continue,
@@ -1599,7 +1599,7 @@ main.member-home .subscribe-cta {
 // - 버튼 테두리(스트로크) 없음: ★ 평점 · 기분 칩 · 취향 더 반영하기
 // - TOP 10 순위 숫자: Noto Sans KR Black 195 · 자간 0 · 테두리 없음 · Linear #F1F1F1(위) → #606060(아래)
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   main.member-home {
 
     // ---------- 섹션 머리 · 전체 보기 ----------
@@ -1748,19 +1748,21 @@ main.member-home .subscribe-cta {
     pointer-events: none;
   }
 
+  // [수정] 카드 아래쪽 그림자: 최신작 · 공개 예정 같은 카드 (예전에는 공개 예정에만 있었음)
+  .member-sc-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, $opacity-b-55 0%, rgba($dark-color-900, 0) 45%);
+    pointer-events: none;
+  }
+
   // ---------- 공개예정작: N월 공개 ----------
   .member-sc-slot--soon {
-    .member-sc-link::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, $opacity-b-55 0%, rgba($dark-color-900, 0) 45%);
-      pointer-events: none;
-    }
 
     // [수정] 마우스를 올리면 신규출시와 같은 커지는 카드 (아래 .member-sc-slot:hover 공용) → "N월 공개" 상자는 숨김
-    &:hover .member-sc-month,
-    &:focus-within .member-sc-month {
+    &:not(.member-sc-slot--static):hover .member-sc-month,
+    &:not(.member-sc-slot--static):focus-within .member-sc-month {
       opacity: 0;
       visibility: hidden;
     }
@@ -1823,8 +1825,8 @@ main.member-home .subscribe-cta {
     transition: opacity 0.25s ease, visibility 0.25s ease;
   }
 
-  .member-sc-slot:hover,
-  .member-sc-slot:focus-within {
+  .member-sc-slot:not(.member-sc-slot--static):hover,
+  .member-sc-slot:not(.member-sc-slot--static):focus-within {
     z-index: 10; // [수정] 커진 카드가 옆 카드 · 화살표보다 앞에 · [수정] 공개예정작도 같은 카드
 
     .member-sc-card {
@@ -1838,8 +1840,8 @@ main.member-home .subscribe-cta {
     }
   }
 
-  .swiper-slide-active .member-sc-slot:hover .member-sc-card,
-  .swiper-slide-active .member-sc-slot:focus-within .member-sc-card {
+  .swiper-slide-active .member-sc-slot:not(.member-sc-slot--static):hover .member-sc-card,
+  .swiper-slide-active .member-sc-slot:not(.member-sc-slot--static):focus-within .member-sc-card {
     left: 0;
     right: -6.5rem;
   }
@@ -2008,14 +2010,36 @@ main.member-home .subscribe-cta {
   //   카드 쪽 z-index 만 올려서는 묶음 밖으로 나오지 못함
   //   → 카드에 마우스(또는 키보드 포커스)가 있는 동안만 묶음 · 그 슬라이드를 위로 올림
   //   (화살표 위에 마우스가 있을 때는 원래대로라 화살표는 그대로 누를 수 있음)
-  .rail-showcase .swiper-wrapper:has(.member-sc-slot:hover),
-  .rail-showcase .swiper-wrapper:has(.member-sc-slot:focus-within) {
+  .rail-showcase .swiper-wrapper:has(.member-sc-slot:not(.member-sc-slot--static):hover),
+  .rail-showcase .swiper-wrapper:has(.member-sc-slot:not(.member-sc-slot--static):focus-within) {
     z-index: 11;
   }
 
-  .rail-showcase .swiper-slide:has(.member-sc-slot:hover),
-  .rail-showcase .swiper-slide:has(.member-sc-slot:focus-within) {
+  .rail-showcase .swiper-slide:has(.member-sc-slot:not(.member-sc-slot--static):hover),
+  .rail-showcase .swiper-slide:has(.member-sc-slot:not(.member-sc-slot--static):focus-within) {
     z-index: 10;
+  }
+
+  // ---------- [수정] 태블릿 · 휴대폰 (1024px 이하 · ShowcaseCard 가 .member-sc-slot--static 을 붙임) ----------
+  // - 글자 · 버튼 없이 제목이 들어간 세로 포스터(2 : 3)만 · 누르면 상세 페이지 · 호버 없음
+  // - 카드 폭: 태블릿 282 (추천작 포스터와 같음) · 휴대폰 138 (mobile.scss)
+  .rail-showcase:has(.member-sc-slot--static) {
+    --nav-top: 50%; // 화살표는 포스터 가운데 높이
+  }
+
+  .member-sc-slot--static {
+    aspect-ratio: auto;
+
+    .member-sc-card {
+      position: relative;
+      inset: auto;
+      aspect-ratio: 2 / 3;
+    }
+
+    // 포스터 위 그림자는 뺌 (포스터 글자가 어두워지지 않게)
+    .member-sc-link::after {
+      display: none;
+    }
   }
 }
 
@@ -2043,9 +2067,14 @@ main.member-home.member-browse {
     padding: 0;
     list-style: none;
 
-    > li {
+    >li {
       min-width: 0;
     }
+  }
+
+  // [추가] 태블릿 · 휴대폰 최신작 · 공개 예정: 세로 포스터 → 추천작과 같은 칸 폭
+  .member-browse-grid:has(.member-sc-slot--static) {
+    --browse-col: 282px;
   }
 
   .member-browse-grid--recommend {
@@ -2060,6 +2089,7 @@ main.member-home.member-browse {
 // =====================================================================
 .member-home,
 .upcoming-section {
+
   .member-nr-heart.is-on .member-nr-heart-icon,
   .member-nr-quick-heart.is-on .member-nr-quick-heart-icon {
     -webkit-mask-image: url("/icons/active-heart.svg");

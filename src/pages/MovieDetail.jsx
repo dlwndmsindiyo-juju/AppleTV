@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import DetailBackLink from '../components/common/DetailBackLink' // [추가] 상세 공용 "← 홈으로"
 import { useMovieStore } from '../store/useMovieStore';
 import { toggleWish, useHeartStore, wishKey } from '../store/useHeartStore'; // 위시리스트 (Firestore)
 import { useAuthStore, useSettings } from '../store/useAuthStore'; // [수정] useSettings: 계정 설정 자동 재생 토글
@@ -351,6 +352,9 @@ export const MovieDetail = ({ type: typeProp }) => {
   return (
     <section className={`sub-page movie-detail-page movie-detail-page--${type}`}>
       <div className="inner">
+        {/* [수정] 홈으로 돌아가기 — 모든 상세 공용 (스포츠 상세 "← 스포츠 홈으로" 와 같은 자리 · 모양) */}
+        <DetailBackLink to="/" label="홈으로" />
+
         <div className="content-layout">
 
           {/* ===== 왼쪽: 플레이어 + 정보 + 평점 ===== */}

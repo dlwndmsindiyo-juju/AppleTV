@@ -38,7 +38,6 @@ export default function SportSeries({ title = "추천 시리즈" }) {
   return (
     <section className="sport-series" aria-labelledby="sport-series-title">
       <div className="inner">
-        <SportBack />
         <SportSectionHead title={title} titleId="sport-series-title" to="/sport/series" />
 
         {series.length === 0 ? (

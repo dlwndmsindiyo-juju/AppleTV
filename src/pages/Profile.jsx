@@ -107,7 +107,7 @@ const Toggle = ({ checked, onChange, label }) => (
     onClick={() => onChange(!checked)}
   >
     <span className="account-toggle-track" aria-hidden="true">
-      <span className="account-toggle-thumb" />
+      <span className="accoun t-toggle-thumb" />
     </span>
     <span className="account-toggle-text">{checked ? "켜기" : "끄기"}</span>
   </button>

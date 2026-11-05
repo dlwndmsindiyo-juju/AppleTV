@@ -143,7 +143,7 @@
   .cast-select:focus-visible, .cast-back:focus-visible,
   .cast-content-scroll:focus-visible, .cast-profile-list:focus-visible,
   .cast-work-card:focus-visible { outline: 2px solid #7477ff; outline-offset: -2px; }
-  @media (max-width: 1024px) {
+  @media (max-width: 767px) {
     .cast-work-title { font-size: 12px; }
     .cast-work-meta { font-size: 11px; }
     .cast-filmography-person { margin: 13px 0 21px; h3 { font-size: 17px; } }
@@ -290,7 +290,7 @@
 .movie-detail-page .cast-browser.has-selection .cast-filmography-person p {
   font-size: 14px;
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .cast-list-container .cast-browser.has-selection .cast-filmography-person p,
   .movie-detail-page .cast-browser.has-selection .cast-filmography-person p {
     font-size: 11px;
@@ -343,7 +343,7 @@
   min-height: 0;
   padding-top: 10px;
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .cast-list-container .cast-browser.has-selection .cast-filmography-person {
     padding: 17px 10px 14px;
     gap: 7px;
