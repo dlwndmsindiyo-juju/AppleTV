@@ -2244,6 +2244,16 @@ header {
     @include inner-wrap;
   }
 
+  .subscribe-bg-picture {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+
   .subscribe-banner {
     position: relative;
     height: 25.9375rem;
@@ -2304,10 +2314,12 @@ header {
     word-break: keep-all;
   }
 
+
   .subscribe-btn {
     @include body-default;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     height: 3rem;
     padding: 0 $space-3xl;
     border-radius: 624.9375rem;
@@ -2324,7 +2336,10 @@ header {
   .subscribe-note {
     @include body-small;
     color: $text-tertiary;
+    display: block;
+    width: 200px;
     margin: 0;
+    text-align: center;
   }
 }
 

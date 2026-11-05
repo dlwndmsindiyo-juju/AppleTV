@@ -2718,21 +2718,25 @@ header .inner nav .gnb-right ul .search-icon-item {
     }
 
     .subscribe-logo {
-      width: 73px;
+      width: 50px;
       height: 3.5rem;
     }
 
     .subscribe-title {
-      @include display-M-b;
+      @include heading-h2-b;
       color: $light-color-0;
+      line-height: 1.5;
+      word-break:keep-all;
+
     }
 
     .subscribe-btn {
-      @include body-large-b;
+      @include body-default-b;
       width: 200px;
       height: 2.5rem;
       padding: 0.4375rem 2.25rem;
       color: $light-color-0;
+      text-align: center;
     }
 
     .subscribe-note {

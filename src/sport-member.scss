@@ -38,6 +38,20 @@ main.sport-home {
     padding: 0;
   }
 
+  // Sport 구독 배너 이미지
+  .subscribe-cta--sport {
+    .subscribe-banner {
+      position: relative;
+      height: 420px; // 현재 배너 높이 유지
+      overflow: hidden;
+    }
+
+    .subscribe-bg {
+      object-fit: cover;
+      object-position: center top;
+    }
+  }
+
   .sport-section-head {
     margin-bottom: $space-xl;
     gap: $space-lg;
@@ -1252,7 +1266,7 @@ main.sport-home.sport-detail-page {
     min-width: 0;
     height: auto;
     min-height: 0;
-    gap: 20px;
+    gap: $space-md;
     overflow: visible;
   }
 
@@ -1261,8 +1275,8 @@ main.sport-home.sport-detail-page {
     display: block;
     flex: 0 0 auto;
     width: 100%;
-    background: #090909;
-    border-radius: 12px;
+    background: $sport-opacity-b;
+    border-radius: $radius-sm;
     overflow: hidden;
   }
 
@@ -1275,9 +1289,8 @@ main.sport-home.sport-detail-page {
     padding: 16px;
     border: 0;
     background: transparent;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 700;
+    color: $light-color-0;
+    @include body-default-b;
     cursor: pointer;
   }
 
@@ -1287,9 +1300,9 @@ main.sport-home.sport-detail-page {
     margin: 0 12px 14px;
     padding: 12px 14px;
     border-radius: 20px;
-    background: #252525;
-    color: #bfbfbf;
-    font-size: 13px;
+    background: $sport-opacity-w;
+    color: $light-color-0;
+    @include body-small;
   }
 
   // 열린 상태
@@ -1358,7 +1371,6 @@ main.sport-home.sport-detail-page {
       width: 100%;
     }
   }
-
 
 
 
@@ -3116,10 +3128,13 @@ main.sport-home.sport-live-page {
     font-family: inherit;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: $space-lg;
-    width: 100%;
-    margin: 0 0 48px;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 auto $space-5xl;
     padding: 0;
+
     font-weight: $font-weight-bold;
     color: $text-primary;
 
@@ -3143,7 +3158,7 @@ main.sport-home.sport-live-page {
     gap: 84px;
     width: max-content;
     max-width: 100%;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     list-style: none;
   }
@@ -3391,7 +3406,7 @@ main.sport-home.sport-live-page {
       @include body-default;
       font-family: inherit;
       flex: 1;
-      height: 2.75rem;
+      height: 2em;
       padding: 0 $space-lg;
       border: 0;
       border-radius: 624.9375rem;
@@ -4032,18 +4047,19 @@ $live-lineup-gap-tablet: $space-3xl; // 36px (PC 52px)
   }
 }
 
-//------------- 라이브 상세 · 모바일 -----------------
-@media (max-width: $breakpoint-mobile) {
-  main.sport-home.sport-detail-page.sport-live-page {
+// =====================================================
+// SportDetail / SportLivePage 공통 모바일 영상 목록
+// =====================================================
 
-    // 영상 목록이 부모 너비를 벗어나지 않도록
-    .sport-detail-layout,
-    .sport-live-sidebar {
+@media (max-width: $breakpoint-mobile) {
+  main.sport-home.sport-detail-page {
+
+    .sport-detail-layout {
       min-width: 0;
     }
 
     // 영상 목록 가로 스와이프
-    .sport-live-sidebar .sport-detail-list {
+    .sport-detail-list {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
@@ -4052,6 +4068,7 @@ $live-lineup-gap-tablet: $space-3xl; // 36px (PC 52px)
       height: auto;
       min-height: 0;
       max-height: none;
+      flex: none;
 
       overflow-x: auto;
       overflow-y: hidden;
@@ -4064,24 +4081,22 @@ $live-lineup-gap-tablet: $space-3xl; // 36px (PC 52px)
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-x: contain;
-
       scrollbar-width: none;
 
       &::-webkit-scrollbar {
         display: none;
       }
 
-      // 영상 카드 하나의 너비
       >li {
         flex: 0 0 180px;
         width: 180px;
         min-width: 180px;
-        // scroll-snap-align: start;
+        scroll-snap-align: start;
       }
     }
 
-    // 기존 가로형 목록을 세로형 카드로 변경
-    .sport-live-sidebar .sport-detail-item {
+    // 영상 카드
+    .sport-detail-item {
       display: flex;
       flex-direction: column;
       align-items: stretch;
@@ -4094,7 +4109,7 @@ $live-lineup-gap-tablet: $space-3xl; // 36px (PC 52px)
     }
 
     // 썸네일
-    .sport-live-sidebar .sport-detail-thumb {
+    .sport-detail-thumb {
       display: block;
       width: 100%;
       height: auto;
@@ -4104,14 +4119,15 @@ $live-lineup-gap-tablet: $space-3xl; // 36px (PC 52px)
       border-radius: $radius-xs;
 
       >img {
+        display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
     }
 
-    // 제목 및 경기 정보
-    .sport-live-sidebar .sport-detail-text {
+    // 영상 제목 및 경기 정보
+    .sport-detail-text {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -4119,7 +4135,7 @@ $live-lineup-gap-tablet: $space-3xl; // 36px (PC 52px)
       gap: 4px;
     }
 
-    .sport-live-sidebar .sport-detail-title {
+    .sport-detail-title {
       @include body-small;
       font-family: inherit;
 
@@ -4128,11 +4144,30 @@ $live-lineup-gap-tablet: $space-3xl; // 36px (PC 52px)
       text-overflow: ellipsis;
     }
 
-    .sport-live-sidebar .sport-detail-meta {
+    .sport-detail-meta {
       font-size: 12px;
       color: $text-secondary;
     }
   }
+
+  main.sport-home.sport-detail-page.sport-live-page {
+
+    .sport-live-sidebar .sport-detail-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .sport-live-sidebar .sport-detail-list>li {
+      flex: 0 0 180px;
+      width: 180px;
+      min-width: 180px;
+    }
+  }
+
+
 }
 
 // =====================================================================

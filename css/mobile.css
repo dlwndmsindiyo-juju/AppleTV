@@ -1,22 +1,22 @@
 @media (max-width: 1024px) {
   header .inner {
-    padding: 0.88em 2.5em;
+    padding: 0.875rem 2.5rem;
   }
   header .inner nav {
-    padding: 0.88em 2.5em;
+    padding: 0.875rem 2.5rem;
   }
   header .inner nav .gnb-center-toggle button {
     padding: 0 1.25rem;
     font-size: 1rem;
   }
   header .inner nav .gnb-right ul {
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   header .inner nav .gnb-right ul .search-box {
     width: 141px;
   }
   .footer {
-    padding: 0.88em 2.5em;
+    padding: 0.875rem 2.5rem;
   }
   .hero-swiper-container {
     height: 100vh;
@@ -44,7 +44,7 @@
     padding-right: 13%;
   }
   .value-props .value-props-inner {
-    gap: 1.5em;
+    gap: 1.5rem;
   }
   .top10-section {
     overflow: hidden;
@@ -55,8 +55,8 @@
   .top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
     padding-right: 13%;
   }
@@ -80,8 +80,8 @@
   .upcoming-section .upcoming-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   .upcoming-section .upcoming-title,
@@ -92,7 +92,7 @@
     grid-template-columns: none;
     grid-auto-flow: column;
     grid-auto-columns: 440px;
-    gap: 1.5em;
+    gap: 1.5rem;
     overflow-x: auto;
     padding-right: 13%;
     scroll-snap-type: x proximity;
@@ -105,8 +105,8 @@
     scroll-snap-align: start;
   }
   .upcoming-section .upcoming-card {
-    gap: 1em;
-    padding: 1em;
+    gap: 1rem;
+    padding: 1rem;
   }
   .upcoming-section .upcoming-thumb {
     width: 120px;
@@ -114,8 +114,8 @@
   .upcoming-section .upcoming-movie-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
   }
   .upcoming-section .upcoming-btn:not(.on) {
@@ -136,8 +136,8 @@
   .apple-originals .apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   .apple-originals .apple-originals-title,
@@ -152,20 +152,20 @@
     display: none;
   }
   .ai-promo {
-    padding-bottom: 4em;
+    padding-bottom: 4rem;
   }
   .ai-promo .inner {
     flex-direction: column;
     align-items: flex-start;
-    gap: 2em;
-    padding-top: 3em;
-    padding-bottom: 3em;
+    gap: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
   .ai-promo .ai-promo-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   .subscribe-cta .subscribe-banner {
@@ -175,15 +175,15 @@
     left: 6%;
   }
   .promo-banner .promo-banner-inner {
-    padding-left: 2.5em;
-    padding-right: 2.5em;
-    gap: 1.5em;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    gap: 1.5rem;
   }
   .promo-banner .promo-banner-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: rgba(255, 255, 255, 0.75);
   }
@@ -194,47 +194,47 @@
 @media (max-width: 767px) {
   .auth-page {
     align-items: flex-start;
-    padding: calc(4.5em + 1em) 1em 3em;
+    padding: calc(4.5rem + 1rem) 1rem 3rem;
   }
   .auth-card {
-    padding: 4em 1.25rem 2em;
+    padding: 4rem 1.25rem 2rem;
   }
   .auth-close {
-    top: 1em;
-    left: 1em;
+    top: 1rem;
+    left: 1rem;
     height: 2.25rem;
-    padding: 0 1em;
+    padding: 0 1rem;
   }
   .auth-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .auth-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .auth-actions--row {
     flex-direction: column-reverse;
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .auth-actions--row .auth-btn:first-child,
   .auth-actions--row .auth-btn:last-child {
     flex: none;
   }
   .plan-opt {
-    padding: 1.25rem 3em 1.25rem 1.25rem;
+    padding: 1.25rem 3rem 1.25rem 1.25rem;
   }
   .plan-opt-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .plan-opt-radio {
@@ -245,25 +245,25 @@
     grid-template-columns: minmax(0, 1fr);
   }
   .auth-links {
-    gap: 1.5em;
+    gap: 1.5rem;
   }
 }
 @media (max-width: 767px) {
   .subscribe-gate-card {
-    padding: 1.5em 1.25rem 1.25rem;
+    padding: 1.5rem 1.25rem 1.25rem;
   }
   .subscribe-gate-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
   }
   .subscribe-gate-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
 }
@@ -274,43 +274,43 @@
   }
   .trial-welcome .trial-strip-actions {
     flex-wrap: wrap;
-    gap: 0.75em;
+    gap: 0.75rem;
   }
 }
 @media (max-width: 767px) {
   .trial-welcome.is-intro {
-    padding-bottom: 4em;
+    padding-bottom: 4rem;
   }
   .trial-welcome.is-intro .trial-heading {
-    margin-top: 4em;
+    margin-top: 4rem;
   }
   .trial-welcome.is-intro.is-strip-hidden .trial-heading {
-    margin-top: 1.5em;
+    margin-top: 1.5rem;
   }
   .trial-welcome.is-intro .top10-section {
-    padding-top: 4em;
+    padding-top: 4rem;
   }
   .trial-welcome .inner.trial-home-actions {
-    margin-top: 4em;
+    margin-top: 4rem;
   }
 }
 @media (max-width: 1024px) {
   .wish-page {
-    padding-top: calc(4.5em + 3em);
-    padding-bottom: 4em;
+    padding-top: calc(4.5rem + 3rem);
+    padding-bottom: 4rem;
   }
   .wish-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   .wish-sort {
-    margin-top: 2em;
+    margin-top: 2rem;
   }
   .wish-tabs {
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .wish-tabs li {
     flex: 0 0 120px;
@@ -322,12 +322,12 @@
     font-size: 1.625rem;
   }
   .wish-grid {
-    gap: 1em;
-    margin-top: 2em;
+    gap: 1rem;
+    margin-top: 2rem;
   }
   .wish-card {
-    gap: 1em;
-    padding: 1em;
+    gap: 1rem;
+    padding: 1rem;
   }
   .wish-card-poster {
     width: 112px;
@@ -335,14 +335,14 @@
   .wish-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
   }
 }
 @media (max-width: 767px) {
   .wish-page {
-    padding-top: calc(4.5em + 1.5em);
+    padding-top: calc(4.5rem + 1.5rem);
   }
   .wish-inner {
     width: calc(100% - 2.5rem);
@@ -350,15 +350,15 @@
   .wish-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .wish-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .wish-tabs li {
@@ -370,8 +370,8 @@
   .wish-tab strong {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.75em;
-    line-height: 1em;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
   }
   .wish-grid {
@@ -383,8 +383,8 @@
   .wish-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .wish-card-overview {
@@ -400,14 +400,14 @@
     font-size: 1.375rem;
   }
   .wish-toast {
-    gap: 0.75em;
-    padding: 0.75em 1em;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
   }
   .wish-toast p {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .wish-toast-icon {
@@ -418,8 +418,8 @@
 }
 @media (max-width: 1024px) {
   .account-page {
-    padding-top: calc(4.5em + 3em);
-    padding-bottom: 4em;
+    padding-top: calc(4.5rem + 3rem);
+    padding-bottom: 4rem;
   }
   .account-layout {
     grid-template-columns: 200px minmax(0, 1fr);
@@ -427,26 +427,26 @@
 }
 @media (max-width: 767px) {
   .account-page {
-    padding-top: calc(4.5em + 1.5em);
+    padding-top: calc(4.5rem + 1.5rem);
   }
   .account-inner {
-    width: calc(100% - 2em);
+    width: calc(100% - 2rem);
   }
   .account-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
-    padding-bottom: 1em;
+    padding-bottom: 1rem;
   }
   .account-layout {
     grid-template-columns: minmax(0, 1fr);
   }
   .account-nav {
     z-index: 10;
-    margin: 0 -1em;
-    padding: 0.5em 1em;
+    margin: 0 -1rem;
+    padding: 0.5rem 1rem;
     background-color: #F5F5F5;
     border-bottom: 0.0625rem solid #D5D5D5;
     overflow-x: auto;
@@ -460,16 +460,16 @@
     width: max-content;
   }
   .account-nav-list {
-    gap: 0.25em;
+    gap: 0.25rem;
   }
   .account-nav-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1em;
-    line-height: 1.31em;
+    font-size: 1rem;
+    line-height: 1.3125rem;
     letter-spacing: 0;
     width: auto;
-    padding: 0.5em 0.75em;
+    padding: 0.5rem 0.75rem;
     white-space: nowrap;
   }
   .account-nav-link::before {
@@ -478,38 +478,38 @@
   .account-nav-link.is-active {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .account-section {
     grid-template-columns: minmax(0, 1fr);
-    gap: 1em;
-    padding: 2em 0;
-    scroll-margin-top: calc(4.5em + 3em);
+    gap: 1rem;
+    padding: 2rem 0;
+    scroll-margin-top: calc(4.5rem + 3rem);
   }
   .account-section-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .account-section-body {
-    gap: 1.5em;
+    gap: 1.5rem;
   }
   .account-item-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .account-avatar-grid {
     grid-template-columns: repeat(4, 56px);
   }
   .account-channels {
-    gap: 0.75em 1.5em;
+    gap: 0.75rem 1.5rem;
   }
 }
 @media (max-width: 1024px) {
@@ -521,19 +521,19 @@
   .member-home .member-continue .member-empty {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     margin-right: 1.25rem;
-    padding: 2em 1em;
+    padding: 2rem 1rem;
   }
 }
 @media (max-width: 1024px) {
   section.top10-section .top10-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     padding-right: 13%;
   }
@@ -545,8 +545,8 @@
   section.top10-section .top10-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     margin-bottom: 1.25rem;
     padding-right: 1.25rem;
@@ -562,17 +562,17 @@
   .hero-swiper-container .hero-slide-item .hero-info .hero-chip {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
     height: 1.5rem;
-    padding: 0 0.5em;
+    padding: 0 0.5rem;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-play {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     min-width: 100px;
     height: 2.25rem;
@@ -604,14 +604,14 @@
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.38em;
-    line-height: 1.75em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-posters {
     top: 50%;
     left: max(55%, 27.5rem);
-    gap: 0.5em;
+    gap: 0.5rem;
     transform: translateY(-50%);
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-poster {
@@ -621,8 +621,8 @@
 @media (max-width: 767px) {
   .subscribe-cta.subscribe-cta--tv .subscribe-banner {
     height: auto;
-    padding: 2em 0;
-    border-radius: 1.25em;
+    padding: 2rem 0;
+    border-radius: 1.25rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-content {
     position: relative;
@@ -639,10 +639,10 @@
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
-    margin-top: 0.75em;
+    margin-top: 0.75rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-btn {
     margin-top: 1.25rem;
@@ -652,9 +652,9 @@
     top: auto;
     left: auto;
     transform: none;
-    margin-top: 1.5em;
+    margin-top: 1.5rem;
     padding-left: 1.25rem;
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-poster {
     --poster-h: 11.1875rem;
@@ -673,11 +673,11 @@
 @media (max-width: 1024px) {
   section.device-guide.device-guide--watch {
     --logo-scale: 0.75;
-    padding: 4em 0;
+    padding: 4rem 0;
   }
   section.device-guide.device-guide--watch .inner {
-    padding-left: 2.5em;
-    padding-right: 2.5em;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
   section.device-guide.device-guide--watch .watch-logo-main {
     height: 3rem;
@@ -685,26 +685,26 @@
   section.device-guide.device-guide--watch .watch-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-subtitle {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-devices {
-    gap: 1.5em 2em;
+    gap: 1.5rem 2rem;
   }
 }
 @media (max-width: 767px) {
   section.device-guide.device-guide--watch {
     --logo-scale: 0.6;
     --icon-scale: 0.8;
-    padding: 3em 0;
+    padding: 3rem 0;
   }
   section.device-guide.device-guide--watch .inner {
     padding-left: 1.25rem;
@@ -716,51 +716,51 @@
   section.device-guide.device-guide--watch .watch-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
-    margin-top: 1em;
+    margin-top: 1rem;
   }
   section.device-guide.device-guide--watch .watch-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-marquee {
-    margin-top: 2em;
+    margin-top: 2rem;
   }
   section.device-guide.device-guide--watch .watch-logo-list {
-    gap: 1.5em;
-    padding-right: 1.5em;
+    gap: 1.5rem;
+    padding-right: 1.5rem;
   }
   section.device-guide.device-guide--watch .watch-mobile {
-    margin-top: 2em;
+    margin-top: 2rem;
   }
   section.device-guide.device-guide--watch .watch-subtitle {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.38em;
-    line-height: 1.75em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-devices {
-    gap: 1em 1.5em;
-    margin-top: 2em;
+    gap: 1rem 1.5rem;
+    margin-top: 2rem;
   }
 }
 @media (max-width: 767px) {
   .auth-profiles {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1em;
+    gap: 1rem;
   }
   .auth-profile-avatar {
     width: 72px;
@@ -774,20 +774,20 @@
 @media (max-width: 767px) {
   .auth-card.auth-card--login {
     min-height: 0;
-    padding: 4.75rem 1.25rem 2em;
+    padding: 4.75rem 1.25rem 2rem;
   }
   .auth-card.auth-card--login .auth-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .auth-card.auth-card--login .auth-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .auth-card.auth-card--login .auth-login-input {
@@ -799,8 +799,8 @@
   .auth-card.auth-card--login .auth-code-box {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.38em;
-    line-height: 1.75em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     width: auto;
     flex: 1 1 0;
@@ -809,10 +809,10 @@
     height: 3.5rem;
   }
   .auth-card.auth-card--login .auth-login-links-row {
-    gap: 0.5em 1.5em;
+    gap: 0.5rem 1.5rem;
   }
   .auth-card.auth-card--login .auth-done {
-    padding: 1.5em 0 1em;
+    padding: 1.5rem 0 1rem;
   }
 }
 @media (max-width: 1024px) {
@@ -821,10 +821,10 @@
   .apple-originals .apple-originals-title.apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
-    margin: 0 0 0.5em;
+    margin: 0 0 0.5rem;
     padding-top: 0;
     color: #FFFFFF;
     word-break: keep-all;
@@ -834,8 +834,8 @@
   .apple-originals .apple-originals-desc.apple-originals-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
@@ -843,52 +843,52 @@
   .hero-swiper-container .hero-slide-item .hero-info .hero-chip.hero-chip {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-overview.hero-overview {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-play.hero-play {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .value-props .value-props-inner .value-prop-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .value-props .value-props-inner .value-prop-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
 }
 @media (max-width: 767px) {
   header .inner {
-    padding: 0.88em 1.25rem;
+    padding: 0.875rem 1.25rem;
   }
   header .inner .logo a img {
     height: 1.25rem;
   }
   header .inner nav {
-    padding: 0.88em 1.25rem;
+    padding: 0.875rem 1.25rem;
   }
   header .inner nav .gnb-center-toggle button {
     height: 2.125rem;
@@ -904,7 +904,7 @@
     font-size: 0.875rem;
   }
   .footer {
-    padding: 0.88em 1.25rem;
+    padding: 0.875rem 1.25rem;
   }
   .footer .footer-main-menu {
     gap: 0.625rem 1.25rem;
@@ -941,7 +941,7 @@
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-title {
     font-size: 2.125rem;
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-overview {
     line-clamp: 3;
@@ -971,8 +971,8 @@
   .top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
     padding-right: 1.25rem;
   }
@@ -992,8 +992,8 @@
   .upcoming-section .upcoming-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
   }
   .upcoming-section .upcoming-title,
@@ -1003,8 +1003,8 @@
   .upcoming-section .upcoming-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     margin-bottom: 1.25rem;
   }
@@ -1012,7 +1012,7 @@
     grid-auto-flow: row;
     grid-auto-columns: auto;
     grid-template-columns: minmax(0, 1fr);
-    gap: 1em;
+    gap: 1rem;
     overflow: visible;
     padding-right: 0;
   }
@@ -1026,8 +1026,8 @@
   .upcoming-section .upcoming-movie-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     white-space: normal;
     word-break: keep-all;
@@ -1042,7 +1042,7 @@
   .upcoming-section .upcoming-btn {
     height: 2rem;
     padding: 0 0.875rem;
-    margin-top: 0.25em;
+    margin-top: 0.25rem;
   }
   .apple-originals {
     padding: 2.5rem 0;
@@ -1050,16 +1050,16 @@
   .apple-originals .apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
     padding-right: 1.25rem;
   }
   .apple-originals .apple-originals-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     padding-right: 1.25rem;
     margin-bottom: 1.25rem;
@@ -1071,20 +1071,20 @@
     width: 140px;
   }
   .apple-originals .apple-card-poster {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.5rem;
   }
   .apple-originals .apple-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .ai-promo {
     padding: 2.5rem 0;
   }
   .ai-promo .inner {
-    gap: 1.5em;
+    gap: 1.5rem;
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
   }
@@ -1094,15 +1094,15 @@
   .ai-promo .ai-promo-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.38em;
-    line-height: 1.75em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
   }
   .ai-promo .ai-promo-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .ai-promo .ai-promo-card {
@@ -1116,7 +1116,7 @@
     display: none;
   }
   .subscribe-cta {
-    padding: 1.5em 0 3em;
+    padding: 1.5rem 0 3rem;
   }
   .subscribe-cta .subscribe-banner {
     height: 18.75rem;
@@ -1125,14 +1125,14 @@
   .subscribe-cta .subscribe-content {
     left: 5%;
     right: 5%;
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .subscribe-cta .subscribe-title {
     font-size: 1.0625rem;
   }
   .subscribe-cta .subscribe-btn {
     height: 2.625rem;
-    padding: 0 1.5em;
+    padding: 0 1.5rem;
   }
   .subscribe-cta .subscribe-banner::after {
     background: linear-gradient(to right, rgba(23, 23, 23, 0.92) 0%, rgba(23, 23, 23, 0.7) 60%, rgba(23, 23, 23, 0.2) 100%);
@@ -1194,16 +1194,16 @@
   }
   main.member-home .member-pair {
     grid-template-columns: 1fr;
-    gap: 1.5em;
+    gap: 1.5rem;
   }
   main.member-home .member-ecosystem {
-    padding: 3em 0;
+    padding: 3rem 0;
   }
   main.member-home .member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
   }
   main.member-home .upcoming-section .inner {
@@ -1226,8 +1226,8 @@
   main.member-home .upcoming-section .upcoming-movie-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
   }
   main.member-home .upcoming-section .upcoming-btn:not(.on) {
@@ -1278,10 +1278,10 @@
   main.member-home .member-section .member-title.member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
-    margin: 0 0 0.5em;
+    margin: 0 0 0.5rem;
     padding-top: 0;
     color: #FFFFFF;
     word-break: keep-all;
@@ -1289,8 +1289,8 @@
   main.member-home .member-section .member-head .member-desc.member-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
@@ -1298,48 +1298,48 @@
   main.member-home .member-continue .member-cw-time {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-continue .member-cw-card .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-continue .member-cw-card .member-card-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-continue .member-cw-card .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-wishlist .member-wl-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-wishlist .member-wl-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -1377,7 +1377,7 @@
 }
 @media (max-width: 767px) {
   main.member-home .member-section {
-    padding: 2em 0 2.5rem;
+    padding: 2rem 0 2.5rem;
   }
   main.member-home .member-section .inner {
     padding-left: 1.25rem;
@@ -1402,8 +1402,8 @@
   main.member-home .member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 3em;
-    line-height: 3.5em;
+    font-size: 3rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-size: 1.75rem;
     line-height: 2.125rem;
@@ -1411,8 +1411,8 @@
   main.member-home .member-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   main.member-home .rail-continue {
@@ -1435,30 +1435,30 @@
     margin-right: 0;
     flex-direction: column;
     align-items: center;
-    gap: 1em;
-    padding: 1.25rem 1em;
+    gap: 1rem;
+    padding: 1.25rem 1rem;
     text-align: center;
   }
   main.member-home .member-mood .member-notice p {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   main.member-home .member-mood .member-notice .member-btn {
     align-self: center;
     height: 2.5rem;
-    padding: 0 1.5em;
+    padding: 0 1.5rem;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   main.member-home .member-mood .member-thumb.portrait {
     aspect-ratio: 16/9;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.5rem;
   }
   main.member-home .member-mood .member-card {
     gap: 0.125rem;
@@ -1466,29 +1466,29 @@
   main.member-home .member-mood .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   main.member-home .member-mood .member-card-meta,
   main.member-home .member-mood .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
   main.member-home .member-recommend .member-head {
     align-items: flex-end;
   }
   main.member-home .member-recommend .member-thumb.portrait {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.5rem;
   }
   main.member-home .member-recommend .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   main.member-home .member-recommend .member-card-meta,
@@ -1496,8 +1496,8 @@
   main.member-home .member-recommend .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
   main.member-home .member-recommend .member-card-strong {
@@ -1513,12 +1513,12 @@
   }
   main.member-home .member-pair {
     grid-template-columns: 1fr;
-    gap: 1.5em;
+    gap: 1.5rem;
   }
   main.member-home .member-wide-card {
     flex-direction: row;
     align-items: center;
-    gap: 0.75em;
+    gap: 0.75rem;
     padding: 0;
     background-color: transparent;
   }
@@ -1534,28 +1534,28 @@
   main.member-home .member-wide-info .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   main.member-home .member-wide-info .member-card-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
   main.member-home .member-wide-info .member-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
     height: 1.75rem;
-    padding: 0 0.75em;
+    padding: 0 0.75rem;
   }
   main.member-home .upcoming-section {
-    padding: 2em 0 2.5rem;
+    padding: 2rem 0 2.5rem;
   }
   main.member-home .member-ecosystem {
     padding: 2.5rem 0;
@@ -1568,13 +1568,13 @@
 }
 @media (max-width: 1024px) {
   .movie-detail-page .inner {
-    padding-left: 2.5em;
-    padding-right: 2.5em;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
   .movie-detail-page .content-layout {
     flex-direction: column;
     align-items: stretch;
-    gap: 2em;
+    gap: 2rem;
   }
   .movie-detail-page .left-section,
   .movie-detail-page .right-section {
@@ -1584,8 +1584,8 @@
   .movie-detail-page .player-box .title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -1598,7 +1598,7 @@
 }
 @media (max-width: 767px) {
   .movie-detail-page {
-    padding-top: calc(4.5em + 1rem);
+    padding-top: calc(4.5rem + 1rem);
     padding-bottom: 3.5rem;
   }
   .movie-detail-page .inner {
@@ -1606,13 +1606,13 @@
     padding-right: 1.25rem;
   }
   .movie-detail-page .content-layout {
-    gap: 1.5em;
+    gap: 1.5rem;
   }
   .movie-detail-page .player-box .player-info {
     flex-direction: column;
     align-items: stretch;
-    gap: 1em;
-    padding: 1em;
+    gap: 1rem;
+    padding: 1rem;
   }
   .movie-detail-page .player-box .title-logo {
     max-width: 160px;
@@ -1621,16 +1621,16 @@
   .movie-detail-page .player-box .title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.38em;
-    line-height: 1.75em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     font-weight: 700;
   }
   .movie-detail-page .player-box .original-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .movie-detail-page .player-box .overview {
@@ -1641,7 +1641,7 @@
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .movie-detail-page .player-box .btn-play {
     width: auto;
@@ -1653,39 +1653,39 @@
   .movie-detail-page .rating-section .rating-header h3 {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .movie-detail-page .rating-section .rating-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .movie-detail-page .rating-section .star-picker {
-    gap: 0.25em;
+    gap: 0.25rem;
   }
   .movie-detail-page .right-section {
     height: 35rem;
-    padding: 1em;
+    padding: 1rem;
   }
   .movie-detail-page .right-section .tabs .tab-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .movie-detail-page .right-section .filter-bar {
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   .movie-detail-page .right-section .season-label {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .movie-detail-page .right-section .episode-card .thumb {
@@ -1699,8 +1699,8 @@
 @media (max-width: 1024px) {
   .sport-team-card {
     height: 6rem;
-    gap: 1em;
-    padding: 0 1.25rem 0 1em;
+    gap: 1rem;
+    padding: 0 1.25rem 0 1rem;
   }
   .sport-team-card .sport-team-logo {
     width: 56px;
@@ -1710,21 +1710,21 @@
     padding: 3.5rem 0;
   }
   .sport-teams .inner {
-    padding-left: 2.5em;
-    padding-right: 2.5em;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
   .sport-teams .sport-team-slide {
     width: 320px;
   }
   .sport-teams-page .inner {
-    padding-left: 2.5em;
-    padding-right: 2.5em;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
   .sport-teams-page .sport-teams-page-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.13em;
-    line-height: 2.56em;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -1737,32 +1737,32 @@
   }
   .sport-teams-page .sport-team-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1em;
+    gap: 1rem;
   }
 }
 @media (max-width: 767px) {
   .sport-team-card {
     height: 5rem;
-    gap: 0.75em;
-    padding: 0 0.75em;
+    gap: 0.75rem;
+    padding: 0 0.75rem;
   }
   .sport-team-card .sport-team-logo {
     width: 48px;
     height: 3rem;
-    border-radius: 0.5em;
+    border-radius: 0.5rem;
   }
   .sport-team-card .sport-team-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
   }
   .sport-team-card .sport-team-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.75em;
-    line-height: 1em;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
   }
   .sport-team-filter {
@@ -1780,8 +1780,8 @@
   .sport-team-filter button {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     height: 2.125rem;
     padding: 0 0.875rem;
@@ -1796,13 +1796,13 @@
   .sport-teams .sport-teams-head {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   .sport-teams .sport-teams-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.38em;
-    line-height: 1.75em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -1810,8 +1810,8 @@
   .sport-teams .sport-teams-count {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .sport-teams .sport-team-slide {
@@ -1820,8 +1820,8 @@
   .sport-teams .sport-team-more {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     width: 100%;
     justify-content: center;
@@ -1831,51 +1831,51 @@
     padding-right: 1.25rem;
   }
   .sport-teams-page .sport-teams-hero {
-    padding: 1.5em 0 2em;
+    padding: 1.5rem 0 2rem;
   }
   .sport-teams-page .sport-teams-page-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
     font-weight: 700;
   }
   .sport-teams-page .sport-teams-page-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
   }
   .sport-teams-page .sport-teams-body {
-    padding-top: 1.5em;
+    padding-top: 1.5rem;
   }
   .sport-teams-page .sport-teams-toolbar {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5rem;
   }
   .sport-teams-page .sport-team-group + .sport-team-group {
-    margin-top: 2em;
+    margin-top: 2rem;
   }
   .sport-teams-page .sport-team-group-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
-    margin-bottom: 0.75em;
+    margin-bottom: 0.75rem;
   }
   .sport-teams-page .sport-team-list {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0.75em;
+    gap: 0.75rem;
   }
 }
 @media (max-width: 1024px) {
   .promo-banner.is-live .live-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     gap: 0.625rem;
   }
@@ -1891,16 +1891,16 @@
   .promo-banner.is-live .promo-banner-inner {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .promo-banner.is-live .live-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     font-weight: 700;
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   .promo-banner.is-live .live-dot {
     width: 10px;
@@ -1913,8 +1913,8 @@
   .promo-banner.is-live .promo-banner-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.75em;
-    line-height: 1em;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     white-space: normal;
     display: -webkit-box;
@@ -1925,8 +1925,8 @@
   .promo-banner.is-live .promo-banner-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     min-width: 0;
     height: 2rem;
@@ -1935,8 +1935,8 @@
   .promo-banner.is-live .promo-banner-note {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
   }
 }
@@ -1944,7 +1944,7 @@
   .login-page.login-page {
     min-height: 100vh;
     min-height: 100svh;
-    padding: calc(4.5em + 1.5rem) 2.5em 4rem;
+    padding: calc(4.5rem + 1.5rem) 2.5rem 4rem;
     align-items: center;
   }
   .login-page.login-page .login-card,
@@ -1953,9 +1953,9 @@
   .login-page.login-page .login-card.plan-card {
     max-width: 560px;
     min-height: 0;
-    padding: 4.75rem 1.5em 2em;
+    padding: 4.75rem 1.5rem 2rem;
     background-color: #F5F5F5;
-    border-radius: 1.25em;
+    border-radius: 1.25rem;
     box-shadow: none;
   }
   .login-page.login-page .login-card.login-card .login-card-close {
@@ -1976,14 +1976,14 @@
   .login-page.login-page .login-card.login-card .login-logo-area .login-app-icon {
     width: 50px;
     height: 3.125rem;
-    border-radius: 1.25em;
+    border-radius: 1.25rem;
     background-color: #D5D5D5;
   }
   .login-page.login-page .login-card.login-card .login-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.38em;
-    line-height: 1.75em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     margin: 1.25rem 0 0.625rem;
     font-size: 1.5rem;
@@ -1994,10 +1994,10 @@
   .login-page.login-page .login-card.login-card .login-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
-    margin: 0 0 1.5em;
+    margin: 0 0 1.5rem;
     font-weight: 700;
     color: #525252;
     word-break: keep-all;
@@ -2009,8 +2009,8 @@
   .login-page.login-page .login-card.login-card .plan-submit {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     width: 100%;
     max-width: none;
@@ -2023,14 +2023,14 @@
   .login-page.login-page .login-card.login-card--signin .login-form .input-field input {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     height: 3.125rem;
   }
   .login-page.login-page .login-card.login-card--signin .login-links-row {
     flex-wrap: wrap;
-    gap: 0.5em 1em;
+    gap: 0.5rem 1rem;
   }
   .login-page.login-page .login-card .login-form .code-input-group {
     gap: 0.375rem;
@@ -2046,7 +2046,7 @@
     margin: 1.25rem 0 0.625rem;
   }
   .login-page.login-page .login-card.login-card--confirm .login-desc {
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
     font-weight: 400;
   }
   .login-page.login-page .login-card.login-card--confirm .login-links.row-links {
@@ -2056,14 +2056,14 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    padding: 1.25rem 1em;
-    border-radius: 1.25em;
+    padding: 1.25rem 1rem;
+    border-radius: 1.25rem;
   }
   .login-page.login-page .login-card.plan-card .plan-option {
     grid-template-columns: minmax(0, 1fr) 20px;
     grid-template-areas: "name radio" "price radio" "note radio";
-    column-gap: 1em;
-    row-gap: 0.5em;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
     height: auto;
     padding: 0;
   }
@@ -2074,8 +2074,8 @@
     grid-area: name;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -2083,16 +2083,16 @@
     grid-area: price;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
   .login-page.login-page .login-card.plan-card .plan-option .plan-note {
     grid-area: note;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.75em;
-    line-height: 1em;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     word-break: keep-all;
   }
@@ -2103,50 +2103,50 @@
   .login-page.login-page .login-card.plan-card .plan-section-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     font-weight: 700;
-    margin: 2em 0 0.75em;
+    margin: 2rem 0 0.75rem;
   }
   .login-page.login-page .login-card.plan-card .plan-benefits {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .login-page.login-page .login-card.plan-card .plan-benefit {
     gap: 0.625rem;
     padding: 1.375rem 1.25rem;
-    border-radius: 1.25em;
+    border-radius: 1.25rem;
   }
   .login-page.login-page .login-card.plan-card .plan-benefit strong {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     font-weight: 700;
   }
   .login-page.login-page .login-card.plan-card .plan-benefit span {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     word-break: keep-all;
   }
   .login-page.login-page .login-card.plan-card .plan-submit {
-    margin-top: 1.5em;
+    margin-top: 1.5rem;
   }
   .login-page.login-page .login-card.plan-card .plan-links {
     grid-template-columns: 1fr;
-    row-gap: 1em;
-    margin: 1.5em 0;
+    row-gap: 1rem;
+    margin: 1.5rem 0;
   }
   .login-page.login-page .login-card.plan-card.plan-card--processing, .login-page.login-page .login-card.plan-card.plan-card--done {
     padding-top: 4.75rem;
   }
   .login-page.login-page .login-card.plan-card.plan-card--processing .login-title, .login-page.login-page .login-card.plan-card.plan-card--done .login-title {
-    margin: 1.25rem 0 0.75em;
+    margin: 1.25rem 0 0.75rem;
     font-size: 1.5rem;
     line-height: 1.875rem;
     font-weight: 400;
@@ -2154,8 +2154,8 @@
   .login-page.login-page .login-card.plan-card.plan-card--processing .login-desc, .login-page.login-page .login-card.plan-card.plan-card--done .login-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     margin-bottom: 1.25rem;
     font-weight: 400;
@@ -2166,7 +2166,7 @@
 }
 @media (max-width: 767px) {
   .login-page.login-page {
-    padding: calc(4.5em + 1rem) 1rem 2.5rem;
+    padding: calc(4.5rem + 1rem) 1rem 2.5rem;
     background-color: #08090d;
   }
   .login-page.login-page .login-card,
@@ -2174,20 +2174,20 @@
   .login-page.login-page .login-card.login-card--confirm,
   .login-page.login-page .login-card.plan-card {
     max-width: none;
-    padding: 4.75rem 1.25rem 1.5em;
+    padding: 4.75rem 1.25rem 1.5rem;
   }
   .login-page.login-page .login-card.login-card .login-title {
     font-size: 1.375rem;
     line-height: 1.75rem;
   }
   .login-page.login-page .login-card.plan-card .plan-list {
-    gap: 1.5em;
+    gap: 1.5rem;
   }
   .login-page.login-page .login-card.plan-card .plan-option .plan-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     font-size: 1.125rem;
     line-height: 1.5rem;
@@ -2208,7 +2208,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 @media (max-width: 767px) {
   header .inner nav .gnb-right ul {
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   header .inner nav .gnb-right ul .search-icon-item {
     display: flex;
@@ -2266,8 +2266,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home .member-wl-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
 }
@@ -2276,25 +2276,25 @@ header .inner nav .gnb-right ul .search-icon-item {
     --rail-col: 176px;
   }
   main.member-home .member-rc-info {
-    left: 0.75em;
-    right: 0.75em;
+    left: 0.75rem;
+    right: 0.75rem;
     bottom: 3.5rem;
   }
   main.member-home .member-rc-actions {
-    left: 0.75em;
-    right: 0.75em;
-    bottom: 0.75em;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
     gap: 0.375rem;
   }
   main.member-home .member-rc-play,
   main.member-home .member-rc-rate {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
     height: 1.875rem;
-    gap: 0.25em;
+    gap: 0.25rem;
   }
 }
 @media (max-width: 767px) {
@@ -2309,8 +2309,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   main.member-home .member-nr-card,
   section.upcoming-section .member-nr-card {
-    gap: 0.75em;
-    padding: 0.75em;
+    gap: 0.75rem;
+    padding: 0.75rem;
   }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -2324,40 +2324,40 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home .member-mood .member-notice p {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-mood .member-ai-tagline {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-mood .member-ai-card .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-mood .member-ai-card .member-card-meta {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-mood .member-ai-card .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -2368,8 +2368,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   .apple-originals .apple-originals-title.apple-originals-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
@@ -2378,8 +2378,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   .apple-originals .apple-originals-desc.apple-originals-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1em;
-    line-height: 1.31em;
+    font-size: 1rem;
+    line-height: 1.3125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -2387,36 +2387,39 @@ header .inner nav .gnb-right ul .search-icon-item {
     display: none;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-content {
-    padding: 0 2.25em;
+    padding: 0 2.25rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-logo {
-    width: 73px;
+    width: 50px;
     height: 3.5rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75em;
-    line-height: 2.13em;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     letter-spacing: 0;
     color: #FFFFFF;
+    line-height: 1.5;
+    word-break: keep-all;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.06em;
-    line-height: 1.38em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     width: 200px;
     height: 2.5rem;
     padding: 0.4375rem 2.25rem;
     color: #FFFFFF;
+    text-align: center;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-note {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.75em;
-    line-height: 1em;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -2429,7 +2432,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     position: relative;
     display: block;
     padding: 0;
-    border-radius: 0.63em;
+    border-radius: 0.625rem;
     overflow: hidden;
     background-color: #2E2E2E;
   }
@@ -2454,12 +2457,12 @@ header .inner nav .gnb-right ul .search-icon-item {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0.75em;
+    bottom: 0.75rem;
     z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   main.member-home .member-nr-card.member-nr-card .member-nr-quick-play,
   main.member-home .member-nr-card.member-nr-card .member-nr-quick-heart,
@@ -2508,14 +2511,14 @@ header .inner nav .gnb-right ul .search-icon-item {
   section.upcoming-section .member-nr-card.member-nr-card .member-nr-quick-month {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.75em;
-    line-height: 1em;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.25em;
+    gap: 0.25rem;
     width: 105px;
     height: 1.5625rem;
     padding: 0.3125rem 0.625rem;
@@ -2535,39 +2538,39 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home .member-section .member-title.member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.25em;
-    line-height: 1.56em;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   main.member-home .member-section .member-head .member-desc.member-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1em;
-    line-height: 1.31em;
+    font-size: 1rem;
+    line-height: 1.3125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-continue .member-cw-card .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   main.member-home .member-continue .member-cw-card .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-wishlist .member-wl-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 0.5rem;
     margin: 0;
     padding: 0 1.25rem 0 0;
     list-style: none;
@@ -2591,8 +2594,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home .member-wishlist .member-wl-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -2606,14 +2609,14 @@ header .inner nav .gnb-right ul .search-icon-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   main.member-home .member-recommend .member-rc-play,
   main.member-home .member-recommend .member-rc-rate {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.75em;
-    line-height: 1em;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     height: 1.5625rem;
     color: #FFFFFF;
@@ -2645,8 +2648,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home .member-mood .member-chips .member-chip.member-chip {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     width: 56px;
     height: 1.875rem;
@@ -2656,8 +2659,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home .member-mood .member-ai-tagline {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 0.81em;
-    line-height: 1.13em;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
     display: inline-flex;
     align-items: center;
@@ -2668,16 +2671,16 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home .member-mood .member-ai-card .member-card-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.94em;
-    line-height: 1.25em;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
   main.member-home .member-mood .member-ai-card .member-card-link {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -2686,8 +2689,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   header .inner nav .gnb-right ul .header-login-btn.header-login-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 0.69em;
-    line-height: 0.81em;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
     letter-spacing: 0;
     box-sizing: border-box;
     justify-content: center;
@@ -2720,8 +2723,8 @@ header .inner nav .gnb-right ul .search-icon-item {
 }
 @media (max-width: 767px) {
   .floating-actions {
-    right: 1em;
-    bottom: 1em;
+    right: 1rem;
+    bottom: 1rem;
   }
   .floating-btn {
     width: 50px;
@@ -2739,12 +2742,12 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: auto;
   }
   body.has-promo-banner .floating-actions {
-    bottom: calc(6.0625rem + 0.75em);
+    bottom: calc(6.0625rem + 0.75rem);
   }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
   .floating-actions {
-    gap: 0.75em;
+    gap: 0.75rem;
   }
   .floating-btn {
     width: 60px;
@@ -2764,7 +2767,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 }
 @media (max-width: 767px) {
   .profile-picker-list {
-    gap: 1em;
+    gap: 1rem;
   }
   .profile-picker-item {
     width: 80px;
@@ -2781,12 +2784,12 @@ header .inner nav .gnb-right ul .search-icon-item {
 @media (max-width: 767px) {
   .auto-next,
   .auto-next--inline {
-    right: 0.5em;
-    bottom: 0.5em;
-    left: 0.5em;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.5rem;
     width: auto;
-    gap: 0.75em;
-    padding: 0.75em;
+    gap: 0.75rem;
+    padding: 0.75rem;
   }
   .auto-next-thumb {
     display: none;
@@ -2804,7 +2807,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   main.member-home.member-browse .member-browse-grid {
     --browse-col: 280px;
-    gap: 2em 1.5em;
+    gap: 2rem 1.5rem;
   }
   main.member-home.member-browse .member-browse-grid--recommend {
     --browse-col: 200px;
@@ -2816,7 +2819,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   main.member-home.member-browse .member-browse-grid {
     --browse-col: 100%;
-    gap: 1.5em 1em;
+    gap: 1.5rem 1rem;
   }
   main.member-home.member-browse .member-browse-grid--recommend {
     --browse-col: 140px;
