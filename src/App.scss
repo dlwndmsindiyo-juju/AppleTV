@@ -6131,7 +6131,7 @@ img.ui-icon.ui-icon-arrow {
 
 // 파란 글자 링크 (모든 브라우저에서 로그아웃 · 연결된 계정 관리 · 재생 기록 지우기)
 .account-link {
-  @include body-default-b;
+  @include body-default;
   padding: 0;
   border: none;
   background: none;
@@ -8412,7 +8412,7 @@ section.device-guide.device-guide--watch {
 // [추가] 섹션 소제목 없앰 (로그인 전 · 후 홈 공통) — 제목 ↔ 콘텐츠 60px (PC 1025px 이상)
 // - TOP 10 · 공개예정작 · 오리지널스 제목 아래 / 기기 안내: 제목 → 로고 띠
 // - 로그인 후 홈 섹션(.member-head)은 member.scss
-// - 기기 안내: 소제목이 빠져 링크가 맨 위 → 링크 위 여백 없앰 (모든 화면)
+// - 기기 안내: 링크 위 여백 없앰 (설명 ↔ 링크 간격은 .watch-subtitle 아래 여백 26px)
 // =====================================================================
 @media (min-width: ($breakpoint-tablet + 1)) {
 
@@ -8423,7 +8423,32 @@ section.device-guide.device-guide--watch {
   }
 
   section.device-guide.device-guide--watch .watch-marquee {
-    margin-top: 3.75rem;
+    margin-top: $watch-gap-block; // [수정] 제목 ↔ 로고 띠 45px
+  }
+
+  // [추가] 기기 안내 PC 간격 (시안): 로고 ↔ 제목 40 / 로고끼리 40 / 로고 띠 ↔ 설명 45 / 설명 ↔ 링크 26 / 링크 ↔ 아이콘 45 / 아이콘끼리 70
+  section.device-guide.device-guide--watch {
+    .watch-title {
+      margin-top: $watch-gap-logo-title;
+    }
+
+    .watch-logo-list {
+      gap: $watch-logo-gap;
+      padding-right: $watch-logo-gap; // 두 목록 사이도 같은 간격
+    }
+
+    .watch-mobile {
+      margin-top: $watch-gap-block;
+    }
+
+    .watch-subtitle {
+      margin-bottom: $watch-gap-text-link;
+    }
+
+    .watch-devices {
+      column-gap: $watch-device-gap;
+      margin-top: $watch-gap-block;
+    }
   }
 }
 

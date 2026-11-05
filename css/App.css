@@ -6946,7 +6946,7 @@ section.device-guide.device-guide--watch {
   --icon-scale: 1;
   --marquee-duration: 40s;
   padding: 6rem 0;
-  height: 52.375rem;
+  height: 100%;
   background-color: #141414;
   text-align: center;
   overflow: hidden;
