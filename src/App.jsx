@@ -65,6 +65,59 @@ function App() {
     setShowIntro(false);
   };
 
+//영상 위치로 이동
+  useEffect(() => {
+    if (!location.pathname.startsWith("/sport/")) return;
+
+    let frame;
+    let observer;
+
+    const scrollToDetail = () => {
+      const section = document.querySelector(
+        ".sport-detail, .sport-live-detail, .sport-short-detail"
+      );
+
+      if (!section) return false;
+
+      const headerHeight =
+        document.querySelector("header")?.getBoundingClientRect().height || 0;
+
+      const offset = headerHeight + 100;
+
+      const top =
+        window.scrollY +
+        section.getBoundingClientRect().top -
+        offset;
+
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: "instant",
+      });
+
+      return true;
+    };
+
+    frame = requestAnimationFrame(() => {
+      if (scrollToDetail()) return;
+
+      // 상세 영역이 비동기로 렌더링될 경우 대기
+      observer = new MutationObserver(() => {
+        if (scrollToDetail()) observer.disconnect();
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer?.disconnect();
+    };
+  }, [location.pathname]);
+
+
   return (
     <>
       {showIntro ? (
