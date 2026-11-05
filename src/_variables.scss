@@ -430,6 +430,14 @@ $ai-banner-chip-active-start: #41424A;
 $ai-banner-chip-active-end: #33343B;
 $ai-banner-chip-active: linear-gradient(to bottom, $ai-banner-chip-active-start 0%, $ai-banner-chip-active-end 100%);
 
+// [추가] AI 반짝이 효과 공용 색 (AI 아이콘 components/ai/assets/ai-logo.svg 의 그라데이션 · 그림자 색)
+// - 쓰는 곳: AiLogo.scss (AI 아이콘) · App.scss AI 홍보 배너 질문 앞 점 · [취향 더 반영하기] 빛나는 테두리
+$ai-glow-1: #6282FF; // 0%
+$ai-glow-2: #7C45EF; // 58%
+$ai-glow-3: #A448E8; // 100%
+$ai-glow-shadow: rgba(95, 70, 228, 0.36); // 원본 그림자 #5F46E4 · 36%
+$ai-glow-bright: rgba(124, 69, 239, 0.75); // 밝게 빛날 때 ($ai-glow-2 · 75%)
+
 // TV 카드 제목: SF Pro Medium 32 / 46 · 자간 0%
 @mixin tv-card-title {
   @include type-style(2rem, 2.875rem, $font-weight-medium);

@@ -2867,7 +2867,6 @@ header .inner nav .gnb-right ul .search-icon-item {
   main.member-home.member-home .member-section .member-head {
     margin: 0 0 1rem;
   }
-  main.member-home.member-home .member-more,
   main.member-home.member-home .member-desc,
   main.member-home.member-home section.top10-section .top10-desc {
     display: none;
@@ -3090,5 +3089,35 @@ header .inner nav .gnb-right ul .search-icon-item {
 @media (min-width: 768px) {
   .member-sc-poster-actions {
     display: none;
+  }
+}
+@media (max-width: 767px) {
+  main.member-home.member-browse .member-browse-grid.member-browse-grid--recommend,
+  main.member-home.member-browse .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem 0.5rem;
+  }
+  main.member-home.member-browse .member-browse-grid--recommend .member-rc-rate {
+    padding: 0 0.375rem;
+  }
+  main.member-home.member-browse .member-browse-grid .member-sc-poster-actions .member-sc-month {
+    width: 25px;
+    min-width: 0;
+    height: 1.5625rem;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 0;
+  }
+}
+@media (max-width: 767px) {
+  .ai-banner {
+    padding: 2.5rem 0;
+  }
+  .ai-banner .ai-banner-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ai-banner .ai-banner-box {
+    width: 100%;
   }
 }

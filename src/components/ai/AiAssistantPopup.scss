@@ -1046,56 +1046,7 @@
   width: 24px;
   height: 24px;
 
-  img {
-    animation: ai-popup-star-glow 3.6s ease-in-out infinite;
-    transform-origin: center;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: -5px;
-    border-radius: 50%;
-    pointer-events: none;
-    background: radial-gradient(circle, rgb(154 165 255 / 28%), transparent 68%);
-    animation: ai-popup-star-halo 3.6s ease-in-out infinite;
-  }
-}
-
-@keyframes ai-popup-star-glow {
-
-  0%,
-  100% {
-    opacity: .75;
-    filter: brightness(1) drop-shadow(0 0 0 transparent);
-    transform: scale(.95) rotate(-4deg);
-  }
-
-  45% {
-    opacity: 1;
-    filter: brightness(1.65) drop-shadow(0 0 5px rgb(152 166 255 / 65%));
-    transform: scale(1.12) rotate(4deg);
-  }
-
-  65% {
-    opacity: .9;
-    filter: brightness(1.15) drop-shadow(0 0 2px rgb(152 166 255 / 30%));
-    transform: scale(1);
-  }
-}
-
-@keyframes ai-popup-star-halo {
-
-  0%,
-  100% {
-    opacity: .1;
-    transform: scale(.85);
-  }
-
-  45% {
-    opacity: .8;
-    transform: scale(1.2);
-  }
+  // [수정] 아이콘 · 빛나는 효과는 AI 아이콘 공용 (AiLogo.jsx · AiLogo.scss) — 예전 별 그림 애니메이션은 뺌
 }
 
 @media (max-width: 767px) {

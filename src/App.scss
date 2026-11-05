@@ -8533,7 +8533,8 @@ main.wish-page {
 
 // =====================================================================
 // [추가] AI 어시스트 홍보 배너 (components/ai/AiAssistantPromo.jsx · 로그인 전 홈) — 시안: AI 어시스트_홍보배너 (1920 × 210)
-// - 배경 이미지: components/ai/assets/ai-promo-bg.jpg (화면 전체 폭 · 높이 210 · App.scss 기준 상대 경로)
+// - 배경 이미지: components/ai/assets/ai-promo-bg.jpg (화면 전체 폭 · 높이 210)
+//   · [수정] 이미지 경로는 AiAssistantPromo.jsx 에서 import 해서 style 로 넣음 (여기서는 크기 · 위치 · 바탕색만)
 // - 글자 · 상자 묶음은 가운데 (시안 폭 1150 · 좁은 화면에서는 이너 폭 안에서 줄바꿈)
 // - 왼쪽: 아이콘 24 × 24 + Label/default · Dark/100 (사이 8) / 제목 Display/L-B · Light/0 / 설명 Body/default · Dark/100
 // - 오른쪽 상자 590 × 118 · 모서리 15: 질문 Body/default · Light/0
@@ -8553,7 +8554,10 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
     min-height: 13.125rem; // 210
     padding: $space-2xl 0;
     box-sizing: border-box;
-    background: $bg-page url("./components/ai/assets/ai-promo-bg.jpg") center / cover no-repeat;
+    background-color: $bg-page;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   .inner {
@@ -8588,23 +8592,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
     color: $dark-color-100;
   }
 
-  .ai-banner-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 24px;
-    height: 1.5rem;
-    border-radius: 0.375rem;
-    background: $ai-banner-gradient;
-    color: $light-color-0;
-
-    svg {
-      display: block;
-      width: 16px;
-      height: 1rem;
-    }
-  }
+  // 아이콘 24 × 24: AI 아이콘 공용 (components/ai/AiLogo.jsx · AiLogo.scss)
 
   .ai-banner-title {
     @include display-l-b;
@@ -8647,13 +8635,15 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
     color: $light-color-0;
 
     // 앞 점 (시안: 보라색 작은 점)
+    // [수정] AI 아이콘과 같은 반짝이 효과: 색이 흐르고 (파랑 → 보라 → 자주) 바깥 빛이 숨 쉬듯 커졌다 작아짐
     &::before {
       content: "";
       flex-shrink: 0;
       width: 6px;
       height: 0.375rem;
       border-radius: 50%;
-      background-color: $ai-banner-gradient-mid;
+      background-color: $ai-glow-2;
+      animation: ai-dot-color 4s linear infinite, ai-dot-glow 2.4s ease-in-out infinite;
     }
   }
 
@@ -8711,8 +8701,12 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
     }
   }
 
+  // [수정] 테두리가 빛나는 버튼: 밝은 빛줄기가 테두리를 따라 돌고 (::before) 바깥 보라 빛이 숨 쉬듯 빛남
+  // - 테두리 두께 1.5px · 버튼 크기는 그대로 (테두리는 버튼 안쪽 가장자리에 그림)
   .ai-banner-btn {
     @include body-small-b;
+    position: relative;
+    isolation: isolate;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
@@ -8729,6 +8723,30 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
     white-space: nowrap;
     cursor: pointer;
     transition: filter 0.2s ease;
+    animation: ai-btn-glow 2.4s ease-in-out infinite;
+
+    // 빛나는 테두리 (돌아가는 빛줄기 · 가운데는 mask 로 비워 테두리만 보이게)
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      padding: 0.09375rem; // 1.5px = 테두리 두께
+      border-radius: inherit;
+      background: conic-gradient(from var(--ai-border-angle),
+          rgba($light-color-0, 0) 0deg,
+          rgba($light-color-0, 0) 200deg,
+          $ai-glow-1 260deg,
+          $light-color-0 300deg,
+          $ai-glow-3 330deg,
+          rgba($light-color-0, 0) 360deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      animation: ai-border-spin 3s linear infinite;
+      pointer-events: none;
+    }
 
     &:hover {
       filter: brightness(1.08);
@@ -8738,6 +8756,11 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
       outline: 0.125rem solid $light-color-0;
       outline-offset: 0.125rem;
     }
+  }
+
+  // 글자 · 화살표는 빛나는 테두리 위로
+  .ai-banner-btn > * {
+    position: relative;
   }
 
   // nav/right-nav.svg (15 × 15 · 흰색)
@@ -8751,3 +8774,70 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 }
 
 // (휴대폰 규칙은 mobile.scss)
+
+// =====================================================================
+// [추가] AI 반짝이 효과 (AI 홍보 배너 · 색은 _variables.scss $ai-glow-*)
+// =====================================================================
+// 테두리 빛줄기가 돌 수 있게 각도를 애니메이션 가능한 값으로 등록 (지원하지 않는 브라우저는 빛줄기만 멈춤)
+@property --ai-border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes ai-border-spin {
+  to {
+    --ai-border-angle: 360deg;
+  }
+}
+
+// 질문 앞 점: 색이 흐름
+@keyframes ai-dot-color {
+  0%,
+  100% {
+    background-color: $ai-glow-1;
+  }
+
+  33% {
+    background-color: $ai-glow-2;
+  }
+
+  66% {
+    background-color: $ai-glow-3;
+  }
+}
+
+// 질문 앞 점: 바깥 빛이 숨 쉬듯
+@keyframes ai-dot-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0.125rem $ai-glow-shadow;
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 0.5rem 0.125rem $ai-glow-bright;
+    transform: scale(1.25);
+  }
+}
+
+// 버튼: 바깥 보라 빛이 숨 쉬듯
+@keyframes ai-btn-glow {
+  0%,
+  100% {
+    box-shadow: 0 0.25rem 0.5rem $ai-glow-shadow;
+  }
+
+  50% {
+    box-shadow: 0 0 1rem $ai-glow-bright;
+  }
+}
+
+// 기기의 "동작 줄이기" 설정: 멈춤
+@media (prefers-reduced-motion: reduce) {
+  .ai-banner .ai-banner-question::before,
+  .ai-banner .ai-banner-btn,
+  .ai-banner .ai-banner-btn::before {
+    animation: none;
+  }
+}
