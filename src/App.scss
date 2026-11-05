@@ -2,14 +2,16 @@
 @use "variables" as *;
 
 $auth-line: $dark-color-100; // 입력 칸 · 플랜 카드 테두리
-$trial-gap: 128px;
+$trial-gap: 8rem;
 $wish-content: math.div($inner-width * (100% - $desktop-gutter * 2), 100%); // 1440px (본문 영역)
 $wish-poster: 160px;
-$mobile-edge: 20px;
+$mobile-edge: 1.25rem;
 $auth-light-line: $light-color-400; // 입력 칸 · 플랜 카드 테두리
 $auth-light-sub: $neutral-color-600; // 라벨 · 안내 문구 (밝은 배경 위 가독성)
-$account-width: 840px; // 시안 본문 폭
+$account-width: 1440px; // [수정] 계정 설정 이너 최대 폭 (PC · 다른 화면 이너보다 좁게)
 $account-side: 252px; // 왼쪽 섹션 이름 칸
+$account-inner-pc: 1440px; // [추가] 계정 설정 PC 이너 최대 폭 (다른 화면의 90% 이너보다 좁게)
+$account-inner-max: 1440px; // [추가] PC 계정 설정 이너 최대 폭 (다른 화면 이너 90% 보다 좁게)
 $account-line: $light-color-400; // 구분선 (시안 #D2D2D7)
 $account-sub: $neutral-color-600; // 설명 · 안내 글자 (밝은 배경에서 읽히는 회색)
 
@@ -18,6 +20,17 @@ $account-sub: $neutral-color-600; // 설명 · 안내 글자 (밝은 배경에�
 // - 태블릿 · 휴대폰은 mobile.scss / TV 는 TV.scss
 // - 스포츠는 sport-member.scss (SportHome.jsx 에서 불러옴)
 // =====================================================================
+
+// [추가] 페이지 바탕색 — 섹션 경계의 가는 선 없애기
+// - 섹션 높이가 소수 픽셀(rem)이라 화면 배율에 따라 섹션 사이로 바탕(기본 흰색)이 1px 비쳐 선처럼 보였음
+// - 바탕을 섹션과 같은 색으로: 로그인 전 홈 · 공통 $gnb-bg / 로그인 후 홈 $bg-page
+body {
+  background-color: $gnb-bg;
+}
+
+main.member-home {
+  background-color: $bg-page;
+}
 
 // ===== Header (Desktop 시안: 좌우 64 / 상하 14) =====
 header {
@@ -54,7 +67,7 @@ header {
         align-items: center;
 
         img {
-          height: 24px;
+          height: 1.5rem;
           display: block;
           filter: brightness(0) invert(1);
         }
@@ -64,11 +77,11 @@ header {
     // 로그인 전 헤더의 로그인 버튼
     .header-login {
       z-index: 10;
-      padding: $space-sm 20px;
+      padding: $space-sm 1.25rem;
       border-radius: $radius-control;
       background-color: $toggle-active-bg;
       color: $toggle-active-text;
-      font-size: 14px;
+      font-size: 0.875rem;
       font-weight: $font-weight-bold;
       transition: background-color 0.2s ease;
 
@@ -103,7 +116,7 @@ header {
         top: 50%;
         transform: translate(-50%, -50%);
         display: flex;
-        border-radius: 9999px;
+        border-radius: 624.9375rem;
         background-color: $toggle-inactive-bg;
 
         // 선택된 버튼 뒤에서 좌우로 미끄러지는 알약
@@ -111,7 +124,7 @@ header {
           position: absolute;
           top: 0;
           height: 100%;
-          border-radius: 9999px;
+          border-radius: 624.9375rem;
           pointer-events: none;
           background-color: $primary-color-500; // Apple TV 선택 색상 (프라이머리)
 
@@ -131,13 +144,13 @@ header {
         button {
           position: relative; // 인디케이터 위로 글자 올리기
           z-index: 1;
-          height: 40px;
+          height: 2.5rem;
           padding: 0 $space-xl;
           border: none;
-          border-radius: 9999px;
+          border-radius: 624.9375rem;
           background: transparent;
           color: $text-primary;
-          font-size: 18px;
+          font-size: 1.125rem;
           font-weight: $font-weight-bold;
           line-height: 1;
           cursor: pointer;
@@ -175,10 +188,10 @@ header {
           .search-box {
             display: flex;
             align-items: center;
-            width: 248px;
-            height: 36px;
-            padding: 0 14px;
-            border-radius: 9999px;
+            width: min(248px, calc(100vw - 590px)); // [수정] 좁은 태블릿(838px 미만)에서 가운데 토글과 겹치지 않게 줄어듦 (그 이상은 그대로 248)
+            height: 2.25rem;
+            padding: 0 0.875rem;
+            border-radius: 624.9375rem;
             background-color: $input-bg;
             box-sizing: border-box;
             transition: background-color 0.2s ease;
@@ -189,7 +202,7 @@ header {
 
             img {
               width: 14px;
-              height: 14px;
+              height: 0.875rem;
               margin-right: $space-sm;
               flex-shrink: 0;
               filter: invert(0.7);
@@ -201,7 +214,7 @@ header {
               outline: none;
               background: transparent;
               color: $text-primary;
-              font-size: 13px;
+              font-size: 0.8125rem;
 
               &::placeholder {
                 color: $text-tertiary;
@@ -219,8 +232,8 @@ header {
             @include body-small-b;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            height: 32px;
+            gap: 0.375rem;
+            height: 2rem;
             padding: 0 $space-md;
             border-radius: $radius-xs;
             background-color: $primary-color-500;
@@ -231,7 +244,7 @@ header {
 
             img {
               width: 10px;
-              height: 11px;
+              height: 0.6875rem;
               display: block;
               flex-shrink: 0;
             }
@@ -241,8 +254,8 @@ header {
             }
 
             &:focus-visible {
-              outline: 2px solid $light-color-0;
-              outline-offset: 2px;
+              outline: 0.125rem solid $light-color-0;
+              outline-offset: 0.125rem;
             }
           }
 
@@ -258,7 +271,7 @@ header {
             align-items: center;
             justify-content: center;
             width: 36px;
-            height: 36px;
+            height: 2.25rem;
             padding: 0;
             border: none;
             border-radius: 50%;
@@ -271,8 +284,8 @@ header {
             }
 
             &:focus-visible {
-              outline: 2px solid $light-color-0;
-              outline-offset: 2px;
+              outline: 0.125rem solid $light-color-0;
+              outline-offset: 0.125rem;
             }
 
             img {
@@ -294,9 +307,9 @@ header {
             border-radius: $radius-sm;
             overflow: hidden;
             background-color: rgba($light-color-500, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(1.25rem);
+            -webkit-backdrop-filter: blur(1.25rem);
+            box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
             animation: profile-menu-in 0.18s ease both;
           }
 
@@ -306,7 +319,7 @@ header {
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            height: 52px;
+            height: 3.25rem;
             padding: 0 $space-lg;
             border: none;
             background: transparent;
@@ -318,7 +331,7 @@ header {
             transition: background-color 0.15s ease;
 
             &+.profile-menu-item {
-              border-top: 1px solid rgba($dark-color-900, 0.15);
+              border-top: 0.0625rem solid rgba($dark-color-900, 0.15);
             }
 
             &:hover,
@@ -348,7 +361,7 @@ header {
 @keyframes profile-menu-in {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-0.25rem);
   }
 
   to {
@@ -360,11 +373,11 @@ header {
 // ===== 로그인 페이지 =====
 .login-page {
   width: 100%;
-  min-height: calc(100vh - #{$header-height} - 160px);
+  min-height: calc(100vh - #{$header-height} - 10rem);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 150px 20px 100px;
+  padding: 9.375rem 1.25rem 6.25rem;
   box-sizing: border-box;
   background-color: $bg-color; // #08090d
 
@@ -374,10 +387,10 @@ header {
     max-width: 580px;
     background-color: $neutral-color-100; // #F2F2F2 (시안의 부드러운 밝은 회색톤)
     border-radius: $radius-md;
-    padding: $space-4xl 56px 40px;
+    padding: $space-4xl 3.5rem 2.5rem;
     box-sizing: border-box;
     text-align: center;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -386,10 +399,10 @@ header {
     // 상단 좌측 닫기 (X) 버튼
     .login-card-close {
       position: absolute;
-      top: 24px;
-      left: 24px;
+      top: 1.5rem;
+      left: 1.5rem;
       width: 32px;
-      height: 32px;
+      height: 2rem;
       border-radius: 50%;
       border: none;
       background-color: rgba(0, 0, 0, 0.05);
@@ -411,7 +424,7 @@ header {
 
       .login-app-icon {
         width: 48px;
-        height: 48px;
+        height: 3rem;
         border-radius: $radius-card-sm;
         background-color: $neutral-color-300; // #D4D4D4
       }
@@ -430,7 +443,7 @@ header {
     .login-desc {
       @include body-default; // font-size: 15px, line-height: 20px
       color: $neutral-color-600; // #525252
-      margin: 0 0 28px;
+      margin: 0 0 1.75rem;
     }
 
     // 폼 영역
@@ -444,10 +457,10 @@ header {
       .input-field input {
         @include body-default;
         width: 100%;
-        height: 48px;
+        height: 3rem;
         padding: 0 $space-lg;
         border-radius: $radius-sm;
-        border: 1px solid $neutral-color-300; // #D4D4D4
+        border: 0.0625rem solid $neutral-color-300; // #D4D4D4
         background-color: $neutral-color-white; // #FFFFFF
         color: $text-inverse;
         box-sizing: border-box;
@@ -467,8 +480,8 @@ header {
       .login-btn {
         @include body-default;
         width: 100%;
-        height: 46px;
-        margin-top: 6px;
+        height: 2.875rem;
+        margin-top: 0.375rem;
         border-radius: $radius-sm;
         border: none;
         background-color: $accent-color; // #0a84ff
@@ -485,7 +498,7 @@ header {
 
     // 하단 링크 영역: @mixin label-default
     .login-links {
-      margin-top: 20px;
+      margin-top: 1.25rem;
       display: flex;
       flex-direction: column;
       gap: $space-sm;
@@ -522,12 +535,12 @@ header {
 
         .code-box {
           width: 52px;
-          height: 58px;
+          height: 3.625rem;
           border-radius: $radius-sm;
-          border: 1px solid $neutral-color-300;
+          border: 0.0625rem solid $neutral-color-300;
           background-color: $neutral-color-white;
           font-family: "SF Pro", sans-serif;
-          font-size: 24px;
+          font-size: 1.5rem;
           font-weight: $font-weight-bold;
           text-align: center;
           color: $text-inverse;
@@ -537,7 +550,7 @@ header {
 
           &:focus {
             border-color: $accent-color;
-            box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
+            box-shadow: 0 0 0 0.125rem rgba($accent-color, 0.2);
           }
         }
       }
@@ -570,24 +583,24 @@ header {
 .login-page {
   .login-card.login-card--confirm {
     max-width: 800px;
-    min-height: 560px;
-    padding: 80px 56px 40px;
+    min-height: 35rem;
+    padding: 5rem 3.5rem 2.5rem;
     background-color: #f5f5f7;
     border-radius: $radius-card-sm;
     box-shadow: none;
 
     // 닫기 버튼: 흰 원형 42px
     .login-card-close {
-      top: 26px;
-      left: 26px;
+      top: 1.625rem;
+      left: 1.625rem;
       width: 42px;
-      height: 42px;
+      height: 2.625rem;
       background-color: #fff;
       color: #000;
 
       svg {
         width: 20px;
-        height: 20px;
+        height: 1.25rem;
       }
 
       &:hover {
@@ -601,7 +614,7 @@ header {
 
       .login-app-icon {
         width: 50px;
-        height: 50px;
+        height: 3.125rem;
         border-radius: $radius-card-sm;
         background-color: #d9d9d9;
       }
@@ -609,18 +622,18 @@ header {
 
     // 로고 ↔ 타이틀 사이 큰 여백
     .login-title {
-      margin: 84px 0 $space-md;
-      font-size: 34px;
-      line-height: 41px;
+      margin: 5.25rem 0 $space-md;
+      font-size: 2.125rem;
+      line-height: 2.5625rem;
       font-weight: $font-weight-regular;
       color: #111;
     }
 
     // 연한 회색 설명
     .login-desc {
-      margin: 0 0 84px;
-      font-size: 22px;
-      line-height: 29px;
+      margin: 0 0 5.25rem;
+      font-size: 1.375rem;
+      line-height: 1.8125rem;
       color: #a1a1a6;
     }
 
@@ -629,11 +642,11 @@ header {
       gap: 0;
 
       .login-btn {
-        height: 48px;
+        height: 3rem;
         margin-top: 0;
-        border-radius: 6px;
+        border-radius: 0.375rem;
         background-color: #007aff;
-        font-size: 17px;
+        font-size: 1.0625rem;
         font-weight: $font-weight-bold;
 
         &:hover {
@@ -644,11 +657,11 @@ header {
 
     // '문제가 있나요?' / '나중에'
     .login-links.row-links {
-      margin-top: 14px;
-      gap: 112px;
+      margin-top: 0.875rem;
+      gap: 7rem;
 
       .login-link-btn {
-        font-size: 12px;
+        font-size: 0.75rem;
         font-weight: $font-weight-regular;
         color: #007aff;
       }
@@ -662,8 +675,8 @@ header {
 .login-page {
   .login-card.login-card--signin {
     max-width: 668px;
-    min-height: 468px;
-    padding: 68px 56px $space-2xl;
+    min-height: 29.25rem;
+    padding: 4.25rem 3.5rem $space-2xl;
     background-color: $light-color-100;
     border-radius: $radius-card;
     box-shadow: none;
@@ -671,16 +684,16 @@ header {
 
     // 닫기 버튼: 흰 원형
     .login-card-close {
-      top: 22px;
-      left: 22px;
+      top: 1.375rem;
+      left: 1.375rem;
       width: 36px;
-      height: 36px;
+      height: 2.25rem;
       background-color: $light-color-0;
       color: $text-inverse;
 
       svg {
         width: 18px;
-        height: 18px;
+        height: 1.125rem;
       }
 
       &:hover {
@@ -690,11 +703,11 @@ header {
 
     // 로고 플레이스홀더
     .login-logo-area {
-      margin-bottom: 14px;
+      margin-bottom: 0.875rem;
 
       .login-app-icon {
         width: 42px;
-        height: 42px;
+        height: 2.625rem;
         border-radius: $radius-sm;
         background-color: $neutral-color-300;
       }
@@ -704,20 +717,20 @@ header {
       @include display-M;
       font-weight: $font-weight-bold;
       color: $text-inverse;
-      margin: 0 0 10px;
+      margin: 0 0 0.625rem;
     }
 
     .login-desc {
       @include heading-h3;
       color: $text-tertiary;
-      margin: 0 0 22px;
+      margin: 0 0 1.375rem;
     }
 
     // 입력칸 440 / 버튼 358 (시안 비율)
     .login-form {
       max-width: 440px;
       align-items: center;
-      gap: 6px;
+      gap: 0.375rem;
 
       .input-field {
         width: 100%;
@@ -725,10 +738,10 @@ header {
 
       .input-field input {
         @include body-large;
-        height: 53px;
-        padding: 0 18px;
+        height: 3.3125rem;
+        padding: 0 1.125rem;
         border-radius: $radius-xs;
-        border: 1px solid $neutral-color-300;
+        border: 0.0625rem solid $neutral-color-300;
         background-color: $light-color-100;
 
         &::placeholder {
@@ -745,9 +758,9 @@ header {
         @include body-default;
         width: 358px;
         max-width: 100%;
-        height: 40px;
+        height: 2.5rem;
         margin-top: $space-sm;
-        border-radius: 6px;
+        border-radius: 0.375rem;
         background-color: $accent-color;
         color: $text-primary;
         font-weight: $font-weight-bold;
@@ -780,23 +793,23 @@ header {
 
     // 하단 링크
     .login-links {
-      margin-top: 14px;
+      margin-top: 0.875rem;
       align-items: center;
-      gap: 6px;
+      gap: 0.375rem;
     }
 
     .login-links-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 20px;
+      gap: 1.25rem;
     }
 
     .login-link-btn {
       @include label-default;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.375rem;
       padding: 0;
       border: none;
       background: none;
@@ -816,7 +829,7 @@ header {
     // 구글 아이콘
     .login-google-icon {
       width: 14px;
-      height: 14px;
+      height: 0.875rem;
       flex-shrink: 0;
     }
   }
@@ -851,7 +864,7 @@ header {
 @keyframes login-step-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(0.75rem);
   }
 
   to {
@@ -881,9 +894,9 @@ header {
   .swiper-button-prev {
     color: $light-color-0 !important;
     width: 52px !important;
-    height: 52px !important;
+    height: 3.25rem !important;
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(0.75rem);
     border-radius: 50%;
     transition: all 0.3s ease;
     z-index: 20;
@@ -894,21 +907,21 @@ header {
     }
 
     &::after {
-      font-size: 20px !important;
+      font-size: 1.25rem !important;
       font-weight: $font-weight-bold;
     }
   }
 
   .swiper-pagination {
-    bottom: 24px !important;
+    bottom: 1.5rem !important;
     z-index: 20;
 
     .swiper-pagination-bullet {
       background: rgba(255, 255, 255, 0.4) !important;
       opacity: 1;
       width: 8px;
-      height: 8px;
-      margin: 0 5px !important;
+      height: 0.5rem;
+      margin: 0 0.3125rem !important;
       transition: all 0.3s ease;
 
       &-active {
@@ -976,21 +989,21 @@ header {
         align-items: center;
         justify-content: flex-start;
         gap: $space-md;
-        margin-bottom: 20px;
+        margin-bottom: 1.25rem;
         color: $text-secondary;
-        font-size: 14px;
+        font-size: 0.875rem;
 
         .age-rating {
-          border: 1px solid $text-secondary;
-          padding: 2px 6px;
-          border-radius: 4px;
-          font-size: 12px;
+          border: 0.0625rem solid $text-secondary;
+          padding: 0.125rem 0.375rem;
+          border-radius: 0.25rem;
+          font-size: 0.75rem;
         }
       }
 
       .hero-title {
         @include display-M;
-        font-size: 64px;
+        font-size: 4rem;
         font-weight: $font-weight-bold;
         line-height: 1.15;
         margin: 0 0 $space-xl;
@@ -1001,7 +1014,7 @@ header {
         @include body-large;
         color: $neutral-color-300;
         line-height: 1.6;
-        margin-bottom: 28px;
+        margin-bottom: 1.75rem;
         word-break: keep-all; // 한글이 단어 중간에서 끊기지 않게
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -1019,10 +1032,10 @@ header {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          height: 40px;
-          padding: 0 20px;
-          border-radius: 9999px;
-          font-size: 14px;
+          height: 2.5rem;
+          padding: 0 1.25rem;
+          border-radius: 624.9375rem;
+          font-size: 0.875rem;
           font-weight: $font-weight-bold;
           text-decoration: none;
           transition: background-color 0.25s ease, color 0.25s ease,
@@ -1040,7 +1053,7 @@ header {
 
           // 서브 버튼 (외곽선)
           &.secondary {
-            border: 1px solid $neutral-color-400;
+            border: 0.0625rem solid $neutral-color-400;
             color: $text-primary;
 
             &:hover {
@@ -1054,42 +1067,11 @@ header {
   }
 }
 
-// ===== 히어로 아래: 핵심 혜택 (Value Props) =====
-.value-props {
-  background-color: $gnb-bg;
-  padding: 22px 0 $space-xl;
-
-  .inner {
-    @include inner-wrap;
-  }
-
-  .value-props-inner {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $space-xl;
-  }
-
-  .value-prop-item {
-    display: flex;
-    flex-direction: column;
-    gap: $space-md;
-  }
-
-  .value-prop-title {
-    @include body-large; // 시안 제목 크기 (17px)
-    color: $light-color-0;
-  }
-
-  .value-prop-desc {
-    @include body-small; // Body Small 13
-    color: $light-color-500;
-  }
-}
 
 // ===== 인기 영화 TOP 10 =====
 .top10-section {
   background-color: $gnb-bg;
-  padding: 40px 0 56px;
+  padding: 2.5rem 0 3.5rem;
 
   .inner {
     @include inner-wrap;
@@ -1098,7 +1080,7 @@ header {
   .top10-title {
     @include heading-h2;
     color: $text-primary;
-    margin: 0 0 20px;
+    margin: 0 0 1.25rem;
   }
 
   .swiper-button-next,
@@ -1187,15 +1169,15 @@ header {
   // 포스터 왼쪽 아래에 겹치는 큰 순위 숫자
   .top10-rank {
     position: absolute;
-    left: 8px;
-    bottom: -12px;
+    left: 0.5rem;
+    bottom: -0.75rem;
     z-index: 2;
     font-family: "SF Pro", sans-serif;
-    font-size: 140px;
+    font-size: 8.75rem;
     font-weight: $font-weight-bold;
     line-height: 1;
     color: $text-primary;
-    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 0.125rem 1rem rgba(0, 0, 0, 0.6);
     pointer-events: none;
   }
 }
@@ -1262,7 +1244,7 @@ header {
     display: flex;
     align-items: center;
     gap: $space-xl;
-    padding: 20px;
+    padding: 1.25rem;
     border-radius: $radius-card-sm;
     background-color: $bg-surface-raised;
     min-width: 0;
@@ -1340,11 +1322,11 @@ header {
     display: inline-flex;
     align-items: center;
     gap: $space-xs;
-    height: 36px;
+    height: 2.25rem;
     margin-top: $space-sm;
-    padding: 0 20px;
-    border: 1px solid transparent;
-    border-radius: 9999px;
+    padding: 0 1.25rem;
+    border: 0.0625rem solid transparent;
+    border-radius: 624.9375rem;
     background-color: $light-color-100;
     color: $text-inverse;
     cursor: pointer;
@@ -1365,8 +1347,8 @@ header {
     }
 
     &:focus-visible {
-      outline: 2px solid $light-color-0;
-      outline-offset: 2px;
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.125rem;
     }
   }
 }
@@ -1376,8 +1358,8 @@ header {
   background-color: $gnb-bg;
   color: $text-primary;
   min-height: 100vh;
-  padding-top: calc(#{$header-height} + 24px); // 헤더 아래 24px
-  padding-bottom: 80px;
+  padding-top: calc(#{$header-height} + 1.5rem); // 헤더 아래 24px
+  padding-bottom: 5rem;
 
   .inner {
     @include inner-wrap;
@@ -1393,6 +1375,11 @@ header {
 
   button {
     font-family: inherit;
+  }
+
+  // [수정] 홈으로 돌아가기 (플레이어 박스 위 · 아래 간격 12) — 모양은 아래 공용 .detail-back
+  .detail-back {
+    margin-bottom: $space-md;
   }
 
   .content-layout {
@@ -1445,23 +1432,23 @@ header {
       justify-content: space-between;
       align-items: flex-end;
       gap: $space-2xl;
-      padding: 20px 28px $space-xl;
+      padding: 1.25rem 1.75rem $space-xl;
     }
 
     .info-text {
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 0.375rem;
     }
 
     .title-logo {
       display: block;
       max-width: 200px;
-      max-height: 56px;
+      max-height: 3.5rem;
       object-fit: contain;
       object-position: left center;
-      margin-bottom: 6px;
+      margin-bottom: 0.375rem;
     }
 
     .title {
@@ -1504,12 +1491,12 @@ header {
 
     .icon-btns {
       display: flex;
-      gap: 10px;
+      gap: 0.625rem;
     }
 
     .icon-btn {
       width: 36px;
-      height: 36px;
+      height: 2.25rem;
       border-radius: 50%;
       border: none;
       @include heading-h5;
@@ -1536,7 +1523,7 @@ header {
       @include body-default;
       font-weight: $font-weight-bold;
       width: 180px;
-      height: 40px;
+      height: 2.5rem;
       border: none;
       border-radius: $radius-xs;
       background-color: $light-color-0;
@@ -1554,7 +1541,7 @@ header {
   .rating-section {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.625rem;
     padding: 0 $space-sm;
 
     .rating-header {
@@ -1577,7 +1564,7 @@ header {
         // 평균 점수 옆 별 (star-icon.svg 모양 · 노랗게 채움)
         .score-star {
           width: 18px;
-          height: 18px;
+          height: 1.125rem;
           color: $rating-color;
           flex-shrink: 0;
         }
@@ -1622,7 +1609,7 @@ header {
 
           svg {
             width: 35px;
-            height: 35px;
+            height: 2.1875rem;
           }
         }
 
@@ -1649,10 +1636,10 @@ header {
       @include body-default;
       align-self: center;
       font-weight: $font-weight-bold;
-      height: 40px;
-      padding: 0 28px;
+      height: 2.5rem;
+      padding: 0 1.75rem;
       border: none;
-      border-radius: 9999px;
+      border-radius: 624.9375rem;
       background-color: $light-color-100;
       color: $text-inverse;
       cursor: pointer;
@@ -1680,12 +1667,12 @@ header {
     flex: 0 0 34%;
     min-width: 0;
     position: sticky;
-    top: calc(#{$header-height} + 24px);
-    height: calc(100vh - #{$header-height} - 48px);
-    min-height: 560px;
-    max-height: 920px;
+    top: calc(#{$header-height} + 1.5rem);
+    height: calc(100vh - #{$header-height} - 3rem);
+    min-height: 35rem;
+    max-height: 57.5rem;
     box-sizing: border-box;
-    padding: 20px $space-xl $space-sm;
+    padding: 1.25rem $space-xl $space-sm;
     border-radius: $radius-card;
     background-color: $bg-surface;
     display: flex;
@@ -1694,8 +1681,8 @@ header {
     .tabs {
       display: flex;
       justify-content: space-between;
-      border-bottom: 1px solid $dark-color-400;
-      margin-bottom: 20px;
+      border-bottom: 0.0625rem solid $dark-color-400;
+      margin-bottom: 1.25rem;
 
       .tab-btn {
         @include heading-h5;
@@ -1719,9 +1706,9 @@ header {
             content: "";
             position: absolute;
             left: 0;
-            bottom: -1px;
+            bottom: -0.0625rem;
             width: 100%;
-            height: 2px;
+            height: 0.125rem;
             background-color: $light-color-0;
           }
         }
@@ -1737,10 +1724,10 @@ header {
       select {
         @include label-default;
         font-weight: $font-weight-bold;
-        height: 36px;
+        height: 2.25rem;
         padding: 0 $space-2xl 0 $space-md;
         border: none;
-        border-radius: 6px;
+        border-radius: 0.375rem;
         background-color: $light-color-300;
         color: $text-inverse;
         outline: none;
@@ -1749,7 +1736,7 @@ header {
         // 아래 화살표 아이콘
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23171717' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position: right 12px center;
+        background-position: right 0.75rem center;
       }
     }
 
@@ -1777,7 +1764,7 @@ header {
       align-items: center;
       gap: $space-md;
       width: 100%;
-      padding: 6px;
+      padding: 0.375rem;
       border: none;
       border-radius: $radius-xs;
       background: none;
@@ -1799,7 +1786,7 @@ header {
         width: 168px;
         aspect-ratio: 16 / 9;
         flex-shrink: 0;
-        border-radius: 6px;
+        border-radius: 0.375rem;
         overflow: hidden;
         background-color: $bg-page;
 
@@ -1816,7 +1803,7 @@ header {
           left: 50%;
           transform: translate(-50%, -50%);
           width: 32px;
-          height: 32px;
+          height: 2rem;
           border-radius: 50%;
           @include caption-default;
           background-color: rgba($dark-color-900, 0.6);
@@ -1833,7 +1820,7 @@ header {
         min-width: 0;
         display: flex;
         flex-direction: column;
-        gap: 3px;
+        gap: 0.1875rem;
 
         .ep-num {
           @include caption-default;
@@ -1862,7 +1849,7 @@ header {
     .cast-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px $space-md;
+      gap: 1.25rem $space-md;
       list-style: none;
       margin: 0;
       padding: $space-xs 0 $space-lg;
@@ -1880,7 +1867,7 @@ header {
     .cast-photo {
       @include heading-h3;
       width: 72px;
-      height: 72px;
+      height: 4.5rem;
       border-radius: 50%;
       overflow: hidden;
       background-color: $bg-surface-hover;
@@ -1933,7 +1920,7 @@ header {
     .similar-card {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 0.375rem;
       width: 100%;
       min-width: 0;
       text-decoration: none;
@@ -1949,7 +1936,7 @@ header {
       width: 100%;
       aspect-ratio: 2 / 3;
       flex-shrink: 0;
-      border-radius: 6px;
+      border-radius: 0.375rem;
       overflow: hidden;
       background-color: $bg-surface-raised;
 
@@ -2003,12 +1990,12 @@ header {
     .popup-close {
       @include body-default;
       position: absolute;
-      top: 24px;
-      right: 24px;
+      top: 1.5rem;
+      right: 1.5rem;
       z-index: 1;
-      padding: $space-sm 18px;
+      padding: $space-sm 1.125rem;
       border: none;
-      border-radius: 9999px;
+      border-radius: 624.9375rem;
       background-color: $light-color-0;
       color: $text-inverse;
       font-weight: $font-weight-bold;
@@ -2047,7 +2034,7 @@ header {
   .swiper-button-next,
   .swiper-button-prev {
     color: $text-primary;
-    top: calc(282px * 400 / 282 / 2); // 포스터 세로 가운데
+    top: calc(17.625rem * 400 / 282 / 2); // 포스터 세로 가운데
   }
 
   .apple-card {
@@ -2151,7 +2138,7 @@ header {
     flex-shrink: 0;
     width: 100%;
     max-width: 400px;
-    padding: 20px;
+    padding: 1.25rem;
     border-radius: $radius-card-sm;
     background-color: $light-color-0;
     color: $text-inverse;
@@ -2186,10 +2173,10 @@ header {
 
   .ai-promo-chip {
     @include label-default;
-    height: 28px;
+    height: 1.75rem;
     padding: 0 $space-md;
-    border: 1px solid $neutral-color-400;
-    border-radius: 9999px;
+    border: 0.0625rem solid $neutral-color-400;
+    border-radius: 624.9375rem;
     background-color: $light-color-0;
     color: $text-inverse;
     white-space: nowrap;
@@ -2213,9 +2200,9 @@ header {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 36px;
+    height: 2.25rem;
     margin-top: $space-md;
-    border-radius: 9999px;
+    border-radius: 624.9375rem;
     background-color: $primary-color-500;
     color: $text-primary;
     text-decoration: none;
@@ -2226,8 +2213,8 @@ header {
     }
 
     &:focus-visible {
-      outline: 2px solid $primary-color-500;
-      outline-offset: 2px;
+      outline: 0.125rem solid $primary-color-500;
+      outline-offset: 0.125rem;
     }
   }
 }
@@ -2235,19 +2222,29 @@ header {
 // ===== 구독 유도 CTA =====
 .subscribe-cta {
   background-color: $gnb-bg;
-  padding: 40px 0 72px;
+  padding: 2.5rem 0 4.5rem;
 
   .inner {
     @include inner-wrap;
   }
 
+  .subscribe-bg-picture {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+
   .subscribe-banner {
     position: relative;
-    height: 415px;
+    height: 25.9375rem;
     border-radius: $radius-lg;
     overflow: hidden;
     background-color: $bg-surface;
-    border: 1px solid $dark-color-300;
+    border: 0.0625rem solid $dark-color-300;
   }
 
   // 배경 webp 이미지: 크기가 줄어들어도 비율을 유지하며 자연스럽게 축소
@@ -2288,7 +2285,7 @@ header {
   }
 
   .subscribe-logo {
-    height: 28px;
+    height: 1.75rem;
     width: auto;
     display: block;
     filter: brightness(0) invert(1);
@@ -2301,13 +2298,15 @@ header {
     word-break: keep-all;
   }
 
+
   .subscribe-btn {
     @include body-default;
     display: inline-flex;
     align-items: center;
-    height: 48px;
+    justify-content: center;
+    height: 3rem;
     padding: 0 $space-3xl;
-    border-radius: 9999px;
+    border-radius: 624.9375rem;
     background-color: $light-color-100;
     color: $text-inverse;
     text-decoration: none;
@@ -2321,13 +2320,16 @@ header {
   .subscribe-note {
     @include body-small;
     color: $text-tertiary;
+    display: block;
+    width: 200px;
     margin: 0;
+    text-align: center;
   }
 }
 
 .sport-upcoming {
   background-color: $gnb-bg;
-  padding: 56px 0 $space-2xl;
+  padding: 3.5rem 0 $space-2xl;
 
   .inner {
     @include inner-wrap;
@@ -2354,18 +2356,18 @@ header {
     flex-direction: column;
     justify-content: space-between;
     width: 310px;
-    height: 200px;
-    padding: 20px;
-    border-radius: 16px;
+    height: 12.5rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
     overflow: hidden;
     background-color: $bg-surface;
     box-sizing: border-box;
     cursor: pointer;
     transition: transform 0.3s ease, border-color 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 0.0625rem solid rgba(255, 255, 255, 0.08);
 
     &:hover {
-      transform: translateY(-4px);
+      transform: translateY(-0.25rem);
       border-color: rgba(255, 255, 255, 0.25);
     }
 
@@ -2414,7 +2416,7 @@ header {
     // 팀 로고 크기
     .sport-team {
       width: 90px;
-      height: 90px;
+      height: 5.625rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2425,7 +2427,7 @@ header {
         height: 100%;
         object-fit: contain;
         display: block;
-        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.75));
+        filter: drop-shadow(0 0.5rem 1rem rgba(0, 0, 0, 0.75));
       }
     }
 
@@ -2433,13 +2435,13 @@ header {
     .sport-match-divider {
       position: absolute;
       width: 1px;
-      height: 70px;
+      height: 4.375rem;
       background: linear-gradient(to bottom,
           rgba(255, 255, 255, 0),
           rgba(255, 255, 255, 0.35),
           rgba(255, 255, 255, 0));
       transform: rotate(25deg);
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.15);
       pointer-events: none;
     }
   }
@@ -2457,7 +2459,7 @@ header {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 97px; // 97px 고정 높이 유지
+  height: 6.0625rem; // 97px 고정 높이 유지
   z-index: 999;
   background-color: $accent-color;
   transform: translateY(100%);
@@ -2489,7 +2491,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 6px;
+    gap: 0.375rem;
   }
 
   // Apple TV를 1주일 무료로 즐기세요. (사진의 굵고 아담한 타이틀)
@@ -2498,7 +2500,7 @@ header {
     font-weight: $font-weight-bold;
     color: $text-primary;
     margin: 0;
-    font-size: clamp(14px, 1.1vw, 16px);
+    font-size: clamp(0.875rem, 1.1vw, 1rem);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2509,7 +2511,7 @@ header {
     @include body-small; // 13px
     color: rgba($text-primary, 0.85);
     margin: 0;
-    font-size: clamp(11px, 0.9vw, 13px);
+    font-size: clamp(0.6875rem, 0.9vw, 0.8125rem);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2521,7 +2523,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 0.375rem;
   }
 
   // 무료 체험 수락 버튼
@@ -2530,13 +2532,13 @@ header {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 36px;
-    padding: 0 20px;
-    border-radius: 9999px;
+    height: 2.25rem;
+    padding: 0 1.25rem;
+    border-radius: 624.9375rem;
     background-color: $light-color-0;
     color: $text-inverse;
     font-weight: $font-weight-bold;
-    font-size: clamp(12px, 0.9vw, 13px);
+    font-size: clamp(0.75rem, 0.9vw, 0.8125rem);
     text-decoration: none;
     transition: background-color 0.25s ease;
     white-space: nowrap;
@@ -2552,7 +2554,7 @@ header {
     color: rgba($text-primary, 0.8);
     text-align: center;
     margin: 0;
-    font-size: clamp(10px, 0.8vw, 11px);
+    font-size: clamp(0.625rem, 0.8vw, 0.6875rem);
     white-space: nowrap;
   }
 }
@@ -2560,7 +2562,7 @@ header {
 // ===== 로그인 후 스포츠: LIVE 경기 배너 (.promo-banner 와 같은 크기, 디자인만 변경) =====
 .promo-banner.is-live {
   background-color: $bg-surface-raised;
-  border-top: 1px solid $dark-color-300;
+  border-top: 0.0625rem solid $dark-color-300;
 
   .promo-banner-text {
     gap: $space-sm;
@@ -2572,7 +2574,7 @@ header {
     font-weight: $font-weight-bold;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 0.875rem;
     min-width: 0;
   }
 
@@ -2591,7 +2593,7 @@ header {
 
   .live-dot {
     width: 18px;
-    height: 18px;
+    height: 1.125rem;
     border-radius: 50%;
     background-color: $sports-color;
     animation: sport-live-blink 1.4s ease-in-out infinite;
@@ -2608,7 +2610,7 @@ header {
     flex-shrink: 0;
     margin: 0 $space-xs;
     color: $text-primary;
-    letter-spacing: 2px;
+    letter-spacing: 0.125rem;
   }
 
   .promo-banner-desc {
@@ -2619,9 +2621,9 @@ header {
   // 경기 시청 버튼 (빨간 알약)
   .promo-banner-btn {
     @include body-default;
-    gap: 6px;
+    gap: 0.375rem;
     min-width: 164px;
-    height: 36px;
+    height: 2.25rem;
     background-color: $sports-color;
     color: $text-primary;
     font-weight: $font-weight-bold;
@@ -2651,7 +2653,7 @@ header {
 
 // 푸터 하단 여백 확보
 body.has-promo-banner .footer {
-  padding-bottom: 115px;
+  padding-bottom: 7.1875rem;
 }
 
 // ===== 스포츠 홈 =====
@@ -2684,7 +2686,7 @@ body.has-promo-banner .footer {
   .sport-hero-card {
     position: absolute;
     left: 8%;
-    bottom: 64px;
+    bottom: 4rem;
     z-index: 2;
     width: 100%;
     max-width: 435px;
@@ -2714,7 +2716,7 @@ body.has-promo-banner .footer {
 
   .sport-live-dot {
     width: 8px;
-    height: 8px;
+    height: 0.5rem;
     border-radius: 50%;
     background-color: $sports-color;
     animation: sport-live-blink 1.4s ease-in-out infinite;
@@ -2738,7 +2740,7 @@ body.has-promo-banner .footer {
 
   .sport-hero-sub {
     @include body-small;
-    margin: 0 0 20px;
+    margin: 0 0 1.25rem;
     color: $text-tertiary;
   }
 
@@ -2766,9 +2768,9 @@ body.has-promo-banner .footer {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
+  height: 2.5rem;
   padding: 0 $space-xl;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   font-weight: $font-weight-bold;
   text-decoration: none;
   transition: background-color 0.25s ease, opacity 0.25s ease;
@@ -2802,7 +2804,7 @@ body.has-promo-banner .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 
   .sport-section-title {
     @include heading-h2;
@@ -2836,7 +2838,7 @@ body.has-promo-banner .footer {
 // 예정된 경기
 .sport-upcoming {
   background-color: $gnb-bg;
-  padding: 56px 0 $space-2xl;
+  padding: 3.5rem 0 $space-2xl;
 
   .inner {
     @include inner-wrap;
@@ -2854,7 +2856,7 @@ body.has-promo-banner .footer {
   .sport-match-card {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 0.875rem;
     padding: $space-lg;
     border-radius: $radius-card-sm;
     background-color: $bg-surface;
@@ -2876,20 +2878,20 @@ body.has-promo-banner .footer {
   .sport-match-teams {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.625rem;
     min-width: 0;
   }
 
   .sport-match-team {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0.625rem;
     min-width: 0;
 
     img,
     .sport-crest-empty {
       width: 28px;
-      height: 28px;
+      height: 1.75rem;
       flex-shrink: 0;
       object-fit: contain;
       border-radius: 50%;
@@ -2916,7 +2918,7 @@ body.has-promo-banner .footer {
 // 숏츠
 .sport-shorts {
   background-color: $gnb-bg;
-  padding: $space-2xl 0 72px;
+  padding: $space-2xl 0 4.5rem;
 
   .inner {
     @include inner-wrap;
@@ -2934,7 +2936,7 @@ body.has-promo-banner .footer {
   .sport-short-card {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.375rem;
     text-decoration: none;
     color: $text-primary;
   }
@@ -2945,7 +2947,7 @@ body.has-promo-banner .footer {
     border-radius: $radius-card-sm;
     overflow: hidden;
     background-color: $bg-surface;
-    margin-bottom: 6px;
+    margin-bottom: 0.375rem;
 
     img {
       width: 100%;
@@ -2965,12 +2967,12 @@ body.has-promo-banner .footer {
     align-items: center;
     justify-content: center;
     width: 52px;
-    height: 52px;
+    height: 3.25rem;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.55);
     color: $text-primary;
-    font-size: 18px;
-    padding-left: 3px;
+    font-size: 1.125rem;
+    padding-left: 0.1875rem;
     box-sizing: border-box;
   }
 
@@ -3001,7 +3003,7 @@ body.has-promo-banner .footer {
 // 스포츠 홍보 배너 (구조만)
 .sport-promo {
   background-color: $gnb-bg;
-  padding: 0 0 72px;
+  padding: 0 0 4.5rem;
 
   .inner {
     @include inner-wrap;
@@ -3012,7 +3014,7 @@ body.has-promo-banner .footer {
     align-items: center;
     justify-content: center;
     aspect-ratio: 1185 / 348; // 시안 비율
-    min-height: 200px;
+    min-height: 12.5rem;
     border-radius: $radius-card-sm;
     background-color: $bg-surface;
     overflow: hidden;
@@ -3035,12 +3037,12 @@ body.has-promo-banner .footer {
 .sport-team-card {
   display: flex;
   align-items: center;
-  gap: 20px;
-  height: 108px;
-  padding: 0 28px 0 18px;
+  gap: 1.25rem;
+  height: 6.75rem;
+  padding: 0 1.75rem 0 1.125rem;
   box-sizing: border-box;
   border-radius: $radius-card;
-  border: 1px solid transparent;
+  border: 0.0625rem solid transparent;
   background-color: $bg-surface-raised;
   min-width: 0;
   transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -3058,7 +3060,7 @@ body.has-promo-banner .footer {
   .sport-team-logo {
     flex-shrink: 0;
     width: 64px;
-    height: 64px;
+    height: 4rem;
     border-radius: $radius-sm;
     overflow: hidden;
 
@@ -3075,7 +3077,7 @@ body.has-promo-banner .footer {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0.125rem;
   }
 
   .sport-team-name,
@@ -3104,7 +3106,7 @@ body.has-promo-banner .footer {
     align-items: center;
     justify-content: center;
     width: 40px;
-    height: 40px;
+    height: 2.5rem;
     border: none;
     border-radius: 50%;
     background: transparent;
@@ -3136,10 +3138,10 @@ body.has-promo-banner .footer {
 
   button {
     @include body-default;
-    height: 40px;
-    padding: 0 18px;
+    height: 2.5rem;
+    padding: 0 1.125rem;
     border: none;
-    border-radius: 9999px;
+    border-radius: 624.9375rem;
     background-color: rgba($dark-color-900, 0.45);
     color: $light-color-300;
     cursor: pointer;
@@ -3147,7 +3149,7 @@ body.has-promo-banner .footer {
     transition: background-color 0.2s ease, color 0.2s ease;
 
     .count {
-      margin-left: 6px;
+      margin-left: 0.375rem;
       color: $text-tertiary;
     }
 
@@ -3171,7 +3173,7 @@ body.has-promo-banner .footer {
 .sport-team-empty {
   @include body-default;
   margin: 0;
-  padding: 40px $space-lg;
+  padding: 2.5rem $space-lg;
   border-radius: $radius-card;
   background-color: rgba($dark-color-900, 0.45);
   color: $light-color-300;
@@ -3194,7 +3196,7 @@ body.has-promo-banner .footer {
     align-items: flex-end;
     justify-content: space-between;
     gap: $space-lg;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
   }
 
   .sport-teams-title {
@@ -3243,11 +3245,11 @@ body.has-promo-banner .footer {
     display: flex;
     align-items: center;
     width: fit-content;
-    height: 44px;
+    height: 2.75rem;
     margin: $space-2xl auto 0;
-    padding: 0 28px;
-    border: 1px solid rgba($light-color-0, 0.5);
-    border-radius: 9999px;
+    padding: 0 1.75rem;
+    border: 0.0625rem solid rgba($light-color-0, 0.5);
+    border-radius: 624.9375rem;
     background-color: rgba($dark-color-900, 0.25);
     color: $text-primary;
     text-decoration: none;
@@ -3264,7 +3266,7 @@ body.has-promo-banner .footer {
 .sport-teams-page {
   min-height: 100vh;
   padding-top: $header-height;
-  padding-bottom: 80px;
+  padding-bottom: 5rem;
   background-color: $gnb-bg;
   color: $text-primary;
 
@@ -3275,12 +3277,12 @@ body.has-promo-banner .footer {
   // 상단 그라데이션 띠
   .sport-teams-hero {
     background: $bg-gradient; // [수정] 배경 그라데이션 토큰
-    padding: 40px 0 $space-4xl;
+    padding: 2.5rem 0 $space-4xl;
   }
 
   .sport-teams-back {
     @include body-small;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     padding: 0;
     border: none;
     background: none;
@@ -3302,7 +3304,7 @@ body.has-promo-banner .footer {
 
   .sport-teams-page-desc {
     @include body-large;
-    margin: 0 0 20px;
+    margin: 0 0 1.25rem;
     color: rgba($light-color-0, 0.85);
   }
 
@@ -3321,10 +3323,10 @@ body.has-promo-banner .footer {
 
   .sport-teams-clear {
     @include body-small;
-    height: 32px;
-    padding: 0 14px;
-    border: 1px solid rgba($light-color-0, 0.5);
-    border-radius: 9999px;
+    height: 2rem;
+    padding: 0 0.875rem;
+    border: 0.0625rem solid rgba($light-color-0, 0.5);
+    border-radius: 624.9375rem;
     background: transparent;
     color: $text-primary;
     cursor: pointer;
@@ -3365,9 +3367,9 @@ body.has-promo-banner .footer {
     display: flex;
     align-items: center;
     width: 280px;
-    height: 40px;
+    height: 2.5rem;
     padding: 0 $space-lg;
-    border-radius: 9999px;
+    border-radius: 624.9375rem;
     background-color: $input-bg;
     box-sizing: border-box;
     transition: background-color 0.2s ease;
@@ -3378,7 +3380,7 @@ body.has-promo-banner .footer {
 
     img {
       width: 14px;
-      height: 14px;
+      height: 0.875rem;
       margin-right: $space-sm;
       flex-shrink: 0;
       filter: invert(0.7);
@@ -3406,7 +3408,7 @@ body.has-promo-banner .footer {
   .sport-team-group-title {
     @include heading-h2;
     font-weight: $font-weight-bold;
-    margin: 0 0 20px;
+    margin: 0 0 1.25rem;
     color: $text-primary;
 
     .count {
@@ -3433,7 +3435,7 @@ body.has-promo-banner .footer {
 // 리그 순위 (바로가기 카드)
 .sport-league {
   background-color: $gnb-bg;
-  padding: 56px 0 72px;
+  padding: 3.5rem 0 4.5rem;
 
   .inner {
     @include inner-wrap;
@@ -3470,12 +3472,12 @@ body.has-promo-banner .footer {
     align-items: center;
     justify-content: center;
     width: 52px;
-    height: 52px;
+    height: 3.25rem;
     border-radius: $radius-sm;
     background-color: $light-color-0;
     color: $text-inverse;
-    font-size: 20px;
-    padding-left: 2px;
+    font-size: 1.25rem;
+    padding-left: 0.125rem;
     box-sizing: border-box;
   }
 
@@ -3489,14 +3491,14 @@ body.has-promo-banner .footer {
   .sport-league-arrow {
     flex-shrink: 0;
     color: $text-tertiary;
-    font-size: 18px;
+    font-size: 1.125rem;
   }
 }
 
 // 영상 다시보기
 .sport-replay {
   background-color: $gnb-bg;
-  padding: 56px 0 $space-2xl;
+  padding: 3.5rem 0 $space-2xl;
 
   .inner {
     @include inner-wrap;
@@ -3514,7 +3516,7 @@ body.has-promo-banner .footer {
   .sport-replay-card {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 0.875rem;
     padding: $space-md;
     border-radius: $radius-card-sm;
     background-color: $bg-surface;
@@ -3539,7 +3541,7 @@ body.has-promo-banner .footer {
 
     img {
       width: 44px;
-      height: 44px;
+      height: 2.75rem;
       object-fit: contain;
       display: block;
     }
@@ -3564,14 +3566,14 @@ body.has-promo-banner .footer {
     @include body-small;
     padding: 0 $space-xs $space-xs;
     color: $text-tertiary;
-    margin-top: -8px;
+    margin-top: -0.5rem;
   }
 }
 
 // 하이라이트
 .sport-highlights {
   background-color: $gnb-bg;
-  padding: 56px 0 72px;
+  padding: 3.5rem 0 4.5rem;
 
   .inner {
     @include inner-wrap;
@@ -3589,7 +3591,7 @@ body.has-promo-banner .footer {
   .sport-highlight-card {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.375rem;
     text-decoration: none;
     color: $text-primary;
   }
@@ -3624,12 +3626,12 @@ body.has-promo-banner .footer {
     align-items: center;
     justify-content: center;
     width: 42px;
-    height: 42px;
+    height: 2.625rem;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.7);
     color: $text-primary;
-    font-size: 14px;
-    padding-left: 2px;
+    font-size: 0.875rem;
+    padding-left: 0.125rem;
     box-sizing: border-box;
   }
 
@@ -3656,7 +3658,7 @@ body.has-promo-banner .footer {
 // 알림 설정 배너 (스포츠 마지막 영역)
 .sport-notify {
   background-color: $gnb-bg;
-  padding: 0 0 72px;
+  padding: 0 0 4.5rem;
 
   .inner {
     @include inner-wrap;
@@ -3668,7 +3670,7 @@ body.has-promo-banner .footer {
     justify-content: space-between;
     gap: $space-2xl;
     padding: $space-4xl;
-    border-radius: 16px;
+    border-radius: 1rem;
     background-color: $bg-surface;
   }
 
@@ -3692,9 +3694,9 @@ body.has-promo-banner .footer {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 44px;
+    height: 2.75rem;
     padding: 0 $space-2xl;
-    border-radius: 9999px;
+    border-radius: 624.9375rem;
     background-color: $light-color-0;
     color: $text-inverse;
     font-weight: $font-weight-bold;
@@ -3724,7 +3726,7 @@ body.has-promo-banner .footer {
 @keyframes page-fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(0.5rem);
   }
 
   to {
@@ -3735,7 +3737,7 @@ body.has-promo-banner .footer {
 
 main {
   h2 {
-    padding-top: 200px;
+    padding-top: 12.5rem;
   }
 }
 
@@ -3751,18 +3753,18 @@ main {
     width: 100%;
     max-width: $inner-width; // 이너 1920px
     margin: 0 auto;
-    padding: 26px 0; // 14 + 26 = 시안의 상하 여백
+    padding: 1.625rem 0; // 14 + 26 = 시안의 상하 여백
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 28px;
+    gap: 1.75rem;
     box-sizing: border-box;
   }
 
   // 1. 로고 (맨 위)
   .footer-logo img {
     width: auto;
-    height: 22px;
+    height: 1.375rem;
     display: block;
     filter: brightness(0) invert(1);
   }
@@ -3779,9 +3781,9 @@ main {
     a {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.375rem;
       color: $text-secondary;
-      font-size: 15px;
+      font-size: 0.9375rem;
       font-weight: $font-weight-regular;
       transition: color 0.2s ease;
 
@@ -3791,7 +3793,7 @@ main {
     }
 
     .arrow {
-      font-size: 15px;
+      font-size: 0.9375rem;
       color: $text-secondary;
     }
   }
@@ -3801,11 +3803,11 @@ main {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: $space-sm 20px;
+    gap: $space-sm 1.25rem;
     list-style: none;
     margin: 0;
     padding: 0;
-    font-size: 13px;
+    font-size: 0.8125rem;
 
     a {
       color: $text-tertiary;
@@ -3820,7 +3822,7 @@ main {
   // 4. 저작권
   .footer-copyright {
     color: $text-tertiary;
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 }
 
@@ -3852,7 +3854,7 @@ main.sport-home {
   }
 
   .sport-teams {
-    padding: 56px 0;
+    padding: 3.5rem 0;
   }
 
   .sport-live-slide,
@@ -3889,21 +3891,21 @@ main.sport-home {
   .sport-live-watch {
     position: absolute;
     z-index: 1;
-    left: 14px;
+    left: 0.875rem;
     @include label-default;
-    padding: 5px $space-md;
+    padding: 0.3125rem $space-md;
   }
 
   .sport-live-badge {
-    top: 14px;
+    top: 0.875rem;
     background: $sports-color;
-    border-radius: 30px;
+    border-radius: 1.875rem;
   }
 
   .sport-live-watch {
-    bottom: 14px;
+    bottom: 0.875rem;
     background: rgba(255, 255, 255, .25);
-    border-radius: 3px;
+    border-radius: 0.1875rem;
   }
 
   .sport-series-card {
@@ -3932,14 +3934,14 @@ main.sport-home {
 //   히어로 · 핵심 혜택 · TOP 10 · 기기 안내(에코시스템)
 // - 태블릿 / 모바일 규칙은 그대로 (1025px 이상에서만 적용)
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
 
   // ---------- 히어로: 높이는 기존 100vh(화면 꽉 차게) 그대로 · 본문 시작선(12.5%) · 보라색 CTA ----------
   // (스포츠 히어로 .sport-hero-swiper 는 제외)
   .hero-swiper-container:not(.sport-hero-swiper) {
     .hero-slide-item .hero-info {
       left: $desktop-gutter;
-      max-width: 720px;
+      max-width: min(720px, 75%); // [수정] 태블릿(768px~)에서 화면 밖으로 나가지 않게 (960px 이상은 그대로 720)
 
       .hero-meta {
         @include label-default-b;
@@ -3969,7 +3971,7 @@ main.sport-home {
 
         .hero-btn {
           @include body-small-b;
-          height: 40px;
+          height: 2.5rem;
           padding: 0 $space-xl;
 
           &.primary {
@@ -4120,8 +4122,8 @@ main.sport-home {
   left: $space-xl;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 40px;
+  gap: 0.375rem;
+  height: 2.5rem;
   padding: 0 $space-xl;
   border: none;
   border-radius: $radius-xs;
@@ -4135,8 +4137,8 @@ main.sport-home {
   }
 
   &:focus-visible {
-    outline: 2px solid $accent-color;
-    outline-offset: 2px;
+    outline: 0.125rem solid $accent-color;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -4146,14 +4148,14 @@ main.sport-home {
   align-items: center;
   justify-content: center;
   width: 64px;
-  height: 52px;
+  height: 3.25rem;
   margin: 0 auto;
   border-radius: $radius-card-sm;
   background-color: $bg-input;
 
   img {
     display: block;
-    height: 22px;
+    height: 1.375rem;
     width: auto;
     filter: brightness(0) invert(1); // 검정 아이콘 → 흰색 (헤더 로고와 같은 방식)
   }
@@ -4167,7 +4169,7 @@ main.sport-home {
 @keyframes auth-step-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(0.75rem);
   }
 
   to {
@@ -4220,8 +4222,8 @@ main.sport-home {
   display: flex;
   flex-direction: column;
   gap: $space-sm;
-  padding: 18px $space-lg;
-  border: 1px solid $auth-line;
+  padding: 1.125rem $space-lg;
+  border: 0.0625rem solid $auth-line;
   border-radius: $radius-sm;
   background-color: $bg-input;
   text-align: left;
@@ -4341,7 +4343,7 @@ main.sport-home {
   &--row {
     flex-direction: row;
     max-width: none;
-    gap: 20px;
+    gap: 1.25rem;
 
     .auth-btn:first-child {
       flex: 0 0 250px;
@@ -4358,9 +4360,9 @@ main.sport-home {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 0.375rem;
   width: 100%;
-  height: 48px;
+  height: 3rem;
   padding: 0 $space-lg;
   border: none;
   border-radius: $radius-xs;
@@ -4381,8 +4383,8 @@ main.sport-home {
   }
 
   &:focus-visible {
-    outline: 2px solid $light-color-0;
-    outline-offset: 2px;
+    outline: 0.125rem solid $light-color-0;
+    outline-offset: 0.125rem;
   }
 
   &--secondary {
@@ -4408,7 +4410,7 @@ main.sport-home {
   &::after {
     content: "";
     flex: 1;
-    height: 1px;
+    height: 0.0625rem;
     background-color: $dark-color-300;
   }
 
@@ -4419,7 +4421,7 @@ main.sport-home {
 
 .auth-google-icon {
   width: 16px;
-  height: 16px;
+  height: 1rem;
   flex-shrink: 0;
 }
 
@@ -4468,7 +4470,7 @@ main.sport-home {
   align-items: flex-start;
   gap: $space-lg;
   padding: $space-xl $space-5xl $space-xl $space-xl;
-  border: 1px solid $auth-line;
+  border: 0.0625rem solid $auth-line;
   border-radius: $radius-card-sm;
   background-color: $bg-input;
   cursor: pointer;
@@ -4478,7 +4480,7 @@ main.sport-home {
   input {
     position: absolute;
     width: 1px;
-    height: 1px;
+    height: 0.0625rem;
     margin: 0;
     opacity: 0;
   }
@@ -4489,12 +4491,12 @@ main.sport-home {
 
   &.on {
     border-color: $accent-color;
-    box-shadow: 0 0 0 1px $accent-color; // 선택 시 테두리 2px
+    box-shadow: 0 0 0 0.0625rem $accent-color; // 선택 시 테두리 2px
   }
 
   &:has(input:focus-visible) {
-    outline: 2px solid $light-color-0;
-    outline-offset: 2px;
+    outline: 0.125rem solid $light-color-0;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -4525,8 +4527,8 @@ main.sport-home {
   top: $space-2xl;
   right: $space-4xl;
   width: 20px;
-  height: 20px;
-  border: 1px solid $neutral-color-600;
+  height: 1.25rem;
+  border: 0.0625rem solid $neutral-color-600;
   border-radius: 50%;
   box-sizing: border-box;
   transition: background-color 0.2s ease, border-color 0.2s ease;
@@ -4557,8 +4559,8 @@ main.sport-home {
     display: flex;
     flex-direction: column;
     gap: $space-sm;
-    padding: 20px $space-lg;
-    border: 1px solid $auth-line;
+    padding: 1.25rem $space-lg;
+    border: 0.0625rem solid $auth-line;
     border-radius: $radius-card-sm;
   }
 
@@ -4591,7 +4593,7 @@ main.sport-home {
   display: inline-block;
   width: 1.15em;
   height: 1.15em;
-  margin-right: 4px;
+  margin-right: 0.25rem;
   vertical-align: -0.2em;
   flex-shrink: 0;
 }
@@ -4651,8 +4653,8 @@ header .inner nav .gnb-right ul .profile-box,
   display: inline-block;
   flex-shrink: 0;
   width: 13px;
-  height: 16px;
-  margin-right: 2px;
+  height: 1rem;
+  margin-right: 0.125rem;
   background-color: currentColor;
   -webkit-mask: url("/icons/live/bell-btn.svg") center / contain no-repeat;
   mask: url("/icons/live/bell-btn.svg") center / contain no-repeat;
@@ -4685,17 +4687,17 @@ header .inner nav .gnb-right ul .profile-box,
 
 // "경기 시청" 버튼 (스포츠 히어로 · 하단 LIVE 배너): 흰 아이콘 · 글자 크기에 맞게 작게
 .sport-btn .play-icon {
-  height: 12px;
+  height: 0.75rem;
 }
 
 .promo-banner.is-live .promo-banner-btn .play-icon {
-  height: 10px;
+  height: 0.625rem;
 }
 
 .sport-live-watch .play-icon,
 .sport-detail-info-meta .play-icon,
 .sport-detail-meta .play-icon {
-  height: 9px;
+  height: 0.5625rem;
 }
 
 // 영화/TV 상세: 에피소드 썸네일 위 재생 (흰 아이콘 24px · 어두운 원)
@@ -4724,7 +4726,7 @@ header .inner nav .gnb-right ul .profile-box,
   justify-content: center;
   padding: $space-xl;
   background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0.25rem);
   animation: subscribe-gate-fade 0.2s ease both;
 }
 
@@ -4737,7 +4739,7 @@ header .inner nav .gnb-right ul .profile-box,
   color: $text-primary;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.45);
   animation: subscribe-gate-in 0.25s ease both;
 }
 
@@ -4746,7 +4748,7 @@ header .inner nav .gnb-right ul .profile-box,
   align-items: center;
   justify-content: center;
   width: 64px;
-  height: 52px;
+  height: 3.25rem;
   margin: 0 auto $space-lg;
   border-radius: $radius-card-sm;
   background-color: $bg-input;
@@ -4754,7 +4756,7 @@ header .inner nav .gnb-right ul .profile-box,
   img {
     display: block;
     width: auto;
-    height: 22px;
+    height: 1.375rem;
     filter: brightness(0) invert(1);
   }
 }
@@ -4785,7 +4787,7 @@ header .inner nav .gnb-right ul .profile-box,
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 48px;
+  height: 3rem;
   border: none;
   border-radius: $radius-xs;
   background-color: $primary-color-500;
@@ -4798,8 +4800,8 @@ header .inner nav .gnb-right ul .profile-box,
   }
 
   &:focus-visible {
-    outline: 2px solid $light-color-0;
-    outline-offset: 2px;
+    outline: 0.125rem solid $light-color-0;
+    outline-offset: 0.125rem;
   }
 
   &--secondary {
@@ -4824,7 +4826,7 @@ header .inner nav .gnb-right ul .profile-box,
 @keyframes subscribe-gate-in {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.98);
+    transform: translateY(0.75rem) scale(0.98);
   }
 
   to {
@@ -4932,7 +4934,7 @@ header .inner nav .gnb-right ul .profile-box,
     justify-content: center;
     gap: $space-sm;
     min-width: 220px;
-    height: 56px;
+    height: 3.5rem;
     padding: 0 $space-2xl;
     border: 0;
     border-radius: $radius-pill;
@@ -4951,7 +4953,7 @@ header .inner nav .gnb-right ul .profile-box,
       background-color: $primary-color-400;
 
       span {
-        transform: translateX(4px);
+        transform: translateX(0.25rem);
       }
     }
 
@@ -4960,8 +4962,8 @@ header .inner nav .gnb-right ul .profile-box,
     }
 
     &:focus-visible {
-      outline: 2px solid $primary-color-200;
-      outline-offset: 3px;
+      outline: 0.125rem solid $primary-color-200;
+      outline-offset: 0.1875rem;
     }
   }
 }
@@ -5052,7 +5054,7 @@ img.ui-icon.ui-icon-arrow {
 
 // 홈으로 바로가기: 마우스를 올리면 화살표가 오른쪽으로 살짝 이동 (img 로 바뀐 아이콘에도 적용)
 .trial-welcome .trial-home-link:hover img.ui-icon-arrow {
-  transform: translateX(4px);
+  transform: translateX(0.25rem);
   transition: transform 0.2s ease;
 }
 
@@ -5092,7 +5094,7 @@ img.ui-icon.ui-icon-arrow {
 // ---------- 페이지 ----------
 .wish-page {
   min-height: 100vh;
-  padding: calc(#{$header-height} + 80px) 0 ($space-5xl * 2);
+  padding: calc(#{$header-height} + 5rem) 0 ($space-5xl * 2);
   box-sizing: border-box;
   background-color: $bg-page;
   color: $text-primary;
@@ -5147,7 +5149,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .wish-sort-arrow {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .wish-menu {
@@ -5162,9 +5164,9 @@ img.ui-icon.ui-icon-arrow {
   border-radius: $radius-sm;
   overflow: hidden;
   background-color: rgba($light-color-500, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
 
   &--right {
     left: auto;
@@ -5172,7 +5174,7 @@ img.ui-icon.ui-icon-arrow {
   }
 
   li+li .wish-menu-item {
-    border-top: 1px solid rgba($dark-color-900, 0.15);
+    border-top: 0.0625rem solid rgba($dark-color-900, 0.15);
   }
 }
 
@@ -5183,7 +5185,7 @@ img.ui-icon.ui-icon-arrow {
   justify-content: space-between;
   gap: $space-md;
   width: 100%;
-  height: 44px;
+  height: 2.75rem;
   padding: 0 $space-lg;
   border: none;
   background: transparent;
@@ -5193,7 +5195,7 @@ img.ui-icon.ui-icon-arrow {
   cursor: pointer;
 
   .wish-icon {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   &:hover,
@@ -5214,7 +5216,7 @@ img.ui-icon.ui-icon-arrow {
 // ---------- 그룹 탭 (아이콘 + 이름 + 개수) ----------
 .wish-tabs {
   display: flex;
-  gap: 20px;
+  gap: 1.25rem;
   margin: $space-2xl 0 0;
   padding: 0;
   list-style: none;
@@ -5237,8 +5239,8 @@ img.ui-icon.ui-icon-arrow {
   justify-content: center;
   gap: $space-xs;
   width: 100%;
-  height: 136px;
-  border: 1px solid transparent;
+  height: 8.5rem;
+  border: 0.0625rem solid transparent;
   border-radius: $radius-sm;
   background-color: $bg-surface;
   color: $text-primary;
@@ -5265,13 +5267,13 @@ img.ui-icon.ui-icon-arrow {
   }
 
   &:focus-visible {
-    outline: 2px solid $primary-color-200;
-    outline-offset: 2px;
+    outline: 0.125rem solid $primary-color-200;
+    outline-offset: 0.125rem;
   }
 }
 
 .wish-tab-icon {
-  font-size: 30px;
+  font-size: 1.875rem;
 }
 
 // ---------- 작품 카드 (2열) ----------
@@ -5337,14 +5339,14 @@ img.ui-icon.ui-icon-arrow {
   align-items: center;
   justify-content: center;
   width: 48px;
-  height: 48px;
+  height: 3rem;
   border-radius: 50%;
   background-color: rgba($dark-color-900, 0.55);
   transform: translate(-50%, -50%);
 
   img {
     width: 24px;
-    height: 24px;
+    height: 1.5rem;
     object-fit: contain;
   }
 }
@@ -5353,7 +5355,7 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding-right: 40px; // ••• 버튼 자리
+  padding-right: 2.5rem; // ••• 버튼 자리
 }
 
 .wish-card-title {
@@ -5400,13 +5402,13 @@ img.ui-icon.ui-icon-arrow {
   align-items: center;
   justify-content: center;
   width: 36px;
-  height: 36px;
+  height: 2.25rem;
   padding: 0;
   border: none;
   border-radius: 50%;
   background: transparent;
   color: $text-primary;
-  font-size: 30px;
+  font-size: 1.875rem;
   cursor: pointer;
 
   &:hover {
@@ -5439,7 +5441,7 @@ img.ui-icon.ui-icon-arrow {
   box-sizing: border-box;
   background-color: $bg-surface;
   color: $text-primary;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.5);
   animation: wish-up 0.25s ease both;
 
   h2 {
@@ -5472,7 +5474,7 @@ img.ui-icon.ui-icon-arrow {
   justify-content: center;
   flex-shrink: 0;
   width: 32px;
-  height: 32px;
+  height: 2rem;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -5524,11 +5526,11 @@ img.ui-icon.ui-icon-arrow {
   justify-content: center;
   flex-shrink: 0;
   width: 52px;
-  height: 52px;
+  height: 3.25rem;
   border-radius: $radius-xs;
   overflow: hidden;
   background-color: $dark-color-300;
-  font-size: 26px;
+  font-size: 1.625rem;
 
   img {
     width: 100%;
@@ -5540,7 +5542,7 @@ img.ui-icon.ui-icon-arrow {
 .wish-group-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
   min-width: 0;
 
   strong {
@@ -5555,7 +5557,7 @@ img.ui-icon.ui-icon-arrow {
 
 .wish-check {
   width: 20px;
-  height: 20px;
+  height: 1.25rem;
   margin-left: auto;
   flex-shrink: 0;
 }
@@ -5563,13 +5565,13 @@ img.ui-icon.ui-icon-arrow {
 .wish-modal-foot {
   margin-top: $space-lg;
   padding-top: $space-lg;
-  border-top: 1px solid $dark-color-400;
+  border-top: 0.0625rem solid $dark-color-400;
 }
 
 // 버튼
 .wish-btn {
   @include body-default-b;
-  height: 48px;
+  height: 3rem;
   padding: 0 $space-xl;
   border: none;
   border-radius: $radius-sm;
@@ -5578,7 +5580,7 @@ img.ui-icon.ui-icon-arrow {
 
   &--full {
     width: 100%;
-    border-radius: 9999px;
+    border-radius: 624.9375rem;
   }
 
   &--white {
@@ -5608,9 +5610,9 @@ img.ui-icon.ui-icon-arrow {
 // 새 그룹 만들기
 .wish-input {
   @include body-default-b;
-  height: 48px;
+  height: 3rem;
   padding: 0 $space-lg;
-  border: 1px solid transparent;
+  border: 0.0625rem solid transparent;
   border-radius: $radius-sm;
   background-color: $bg-surface-hover;
   color: $text-primary;
@@ -5652,13 +5654,13 @@ img.ui-icon.ui-icon-arrow {
   align-items: center;
   justify-content: center;
   width: 52px;
-  height: 52px;
+  height: 3.25rem;
   padding: 0;
   border: none;
   border-radius: 50%;
   background-color: $dark-color-100;
   color: $text-primary;
-  font-size: 26px;
+  font-size: 1.625rem;
   cursor: pointer;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 
@@ -5667,12 +5669,12 @@ img.ui-icon.ui-icon-arrow {
   }
 
   &.is-selected {
-    box-shadow: 0 0 0 2px $light-color-0;
+    box-shadow: 0 0 0 0.125rem $light-color-0;
   }
 
   &:focus-visible {
-    outline: 2px solid $primary-color-200;
-    outline-offset: 2px;
+    outline: 0.125rem solid $primary-color-200;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -5695,14 +5697,14 @@ img.ui-icon.ui-icon-arrow {
   align-items: center;
   gap: $space-lg;
   width: min(630px, calc(100% - #{$space-2xl}));
-  min-height: 72px;
+  min-height: 4.5rem;
   padding: $space-md $space-xl $space-md $space-lg;
   border-radius: $radius-lg;
   box-sizing: border-box;
   background-color: rgba($dark-color-100, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
   color: $text-primary;
   transform: translateX(-50%);
   animation: wish-toast-in 0.3s ease both;
@@ -5719,10 +5721,10 @@ img.ui-icon.ui-icon-arrow {
   justify-content: center;
   flex-shrink: 0;
   width: 44px;
-  height: 44px;
+  height: 2.75rem;
   border-radius: 50%;
   background-color: $dark-color-300;
-  font-size: 22px;
+  font-size: 1.375rem;
 }
 
 .wish-toast-link {
@@ -5749,14 +5751,14 @@ img.ui-icon.ui-icon-arrow {
 @keyframes wish-up {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(0.75rem);
   }
 }
 
 @keyframes wish-toast-in {
   from {
     opacity: 0;
-    transform: translate(-50%, 16px);
+    transform: translate(-50%, 1rem);
   }
 }
 
@@ -5911,7 +5913,7 @@ img.ui-icon.ui-icon-arrow {
 
   &.on {
     border-color: $primary-color-500;
-    box-shadow: 0 0 0 1px $primary-color-500;
+    box-shadow: 0 0 0 0.0625rem $primary-color-500;
     background-color: $light-color-0;
   }
 
@@ -5957,7 +5959,7 @@ img.ui-icon.ui-icon-arrow {
 // =====================================================================
 // [추가] 계정 설정 (/profile · pages/Profile.jsx)
 // - 시안: 계정 설정 · 기존 항목 + 신규 설정 전체 / AI 및 알림 켜짐 · 꺼짐 (1440 기준 본문 840)
-// - 왼쪽 섹션 이름 + 오른쪽 항목 · 섹션 사이 구분선
+// - [수정] 왼쪽 섹션 메뉴(스크롤 중 고정 · 누르면 그 섹션으로 이동) + 오른쪽 항목 · 섹션 사이 구분선
 // - 시안처럼 밝은 배경($light-color-100) + 어두운 글자
 // =====================================================================
 
@@ -5987,21 +5989,106 @@ img.ui-icon.ui-icon-arrow {
 
 .account-title {
   @include display-l-b;
+  color: $dark-color-400; // [수정] 시안 Dark/400
   padding-bottom: $space-xl;
-  border-bottom: 1px solid $account-line;
+  border-bottom: 0.0625rem solid $account-line;
 }
 
-// ---------- 섹션: 왼쪽 이름 + 오른쪽 항목 ----------
-.account-section {
+// ---------- [추가] 왼쪽 메뉴 + 오른쪽 섹션 ----------
+.account-layout {
   display: grid;
   grid-template-columns: $account-side minmax(0, 1fr);
   align-items: start;
-  padding: $space-4xl 0;
-  border-bottom: 1px solid $account-line;
 }
 
+// 왼쪽 메뉴: 스크롤해도 헤더 바로 아래에 고정 (글자 위치 = 섹션 첫 항목과 같은 높이 · 행 위아래 여백 12 만큼 위로)
+.account-nav {
+  position: sticky;
+  top: $header-height;
+  padding: ($space-4xl - $space-md) $space-xl $space-4xl 0;
+}
+
+// [수정] 메뉴 행 세로 나열 (행 폭 = 메뉴 칸 가득)
+.account-nav-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: $space-xs;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// [수정] 메뉴 행 (사이드바 탭형): 글자 Heading/h2-B
+// - 보고 있는 섹션: 연회색 배경 + 왼쪽 세로 막대 · Dark/400 / 나머지: 회색 글자 · 호버 시 배경
+.account-nav-link {
+  @include heading-h2-b;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: $space-md $space-lg;
+  border: none;
+  border-radius: $radius-card-sm;
+  background: none;
+  color: $account-sub;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+
+  // 왼쪽 세로 막대 (보고 있는 섹션만)
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: $space-xl;
+    width: 4px;
+    border-radius: $radius-pill;
+    background-color: $dark-color-400;
+    transform: translateY(-50%) scaleY(0);
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    background-color: $light-color-200;
+    color: $dark-color-400;
+  }
+
+  &.is-active {
+    background-color: $light-color-200;
+    color: $dark-color-400;
+
+    &::before {
+      transform: translateY(-50%) scaleY(1);
+    }
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+  }
+}
+
+// ---------- 섹션: 오른쪽 항목 (섹션 이름은 왼쪽 메뉴가 대신함) ----------
+.account-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  padding: $space-4xl 0;
+  border-bottom: 0.0625rem solid $account-line;
+  scroll-margin-top: $header-height; // 메뉴로 이동했을 때 헤더에 가리지 않게
+}
+
+// [수정] 섹션 이름은 화면 읽기 프로그램용으로만 남김 (보이는 이름은 왼쪽 메뉴)
 .account-section-title {
   @include heading-h3-b;
+  position: absolute;
+  width: 1px;
+  height: 0.0625rem;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .account-section-body {
@@ -6024,19 +6111,21 @@ img.ui-icon.ui-icon-arrow {
   }
 }
 
+// [수정] 항목 제목 Heading/h5-B · Dark/400 / 설명 Body/default · Dark/100 / 맨 아래 안내 Body/small · Dark/100
 .account-item-title {
-  @include body-default-b;
+  @include heading-h5-b;
+  color: $dark-color-400;
 }
 
 .account-item-desc {
   @include body-default;
-  color: $account-sub;
+  color: $dark-color-100;
   word-break: keep-all;
 }
 
 .account-note {
   @include body-small;
-  color: $account-sub;
+  color: $dark-color-100;
 }
 
 // 파란 글자 링크 (모든 브라우저에서 로그아웃 · 연결된 계정 관리 · 재생 기록 지우기)
@@ -6055,8 +6144,8 @@ img.ui-icon.ui-icon-arrow {
   }
 
   &:focus-visible {
-    outline: 2px solid $primary-color-500;
-    outline-offset: 2px;
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
     border-radius: $space-xs;
   }
 }
@@ -6070,12 +6159,12 @@ img.ui-icon.ui-icon-arrow {
   padding: 0;
   border: none;
   background: none;
-  color: $text-inverse;
+  color: $dark-color-400; // [수정] 켜기 · 끄기 글자 Body/default · Dark/400
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid $primary-color-500;
-    outline-offset: 4px;
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.25rem;
     border-radius: $space-xs;
   }
 }
@@ -6084,21 +6173,21 @@ img.ui-icon.ui-icon-arrow {
   position: relative;
   flex-shrink: 0;
   width: 36px;
-  height: 20px;
-  border-radius: 9999px;
+  height: 1.25rem;
+  border-radius: 624.9375rem;
   background-color: $light-color-300;
   transition: background-color 0.2s ease;
 }
 
 .account-toggle-thumb {
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 0.125rem;
+  left: 0.125rem;
   width: 16px;
-  height: 16px;
+  height: 1rem;
   border-radius: 50%;
   background-color: $light-color-0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
@@ -6108,7 +6197,7 @@ img.ui-icon.ui-icon-arrow {
   }
 
   .account-toggle-thumb {
-    transform: translateX(16px);
+    transform: translateX(1rem);
     background-color: $light-color-0;
   }
 }
@@ -6139,7 +6228,7 @@ img.ui-icon.ui-icon-arrow {
     place-items: center;
     flex-shrink: 0;
     width: 18px;
-    height: 18px;
+    height: 1.125rem;
     margin: 0;
     border-radius: $space-xs;
     background-color: $light-color-300;
@@ -6149,7 +6238,7 @@ img.ui-icon.ui-icon-arrow {
     &::after {
       content: "";
       width: 12px;
-      height: 12px;
+      height: 0.75rem;
       background-color: $light-color-0;
       -webkit-mask: url("/icons/check.svg") center / contain no-repeat;
       mask: url("/icons/check.svg") center / contain no-repeat;
@@ -6166,8 +6255,8 @@ img.ui-icon.ui-icon-arrow {
     }
 
     &:focus-visible {
-      outline: 2px solid $primary-color-500;
-      outline-offset: 2px;
+      outline: 0.125rem solid $primary-color-500;
+      outline-offset: 0.125rem;
     }
   }
 }
@@ -6185,9 +6274,9 @@ img.ui-icon.ui-icon-arrow {
 .account-sr-only {
   position: absolute;
   width: 1px;
-  height: 1px;
+  height: 0.0625rem;
   padding: 0;
-  margin: -1px;
+  margin: -0.0625rem;
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
@@ -6204,7 +6293,7 @@ img.ui-icon.ui-icon-arrow {
 .account-profile-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
   min-width: 0;
 
   strong {
@@ -6230,7 +6319,7 @@ img.ui-icon.ui-icon-arrow {
 .account-avatar-option {
   display: block;
   padding: 0;
-  border: 2px solid transparent;
+  border: 0.125rem solid transparent;
   border-radius: 50%;
   background: none;
   cursor: pointer;
@@ -6238,7 +6327,7 @@ img.ui-icon.ui-icon-arrow {
 
   .profile-avatar {
     width: 52px;
-    height: 52px;
+    height: 3.25rem;
   }
 
   &:hover {
@@ -6250,8 +6339,8 @@ img.ui-icon.ui-icon-arrow {
   }
 
   &:focus-visible {
-    outline: 2px solid $primary-color-500;
-    outline-offset: 2px;
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -6329,7 +6418,7 @@ img.ui-icon.ui-icon-arrow {
 .account-btn {
   @include body-default-b;
   flex: 1;
-  height: 44px;
+  height: 2.75rem;
   border: none;
   border-radius: $radius-xs;
   background-color: $primary-color-500;
@@ -6347,8 +6436,8 @@ img.ui-icon.ui-icon-arrow {
   }
 
   &:focus-visible {
-    outline: 2px solid $primary-color-500;
-    outline-offset: 2px;
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
   }
 
   &--secondary {
@@ -6370,7 +6459,7 @@ img.ui-icon.ui-icon-arrow {
   z-index: 1100;
   margin: 0;
   padding: $space-md $space-xl;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background-color: $dark-color-900;
   color: $text-primary;
   transform: translate(-50%, $space-lg);
@@ -6404,12 +6493,12 @@ img.ui-icon.ui-icon-arrow {
 
   &--md {
     width: 52px;
-    height: 52px;
+    height: 3.25rem;
   }
 
   &--lg {
     width: 72px;
-    height: 72px;
+    height: 4.5rem;
   }
 
   img {
@@ -6498,8 +6587,8 @@ img.ui-icon.ui-icon-arrow {
 // =====================================================================
 // [추가] TOP 10 — 시안 "지금 가장 주목받는 작품" (로그인 전 홈 · 로그인 후 홈 · 무료 체험 안내 공용)
 // - 큰 순위 숫자(SVG .top10-num)가 포스터 왼쪽 뒤에 겹침
-//   · 안쪽: Linear 그라데이션($card-shadow-start → $card-shadow-end)
-//   · 테두리: Light/500 3px 바깥쪽 (stroke 6px + paint-order: stroke → 안쪽 절반은 글자에 가려짐)
+//   · 안쪽: [수정] 그라데이션 위 $top10-num-gradient-start → 아래 $top10-num-gradient-end (로그인 후 홈과 같음)
+//   · [수정] 테두리(스트로크) 없음
 // - PC: 한 줄 4장 + 화살표 / 태블릿 · 모바일: 고정 폭 슬라이드
 // - section.top10-section : 기존 .top10-section 규칙(태블릿 · mobile.scss 포함)보다 우선
 // =====================================================================
@@ -6545,24 +6634,24 @@ section.top10-section {
     .top10-num-glyph {
       font-family: "Noto Sans KR", sans-serif; // 순위 숫자만 Noto Sans KR (PC · 태블릿 · 모바일 공통)
       font-weight: 900; // Black
-      font-size: 160px;
-      letter-spacing: -8px;
+      font-size: 10rem;
+      letter-spacing: -0.5rem;
     }
 
-    // 테두리 6px 중 안쪽 3px 은 마스크로 지워짐 → 바깥 3px (시안 Outside 3)
+    // [수정] 숫자 테두리(스트로크) 없음 — 로그인 전 · 후 · 모든 화면 공통 (예전: Light/500 바깥 3px)
     .top10-num-stroke {
-      stroke: $light-color-500;
-      stroke-width: 6px;
-      stroke-linejoin: round;
+      display: none;
     }
   }
 
+  // [수정] 순위 숫자 색: 로그인 후 홈과 같은 그라데이션 (위 #F1F1F1 → 아래 #606060 · 모든 화면 공통)
+  // SVG 그라데이션은 아래(0%) → 위(100%) 방향이라 색을 반대로 넣음
   .top10-num-stop-start {
-    stop-color: $card-shadow-start;
+    stop-color: $top10-num-gradient-end;
   }
 
   .top10-num-stop-end {
-    stop-color: $card-shadow-end;
+    stop-color: $top10-num-gradient-start;
   }
 }
 
@@ -6572,7 +6661,7 @@ section.top10-section {
 // [추가] 섹션 소제목 — 시안 Heading/h2 22/28 · Light/500 (PC 1025px 이상)
 // - TOP 10 · 공개예정작 · 오리지널스 설명 문구 (로그인 전 · 후 홈 공통)
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
 
   section.top10-section .top10-desc,
   .upcoming-section .upcoming-desc.upcoming-desc,
@@ -6587,7 +6676,7 @@ section.top10-section {
 // - TOP 10 · 공개예정작 · 오리지널스 제목: Heading/h1-B · Light/0 (기존 믹스인 heading-h1-b)
 // - 소제목은 위 [추가] 섹션 소제목 규칙(heading-h2 · Light/500)과 같음
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
 
   section.top10-section .top10-title,
   .upcoming-section .upcoming-title.upcoming-title,
@@ -6619,9 +6708,9 @@ section.top10-section {
     @include body-small;
     display: inline-flex;
     align-items: center;
-    height: 28px;
-    padding: 0 10px;
-    border-radius: 4px;
+    height: 1.75rem;
+    padding: 0 0.625rem;
+    border-radius: 0.25rem;
     box-sizing: border-box;
     background-color: $dark-color-300;
     color: $light-color-0;
@@ -6629,7 +6718,7 @@ section.top10-section {
 
     // 연령 등급: 테두리만
     &--rating {
-      border: 1px solid $light-color-500;
+      border: 0.0625rem solid $light-color-500;
       background-color: $light-color-0;
       color: $dark-color-900;
 
@@ -6651,11 +6740,11 @@ section.top10-section {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 0.375rem;
     min-width: 120px;
-    height: 42px;
+    height: 2.625rem;
     padding: 0 $space-xl;
-    border-radius: 999px;
+    border-radius: 62.4375rem;
     box-sizing: border-box;
     background-color: $primary-color-500;
     color: $light-color-0;
@@ -6664,7 +6753,7 @@ section.top10-section {
 
     img {
       width: 10px;
-      height: 14px;
+      height: 0.875rem;
       display: block;
     }
 
@@ -6678,7 +6767,7 @@ section.top10-section {
     align-items: center;
     justify-content: center;
     width: 42px;
-    height: 42px;
+    height: 2.625rem;
     padding: 0;
     border: none;
     border-radius: 50%;
@@ -6698,8 +6787,8 @@ section.top10-section {
 
   .hero-play:focus-visible,
   .hero-wish:focus-visible {
-    outline: 2px solid $light-color-0;
-    outline-offset: 2px;
+    outline: 0.125rem solid $light-color-0;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -6708,8 +6797,8 @@ section.top10-section {
 // Movie home banner: mirror the sports home hero dimensions at each breakpoint.
 // Scoped class prevents changes to sports or other Swiper instances.
 .hero-swiper-container.movie-home-hero {
-  height: min(955px, calc(100svh - 64px));
-  min-height: 620px;
+  height: min(59.6875rem, calc(100svh - 4rem));
+  min-height: 38.75rem;
   overflow: hidden;
 }
 
@@ -6725,7 +6814,7 @@ section.top10-section {
 // =====================================================================
 .subscribe-cta.subscribe-cta--tv {
   .subscribe-banner {
-    height: 420px;
+    height: 26.25rem;
     border: none;
     border-radius: $radius-md; // 20
     background-color: $dark-color-900;
@@ -6751,7 +6840,7 @@ section.top10-section {
 
   .subscribe-logo {
     width: 73px;
-    height: 56px;
+    height: 3.5rem;
     object-fit: contain;
     object-position: left center;
     filter: none; // 흰색 로고 파일 그대로
@@ -6769,10 +6858,10 @@ section.top10-section {
     box-sizing: border-box;
     justify-content: center;
     width: 200px;
-    height: 40px;
+    height: 2.5rem;
     margin-top: $space-xl;
-    padding: 7px 36px;
-    border-radius: 999px;
+    padding: 0.4375rem 2.25rem;
+    border-radius: 62.4375rem;
     background-color: $primary-color-500;
     color: $light-color-0;
     white-space: nowrap;
@@ -6791,8 +6880,8 @@ section.top10-section {
   // 오른쪽 포스터 영역: 시안 X 737 (1440 기준 51.2%) · Y 36 · 오른쪽 끝에서 잘림 (배너 overflow hidden)
   .subscribe-posters {
     position: absolute;
-    top: 36px;
-    left: max(51.2%, 640px); // 문구(약 600px)와 겹치지 않게
+    top: 2.25rem;
+    left: max(51.2%, 40rem); // 문구(약 600px)와 겹치지 않게
     z-index: 2;
     display: flex;
     gap: $space-lg;
@@ -6806,7 +6895,7 @@ section.top10-section {
   //   (323 높이 → 카드 면 181 + 기울어진 폭 35 = 전체 216, Figma 216 × 323)
   // - 카드(li)만 기울이고 안쪽 사진은 반대로 기울여 똑바로 보이게 · 모서리 10 은 기울어진 카드에 그대로 적용
   .subscribe-poster {
-    --poster-h: 323px;
+    --poster-h: 20.1875rem;
     position: relative;
     flex-shrink: 0;
     width: calc(var(--poster-h) * 0.56);
@@ -6814,7 +6903,7 @@ section.top10-section {
     border-radius: $radius-sm; // 10
     overflow: hidden;
     background-color: $dark-color-800;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.5);
     transform: skewX(-6.2deg);
     transform-origin: left bottom; // 아래 변은 제자리, 위 변이 오른쪽으로
 
@@ -6833,7 +6922,7 @@ section.top10-section {
 }
 
 // PC: 배너 가로 = 이너 폭 (1920 기준 좌우 240 → 1440, 다른 홈 섹션과 같은 시작선)
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   .subscribe-cta.subscribe-cta--tv .inner {
     padding-left: $desktop-gutter;
     padding-right: $desktop-gutter;
@@ -6841,7 +6930,7 @@ section.top10-section {
 }
 
 // 작은 PC (1025 ~ 1439px): 배너가 좁아져도 문구 · 포스터가 겹치지 않게 조금 줄임
-@media (min-width: ($breakpoint-tablet + 1)) and (max-width: 1439px) {
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: 1439px) {
   .subscribe-cta.subscribe-cta--tv {
     .subscribe-title {
       @include display-M-b;
@@ -6849,13 +6938,13 @@ section.top10-section {
 
     .subscribe-posters {
       top: 50%;
-      left: max(48%, 520px);
+      left: max(48%, 32.5rem);
       gap: $space-md;
       transform: translateY(-50%);
     }
 
     .subscribe-poster {
-      --poster-h: 268px;
+      --poster-h: 16.75rem;
     }
   }
 }
@@ -6898,7 +6987,7 @@ section.top10-section {
 // =====================================================================
 header .inner nav .gnb-right ul .profile-box.profile-box {
   width: 40px;
-  height: 40px;
+  height: 2.5rem;
   background-color: $primary-color-500;
 
   &:hover {
@@ -6929,7 +7018,7 @@ header .inner nav .gnb-right ul .profile-box.profile-box {
     display: block;
     flex: none;
     width: 14px;
-    height: 14px;
+    height: 0.875rem;
     max-width: none;
     margin: 0;
     transform: none;
@@ -6995,7 +7084,8 @@ section.device-guide.device-guide--watch {
   --icon-scale: 1; // 기기 아이콘 크기 비율 (svg 원래 폭 × 비율)
   --marquee-duration: 40s;
 
-  padding: 96px 0;
+  padding: 6rem 0;
+  height: 52.375rem; // [추가] 기기 안내 전체 높이 (box-sizing: border-box · 위아래 패딩 포함)
   background-color: $dark-color-950;
   text-align: center;
   overflow: hidden;
@@ -7013,7 +7103,7 @@ section.device-guide.device-guide--watch {
 
   .watch-logo-main {
     display: block;
-    height: 60px;
+    height: 3.75rem;
     width: auto;
   }
 
@@ -7063,7 +7153,7 @@ section.device-guide.device-guide--watch {
     img {
       display: block;
       width: auto;
-      height: calc(var(--logo-h) * 1px * var(--logo-scale));
+      height: calc(var(--logo-h) * 0.0625rem * var(--logo-scale));
       max-width: none;
     }
   }
@@ -7078,7 +7168,7 @@ section.device-guide.device-guide--watch {
 
   .watch-subtitle {
     @include display-M;
-    margin: 0;
+    margin: 0 0 $space-lg 0;
     padding-top: 0;
     color: $light-color-0;
     word-break: keep-all;
@@ -7170,13 +7260,13 @@ section.device-guide.device-guide--watch {
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid $primary-color-500;
-    outline-offset: 2px;
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
   }
 
   &:hover .auth-profile-avatar {
     transform: scale(1.06);
-    box-shadow: 0 0 0 3px $light-color-0, 0 0 0 5px $primary-color-500;
+    box-shadow: 0 0 0 0.1875rem $light-color-0, 0 0 0 0.3125rem $primary-color-500;
   }
 
   // 프로필마다 다른 배경색 (아빠 · 엄마 · 아들 · 딸)
@@ -7202,14 +7292,14 @@ section.device-guide.device-guide--watch {
   align-items: center;
   justify-content: center;
   width: 88px;
-  height: 88px;
+  height: 5.5rem;
   border-radius: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   img {
     display: block;
     width: 32px;
-    height: 32px;
+    height: 2rem;
     object-fit: contain;
   }
 }
@@ -7254,14 +7344,14 @@ section.device-guide.device-guide--watch {
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid $primary-color-500;
-    outline-offset: 2px;
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
   }
 
   &:hover .profile-picker-avatar,
   &.is-current .profile-picker-avatar {
     transform: scale(1.06);
-    box-shadow: 0 0 0 3px $light-color-0, 0 0 0 5px $primary-color-500;
+    box-shadow: 0 0 0 0.1875rem $light-color-0, 0 0 0 0.3125rem $primary-color-500;
   }
 }
 
@@ -7270,7 +7360,7 @@ section.device-guide.device-guide--watch {
   align-items: center;
   justify-content: center;
   width: 88px;
-  height: 88px;
+  height: 5.5rem;
   border-radius: 50%;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -7282,7 +7372,7 @@ section.device-guide.device-guide--watch {
 
   img {
     width: 32px;
-    height: 32px;
+    height: 2rem;
   }
 }
 
@@ -7313,16 +7403,16 @@ section.device-guide.device-guide--watch {
 
 .profile-picker-input {
   @include body-large;
-  height: 52px;
+  height: 3.25rem;
   padding: 0 $space-lg;
-  border: 1px solid $auth-light-line;
+  border: 0.0625rem solid $auth-light-line;
   border-radius: $radius-sm;
   background-color: $light-color-0;
   color: $text-inverse;
 
   &:focus {
-    outline: 2px solid $primary-color-500;
-    outline-offset: 1px;
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.0625rem;
   }
 }
 
@@ -7350,12 +7440,12 @@ section.device-guide.device-guide--watch {
   }
 
   &.is-on {
-    box-shadow: 0 0 0 3px $light-color-0, 0 0 0 5px $primary-color-500;
+    box-shadow: 0 0 0 0.1875rem $light-color-0, 0 0 0 0.3125rem $primary-color-500;
   }
 
   &:focus-visible {
-    outline: 2px solid $primary-color-500;
-    outline-offset: 3px;
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.1875rem;
   }
 }
 
@@ -7374,10 +7464,10 @@ section.device-guide.device-guide--watch {
 
 .profile-picker-btn {
   @include body-default-b;
-  height: 44px;
+  height: 2.75rem;
   padding: 0 $space-xl;
   border: none;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   background-color: $primary-color-500;
   color: $light-color-0;
   cursor: pointer;
@@ -7390,7 +7480,7 @@ section.device-guide.device-guide--watch {
   &.is-ghost {
     background-color: transparent;
     color: $text-inverse;
-    box-shadow: inset 0 0 0 1px $auth-light-line;
+    box-shadow: inset 0 0 0 0.0625rem $auth-light-line;
   }
 }
 
@@ -7409,7 +7499,7 @@ section.device-guide.device-guide--watch {
 
   .profile-picker-avatar {
     width: 64px;
-    height: 64px;
+    height: 4rem;
   }
 
   .profile-picker-name {
@@ -7432,13 +7522,13 @@ section.device-guide.device-guide--watch {
 // =====================================================================
 .auth-card.auth-card--login {
   max-width: 800px;
-  min-height: 560px;
-  padding: 80px $space-4xl $space-4xl;
+  min-height: 35rem;
+  padding: 5rem $space-4xl $space-4xl;
   border-radius: $radius-sm;
 
   .auth-logo {
     width: 50px;
-    height: 50px;
+    height: 3.125rem;
     border-radius: $radius-card-sm;
   }
 
@@ -7463,7 +7553,7 @@ section.device-guide.device-guide--watch {
   .auth-login-fields {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.375rem;
     width: 100%;
     max-width: 528px;
     margin-bottom: $space-lg;
@@ -7472,9 +7562,9 @@ section.device-guide.device-guide--watch {
   .auth-login-input {
     @include body-large;
     width: 100%;
-    height: 64px;
-    padding: 0 20px;
-    border: 1px solid $light-color-400;
+    height: 4rem;
+    padding: 0 1.25rem;
+    border: 0.0625rem solid $light-color-400;
     border-radius: $radius-xs;
     background-color: $light-color-100;
     color: $text-inverse;
@@ -7495,8 +7585,8 @@ section.device-guide.device-guide--watch {
   .auth-login-btn {
     width: 100%;
     max-width: 428px;
-    height: 48px;
-    border-radius: 999px;
+    height: 3rem;
+    border-radius: 62.4375rem;
   }
 
   .auth-login-error,
@@ -7565,9 +7655,9 @@ section.device-guide.device-guide--watch {
   .auth-code-box {
     @include display-l-b;
     width: 72px;
-    height: 72px;
+    height: 4.5rem;
     padding: 0;
-    border: 1px solid $light-color-400;
+    border: 0.0625rem solid $light-color-400;
     border-radius: $radius-xs;
     background-color: $light-color-100;
     color: $text-inverse;
@@ -7629,8 +7719,8 @@ section.device-guide.device-guide--watch {
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid $primary-color-500;
-    outline-offset: 4px;
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.25rem;
     border-radius: $radius-xs;
   }
 
@@ -7657,7 +7747,7 @@ section.device-guide.device-guide--watch {
   // 지금 보고 있는 프로필
   &.is-on {
     .account-member-avatar {
-      box-shadow: 0 0 0 3px $light-color-100, 0 0 0 5px $primary-color-500;
+      box-shadow: 0 0 0 0.1875rem $light-color-100, 0 0 0 0.3125rem $primary-color-500;
     }
 
     .account-member-name {
@@ -7672,14 +7762,14 @@ section.device-guide.device-guide--watch {
   align-items: center;
   justify-content: center;
   width: 56px;
-  height: 56px;
+  height: 3.5rem;
   border-radius: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   img {
     display: block;
     width: 20px;
-    height: 20px;
+    height: 1.25rem;
     object-fit: contain;
   }
 }
@@ -7706,7 +7796,7 @@ section.device-guide.device-guide--watch {
     .hero-title-logo {
       display: block;
       width: 390px;
-      height: 162px;
+      height: 10.125rem;
       max-width: 100%;
       object-fit: contain;
       object-position: left bottom;
@@ -7717,7 +7807,7 @@ section.device-guide.device-guide--watch {
     .hero-title-text {
       position: absolute;
       width: 1px;
-      height: 1px;
+      height: 0.0625rem;
       overflow: hidden;
       clip: rect(0 0 0 0);
       white-space: nowrap;
@@ -7769,7 +7859,7 @@ section.device-guide.device-guide--watch {
 // - 섹션마다 우선순위가 높은 규칙이 많아 !important 로 한 곳에서 확실하게 적용
 // - 태블릿 · 모바일은 기존 여백 그대로 (mobile.scss)
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
 
   .inner,
   .account-inner,
@@ -7782,6 +7872,21 @@ section.device-guide.device-guide--watch {
     margin-right: auto !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  // [추가] 계정 설정만 이너를 더 좁게: 화면의 90% 이되 최대 1440px
+  .account-inner {
+    max-width: $account-inner-max !important;
+  }
+
+  // [추가] 계정 설정만 이너를 더 좁게: 화면의 90% 이되 최대 1440px
+  .account-page .account-inner {
+    max-width: $account-inner-pc !important;
+  }
+
+  // [추가] 계정 설정만 이너 최대 1440px (90% 폭은 그대로 · 넓은 화면에서 다른 이너보다 좁게)
+  .account-inner.account-inner {
+    max-width: $account-width !important;
   }
 
   // 헤더: 내비게이션(가운데 토글 · 오른쪽 버튼)도 이너 끝선에 맞춤
@@ -7802,7 +7907,7 @@ section.device-guide.device-guide--watch {
 // - 원래 시안(본문 1440 · 간격 24) 기준: (1440 - 72) / 4 = 342 / 10위 카드 × 1.3 = 445
 // - 오리지널스(282px)는 원래 픽셀 값이라 그대로
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   section.top10-section .top10-slide {
     width: 342px;
 
@@ -7833,7 +7938,7 @@ section.device-guide.device-guide--watch {
 }
 
 body.has-promo-banner .floating-actions {
-  bottom: calc(97px + #{$space-lg});
+  bottom: calc(6.0625rem + #{$space-lg});
 }
 
 .floating-btn {
@@ -7842,7 +7947,7 @@ body.has-promo-banner .floating-actions {
   align-items: center;
   justify-content: center;
   width: 24px;
-  height: 24px;
+  height: 1.5rem;
   margin: 0;
   padding: 0;
   border: none;
@@ -7850,7 +7955,7 @@ body.has-promo-banner .floating-actions {
   overflow: hidden;
   background: transparent;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease;
 
   img {
@@ -7863,14 +7968,14 @@ body.has-promo-banner .floating-actions {
   }
 
   &:focus-visible {
-    outline: 2px solid $light-color-0;
-    outline-offset: 2px;
+    outline: 0.125rem solid $light-color-0;
+    outline-offset: 0.125rem;
   }
 
   // TV 디자인 보기: 아이콘이 원형 버튼 그 자체
   &.floating-btn--tv img {
     width: 24px;
-    height: 24px;
+    height: 1.5rem;
   }
 
   // TOP: Light/200 원 + 화살표 (원본 17 × 9)
@@ -7879,7 +7984,7 @@ body.has-promo-banner .floating-actions {
 
     img {
       width: 17px;
-      height: 9px;
+      height: 0.5625rem;
     }
   }
 }
@@ -7889,23 +7994,23 @@ body.has-promo-banner .floating-actions {
 // - 70 × 70 · TOP 화살표는 좌우 패딩 22 → 26 × 14 · 버튼 사이 12
 // - 태블릿은 mobile.scss · 휴대폰은 원본 24 그대로
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   .floating-actions {
     gap: $space-md;
   }
 
   .floating-btn {
     width: 70px;
-    height: 70px;
+    height: 4.375rem;
 
     &.floating-btn--tv img {
       width: 70px;
-      height: 70px;
+      height: 4.375rem;
     }
 
     // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 26
     &.floating-btn--top {
-      padding: 0 22px;
+      padding: 0 1.375rem;
 
       img {
         width: 100%;
@@ -7975,13 +8080,13 @@ body.has-promo-banner .floating-actions {
   display: inline-flex;
   align-items: center;
   gap: $space-xs;
-  height: 32px;
+  height: 2rem;
   padding: 0 $space-md;
-  border: 1px solid rgba($light-color-0, 0.3);
-  border-radius: 9999px;
+  border: 0.0625rem solid rgba($light-color-0, 0.3);
+  border-radius: 624.9375rem;
   background-color: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
   color: $light-color-0;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -7991,8 +8096,8 @@ body.has-promo-banner .floating-actions {
   }
 
   &:focus-visible {
-    outline: 2px solid $light-color-0;
-    outline-offset: 2px;
+    outline: 0.125rem solid $light-color-0;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -8041,30 +8146,24 @@ body.has-promo-banner .floating-actions {
 // - 글자 위계 · 버튼 크기는 그대로 (위치 · 여백만 맞춤)
 // - 헤더: 로고 · 토글 · 검색 · 프로필이 이너(90%)가 아니라 화면 양 끝에서 30px
 // - 히어로 글(제목 로고 · 칩 · 소개 · 버튼): 왼쪽 12.5% (1920 기준 240px)
-// - 푸터: 화면 양 끝에서 60px
+// - [수정] 푸터: 다른 이너와 같은 화면 폭의 90% (예전: 화면 양 끝에서 60px)
 // - 섹션 본문(이너 90% ≒ 1720)은 시안과 같아 그대로
 // - 이너 90% 규칙(_24-layout-pc)이 !important 라 같은 방식으로 덮어씀
 // =====================================================================
-@media (min-width: ($breakpoint-tablet + 1)) {
+@media (min-width: ($breakpoint-mobile + 1)) {
   header .inner {
     width: 100% !important;
-    padding-left: 30px !important;
-    padding-right: 30px !important;
+    padding-left: 1.875rem !important;
+    padding-right: 1.875rem !important;
   }
 
   header .inner nav {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
+    padding-left: 1.875rem !important;
+    padding-right: 1.875rem !important;
   }
 
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info {
     left: 12.5%;
-  }
-
-  .footer .inner {
-    width: 100% !important;
-    padding-left: 60px !important;
-    padding-right: 60px !important;
   }
 }
 
@@ -8083,11 +8182,11 @@ body.has-promo-banner .floating-actions {
   gap: $space-lg;
   width: min(480px, calc(100% - #{$space-2xl * 2}));
   padding: $space-lg;
-  border: 1px solid rgba($light-color-0, 0.12);
+  border: 0.0625rem solid rgba($light-color-0, 0.12);
   border-radius: $radius-card-sm;
   background-color: rgba($dark-color-900, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(0.75rem);
+  -webkit-backdrop-filter: blur(0.75rem);
   color: $text-primary;
 }
 
@@ -8104,7 +8203,7 @@ body.has-promo-banner .floating-actions {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
   min-width: 0;
 }
 
@@ -8139,9 +8238,9 @@ body.has-promo-banner .floating-actions {
   align-items: center;
   justify-content: center;
   gap: $space-xs;
-  height: 32px;
+  height: 2rem;
   padding: 0 $space-md;
-  border: 1px solid rgba($light-color-0, 0.3);
+  border: 0.0625rem solid rgba($light-color-0, 0.3);
   border-radius: $radius-xs;
   background-color: transparent;
   color: $text-primary;
@@ -8151,7 +8250,7 @@ body.has-promo-banner .floating-actions {
 
   img {
     width: 12px;
-    height: 12px;
+    height: 0.75rem;
   }
 
   &:hover {
@@ -8168,8 +8267,8 @@ body.has-promo-banner .floating-actions {
   }
 
   &:focus-visible {
-    outline: 2px solid $light-color-0;
-    outline-offset: 2px;
+    outline: 0.125rem solid $light-color-0;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -8181,5 +8280,542 @@ body.has-promo-banner .floating-actions {
 
   .auto-next-thumb {
     width: 104px;
+  }
+}
+
+// =====================================================================
+// [추가] 핵심 혜택 (ValueProps.jsx) — 시안: 검은 띠(#000 · Dark/Black) · 3칸 가운데 정렬 · 칸 사이 세로 구분선
+// - 구분선: Light/0 1px · 글자 높이만큼 (칸 사이 간격의 가운데)
+// - 제목 Body/large-B · Light/0 / 설명 Body/small-B · Light/500 (PC)
+// - 휴대폰(1열)은 mobile.scss 에서 가로 구분선으로
+// =====================================================================
+.value-props.value-props {
+  background-color: $dark-color-black;
+
+  .value-prop-item {
+    position: relative;
+    align-items: center;
+    text-align: center;
+    word-break: keep-all;
+  }
+
+  .value-prop-item+.value-prop-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(#{$grid-gutter} / -2);
+    width: 1px;
+    background-color: $light-color-0;
+    pointer-events: none;
+  }
+}
+
+@media (min-width: ($breakpoint-mobile + 1)) {
+  .value-props.value-props {
+    padding: $space-xl 0;
+
+    .value-prop-item {
+      gap: $space-sm;
+    }
+
+    .value-prop-title {
+      @include body-large-b;
+      color: $light-color-0;
+    }
+
+    .value-prop-desc {
+      @include body-small-b;
+      color: $light-color-500;
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 기기 안내 (DeviceGuide.jsx) — 배경을 페이지 배경과 같게 · 새 기기 아이콘 + 아래 이름 글자
+// - 배경: $bg-page (페이지 배경 · Dark/900)
+// - 아이콘: svg 원래 크기 × --icon-scale · 가장 큰 아이콘 높이(54) 칸에 아래 맞춤 → 이름 줄이 한 줄로 맞음
+// - 이름: Body/small · Light/0
+// =====================================================================
+section.device-guide.device-guide--watch {
+  background-color: $bg-page;
+
+  .watch-device {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-md;
+  }
+
+  .watch-device-icon {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: calc(3.375rem * var(--icon-scale));
+  }
+
+  .watch-device-name {
+    @include body-small;
+    color: $light-color-0;
+    white-space: nowrap;
+  }
+}
+
+// =====================================================================
+// [추가] 찜 버튼 하트 — 비어 있으면 테두리(heart-icon.svg) · 찜하면 채운 하트(active-heart.svg) · 흰색
+// - 히어로 [♡] (HeroSection.jsx · .hero-wish-icon) · 작품 상세 [♡] (MovieDetail.jsx · .icon-heart)
+// =====================================================================
+.hero-wish-icon,
+.movie-detail-page .icon-heart {
+  display: block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+  mask: url("/icons/heart-icon.svg") center / contain no-repeat;
+
+  &.is-on {
+    -webkit-mask-image: url("/icons/active-heart.svg");
+    mask-image: url("/icons/active-heart.svg");
+  }
+}
+
+.hero-wish-icon {
+  width: 22px;
+  height: 1.375rem;
+}
+
+.movie-detail-page {
+  .icon-heart {
+    width: 18px;
+    height: 1.125rem;
+  }
+
+  // 찜한 상태: 예전 흰 배경 + 빨간 하트 → 배경은 그대로 · 흰색 채운 하트
+  .player-box .icon-btn.on {
+    background-color: rgba($light-color-0, 0.16);
+    color: $light-color-0;
+
+    &:hover {
+      background-color: rgba($light-color-0, 0.28);
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 섹션 소제목 없앰 (로그인 전 · 후 홈 공통) — 제목 ↔ 콘텐츠 60px (PC 1025px 이상)
+// - TOP 10 · 공개예정작 · 오리지널스 제목 아래 / 기기 안내: 제목 → 로고 띠
+// - 로그인 후 홈 섹션(.member-head)은 member.scss
+// - 기기 안내: 링크 위 여백 없앰 (설명 ↔ 링크 간격은 .watch-subtitle 아래 여백 26px)
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) {
+
+  section.top10-section .top10-title,
+  .upcoming-section .upcoming-title.upcoming-title,
+  .apple-originals .apple-originals-title.apple-originals-title {
+    margin-bottom: 3.75rem;
+  }
+
+  section.device-guide.device-guide--watch .watch-marquee {
+    margin-top: $watch-gap-block; // [수정] 제목 ↔ 로고 띠 45px
+  }
+
+  // [추가] 기기 안내 PC 간격 (시안): 로고 ↔ 제목 40 / 로고끼리 40 / 로고 띠 ↔ 설명 45 / 설명 ↔ 링크 26 / 링크 ↔ 아이콘 45 / 아이콘끼리 70
+  section.device-guide.device-guide--watch {
+    .watch-title {
+      margin-top: $watch-gap-logo-title;
+    }
+
+    .watch-logo-list {
+      gap: $watch-logo-gap;
+      padding-right: $watch-logo-gap; // 두 목록 사이도 같은 간격
+    }
+
+    .watch-mobile {
+      margin-top: $watch-gap-block;
+    }
+
+    .watch-subtitle {
+      margin-bottom: $watch-gap-text-link;
+    }
+
+    .watch-devices {
+      column-gap: $watch-device-gap;
+      margin-top: $watch-gap-block;
+    }
+  }
+}
+
+section.device-guide.device-guide--watch .watch-link {
+  margin-top: 0;
+}
+
+// =====================================================================
+// [추가] 상세 페이지 "← 홈으로" · "← 스포츠 홈으로" 공용 (components/common/DetailBackLink.jsx)
+// - 모든 상세에서 같은 자리: 헤더 아래 24px (휴대폰 16px) · 이너 왼쪽 끝 = 영화 상세 플레이어 박스 바로 위
+// - 글자 Body/small · 회색($text-tertiary) · 마우스를 올리면 흰색
+// - .detail-back-bar: 위에 히어로가 있는 스포츠 상세 → 히어로 위에 겹쳐서 같은 자리 (페이지 배치는 그대로)
+// =====================================================================
+.detail-back {
+  @include body-small;
+  display: inline-block;
+  color: $text-tertiary;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $light-color-0;
+    outline-offset: 0.125rem;
+    border-radius: $space-xs;
+  }
+}
+
+main.sport-detail-page,
+main.sport-standings-page,
+main.member-browse,
+main.wish-page {
+  position: relative; // .detail-back-bar 기준 ([추가] 전체 보기 · 위시리스트)
+}
+
+.detail-back-bar.detail-back-bar {
+  position: absolute;
+  top: calc(#{$header-height} + #{$space-xl}); // 영화 상세: 헤더 아래 24px
+  left: 0;
+  right: 0;
+  z-index: 20; // 히어로 위
+  pointer-events: none; // 히어로 버튼은 그대로 누름
+
+  .detail-back {
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .detail-back-bar.detail-back-bar {
+    top: calc(#{$header-height} + #{$space-lg}); // 영화 상세 휴대폰: 헤더 아래 16px
+    left: $mobile-edge;
+    right: $mobile-edge;
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+
+// =====================================================================
+// [추가] AI 어시스트 홍보 배너 (components/ai/AiAssistantPromo.jsx · 로그인 전 홈) — 시안: AI 어시스트_홍보배너 (1920 × 210)
+// - 배경 이미지: components/ai/assets/ai-promo-bg.jpg (화면 전체 폭 · 높이 210)
+//   · [수정] 이미지 경로는 AiAssistantPromo.jsx 에서 import 해서 style 로 넣음 (여기서는 크기 · 위치 · 바탕색만)
+// - 글자 · 상자 묶음은 가운데 (시안 폭 1150 · 좁은 화면에서는 이너 폭 안에서 줄바꿈)
+// - 왼쪽: 아이콘 24 × 24 + Label/default · Dark/100 (사이 8) / 제목 Display/L-B · Light/0 / 설명 Body/default · Dark/100
+// - 오른쪽 상자 590 × 118 · 모서리 15: 질문 Body/default · Light/0
+//   · 기분 칩 87 × 38 (패딩 13 · 9) · 둥근 · Body/small-M · 기본 Dark/100 글자 / 선택 Light/0 글자 · 칩 사이 8
+//   · [취향 더 반영하기 →] 158 × 38 (패딩 17 · 10) · Body/small-B · Light/0 · 화살표 15 × 15 (사이 8) · AI_홍보배너 그라데이션
+// - 버튼 테두리(스트로크) 없음
+// =====================================================================
+$ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(1535)
+
+.ai-banner {
+  background-color: $gnb-bg;
+  padding: $space-5xl 0 ($space-5xl * 2); // 예전 AI 안내 띠와 같은 위아래 여백
+
+  .ai-banner-band {
+    display: flex;
+    align-items: center;
+    min-height: 13.125rem; // 210
+    padding: $space-2xl 0;
+    box-sizing: border-box;
+    background-color: $bg-page;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .inner {
+    @include inner-wrap;
+  }
+
+  .ai-banner-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-xl;
+    max-width: $ai-banner-content-width;
+    margin: 0 auto;
+  }
+
+  // ---------- 왼쪽 글 ----------
+  .ai-banner-text {
+    min-width: 0;
+
+    :where(h3, p) {
+      margin: 0;
+      padding-top: 0;
+    }
+  }
+
+  .ai-banner-eyebrow {
+    @include label-default;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    color: $dark-color-100;
+  }
+
+  // 아이콘 24 × 24: AI 아이콘 공용 (components/ai/AiLogo.jsx · AiLogo.scss)
+
+  .ai-banner-title {
+    @include display-l-b;
+    margin-top: $space-md;
+    color: $light-color-0;
+    word-break: keep-all;
+  }
+
+  .ai-banner-desc {
+    @include body-default;
+    margin-top: $space-sm;
+    color: $dark-color-100;
+    word-break: keep-all;
+  }
+
+  // ---------- 오른쪽 상자 ----------
+  .ai-banner-box {
+    box-sizing: border-box;
+    width: 590px;
+    max-width: 100%;
+    padding: 1.25rem $space-xl $space-xl;
+    border-radius: 0.9375rem; // 15
+    background-color: $opacity-b-45;
+  }
+
+  .ai-banner-box-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-md;
+    margin-bottom: $space-lg;
+  }
+
+  .ai-banner-question {
+    @include body-default;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin: 0;
+    color: $light-color-0;
+
+    // 앞 점 (시안: 보라색 작은 점)
+    // [수정] AI 아이콘과 같은 반짝이 효과: 색이 흐르고 (파랑 → 보라 → 자주) 바깥 빛이 숨 쉬듯 커졌다 작아짐
+    &::before {
+      content: "";
+      flex-shrink: 0;
+      width: 6px;
+      height: 0.375rem;
+      border-radius: 50%;
+      background-color: $ai-glow-2;
+      animation: ai-dot-color 4s linear infinite, ai-dot-glow 2.4s ease-in-out infinite;
+    }
+  }
+
+  .ai-banner-tag {
+    @include caption-small;
+    flex-shrink: 0;
+    color: $dark-color-100;
+  }
+
+  .ai-banner-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-sm;
+  }
+
+  .ai-banner-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-sm;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ai-banner-chip {
+    @include body-small-m;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 87px;
+    height: 2.375rem; // 38
+    padding: 0.5625rem 0.8125rem; // 9 · 13
+    border: none;
+    border-radius: 62.4375rem;
+    background-color: rgba($ai-banner-chip-bg, 0.3);
+    color: $dark-color-100;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background-color: rgba($ai-banner-chip-bg, 0.45);
+    }
+
+    &.is-active {
+      background: $ai-banner-chip-active;
+      color: $light-color-0;
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.125rem;
+    }
+  }
+
+  // [수정] 테두리가 빛나는 버튼: 밝은 빛줄기가 테두리를 따라 돌고 (::before) 바깥 보라 빛이 숨 쉬듯 빛남
+  // - 테두리 두께 1.5px · 버튼 크기는 그대로 (테두리는 버튼 안쪽 가장자리에 그림)
+  .ai-banner-btn {
+    @include body-small-b;
+    position: relative;
+    isolation: isolate;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-sm;
+    width: 158px;
+    height: 2.375rem; // 38
+    padding: 0.625rem 1.0625rem; // 10 · 17
+    border: none;
+    border-radius: 62.4375rem;
+    background: $ai-banner-gradient;
+    color: $light-color-0;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+    animation: ai-btn-glow 2.4s ease-in-out infinite;
+
+    // 빛나는 테두리 (돌아가는 빛줄기 · 가운데는 mask 로 비워 테두리만 보이게)
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      padding: 0.09375rem; // 1.5px = 테두리 두께
+      border-radius: inherit;
+      background: conic-gradient(from var(--ai-border-angle),
+          rgba($light-color-0, 0) 0deg,
+          rgba($light-color-0, 0) 200deg,
+          $ai-glow-1 260deg,
+          $light-color-0 300deg,
+          $ai-glow-3 330deg,
+          rgba($light-color-0, 0) 360deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      animation: ai-border-spin 3s linear infinite;
+      pointer-events: none;
+    }
+
+    &:hover {
+      filter: brightness(1.08);
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.125rem;
+    }
+  }
+
+  // 글자 · 화살표는 빛나는 테두리 위로
+  .ai-banner-btn>* {
+    position: relative;
+  }
+
+  // nav/right-nav.svg (15 × 15 · 흰색)
+  .ai-banner-btn-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 15px;
+    height: 0.9375rem;
+    filter: brightness(0) invert(1);
+  }
+}
+
+// (휴대폰 규칙은 mobile.scss)
+
+// =====================================================================
+// [추가] AI 반짝이 효과 (AI 홍보 배너 · 색은 _variables.scss $ai-glow-*)
+// =====================================================================
+// 테두리 빛줄기가 돌 수 있게 각도를 애니메이션 가능한 값으로 등록 (지원하지 않는 브라우저는 빛줄기만 멈춤)
+@property --ai-border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes ai-border-spin {
+  to {
+    --ai-border-angle: 360deg;
+  }
+}
+
+// 질문 앞 점: 색이 흐름
+@keyframes ai-dot-color {
+
+  0%,
+  100% {
+    background-color: $ai-glow-1;
+  }
+
+  33% {
+    background-color: $ai-glow-2;
+  }
+
+  66% {
+    background-color: $ai-glow-3;
+  }
+}
+
+// 질문 앞 점: 바깥 빛이 숨 쉬듯
+@keyframes ai-dot-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0.125rem $ai-glow-shadow;
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 0.5rem 0.125rem $ai-glow-bright;
+    transform: scale(1.25);
+  }
+}
+
+// 버튼: 바깥 보라 빛이 숨 쉬듯
+@keyframes ai-btn-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0.25rem 0.5rem $ai-glow-shadow;
+  }
+
+  50% {
+    box-shadow: 0 0 1rem $ai-glow-bright;
+  }
+}
+
+// 기기의 "동작 줄이기" 설정: 멈춤
+@media (prefers-reduced-motion: reduce) {
+
+  .ai-banner .ai-banner-question::before,
+  .ai-banner .ai-banner-btn,
+  .ai-banner .ai-banner-btn::before {
+    animation: none;
   }
 }

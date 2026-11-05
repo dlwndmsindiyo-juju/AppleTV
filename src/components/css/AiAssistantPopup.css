@@ -326,7 +326,7 @@
   white-space: nowrap;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .ai-popup {
     width: 460px;
     padding-block: 28px;
@@ -577,7 +577,7 @@
   height: 760px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .ai-popup {
     width: 760px;
     padding: 32px 36px;
@@ -882,48 +882,8 @@
   width: 24px;
   height: 24px;
 }
-.ai-popup .ai-popup-sparkle img {
-  animation: ai-popup-star-glow 3.6s ease-in-out infinite;
-  transform-origin: center;
-}
-.ai-popup .ai-popup-sparkle::after {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(circle, rgba(154, 165, 255, 0.28), transparent 68%);
-  animation: ai-popup-star-halo 3.6s ease-in-out infinite;
-}
 
-@keyframes ai-popup-star-glow {
-  0%, 100% {
-    opacity: 0.75;
-    filter: brightness(1) drop-shadow(0 0 0 transparent);
-    transform: scale(0.95) rotate(-4deg);
-  }
-  45% {
-    opacity: 1;
-    filter: brightness(1.65) drop-shadow(0 0 5px rgba(152, 166, 255, 0.65));
-    transform: scale(1.12) rotate(4deg);
-  }
-  65% {
-    opacity: 0.9;
-    filter: brightness(1.15) drop-shadow(0 0 2px rgba(152, 166, 255, 0.3));
-    transform: scale(1);
-  }
-}
-@keyframes ai-popup-star-halo {
-  0%, 100% {
-    opacity: 0.1;
-    transform: scale(0.85);
-  }
-  45% {
-    opacity: 0.8;
-    transform: scale(1.2);
-  }
-}
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .ai-popup.ai-popup--selection {
     width: 904px;
     height: auto;
@@ -1275,7 +1235,7 @@
   line-height: 16px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .ai-popup.ai-popup--results {
     width: 936px;
     padding: 24px;

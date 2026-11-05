@@ -2,11 +2,10 @@
 import React, { useEffect } from "react";
 import { useMovieStore } from "../store/useMovieStore";
 import HeroSection from "../components/landing/HeroSection";
-import ValueProps from "../components/landing/ValueProps";
 import Top10Section from "../components/landing/Top10Section";
 import UpcomingSection from "../components/landing/UpcomingSection";
 import AppleOriginals from "../components/landing/AppleOriginals";
-import AiAssistantPromo from "../components/landing/AiAssistantPromo";
+import AiAssistantPromo from "../components/ai/AiAssistantPromo"; // [이동] AI 관련 파일은 components/ai 폴더
 import SubscribeCTA from "../components/landing/SubscribeCTA"; // 구독 유도 CTA (로그인 전 메인에만 표시)
 import DeviceGuide from "../components/landing/DeviceGuide";
 import MemberHome from "../components/member/MemberHome"; // [추가] 로그인 후 메인
@@ -30,26 +29,23 @@ const Home = () => {
       {/* 1. 상단 히어로 섹션 */}
       <HeroSection />
 
-      {/* 2. 핵심 혜택 (Apple TV 설명, 링크 없음) */}
-      <ValueProps />
-
-      {/* 3. TOP 10 (호버 시 제목/평점) */}
+      {/* 2. TOP 10 (호버 시 제목/평점) */}
       <Top10Section />
 
-      {/* 4. 공개예정작 (알림 받기) */}
+      {/* 3. 공개예정작 (알림 받기) */}
       <UpcomingSection />
 
-      {/* 5. 오리지널스 */}
+      {/* 4. 오리지널스 */}
       <AppleOriginals />
 
-      {/* 비구독 전용 AI: 오리지널스 바로 아래, 기존 팝업 연결 유지 */}
+      {/* 5. 비구독 전용 AI: 오리지널스 바로 아래, 기존 팝업 연결 유지 */}
       <AiAssistantPromo />
 
 
-      {/* 7. 구독 유도 CTA — 로그인 전에만 보임 (로그인하면 위의 MemberHome 으로 바뀌어 자동으로 숨겨짐) */}
+      {/* 6. 구독 유도 CTA — 로그인 전에만 보임 (로그인하면 위의 MemberHome 으로 바뀌어 자동으로 숨겨짐) */}
       <SubscribeCTA type="tv" />
 
-      {/* 8. 기기 안내 (마지막 섹션, 아래는 푸터) */}
+      {/* 7. 기기 안내 (마지막 섹션, 아래는 푸터) */}
       <DeviceGuide />
 
     </main>

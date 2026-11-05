@@ -17,6 +17,7 @@ import { useTeamStore } from "../store/useTeamStore";
 import { getTeamById } from "../data/sportTeams";
 import TvHome from "../components/tv/TvHome";
 import "../TV.scss";
+import AiLogo from "../components/ai/AiLogo"; // [수정] AI 아이콘 공용 (빛나며 움직임 · 원본 components/ai/assets/ai-logo.svg)
 
 // TV 디자인 미리보기 (/tv) — 하단 TV 버튼(FloatingActions)으로 들어옴
 // - 왼쪽 메뉴: 홈 · 스포츠 · AI / 관심구단 묶음(팀 이름) / 설정 묶음(프로필 변경 · 이용 안내 · 웹 화면으로 · 로그아웃)
@@ -308,7 +309,7 @@ const TvPreview = () => {
             {assistantOn && (
               <button type="button" className={`tv-side-item${aiOpen ? " is-active" : ""}`} aria-haspopup="dialog" onClick={() => setAiOpen(true)}>
                 <span className="tv-side-icon tv-side-icon--ai" aria-hidden="true">
-                  <span className="tv-side-ai-icon" />
+                  <AiLogo size={26} />
                 </span>
                 AI
               </button>

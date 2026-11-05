@@ -32,6 +32,7 @@ import Search from "./pages/Search";
 import SearchPerson from "./pages/SearchPerson";
 import SearchTitle from "./pages/SearchTitle";
 import Wishlist from "./pages/Wishlist";
+import MemberBrowse from "./pages/MemberBrowse"; // [추가] 로그인 후 메인 "전체 보기" (/browse/:key)
 import WishlistLayer from "./components/wishlist/WishlistLayer";
 import { Profile } from "./pages/Profile";
 import TvPreview from "./pages/TvPreview"; // [추가] TV 디자인 미리보기 (/tv)
@@ -64,8 +65,7 @@ function App() {
     setShowIntro(false);
   };
 
-  // 영상으로 스크롤 이동
-
+//영상 위치로 이동
   useEffect(() => {
     if (!location.pathname.startsWith("/sport/")) return;
 
@@ -74,7 +74,7 @@ function App() {
 
     const scrollToDetail = () => {
       const section = document.querySelector(
-        ".sport-detail-back, .sport-detail, .sport-live-detail, .sport-short-detail"
+        ".sport-detail, .sport-live-detail, .sport-short-detail"
       );
 
       if (!section) return false;
@@ -82,7 +82,7 @@ function App() {
       const headerHeight =
         document.querySelector("header")?.getBoundingClientRect().height || 0;
 
-      const offset = headerHeight + 70;
+      const offset = headerHeight + 100;
 
       const top =
         window.scrollY +
@@ -116,10 +116,6 @@ function App() {
       observer?.disconnect();
     };
   }, [location.pathname]);
-
-
-
-
 
 
   return (
@@ -194,6 +190,11 @@ function App() {
               <Route
                 path="/wishlist"
                 element={<Wishlist />}
+              />
+
+              <Route
+                path="/browse/:key"
+                element={<MemberBrowse />}
               />
 
               <Route

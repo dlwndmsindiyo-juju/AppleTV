@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuthStore, isSubscribed } from "../../store/useAuthStore";
 
+
 // [추가] TV 홍보 배너 오른쪽 포스터 (시안 순서 · public/images/promo)
 const TV_POSTERS = [
   { src: "/images/promo/poster-wanda.png", title: "반다를 찾아서" },
@@ -26,7 +27,7 @@ const SubscribeCTA = ({ type = "tv" }) => {
   const to = user ? "/subscribe" : "/login";
 
   // 배경 사진: TV 홈은 기존 배너 사진 · [수정] 스포츠 홈은 선수 사진 (public/images/sport/sport-promo-banner.jpg)
-  const bgImageSrc = isSport ? "/images/sport/sport-promo-banner.jpg" : "/images/subscribe-cta.webp";
+  const bgImageSrc = isSport ? "/images/sport/sport-promo-banner.svg" : "/images/subscribe-cta.webp";
 
   // [추가] TV 홈(로그인 전) 홍보 배너 — 시안
   // - 배경: 기존 배너 사진 + 검정 80% 그림자 / 왼쪽: 로고 · 문구 · 무료 체험 버튼 · 안내 / 오른쪽: 포스터 4장 (마지막 장은 배너 끝에서 잘림)
@@ -37,14 +38,38 @@ const SubscribeCTA = ({ type = "tv" }) => {
     <section className={`subscribe-cta subscribe-cta--tv${isSport ? " subscribe-cta--sport" : ""}`}>
       <div className="inner">
         <div className="subscribe-banner">
-          <img className="subscribe-bg" src={bgImageSrc} alt="" aria-hidden="true" />
+          <picture className="subscribe-bg-picture">
+            {isSport && (
+              <source
+                media="(max-width: 767px)"
+                srcSet="/images/sport/sport-promo-mobile.svg"
+              />
+            )}
+
+            <img
+              className="subscribe-bg"
+              src={bgImageSrc}
+              alt=""
+              aria-hidden="true"
+            />
+          </picture>
 
           <div className="subscribe-content">
             <img className="subscribe-logo" src="/icons/shorts/logo_w.svg" alt="Apple TV" />
             <h3 className="subscribe-title">
-              독점 오리지널 콘텐츠를 한 곳에서,
-              <br />
-              지금 Apple TV로 경험해보세요.
+              {isSport ? (
+                <>
+                  이번주 놓칠 수 없는 경기,
+                  <br />
+                  지금 Apple TV로 경험해보세요.
+                </>
+              ) : (
+                <>
+                  독점 오리지널 콘텐츠를 한 곳에서,
+                  <br />
+                  지금 Apple TV로 경험해보세요.
+                </>
+              )}
             </h3>
             <Link className="subscribe-btn" to={to}>
               7일 무료 체험하기

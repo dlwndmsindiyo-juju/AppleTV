@@ -13,8 +13,7 @@ import "swiper/css/navigation";
 // - 포스터에 마우스를 올리면 제목 + 평점 (기존 그대로)
 // - 로그인 전 홈 · 로그인 후 홈 · 무료 체험 안내 세 화면 공용 (제목 문구도 같음)
 // - 슬라이드 폭은 CSS(.top10-slide): PC 한 줄 4장 / 태블릿 · 모바일 고정 폭
-const TITLE = "지금 가장 주목받는 작품";
-const DESC = "많은 사랑을 받고 있는 인기 콘텐츠 TOP 10을 만나보세요.";
+const TITLE = "인기 콘텐츠";
 
 // 순위 숫자 (SVG)
 // - 테두리는 글자 바깥쪽에만: 테두리 층에서 글자 안쪽을 마스크로 지움 → 반투명 안쪽 그라데이션 아래로 테두리가 비치지 않음
@@ -66,8 +65,8 @@ const Top10Section = () => {
   return (
     <section className="top10-section">
       <div className="inner">
+        {/* [수정] 소제목 없앰 · 제목 ↔ 콘텐츠 60px (App.scss) */}
         <h3 className="top10-title">{TITLE}</h3>
-        <p className="top10-desc">{DESC}</p>
 
         <Swiper
           className="top10-swiper"
@@ -76,8 +75,7 @@ const Top10Section = () => {
           slidesPerView="auto"
           spaceBetween={16} // 모바일
           breakpoints={{
-            768: { spaceBetween: 24 }, // 태블릿
-            1025: { spaceBetween: 24 }, // 데스크톱
+            768: { spaceBetween: 24 }, // [수정] 태블릿 · 데스크톱 (태블릿도 PC 와 같음)
           }}
         >
           {top10.map((tv, index) => (

@@ -28,8 +28,7 @@ const FALLBACK_THUMB = "/images/matches/matches-bg.png";
 const TABS = [
   { key: "commentary", label: "중계" },
   { key: "lineup", label: "라인업" },
-  { key: "stats", label: "기록" },
-  { key: "chat", label: "채팅" },
+  { key: "stats", label: "기록" }
 ];
 
 const halfLabel = (minute) => (minute > 45 ? `후반 ${minute}'` : `전반 ${minute}'`);
@@ -398,7 +397,6 @@ const ChatPanel = ({ matchId, room, seed }) => {
           </button>
         ))}
       </div>
-
       <ul className="sport-chat-list" aria-live="polite">
         {list.map((m) => {
           // 실시간 메시지: 보낸 사람이 저장한 팀(처음 팔로우한 팀) / 내 메시지는 현재 프로필
@@ -427,7 +425,6 @@ const ChatPanel = ({ matchId, room, seed }) => {
           );
         })}
       </ul>
-
       {error && <p className="sport-chat-error" role="alert">{error}</p>}
 
       <form className="sport-chat-form" onSubmit={send}>
@@ -494,9 +491,21 @@ const SportLivePage = () => {
   const fetchHighlightList = useSportStore((state) => state.onFetchHighlightList);
   useEffect(() => { fetchLiveClips(); fetchHighlightList(); }, [fetchLiveClips, fetchHighlightList]);
   const highlightList = clips.length > 0 ? clips : sdbVideos;
-  useEffect(() => { window.scrollTo(0, 0); }, [routeId]);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      document.querySelector(".sport-live-stage")
+        ?.scrollIntoView({
+          behavior: "instant",
+          block: "start",
+        });
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [routeId]);
 
   const [tab, setTab] = useState("lineup");
+  const [chatOpen, setChatOpen] = useState(false);
 
   // 오른쪽 "다른 라이브 경기": 목업 경기면 목업 목록, 실제 경기면 livescore 목록 (누르면 그 경기 상세로 이동)
   const items = useMemo(() => {
@@ -562,7 +571,7 @@ const SportLivePage = () => {
     <main className="sport-home sport-detail-page sport-live-page">
       {followedHero ? <TeamHero team={followedHero} /> : <SportHero />}
 
-      {/* ===== 라이브 영상 + 다른 경기 ===== */}
+      {/* ===== 라이브 영상 + 채팅 + 다른 경기 ===== */}
       <section className="sport-detail sport-live-stage" aria-label="라이브 중계">
         <div className="inner">
           <SportBack />
@@ -591,27 +600,59 @@ const SportLivePage = () => {
               </div>
             </article>
 
-            <ul className="sport-detail-list" aria-label="다른 라이브 경기">
-              {list.map((item) => (
-                <li key={item.id}>
-                  <button type="button" className="sport-detail-item" onClick={() => navigate(`/sport/match/${item.id}`)}>
-                    <span className="sport-detail-thumb">
-                      <img src={thumbOf(item)} alt="" loading="lazy" />
-                      <span className="sport-detail-play" aria-hidden="true"><img className="play-icon" src="/icons/play-w.svg" alt="" aria-hidden="true" /></span>
-                    </span>
-                    <span className="sport-detail-text">
-                      <span className="sport-detail-title">{item.title}</span>
-                      <span className="sport-detail-meta">{item.sub}</span>
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <aside className="sport-live-sidebar">
+              <div className={`sport-live-chat-card${chatOpen ? " is-open" : ""}`}>
+                <button
+                  type="button"
+                  className="sport-live-chat-toggle"
+                  onClick={() => setChatOpen(prev => !prev)}
+                  aria-expanded={chatOpen}
+                >
+                  <span>채팅</span>
+                  <span>{chatOpen ? "⌃" : "⌄"}</span>
+                </button>
+
+                {chatOpen ? (
+                  <div className="sport-live-chat-content">
+                    <ChatPanel
+                      key={match.id}
+                      matchId={match.id}
+                      room={match.chatRoom}
+                      seed={match.chat}
+                    />
+                  </div>
+                ) : (
+                  <p className="sport-live-chat-preview">
+                    실시간 채팅에 참여해보세요
+                  </p>
+                )}
+              </div>
+
+              <ul className="sport-detail-list sport-live-video-list">
+                {/* 기존 list.map(...) 코드 유지 */}
+              </ul>
+              <ul className="sport-detail-list" aria-label="다른 라이브 경기">
+                {list.map((item) => (
+                  <li key={item.id}>
+                    <button type="button" className="sport-detail-item" onClick={() => navigate(`/sport/match/${item.id}`)}>
+                      <span className="sport-detail-thumb">
+                        <img src={thumbOf(item)} alt="" loading="lazy" />
+                        <span className="sport-detail-play" aria-hidden="true"><img className="play-icon" src="/icons/play-w.svg" alt="" aria-hidden="true" /></span>
+                      </span>
+                      <span className="sport-detail-text">
+                        <span className="sport-detail-title">{item.title}</span>
+                        <span className="sport-detail-meta">{item.sub}</span>
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </aside>
           </div>
         </div>
       </section>
 
-      {/* ===== 탭: 중계 · 라인업 · 기록 · 채팅 ===== */}
+      {/* ===== 탭: 중계 · 라인업 · 기록===== */}
       <section className="sport-live-tabs-section" aria-label="경기 정보">
         <div className="sport-live-tabs" role="tablist" aria-label="경기 정보 탭">
           {TABS.map((t) => (
@@ -634,7 +675,6 @@ const SportLivePage = () => {
           {tab === "commentary" && <CommentaryPanel events={match.commentary} left={away} right={home} score={finalScore} />}
           {tab === "lineup" && <LineupPanel key={match.id} teams={lineupTeams} />}
           {tab === "stats" && <StatsPanel match={match} stats={match.stats} left={away} right={home} score={finalScore} />}
-          {tab === "chat" && <ChatPanel key={match.id} matchId={match.id} room={match.chatRoom} seed={match.chat} />}
         </div>
       </section>
 
