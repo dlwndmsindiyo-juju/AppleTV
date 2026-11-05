@@ -8303,3 +8303,26 @@ section.device-guide.device-guide--watch {
     }
   }
 }
+
+// =====================================================================
+// [추가] 섹션 소제목 없앰 (로그인 전 · 후 홈 공통) — 제목 ↔ 콘텐츠 60px (PC 1025px 이상)
+// - TOP 10 · 공개예정작 · 오리지널스 제목 아래 / 기기 안내: 제목 → 로고 띠
+// - 로그인 후 홈 섹션(.member-head)은 member.scss
+// - 기기 안내: 소제목이 빠져 링크가 맨 위 → 링크 위 여백 없앰 (모든 화면)
+// =====================================================================
+@media (min-width: ($breakpoint-tablet + 1)) {
+
+  section.top10-section .top10-title,
+  .upcoming-section .upcoming-title.upcoming-title,
+  .apple-originals .apple-originals-title.apple-originals-title {
+    margin-bottom: 60px;
+  }
+
+  section.device-guide.device-guide--watch .watch-marquee {
+    margin-top: 60px;
+  }
+}
+
+section.device-guide.device-guide--watch .watch-link {
+  margin-top: 0;
+}

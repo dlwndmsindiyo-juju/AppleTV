@@ -1603,8 +1603,13 @@ main.member-home .subscribe-cta {
   main.member-home {
 
     // ---------- 섹션 머리 · 전체 보기 ----------
+    // [수정] 소제목을 없애고 제목 ↔ 콘텐츠 60px (전체 보기는 제목 줄 오른쪽 · 아래 맞춤)
     .member-head {
-      margin-bottom: 27px;
+      margin-bottom: 60px;
+    }
+
+    .member-title {
+      margin-bottom: 0;
     }
 
     .member-more {
