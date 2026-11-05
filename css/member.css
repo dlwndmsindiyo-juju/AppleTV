@@ -358,9 +358,9 @@
 }
 .member-home .member-notice p {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 0.8125rem;
-  line-height: 1.125rem;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
   letter-spacing: 0;
   margin: 0;
   color: #D4D4D4;
@@ -369,7 +369,7 @@
   margin-top: 0;
   height: 2rem;
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 0.8125rem;
   line-height: 1.125rem;
   letter-spacing: 0;
@@ -625,7 +625,7 @@
   }
   main.member-home .member-notice .member-btn {
     font-family: "SF Pro", sans-serif;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
@@ -670,7 +670,7 @@
   }
   main.member-home .member-wide-card .member-btn {
     font-family: "SF Pro", sans-serif;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
@@ -1099,8 +1099,8 @@ main.member-home .member-mood .member-chip:not(.active),
 main.member-home .member-mood .member-notice .member-btn {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 0.9375rem;
-  line-height: 1.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   box-sizing: border-box;
   border: 0.0625rem solid #C8C8C8;

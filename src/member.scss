@@ -387,7 +387,7 @@ $mobile-edge: 1.25rem;
     background-color: $bg-surface;
 
     p {
-      @include body-small;
+      @include body-default-b;
       margin: 0;
       color: $neutral-color-300;
     }
@@ -395,7 +395,7 @@ $mobile-edge: 1.25rem;
     .member-btn {
       margin-top: 0;
       height: 2rem;
-      @include body-small;
+      @include body-small-b;
     }
   }
 
@@ -682,7 +682,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
       }
 
       .member-btn {
-        @include body-small;
+        @include body-small-b;
         height: 2.25rem;
         padding: 0 $space-lg;
         border-color: $light-color-0;
@@ -721,7 +721,7 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
 
       // 신규출시: 흰 테두리 버튼
       .member-btn {
-        @include body-small;
+        @include body-small-b;
         height: 2.5rem;
         margin-top: $space-sm;
         padding: 0 $space-lg;
@@ -1205,7 +1205,7 @@ main.member-home .member-mood {
 
   .member-chip:not(.active),
   .member-notice .member-btn {
-    @include body-default-b;
+    @include body-small-b;
     box-sizing: border-box;
     border: 0.0625rem solid $light-color-500; // Inside
     border-radius: 62.4375rem;
