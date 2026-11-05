@@ -32,23 +32,23 @@ const Home = () => {
       {/* 1. 상단 히어로 섹션 */}
       <HeroSection />
 
-      {/* 2. TOP 10 (호버 시 제목/평점) */}
+      {/* 3. TOP 10 (호버 시 제목/평점) */}
       <Top10Section />
 
-      {/* 3. 비구독 전용 AI 배너: 시안 순서대로 인기 콘텐츠 바로 아래 (기존 팝업 연결 유지) */}
+      {/* [수정] 비구독 전용 AI 배너: 시안 순서대로 인기 콘텐츠 바로 아래 (기존 팝업 연결 유지) */}
       <AiAssistantPromo />
 
-      {/* 4. [수정] 공개 예정 · Apple 추천 — 로그인 후 메인 섹션 그대로 (스타일은 .member-home 감싸개 안에서 적용) */}
+      {/* 4 · 5. [수정] 공개 예정 · Apple 추천 — 로그인 후 메인 섹션 그대로 (스타일은 .member-home 감싸개 안에서 적용) */}
       <div className="member-home member-home--guest">
         <ComingSoon />
         <RecommendSection />
       </div>
 
 
-      {/* 5. 구독 유도 CTA — 로그인 전에만 보임 (로그인하면 위의 MemberHome 으로 바뀌어 자동으로 숨겨짐) */}
+      {/* 7. 구독 유도 CTA — 로그인 전에만 보임 (로그인하면 위의 MemberHome 으로 바뀌어 자동으로 숨겨짐) */}
       <SubscribeCTA type="tv" />
 
-      {/* 6. 기기 안내 (마지막 섹션, 아래는 푸터) */}
+      {/* 8. 기기 안내 (마지막 섹션, 아래는 푸터) */}
       <DeviceGuide />
 
     </main>

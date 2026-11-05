@@ -4945,12 +4945,11 @@ header .inner nav .gnb-right ul .profile-box > span,
   padding: 0;
   border: 0;
   background: none;
-  color: #6e6e73;
+  color: #D5D5D5;
   cursor: pointer;
 }
 .trial-welcome .trial-strip-hide:hover {
-  color: #111;
-  text-decoration: underline;
+  color: #FFFFFF;
 }
 .trial-welcome.is-strip-hidden .trial-heading {
   margin-top: 0;

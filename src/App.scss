@@ -4886,12 +4886,11 @@ header .inner nav .gnb-right ul .profile-box,
     padding: 0;
     border: 0;
     background: none;
-    color: #6e6e73;
+    color: $light-color-400;
     cursor: pointer;
 
     &:hover {
-      color: #111;
-      text-decoration: underline;
+      color: $light-color-0;
     }
   }
 
@@ -8755,7 +8754,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
   }
 
   // 글자 · 화살표는 빛나는 테두리 위로
-  .ai-banner-btn > * {
+  .ai-banner-btn>* {
     position: relative;
   }
 
@@ -8789,6 +8788,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 
 // 질문 앞 점: 색이 흐름
 @keyframes ai-dot-color {
+
   0%,
   100% {
     background-color: $ai-glow-1;
@@ -8805,6 +8805,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 
 // 질문 앞 점: 바깥 빛이 숨 쉬듯
 @keyframes ai-dot-glow {
+
   0%,
   100% {
     box-shadow: 0 0 0.125rem $ai-glow-shadow;
@@ -8819,6 +8820,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 
 // 버튼: 바깥 보라 빛이 숨 쉬듯
 @keyframes ai-btn-glow {
+
   0%,
   100% {
     box-shadow: 0 0.25rem 0.5rem $ai-glow-shadow;
@@ -8831,6 +8833,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 
 // 기기의 "동작 줄이기" 설정: 멈춤
 @media (prefers-reduced-motion: reduce) {
+
   .ai-banner .ai-banner-question::before,
   .ai-banner .ai-banner-btn,
   .ai-banner .ai-banner-btn::before {
