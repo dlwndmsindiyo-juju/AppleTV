@@ -6706,7 +6706,7 @@ section.top10-section {
   }
 
   .hero-chip {
-    @include body-small;
+    @include body-small-b;
     display: inline-flex;
     align-items: center;
     height: 1.75rem;
