@@ -38,6 +38,20 @@ main.sport-home {
     padding: 0;
   }
 
+  // Sport 구독 배너 이미지
+  .subscribe-cta--sport {
+    .subscribe-banner {
+      position: relative;
+      height: 420px; // 현재 배너 높이 유지
+      overflow: hidden;
+    }
+
+    .subscribe-bg {
+      object-fit: cover;
+      object-position: center top;
+    }
+  }
+
   .sport-section-head {
     margin-bottom: $space-xl;
     gap: $space-lg;
@@ -1236,6 +1250,123 @@ main.sport-home.sport-detail-page {
     gap: $space-lg;
     align-items: stretch;
   }
+
+  //----------------채팅창--------------
+  // 우측 사이드바
+  .sport-live-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    gap: $space-md;
+    overflow: visible;
+  }
+
+  // 채팅 카드
+  .sport-live-chat-card {
+    display: block;
+    flex: 0 0 auto;
+    width: 100%;
+    background: $sport-opacity-b;
+    border-radius: $radius-sm;
+    overflow: hidden;
+  }
+
+  // 채팅 접기 / 펼치기 버튼
+  .sport-live-chat-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    border: 0;
+    background: transparent;
+    color: $light-color-0;
+    @include body-default-b;
+    cursor: pointer;
+  }
+
+  // 닫힌 상태
+  .sport-live-chat-preview {
+    display: block;
+    margin: 0 12px 14px;
+    padding: 12px 14px;
+    border-radius: 20px;
+    background: $sport-opacity-w;
+    color: $light-color-0;
+    @include body-small;
+  }
+
+  // 열린 상태
+  .sport-live-chat-content {
+    height: auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .sport-live-chat-content .sport-chat {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+    padding: 0 12px 12px;
+    overflow: hidden;
+  }
+
+  .sport-live-chat-card {
+
+    .sport-chat-head,
+    .sport-chat-filters {
+      display: none;
+    }
+
+    .sport-chat-list {
+      flex: 1 1 auto;
+      min-height: 0;
+      height: auto;
+      max-height: none;
+      overflow-y: auto;
+      margin: 0 0 12px;
+      padding: 4px 0;
+    }
+
+    .sport-chat-form {
+      position: static;
+      flex: 0 0 auto;
+      margin-top: auto;
+    }
+  }
+
+  // 채팅창 아래 경기 영상 목록
+  .sport-live-sidebar .sport-detail-list {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    gap: 12px;
+
+    >li {
+      flex: 0 0 auto;
+      width: 100%;
+    }
+
+    .sport-detail-item {
+      width: 100%;
+    }
+  }
+
+
 
   // ---------- 왼쪽 : 큰 화면 + 정보 ----------
   .sport-detail-stage {
@@ -2975,9 +3106,13 @@ main.sport-home.sport-live-page {
     font-family: inherit;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: $space-lg;
-    margin: 0 0 7.5rem;
-    padding-left: 15%;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 auto $space-5xl;
+    padding: 0;
+
     font-weight: $font-weight-bold;
     color: $text-primary;
 
@@ -2991,8 +3126,10 @@ main.sport-home.sport-live-page {
   .sport-subs-col ul {
     display: flex;
     flex-direction: column;
-    gap: 5.25rem;
-    margin: 0;
+    gap: 84px;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 auto;
     padding: 0;
     list-style: none;
   }
@@ -3239,7 +3376,7 @@ main.sport-home.sport-live-page {
       @include body-default;
       font-family: inherit;
       flex: 1;
-      height: 2.75rem;
+      height: 2em;
       padding: 0 $space-lg;
       border: 0;
       border-radius: 624.9375rem;
@@ -3684,7 +3821,321 @@ $live-lineup-gap: 3.25rem;
 // ---------------------------------------------------------------------
 $live-lineup-gap-tablet: $space-3xl; // 36px (PC 52px)
 
-// [삭제] 태블릿 전용 규칙 (768 ~ 1024px) — 태블릿도 PC 규칙을 따름 (이너 90% · PC 텍스트 위계)
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  main.sport-home.sport-live-page {
+    padding-bottom: 7.5rem;
+
+    // ---------- 영상 + 다른 경기 목록 (영상 위 · 목록 아래 2열) ----------
+    .sport-live-stage>.inner {
+      width: calc(100% - #{$tablet-edge * 2});
+    }
+
+    .sport-detail-layout {
+      grid-template-columns: 1fr;
+      gap: $space-xl;
+    }
+
+    .sport-detail-list {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: $space-md $space-lg;
+    }
+
+    .sport-detail-thumb {
+      flex-basis: 128px;
+    }
+
+    .sport-detail-title {
+      @include body-default;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+    }
+
+    .sport-detail-meta {
+      @include label-default;
+      font-family: inherit;
+    }
+
+    .sport-detail-info {
+      gap: $space-xs;
+      padding: $space-lg $space-xl $space-xl;
+    }
+
+    .sport-live-info-title {
+      @include heading-h4-b;
+      font-family: inherit;
+      gap: $space-md;
+    }
+
+    .sport-live-info-sub {
+      @include body-default;
+      font-family: inherit;
+    }
+
+    .sport-live-info-note {
+      @include label-default;
+      font-family: inherit;
+    }
+
+    // ---------- 탭 ----------
+    .sport-live-tabs-section>.inner,
+    .sport-live-back-wrap {
+      width: calc(100% - #{$tablet-edge * 2});
+    }
+
+    .sport-live-tab {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      height: auto;
+      padding: $space-lg 0;
+    }
+
+    .sport-live-panel {
+      padding-top: $live-lineup-gap-tablet;
+    }
+
+    // ---------- 라인업 (간격 36px) ----------
+    .sport-lineup-head {
+      gap: $space-md;
+      margin: 0 0 $live-lineup-gap-tablet;
+
+      .sport-lineup-badge {
+        width: 56px;
+        height: 3.5rem;
+      }
+
+      h3 {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p {
+        @include display-M;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+
+      p span {
+        margin-right: $space-sm;
+        font-weight: $font-weight-regular;
+        color: $text-secondary;
+      }
+    }
+
+    .sport-lineup-head.is-button {
+      margin: $live-lineup-gap-tablet 0 0;
+      padding: 0 $space-sm;
+    }
+
+    .sport-pitch {
+      border-radius: $radius-card;
+    }
+
+    .sport-pitch-players li {
+      gap: $space-xs;
+    }
+
+    .sport-pitch-photo {
+      width: 72px;
+      height: 4.5rem;
+      border-width: 0.125rem;
+
+      &.is-empty {
+        @include heading-h3;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .sport-pitch-label {
+      @include body-small;
+      font-family: inherit;
+    }
+
+    // ---------- 후보선수 ----------
+    .sport-subs-title {
+      @include display-M;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      margin-top: 4.5rem;
+      padding-bottom: $space-xl;
+    }
+
+    .sport-subs {
+      gap: $space-xl;
+      padding: $space-4xl 4% 0;
+    }
+
+    .sport-subs-team {
+      @include heading-h2;
+      font-family: inherit;
+      font-weight: $font-weight-bold;
+      gap: $space-md;
+      margin-bottom: $space-3xl;
+      padding-left: 0;
+
+      img {
+        width: 64px;
+        height: 4rem;
+      }
+    }
+
+    .sport-subs-col ul {
+      gap: $space-xl;
+    }
+
+    .sport-subs-col li {
+      @include heading-h4-b;
+      font-family: inherit;
+      gap: $space-md;
+    }
+
+    .sport-subs-photo {
+      width: 64px;
+      height: 4rem;
+      border-width: 0.125rem;
+      margin-right: $space-xs;
+
+      &.is-empty {
+        @include body-default;
+        font-family: inherit;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    .sport-live-back-wrap {
+      margin-top: 3.5rem;
+    }
+  }
+}
+
+// =====================================================
+// SportDetail / SportLivePage 공통 모바일 영상 목록
+// =====================================================
+
+@media (max-width: $breakpoint-mobile) {
+  main.sport-home.sport-detail-page {
+
+    .sport-detail-layout {
+      min-width: 0;
+    }
+
+    // 영상 목록 가로 스와이프
+    .sport-detail-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      flex: none;
+
+      overflow-x: auto;
+      overflow-y: hidden;
+
+      gap: $space-md;
+      margin: 0;
+      padding: 0 0 $space-md;
+
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      >li {
+        flex: 0 0 180px;
+        width: 180px;
+        min-width: 180px;
+        scroll-snap-align: start;
+      }
+    }
+
+    // 영상 카드
+    .sport-detail-item {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+
+      width: 100%;
+      height: auto;
+      gap: $space-sm;
+
+      text-align: left;
+    }
+
+    // 썸네일
+    .sport-detail-thumb {
+      display: block;
+      width: 100%;
+      height: auto;
+      flex: none;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: $radius-xs;
+
+      >img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    // 영상 제목 및 경기 정보
+    .sport-detail-text {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      min-width: 0;
+      gap: 4px;
+    }
+
+    .sport-detail-title {
+      @include body-small;
+      font-family: inherit;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .sport-detail-meta {
+      font-size: 12px;
+      color: $text-secondary;
+    }
+  }
+
+  main.sport-home.sport-detail-page.sport-live-page {
+
+    .sport-live-sidebar .sport-detail-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .sport-live-sidebar .sport-detail-list>li {
+      flex: 0 0 180px;
+      width: 180px;
+      min-width: 180px;
+    }
+  }
+
+
+}
 
 // =====================================================================
 // 라이브 상세 · 중계 / 기록 / 채팅 탭 (시안)
