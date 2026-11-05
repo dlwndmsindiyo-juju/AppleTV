@@ -427,7 +427,8 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
   .wish-page {
-    padding-top: calc(#{$header-height} + #{$space-xl});
+    // [수정] "← 홈으로"(헤더 아래 16 · 글자 18) 아래 12 에서 제목 시작 (영화 상세와 같은 간격)
+    padding-top: calc(#{$header-height} + #{$space-lg} + 1.125rem + #{$space-md});
   }
 
   .wish-inner {
@@ -3093,6 +3094,11 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 @media (max-width: $breakpoint-mobile) {
   main.member-home.member-browse {
+    // [추가] "← 홈으로"(헤더 아래 16 · 글자 18) 아래 12 에서 제목 시작 (영화 상세와 같은 간격)
+    .member-section {
+      padding-top: calc(#{$space-lg} + 1.125rem + #{$space-md});
+    }
+
     .member-section .inner {
       padding-right: $mobile-edge;
     }

@@ -8488,8 +8488,10 @@ section.device-guide.device-guide--watch .watch-link {
 }
 
 main.sport-detail-page,
-main.sport-standings-page {
-  position: relative; // .detail-back-bar 기준
+main.sport-standings-page,
+main.member-browse,
+main.wish-page {
+  position: relative; // .detail-back-bar 기준 ([추가] 전체 보기 · 위시리스트)
 }
 
 .detail-back-bar.detail-back-bar {
