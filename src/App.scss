@@ -7080,7 +7080,7 @@ section.device-guide.device-guide--watch {
 
   .watch-subtitle {
     @include display-M;
-    margin: 0;
+    margin: 0 0 $space-lg 0;
     padding-top: 0;
     color: $light-color-0;
     word-break: keep-all;
@@ -8202,7 +8202,7 @@ body.has-promo-banner .floating-actions {
     word-break: keep-all;
   }
 
-  .value-prop-item + .value-prop-item::before {
+  .value-prop-item+.value-prop-item::before {
     content: "";
     position: absolute;
     top: 0;
