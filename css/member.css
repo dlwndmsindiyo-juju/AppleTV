@@ -427,7 +427,7 @@
 }
 .member-home a:focus-visible,
 .member-home button:focus-visible {
-  outline: 2px solid #0a84ff;
+  outline: 2px solid #6E7AF4;
   outline-offset: 2px;
 }
 
@@ -1523,9 +1523,15 @@ main.member-home .subscribe-cta {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(23, 23, 23, 0) 45%);
   pointer-events: none;
 }
-.member-home .member-sc-slot--soon:hover .member-sc-thumb {
+.member-home .member-sc-slot--soon .member-sc-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.member-home .member-sc-slot--soon:hover, .member-home .member-sc-slot--soon:focus-within {
+  z-index: 10;
+}
+.member-home .member-sc-slot--soon:hover .member-sc-card, .member-home .member-sc-slot--soon:focus-within .member-sc-card {
   transform: scale(1.05);
-  z-index: 1000;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 }
 .member-home .member-sc-month {
   font-family: "SF Pro", sans-serif;
@@ -1566,7 +1572,7 @@ main.member-home .subscribe-cta {
 }
 .member-home .member-sc-slot--new:hover,
 .member-home .member-sc-slot--new:focus-within {
-  z-index: 3;
+  z-index: 10;
 }
 .member-home .member-sc-slot--new:hover .member-sc-card,
 .member-home .member-sc-slot--new:focus-within .member-sc-card {
@@ -1686,6 +1692,21 @@ main.member-home .subscribe-cta {
   -webkit-mask: url("/icons/heart-icon.svg") center/contain no-repeat;
   mask: url("/icons/heart-icon.svg") center/contain no-repeat;
 }
+.member-home .member-sc-heart.is-on {
+  color: #FFFFFF;
+}
+.member-home .member-sc-heart.is-on .member-sc-heart-icon {
+  -webkit-mask-image: url("/icons/active-heart.svg");
+  mask-image: url("/icons/active-heart.svg");
+}
+.member-home .rail-showcase .swiper-wrapper:has(.member-sc-slot:hover),
+.member-home .rail-showcase .swiper-wrapper:has(.member-sc-slot:focus-within) {
+  z-index: 11;
+}
+.member-home .rail-showcase .swiper-slide:has(.member-sc-slot:hover),
+.member-home .rail-showcase .swiper-slide:has(.member-sc-slot:focus-within) {
+  z-index: 10;
+}
 
 main.member-home.member-browse {
   min-height: 100vh;
@@ -1709,4 +1730,16 @@ main.member-home.member-browse .member-browse-grid > li {
 }
 main.member-home.member-browse .member-browse-grid--recommend {
   --browse-col: 282px;
+}
+
+.member-home .member-nr-heart.is-on .member-nr-heart-icon,
+.member-home .member-nr-quick-heart.is-on .member-nr-quick-heart-icon,
+.upcoming-section .member-nr-heart.is-on .member-nr-heart-icon,
+.upcoming-section .member-nr-quick-heart.is-on .member-nr-quick-heart-icon {
+  -webkit-mask-image: url("/icons/active-heart.svg");
+  mask-image: url("/icons/active-heart.svg");
+}
+.member-home .member-nr-quick-heart.is-on.is-on,
+.upcoming-section .member-nr-quick-heart.is-on.is-on {
+  color: #FFFFFF;
 }
