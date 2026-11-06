@@ -5864,12 +5864,13 @@ img.ui-icon.ui-icon-arrow {
   @include body-default;
   font-family: inherit;
   padding: 0;
-  border: none;
-  background: none;
-  color: $primary-color-500; // 시안 링크 색
+  color: $primary-color-500;
   cursor: pointer;
   text-align: left;
   margin-bottom: $space-lg;
+
+  display: inline-block;
+  margin-left: $space-xs;
 
 
   &:hover {
@@ -6208,7 +6209,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-sub-heading {
-  margin: $space-3xl 0;
+  margin: $space-3xl 0 $space-xl;
 }
 
 // ========================================
@@ -6216,6 +6217,7 @@ img.ui-icon.ui-icon-arrow {
 // ========================================
 
 .account-pay {
+
   // 결제 수단 목록 레이아웃
   .account-pay-layout {
     display: flex;
@@ -6553,7 +6555,8 @@ img.ui-icon.ui-icon-arrow {
 // ========================================
 
 .account-pay-methods {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: $space-lg;
   margin-top: $space-lg;
 }
@@ -6578,6 +6581,7 @@ img.ui-icon.ui-icon-arrow {
     border-color: $brand-primary;
   }
 }
+
 
 // 원형 선택 버튼
 .account-pay-method-radio {
@@ -6604,8 +6608,8 @@ img.ui-icon.ui-icon-arrow {
 .account-pay-method-radio-ui {
   position: relative;
   display: block;
-  width: $space-3xl;
-  height: $space-3xl;
+  width: $space-2xl;
+  height: $space-2xl;
   border: 2px solid $neutral-color-400;
   border-radius: 50%;
   background: $light-color-0;
@@ -6628,8 +6632,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 // 키보드 접근성
-.account-pay-method-radio input:focus-visible
-  + .account-pay-method-radio-ui {
+.account-pay-method-radio input:focus-visible+.account-pay-method-radio-ui {
   outline: 2px solid $brand-primary;
   outline-offset: 3px;
 }
@@ -6653,8 +6656,43 @@ img.ui-icon.ui-icon-arrow {
 }
 
 // 간편결제 선택 카드
-.account-pay-method--provider {
-  min-height: 7.5rem;
+
+
+.account-pay-methods--provider {
+  .account-pay-method--provider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 16px;
+    min-height: 7.5rem;
+
+    .account-pay-method-radio {
+      flex: 0 0 auto;
+    }
+
+    .account-pay-provider-image {
+      display: block;
+      width: 88px;
+      height: 36px;
+      flex: 0 0 88px;
+      object-fit: contain;
+    }
+
+    .account-pay-method-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      min-width: 0;
+
+      strong {
+        margin: 0;
+        white-space: nowrap;
+      }
+    }
+  }
 }
 
 // ========================================
@@ -6677,7 +6715,7 @@ img.ui-icon.ui-icon-arrow {
     width: 100%;
     min-height: 3rem;
     padding: $space-md $space-lg;
-    border: 1px solid $neutral-color-300;
+    border: 1px solid $light-color-500;
     border-radius: $radius-sm;
     background: $light-color-100;
     color: $text-inverse;
@@ -6689,7 +6727,7 @@ img.ui-icon.ui-icon-arrow {
     }
 
     &::placeholder {
-      color: $neutral-color-400;
+      color: $dark-color-100;
     }
   }
 }
@@ -6697,7 +6735,7 @@ img.ui-icon.ui-icon-arrow {
 .account-pay-help {
   margin: 0;
   @include body-small;
-  color: $neutral-color-600;
+  color: $dark-color-100;
 }
 
 // ========================================
@@ -6939,6 +6977,83 @@ img.ui-icon.ui-icon-arrow {
   }
 }
 
+
+// 결제 수단별 아이콘
+.account-pay-method-icon {
+  display: block;
+  width: 38px;
+  height: 28px;
+  flex: 0 0 58px;
+  object-fit: contain;
+}
+
+.account-pay-provider-image {
+  display: block;
+  width: 62px;
+  height: 34px;
+  flex: 0 0 92px;
+  object-fit: contain;
+}
+
+// 카드 등록 필드
+.account-pay-card-fields {
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  input,
+  select {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .account-pay-card-field-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+// 휴대폰 인증 필드
+.account-pay-phone-fields {
+  label {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  label>span {
+    white-space: nowrap;
+  }
+
+  input,
+  select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  select {
+    padding-right: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-pay-phone-fields label {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .account-pay-provider-image {
+    width: 72px;
+    flex-basis: 72px;
+  }
+}
 
 
 
