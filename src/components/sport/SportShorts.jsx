@@ -159,7 +159,6 @@ const SportShorts = ({ title = "숏폼" }) => {
             slideToClickedSlide
             // initialSlide={Math.min(3, items.length - 1)}
             onSlideChange={() => setPlayingId(null)}
-            loop={true}
           >
             {items.map((item) => {
               const playing = playingId === item.id;
