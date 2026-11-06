@@ -148,6 +148,8 @@ const DETAIL_CONFIG = {
   },
 };
 
+
+
 // 남은 시간 (일 · 시 · 분 · 초)
 const useCountdown = (target) => {
   const [now, setNow] = useState(() => Date.now());
@@ -239,6 +241,38 @@ const SportDetail = () => {
   const { type } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const config = DETAIL_CONFIG[type];
+
+  //스포츠 상세페이지 진입시 영상 위치로 이동 
+  useEffect(() => {
+    if (!config) return;
+
+    const frame = requestAnimationFrame(() => {
+      const section = document.querySelector(
+        `main.sport-detail-page--${type} .sport-detail-layout`
+      );
+
+      if (!section) return;
+
+      const headerHeight =
+        document.querySelector("header")
+          ?.getBoundingClientRect().height ?? 0;
+
+      const offset = headerHeight + 80;
+
+      const top =
+        window.scrollY +
+        section.getBoundingClientRect().top -
+        offset;
+
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: "auto",
+      });
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [type, config]);
+
 
   // (경기 시각이 지난 경우만) 상세에 들어온 시점 + 9시간
   const [countdownTarget, setCountdownTarget] = useState(() => Date.now() + COUNTDOWN_START_MS);
