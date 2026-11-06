@@ -5754,7 +5754,7 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: 1rem;
   transition: opacity 0.2s ease;
 }
 .account-item.is-muted {
@@ -7422,12 +7422,30 @@ body.has-promo-banner .floating-actions {
 }
 
 .floating-actions .floating-btn.floating-btn--tv {
+  position: relative;
   border-radius: 50% 50% 0 0;
   background-color: #2E2E2E;
 }
 .floating-actions .floating-btn.floating-btn--tv img {
   width: 60%;
   height: auto;
+  animation: floating-tv-glow 2.4s ease-in-out infinite;
+}
+.floating-actions .floating-btn.floating-btn--tv::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  aspect-ratio: 70/33;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 65%);
+  background-size: 300% 100%;
+  background-position: 150% 0;
+  -webkit-mask: url("/icons/tv/tv-more-btn.svg") center/contain no-repeat;
+  mask: url("/icons/tv/tv-more-btn.svg") center/contain no-repeat;
+  pointer-events: none;
+  animation: floating-tv-shine 3s ease-in-out infinite;
 }
 .floating-actions .floating-btn.floating-btn--top {
   padding: 0;
@@ -7439,6 +7457,32 @@ body.has-promo-banner .floating-actions {
   height: auto;
 }
 
+@keyframes floating-tv-glow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0.125rem rgba(95, 70, 228, 0.36)) brightness(1);
+  }
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 0.5rem rgba(124, 69, 239, 0.75)) brightness(1.2);
+  }
+}
+@keyframes floating-tv-shine {
+  0% {
+    background-position: 150% 0;
+  }
+  60%, 100% {
+    background-position: -50% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-actions .floating-btn.floating-btn--tv img, .floating-actions .floating-btn.floating-btn--tv::after {
+    animation: none;
+  }
+  .floating-actions .floating-btn.floating-btn--tv::after {
+    display: none;
+  }
+}
 @media (min-width: 768px) {
   .floating-btn {
     width: 70px;
