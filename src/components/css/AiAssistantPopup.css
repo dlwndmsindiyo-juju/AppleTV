@@ -738,9 +738,9 @@
 .ai-popup.ai-popup--selection .ai-popup-header > p {
   margin-top: 24px;
   color: #fff;
-  font-size: 22px;
+  font-size: 24px;
   line-height: 28px;
-  font-weight: 700;
+  font-weight: 500;
   text-align: center;
   height: 22px;
 }
@@ -786,14 +786,15 @@
   margin: 0 0 24px;
 }
 .ai-popup.ai-popup--selection .ai-popup-question h3 {
+  margin-top: 15px;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 28px;
 }
 .ai-popup.ai-popup--selection .ai-popup-question p {
   margin-top: 8px;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 300;
   line-height: 16px;
   color: var(--ai-subtle);
 }
@@ -803,7 +804,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: 10px 5px;
+  gap: 10px 8px;
   width: 100%;
   max-width: none;
 }
