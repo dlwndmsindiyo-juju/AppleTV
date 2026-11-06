@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import "./App.scss";
 import "./mobile.scss";
+import "./auth.scss"; // [추가] 로그인 화면에만 적용되는 스타일
 
 import {
   Navigate,
@@ -48,7 +49,8 @@ function App() {
   const user = useAuthStore((state) => state.user);
   const initAuth = useAuthStore((state) => state.initAuth);
   const location = useLocation();
-  const isTvPreview = location.pathname === "/tv"; // [추가] TV 미리보기: 웹 헤더 · 푸터 · 배너 · 떠 있는 버튼 숨김
+  const isTvPreview = location.pathname === "/tv";
+  const isLoginPage = location.pathname === "/login"; // [추가] 로그인은 독립 화면 // [추가] TV 미리보기: 웹 헤더 · 푸터 · 배너 · 떠 있는 버튼 숨김
 
   // 로그인 상태 초기화
   useEffect(() => {
@@ -74,7 +76,7 @@ function App() {
       ) : (
         <>
           {/* 헤더 */}
-          {!isTvPreview && <Header />}
+          {!isTvPreview && !isLoginPage && <Header />}
 
           {/* 메인 콘텐츠 */}
           <div className="page-fade" key={location.pathname}>
@@ -185,13 +187,13 @@ function App() {
           </div>
 
           {/* 기존 프로모션 배너 */}
-          {!isTvPreview && <PromoBanner />}
+          {!isTvPreview && !isLoginPage && <PromoBanner />}
 
           {/* 푸터 */}
-          {!isTvPreview && <Footer />}
+          {!isTvPreview && !isLoginPage && <Footer />}
 
           {/* [추가] 오른쪽 아래 TV 디자인 · TOP 버튼 (항상 표시) */}
-          {!isTvPreview && <FloatingActions />}
+          {!isTvPreview && !isLoginPage && <FloatingActions />}
 
           {/* 위시리스트 팝업 및 토스트 */}
           <WishlistLayer />
