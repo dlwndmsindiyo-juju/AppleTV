@@ -69,7 +69,6 @@ function App() {
     setShowIntro(false);
   };
 
-
   return (
     <>
       {showIntro ? (
@@ -167,11 +166,8 @@ function App() {
               <Route
                 path="/login"
                 element={
-                  isSubscribed(user) ? (
-                    <Navigate to="/" replace />
-                  ) : (
-                    <Login />
-                  )
+                  // [수정] 로그인 직후 프로필 선택 단계가 라우터에서 차단되지 않도록 유지
+                  <Login />
                 }
               />
 
