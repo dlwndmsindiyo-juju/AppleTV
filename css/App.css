@@ -1148,8 +1148,8 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.8125rem;
-  line-height: 1.125rem;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #E0E0E0;
   max-width: 40rem;
@@ -7406,7 +7406,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.1rem;
 }
 
 body.has-promo-banner .floating-actions {
@@ -8217,7 +8217,14 @@ main.wish-page {
     letter-spacing: 0;
     color: #FFFFFF;
   }
-  .movie-detail-page.movie-detail-page .player-box .genres,
+  .movie-detail-page.movie-detail-page .player-box .genres {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
+    letter-spacing: 0;
+    color: #C8C8C8;
+  }
   .movie-detail-page.movie-detail-page .player-box .overview {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
@@ -8246,16 +8253,16 @@ main.wish-page {
   .movie-detail-page.movie-detail-page .rating-section .rating-header h3 {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.125rem;
-    line-height: 2.5625rem;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display {
     font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.3125rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
@@ -8282,8 +8289,8 @@ main.wish-page {
   .movie-detail-page.movie-detail-page .rating-section .star-picker .star-item .label {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 1rem;
+    line-height: 1.3125rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
@@ -8296,12 +8303,13 @@ main.wish-page {
     width: 11.25rem;
     height: 3.875rem;
     padding: 0;
+    margin: 1rem 0;
   }
   .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
     color: #525252;
   }
@@ -8326,8 +8334,8 @@ main.wish-page {
   .movie-detail-page.movie-detail-page .right-section .season-label {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 1rem;
+    line-height: 1.3125rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }

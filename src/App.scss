@@ -1300,7 +1300,7 @@ header {
     }
 
     .overview {
-      @include body-small;
+      @include caption-default;
       color: $light-color-300;
       max-width: 40rem;
       margin-top: $space-xs;
@@ -7684,7 +7684,7 @@ $floating-btn-gap: 0.25rem; // 두 버튼 사이 4
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $floating-btn-gap;
+  gap: $space-xxs;
 }
 
 body.has-promo-banner .floating-actions {
@@ -8658,7 +8658,11 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
         color: $light-color-0;
       }
 
-      .genres,
+      .genres {
+        @include caption-default;
+        color: $light-color-500;
+      }
+
       .overview {
         @include body-default;
         color: $light-color-0;
@@ -8685,12 +8689,12 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
     .rating-section {
       .rating-header {
         h3 {
-          @include display-l-b;
+          @include display-M-b;
           color: $light-color-0;
         }
 
         .score-display {
-          @include heading-h3-b;
+          @include heading-h5;
           color: $light-color-0;
 
           .score-star {
@@ -8717,7 +8721,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
         }
 
         .label {
-          @include heading-h3;
+          @include heading-h5;
           color: $light-color-0;
         }
       }
@@ -8727,13 +8731,14 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
         width: 11.25rem; // 180 (좌우 48 · 위아래 20 패딩 포함 크기)
         height: 3.875rem; // 62
         padding: 0;
+        margin: 1rem 0
       }
     }
 
     // ---------- 오른쪽 탭 ----------
     .right-section {
       .tabs .tab-btn {
-        @include heading-h2-b;
+        @include heading-h4-b;
         color: $dark-color-100;
 
         &:hover {
@@ -8756,7 +8761,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
       }
 
       .season-label {
-        @include heading-h3;
+        @include heading-h5;
         color: $light-color-0;
       }
 
