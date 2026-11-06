@@ -23,9 +23,9 @@ $account-sub: $neutral-color-600; // 설명 · 안내 글자 (밝은 배경에�
 
 // [추가] 페이지 바탕색 — 섹션 경계의 가는 선 없애기
 // - 섹션 높이가 소수 픽셀(rem)이라 화면 배율에 따라 섹션 사이로 바탕(기본 흰색)이 1px 비쳐 선처럼 보였음
-// - 바탕을 섹션과 같은 색으로: 로그인 전 홈 · 공통 $gnb-bg / 로그인 후 홈 $bg-page
+// - 바탕을 섹션과 같은 색으로: 로그인 전 홈 · 공통 $bg-page / 로그인 후 홈 $bg-page
 body {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
 }
 
 main.member-home {
@@ -1070,7 +1070,7 @@ header {
 
 // ===== 인기 영화 TOP 10 =====
 .top10-section {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   padding: 2.5rem 0 3.5rem;
 
   .inner {
@@ -1185,7 +1185,7 @@ header {
 
 // ===== 영화 상세페이지 =====
 .movie-detail-page {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   color: $text-primary;
   min-height: 100vh;
   padding-top: calc(#{$header-height} + 1.5rem); // 헤더 아래 24px
@@ -1835,9 +1835,142 @@ header {
 }
 
 
+
+// ===== AI 어시스턴트 안내 띠 (로그인 전 메인 · 시안) =====
+// - 바깥 section 은 페이지 배경, 안쪽 .ai-promo-band 가 화면 전체 폭 회색 띠
+.ai-promo {
+  background-color: $bg-page;
+  padding: $space-5xl 0 ($space-5xl * 2);
+
+  .ai-promo-band {
+    background-color: $bg-surface-hover;
+  }
+
+  .inner {
+    @include inner-wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-5xl;
+    padding-top: $space-5xl;
+    padding-bottom: $space-5xl;
+  }
+
+  // 왼쪽 글
+  .ai-promo-text {
+    min-width: 0;
+  }
+
+  .ai-promo-eyebrow {
+    @include label-default;
+    margin: 0 0 $space-sm;
+    color: $text-primary;
+    letter-spacing: 0.04em;
+  }
+
+  .ai-promo-title {
+    @include heading-h1;
+    margin: 0 0 $space-md;
+    padding-top: 0;
+    color: $text-primary;
+    word-break: keep-all;
+  }
+
+  .ai-promo-desc {
+    @include body-default;
+    margin: 0;
+    color: $text-secondary;
+    word-break: keep-all;
+  }
+
+  // 오른쪽 흰 카드
+  .ai-promo-card {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 400px;
+    padding: 1.25rem;
+    border-radius: $radius-card-sm;
+    background-color: $light-color-0;
+    color: $text-inverse;
+    box-sizing: border-box;
+  }
+
+  .ai-promo-card-title {
+    @include body-default-b;
+    margin: 0 0 $space-sm;
+    padding-top: 0;
+    color: $text-inverse;
+  }
+
+  .ai-promo-card-sub,
+  .ai-promo-question {
+    @include label-default;
+    margin: 0;
+    color: $neutral-color-600;
+  }
+
+  .ai-promo-chips {
+    display: flex;
+    gap: $space-sm;
+    margin: $space-md 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      flex-shrink: 0;
+    }
+  }
+
+  .ai-promo-chip {
+    @include label-default;
+    height: 1.75rem;
+    padding: 0 $space-md;
+    border: 0.0625rem solid $neutral-color-400;
+    border-radius: 624.9375rem;
+    background-color: $light-color-0;
+    color: $text-inverse;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      border-color: $neutral-color-700;
+    }
+
+    &.active {
+      background-color: $text-inverse;
+      border-color: $text-inverse;
+      color: $text-primary;
+    }
+  }
+
+  .ai-promo-btn {
+    @include body-small-b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 2.25rem;
+    margin-top: $space-md;
+    border-radius: 624.9375rem;
+    background-color: $primary-color-500;
+    color: $text-primary;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $primary-color-400;
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $primary-color-500;
+      outline-offset: 0.125rem;
+    }
+  }
+}
+
 // ===== 구독 유도 CTA =====
 .subscribe-cta {
-  background-color: $gnb-bg;
   padding: 2.5rem 0 4.5rem;
 
   .inner {
@@ -2438,7 +2571,7 @@ body.has-promo-banner .footer {
 
 // 예정된 경기
 .sport-upcoming {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   padding: 3.5rem 0 $space-2xl;
 
   .inner {
@@ -2518,7 +2651,7 @@ body.has-promo-banner .footer {
 
 // 숏츠
 .sport-shorts {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   padding: $space-2xl 0 4.5rem;
 
   .inner {
@@ -2603,7 +2736,7 @@ body.has-promo-banner .footer {
 
 // 스포츠 홍보 배너 (구조만)
 .sport-promo {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   padding: 0 0 4.5rem;
 
   .inner {
@@ -2868,7 +3001,7 @@ body.has-promo-banner .footer {
   min-height: 100vh;
   padding-top: $header-height;
   padding-bottom: 5rem;
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   color: $text-primary;
 
   .inner {
@@ -3035,7 +3168,7 @@ body.has-promo-banner .footer {
 
 // 리그 순위 (바로가기 카드)
 .sport-league {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   padding: 3.5rem 0 4.5rem;
 
   .inner {
@@ -3098,7 +3231,7 @@ body.has-promo-banner .footer {
 
 // 영상 다시보기
 .sport-replay {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   padding: 3.5rem 0 $space-2xl;
 
   .inner {
@@ -3173,7 +3306,7 @@ body.has-promo-banner .footer {
 
 // 하이라이트
 .sport-highlights {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   padding: 3.5rem 0 4.5rem;
 
   .inner {
@@ -3258,7 +3391,7 @@ body.has-promo-banner .footer {
 
 // 알림 설정 배너 (스포츠 마지막 영역)
 .sport-notify {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   padding: 0 0 4.5rem;
 
   .inner {
@@ -3312,7 +3445,7 @@ body.has-promo-banner .footer {
 
 // ===== 공통 영화 슬라이더 =====
 .movie-slider-section {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
 
   .inner {
     @include inner-wrap;
@@ -3592,6 +3725,33 @@ main.sport-home {
     }
   }
 
+  // ---------- 핵심 혜택: 검은 띠 · 3칸 ----------
+  .value-props {
+    background-color: $bg-color;
+    padding: $space-3xl 0 $space-xl;
+
+    .inner {
+      padding-left: calc(#{$grid-margin} + #{$space-4xl}); // 128
+      padding-right: calc(#{$grid-margin} + #{$space-4xl});
+    }
+
+    .value-props-inner {
+      gap: $grid-gutter;
+    }
+
+    .value-prop-item {
+      gap: $space-sm;
+    }
+
+    .value-prop-title {
+      @include body-default-b;
+    }
+
+    .value-prop-desc {
+      @include body-small;
+      color: $text-secondary;
+    }
+  }
 
   // ---------- TOP 10: 제목 크게 · 본문 시작선 · 이너 안에서 잘림 ----------
   .top10-section {
@@ -3607,6 +3767,13 @@ main.sport-home {
     }
   }
 
+  // ---------- 공개예정작 · 오리지널스 · AI 어시스턴트: 본문 시작선(12.5%) ----------
+  .upcoming-section .inner,
+  .apple-originals .inner,
+  .ai-promo .inner {
+    padding-left: $desktop-gutter;
+    padding-right: $desktop-gutter;
+  }
 
 }
 
@@ -3710,21 +3877,19 @@ main.sport-home {
 }
 
 // Apple TV 로고 (헤더와 같은 public/icons/header-icon.svg)
-.auth-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 3.25rem;
-  margin: 0 auto;
-  border-radius: $radius-card-sm;
-  background-color: $bg-input;
-
-  img {
-    display: block;
-    height: 1.375rem;
+.login-page {
+  .auth-logo {
     width: auto;
-    filter: brightness(0) invert(1); // 검정 아이콘 → 흰색 (헤더 로고와 같은 방식)
+    height: auto;
+    margin: 0 auto 32px;
+    border-radius: 0;
+
+    img {
+      display: block;
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
   }
 }
 
@@ -4166,6 +4331,7 @@ main.sport-home {
 }
 
 
+
 // =====================================================================
 // 원형(둥근) 아이콘 버튼: 아이콘을 정가운데로
 // - display: flex + justify-content: center + align-items: center
@@ -4416,6 +4582,9 @@ header .inner nav .gnb-right ul .profile-box,
     margin: 0 auto;
   }
 
+  .trial-heading {
+    padding: 0;
+  }
 
   .trial-strip-actions {
     display: flex;
@@ -4437,7 +4606,10 @@ header .inner nav .gnb-right ul .profile-box,
     }
   }
 
-
+  // 배너를 숨기면 문구가 헤더 바로 아래에서 시작
+  &.is-strip-hidden .trial-heading {
+    margin-top: 0;
+  }
 }
 
 // (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
@@ -4452,7 +4624,76 @@ header .inner nav .gnb-right ul .profile-box,
     padding-bottom: $space-md;
   }
 
+  &.is-intro {
+    display: block;
+    min-height: 0;
+    padding-bottom: $trial-gap;
 
+    .inner {
+      display: block;
+    }
+
+    .trial-heading {
+      margin-top: $trial-gap;
+    }
+
+    // 배너를 숨긴 상태면 헤더 바로 아래에서 시작
+    &.is-strip-hidden .trial-heading {
+      margin-top: $space-2xl;
+    }
+
+    .top10-section {
+      padding: $trial-gap 0 0;
+      background: none;
+    }
+  }
+
+  // 홈으로 바로가기: 아래 가운데 · Pill(토글형) 버튼 · 프라이머리 컬러
+  .inner.trial-home-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: $trial-gap;
+  }
+
+  .trial-home-link {
+    @include body-large-b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-sm;
+    min-width: 220px;
+    height: 3.5rem;
+    padding: 0 $space-2xl;
+    border: 0;
+    border-radius: $radius-pill;
+    background-color: $primary-color-500;
+    color: $text-primary;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    span {
+      font-size: 1.3em;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    &:hover {
+      background-color: $primary-color-400;
+
+      span {
+        transform: translateX(0.25rem);
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $primary-color-200;
+      outline-offset: 0.1875rem;
+    }
+  }
 }
 
 // (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
@@ -4525,7 +4766,8 @@ img.ui-icon.ui-icon-arrow {
 .trial-strip-title,
 .member-btn,
 .auth-link,
-.login-link-btn {
+.login-link-btn,
+.trial-home-link {
   &:has(> .ui-icon) {
     display: inline-flex;
     align-items: center;
@@ -4533,6 +4775,16 @@ img.ui-icon.ui-icon-arrow {
   }
 }
 
+// 홈으로 바로가기: 기존 화살표 규칙(span { font-size: 1.3em })이 아이콘 크기를 키우지 않게 → 버튼 글자 크기와 동일
+.trial-welcome .trial-home-link .ui-icon {
+  font-size: inherit;
+}
+
+// 홈으로 바로가기: 마우스를 올리면 화살표가 오른쪽으로 살짝 이동 (img 로 바뀐 아이콘에도 적용)
+.trial-welcome .trial-home-link:hover img.ui-icon-arrow {
+  transform: translateX(0.25rem);
+  transition: transform 0.2s ease;
+}
 
 // 아이콘 정렬 대상 추가 (푸터 링크 · 로그인/구독 버튼형 링크) + 푸터 화살표도 글자 크기와 동일하게
 .footer-main-menu a,
@@ -5257,21 +5509,13 @@ img.ui-icon.ui-icon-arrow {
   background-color: $light-color-0;
   color: $text-inverse;
 
+
   &:hover {
     background-color: $light-color-300;
   }
 
   &:focus-visible {
     outline-color: $primary-color-500;
-  }
-}
-
-// 로고: 회색 칸 + 검정 아이콘
-.auth-logo {
-  background-color: $light-color-400;
-
-  img {
-    filter: brightness(0);
   }
 }
 
@@ -5452,12 +5696,9 @@ img.ui-icon.ui-icon-arrow {
     padding-top: 0;
   }
 
-}
-
-// [수정] 우선순위 0 (:where) → 버튼 글자도 각자 텍스트 스타일(믹스인)의 글꼴을 그대로 씀
-// (예전: .account-page button 이 .account-link 등의 글꼴을 덮어써 버튼 글자만 다른 글꼴로 보였음)
-:where(.account-page button) {
-  font-family: inherit;
+  button {
+    font-family: inherit;
+  }
 }
 
 .account-inner {
@@ -5581,7 +5822,7 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: $space-sm;
+  gap: $space-lg;
   transition: opacity 0.2s ease;
 
   // 알림이 꺼져 있을 때 알림 받기 방식 (시안: 흐리게)
@@ -5878,14 +6119,13 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-dialog-title {
-  @include heading-h2-b; // [수정] 계정 설정 메뉴별 타이틀과 같은 Heading/h2-B · Dark/400
-  color: $dark-color-400;
+  @include heading-h3-b;
   margin-bottom: $space-sm;
 }
 
 .account-dialog-desc {
-  @include body-default; // 설명 Body/default · Dark/100
-  color: $dark-color-100;
+  @include body-default;
+  color: $account-sub;
   word-break: keep-all;
 }
 
@@ -5951,466 +6191,6 @@ img.ui-icon.ui-icon-arrow {
     opacity: 1;
     transform: translate(-50%, 0);
   }
-}
-
-// =====================================================================
-// [추가] 계정 설정 — 구독 관리 · 지불 방법 (/profile/subscription · /profile/payment)
-// - pages/AccountSubscription.jsx · pages/AccountPayment.jsx · components/profile/AccountShared.jsx
-// - 글자 위계는 계정 설정과 같음: 화면 제목 Display/L-B · 큰 제목 Heading/h2-B · 항목 제목 Heading/h5-B (Dark/400)
-//   설명 Body/default (Dark/100) · 안내 Body/small (Dark/100)
-// - 파란 버튼 · 링크는 모두 프라이머리 ($primary-color-500)
-// =====================================================================
-$account-icon-size: 4.25rem; // Apple TV 앱 아이콘 68
-
-// ---------- 화면 틀: 제목 + "‹ 뒤로" + 구분선 ----------
-.account-title.account-title--sub {
-  padding-bottom: $space-lg;
-  border-bottom: none;
-}
-
-.account-back-row {
-  padding-bottom: $space-lg;
-  border-bottom: 0.0625rem solid $account-line;
-}
-
-.account-back {
-  @include body-default; // [수정] 다른 계정 설정 링크와 같은 Body/default
-  display: inline-flex;
-  align-items: center;
-  gap: $space-sm;
-  color: $primary-color-500;
-  text-decoration: none;
-
-  &:hover {
-    color: $primary-color-400;
-    text-decoration: underline;
-  }
-
-  &:focus-visible {
-    outline: 0.125rem solid $primary-color-500;
-    outline-offset: 0.125rem;
-    border-radius: $space-xs;
-  }
-}
-
-.account-back-icon {
-  flex-shrink: 0;
-}
-
-// 화면 안 묶음 (아래 구분선은 --line)
-.account-sub-body {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: $space-2xl;
-  padding: $space-4xl 0;
-
-  &--line {
-    border-bottom: 0.0625rem solid $account-line;
-  }
-}
-
-// 큰 제목 (Apple TV · 지불 방법): 계정 설정 메뉴 글자와 같은 Heading/h2-B
-.account-sub-heading {
-  @include heading-h2-b;
-  color: $dark-color-400;
-}
-
-.account-sub-app {
-  display: flex;
-  align-items: center;
-  gap: $space-lg;
-}
-
-.account-sub-app-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: $account-icon-size;
-  height: $account-icon-size;
-  border-radius: $radius-md;
-  background-color: $dark-color-900;
-
-  img {
-    width: 60%;
-    height: auto;
-    display: block;
-  }
-}
-
-// 요금 · 갱신 예정일 (아이콘 + 글자)
-.account-sub-facts {
-  display: flex;
-  flex-direction: column;
-  gap: $space-md;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  li {
-    @include body-default; // [수정] 설명 Body/default · Dark/100
-    display: flex;
-    align-items: center;
-    gap: $space-md;
-    color: $dark-color-100;
-  }
-
-  .account-icon {
-    color: $dark-color-100;
-  }
-}
-
-.account-icon {
-  display: block;
-  flex-shrink: 0;
-}
-
-// 취소함: 빨간 안내
-.account-sub-canceled {
-  @include heading-h5-b;
-  color: $live-color;
-}
-
-// 구독 없음: 회색 상자
-.account-sub-empty {
-  display: flex;
-  flex-direction: column;
-  gap: $space-sm;
-  width: 100%;
-  padding: $space-xl;
-  border: 0.0625rem solid $account-line;
-  border-radius: $radius-card-sm;
-  background-color: $light-color-0;
-  box-sizing: border-box;
-}
-
-.account-sub-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-md;
-}
-
-// ---------- 버튼: 모두 배경 가득 (갱신 · 가족 설정 · 모든 요금제 보기 · 구독 취소) ----------
-.account-fill-btn,
-.account-outline-btn {
-  @include body-default-b;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.75rem;
-  padding: 0 1.25rem;
-  border-radius: $radius-xs;
-  box-sizing: border-box;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: default;
-  }
-
-  &:focus-visible {
-    outline: 0.125rem solid $primary-color-500;
-    outline-offset: 0.125rem;
-  }
-}
-
-.account-fill-btn {
-  border: none;
-  background-color: $primary-color-500;
-  color: $light-color-0;
-
-  &:hover:not(:disabled) {
-    background-color: $primary-color-400;
-  }
-}
-
-// [수정] 테두리 대신 배경 가득 (프라이머리 · 흰 글자)
-.account-outline-btn {
-  border: none;
-  background-color: $primary-color-500;
-  color: $light-color-0;
-
-  &:hover:not(:disabled) {
-    background-color: $primary-color-400;
-  }
-
-  // 구독 취소: 빨간 배경 가득
-  &--danger {
-    background-color: $live-color;
-
-    &:hover:not(:disabled) {
-      background-color: rgba($live-color, 0.85);
-    }
-  }
-}
-
-// 버튼이 위아래로 이어질 때 사이 (관리: 모든 요금제 보기 → 구독 취소)
-.account-item>.account-outline-btn+.account-outline-btn,
-.account-item>.account-plan-list+.account-outline-btn {
-  margin-top: $space-sm;
-}
-
-// ---------- 요금제 목록 (모든 요금제 보기) ----------
-.account-plan-list {
-  display: flex;
-  flex-direction: column;
-  gap: $space-sm;
-  width: 100%;
-  max-width: 420px;
-  margin: $space-xs 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.account-plan {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: $space-xs $space-lg;
-  width: 100%;
-  padding: $space-md $space-lg;
-  border: 0.0625rem solid $account-line;
-  border-radius: $radius-card-sm;
-  background-color: $light-color-0;
-  color: $dark-color-400;
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 0.2s ease;
-
-  &:hover:not(:disabled) {
-    border-color: $primary-color-500;
-  }
-
-  &.is-on {
-    border-color: $primary-color-500;
-    cursor: default;
-  }
-
-  &:disabled {
-    cursor: default;
-  }
-
-  &:focus-visible {
-    outline: 0.125rem solid $primary-color-500;
-    outline-offset: 0.125rem;
-  }
-}
-
-.account-plan-name {
-  @include heading-h5-b;
-  grid-column: 1;
-}
-
-.account-plan-price {
-  @include body-default;
-  grid-column: 1;
-  color: $dark-color-100;
-}
-
-.account-plan-tag {
-  @include body-small; // [수정] 안내 Body/small
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  color: $primary-color-500;
-}
-
-// ---------- 링크: 글 안 "더 알아보기 ↗" · 아이콘 + 글자 (지불 방법 추가 · 순서 변경) ----------
-.account-link.account-link--inline {
-  display: inline;
-}
-
-.account-link-arrow {
-  display: inline-block;
-  width: 8px;
-  height: 0.5rem;
-  margin-left: $space-xs;
-  background-color: currentColor;
-  -webkit-mask: url("/icons/right-top.svg") center / contain no-repeat;
-  mask: url("/icons/right-top.svg") center / contain no-repeat;
-}
-
-.account-icon-link {
-  @include body-default;
-  display: inline-flex;
-  align-items: center;
-  gap: $space-sm;
-  padding: 0;
-  border: none;
-  background: none;
-  color: $primary-color-500;
-  cursor: pointer;
-
-  &:hover:not(:disabled) {
-    color: $primary-color-400;
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: default;
-  }
-
-  &:focus-visible {
-    outline: 0.125rem solid $primary-color-500;
-    outline-offset: 0.125rem;
-    border-radius: $space-xs;
-  }
-}
-
-// ---------- 지불 방법 카드 ----------
-.account-pay-layout {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: $space-xl $space-4xl;
-  width: 100%;
-}
-
-.account-pay-list {
-  display: flex;
-  flex-direction: column;
-  gap: $space-md;
-  width: min(100%, 39rem);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.account-pay-card {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: $space-lg;
-  min-height: 9rem;
-  padding: $space-xl;
-  border: 0.0625rem solid $account-line;
-  border-radius: $radius-card;
-  background-color: $light-color-0;
-  box-shadow: 0 $space-sm $space-xl rgba($dark-color-900, 0.06);
-  box-sizing: border-box;
-}
-
-.account-pay-card-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: $space-xs;
-  min-width: 0;
-}
-
-.account-pay-brand {
-  @include heading-h5-b; // [수정] 항목 제목 Heading/h5-B
-  color: $dark-color-400;
-}
-
-.account-pay-number {
-  @include body-default;
-  color: $dark-color-100;
-}
-
-.account-pay-default {
-  @include body-small; // [수정] 안내 Body/small
-  margin-top: $space-xs;
-  color: $primary-color-500;
-}
-
-.account-pay-card-icon {
-  color: $dark-color-100;
-}
-
-// 순서 변경 중: ↑ ↓ 삭제
-.account-pay-order {
-  display: flex;
-  align-items: center;
-  gap: $space-sm;
-  flex-shrink: 0;
-}
-
-.account-pay-move {
-  @include body-default-b;
-  width: 32px;
-  height: 2rem;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background-color: $light-color-200;
-  color: $dark-color-400;
-  cursor: pointer;
-
-  &:hover:not(:disabled) {
-    background-color: $light-color-300;
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: default;
-  }
-}
-
-.account-pay-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: $space-md;
-  padding-top: $space-sm;
-}
-
-// ---------- 입력 칸 (지불 방법 추가 · 청구 주소 · 팝업 안) ----------
-.account-form {
-  display: flex;
-  flex-direction: column;
-  gap: $space-md;
-  margin-top: $space-lg;
-}
-
-.account-field {
-  display: flex;
-  flex-direction: column;
-  gap: $space-xs;
-
-  input,
-  select {
-    @include body-default;
-    width: 100%;
-    height: 2.75rem;
-    padding: 0 $space-md;
-    border: 0.0625rem solid $account-line;
-    border-radius: $radius-xs;
-    background-color: $light-color-100;
-    color: $dark-color-400;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-
-    &:focus {
-      border-color: $primary-color-500;
-      background-color: $light-color-0;
-    }
-  }
-}
-
-.account-field-optional {
-  @include body-small;
-  color: $dark-color-100;
-}
-
-// ---------- 계정 설정 "지불 방법": 지불 유형 · 청구 주소 · 국가/지역 한 줄 ----------
-.account-item-row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: $space-2xl;
-}
-
-.account-address {
-  @include body-default;
-  display: flex;
-  flex-direction: column;
-  font-style: normal;
-  color: $dark-color-100;
-  word-break: keep-all;
 }
 
 // =====================================================================
@@ -6603,7 +6383,9 @@ section.top10-section {
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
 
-  section.top10-section .top10-desc {
+  section.top10-section .top10-desc,
+  .upcoming-section .upcoming-desc.upcoming-desc,
+  .apple-originals .apple-originals-desc.apple-originals-desc {
     @include heading-h2;
     color: $light-color-500;
   }
@@ -6616,7 +6398,9 @@ section.top10-section {
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
 
-  section.top10-section .top10-title {
+  section.top10-section .top10-title,
+  .upcoming-section .upcoming-title.upcoming-title,
+  .apple-originals .apple-originals-title.apple-originals-title {
     @include heading-h1-b;
     color: $light-color-0;
     margin: 0 0 $space-sm;
@@ -7859,14 +7643,17 @@ section.device-guide.device-guide--watch {
 }
 
 // =====================================================================
-// [추가] 오른쪽 아래 떠 있는 버튼 묶음 (FloatingActions.jsx) — 모든 페이지 · 항상 표시
-// - 세로로 나란히: 위 TV 디자인 보기 (/tv) · 아래 TOP (맨 위로)
-// - 두 버튼 모두 24 × 24 원형
-//   · TV: 아이콘 원본 그대로 (public/icons/tv/tv-more-btn.svg)
-//   · TOP: 원형 배경 Light/200 + 화살표 아이콘 원본 17 × 9 (public/icons/top-btn.svg)
+// [수정] 오른쪽 아래 떠 있는 버튼 묶음 (FloatingActions.jsx) — 모든 페이지 · 항상 표시
+// - 세로 캡슐 하나를 위아래로 나눈 모양 (시안): 위 TV 디자인 보기 (/tv) · 아래 TOP (맨 위로)
+//   · 위 TV: 배경 Dark/300 · 위쪽만 둥글게 · 아이콘 public/icons/tv/tv-more-btn.svg (Apple TV 로고)
+//   · 아래 TOP: 배경 Dark/400 · 아래쪽만 둥글게 · 아이콘 public/icons/top-btn.svg (흰 화살표)
+//   · 두 버튼 모두 드롭 섀도 · 사이 4 (0.25rem)
+// - 크기는 예전 그대로: PC · 태블릿 70 × 70 / 휴대폰 50 × 50 (mobile.scss)
 // - 하단 LIVE 배너(97px)가 보일 때는 배너 위로 올라감
-// - 휴대폰 위치는 mobile.scss
 // =====================================================================
+$floating-btn-shadow: 0 0.25rem 0.75rem rgba($dark-color-black, 0.45); // 드롭 섀도
+$floating-btn-gap: 0.25rem; // 두 버튼 사이 4
+
 .floating-actions {
   position: fixed;
   right: $space-xl;
@@ -7875,7 +7662,7 @@ section.device-guide.device-guide--watch {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $space-sm;
+  gap: $floating-btn-gap;
 }
 
 body.has-promo-banner .floating-actions {
@@ -7892,12 +7679,11 @@ body.has-promo-banner .floating-actions {
   margin: 0;
   padding: 0;
   border: none;
-  border-radius: 50%;
   overflow: hidden;
   background: transparent;
   cursor: pointer;
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s ease;
+  box-shadow: $floating-btn-shadow;
+  transition: transform 0.2s ease, filter 0.2s ease;
 
   img {
     display: block;
@@ -7905,59 +7691,114 @@ body.has-promo-banner .floating-actions {
   }
 
   &:hover {
-    transform: scale(1.1);
+    filter: brightness(1.15);
   }
 
   &:focus-visible {
     outline: 0.125rem solid $light-color-0;
     outline-offset: 0.125rem;
   }
+}
 
-  // TV 디자인 보기: 아이콘이 원형 버튼 그 자체
-  &.floating-btn--tv img {
-    width: 24px;
-    height: 1.5rem;
-  }
+// 아이콘 크기는 버튼 폭에 맞춰 비율로 (PC 70 · 휴대폰 50 모두 같은 비율)
+.floating-actions .floating-btn {
 
-  // TOP: Light/200 원 + 화살표 (원본 17 × 9)
-  &.floating-btn--top {
-    background-color: $light-color-200;
+  // 위: TV 디자인 보기 (Apple TV 로고 · 버튼 폭의 60%)
+  &.floating-btn--tv {
+    position: relative;
+    border-radius: 50% 50% 0 0; // 위쪽만 둥글게 (반원)
+    background-color: $dark-color-400;
 
     img {
-      width: 17px;
-      height: 0.5625rem;
+      width: 60%;
+      height: auto;
+      animation: floating-tv-glow 2.4s ease-in-out infinite; // [추가] AI 아이콘처럼 빛이 숨 쉬듯
+    }
+
+    // [추가] 로고 위를 지나가는 반짝이는 빛 (로고 모양 안에서만 보이게 마스크)
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60%;
+      aspect-ratio: 70 / 33; // tv-more-btn.svg 비율
+      transform: translate(-50%, -50%);
+      background: linear-gradient(110deg,
+          rgba($light-color-0, 0) 35%,
+          rgba($light-color-0, 0.85) 50%,
+          rgba($light-color-0, 0) 65%);
+      background-size: 300% 100%;
+      background-position: 150% 0;
+      -webkit-mask: url("/icons/tv/tv-more-btn.svg") center / contain no-repeat;
+      mask: url("/icons/tv/tv-more-btn.svg") center / contain no-repeat;
+      pointer-events: none;
+      animation: floating-tv-shine 3s ease-in-out infinite;
+    }
+  }
+
+  // 아래: TOP (흰 화살표 · 버튼 폭의 60%)
+  &.floating-btn--top {
+    padding: 0;
+    border-radius: 0 0 50% 50%; // 아래쪽만 둥글게 (반원)
+    background-color: $dark-color-200;
+
+    img {
+      width: 60%;
+      height: auto;
+    }
+  }
+}
+
+// [추가] TV 로고 반짝임 — AI 아이콘(AiLogo.scss · ai-logo-glow)과 같은 보라 빛 · 같은 2.4초
+@keyframes floating-tv-glow {
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0.125rem $ai-glow-shadow) brightness(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 0.5rem $ai-glow-bright) brightness(1.2);
+  }
+}
+
+// 빛이 왼쪽 → 오른쪽으로 지나간 뒤 잠깐 쉼
+@keyframes floating-tv-shine {
+  0% {
+    background-position: 150% 0;
+  }
+
+  60%,
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-actions .floating-btn.floating-btn--tv {
+
+    img,
+    &::after {
+      animation: none;
+    }
+
+    &::after {
+      display: none;
     }
   }
 }
 
 // =====================================================================
-// [추가] 오른쪽 아래 TV · TOP 버튼 — PC 에서 크게 (1025px 이상)
-// - 70 × 70 · TOP 화살표는 좌우 패딩 22 → 26 × 14 · 버튼 사이 12
-// - 태블릿은 mobile.scss · 휴대폰은 원본 24 그대로
+// [추가] 오른쪽 아래 TV · TOP 버튼 — PC 에서 크게 (768px 이상 · 예전 크기 70 × 70 그대로)
+// - 휴대폰은 mobile.scss (50 × 50)
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
-  .floating-actions {
-    gap: $space-md;
-  }
-
   .floating-btn {
     width: 70px;
     height: 4.375rem;
-
-    &.floating-btn--tv img {
-      width: 70px;
-      height: 4.375rem;
-    }
-
-    // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 26
-    &.floating-btn--top {
-      padding: 0 1.375rem;
-
-      img {
-        width: 100%;
-        height: auto;
-      }
-    }
   }
 }
 
@@ -8224,6 +8065,53 @@ body.has-promo-banner .floating-actions {
   }
 }
 
+// =====================================================================
+// [추가] 핵심 혜택 (ValueProps.jsx) — 시안: 검은 띠(#000 · Dark/Black) · 3칸 가운데 정렬 · 칸 사이 세로 구분선
+// - 구분선: Light/0 1px · 글자 높이만큼 (칸 사이 간격의 가운데)
+// - 제목 Body/large-B · Light/0 / 설명 Body/small-B · Light/500 (PC)
+// - 휴대폰(1열)은 mobile.scss 에서 가로 구분선으로
+// =====================================================================
+.value-props.value-props {
+  background-color: $dark-color-black;
+
+  .value-prop-item {
+    position: relative;
+    align-items: center;
+    text-align: center;
+    word-break: keep-all;
+  }
+
+  .value-prop-item+.value-prop-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(#{$grid-gutter} / -2);
+    width: 1px;
+    background-color: $light-color-0;
+    pointer-events: none;
+  }
+}
+
+@media (min-width: ($breakpoint-mobile + 1)) {
+  .value-props.value-props {
+    padding: $space-xl 0;
+
+    .value-prop-item {
+      gap: $space-sm;
+    }
+
+    .value-prop-title {
+      @include body-large-b;
+      color: $light-color-0;
+    }
+
+    .value-prop-desc {
+      @include body-small-b;
+      color: $light-color-500;
+    }
+  }
+}
 
 // =====================================================================
 // [추가] 기기 안내 (DeviceGuide.jsx) — 배경을 페이지 배경과 같게 · 새 기기 아이콘 + 아래 이름 글자
@@ -8303,7 +8191,9 @@ section.device-guide.device-guide--watch {
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
 
-  section.top10-section .top10-title {
+  section.top10-section .top10-title,
+  .upcoming-section .upcoming-title.upcoming-title,
+  .apple-originals .apple-originals-title.apple-originals-title {
     margin-bottom: 3.75rem;
   }
 
@@ -8411,7 +8301,7 @@ main.wish-page {
 $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(1535)
 
 .ai-banner {
-  background-color: $gnb-bg;
+  background-color: $bg-page;
   padding: $space-5xl 0 ($space-5xl * 2); // 예전 AI 안내 띠와 같은 위아래 여백
 
   .ai-banner-band {

@@ -48,7 +48,6 @@ const SportReplay = () => {
             slidesPerView="auto"
             spaceBetween={24}
             breakpoints={{ 0: { spaceBetween: 12 }, 768: { spaceBetween: 24 } }}
-            loop={true}
           >
             {REPLAY_LEAGUES.map((league) => (
               <SwiperSlide key={league.id} className="sport-replay-slide">
@@ -67,7 +66,7 @@ const SportReplay = () => {
                   <span className="sport-replay-name">{league.league}</span>
                   <span className="sport-replay-date">
                     <img className="play-icon" src="/icons/play-w.svg" alt="" aria-hidden="true" />
-                    {league.country} · 영상 모음 보기
+                    {league.league} · 영상 모음 보기
                   </span>
                 </Link>
               </SwiperSlide>

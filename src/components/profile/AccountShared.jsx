@@ -47,11 +47,11 @@ export const subscriptionSummary = (user) => {
   return `${s.info.name}${s.trial ? " (무료 체험 중)" : ""} · ${s.endDate}에 갱신 예정`;
 };
 
-// 화면 틀: 제목 + 뒤로 (back: 돌아갈 계정 설정 섹션 id)
+// 화면 틀: 뒤로 + 제목 (back: 돌아갈 계정 설정 섹션 id)
 export const AccountSubPage = ({ back, children }) => (
   <main className="account-page account-page--sub">
     <div className="account-inner">
-      <h1 className="account-title account-title--sub">계정 설정</h1>
+      {/* [수정] 뒤로 가기를 제목 위로 (제목 아래 구분선은 계정 설정과 같음) */}
       <div className="account-back-row">
         <Link className="account-back" to={`/profile#${back}`}>
           <svg className="account-back-icon" width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true">
@@ -60,6 +60,7 @@ export const AccountSubPage = ({ back, children }) => (
           뒤로
         </Link>
       </div>
+      <h1 className="account-title account-title--sub">계정 설정</h1>
       {children}
     </div>
   </main>

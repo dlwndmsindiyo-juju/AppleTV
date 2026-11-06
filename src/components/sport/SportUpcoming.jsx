@@ -32,7 +32,6 @@ const SportUpcoming = ({ title = "예정된 경기" }) => {
             spaceBetween={24}
             breakpoints={{ 0: { spaceBetween: 12 }, 768: { spaceBetween: 16 }, 1025: { spaceBetween: 24 } }}
             className="sport-up-swiper"
-            loop={true}
           >
             {matches.map((match) => {
               const name = matchTitle(match);
