@@ -100,7 +100,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .top10-rank {
-      font-size: 6.5rem;
+      font-size: 6.25rem;
       bottom: -0.625rem;
     }
 
@@ -505,10 +505,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     .top10-slide {
       width: 170px;
-    }
-
-    .top10-num .top10-num-stroke {
-      stroke-width: 0.5rem; // 숫자가 작아져도 바깥 테두리가 보이게 (viewBox 기준)
     }
   }
 }
@@ -2811,6 +2807,12 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
 
       .top10-card {
         padding-left: $space-4xl;
+
+        .top10-num {
+          .top10-num-glyph {
+            font-size: 6.25rem;
+          }
+        }
       }
 
       .top10-slide--wide .top10-card {
@@ -2820,6 +2822,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
       .top10-poster {
         aspect-ratio: 123 / 201;
       }
+
 
     }
 
@@ -3039,6 +3042,13 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     }
 
     .watch-subtitle {
+      display: none
+    }
+
+    .watch-subtitle-mobile {
+      @include body-small;
+      display: block;
+      color: $light-color-0;
       margin-bottom: $space-md;
     }
 
@@ -3108,8 +3118,19 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     .ai-banner-box {
       width: 100%;
     }
+
+    .ai-banner-chip {
+      width: 4.375rem;
+      height: 2.375rem; // 38
+    }
+
+    .ai-banner-title {
+      @include display-M-b
+    }
   }
 }
+
+
 
 // =====================================================================
 // [추가] 헤더 가운데 토글 (Apple TV · Sport) · 검색창 크기 — 태블릿 · 휴대폰
@@ -3314,6 +3335,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
         padding: 0;
       }
     }
+
 
     // ---------- 오른쪽(아래) 탭 ----------
     .right-section {
@@ -3555,8 +3577,16 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     // 다른 텍스트 및 PC·태블릿 타이포그래피는 변경하지 않음
     .subscribe-title-mobile {
       display: inline;
-      @include display-M-b;
+      @include heading-h2-b;
       color: $light-color-0;
     }
   }
+
+  .ai-banner-box {
+    .ai-banner-chip {
+      width: 3.8rem;
+      height: 2.375rem; // 38
+    }
+  }
+
 }

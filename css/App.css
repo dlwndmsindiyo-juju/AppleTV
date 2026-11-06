@@ -1911,13 +1911,22 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .subscribe-cta .subscribe-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 1.25rem;
-  line-height: 1.5625rem;
+  font-weight: 700;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
   word-break: keep-all;
+}
+.subscribe-cta .subscribe-title .subscribe-title-desktop span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
+  letter-spacing: 0;
+  display: flex;
+  flex-direction: column;
 }
 .subscribe-cta .subscribe-btn {
   font-family: "SF Pro", sans-serif;
@@ -7407,6 +7416,9 @@ section.device-guide.device-guide--watch .watch-subtitle {
   color: #FFFFFF;
   word-break: keep-all;
 }
+section.device-guide.device-guide--watch .watch-subtitle-mobile {
+  display: none;
+}
 section.device-guide.device-guide--watch .watch-link {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
@@ -8535,6 +8547,11 @@ section.device-guide.device-guide--watch .watch-device-name {
     margin-top: 2.8125rem;
   }
   section.device-guide.device-guide--watch .watch-subtitle {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    letter-spacing: 0;
     margin-bottom: 1.625rem;
   }
   section.device-guide.device-guide--watch .watch-devices {
@@ -8650,7 +8667,7 @@ main.wish-page {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #525252;
+  color: #8F909D;
 }
 .ai-banner .ai-banner-title {
   font-family: "SF Pro", sans-serif;
@@ -8669,7 +8686,7 @@ main.wish-page {
   line-height: 1.25rem;
   letter-spacing: 0;
   margin-top: 0.5rem;
-  color: #525252;
+  color: #999AA6;
   word-break: keep-all;
 }
 .ai-banner .ai-banner-box {
@@ -9033,9 +9050,41 @@ section.top10-section .top10-num {
   bottom: 0.5rem;
 }
 section.top10-section .top10-num .top10-num-glyph {
-  font-size: 12.1875rem;
+  font-size: 6.25rem;
   letter-spacing: -1.25rem;
 }
 section.top10-section .top10-num .top10-num-stroke {
   display: none;
+}
+
+.hero-swiper-container.movie-home-hero .hero-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 4.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+.hero-swiper-container.movie-home-hero .hero-nav img {
+  display: block;
+  width: 2rem;
+  height: 3.75rem;
+  object-fit: contain;
+}
+.hero-swiper-container.movie-home-hero .hero-nav:focus-visible {
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
+}
+.hero-swiper-container.movie-home-hero .hero-nav--prev {
+  left: 5%;
+}
+.hero-swiper-container.movie-home-hero .hero-nav--next {
+  right: 5%;
 }

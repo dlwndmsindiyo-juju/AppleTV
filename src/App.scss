@@ -2032,10 +2032,19 @@ header {
   }
 
   .subscribe-title {
-    @include heading-h3;
-    color: $text-primary;
+    @include display-l-b;
+    color: $light-color-0;
     margin: 0;
     word-break: keep-all;
+
+    .subscribe-title-desktop {
+
+      span {
+        @include display-l-b;
+        display: flex;
+        flex-direction: column
+      }
+    }
   }
 
   .subscribe-btn {
@@ -6240,6 +6249,7 @@ img.ui-icon.ui-icon-arrow {
 // ========================================
 
 .account-pay {
+
   // 결제 수단 목록 레이아웃
   .account-pay-layout {
     display: flex;
@@ -6652,8 +6662,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 // 키보드 접근성
-.account-pay-method-radio input:focus-visible
-  + .account-pay-method-radio-ui {
+.account-pay-method-radio input:focus-visible+.account-pay-method-radio-ui {
   outline: 2px solid $brand-primary;
   outline-offset: 3px;
 }
@@ -7436,14 +7445,7 @@ main.landing-home .subscribe-cta {
     }
 
     .subscribe-posters {
-      top: 50%;
-      left: max(48%, 32.5rem);
-      gap: $space-md;
-      transform: translateY(-50%);
-    }
-
-    .subscribe-poster {
-      --poster-h: 16.75rem;
+      display: none;
     }
   }
 }
@@ -7671,6 +7673,10 @@ section.device-guide.device-guide--watch {
     padding-top: 0;
     color: $light-color-0;
     word-break: keep-all;
+  }
+
+  .watch-subtitle-mobile {
+    display: none
   }
 
   .watch-link {
@@ -8989,6 +8995,7 @@ section.device-guide.device-guide--watch {
     }
 
     .watch-subtitle {
+      @include heading-h2;
       margin-bottom: $watch-gap-text-link;
     }
 
@@ -9117,7 +9124,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
     display: flex;
     align-items: center;
     gap: $space-sm;
-    color: $dark-color-100;
+    color: #8F909D;
   }
 
   // 아이콘 24 × 24: AI 아이콘 공용 (components/ai/AiLogo.jsx · AiLogo.scss)
@@ -9132,7 +9139,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
   .ai-banner-desc {
     @include body-default;
     margin-top: $space-sm;
-    color: $dark-color-100;
+    color: #999AA6;
     word-break: keep-all;
   }
 
@@ -9543,7 +9550,7 @@ section.top10-section {
     bottom: 0.5rem;
 
     .top10-num-glyph {
-      font-size: 12.1875rem;
+      font-size: 6.25rem;
       letter-spacing: $top10-num-letter-spacing;
     }
 
@@ -9584,6 +9591,11 @@ section.top10-section {
     }
   }
 
-  .hero-nav--prev { left: 5%; }
-  .hero-nav--next { right: 5%; }
+  .hero-nav--prev {
+    left: 5%;
+  }
+
+  .hero-nav--next {
+    right: 5%;
+  }
 }
