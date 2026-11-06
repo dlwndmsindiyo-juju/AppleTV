@@ -3877,21 +3877,19 @@ main.sport-home {
 }
 
 // Apple TV 로고 (헤더와 같은 public/icons/header-icon.svg)
-.auth-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 3.25rem;
-  margin: 0 auto;
-  border-radius: $radius-card-sm;
-  background-color: $bg-input;
-
-  img {
-    display: block;
-    height: 1.375rem;
+.login-page {
+  .auth-logo {
     width: auto;
-    filter: brightness(0) invert(1); // 검정 아이콘 → 흰색 (헤더 로고와 같은 방식)
+    height: auto;
+    margin: 0 auto 32px;
+    border-radius: 0;
+
+    img {
+      display: block;
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
   }
 }
 
@@ -5518,15 +5516,6 @@ img.ui-icon.ui-icon-arrow {
 
   &:focus-visible {
     outline-color: $primary-color-500;
-  }
-}
-
-// 로고: 회색 칸 + 검정 아이콘
-.auth-logo {
-  background-color: $light-color-400;
-
-  img {
-    filter: brightness(0);
   }
 }
 
@@ -7763,6 +7752,7 @@ body.has-promo-banner .floating-actions {
 
 // [추가] TV 로고 반짝임 — AI 아이콘(AiLogo.scss · ai-logo-glow)과 같은 보라 빛 · 같은 2.4초
 @keyframes floating-tv-glow {
+
   0%,
   100% {
     transform: scale(1);
@@ -7789,6 +7779,7 @@ body.has-promo-banner .floating-actions {
 
 @media (prefers-reduced-motion: reduce) {
   .floating-actions .floating-btn.floating-btn--tv {
+
     img,
     &::after {
       animation: none;

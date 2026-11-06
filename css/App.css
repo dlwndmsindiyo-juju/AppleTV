@@ -3845,21 +3845,17 @@ main.sport-home .sport-series-card h4 {
   outline-offset: 0.125rem;
 }
 
-.auth-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 3.25rem;
-  margin: 0 auto;
-  border-radius: 0.75rem;
-  background-color: #262626;
-}
-.auth-logo img {
-  display: block;
-  height: 1.375rem;
+.login-page .auth-logo {
   width: auto;
-  filter: brightness(0) invert(1);
+  height: auto;
+  margin: 0 auto 32px;
+  border-radius: 0;
+}
+.login-page .auth-logo img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
 }
 
 .auth-step {
@@ -5484,13 +5480,6 @@ img.ui-icon.ui-icon-arrow {
 }
 .auth-close:focus-visible {
   outline-color: #5865F2;
-}
-
-.auth-logo {
-  background-color: #D5D5D5;
-}
-.auth-logo img {
-  filter: brightness(0);
 }
 
 .auth-title {
@@ -7422,12 +7411,30 @@ body.has-promo-banner .floating-actions {
 }
 
 .floating-actions .floating-btn.floating-btn--tv {
+  position: relative;
   border-radius: 50% 50% 0 0;
   background-color: #2E2E2E;
 }
 .floating-actions .floating-btn.floating-btn--tv img {
   width: 60%;
   height: auto;
+  animation: floating-tv-glow 2.4s ease-in-out infinite;
+}
+.floating-actions .floating-btn.floating-btn--tv::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  aspect-ratio: 70/33;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 65%);
+  background-size: 300% 100%;
+  background-position: 150% 0;
+  -webkit-mask: url("/icons/tv/tv-more-btn.svg") center/contain no-repeat;
+  mask: url("/icons/tv/tv-more-btn.svg") center/contain no-repeat;
+  pointer-events: none;
+  animation: floating-tv-shine 3s ease-in-out infinite;
 }
 .floating-actions .floating-btn.floating-btn--top {
   padding: 0;
@@ -7439,6 +7446,32 @@ body.has-promo-banner .floating-actions {
   height: auto;
 }
 
+@keyframes floating-tv-glow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0.125rem rgba(95, 70, 228, 0.36)) brightness(1);
+  }
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 0.5rem rgba(124, 69, 239, 0.75)) brightness(1.2);
+  }
+}
+@keyframes floating-tv-shine {
+  0% {
+    background-position: 150% 0;
+  }
+  60%, 100% {
+    background-position: -50% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-actions .floating-btn.floating-btn--tv img, .floating-actions .floating-btn.floating-btn--tv::after {
+    animation: none;
+  }
+  .floating-actions .floating-btn.floating-btn--tv::after {
+    display: none;
+  }
+}
 @media (min-width: 768px) {
   .floating-btn {
     width: 70px;
