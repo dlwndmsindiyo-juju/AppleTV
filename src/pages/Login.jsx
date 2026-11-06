@@ -10,7 +10,7 @@
 // - 로그인이 끝난 계정이 /login 으로 다시 들어오면 화면을 보여주지 않고 바로 이동
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { sendPasswordResetEmail, setPersistence, browserLocalPersistence, browserSessionPersistence } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import {
   useAuthStore,
@@ -49,7 +49,7 @@ const AuthCard = ({ wide = false, className = "", onClose, stepKey, children }) 
       </button>
 
       <div className="auth-logo">
-        <img src="/icons/header-icon.svg" alt="Apple TV" />
+        <img src="/icons/login-logo.svg" alt="Apple TV" />
       </div>
 
       <div className="auth-step" key={stepKey}>
@@ -176,7 +176,11 @@ const Login = () => {
   } = useAuthStore();
 
   // step: "login" | "signup" | "code" | "done" | "profile"
-  const [step, setStep] = useState("login");
+  const [step, setStep] = useState("select");
+  // [추가] 새 시안의 입력 상태
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [termsAgreed, setTermsAgreed] = useState(false);
+  const [keepSignedIn, setKeepSignedIn] = useState(false);
   const [remembered, setRemembered] = useState(false); // 이 기기에서 로그인한 적 있는 계정 (이메일 미리 채움)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -267,6 +271,14 @@ const Login = () => {
     }
     flowStarted.current = true;
     setBusy(true);
+    // [추가] 로그인 상태 유지 선택을 Firebase 인증 지속성에 반영
+    try {
+      await setPersistence(auth, keepSignedIn ? browserLocalPersistence : browserSessionPersistence);
+    } catch {
+      setBusy(false);
+      setErrorText("로그인 설정을 저장하지 못했습니다. 다시 시도해 주세요.");
+      return;
+    }
     const res = await onEmailAuth("signin", trimmed, password);
     setBusy(false);
     if (res.status === "ok") finish();
@@ -285,6 +297,14 @@ const Login = () => {
     }
     if (password.length < 6) {
       setErrorText("비밀번호는 6자 이상 입력해 주세요.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setErrorText("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+    if (!termsAgreed) {
+      setErrorText("필수 이용약관 및 개인정보 처리 동의가 필요합니다.");
       return;
     }
     flowStarted.current = true;
@@ -382,7 +402,7 @@ const Login = () => {
     setPassword("");
     setCode("");
     clearMessages();
-    setStep("login");
+    setStep("select");
   };
 
   // 다른 계정으로 로그인 / 다른 이메일 사용: 기억한 계정을 지우고 빈 로그인 화면
@@ -397,6 +417,8 @@ const Login = () => {
     setPassword("");
     clearMessages();
     if (remembered) setEmail("");
+    setConfirmPassword("");
+    setTermsAgreed(false);
     setStep("signup");
   };
 
@@ -414,21 +436,55 @@ const Login = () => {
     </>
   );
 
+  // [추가] 이메일 로그인 / 비밀번호 재설정 화면으로 이동
+  const goEmailLogin = () => { clearMessages(); setStep("login"); };
+  const goReset = () => { clearMessages(); setStep("reset"); };
+
   // ================= 화면 =================
   let content = null;
+
+  // [추가] 로그인 방식 선택 (시안 3)
+  if (step === "select") {
+    content = <>
+      <AuthHead title="Apple TV에 로그인" desc="이메일 또는 Google 계정으로 로그인해 주세요." />
+      <div className="auth-login-form auth-choice">
+        <button type="button" className="auth-btn auth-login-btn" onClick={goEmailLogin}>이메일로 로그인</button>
+        <button type="button" className="auth-btn auth-btn--secondary auth-google-btn" onClick={handleGoogleLogin} disabled={busy}>
+          <img className="auth-google-mark" src="/icons/google.svg" alt="" aria-hidden="true" />{busy ? "연결 중..." : "Google로 로그인"}
+        </button>
+        <div className="auth-divider"><span>아직 계정이 없으신가요?</span></div>
+        <button type="button" className="auth-btn auth-btn--secondary" onClick={goSignup}>회원가입</button>
+        {messages}
+        <p className="auth-legal"><a href="https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html" target="_blank" rel="noreferrer">이용약관</a> 및 <a href={APPLE_LINKS.privacy} target="_blank" rel="noreferrer">개인정보 처리방침</a></p>
+      </div>
+    </>;
+  }
+
+  // [추가] 비밀번호 재설정 화면 (시안 4)
+  if (step === "reset") {
+    content = <>
+      <AuthHead title="비밀번호 찾기" desc="가입한 이메일로 재설정 링크를 보내드려요." />
+      <form className="auth-form auth-login-form" onSubmit={(e) => { e.preventDefault(); handleResetPassword(); }} noValidate>
+        <input className="auth-login-input" type="email" autoComplete="email" placeholder="이메일 주소를 입력하세요" aria-label="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
+        {messages}
+        <button type="submit" className="auth-btn auth-login-btn" disabled={busy}>{busy ? "발송 중..." : "비밀번호 재설정 메일 발송"}</button>
+      </form>
+      <div className="auth-login-links"><p className="auth-muted">Google로 가입하셨나요?</p><button type="button" className="auth-login-link" onClick={backToLogin}>로그인으로 돌아가기</button></div>
+    </>;
+  }
 
   // 1. 로그인 (시안: 이메일 + 비밀번호 한 화면)
   if (step === "login") {
     content = (
       <>
-        <AuthHead title="로그인" desc="Apple 계정으로 Apple TV를 이용하세요." />
+        <AuthHead title={errorText ? "로그인 정보를 확인해 주세요" : "이메일로 로그인"} desc={errorText ? "이메일 또는 비밀번호를 다시 확인해 주세요." : "가입한 이메일과 비밀번호를 입력해 주세요."} />
         <form className="auth-form auth-login-form" onSubmit={handleLoginSubmit} noValidate>
           <div className="auth-login-fields">
             <input
               className="auth-login-input"
               type="email"
               autoComplete="username"
-              placeholder="hi1234@naver.com" /* [수정] 지정 아이디 안내 */
+              placeholder="이메일을 입력하세요"
               aria-label="이메일"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -438,37 +494,26 @@ const Login = () => {
               className="auth-login-input"
               type="password"
               autoComplete="current-password"
-              placeholder="123456" /* [수정] 지정 비밀번호 안내 (입력 전에는 글자 그대로 보임) */
+              placeholder="비밀번호를 입력하세요"
               aria-label="비밀번호"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoFocus={remembered}
             />
           </div>
+          <label className="auth-remember"><input type="checkbox" checked={keepSignedIn} onChange={(e) => setKeepSignedIn(e.target.checked)} /> 로그인 상태 유지</label>
           {messages}
           <button type="submit" className="auth-btn auth-login-btn" disabled={busy}>
-            {busy ? "확인 중..." : "Apple TV 구독 플랜 보기"}
+            {busy ? "확인 중..." : errorText ? "다시 입력하기" : "로그인"}
           </button>
         </form>
 
         <div className="auth-login-links">
-          <div className="auth-login-links-row">
-            <button type="button" className="auth-login-link" onClick={handleGoogleLogin} disabled={busy}>
-              Google 계정으로 로그인
-            </button>
-            <button type="button" className="auth-login-link" onClick={handleResetPassword} disabled={busy}>
-              비밀번호를 잊으셨나요?
-            </button>
-          </div>
-          {remembered ? (
-            <button type="button" className="auth-login-link" onClick={switchAccount}>
-              다른 계정으로 로그인
-            </button>
-          ) : (
-            <button type="button" className="auth-login-link" onClick={goSignup}>
-              새 Apple 계정 만들기
-            </button>
-          )}
+          <button type="button" className="auth-login-link" onClick={goReset}>비밀번호를 잊으셨나요?</button>
+          <p className="auth-muted">계정이 없으신가요? <button type="button" className="auth-login-link auth-inline-link" onClick={goSignup}>회원가입</button></p>
+          <div className="auth-divider"><span>또는</span></div>
+          <button type="button" className="auth-btn auth-btn--secondary auth-google-btn" onClick={handleGoogleLogin} disabled={busy}><img className="auth-google-mark" src="/icons/google.svg" alt="" aria-hidden="true" />Google로 로그인</button>
+          <button type="button" className="auth-login-link" onClick={() => { clearMessages(); setStep("select"); }}>다른 방법으로 로그인</button>
         </div>
       </>
     );
@@ -478,7 +523,7 @@ const Login = () => {
   if (step === "signup") {
     content = (
       <>
-        <AuthHead title="새 Apple 계정 만들기" desc="이메일과 사용할 비밀번호(6자 이상)를 입력하세요." />
+        <AuthHead title="이메일로 회원가입" desc="로그인에 사용할 이메일과 비밀번호를 입력해 주세요." />
         <form className="auth-form auth-login-form" onSubmit={handleSignupSubmit} noValidate>
           <div className="auth-login-fields">
             <input
@@ -500,15 +545,17 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <input className="auth-login-input" type="password" autoComplete="new-password" placeholder="비밀번호 확인" aria-label="비밀번호 확인" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
           </div>
+          <label className="auth-remember"><input type="checkbox" checked={termsAgreed} onChange={(e) => setTermsAgreed(e.target.checked)} /> [필수] 이용약관 및 개인정보 수집·이용 동의</label>
           {messages}
           <button type="submit" className="auth-btn auth-login-btn" disabled={busy}>
-            {busy ? "만드는 중..." : "계정 만들기"}
+            {busy ? "만드는 중..." : "동의하고 회원가입"}
           </button>
         </form>
         <div className="auth-login-links">
           <button type="button" className="auth-login-link" onClick={backToLogin}>
-            이미 계정이 있나요? 로그인
+            이미 가입하셨나요? 로그인
           </button>
         </div>
       </>
