@@ -241,7 +241,8 @@ const Login = () => {
     setPassword("");
     setCode("");
     clearMessages();
-    setStep("done");
+    // [수정] 인증 완료 직후 반드시 프로필 선택 화면으로 이동
+    setStep("profile");
   };
 
   // 인증 완료 → 로그인할 때마다 항상 가족 프로필 선택 (새 계정도 포함)
@@ -484,7 +485,7 @@ const Login = () => {
               className="auth-login-input"
               type="email"
               autoComplete="username"
-              placeholder="이메일을 입력하세요"
+              placeholder="hi1234@naver.com"
               aria-label="이메일"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -494,7 +495,7 @@ const Login = () => {
               className="auth-login-input"
               type="password"
               autoComplete="current-password"
-              placeholder="비밀번호를 입력하세요"
+              placeholder="123456"
               aria-label="비밀번호"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -514,6 +515,7 @@ const Login = () => {
           <div className="auth-divider"><span>또는</span></div>
           <button type="button" className="auth-btn auth-btn--secondary auth-google-btn" onClick={handleGoogleLogin} disabled={busy}><img className="auth-google-mark" src="/icons/google.svg" alt="" aria-hidden="true" />Google로 로그인</button>
           <button type="button" className="auth-login-link" onClick={() => { clearMessages(); setStep("select"); }}>다른 방법으로 로그인</button>
+          {remembered && <button type="button" className="auth-login-link" onClick={switchAccount}>다른 계정으로 로그인</button>}
         </div>
       </>
     );
