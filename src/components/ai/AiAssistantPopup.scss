@@ -671,11 +671,12 @@
 
   .ai-popup-results-footer {
     flex: 0 0 auto;
-    padding-top: 20px;
+    padding: 20px 0;
+    margin-top: 10px;
   }
 
   .ai-popup-more {
-    margin-top: 0;
+    margin: 30px auto;
   }
 
   .ai-popup-error {
@@ -1338,7 +1339,7 @@
   }
 
   .ai-popup-hint {
-    margin: 0 0 10px;
+    margin: 20px 0;
     font-size: 12px;
     line-height: 15px;
   }
@@ -1526,7 +1527,7 @@
     }
 
     .ai-popup-tags {
-      gap: 4px;
+      gap: 8px;
       margin-bottom: 8px;
     }
 
@@ -1538,8 +1539,8 @@
     }
 
     .ai-popup-tags button img {
-      width: 12px;
-      height: 12px;
+      width: 0.75rem;
+      height: 0.75rem;
     }
 
     .ai-popup-hint {

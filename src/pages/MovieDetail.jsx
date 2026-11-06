@@ -345,9 +345,11 @@ export const MovieDetail = ({ type: typeProp }) => {
     setRatingSaved(true);
   };
 
+  // [수정] TV: 고른 시즌 번호 그대로 "시즌 N" (시즌 정보가 없으면 글자 자체를 안 보여줌)
+  // 영화: 영상 종류 + 개수 (예전 그대로)
   const listLabel = isTv
-    ? seasons.find((s) => s.season_number === currentSeason)?.name || (currentSeason !== null ? `시즌 ${currentSeason}` : '에피소드')
-    : videoType === 'all' ? '전체 영상' : VIDEO_TYPE_LABEL[videoType] || videoType;
+    ? (seasons.length > 0 && currentSeason !== null ? `시즌 ${currentSeason}` : '')
+    : `${videoType === 'all' ? '전체 영상' : VIDEO_TYPE_LABEL[videoType] || videoType} ${episodeList.length}`;
 
   return (
     <section className={`sub-page movie-detail-page movie-detail-page--${type}`}>
@@ -524,9 +526,7 @@ export const MovieDetail = ({ type: typeProp }) => {
                   </select>
                 </div>
 
-                <p className="season-label">
-                  {listLabel} {episodeList.length}
-                </p>
+                {listLabel && <p className="season-label">{listLabel}</p>}
 
                 <div className="list-container">
                   {episodeList.length === 0 ? (
