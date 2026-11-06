@@ -5669,8 +5669,21 @@ img.ui-icon.ui-icon-arrow {
   line-height: 2.5625rem;
   letter-spacing: 0;
   color: #2E2E2E;
-  padding-bottom: 1.5rem;
+  padding: 1rem 0 1.5rem;
   border-bottom: 0.0625rem solid #D5D5D5;
+}
+
+.account-back {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+}
+
+.account-back > svg {
+  display: inline-flex;
+  margin-right: 0.5rem;
 }
 
 .account-layout {
@@ -5742,6 +5755,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-section {
+  font-family: inherit;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
@@ -5778,6 +5792,7 @@ img.ui-icon.ui-icon-arrow {
   align-items: flex-start;
   gap: 1rem;
   transition: opacity 0.2s ease;
+  margin-bottom: 1rem;
 }
 .account-item.is-muted {
   opacity: 0.4;
@@ -5817,12 +5832,14 @@ img.ui-icon.ui-icon-arrow {
   font-size: 0.9375rem;
   line-height: 1.25rem;
   letter-spacing: 0;
+  font-family: inherit;
   padding: 0;
   border: none;
   background: none;
   color: #5865F2;
   cursor: pointer;
   text-align: left;
+  margin-bottom: 1rem;
 }
 .account-link:hover {
   color: #6E7AF4;
@@ -6163,6 +6180,666 @@ img.ui-icon.ui-icon-arrow {
   transform: translate(-50%, 0);
 }
 
+.account-sub-heading {
+  margin: 2.25rem 0;
+}
+
+.account-pay .account-pay-layout {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.account-pay .account-pay-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: min(100%, 28.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.account-pay .account-pay-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1rem;
+  border-radius: 1.25rem;
+  background: #FFFFFF;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+.account-pay .account-pay-item-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+.account-pay .account-pay-item-right {
+  position: relative;
+  flex-shrink: 0;
+}
+.account-pay .account-pay-card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.account-pay .account-pay-brand {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.3125rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+.account-pay .account-pay-number {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+.account-pay .account-pay-default {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0;
+  color: #5865F2;
+}
+.account-pay .account-pay-badge,
+.account-pay .account-pay-provider-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 3.625rem;
+  height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: 0.5rem;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+}
+.account-pay .account-pay-badge.is-kakao,
+.account-pay .account-pay-provider-badge.is-kakao {
+  background: #FFD60A;
+  color: #171717;
+}
+.account-pay .account-pay-badge.is-naver,
+.account-pay .account-pay-provider-badge.is-naver {
+  background: #30d158;
+  color: #171717;
+}
+.account-pay .account-pay-badge.is-toss,
+.account-pay .account-pay-provider-badge.is-toss {
+  background: #5865F2;
+  color: #FFFFFF;
+}
+.account-pay .account-pay-badge.is-phone,
+.account-pay .account-pay-provider-badge.is-phone {
+  background: #F2F2F2;
+  color: #5865F2;
+  border: 1px solid #B0C1FA;
+}
+.account-pay .account-pay-provider-image {
+  display: block;
+  width: 3.625rem;
+  height: 2.25rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.account-pay .account-pay-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #171717;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.account-pay .account-pay-more:hover {
+  background: #F2F2F2;
+}
+.account-pay .account-pay-more:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: 2px;
+}
+.account-pay .account-pay-more-menu {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 12rem;
+  padding: 0.5rem;
+  border: 1px solid #E5E5E5;
+  border-radius: 0.75rem;
+  background: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.account-pay .account-pay-more-menu button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: #171717;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.account-pay .account-pay-more-menu button:hover {
+  background: #F2F2F2;
+}
+.account-pay .account-pay-more-menu button.is-danger {
+  color: #ff453a;
+}
+.account-pay .account-pay-more-menu button.is-close {
+  color: #525252;
+}
+.account-pay .account-pay-more-menu button:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: -2px;
+}
+.account-pay .account-pay-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.account-pay .account-icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  border: 0;
+  background: transparent;
+  color: #5865F2;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.account-pay .account-icon-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.account-pay .account-icon-link:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.account-pay .account-icon-link:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: 3px;
+}
+.account-pay .account-inline-plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1.5px solid #5865F2;
+  border-radius: 50%;
+  color: #5865F2;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
+  letter-spacing: 0;
+}
+.account-pay .account-pay-empty {
+  margin: 0;
+  padding: 1rem 0;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+
+.account-pay-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.account-pay-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 45rem);
+  max-height: min(90vh, 53.75rem);
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: #FFFFFF;
+  color: #171717;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.account-pay-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem 1rem;
+}
+.account-pay-modal-head h3 {
+  margin: 0;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+
+.account-pay-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #525252;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.account-pay-close:hover {
+  color: #171717;
+}
+
+.account-pay-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.5rem 2rem 2rem;
+}
+
+.account-pay-methods {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.account-pay-method {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #D4D4D4;
+  border-radius: 1.25rem;
+  background: #F5F5F5;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.account-pay-method.is-selected {
+  border-color: #5865F2;
+  background: rgba(88, 101, 242, 0.06);
+}
+.account-pay-method:hover {
+  border-color: #5865F2;
+}
+
+.account-pay-method-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+.account-pay-method-radio input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.account-pay-method-radio-ui {
+  position: relative;
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid #A3A3A3;
+  border-radius: 50%;
+  background: #FFFFFF;
+  pointer-events: none;
+}
+
+.account-pay-method.is-selected .account-pay-method-radio-ui {
+  border-color: #5865F2;
+}
+.account-pay-method.is-selected .account-pay-method-radio-ui::after {
+  content: "";
+  position: absolute;
+  inset: 0.5rem;
+  border-radius: 50%;
+  background: #5865F2;
+}
+
+.account-pay-method-radio input:focus-visible + .account-pay-method-radio-ui {
+  outline: 2px solid #5865F2;
+  outline-offset: 3px;
+}
+
+.account-pay-method-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.account-pay-method-copy strong {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+.account-pay-method-copy small {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+
+.account-pay-method--provider {
+  min-height: 7.5rem;
+}
+
+.account-pay-fields {
+  display: grid;
+  gap: 1rem;
+}
+.account-pay-fields label {
+  display: grid;
+  gap: 0.5rem;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+.account-pay-fields input,
+.account-pay-fields select {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #D4D4D4;
+  border-radius: 0.625rem;
+  background: #F5F5F5;
+  color: #171717;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.account-pay-fields input:focus,
+.account-pay-fields select:focus {
+  outline: 2px solid #5865F2;
+  outline-offset: 1px;
+}
+.account-pay-fields input::placeholder,
+.account-pay-fields select::placeholder {
+  color: #A3A3A3;
+}
+
+.account-pay-help {
+  margin: 0;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+
+.account-pay-auth {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1.25rem;
+  background: #F5F5F5;
+}
+.account-pay-auth--kakao {
+  border-top: 4px solid #FFD60A;
+}
+.account-pay-auth--naver {
+  border-top: 4px solid #30d158;
+}
+.account-pay-auth--toss {
+  border-top: 4px solid #5865F2;
+}
+.account-pay-auth--phone {
+  border-top: 4px solid #5865F2;
+}
+
+.account-pay-auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.account-pay-auth-brand strong {
+  display: block;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+.account-pay-auth-brand small {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+
+.account-pay-auth-box {
+  overflow: hidden;
+  border: 1px solid #E5E5E5;
+  border-radius: 0.75rem;
+  background: #FFFFFF;
+}
+
+.account-pay-auth-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #E5E5E5;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+}
+.account-pay-auth-row:last-child {
+  border-bottom: 0;
+}
+.account-pay-auth-row span {
+  color: #525252;
+}
+.account-pay-auth-row strong {
+  color: #171717;
+  font-weight: 700;
+}
+
+.account-pay-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 2rem 1.5rem;
+  border-top: 1px solid #E5E5E5;
+}
+
+.account-pay-primary,
+.account-pay-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6.5rem;
+  min-height: 3rem;
+  padding: 0 1.5rem;
+  border: 0;
+  border-radius: 0.625rem;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.account-pay-primary {
+  background: #5865F2;
+  color: #FFFFFF;
+}
+.account-pay-primary:hover:not(:disabled) {
+  background: rgb(59.61, 74.82, 239.79);
+}
+
+.account-pay-secondary {
+  background: #E5E5E5;
+  color: #171717;
+}
+.account-pay-secondary:hover:not(:disabled) {
+  background: #D4D4D4;
+}
+
+.account-pay-primary:disabled,
+.account-pay-secondary:disabled,
+.account-pay button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 767px) {
+  .account-pay .account-pay-layout {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .account-pay .account-pay-list {
+    width: 100%;
+  }
+  .account-pay .account-pay-apple {
+    width: 100%;
+  }
+  .account-pay .account-pay-card {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+  .account-pay .account-pay-item-left {
+    gap: 0.75rem;
+  }
+  .account-pay .account-pay-more-menu {
+    right: 0;
+    min-width: 11rem;
+  }
+  .account-pay .account-pay-actions {
+    width: 100%;
+  }
+  .account-pay-overlay {
+    padding: 0.75rem;
+  }
+  .account-pay-modal {
+    width: 100%;
+    max-height: 94vh;
+    border-radius: 1.25rem;
+  }
+  .account-pay-modal-head {
+    padding: 1rem 1rem 0.75rem;
+  }
+  .account-pay-modal-head h3 {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+  }
+  .account-pay-modal-body {
+    padding: 0.5rem 1rem 1rem;
+  }
+  .account-pay-method {
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  .account-pay-method--provider {
+    min-height: 6rem;
+  }
+  .account-pay-method-copy strong {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    letter-spacing: 0;
+  }
+  .account-pay-auth {
+    padding: 0.75rem;
+  }
+  .account-pay-auth-row {
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+  .account-pay-modal-footer {
+    padding: 0.75rem 1rem 1rem;
+  }
+  .account-pay-primary,
+  .account-pay-secondary {
+    min-width: 5rem;
+  }
+}
 .profile-avatar {
   display: inline-flex;
   align-items: center;
