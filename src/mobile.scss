@@ -2,6 +2,7 @@
 @use "variables" as *;
 
 $breakpoint-tablet-wide: 1194px !default; // _variables.scss 에 없을 때를 대비한 기본값 (헤더 토글 · 검색창)
+$accent-yellow: #FFCC00 !default; // [추가] 작품 상세 평점 별 (_variables.scss 에 없을 때 기본값)
 
 $mobile-edge: 1.25rem; // 모바일 좌우 여백
 $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전 App.scss 에 있던 변수)
@@ -1362,7 +1363,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 // PC 스타일은 App.scss 의 .movie-detail-page
 // =====================================================================
 
-// ---------- [수정] 태블릿 · 모바일 (1024px 이하): 좌우 2단 → 위아래로 쌓기 (오른쪽 정보 박스를 아래로) ----------
+// ---------- [수정] 태블릿 · 모바일 (64rem 이하): 좌우 2단 → 위아래로 쌓기 (오른쪽 정보 박스를 아래로) ----------
 // - 태블릿은 나머지(이너 90% · 글자 위계)는 PC 그대로, 배치만 위아래로
 @media (max-width: $breakpoint-tablet) {
   .movie-detail-page {
@@ -1388,7 +1389,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 }
 
-// 모바일 (767px 이하): 좌우 여백 · 제목 크기 (예전 태블릿 규칙 그대로)
+// 모바일 (47.9375rem 이하): 좌우 여백 · 제목 크기 (예전 태블릿 규칙 그대로)
 @media (max-width: $breakpoint-mobile) {
   .movie-detail-page {
     .inner {
@@ -1403,7 +1404,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 }
 
-// ---------- 모바일 (767px 이하) ----------
+// ---------- 모바일 (47.9375rem 이하) ----------
 @media (max-width: $breakpoint-mobile) {
   .movie-detail-page {
     padding-top: calc(#{$header-height} + 1rem);
@@ -1428,7 +1429,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       }
 
       .title-logo {
-        max-width: 160px;
+        max-width: 10rem;
         max-height: 2.75rem;
       }
 
@@ -1495,11 +1496,11 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       }
 
       .episode-card .thumb {
-        width: 128px;
+        width: 8rem;
       }
 
       .cast-photo {
-        width: 60px;
+        width: 3.75rem;
         height: 3.75rem;
       }
     }
@@ -3226,5 +3227,144 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
   .account-pay-card {
     min-height: 0;
     padding: $space-lg;
+  }
+}
+
+// =====================================================================
+// [추가] 작품 상세 (MovieDetail.jsx) — 휴대폰 글자 위계 (767px 이하)
+// - PC(App.scss 맨 아래)와 같은 구성 · 색 그대로, 크기만 한 단계씩 작게
+//   · 원제 Heading/h3 → Heading/h5 · 장르 · 줄거리 Body/default → Body/small · [재생하기] Heading/h4-B → Body/default-B
+//   · 찜 · 공유 원 50 → 40 · 아이콘 20 → 16
+//   · "작품 평점" Display/L-B → Heading/h2-B · 질문 Heading/h3 → Body/default · 별 35 → 28 · "N점" → Body/small
+//   · 평균 점수 Heading/h3-B → Body/default-B (별 20 → 16) · [평점 남기기] Heading/h4-B · 180 × 62 → Body/default-B · 144 × 48
+//   · 탭 Heading/h2-B → Heading/h5-B · 정렬 상자 Body/small-B → Label/default-B · 높이 50 → 40
+//   · 시즌 Heading/h3 → Body/default · 회차 · 시간 Label/default → Caption/default · 회차 제목 Body/small → Label/default
+// - 간격: 플레이어 ↔ 작품 평점 16 · 평점 버튼 ↔ 푸터 32
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .movie-detail-page.movie-detail-page {
+    padding-bottom: $space-2xl;
+
+    .left-section {
+      gap: $space-lg;
+    }
+
+    // ---------- 정보 바 ----------
+    .player-box {
+      .original-title {
+        @include heading-h5;
+        color: $light-color-0;
+      }
+
+      .genres,
+      .overview {
+        @include body-small;
+        color: $light-color-0;
+      }
+
+      .icon-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+
+        svg,
+        .icon-heart {
+          width: $space-lg;
+          height: $space-lg;
+        }
+      }
+
+      .btn-play {
+        @include body-default-b;
+        color: $dark-color-900;
+      }
+    }
+
+    // ---------- 작품 평점 ----------
+    .rating-section {
+      .rating-header {
+        h3 {
+          @include heading-h2-b;
+          color: $light-color-0;
+        }
+
+        .score-display {
+          @include body-default-b;
+          color: $light-color-0;
+
+          .score-star {
+            width: $space-lg;
+            height: $space-lg;
+            color: $accent-yellow;
+          }
+
+          .max-score {
+            color: $dark-color-100;
+          }
+        }
+      }
+
+      .rating-desc {
+        @include body-default;
+        color: $light-color-0;
+      }
+
+      .star-picker .star-item {
+        width: 2.75rem;
+
+        .star svg {
+          width: 1.75rem;
+          height: 1.75rem;
+        }
+
+        .label {
+          @include body-small;
+          color: $light-color-0;
+        }
+      }
+
+      .btn-submit-rating {
+        @include body-default-b;
+        width: 9rem;
+        height: $space-4xl;
+        padding: 0;
+      }
+    }
+
+    // ---------- 오른쪽(아래) 탭 ----------
+    .right-section {
+      .tabs .tab-btn {
+        @include heading-h5-b;
+        color: $dark-color-100;
+
+        &.active {
+          color: $light-color-0;
+        }
+      }
+
+      .filter-bar select {
+        @include label-default-b;
+        height: 2.5rem;
+        color: $dark-color-900;
+      }
+
+      .season-label {
+        @include body-default;
+        color: $light-color-0;
+      }
+
+      .episode-card .info {
+
+        .ep-num,
+        .runtime {
+          @include caption-default;
+          color: $light-color-0;
+        }
+
+        .ep-title {
+          @include label-default;
+          color: $light-color-0;
+        }
+      }
+    }
   }
 }

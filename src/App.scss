@@ -14,6 +14,7 @@ $account-inner-pc: 1440px; // [추가] 계정 설정 PC 이너 최대 폭 (다�
 $account-inner-max: 1440px; // [추가] PC 계정 설정 이너 최대 폭 (다른 화면 이너 90% 보다 좁게)
 $account-line: $light-color-400; // 구분선 (시안 #D2D2D7)
 $account-sub: $neutral-color-600; // 설명 · 안내 글자 (밝은 배경에서 읽히는 회색)
+$accent-yellow: #FFCC00 !default; // [추가] _variables.scss 에 없을 때를 대비한 기본값 (작품 상세 평점 별)
 
 // =====================================================================
 // App.scss — PC 디자인 (모든 화면 공통 기본값 + 1025px 이상)
@@ -1188,14 +1189,14 @@ header {
   background-color: $bg-page;
   color: $text-primary;
   min-height: 100vh;
-  padding-top: calc(#{$header-height} + 1.5rem); // 헤더 아래 24px
+  padding-top: calc(#{$header-height} + 1.5rem); // 헤더 아래 1.5rem
   padding-bottom: 5rem;
 
   .inner {
     @include inner-wrap;
   }
 
-  // main h2 { padding-top: 200px } 영향 제거
+  // main h2 { padding-top: 12.5rem } 영향 제거
   h2,
   h3,
   p {
@@ -1274,7 +1275,7 @@ header {
 
     .title-logo {
       display: block;
-      max-width: 200px;
+      max-width: 12.5rem;
       max-height: 3.5rem;
       object-fit: contain;
       object-position: left center;
@@ -1301,7 +1302,7 @@ header {
     .overview {
       @include body-small;
       color: $light-color-300;
-      max-width: 640px;
+      max-width: 40rem;
       margin-top: $space-xs;
       word-break: keep-all;
       display: -webkit-box;
@@ -1325,7 +1326,7 @@ header {
     }
 
     .icon-btn {
-      width: 36px;
+      width: 2.25rem;
       height: 2.25rem;
       border-radius: 50%;
       border: none;
@@ -1352,7 +1353,7 @@ header {
     .btn-play {
       @include body-default;
       font-weight: $font-weight-bold;
-      width: 180px;
+      width: 11.25rem;
       height: 2.5rem;
       border: none;
       border-radius: $radius-xs;
@@ -1393,7 +1394,7 @@ header {
 
         // 평균 점수 옆 별 (star-icon.svg 모양 · 노랗게 채움)
         .score-star {
-          width: 18px;
+          width: 1.125rem;
           height: 1.125rem;
           color: $rating-color;
           flex-shrink: 0;
@@ -1421,7 +1422,7 @@ header {
       padding: $space-xs 0;
 
       .star-item {
-        width: 48px;
+        width: 3rem;
         background: none;
         border: none;
         padding: 0;
@@ -1438,7 +1439,7 @@ header {
           transition: color 0.15s ease, transform 0.15s ease;
 
           svg {
-            width: 35px;
+            width: 2.1875rem;
             height: 2.1875rem;
           }
         }
@@ -1613,7 +1614,7 @@ header {
 
       .thumb {
         position: relative;
-        width: 168px;
+        width: 10.5rem;
         aspect-ratio: 16 / 9;
         flex-shrink: 0;
         border-radius: 0.375rem;
@@ -1632,7 +1633,7 @@ header {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          width: 32px;
+          width: 2rem;
           height: 2rem;
           border-radius: 50%;
           @include caption-default;
@@ -1696,7 +1697,7 @@ header {
 
     .cast-photo {
       @include heading-h3;
-      width: 72px;
+      width: 4.5rem;
       height: 4.5rem;
       border-radius: 50%;
       overflow: hidden;
@@ -8168,7 +8169,7 @@ section.device-guide.device-guide--watch {
 
 .movie-detail-page {
   .icon-heart {
-    width: 18px;
+    width: 1.125rem;
     height: 1.125rem;
   }
 
@@ -8599,5 +8600,158 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
   .ai-banner .ai-banner-btn,
   .ai-banner .ai-banner-btn::before {
     animation: none;
+  }
+}
+
+// =====================================================================
+// [추가] 작품 상세 (MovieDetail.jsx) — 시안 글자 위계 · 크기 (PC · 태블릿)
+// - 정보 바: 원제 Heading/h3 · 장르 · 줄거리 Body/default (Light/0) · [재생하기] Heading/h4-B (Dark/900)
+//   · 찜 · 공유 버튼 원 50 × 50 · 아이콘 20 × 20
+// - 작품 평점: 제목 Display/L-B · 질문 Heading/h3 · 별 35 × 35 · 점수 글자 Heading/h3 (Light/0)
+//   · 평균 점수 Heading/h3-B Light/0 · "/ 5" Dark/100 · 별 20 × 20 $accent-yellow
+//   · [평점 남기기] Heading/h4-B · 180 × 62 (좌우 48 · 위아래 20)
+// - 오른쪽 탭: 선택 Heading/h2-B Light/0 · 나머지 Heading/h2-B Dark/100
+//   · 정렬 상자 Body/small-B Dark/900 · 290 × 50 / 시즌 Heading/h3 Light/0
+//   · 회차 · 시간 Label/default · 제목 Body/small (Light/0)
+// - 간격: 헤더 ↔ 내용 23 · 정보 바 위아래 11 · 플레이어 ↔ 작품 평점 20 · 평점 버튼 ↔ 푸터 40
+// - 768px 이상 (휴대폰은 mobile.scss 그대로)
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) {
+  .movie-detail-page.movie-detail-page {
+    padding-top: calc(#{$header-height} + 1.4375rem); // 헤더 아래 23
+    padding-bottom: 2.5rem; // 평점 버튼 ↔ 푸터 40
+
+    .left-section {
+      gap: 1.25rem; // 플레이어 ↔ 작품 평점 20
+    }
+
+    // ---------- 정보 바 ----------
+    .player-box {
+      .player-info {
+        padding-top: 0.6875rem; // 11
+        padding-bottom: 0.6875rem;
+      }
+
+      .original-title {
+        @include heading-h3;
+        color: $light-color-0;
+      }
+
+      .genres,
+      .overview {
+        @include body-default;
+        color: $light-color-0;
+      }
+
+      .icon-btn {
+        width: 3.125rem; // 50
+        height: 3.125rem;
+
+        svg,
+        .icon-heart {
+          width: 1.25rem; // 20
+          height: 1.25rem;
+        }
+      }
+
+      .btn-play {
+        @include heading-h4-b;
+        color: $dark-color-900;
+      }
+    }
+
+    // ---------- 작품 평점 ----------
+    .rating-section {
+      .rating-header {
+        h3 {
+          @include display-l-b;
+          color: $light-color-0;
+        }
+
+        .score-display {
+          @include heading-h3-b;
+          color: $light-color-0;
+
+          .score-star {
+            width: 1.25rem; // 20
+            height: 1.25rem;
+            color: $accent-yellow;
+          }
+
+          .max-score {
+            color: $dark-color-100;
+          }
+        }
+      }
+
+      .rating-desc {
+        @include heading-h3;
+        color: $light-color-0;
+      }
+
+      .star-picker .star-item {
+        .star svg {
+          width: 2.1875rem; // 35
+          height: 2.1875rem;
+        }
+
+        .label {
+          @include heading-h3;
+          color: $light-color-0;
+        }
+      }
+
+      .btn-submit-rating {
+        @include heading-h4-b;
+        width: 11.25rem; // 180 (좌우 48 · 위아래 20 패딩 포함 크기)
+        height: 3.875rem; // 62
+        padding: 0;
+      }
+    }
+
+    // ---------- 오른쪽 탭 ----------
+    .right-section {
+      .tabs .tab-btn {
+        @include heading-h2-b;
+        color: $dark-color-100;
+
+        &:hover {
+          color: $light-color-500;
+        }
+
+        &.active {
+          color: $light-color-0;
+        }
+      }
+
+      .filter-bar {
+        grid-template-columns: repeat(2, minmax(0, 18.125rem)); // 290
+
+        select {
+          @include body-small-b;
+          height: 3.125rem; // 50
+          color: $dark-color-900;
+        }
+      }
+
+      .season-label {
+        @include heading-h3;
+        color: $light-color-0;
+      }
+
+      .episode-card .info {
+
+        .ep-num,
+        .runtime {
+          @include label-default;
+          color: $light-color-0;
+        }
+
+        .ep-title {
+          @include body-small;
+          color: $light-color-0;
+        }
+      }
+    }
   }
 }
