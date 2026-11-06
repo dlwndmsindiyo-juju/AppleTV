@@ -1075,7 +1075,7 @@ section.sport-hero {
 
 @media (max-width: $breakpoint-mobile) {
   section.sport-hero .sport-hero-card {
-    left: 2.5rem;
+    left: 1.25rem;
     width: min(600px, calc(100% - 80px));
     bottom: 2rem;
     padding: $space-xl;
@@ -1090,9 +1090,15 @@ section.sport-hero {
 @media (max-width: $breakpoint-mobile) {
   section.sport-hero .sport-hero-card {
     left: 1.25rem;
-    width: calc(100% - 40px);
-    padding: $space-lg;
-    bottom: 2rem;
+    right: auto;
+    bottom: 1.5rem;
+
+    width: 80%;
+    max-width: 360px;
+    box-sizing: border-box;
+
+    padding: $space-md;
+    border-radius: $radius-card;
   }
 
   section.sport-hero .sport-hero-label {
@@ -1109,22 +1115,22 @@ section.sport-hero {
     @include heading-h3;
     font-family: inherit;
     font-weight: $font-weight-bold;
-    gap: $space-sm;
+    gap: $space-xs;
     margin-bottom: 0.375rem;
   }
 
   section.sport-hero .sport-hero-actions {
     gap: $space-sm;
-    margin-top: $space-lg;
+    margin-top: $space-md;
   }
 
   section.sport-hero .sport-btn {
+    width: 100%;
+    min-width: 96px;
     height: 2.25rem;
     min-height: 2.25rem;
     padding: 0 $space-lg;
-    @include body-small;
-    font-family: inherit;
-    font-weight: $font-weight-bold;
+    @include body-small-b;
   }
 
   section.sport-hero .sport-hero-bg {
@@ -2889,7 +2895,7 @@ main.sport-home.sport-live-page {
 
   .sport-live-tabs {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     border-bottom: 0.0625rem solid $dark-color-200;
     box-shadow: 0 1rem 1.5rem -1rem rgba(0, 0, 0, 0.5);
   }
@@ -2902,7 +2908,6 @@ main.sport-home.sport-live-page {
     border: 0;
     background: transparent;
     color: $light-color-300;
-    font-weight: $font-weight-bold;
     cursor: pointer;
     transition: color 0.2s ease;
 
@@ -2949,7 +2954,7 @@ main.sport-home.sport-live-page {
     display: flex;
     align-items: center;
     gap: $space-lg;
-    margin: 3.25rem 0;
+    margin: $space-4xl 0;
 
     img {
       width: 72px;
@@ -2958,26 +2963,22 @@ main.sport-home.sport-live-page {
     }
 
     h3 {
-      @include display-l;
-      font-family: inherit;
+      @include display-l-b;
       flex: 1;
       margin: 0;
       padding: 0;
-      font-weight: $font-weight-bold;
       color: $text-primary;
     }
 
     p {
-      @include display-l;
+      @include display-l-b;
       font-family: inherit;
       margin: 0;
-      font-weight: $font-weight-bold;
       color: $text-primary;
     }
 
     p span {
       margin-right: $space-md;
-      font-weight: $font-weight-regular;
       color: $text-secondary;
     }
   }
@@ -3231,12 +3232,11 @@ main.sport-home.sport-live-page {
   }
 
   .sport-stats-teams {
-    @include heading-h3;
+    @include heading-h3-b;
     font-family: inherit;
     display: flex;
     justify-content: space-between;
     margin-bottom: $space-2xl;
-    font-weight: $font-weight-bold;
     color: $text-primary;
 
     span {
@@ -3294,7 +3294,7 @@ main.sport-home.sport-live-page {
     span {
       display: flex;
       height: 0.5rem;
-      border-radius: 624.9375rem;
+      border-radius: 50%;
       background: $bg-surface-hover;
       overflow: hidden;
     }
@@ -3592,7 +3592,6 @@ main.sport-home.sport-live-page {
     .sport-pitch-label {
       @include caption-default;
       font-family: inherit;
-      font-size: 0.625rem;
     }
 
     .sport-subs-title {
@@ -3704,7 +3703,6 @@ main.sport-home.sport-live-page {
     border-radius: $radius-card;
     background: transparent;
     color: inherit;
-    font: inherit;
     text-align: left;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -4112,7 +4110,7 @@ $live-lineup-gap-tablet: $space-3xl; // 36px (PC 52px)
     }
 
     .sport-detail-meta {
-      font-size: 12px;
+      @include label-default;
       color: $text-secondary;
     }
   }
@@ -4155,7 +4153,7 @@ main.sport-home.sport-live-page {
     align-items: flex-start;
     justify-content: center;
     gap: $space-3xl;
-    padding-bottom: $space-4xl;
+    padding: $space-4xl 0;
     border-bottom: 0.0625rem solid $dark-color-200;
   }
 
@@ -4184,10 +4182,10 @@ main.sport-home.sport-live-page {
       font-family: inherit;
       display: grid;
       place-items: center;
-      width: 140px;
-      height: 8.75rem;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      background: #0d0d0d;
+      background: $sport-opacity-b;
       font-weight: $font-weight-regular;
       color: $text-primary;
     }
@@ -4215,7 +4213,6 @@ main.sport-home.sport-live-page {
     position: relative;
     margin: 0;
     padding: $space-4xl 0;
-    list-style: none;
 
     // 가운데 세로선
     &::before {
@@ -4396,8 +4393,7 @@ main.sport-home.sport-live-page {
       font-family: inherit;
       display: inline-block;
       margin: 0 0 $space-md;
-      padding: $space-xs $space-md;
-      background: $bg-surface-hover;
+      padding: $space-xs 0;
       font-weight: $font-weight-bold;
       color: $text-primary;
     }
@@ -4410,13 +4406,13 @@ main.sport-home.sport-live-page {
     }
   }
 
-  .sport-stats-list {
-    display: flex;
-    flex-direction: column;
+  .sport-stats .sport-stats-list {
+    width: 66.666%;
+    max-width: none;
+    margin: 0 auto;
+
     gap: $space-xl;
-    margin: 0;
     padding: $space-4xl 0 0;
-    list-style: none;
 
     li {
       display: grid;
@@ -4737,7 +4733,7 @@ main.sport-home.sport-live-page {
     .sport-tl-min {
       width: 28px;
       height: 1.75rem;
-      font-size: 0.625rem;
+      @include caption-default;
     }
 
     .sport-tl-sub,
@@ -4889,6 +4885,10 @@ main.sport-home.sport-live-page {
         @include body-small;
         font-family: inherit;
       }
+    }
+
+    .sport-stats .sport-stats-list {
+      width: 100%;
     }
 
     .sport-stats-list li {
@@ -5104,55 +5104,40 @@ main.sport-home.sport-live-page {
     // 영상 정보 · 다른 경기 목록
     .sport-live-info-title {
       @include heading-h4-b;
-      font-family: inherit;
     }
 
     .sport-live-info-sub {
       @include body-default;
-      font-family: inherit;
     }
 
     .sport-live-info-note {
       @include label-default;
-      font-family: inherit;
     }
 
     .sport-detail-title {
-      @include body-default;
-      font-family: inherit;
-      font-weight: $font-weight-bold;
+      @include body-default-b;
     }
 
     .sport-detail-meta {
       @include label-default;
-      font-family: inherit;
     }
 
     // 탭
     .sport-live-tab {
-      @include heading-h2;
-      font-family: inherit;
-      font-weight: $font-weight-bold;
+      @include heading-h2-b;
       padding: $space-lg 0;
     }
 
     // 라인업
     .sport-lineup-head {
       h3 {
-        @include display-M;
-        font-family: inherit;
-        font-weight: $font-weight-bold;
+        @include display-M-b;
       }
 
       p {
-        @include display-M;
-        font-family: inherit;
-        font-weight: $font-weight-bold;
+        @include display-M-b;
       }
 
-      p span {
-        font-weight: $font-weight-regular;
-      }
     }
 
     .sport-pitch-label {
@@ -5161,15 +5146,13 @@ main.sport-home.sport-live-page {
     }
 
     .sport-subs-title {
-      @include display-M;
+      @include display-M-b;
       font-family: inherit;
-      font-weight: $font-weight-bold;
     }
 
     .sport-subs-team {
-      @include heading-h2;
+      @include heading-h2-b;
       font-family: inherit;
-      font-weight: $font-weight-bold;
     }
 
     .sport-subs-col li {
@@ -5182,7 +5165,6 @@ main.sport-home.sport-live-page {
       b {
         @include display-M;
         font-family: inherit;
-        font-weight: $font-weight-regular;
       }
 
       span {
@@ -5363,7 +5345,7 @@ main.sport-home {
     gap: 0.375rem;
     height: 1.875rem;
     padding: 0 $space-md;
-    border-radius: 624.9375rem;
+    border-radius: 50%;
     background: $sports-color;
   }
 
@@ -6066,7 +6048,6 @@ main.sport-home {
     b {
       @include body-small-b;
       font-family: inherit;
-      font-size: clamp(0.625rem, 3.3cqw, 0.875rem);
       line-height: 1;
     }
   }
@@ -6087,8 +6068,7 @@ main.sport-home {
       background-color: rgba(0, 0, 0, 0.45);
       border: 0.0625rem solid rgba(255, 255, 255, 0.3);
       font-family: inherit;
-      font-weight: 700;
-      font-size: min(4cqw, 1.125rem);
+      @include heading-h4-b;
       line-height: 1;
     }
   }
@@ -6097,7 +6077,6 @@ main.sport-home {
   .sport-lv-score {
     @include display-M-b;
     font-family: inherit;
-    font-size: min(9cqw, 2.75rem);
     line-height: min(13cqw, 4rem);
     font-variant-numeric: tabular-nums;
   }
@@ -6105,7 +6084,6 @@ main.sport-home {
   .sport-lv-time {
     @include body-default-b;
     font-family: inherit;
-    font-size: min(4.2cqw, 1.25rem);
     line-height: min(13cqw, 4rem);
     min-width: 0;
     text-align: center;
