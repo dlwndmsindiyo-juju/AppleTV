@@ -7387,7 +7387,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 body.has-promo-banner .floating-actions {
@@ -7404,54 +7404,46 @@ body.has-promo-banner .floating-actions {
   margin: 0;
   padding: 0;
   border: none;
-  border-radius: 50%;
   overflow: hidden;
   background: transparent;
   cursor: pointer;
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s ease;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 .floating-btn img {
   display: block;
   flex-shrink: 0;
 }
 .floating-btn:hover {
-  transform: scale(1.1);
+  filter: brightness(1.15);
 }
 .floating-btn:focus-visible {
   outline: 0.125rem solid #FFFFFF;
   outline-offset: 0.125rem;
 }
-.floating-btn.floating-btn--tv img {
-  width: 24px;
-  height: 1.5rem;
+
+.floating-actions .floating-btn.floating-btn--tv {
+  border-radius: 50% 50% 0 0;
+  background-color: #2E2E2E;
 }
-.floating-btn.floating-btn--top {
-  background-color: #EBEBEB;
+.floating-actions .floating-btn.floating-btn--tv img {
+  width: 60%;
+  height: auto;
 }
-.floating-btn.floating-btn--top img {
-  width: 17px;
-  height: 0.5625rem;
+.floating-actions .floating-btn.floating-btn--top {
+  padding: 0;
+  border-radius: 0 0 50% 50%;
+  background-color: #464646;
+}
+.floating-actions .floating-btn.floating-btn--top img {
+  width: 60%;
+  height: auto;
 }
 
 @media (min-width: 768px) {
-  .floating-actions {
-    gap: 0.75rem;
-  }
   .floating-btn {
     width: 70px;
     height: 4.375rem;
-  }
-  .floating-btn.floating-btn--tv img {
-    width: 70px;
-    height: 4.375rem;
-  }
-  .floating-btn.floating-btn--top {
-    padding: 0 1.375rem;
-  }
-  .floating-btn.floating-btn--top img {
-    width: 100%;
-    height: auto;
   }
 }
 .swiper-button-prev,

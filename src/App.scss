@@ -7655,14 +7655,17 @@ section.device-guide.device-guide--watch {
 }
 
 // =====================================================================
-// [추가] 오른쪽 아래 떠 있는 버튼 묶음 (FloatingActions.jsx) — 모든 페이지 · 항상 표시
-// - 세로로 나란히: 위 TV 디자인 보기 (/tv) · 아래 TOP (맨 위로)
-// - 두 버튼 모두 24 × 24 원형
-//   · TV: 아이콘 원본 그대로 (public/icons/tv/tv-more-btn.svg)
-//   · TOP: 원형 배경 Light/200 + 화살표 아이콘 원본 17 × 9 (public/icons/top-btn.svg)
+// [수정] 오른쪽 아래 떠 있는 버튼 묶음 (FloatingActions.jsx) — 모든 페이지 · 항상 표시
+// - 세로 캡슐 하나를 위아래로 나눈 모양 (시안): 위 TV 디자인 보기 (/tv) · 아래 TOP (맨 위로)
+//   · 위 TV: 배경 Dark/300 · 위쪽만 둥글게 · 아이콘 public/icons/tv/tv-more-btn.svg (Apple TV 로고)
+//   · 아래 TOP: 배경 Dark/400 · 아래쪽만 둥글게 · 아이콘 public/icons/top-btn.svg (흰 화살표)
+//   · 두 버튼 모두 드롭 섀도 · 사이 4 (0.25rem)
+// - 크기는 예전 그대로: PC · 태블릿 70 × 70 / 휴대폰 50 × 50 (mobile.scss)
 // - 하단 LIVE 배너(97px)가 보일 때는 배너 위로 올라감
-// - 휴대폰 위치는 mobile.scss
 // =====================================================================
+$floating-btn-shadow: 0 0.25rem 0.75rem rgba($dark-color-black, 0.45); // 드롭 섀도
+$floating-btn-gap: 0.25rem; // 두 버튼 사이 4
+
 .floating-actions {
   position: fixed;
   right: $space-xl;
@@ -7671,7 +7674,7 @@ section.device-guide.device-guide--watch {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $space-sm;
+  gap: $floating-btn-gap;
 }
 
 body.has-promo-banner .floating-actions {
@@ -7688,12 +7691,11 @@ body.has-promo-banner .floating-actions {
   margin: 0;
   padding: 0;
   border: none;
-  border-radius: 50%;
   overflow: hidden;
   background: transparent;
   cursor: pointer;
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s ease;
+  box-shadow: $floating-btn-shadow;
+  transition: transform 0.2s ease, filter 0.2s ease;
 
   img {
     display: block;
@@ -7701,59 +7703,112 @@ body.has-promo-banner .floating-actions {
   }
 
   &:hover {
-    transform: scale(1.1);
+    filter: brightness(1.15);
   }
 
   &:focus-visible {
     outline: 0.125rem solid $light-color-0;
     outline-offset: 0.125rem;
   }
+}
 
-  // TV 디자인 보기: 아이콘이 원형 버튼 그 자체
-  &.floating-btn--tv img {
-    width: 24px;
-    height: 1.5rem;
-  }
+// 아이콘 크기는 버튼 폭에 맞춰 비율로 (PC 70 · 휴대폰 50 모두 같은 비율)
+.floating-actions .floating-btn {
 
-  // TOP: Light/200 원 + 화살표 (원본 17 × 9)
-  &.floating-btn--top {
-    background-color: $light-color-200;
+  // 위: TV 디자인 보기 (Apple TV 로고 · 버튼 폭의 60%)
+  &.floating-btn--tv {
+    position: relative;
+    border-radius: 50% 50% 0 0; // 위쪽만 둥글게 (반원)
+    background-color: $dark-color-400;
 
     img {
-      width: 17px;
-      height: 0.5625rem;
+      width: 60%;
+      height: auto;
+      animation: floating-tv-glow 2.4s ease-in-out infinite; // [추가] AI 아이콘처럼 빛이 숨 쉬듯
+    }
+
+    // [추가] 로고 위를 지나가는 반짝이는 빛 (로고 모양 안에서만 보이게 마스크)
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60%;
+      aspect-ratio: 70 / 33; // tv-more-btn.svg 비율
+      transform: translate(-50%, -50%);
+      background: linear-gradient(110deg,
+          rgba($light-color-0, 0) 35%,
+          rgba($light-color-0, 0.85) 50%,
+          rgba($light-color-0, 0) 65%);
+      background-size: 300% 100%;
+      background-position: 150% 0;
+      -webkit-mask: url("/icons/tv/tv-more-btn.svg") center / contain no-repeat;
+      mask: url("/icons/tv/tv-more-btn.svg") center / contain no-repeat;
+      pointer-events: none;
+      animation: floating-tv-shine 3s ease-in-out infinite;
+    }
+  }
+
+  // 아래: TOP (흰 화살표 · 버튼 폭의 60%)
+  &.floating-btn--top {
+    padding: 0;
+    border-radius: 0 0 50% 50%; // 아래쪽만 둥글게 (반원)
+    background-color: $dark-color-200;
+
+    img {
+      width: 60%;
+      height: auto;
+    }
+  }
+}
+
+// [추가] TV 로고 반짝임 — AI 아이콘(AiLogo.scss · ai-logo-glow)과 같은 보라 빛 · 같은 2.4초
+@keyframes floating-tv-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0.125rem $ai-glow-shadow) brightness(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 0.5rem $ai-glow-bright) brightness(1.2);
+  }
+}
+
+// 빛이 왼쪽 → 오른쪽으로 지나간 뒤 잠깐 쉼
+@keyframes floating-tv-shine {
+  0% {
+    background-position: 150% 0;
+  }
+
+  60%,
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-actions .floating-btn.floating-btn--tv {
+    img,
+    &::after {
+      animation: none;
+    }
+
+    &::after {
+      display: none;
     }
   }
 }
 
 // =====================================================================
-// [추가] 오른쪽 아래 TV · TOP 버튼 — PC 에서 크게 (1025px 이상)
-// - 70 × 70 · TOP 화살표는 좌우 패딩 22 → 26 × 14 · 버튼 사이 12
-// - 태블릿은 mobile.scss · 휴대폰은 원본 24 그대로
+// [추가] 오른쪽 아래 TV · TOP 버튼 — PC 에서 크게 (768px 이상 · 예전 크기 70 × 70 그대로)
+// - 휴대폰은 mobile.scss (50 × 50)
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
-  .floating-actions {
-    gap: $space-md;
-  }
-
   .floating-btn {
     width: 70px;
     height: 4.375rem;
-
-    &.floating-btn--tv img {
-      width: 70px;
-      height: 4.375rem;
-    }
-
-    // TOP: 화살표는 작게 두고 원 안쪽 여백(패딩)으로 크기를 맞춤 → 화살표 폭 26
-    &.floating-btn--top {
-      padding: 0 1.375rem;
-
-      img {
-        width: 100%;
-        height: auto;
-      }
-    }
   }
 }
 
