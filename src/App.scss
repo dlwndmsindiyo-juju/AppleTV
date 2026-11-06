@@ -5710,8 +5710,17 @@ img.ui-icon.ui-icon-arrow {
 .account-title {
   @include display-l-b;
   color: $dark-color-400; // [수정] 시안 Dark/400
-  padding-bottom: $space-xl;
+  padding: $space-lg 0 $space-xl;
   border-bottom: 0.0625rem solid $account-line;
+}
+
+.account-back {
+  @include body-small;
+}
+
+.account-back>svg {
+  display: inline-flex;
+  margin-right: $space-sm;
 }
 
 // ---------- [추가] 왼쪽 메뉴 + 오른쪽 섹션 ----------
@@ -5791,6 +5800,7 @@ img.ui-icon.ui-icon-arrow {
 
 // ---------- 섹션: 오른쪽 항목 (섹션 이름은 왼쪽 메뉴가 대신함) ----------
 .account-section {
+  font-family: inherit;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
@@ -5824,6 +5834,7 @@ img.ui-icon.ui-icon-arrow {
   align-items: flex-start;
   gap: $space-lg;
   transition: opacity 0.2s ease;
+  margin-bottom: $space-lg;
 
   // 알림이 꺼져 있을 때 알림 받기 방식 (시안: 흐리게)
   &.is-muted {
@@ -5851,12 +5862,15 @@ img.ui-icon.ui-icon-arrow {
 // 파란 글자 링크 (모든 브라우저에서 로그아웃 · 연결된 계정 관리 · 재생 기록 지우기)
 .account-link {
   @include body-default;
+  font-family: inherit;
   padding: 0;
   border: none;
   background: none;
   color: $primary-color-500; // 시안 링크 색
   cursor: pointer;
   text-align: left;
+  margin-bottom: $space-lg;
+
 
   &:hover {
     color: $primary-color-400;
@@ -6192,6 +6206,742 @@ img.ui-icon.ui-icon-arrow {
     transform: translate(-50%, 0);
   }
 }
+
+.account-sub-heading {
+  margin: $space-3xl 0;
+}
+
+// ========================================
+// 1. 지불 방법 메인 화면
+// ========================================
+
+.account-pay {
+  // 결제 수단 목록 레이아웃
+  .account-pay-layout {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: $space-xl;
+    margin-top: $space-xl;
+  }
+
+  .account-pay-list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    width: min(100%, 28.75rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // 등록된 결제 수단 카드
+  .account-pay-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-lg;
+    min-width: 0;
+    padding: $space-lg;
+    border-radius: $radius-md;
+    background: $light-color-0;
+    box-shadow: 0 2px 12px rgba($dark-color-black, 0.07);
+  }
+
+  // 좌측: 아이콘 + 텍스트
+  .account-pay-item-left {
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
+    flex: 1;
+    min-width: 0;
+  }
+
+  // 우측: 더보기
+  .account-pay-item-right {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .account-pay-card-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-xs;
+    min-width: 0;
+  }
+
+  .account-pay-brand {
+    @include heading-h5-b;
+    color: $text-inverse;
+  }
+
+  .account-pay-number {
+    @include body-small;
+    color: $neutral-color-600;
+  }
+
+  .account-pay-default {
+    @include label-default;
+    color: $brand-primary;
+  }
+
+  // ========================================
+  // 2. 결제 수단 아이콘 / 브랜드 배지
+  // ========================================
+
+  .account-pay-badge,
+  .account-pay-provider-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-width: 3.625rem;
+    height: $space-3xl;
+    padding: 0 $space-md;
+    border-radius: $radius-xs;
+    @include body-small-b;
+
+    // 카카오페이
+    &.is-kakao {
+      background: $status-rating;
+      color: $text-inverse;
+    }
+
+    // 네이버페이
+    &.is-naver {
+      background: $status-success;
+      color: $text-inverse;
+    }
+
+    // 토스페이
+    &.is-toss {
+      background: $brand-primary;
+      color: $text-primary;
+    }
+
+    // 신용/체크카드
+    // &.is-card {
+    //   background: $neutral-color-100;
+    //   color: $text-inverse;
+    //   border: 1px solid $neutral-color-300;
+    // }
+
+    // 휴대폰 결제
+    &.is-phone {
+      background: $neutral-color-100;
+      color: $brand-primary;
+      border: 1px solid $primary-color-100;
+    }
+  }
+
+  // 실제 이미지 사용 시
+  .account-pay-provider-image {
+    display: block;
+    width: 3.625rem;
+    height: $space-3xl;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  // ========================================
+  // 3. 더보기 버튼 및 드롭다운
+  // ========================================
+
+  .account-pay-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $space-3xl;
+    height: $space-3xl;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: $text-inverse;
+    @include heading-h2-b;
+    cursor: pointer;
+
+    &:hover {
+      background: $neutral-color-100;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $brand-primary;
+      outline-offset: 2px;
+    }
+  }
+
+  .account-pay-more-menu {
+    position: absolute;
+    top: calc(100% + #{$space-xs});
+    right: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    min-width: 12rem;
+    padding: $space-sm;
+    border: 1px solid $neutral-color-200;
+    border-radius: $radius-card-sm;
+    background: $light-color-0;
+    box-shadow: 0 8px 24px rgba($dark-color-black, 0.12);
+
+    button {
+      width: 100%;
+      padding: $space-md $space-lg;
+      border: 0;
+      border-radius: $radius-xs;
+      background: transparent;
+      color: $text-inverse;
+      @include body-small;
+      text-align: left;
+      cursor: pointer;
+
+      &:hover {
+        background: $neutral-color-100;
+      }
+
+      // 삭제 버튼
+      &.is-danger {
+        color: $status-live;
+      }
+
+      // 닫기 버튼
+      &.is-close {
+        color: $neutral-color-600;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-primary;
+        outline-offset: -2px;
+      }
+    }
+  }
+
+  // ========================================
+  // 4. 결제 수단 추가 버튼
+  // ========================================
+
+  .account-pay-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-lg;
+  }
+
+  .account-icon-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-xs 0;
+    border: 0;
+    background: transparent;
+    color: $brand-primary;
+    @include body-default;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      text-decoration: underline;
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $brand-primary;
+      outline-offset: 3px;
+    }
+  }
+
+  .account-inline-plus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: $space-xl;
+    height: $space-xl;
+    border: 1.5px solid $brand-primary;
+    border-radius: 50%;
+    color: $brand-primary;
+    @include body-large;
+  }
+
+  .account-pay-empty {
+    margin: 0;
+    padding: $space-lg 0;
+    @include body-default;
+    color: $neutral-color-600;
+  }
+}
+
+// ========================================
+// 5. 지불 방법 추가 모달
+// ========================================
+
+// 모달 배경
+.account-pay-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: $space-lg;
+  background: rgba($dark-color-black, 0.5);
+}
+
+// 모달 본체
+.account-pay-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 45rem);
+  max-height: min(90vh, 53.75rem);
+  overflow: hidden;
+  border-radius: $radius-lg;
+  background: $light-color-0;
+  color: $text-inverse;
+  box-shadow: 0 20px 60px rgba($dark-color-black, 0.2);
+}
+
+// 모달 헤더
+.account-pay-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-lg;
+  padding: $space-xl $space-2xl $space-lg;
+
+  h3 {
+    margin: 0;
+    @include heading-h2-b;
+    color: $text-inverse;
+  }
+}
+
+.account-pay-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $space-3xl;
+  height: $space-3xl;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $neutral-color-600;
+  @include heading-h2-b;
+  cursor: pointer;
+
+  &:hover {
+    color: $text-inverse;
+  }
+}
+
+// 모달 콘텐츠
+.account-pay-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: $space-sm $space-2xl $space-2xl;
+}
+
+// ========================================
+// 6. 결제 수단 선택 UI
+// ========================================
+
+.account-pay-methods {
+  display: grid;
+  gap: $space-lg;
+  margin-top: $space-lg;
+}
+
+.account-pay-method {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+  padding: $space-xl;
+  border: 1px solid $neutral-color-300;
+  border-radius: $radius-md;
+  background: $light-color-100;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+
+  &.is-selected {
+    border-color: $brand-primary;
+    background: rgba($brand-primary, 0.06);
+  }
+
+  &:hover {
+    border-color: $brand-primary;
+  }
+}
+
+// 원형 선택 버튼
+.account-pay-method-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: $space-3xl;
+  height: $space-3xl;
+
+  input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+}
+
+// 커스텀 라디오 원
+.account-pay-method-radio-ui {
+  position: relative;
+  display: block;
+  width: $space-3xl;
+  height: $space-3xl;
+  border: 2px solid $neutral-color-400;
+  border-radius: 50%;
+  background: $light-color-0;
+  pointer-events: none;
+}
+
+// 선택 상태
+.account-pay-method.is-selected {
+  .account-pay-method-radio-ui {
+    border-color: $brand-primary;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: $space-sm;
+      border-radius: 50%;
+      background: $brand-primary;
+    }
+  }
+}
+
+// 키보드 접근성
+.account-pay-method-radio input:focus-visible
+  + .account-pay-method-radio-ui {
+  outline: 2px solid $brand-primary;
+  outline-offset: 3px;
+}
+
+// 결제 수단 텍스트
+.account-pay-method-copy {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  min-width: 0;
+
+  strong {
+    @include heading-h4-b;
+    color: $text-inverse;
+  }
+
+  small {
+    @include body-small;
+    color: $neutral-color-600;
+  }
+}
+
+// 간편결제 선택 카드
+.account-pay-method--provider {
+  min-height: 7.5rem;
+}
+
+// ========================================
+// 7. 카드 / 휴대폰 정보 입력 폼
+// ========================================
+
+.account-pay-fields {
+  display: grid;
+  gap: $space-lg;
+
+  label {
+    display: grid;
+    gap: $space-sm;
+    @include body-small-b;
+    color: $text-inverse;
+  }
+
+  input,
+  select {
+    width: 100%;
+    min-height: 3rem;
+    padding: $space-md $space-lg;
+    border: 1px solid $neutral-color-300;
+    border-radius: $radius-sm;
+    background: $light-color-100;
+    color: $text-inverse;
+    @include body-default;
+
+    &:focus {
+      outline: 2px solid $brand-primary;
+      outline-offset: 1px;
+    }
+
+    &::placeholder {
+      color: $neutral-color-400;
+    }
+  }
+}
+
+.account-pay-help {
+  margin: 0;
+  @include body-small;
+  color: $neutral-color-600;
+}
+
+// ========================================
+// 8. 간편결제 / 휴대폰 모의 인증 화면
+// ========================================
+
+.account-pay-auth {
+  display: grid;
+  gap: $space-lg;
+  padding: $space-lg;
+  border-radius: $radius-md;
+  background: $light-color-100;
+
+  // 카카오페이
+  &--kakao {
+    border-top: 4px solid $status-rating;
+  }
+
+  // 네이버페이
+  &--naver {
+    border-top: 4px solid $status-success;
+  }
+
+  // 토스페이
+  &--toss {
+    border-top: 4px solid $brand-primary;
+  }
+
+  // 휴대폰
+  &--phone {
+    border-top: 4px solid $brand-primary;
+  }
+}
+
+// 인증 서비스 정보
+.account-pay-auth-brand {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+
+  strong {
+    display: block;
+    @include heading-h2-b;
+    color: $text-inverse;
+  }
+
+  small {
+    display: block;
+    margin-top: $space-xs;
+    @include body-small;
+    color: $neutral-color-600;
+  }
+}
+
+// 인증 정보 박스
+.account-pay-auth-box {
+  overflow: hidden;
+  border: 1px solid $neutral-color-200;
+  border-radius: $radius-card-sm;
+  background: $light-color-0;
+}
+
+// 인증 정보 행
+.account-pay-auth-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-lg;
+  padding: $space-lg;
+  border-bottom: 1px solid $neutral-color-200;
+  @include body-small;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  span {
+    color: $neutral-color-600;
+  }
+
+  strong {
+    color: $text-inverse;
+    font-weight: $font-weight-bold;
+  }
+}
+
+// ========================================
+// 9. 모달 하단 버튼
+// ========================================
+
+.account-pay-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-md;
+  padding: $space-lg $space-2xl $space-xl;
+  border-top: 1px solid $neutral-color-200;
+}
+
+.account-pay-primary,
+.account-pay-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6.5rem;
+  min-height: 3rem;
+  padding: 0 $space-xl;
+  border: 0;
+  border-radius: $radius-sm;
+  @include body-default-b;
+  cursor: pointer;
+}
+
+// 계속 / 등록 / 완료
+.account-pay-primary {
+  background: $brand-primary;
+  color: $text-primary;
+
+  &:hover:not(:disabled) {
+    background: $accent-color-hover;
+  }
+}
+
+// 취소 / 뒤로
+.account-pay-secondary {
+  background: $neutral-color-200;
+  color: $text-inverse;
+
+  &:hover:not(:disabled) {
+    background: $neutral-color-300;
+  }
+}
+
+// 버튼 비활성화
+.account-pay-primary:disabled,
+.account-pay-secondary:disabled,
+.account-pay button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+// ========================================
+// 10. 모바일 반응형
+// ========================================
+
+@media (max-width: $breakpoint-mobile) {
+
+  // 메인 결제 수단
+  .account-pay {
+
+    .account-pay-layout {
+      flex-direction: column;
+      gap: $space-lg;
+    }
+
+    .account-pay-list {
+      width: 100%;
+    }
+
+    .account-pay-apple {
+      width: 100%;
+    }
+
+    .account-pay-card {
+      padding: $space-lg;
+      gap: $space-sm;
+    }
+
+    .account-pay-item-left {
+      gap: $space-md;
+    }
+
+    .account-pay-more-menu {
+      right: 0;
+      min-width: 11rem;
+    }
+
+    .account-pay-actions {
+      width: 100%;
+    }
+  }
+
+  // 모바일 모달
+  .account-pay-overlay {
+    padding: $space-md;
+  }
+
+  .account-pay-modal {
+    width: 100%;
+    max-height: 94vh;
+    border-radius: $radius-md;
+  }
+
+  .account-pay-modal-head {
+    padding: $space-lg $space-lg $space-md;
+
+    h3 {
+      @include heading-h4-b;
+    }
+  }
+
+  .account-pay-modal-body {
+    padding: $space-sm $space-lg $space-lg;
+  }
+
+  // 결제 수단 선택
+  .account-pay-method {
+    gap: $space-md;
+    padding: $space-lg;
+  }
+
+  .account-pay-method--provider {
+    min-height: 6rem;
+  }
+
+  .account-pay-method-copy {
+    strong {
+      @include heading-h5-b;
+    }
+  }
+
+  // 인증 정보
+  .account-pay-auth {
+    padding: $space-md;
+  }
+
+  .account-pay-auth-row {
+    gap: $space-sm;
+    padding: $space-md;
+  }
+
+  // 모달 버튼
+  .account-pay-modal-footer {
+    padding: $space-md $space-lg $space-lg;
+  }
+
+  .account-pay-primary,
+  .account-pay-secondary {
+    min-width: 5rem;
+  }
+}
+
+
+
+
 
 // =====================================================================
 // [추가] 프로필 아이콘 (components/profile/ProfileAvatar.jsx) — 헤더 · 계정 설정 공용
