@@ -14,6 +14,7 @@ $account-inner-pc: 1440px; // [추가] 계정 설정 PC 이너 최대 폭 (다�
 $account-inner-max: 1440px; // [추가] PC 계정 설정 이너 최대 폭 (다른 화면 이너 90% 보다 좁게)
 $account-line: $light-color-400; // 구분선 (시안 #D2D2D7)
 $account-sub: $neutral-color-600; // 설명 · 안내 글자 (밝은 배경에서 읽히는 회색)
+$accent-yellow: #FFCC00 !default; // [추가] _variables.scss 에 없을 때를 대비한 기본값 (작품 상세 평점 별)
 
 // =====================================================================
 // App.scss — PC 디자인 (모든 화면 공통 기본값 + 1025px 이상)
@@ -1188,14 +1189,14 @@ header {
   background-color: $bg-page;
   color: $text-primary;
   min-height: 100vh;
-  padding-top: calc(#{$header-height} + 1.5rem); // 헤더 아래 24px
+  padding-top: calc(#{$header-height} + 1.5rem); // 헤더 아래 1.5rem
   padding-bottom: 5rem;
 
   .inner {
     @include inner-wrap;
   }
 
-  // main h2 { padding-top: 200px } 영향 제거
+  // main h2 { padding-top: 12.5rem } 영향 제거
   h2,
   h3,
   p {
@@ -1274,7 +1275,7 @@ header {
 
     .title-logo {
       display: block;
-      max-width: 200px;
+      max-width: 12.5rem;
       max-height: 3.5rem;
       object-fit: contain;
       object-position: left center;
@@ -1299,9 +1300,9 @@ header {
     }
 
     .overview {
-      @include body-small;
+      @include caption-default;
       color: $light-color-300;
-      max-width: 640px;
+      max-width: 40rem;
       margin-top: $space-xs;
       word-break: keep-all;
       display: -webkit-box;
@@ -1325,7 +1326,7 @@ header {
     }
 
     .icon-btn {
-      width: 36px;
+      width: 2.25rem;
       height: 2.25rem;
       border-radius: 50%;
       border: none;
@@ -1352,7 +1353,7 @@ header {
     .btn-play {
       @include body-default;
       font-weight: $font-weight-bold;
-      width: 180px;
+      width: 11.25rem;
       height: 2.5rem;
       border: none;
       border-radius: $radius-xs;
@@ -1393,7 +1394,7 @@ header {
 
         // 평균 점수 옆 별 (star-icon.svg 모양 · 노랗게 채움)
         .score-star {
-          width: 18px;
+          width: 1.125rem;
           height: 1.125rem;
           color: $rating-color;
           flex-shrink: 0;
@@ -1421,7 +1422,7 @@ header {
       padding: $space-xs 0;
 
       .star-item {
-        width: 48px;
+        width: 3rem;
         background: none;
         border: none;
         padding: 0;
@@ -1438,7 +1439,7 @@ header {
           transition: color 0.15s ease, transform 0.15s ease;
 
           svg {
-            width: 35px;
+            width: 2.1875rem;
             height: 2.1875rem;
           }
         }
@@ -1613,7 +1614,7 @@ header {
 
       .thumb {
         position: relative;
-        width: 168px;
+        width: 10.5rem;
         aspect-ratio: 16 / 9;
         flex-shrink: 0;
         border-radius: 0.375rem;
@@ -1632,7 +1633,7 @@ header {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          width: 32px;
+          width: 2rem;
           height: 2rem;
           border-radius: 50%;
           @include caption-default;
@@ -1696,7 +1697,7 @@ header {
 
     .cast-photo {
       @include heading-h3;
-      width: 72px;
+      width: 4.5rem;
       height: 4.5rem;
       border-radius: 50%;
       overflow: hidden;
@@ -2031,10 +2032,19 @@ header {
   }
 
   .subscribe-title {
-    @include heading-h3;
-    color: $text-primary;
+    @include display-l-b;
+    color: $light-color-0;
     margin: 0;
     word-break: keep-all;
+
+    .subscribe-title-desktop {
+
+      span {
+        @include display-l-b;
+        display: flex;
+        flex-direction: column
+      }
+    }
   }
 
   .subscribe-btn {
@@ -3893,9 +3903,34 @@ main.sport-home {
   }
 }
 
+.auth-divider {
+  span {
+    @include body-default;
+  }
+}
+
+.auth-legal {
+  a {
+    @include body-default;
+  }
+
+  span {
+    @include body-default;
+  }
+
+}
+
+.auth-remember {
+  @include body-default;
+}
+
 // 단계가 바뀔 때 아래에서 살짝 올라오며 나타남
 .auth-step {
   animation: auth-step-in 0.4s ease both;
+}
+
+.auth-muted {
+  @include body-default;
 }
 
 @keyframes auth-step-in {
@@ -4130,13 +4165,11 @@ main.sport-home {
 
 // ---------- 또는 (구글 계정으로 계속 위 구분선) ----------
 .auth-divider {
-  @include label-default;
   display: flex;
   align-items: center;
   gap: $space-md;
   max-width: 428px;
   margin: $space-xl auto 0;
-  color: $text-tertiary;
 
   &::before,
   &::after {
@@ -5864,12 +5897,13 @@ img.ui-icon.ui-icon-arrow {
   @include body-default;
   font-family: inherit;
   padding: 0;
-  border: none;
-  background: none;
-  color: $primary-color-500; // 시안 링크 색
+  color: $primary-color-500;
   cursor: pointer;
   text-align: left;
   margin-bottom: $space-lg;
+
+  display: inline-block;
+  margin-left: $space-xs;
 
 
   &:hover {
@@ -6208,7 +6242,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-sub-heading {
-  margin: $space-3xl 0;
+  margin: $space-3xl 0 $space-xl;
 }
 
 // ========================================
@@ -6216,6 +6250,7 @@ img.ui-icon.ui-icon-arrow {
 // ========================================
 
 .account-pay {
+
   // 결제 수단 목록 레이아웃
   .account-pay-layout {
     display: flex;
@@ -6553,7 +6588,8 @@ img.ui-icon.ui-icon-arrow {
 // ========================================
 
 .account-pay-methods {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: $space-lg;
   margin-top: $space-lg;
 }
@@ -6578,6 +6614,7 @@ img.ui-icon.ui-icon-arrow {
     border-color: $brand-primary;
   }
 }
+
 
 // 원형 선택 버튼
 .account-pay-method-radio {
@@ -6604,8 +6641,8 @@ img.ui-icon.ui-icon-arrow {
 .account-pay-method-radio-ui {
   position: relative;
   display: block;
-  width: $space-3xl;
-  height: $space-3xl;
+  width: $space-2xl;
+  height: $space-2xl;
   border: 2px solid $neutral-color-400;
   border-radius: 50%;
   background: $light-color-0;
@@ -6628,8 +6665,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 // 키보드 접근성
-.account-pay-method-radio input:focus-visible
-  + .account-pay-method-radio-ui {
+.account-pay-method-radio input:focus-visible+.account-pay-method-radio-ui {
   outline: 2px solid $brand-primary;
   outline-offset: 3px;
 }
@@ -6653,8 +6689,43 @@ img.ui-icon.ui-icon-arrow {
 }
 
 // 간편결제 선택 카드
-.account-pay-method--provider {
-  min-height: 7.5rem;
+
+
+.account-pay-methods--provider {
+  .account-pay-method--provider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 16px;
+    min-height: 7.5rem;
+
+    .account-pay-method-radio {
+      flex: 0 0 auto;
+    }
+
+    .account-pay-provider-image {
+      display: block;
+      width: 88px;
+      height: 36px;
+      flex: 0 0 88px;
+      object-fit: contain;
+    }
+
+    .account-pay-method-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      min-width: 0;
+
+      strong {
+        margin: 0;
+        white-space: nowrap;
+      }
+    }
+  }
 }
 
 // ========================================
@@ -6677,7 +6748,7 @@ img.ui-icon.ui-icon-arrow {
     width: 100%;
     min-height: 3rem;
     padding: $space-md $space-lg;
-    border: 1px solid $neutral-color-300;
+    border: 1px solid $light-color-500;
     border-radius: $radius-sm;
     background: $light-color-100;
     color: $text-inverse;
@@ -6689,7 +6760,7 @@ img.ui-icon.ui-icon-arrow {
     }
 
     &::placeholder {
-      color: $neutral-color-400;
+      color: $dark-color-100;
     }
   }
 }
@@ -6697,7 +6768,7 @@ img.ui-icon.ui-icon-arrow {
 .account-pay-help {
   margin: 0;
   @include body-small;
-  color: $neutral-color-600;
+  color: $dark-color-100;
 }
 
 // ========================================
@@ -6939,6 +7010,83 @@ img.ui-icon.ui-icon-arrow {
   }
 }
 
+
+// 결제 수단별 아이콘
+.account-pay-method-icon {
+  display: block;
+  width: 38px;
+  height: 28px;
+  flex: 0 0 58px;
+  object-fit: contain;
+}
+
+.account-pay-provider-image {
+  display: block;
+  width: 62px;
+  height: 34px;
+  flex: 0 0 92px;
+  object-fit: contain;
+}
+
+// 카드 등록 필드
+.account-pay-card-fields {
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  input,
+  select {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .account-pay-card-field-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+// 휴대폰 인증 필드
+.account-pay-phone-fields {
+  label {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  label>span {
+    white-space: nowrap;
+  }
+
+  input,
+  select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  select {
+    padding-right: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-pay-phone-fields label {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .account-pay-provider-image {
+    width: 72px;
+    flex-basis: 72px;
+  }
+}
 
 
 
@@ -7412,14 +7560,7 @@ main.landing-home .subscribe-cta {
     }
 
     .subscribe-posters {
-      top: 50%;
-      left: max(48%, 32.5rem);
-      gap: $space-md;
-      transform: translateY(-50%);
-    }
-
-    .subscribe-poster {
-      --poster-h: 16.75rem;
+      display: none;
     }
   }
 }
@@ -7647,6 +7788,10 @@ section.device-guide.device-guide--watch {
     padding-top: 0;
     color: $light-color-0;
     word-break: keep-all;
+  }
+
+  .watch-subtitle-mobile {
+    display: none
   }
 
   .watch-link {
@@ -7953,9 +8098,7 @@ section.device-guide.device-guide--watch {
   }
 
   &.is-ghost {
-    background-color: transparent;
-    color: $text-inverse;
-    box-shadow: inset 0 0 0 0.0625rem $auth-light-line;
+    background-color: $dark-color-400;
   }
 }
 
@@ -8412,7 +8555,7 @@ $floating-btn-gap: 0.25rem; // 두 버튼 사이 4
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $floating-btn-gap;
+  gap: $space-xxs;
 }
 
 body.has-promo-banner .floating-actions {
@@ -8918,7 +9061,7 @@ section.device-guide.device-guide--watch {
 
 .movie-detail-page {
   .icon-heart {
-    width: 18px;
+    width: 1.125rem;
     height: 1.125rem;
   }
 
@@ -8967,6 +9110,7 @@ section.device-guide.device-guide--watch {
     }
 
     .watch-subtitle {
+      @include heading-h2;
       margin-bottom: $watch-gap-text-link;
     }
 
@@ -9095,7 +9239,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
     display: flex;
     align-items: center;
     gap: $space-sm;
-    color: $dark-color-100;
+    color: #8F909D;
   }
 
   // 아이콘 24 × 24: AI 아이콘 공용 (components/ai/AiLogo.jsx · AiLogo.scss)
@@ -9110,7 +9254,7 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
   .ai-banner-desc {
     @include body-default;
     margin-top: $space-sm;
-    color: $dark-color-100;
+    color: #999AA6;
     word-break: keep-all;
   }
 
@@ -9349,5 +9493,224 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
   .ai-banner .ai-banner-btn,
   .ai-banner .ai-banner-btn::before {
     animation: none;
+  }
+}
+
+// =====================================================================
+// [추가] 작품 상세 (MovieDetail.jsx) — 시안 글자 위계 · 크기 (PC · 태블릿)
+// - 정보 바: 원제 Heading/h3 · 장르 · 줄거리 Body/default (Light/0) · [재생하기] Heading/h4-B (Dark/900)
+//   · 찜 · 공유 버튼 원 50 × 50 · 아이콘 20 × 20
+// - 작품 평점: 제목 Display/L-B · 질문 Heading/h3 · 별 35 × 35 · 점수 글자 Heading/h3 (Light/0)
+//   · 평균 점수 Heading/h3-B Light/0 · "/ 5" Dark/100 · 별 20 × 20 $accent-yellow
+//   · [평점 남기기] Heading/h4-B · 180 × 62 (좌우 48 · 위아래 20)
+// - 오른쪽 탭: 선택 Heading/h2-B Light/0 · 나머지 Heading/h2-B Dark/100
+//   · 정렬 상자 Body/small-B Dark/900 · 290 × 50 / 시즌 Heading/h3 Light/0
+//   · 회차 · 시간 Label/default · 제목 Body/small (Light/0)
+// - 간격: 헤더 ↔ 내용 23 · 정보 바 위아래 11 · 플레이어 ↔ 작품 평점 20 · 평점 버튼 ↔ 푸터 40
+// - 768px 이상 (휴대폰은 mobile.scss 그대로)
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) {
+  .movie-detail-page.movie-detail-page {
+    padding-top: calc(#{$header-height} + 1.4375rem); // 헤더 아래 23
+    padding-bottom: 2.5rem; // 평점 버튼 ↔ 푸터 40
+
+    .left-section {
+      gap: 1.25rem; // 플레이어 ↔ 작품 평점 20
+    }
+
+    // ---------- 정보 바 ----------
+    .player-box {
+      .player-info {
+        padding-top: 0.6875rem; // 11
+        padding-bottom: 0.6875rem;
+      }
+
+      .original-title {
+        @include heading-h3;
+        color: $light-color-0;
+      }
+
+      .genres {
+        @include caption-default;
+        color: $light-color-500;
+      }
+
+      .overview {
+        @include body-default;
+        color: $light-color-0;
+      }
+
+      .icon-btn {
+        width: 3.125rem; // 50
+        height: 3.125rem;
+
+        svg,
+        .icon-heart {
+          width: 1.25rem; // 20
+          height: 1.25rem;
+        }
+      }
+
+      .btn-play {
+        @include heading-h4-b;
+        color: $dark-color-900;
+      }
+    }
+
+    // ---------- 작품 평점 ----------
+    .rating-section {
+      .rating-header {
+        h3 {
+          @include display-M-b;
+          color: $light-color-0;
+        }
+
+        .score-display {
+          @include heading-h5;
+          color: $light-color-0;
+
+          .score-star {
+            width: 1.25rem; // 20
+            height: 1.25rem;
+            color: $accent-yellow;
+          }
+
+          .max-score {
+            color: $dark-color-100;
+          }
+        }
+      }
+
+      .rating-desc {
+        @include heading-h3;
+        color: $light-color-0;
+      }
+
+      .star-picker .star-item {
+        .star svg {
+          width: 2.1875rem; // 35
+          height: 2.1875rem;
+        }
+
+        .label {
+          @include heading-h5;
+          color: $light-color-0;
+        }
+      }
+
+      .btn-submit-rating {
+        @include heading-h4-b;
+        width: 11.25rem; // 180 (좌우 48 · 위아래 20 패딩 포함 크기)
+        height: 3.875rem; // 62
+        padding: 0;
+        margin: 1rem 0
+      }
+    }
+
+    // ---------- 오른쪽 탭 ----------
+    .right-section {
+      .tabs .tab-btn {
+        @include heading-h4-b;
+        color: $dark-color-100;
+
+        &:hover {
+          color: $light-color-500;
+        }
+
+        &.active {
+          color: $light-color-0;
+        }
+      }
+
+      .filter-bar {
+        grid-template-columns: repeat(2, minmax(0, 18.125rem)); // 290
+
+        select {
+          @include body-small-b;
+          height: 3.125rem; // 50
+          color: $dark-color-900;
+        }
+      }
+
+      .season-label {
+        @include heading-h5;
+        color: $light-color-0;
+      }
+
+      .episode-card .info {
+
+        .ep-num,
+        .runtime {
+          @include label-default;
+          color: $light-color-0;
+        }
+
+        .ep-title {
+          @include body-small;
+          color: $light-color-0;
+        }
+      }
+    }
+  }
+}
+
+// =====================================================================
+// [수정] TOP 10 순위 숫자 — member.scss 디자인과 통일
+// 기존 App.scss 규칙은 유지하고 순위 숫자의 크기·자간·위치만 일치시킴.
+// 다른 카드·슬라이더·모바일 스타일은 변경하지 않음.
+// =====================================================================
+section.top10-section {
+  .top10-num {
+    height: 8.75rem;
+    bottom: 0.5rem;
+
+    .top10-num-glyph {
+      font-size: 6.25rem;
+      letter-spacing: $top10-num-letter-spacing;
+    }
+
+    .top10-num-stroke {
+      display: none;
+    }
+  }
+}
+
+
+// [추가] 메인 히어로 전용 SVG 네비게이션 (다른 슬라이더 영향 없음)
+.hero-swiper-container.movie-home-hero {
+  .hero-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 4.5rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    transform: translateY(-50%);
+
+    img {
+      display: block;
+      width: 2rem;
+      height: 3.75rem;
+      object-fit: contain;
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.125rem;
+    }
+  }
+
+  .hero-nav--prev {
+    left: 5%;
+  }
+
+  .hero-nav--next {
+    right: 5%;
   }
 }

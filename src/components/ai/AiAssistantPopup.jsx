@@ -163,9 +163,11 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend })
         return;
       }
       resolvedDetails.set(item.id, match);
-      useMovieStore.setState(state => ({ contentDetails: {
-        ...state.contentDetails, [`${match.type}_${match.id}`]: match.detail,
-      } }));
+      useMovieStore.setState(state => ({
+        contentDetails: {
+          ...state.contentDetails, [`${match.type}_${match.id}`]: match.detail,
+        }
+      }));
       navigate(`/${match.type}/${match.id}`);
       onClose();
     } catch (err) {
@@ -215,13 +217,13 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend })
           <PreferenceGroup key={step} {...groups[step]} />
         </div>
         <div className="ai-popup-footer">
-          {step < 2 ? <button type="button" className="ai-popup-skip" disabled={!stepValid} onClick={() => setStep((prev) => prev + 1)}>넘어가기<img className="ai-popup-next-arrow" src={selectionArrowIcon} alt="" /></button> : <>
+          {step < 2 ? <button type="button" className="ai-popup-skip" disabled={!stepValid} onClick={() => setStep((prev) => prev + 1)}>다음 단계로<img className="ai-popup-next-arrow" src={selectionArrowIcon} alt="" /></button> : <>
             <p className="ai-popup-helper"><span className="ai-popup-sparkle" aria-hidden="true"><AiLogo size={24} /></span><span>선택한 취향을 바탕으로 맞춤 작품을 찾아드릴게요.</span></p>
             <div className="ai-popup-actions">
               <button type="button" className="ai-popup-reset ai-popup-sr-only" disabled={loading} onClick={() => { setPreferences(emptyPreferences()); setStep(0); setError(""); }}><img src={resetIcon} alt="" />초기화</button>
               <button type="button" className="ai-popup-primary" disabled={!stepValid || loading} onClick={() => {
                 if (step < 2) { setStep((prev) => prev + 1); } else { recommend(); }
-              }}>{loading ? "추천 중…" : "작품 추천받기"}<img className="ai-popup-next-arrow" src={selectionArrowIcon} alt="" /></button>
+              }}>{loading ? "추천 중…" : "바로 추천받기"}</button>
             </div>
           </>}
         </div>

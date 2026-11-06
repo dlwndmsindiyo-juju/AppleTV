@@ -1113,7 +1113,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .movie-detail-page .player-box .title-logo {
   display: block;
-  max-width: 200px;
+  max-width: 12.5rem;
   max-height: 3.5rem;
   object-fit: contain;
   object-position: left center;
@@ -1148,11 +1148,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.8125rem;
-  line-height: 1.125rem;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #E0E0E0;
-  max-width: 640px;
+  max-width: 40rem;
   margin-top: 0.25rem;
   word-break: keep-all;
   display: -webkit-box;
@@ -1173,7 +1173,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   gap: 0.625rem;
 }
 .movie-detail-page .player-box .icon-btn {
-  width: 36px;
+  width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
   border: none;
@@ -1205,7 +1205,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   line-height: 1.25rem;
   letter-spacing: 0;
   font-weight: 700;
-  width: 180px;
+  width: 11.25rem;
   height: 2.5rem;
   border: none;
   border-radius: 0.5rem;
@@ -1248,7 +1248,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   gap: 0.25rem;
 }
 .movie-detail-page .rating-section .rating-header .score-display .score-star {
-  width: 18px;
+  width: 1.125rem;
   height: 1.125rem;
   color: #FFD60A;
   flex-shrink: 0;
@@ -1274,7 +1274,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   padding: 0.25rem 0;
 }
 .movie-detail-page .rating-section .star-picker .star-item {
-  width: 48px;
+  width: 3rem;
   background: none;
   border: none;
   padding: 0;
@@ -1290,7 +1290,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   transition: color 0.15s ease, transform 0.15s ease;
 }
 .movie-detail-page .rating-section .star-picker .star-item .star svg {
-  width: 35px;
+  width: 2.1875rem;
   height: 2.1875rem;
 }
 .movie-detail-page .rating-section .star-picker .star-item .label {
@@ -1462,7 +1462,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .movie-detail-page .right-section .episode-card .thumb {
   position: relative;
-  width: 168px;
+  width: 10.5rem;
   aspect-ratio: 16/9;
   flex-shrink: 0;
   border-radius: 0.375rem;
@@ -1480,7 +1480,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 32px;
+  width: 2rem;
   height: 2rem;
   border-radius: 50%;
   font-family: "SF Pro", sans-serif;
@@ -1554,7 +1554,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   font-size: 1.25rem;
   line-height: 1.5625rem;
   letter-spacing: 0;
-  width: 72px;
+  width: 4.5rem;
   height: 4.5rem;
   border-radius: 50%;
   overflow: hidden;
@@ -1911,13 +1911,22 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .subscribe-cta .subscribe-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 1.25rem;
-  line-height: 1.5625rem;
+  font-weight: 700;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
   word-break: keep-all;
+}
+.subscribe-cta .subscribe-title .subscribe-title-desktop span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
+  letter-spacing: 0;
+  display: flex;
+  flex-direction: column;
 }
 .subscribe-cta .subscribe-btn {
   font-family: "SF Pro", sans-serif;
@@ -3858,8 +3867,47 @@ main.sport-home .sport-series-card h4 {
   object-fit: contain;
 }
 
+.auth-divider span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+
+.auth-legal a {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.auth-legal span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+
+.auth-remember {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+
 .auth-step {
   animation: auth-step-in 0.4s ease both;
+}
+
+.auth-muted {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
 }
 
 @keyframes auth-step-in {
@@ -4120,17 +4168,11 @@ main.sport-home .sport-series-card h4 {
 }
 
 .auth-divider {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  letter-spacing: 0;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   max-width: 428px;
   margin: 1.5rem auto 0;
-  color: #A3A3A3;
 }
 .auth-divider::before, .auth-divider::after {
   content: "";
@@ -5801,12 +5843,12 @@ img.ui-icon.ui-icon-arrow {
   letter-spacing: 0;
   font-family: inherit;
   padding: 0;
-  border: none;
-  background: none;
   color: #5865F2;
   cursor: pointer;
   text-align: left;
   margin-bottom: 1rem;
+  display: inline-block;
+  margin-left: 0.25rem;
 }
 .account-link:hover {
   color: #6E7AF4;
@@ -6148,7 +6190,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-sub-heading {
-  margin: 2.25rem 0;
+  margin: 2.25rem 0 1.5rem;
 }
 
 .account-pay .account-pay-layout {
@@ -6461,7 +6503,8 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-pay-methods {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -6507,8 +6550,8 @@ img.ui-icon.ui-icon-arrow {
 .account-pay-method-radio-ui {
   position: relative;
   display: block;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2rem;
+  height: 2rem;
   border: 2px solid #A3A3A3;
   border-radius: 50%;
   background: #FFFFFF;
@@ -6554,8 +6597,35 @@ img.ui-icon.ui-icon-arrow {
   color: #525252;
 }
 
-.account-pay-method--provider {
+.account-pay-methods--provider .account-pay-method--provider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 16px;
   min-height: 7.5rem;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-method-radio {
+  flex: 0 0 auto;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-provider-image {
+  display: block;
+  width: 88px;
+  height: 36px;
+  flex: 0 0 88px;
+  object-fit: contain;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-method-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-method-copy strong {
+  margin: 0;
+  white-space: nowrap;
 }
 
 .account-pay-fields {
@@ -6577,7 +6647,7 @@ img.ui-icon.ui-icon-arrow {
   width: 100%;
   min-height: 3rem;
   padding: 0.75rem 1rem;
-  border: 1px solid #D4D4D4;
+  border: 1px solid #C8C8C8;
   border-radius: 0.625rem;
   background: #F5F5F5;
   color: #171717;
@@ -6594,7 +6664,7 @@ img.ui-icon.ui-icon-arrow {
 }
 .account-pay-fields input::placeholder,
 .account-pay-fields select::placeholder {
-  color: #A3A3A3;
+  color: #525252;
 }
 
 .account-pay-help {
@@ -6805,6 +6875,69 @@ img.ui-icon.ui-icon-arrow {
   .account-pay-primary,
   .account-pay-secondary {
     min-width: 5rem;
+  }
+}
+.account-pay-method-icon {
+  display: block;
+  width: 38px;
+  height: 28px;
+  flex: 0 0 58px;
+  object-fit: contain;
+}
+
+.account-pay-provider-image {
+  display: block;
+  width: 62px;
+  height: 34px;
+  flex: 0 0 92px;
+  object-fit: contain;
+}
+
+.account-pay-card-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.account-pay-card-fields input,
+.account-pay-card-fields select {
+  box-sizing: border-box;
+  min-width: 0;
+}
+.account-pay-card-fields .account-pay-card-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.account-pay-phone-fields label {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.account-pay-phone-fields label > span {
+  white-space: nowrap;
+}
+.account-pay-phone-fields input,
+.account-pay-phone-fields select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.account-pay-phone-fields select {
+  padding-right: 48px;
+}
+
+@media (max-width: 480px) {
+  .account-pay-phone-fields label {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .account-pay-provider-image {
+    width: 72px;
+    flex-basis: 72px;
   }
 }
 .profile-avatar {
@@ -7196,13 +7329,7 @@ main.landing-home .subscribe-cta {
     letter-spacing: 0;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-posters {
-    top: 50%;
-    left: max(48%, 32.5rem);
-    gap: 0.75rem;
-    transform: translateY(-50%);
-  }
-  .subscribe-cta.subscribe-cta--tv .subscribe-poster {
-    --poster-h: 16.75rem;
+    display: none;
   }
 }
 .subscribe-cta.subscribe-cta--tv.subscribe-cta--sport .subscribe-bg {
@@ -7379,6 +7506,9 @@ section.device-guide.device-guide--watch .watch-subtitle {
   padding-top: 0;
   color: #FFFFFF;
   word-break: keep-all;
+}
+section.device-guide.device-guide--watch .watch-subtitle-mobile {
+  display: none;
 }
 section.device-guide.device-guide--watch .watch-link {
   font-family: "SF Pro", sans-serif;
@@ -7671,9 +7801,7 @@ section.device-guide.device-guide--watch .watch-device img {
   cursor: default;
 }
 .profile-picker-btn.is-ghost {
-  background-color: transparent;
-  color: #171717;
-  box-shadow: inset 0 0 0 0.0625rem #D5D5D5;
+  background-color: #2E2E2E;
 }
 
 .profile-picker.account-profile-picker {
@@ -8052,7 +8180,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.1rem;
 }
 
 body.has-promo-banner .floating-actions {
@@ -8479,7 +8607,7 @@ section.device-guide.device-guide--watch .watch-device-name {
 }
 
 .movie-detail-page .icon-heart {
-  width: 18px;
+  width: 1.125rem;
   height: 1.125rem;
 }
 .movie-detail-page .player-box .icon-btn.on {
@@ -8510,6 +8638,11 @@ section.device-guide.device-guide--watch .watch-device-name {
     margin-top: 2.8125rem;
   }
   section.device-guide.device-guide--watch .watch-subtitle {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    letter-spacing: 0;
     margin-bottom: 1.625rem;
   }
   section.device-guide.device-guide--watch .watch-devices {
@@ -8625,7 +8758,7 @@ main.wish-page {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #525252;
+  color: #8F909D;
 }
 .ai-banner .ai-banner-title {
   font-family: "SF Pro", sans-serif;
@@ -8644,7 +8777,7 @@ main.wish-page {
   line-height: 1.25rem;
   letter-spacing: 0;
   margin-top: 0.5rem;
-  color: #525252;
+  color: #999AA6;
   word-break: keep-all;
 }
 .ai-banner .ai-banner-box {
@@ -8842,4 +8975,207 @@ main.wish-page {
   .ai-banner .ai-banner-btn::before {
     animation: none;
   }
+}
+@media (min-width: 768px) {
+  .movie-detail-page.movie-detail-page {
+    padding-top: calc(4.5rem + 1.4375rem);
+    padding-bottom: 2.5rem;
+  }
+  .movie-detail-page.movie-detail-page .left-section {
+    gap: 1.25rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .player-info {
+    padding-top: 0.6875rem;
+    padding-bottom: 0.6875rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .original-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .player-box .genres {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
+    letter-spacing: 0;
+    color: #C8C8C8;
+  }
+  .movie-detail-page.movie-detail-page .player-box .overview {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .player-box .icon-btn {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .icon-btn svg,
+  .movie-detail-page.movie-detail-page .player-box .icon-btn .icon-heart {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .btn-play {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    color: #171717;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header h3 {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display .score-star {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #FFCC00;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display .max-score {
+    color: #525252;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .star-picker .star-item .star svg {
+    width: 2.1875rem;
+    height: 2.1875rem;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .star-picker .star-item .label {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .btn-submit-rating {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    width: 11.25rem;
+    height: 3.875rem;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    color: #525252;
+  }
+  .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn:hover {
+    color: #C8C8C8;
+  }
+  .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn.active {
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .right-section .filter-bar {
+    grid-template-columns: repeat(2, minmax(0, 18.125rem));
+  }
+  .movie-detail-page.movie-detail-page .right-section .filter-bar select {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+    height: 3.125rem;
+    color: #171717;
+  }
+  .movie-detail-page.movie-detail-page .right-section .season-label {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .right-section .episode-card .info .ep-num,
+  .movie-detail-page.movie-detail-page .right-section .episode-card .info .runtime {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .right-section .episode-card .info .ep-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+}
+section.top10-section .top10-num {
+  height: 8.75rem;
+  bottom: 0.5rem;
+}
+section.top10-section .top10-num .top10-num-glyph {
+  font-size: 6.25rem;
+  letter-spacing: -1.25rem;
+}
+section.top10-section .top10-num .top10-num-stroke {
+  display: none;
+}
+
+.hero-swiper-container.movie-home-hero .hero-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 4.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+.hero-swiper-container.movie-home-hero .hero-nav img {
+  display: block;
+  width: 2rem;
+  height: 3.75rem;
+  object-fit: contain;
+}
+.hero-swiper-container.movie-home-hero .hero-nav:focus-visible {
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
+}
+.hero-swiper-container.movie-home-hero .hero-nav--prev {
+  left: 5%;
+}
+.hero-swiper-container.movie-home-hero .hero-nav--next {
+  right: 5%;
 }

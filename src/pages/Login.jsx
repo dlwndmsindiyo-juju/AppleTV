@@ -241,7 +241,8 @@ const Login = () => {
     setPassword("");
     setCode("");
     clearMessages();
-    setStep("done");
+    // [수정] 인증 완료 직후 반드시 프로필 선택 화면으로 이동
+    setStep("profile");
   };
 
   // 인증 완료 → 로그인할 때마다 항상 가족 프로필 선택 (새 계정도 포함)
@@ -455,7 +456,7 @@ const Login = () => {
         <div className="auth-divider"><span>아직 계정이 없으신가요?</span></div>
         <button type="button" className="auth-btn auth-btn--secondary" onClick={goSignup}>회원가입</button>
         {messages}
-        <p className="auth-legal"><a href="https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html" target="_blank" rel="noreferrer">이용약관</a> 및 <a href={APPLE_LINKS.privacy} target="_blank" rel="noreferrer">개인정보 처리방침</a></p>
+        <p className="auth-legal"><a href="https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html" target="_blank" rel="noreferrer">이용약관</a> <span>및</span> <a href={APPLE_LINKS.privacy} target="_blank" rel="noreferrer">개인정보 처리방침</a></p>
       </div>
     </>;
   }
@@ -484,7 +485,7 @@ const Login = () => {
               className="auth-login-input"
               type="email"
               autoComplete="username"
-              placeholder="이메일을 입력하세요"
+              placeholder="hi1234@naver.com"
               aria-label="이메일"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -494,7 +495,7 @@ const Login = () => {
               className="auth-login-input"
               type="password"
               autoComplete="current-password"
-              placeholder="비밀번호를 입력하세요"
+              placeholder="123456"
               aria-label="비밀번호"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

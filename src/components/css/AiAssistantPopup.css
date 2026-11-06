@@ -565,10 +565,11 @@
 }
 .ai-popup .ai-popup-results-footer {
   flex: 0 0 auto;
-  padding-top: 20px;
+  padding: 20px 0;
+  margin-top: 10px;
 }
 .ai-popup .ai-popup-more {
-  margin-top: 0;
+  margin: 30px auto;
 }
 .ai-popup .ai-popup-error {
   flex: 0 0 auto;
@@ -1119,7 +1120,7 @@
   line-height: 17px;
 }
 .ai-popup.ai-popup--results .ai-popup-hint {
-  margin: 0 0 10px;
+  margin: 20px 0;
   font-size: 12px;
   line-height: 15px;
 }
@@ -1282,7 +1283,7 @@
     margin-top: 12px;
   }
   .ai-popup.ai-popup--results .ai-popup-tags {
-    gap: 4px;
+    gap: 8px;
     margin-bottom: 8px;
   }
   .ai-popup.ai-popup--results .ai-popup-tags button {
@@ -1292,8 +1293,8 @@
     gap: 4px;
   }
   .ai-popup.ai-popup--results .ai-popup-tags button img {
-    width: 12px;
-    height: 12px;
+    width: 0.75rem;
+    height: 0.75rem;
   }
   .ai-popup.ai-popup--results .ai-popup-hint {
     margin-bottom: 8px;
