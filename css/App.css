@@ -3845,21 +3845,17 @@ main.sport-home .sport-series-card h4 {
   outline-offset: 0.125rem;
 }
 
-.auth-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 3.25rem;
-  margin: 0 auto;
-  border-radius: 0.75rem;
-  background-color: #262626;
-}
-.auth-logo img {
-  display: block;
-  height: 1.375rem;
+.login-page .auth-logo {
   width: auto;
-  filter: brightness(0) invert(1);
+  height: auto;
+  margin: 0 auto 32px;
+  border-radius: 0;
+}
+.login-page .auth-logo img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
 }
 
 .auth-step {
@@ -5484,13 +5480,6 @@ img.ui-icon.ui-icon-arrow {
 }
 .auth-close:focus-visible {
   outline-color: #5865F2;
-}
-
-.auth-logo {
-  background-color: #D5D5D5;
-}
-.auth-logo img {
-  filter: brightness(0);
 }
 
 .auth-title {
