@@ -65,9 +65,16 @@ const SubscribeCTA = ({ type = "tv" }) => {
                 </>
               ) : (
                 <>
-                  독점 오리지널 콘텐츠를 한 곳에서,
-                  <br />
-                  지금 Apple TV로 경험해보세요.
+                  <span className="subscribe-title-desktop">
+                    독점 오리지널 콘텐츠를 한 곳에서,
+                    <br />
+                    지금 Apple TV로 경험해보세요.
+                  </span>
+                  <span className="subscribe-title-mobile">
+                    Apple TV 오리지널 콘텐츠,
+                    <br />
+                    지금 만나보세요.
+                  </span>
                 </>
               )}
             </h3>

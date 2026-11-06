@@ -490,15 +490,6 @@
     line-height: 1.75rem;
     letter-spacing: 0;
   }
-  .subscribe-cta.subscribe-cta--tv .subscribe-posters {
-    top: 50%;
-    left: max(55%, 27.5rem);
-    gap: 0.5rem;
-    transform: translateY(-50%);
-  }
-  .subscribe-cta.subscribe-cta--tv .subscribe-poster {
-    --poster-h: 14.875rem;
-  }
 }
 @media (max-width: 767px) {
   .subscribe-cta.subscribe-cta--tv .subscribe-banner {
@@ -528,18 +519,6 @@
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-btn {
     margin-top: 1.25rem;
-  }
-  .subscribe-cta.subscribe-cta--tv .subscribe-posters {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin-top: 1.5rem;
-    padding-left: 1.25rem;
-    gap: 0.5rem;
-  }
-  .subscribe-cta.subscribe-cta--tv .subscribe-poster {
-    --poster-h: 11.1875rem;
   }
 }
 @media (max-width: 767px) {
@@ -1927,9 +1906,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     letter-spacing: 0;
     color: #C8C8C8;
   }
-  .subscribe-cta.subscribe-cta--tv .subscribe-posters {
-    display: none;
-  }
   .subscribe-cta.subscribe-cta--tv .subscribe-content {
     padding: 0 2.25rem;
   }
@@ -2493,12 +2469,26 @@ header .inner nav .gnb-right ul .search-icon-item {
     width: 14px;
     height: 0.875rem;
   }
-  :is(main, div).member-home.member-home .member-sc-poster-actions .member-sc-month {
+  :is(main, div).member-home.member-home .member-sc-slot--soon .member-sc-poster-actions .member-sc-month {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+    box-sizing: border-box;
     position: static;
+    width: 6.5625rem;
+    min-width: 6.5625rem;
     height: 1.5625rem;
-    min-width: 0;
-    padding: 0 0.5rem;
-    gap: 0.25rem;
+    padding: 0.5rem 0.8125rem;
+    gap: 0.125rem;
+    border-radius: 0.3125rem;
+    color: #FFFFFF;
+    white-space: nowrap;
+  }
+  :is(main, div).member-home.member-home .member-sc-slot--soon.member-sc-slot--static .member-sc-link::after {
+    display: block;
+    background: linear-gradient(to top, rgba(23, 23, 23, 0.85) 0%, rgba(23, 23, 23, 0.35) 34%, rgba(23, 23, 23, 0) 68%);
   }
   :is(main, div).member-home.member-home .subscribe-cta.subscribe-cta--tv .inner {
     width: 100% !important;
@@ -2533,9 +2523,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     width: 200px;
     margin-top: 0.5rem;
     text-align: center;
-  }
-  :is(main, div).member-home.member-home .subscribe-cta.subscribe-cta--tv .subscribe-posters {
-    display: none;
   }
   section.device-guide.device-guide--watch.device-guide--watch {
     --icon-scale: 0.5;
@@ -2819,5 +2806,153 @@ header .inner nav .gnb-right ul .search-icon-item {
     line-height: 1rem;
     letter-spacing: 0;
     color: #FFFFFF;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  :is(main, div).member-home .rail-release.rail-showcase .member-sc-slot--soon .member-sc-card {
+    position: relative;
+  }
+  :is(main, div).member-home .rail-release.rail-showcase .member-sc-slot--soon .member-sc-link::after {
+    display: block;
+    background: linear-gradient(to top, rgba(23, 23, 23, 0.85) 0%, rgba(23, 23, 23, 0.38) 32%, rgba(23, 23, 23, 0) 65%);
+  }
+  :is(main, div).member-home .rail-release.rail-showcase .member-sc-slot--soon .member-sc-poster-actions {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.75rem;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+  }
+  :is(main, div).member-home .rail-release.rail-showcase .member-sc-slot--soon .member-sc-month,
+  :is(main, div).member-home .rail-release.rail-showcase .member-sc-slot--soon .member-sc-poster-actions .member-sc-month {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    box-sizing: border-box;
+    position: static;
+    width: 9.6875rem;
+    min-width: 9.6875rem;
+    height: 2.5rem;
+    padding: 0.5625rem 0.8125rem;
+    color: #FFFFFF;
+    white-space: nowrap;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hero-swiper-container.movie-home-hero {
+    height: 59.6875rem;
+    min-height: 0;
+    max-height: none;
+  }
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-media-bg {
+    background-size: cover;
+    background-position: center center;
+  }
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-overlay {
+    background: linear-gradient(to top, rgba(8, 9, 13, 0.8) 0%, rgba(8, 9, 13, 0.28) 30%, rgba(8, 9, 13, 0) 66%);
+  }
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info {
+    top: auto;
+    bottom: 6.875rem;
+    left: 6%;
+    right: 6%;
+    width: auto;
+    max-width: 48rem;
+    transform: none;
+    text-align: left;
+  }
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-title {
+    margin-bottom: 1.5rem;
+  }
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-chips,
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-overview {
+    display: flex;
+  }
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-overview {
+    display: -webkit-box;
+  }
+}
+@media (max-width: 767px) {
+  .hero-swiper-container.movie-home-hero .swiper-pagination {
+    display: none !important;
+  }
+  .hero-swiper-container.movie-home-hero .hero-nav {
+    display: flex;
+    width: 2.5rem;
+    height: 3.75rem;
+  }
+  .hero-swiper-container.movie-home-hero .hero-nav img {
+    width: 1.5rem;
+    height: 2.8125rem;
+  }
+  .hero-swiper-container.movie-home-hero .hero-nav--prev {
+    left: 5%;
+  }
+  .hero-swiper-container.movie-home-hero .hero-nav--next {
+    right: 5%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info {
+    top: auto;
+    left: 12.5%;
+    right: auto;
+    bottom: 9rem;
+    width: 60%;
+    max-width: 38rem;
+    transform: none;
+    text-align: left;
+  }
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-title.has-logo {
+    width: 100%;
+    max-width: 15.625rem;
+    margin-bottom: 1.25rem;
+  }
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-title.has-logo .hero-title-logo {
+    display: block;
+    width: 100%;
+    max-width: 15.625rem;
+    height: auto;
+    object-fit: contain;
+    object-position: left center;
+  }
+  .hero-swiper-container.movie-home-hero .hero-slide-item .hero-info .hero-overview {
+    display: -webkit-box;
+    width: 100%;
+    max-width: 35rem;
+    margin-left: 0;
+    margin-right: 0;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+}
+.subscribe-cta--tv:not(.subscribe-cta--sport) .subscribe-title-desktop {
+  display: contents;
+}
+.subscribe-cta--tv:not(.subscribe-cta--sport) .subscribe-title-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .subscribe-cta--tv:not(.subscribe-cta--sport) .subscribe-title-desktop {
+    display: none;
+  }
+  .subscribe-cta--tv:not(.subscribe-cta--sport) .subscribe-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
+    letter-spacing: 0;
+  }
+  .subscribe-cta--tv:not(.subscribe-cta--sport) .subscribe-title-mobile {
+    display: contents;
   }
 }

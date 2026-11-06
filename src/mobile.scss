@@ -564,17 +564,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     .subscribe-title {
       @include heading-h2-b;
     }
-
-    .subscribe-posters {
-      top: 50%;
-      left: max(55%, 27.5rem);
-      gap: $space-sm;
-      transform: translateY(-50%);
-    }
-
-    .subscribe-poster {
-      --poster-h: 14.875rem;
-    }
   }
 }
 
@@ -608,20 +597,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
     .subscribe-btn {
       margin-top: 1.25rem;
-    }
-
-    .subscribe-posters {
-      position: relative;
-      top: auto;
-      left: auto;
-      transform: none;
-      margin-top: $space-xl;
-      padding-left: 1.25rem;
-      gap: $space-sm;
-    }
-
-    .subscribe-poster {
-      --poster-h: 11.1875rem;
     }
   }
 }
@@ -2237,9 +2212,6 @@ header .inner nav .gnb-right ul .search-icon-item {
   // ---------- 홍보 배너 ----------
   // 시안: 비스듬한 포스터 없이 배경 사진(어둡게) 위에 로고 · 문구 · 버튼 · 안내
   .subscribe-cta.subscribe-cta--tv {
-    .subscribe-posters {
-      display: none;
-    }
 
     .subscribe-content {
       padding: 0 $space-3xl;
@@ -2974,12 +2946,28 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     }
 
     // [12월 공개예정 🔔] 배경 Sports/Opacity-b (글자는 PC "N월 공개" 상자와 같음)
-    .member-sc-poster-actions .member-sc-month {
+    // [수정] 휴대폰 공개예정 안내 — 시안 105 × 25, 좌우 13 / 상하 8
+    .member-sc-slot--soon .member-sc-poster-actions .member-sc-month {
+      @include body-small-m;
+      box-sizing: border-box;
       position: static;
+      width: 6.5625rem;
+      min-width: 6.5625rem;
       height: 1.5625rem;
-      min-width: 0;
-      padding: 0 $space-sm;
-      gap: $space-xs;
+      padding: 0.5rem 0.8125rem;
+      gap: 0.125rem;
+      border-radius: 0.3125rem;
+      color: $light-color-0;
+      white-space: nowrap;
+    }
+
+    // [수정] 휴대폰 공개예정 포스터에만 하단 그림자 복원
+    .member-sc-slot--soon.member-sc-slot--static .member-sc-link::after {
+      display: block;
+      background: linear-gradient(to top,
+          rgba($dark-color-900, 0.85) 0%,
+          rgba($dark-color-900, 0.35) 34%,
+          rgba($dark-color-900, 0) 68%);
     }
 
     // ---------- 홍보 배너: 화면 폭 가득 · 높이 357 · 포스터 줄 없음 ----------
@@ -3023,10 +3011,6 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
         width: 200px;
         margin-top: $space-sm;
         text-align: center;
-      }
-
-      .subscribe-posters {
-        display: none;
       }
     }
   }
@@ -3366,6 +3350,213 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
           color: $light-color-0;
         }
       }
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 공개예정 카드 — 태블릿 전용 (768~1024)
+// - 휴대폰(767 이하) 기존 디자인은 수정하지 않음
+// - 공개예정 안내 155 × 40 / padding X 13, Y 9
+// - Body Large Bold / Light 0 / 포스터 하단 그림자
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  :is(main, div).member-home .rail-release.rail-showcase {
+    .member-sc-slot--soon {
+      .member-sc-card {
+        position: relative;
+      }
+
+      // member.scss의 static 카드 그림자 숨김을 공개예정에 한해 복원
+      .member-sc-link::after {
+        display: block;
+        background: linear-gradient(to top,
+            rgba($dark-color-900, 0.85) 0%,
+            rgba($dark-color-900, 0.38) 32%,
+            rgba($dark-color-900, 0) 65%);
+      }
+
+      // 태블릿에서 공통 숨김 처리된 포스터 액션 중 공개예정만 표시
+      .member-sc-poster-actions {
+        display: flex;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: $space-md;
+        z-index: 2;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .member-sc-month,
+      .member-sc-poster-actions .member-sc-month {
+        @include body-large-b;
+        box-sizing: border-box;
+        position: static;
+        width: 9.6875rem;
+        min-width: 9.6875rem;
+        height: 2.5rem;
+        padding: 0.5625rem 0.8125rem;
+        color: $light-color-0;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 메인 히어로 — 태블릿 시안(Hero.png) 위치 맞춤
+// 768~1024 범위에만 적용. 휴대폰/PC/스포츠 히어로는 변경하지 않음.
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  .hero-swiper-container.movie-home-hero {
+    // 시안의 정사각형에 가까운 히어로 비율 (1024 × 955 기준)
+    height: 59.6875rem;
+    min-height: 0;
+    max-height: none;
+
+    .hero-slide-item {
+      .hero-media-bg {
+        background-size: cover;
+        // 인물과 우산의 중앙 구도를 유지
+        background-position: center center;
+      }
+
+      // 시안처럼 아래쪽 텍스트를 읽을 수 있는 그림자
+      .hero-overlay {
+        background: linear-gradient(to top,
+            rgba($bg-color, 0.8) 0%,
+            rgba($bg-color, 0.28) 30%,
+            rgba($bg-color, 0) 66%);
+      }
+
+      .hero-info {
+        top: auto;
+        bottom: 6.875rem;
+        left: 6%;
+        right: 6%;
+        width: auto;
+        max-width: 48rem;
+        transform: none;
+        text-align: left;
+
+        .hero-title {
+          margin-bottom: 1.5rem;
+        }
+
+        .hero-chips,
+        .hero-overview {
+          display: flex;
+        }
+
+        .hero-overview {
+          display: -webkit-box;
+        }
+      }
+    }
+  }
+}
+
+
+// [추가] 모바일 히어로: 페이지네이션 숨김, SVG 네비게이션만 유지
+@media (max-width: $breakpoint-mobile) {
+  .hero-swiper-container.movie-home-hero {
+    .swiper-pagination {
+      display: none !important;
+    }
+
+    .hero-nav {
+      display: flex;
+      width: 2.5rem;
+      height: 3.75rem;
+    }
+
+    .hero-nav img {
+      width: 1.5rem;
+      height: 2.8125rem;
+    }
+
+    .hero-nav--prev {
+      left: 5%;
+    }
+
+    .hero-nav--next {
+      right: 5%;
+    }
+  }
+}
+
+
+// [수정] 태블릿 히어로 — 빨간 박스 기준으로 정보 위치·줄거리 폭 조정
+// 이 블록만 기존 태블릿 정보 영역 규칙에서 변경. PC·휴대폰·다른 섹션은 유지.
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  .hero-swiper-container.movie-home-hero .hero-slide-item {
+    .hero-info {
+      top: auto;
+      left: 12.5%;
+      right: auto;
+      bottom: 9rem;
+      width: 60%;
+      max-width: 38rem;
+      transform: none;
+      text-align: left;
+
+      .hero-title.has-logo {
+        width: 100%;
+        max-width: 15.625rem; // 250px 기준
+        margin-bottom: 1.25rem;
+      }
+
+      .hero-title.has-logo .hero-title-logo {
+        display: block;
+        width: 100%;
+        max-width: 15.625rem; // 250px 기준
+        height: auto;
+        object-fit: contain;
+        object-position: left center;
+      }
+
+      .hero-overview {
+        display: -webkit-box;
+        width: 100%;
+        max-width: 35rem;
+        margin-left: 0;
+        margin-right: 0;
+        -webkit-box-orient: vertical;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        overflow-wrap: anywhere;
+      }
+    }
+  }
+}
+
+
+// [추가] 홍보 배너 문구: PC/태블릿 기존 문구 유지, 휴대폰 문구만 교체
+// 텍스트 디자인은 기존 모바일 .subscribe-title 의 display-M-b / light-0 그대로 적용
+.subscribe-cta--tv:not(.subscribe-cta--sport) {
+  .subscribe-title-desktop {
+    display: contents;
+  }
+
+  .subscribe-title-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .subscribe-cta--tv:not(.subscribe-cta--sport) {
+    .subscribe-title-desktop {
+      display: none;
+    }
+
+    // 휴대폰 홍보 배너 제목: 시안의 display-m-b (28 / 34, Bold)
+    // 다른 텍스트 및 PC·태블릿 타이포그래피는 변경하지 않음
+    .subscribe-title-mobile {
+      display: inline;
+      @include display-M-b;
+      color: $light-color-0;
     }
   }
 }
