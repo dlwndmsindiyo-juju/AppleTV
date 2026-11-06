@@ -5843,12 +5843,12 @@ img.ui-icon.ui-icon-arrow {
   letter-spacing: 0;
   font-family: inherit;
   padding: 0;
-  border: none;
-  background: none;
   color: #5865F2;
   cursor: pointer;
   text-align: left;
   margin-bottom: 1rem;
+  display: inline-block;
+  margin-left: 0.25rem;
 }
 .account-link:hover {
   color: #6E7AF4;
@@ -6190,7 +6190,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-sub-heading {
-  margin: 2.25rem 0;
+  margin: 2.25rem 0 1.5rem;
 }
 
 .account-pay .account-pay-layout {
@@ -6503,7 +6503,8 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-pay-methods {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -6549,8 +6550,8 @@ img.ui-icon.ui-icon-arrow {
 .account-pay-method-radio-ui {
   position: relative;
   display: block;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2rem;
+  height: 2rem;
   border: 2px solid #A3A3A3;
   border-radius: 50%;
   background: #FFFFFF;
@@ -6596,8 +6597,35 @@ img.ui-icon.ui-icon-arrow {
   color: #525252;
 }
 
-.account-pay-method--provider {
+.account-pay-methods--provider .account-pay-method--provider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 16px;
   min-height: 7.5rem;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-method-radio {
+  flex: 0 0 auto;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-provider-image {
+  display: block;
+  width: 88px;
+  height: 36px;
+  flex: 0 0 88px;
+  object-fit: contain;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-method-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-method-copy strong {
+  margin: 0;
+  white-space: nowrap;
 }
 
 .account-pay-fields {
@@ -6619,7 +6647,7 @@ img.ui-icon.ui-icon-arrow {
   width: 100%;
   min-height: 3rem;
   padding: 0.75rem 1rem;
-  border: 1px solid #D4D4D4;
+  border: 1px solid #C8C8C8;
   border-radius: 0.625rem;
   background: #F5F5F5;
   color: #171717;
@@ -6636,7 +6664,7 @@ img.ui-icon.ui-icon-arrow {
 }
 .account-pay-fields input::placeholder,
 .account-pay-fields select::placeholder {
-  color: #A3A3A3;
+  color: #525252;
 }
 
 .account-pay-help {
@@ -6847,6 +6875,69 @@ img.ui-icon.ui-icon-arrow {
   .account-pay-primary,
   .account-pay-secondary {
     min-width: 5rem;
+  }
+}
+.account-pay-method-icon {
+  display: block;
+  width: 38px;
+  height: 28px;
+  flex: 0 0 58px;
+  object-fit: contain;
+}
+
+.account-pay-provider-image {
+  display: block;
+  width: 62px;
+  height: 34px;
+  flex: 0 0 92px;
+  object-fit: contain;
+}
+
+.account-pay-card-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.account-pay-card-fields input,
+.account-pay-card-fields select {
+  box-sizing: border-box;
+  min-width: 0;
+}
+.account-pay-card-fields .account-pay-card-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.account-pay-phone-fields label {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.account-pay-phone-fields label > span {
+  white-space: nowrap;
+}
+.account-pay-phone-fields input,
+.account-pay-phone-fields select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.account-pay-phone-fields select {
+  padding-right: 48px;
+}
+
+@media (max-width: 480px) {
+  .account-pay-phone-fields label {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .account-pay-provider-image {
+    width: 72px;
+    flex-basis: 72px;
   }
 }
 .profile-avatar {

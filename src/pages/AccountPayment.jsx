@@ -3,6 +3,18 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useAuthStore, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
 import { AccountSubPage, ConfirmDialog, CARD_BRANDS } from "../components/profile/AccountShared";
 import { PAYMENT_URL } from "../data/appleLinks";
+// public 폴더의 파일은 import 없이 루트(/) 경로로 참조합니다.
+// 실제 경로: public/pay-icon/*.svg, public/method-icon/*.svg
+const METHOD_ICONS = {
+  card: "/icons/method-icon/card.svg",
+  pay: "/icons/method-icon/pay.svg",
+  phone: "/icons/method-icon/phone.svg",
+};
+const PAY_ICONS = {
+  "카카오페이": "/icons/pay-icon/kakaopay.svg",
+  "네이버페이": "/icons/pay-icon/naverpay.svg",
+  "토스페이": "/icons/pay-icon/tosspay.svg",
+};
 
 const makeId = () =>
   `pm_${Date.now().toString(36)}_${Math.random()
@@ -35,19 +47,16 @@ const METHODS = [
 const PAY_PROVIDERS = [
   {
     value: "카카오페이",
-    desc: "모의 인증으로 연결",
     tone: "kakao",
     accountHint: "@kakao.com",
   },
   {
     value: "네이버페이",
-    desc: "모의 인증으로 연결",
     tone: "naver",
     accountHint: "@naver.com",
   },
   {
     value: "토스페이",
-    desc: "모의 인증으로 연결",
     tone: "toss",
     accountHint: "@toss.im",
   },
@@ -57,6 +66,13 @@ const INITIAL = {
   method: "card",
   brand: CARD_BRANDS[0],
   last4: "",
+  cardNumber: "",
+  expiry: "",
+  cvc: "",
+  billingName: "",
+  billingAddress: "",
+  billingPostal: "",
+  billingPhone: "",
   provider: PAY_PROVIDERS[0].value,
   carrier: "SKT",
   phone: "",
@@ -64,6 +80,12 @@ const INITIAL = {
 };
 
 const digits = (value) => value.replace(/\D/g, "");
+const formatCardNumber = (value) =>
+  digits(value).slice(0, 19).replace(/(.{4})/g, "$1 ").trim();
+const formatExpiry = (value) => {
+  const raw = digits(value).slice(0, 4);
+  return raw.length > 2 ? `${raw.slice(0, 2)}/${raw.slice(2)}` : raw;
+};
 
 const maskPhone = (value) =>
   value ? `${value.slice(0, 3)}-****-${value.slice(-4)}` : "";
@@ -219,7 +241,20 @@ export default function AccountPayment() {
     setStep("select");
   };
 
-  const isCardValid = /^\d{4}$/.test(form.last4);
+  const expiryMonth = Number(form.expiry.slice(0, 2));
+  const expiryYear = Number(`20${form.expiry.slice(3, 5)}`);
+  const currentMonth = new Date().getMonth() + 1;
+  const currentYear = new Date().getFullYear();
+  const isCardValid =
+    /^\d{13,19}$/.test(digits(form.cardNumber)) &&
+    /^\d{2}\/\d{2}$/.test(form.expiry) &&
+    expiryMonth >= 1 && expiryMonth <= 12 &&
+    (expiryYear > currentYear || (expiryYear === currentYear && expiryMonth >= currentMonth)) &&
+    /^\d{3,4}$/.test(form.cvc) &&
+    form.billingName.trim().length >= 2 &&
+    form.billingAddress.trim().length > 0 &&
+    form.billingPostal.trim().length > 0 &&
+    /^01\d{8,9}$/.test(digits(form.billingPhone));
 
   const isPhoneValid =
     /^01\d{8,9}$/.test(digits(form.phone)) &&
@@ -264,7 +299,8 @@ export default function AccountPayment() {
       entry = {
         ...base,
         brand: form.brand,
-        last4: form.last4,
+        // 저장에는 마지막 4자리만 사용합니다. 전체 카드번호/CVC는 저장하지 않습니다.
+        last4: digits(form.cardNumber).slice(-4),
       };
     }
 
@@ -361,12 +397,12 @@ export default function AccountPayment() {
                 return (
                   <li key={payment.id} className="account-pay-card">
                     <div className="account-pay-item-left">
-                      <span
-                        className={`account-pay-badge is-${meta.badge}`}
+                      <img
+                        className="account-pay-method-icon" style={{ width: 58, height: 48, objectFit: "contain", flexShrink: 0 }}
+                        src={METHOD_ICONS[meta.type]}
+                        alt=""
                         aria-hidden="true"
-                      >
-                        {meta.badgeText}
-                      </span>
+                      />
 
                       <div className="account-pay-card-text">
                         <strong className="account-pay-brand">{meta.title}</strong>
@@ -449,7 +485,9 @@ export default function AccountPayment() {
                       : form.method === "pay"
                         ? `${form.provider} 연결`
                         : "신용/체크카드"
-                    : `${form.provider} 인증`}
+                    : form.method === "phone"
+                      ? "휴대폰 결제 인증"
+                      : `${form.provider} 인증`}
               </h3>
 
               <button
@@ -504,36 +542,70 @@ export default function AccountPayment() {
               )}
 
               {step === "form" && form.method === "card" && (
-                <div className="account-pay-fields">
+                <div className="account-pay-fields account-pay-card-fields" style={{ minWidth: 0 }}>
                   <label>
-                    카드사
-                    <select
-                      value={form.brand}
-                      onChange={(e) => update("brand", e.target.value)}
-                    >
-                      {CARD_BRANDS.map((brand) => (
-                        <option key={brand}>{brand}</option>
-                      ))}
+                    <span>지불 방법 · 카드사</span>
+                    <select value={form.brand} onChange={(e) => update("brand", e.target.value)}>
+                      {CARD_BRANDS.map((brand) => <option key={brand}>{brand}</option>)}
                     </select>
                   </label>
-
                   <label>
-                    카드 번호 끝 4자리
+                    <span>카드 번호</span>
                     <input
                       inputMode="numeric"
-                      maxLength={4}
-                      autoComplete="off"
-                      placeholder="1234"
-                      value={form.last4}
-                      onChange={(e) =>
-                        update("last4", digits(e.target.value).slice(0, 4))
-                      }
+                      autoComplete="cc-number"
+                      placeholder="0000 0000 0000 0000"
+                      value={form.cardNumber}
+                      onChange={(e) => update("cardNumber", formatCardNumber(e.target.value))}
                     />
                   </label>
-
-                  <p className="account-pay-help">
-                    데모 화면이므로 전체 카드번호와 유효기간은 저장하지 않습니다.
-                  </p>
+                  <div className="account-pay-card-field-row" style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 16 }}>
+                    <label>
+                      <span>유효기간</span>
+                      <input
+                        inputMode="numeric"
+                        autoComplete="cc-exp"
+                        placeholder="MM/YY"
+                        maxLength={5}
+                        value={form.expiry}
+                        onChange={(e) => update("expiry", formatExpiry(e.target.value))}
+                      />
+                    </label>
+                    <label>
+                      <span>보안 코드</span>
+                      <input
+                        type="password"
+                        inputMode="numeric"
+                        autoComplete="cc-csc"
+                        placeholder="CVC"
+                        maxLength={4}
+                        value={form.cvc}
+                        onChange={(e) => update("cvc", digits(e.target.value).slice(0, 4))}
+                      />
+                    </label>
+                  </div>
+                  <label>
+                    <span>청구지 이름</span>
+                    <input autoComplete="cc-name" placeholder="이름" value={form.billingName}
+                      onChange={(e) => update("billingName", e.target.value)} />
+                  </label>
+                  <label>
+                    <span>청구지 주소</span>
+                    <input autoComplete="street-address" placeholder="도로명 주소" value={form.billingAddress}
+                      onChange={(e) => update("billingAddress", e.target.value)} />
+                  </label>
+                  <label>
+                    <span>우편번호</span>
+                    <input autoComplete="postal-code" placeholder="우편번호" value={form.billingPostal}
+                      onChange={(e) => update("billingPostal", e.target.value)} />
+                  </label>
+                  <label>
+                    <span>전화번호</span>
+                    <input type="tel" autoComplete="tel" placeholder="010-0000-0000"
+                      value={form.billingPhone}
+                      onChange={(e) => update("billingPhone", e.target.value)} />
+                  </label>
+                  <p className="account-pay-help">데모 화면입니다. 카드번호와 CVC는 저장되지 않습니다.</p>
                 </div>
               )}
 
@@ -560,13 +632,8 @@ export default function AccountPayment() {
                           <span className="account-pay-method-radio-ui" />
                         </span>
 
-                        <span className={`account-pay-provider-badge is-${item.tone}`}>
-                          {item.value === "카카오페이"
-                            ? "pay"
-                            : item.value === "네이버페이"
-                              ? "N"
-                              : "toss"}
-                        </span>
+                        <img className="account-pay-provider-image" style={{ width: 58, height: 48, objectFit: "contain", flexShrink: 0 }} src={PAY_ICONS[item.value]}
+                          alt="" aria-hidden="true" />
 
                         <span className="account-pay-method-copy">
                           <strong>{item.value}</strong>
@@ -579,10 +646,11 @@ export default function AccountPayment() {
               )}
 
               {step === "form" && form.method === "phone" && (
-                <div className="account-pay-fields">
-                  <label>
-                    통신사
+                <div className="account-pay-fields account-pay-phone-fields">
+                  <label style={{ display: "grid", gridTemplateColumns: "120px minmax(0, 1fr)", alignItems: "center", gap: 16, minWidth: 0 }}>
+                    <span style={{ whiteSpace: "nowrap" }}>통신사</span>
                     <select
+                      style={{ minWidth: 0, paddingRight: 48 }}
                       value={form.carrier}
                       onChange={(e) => update("carrier", e.target.value)}
                     >
@@ -592,9 +660,10 @@ export default function AccountPayment() {
                     </select>
                   </label>
 
-                  <label>
-                    휴대폰 번호
+                  <label style={{ display: "grid", gridTemplateColumns: "120px minmax(0, 1fr)", alignItems: "center", gap: 16, minWidth: 0 }}>
+                    <span style={{ whiteSpace: "nowrap" }}>휴대폰 번호</span>
                     <input
+                      style={{ minWidth: 0, boxSizing: "border-box" }}
                       inputMode="tel"
                       autoComplete="off"
                       placeholder="01012345678"
@@ -605,9 +674,10 @@ export default function AccountPayment() {
                     />
                   </label>
 
-                  <label>
-                    명의자
+                  <label style={{ display: "grid", gridTemplateColumns: "120px minmax(0, 1fr)", alignItems: "center", gap: 16, minWidth: 0 }}>
+                    <span style={{ whiteSpace: "nowrap" }}>명의자</span>
                     <input
+                      style={{ minWidth: 0, boxSizing: "border-box" }}
                       autoComplete="off"
                       placeholder="이름"
                       value={form.holder}
@@ -615,8 +685,19 @@ export default function AccountPayment() {
                     />
                   </label>
 
+                  <label style={{ display: "grid", gridTemplateColumns: "120px minmax(0, 1fr)", alignItems: "center", gap: 16, minWidth: 0 }}>
+                    <span style={{ whiteSpace: "nowrap" }}>인증번호</span>
+                    <input
+                      style={{ minWidth: 0, boxSizing: "border-box" }}
+                      autoComplete="number"
+                      placeholder="1234"
+                      value={form.last4}
+                      onChange={(e) => update("last4", e.target.value)}
+                    />
+                  </label>
+
                   <p className="account-pay-help">
-                    실제 SMS 인증 대신 데모 인증 화면으로 진행됩니다.
+                    인증번호 발송까지 1분 정도 소요됩니다.
                   </p>
                 </div>
               )}
@@ -624,13 +705,8 @@ export default function AccountPayment() {
               {step === "verify" && form.method === "pay" && (
                 <div className={`account-pay-auth account-pay-auth--${providerMeta.tone}`}>
                   <div className="account-pay-auth-brand">
-                    <span className={`account-pay-provider-badge is-${providerMeta.tone}`}>
-                      {form.provider === "카카오페이"
-                        ? "pay"
-                        : form.provider === "네이버페이"
-                          ? "N"
-                          : "toss"}
-                    </span>
+                    <img className="account-pay-provider-image" style={{ width: 58, height: 48, objectFit: "contain", flexShrink: 0 }} src={PAY_ICONS[form.provider]}
+                      alt="" aria-hidden="true" />
                     <div>
                       <strong>{form.provider}</strong>
                       <small>{providerMeta.accountHint}</small>
@@ -653,7 +729,7 @@ export default function AccountPayment() {
                   </div>
 
                   <p className="account-pay-help">
-                    첨부해주신 iOS 결제 연동 화면을 참고한 모의 인증 단계입니다.
+                    앱에서 인증 후 완료 버튼을 눌러주세요
                   </p>
                 </div>
               )}
@@ -661,7 +737,7 @@ export default function AccountPayment() {
               {step === "verify" && form.method === "phone" && (
                 <div className="account-pay-auth account-pay-auth--phone">
                   <div className="account-pay-auth-brand">
-                    <span className="account-pay-provider-badge is-phone">휴</span>
+                    <img className="account-pay-method-icon" style={{ width: 58, height: 48, objectFit: "contain", flexShrink: 0 }} src={METHOD_ICONS.phone} alt="" aria-hidden="true" />
                     <div>
                       <strong>휴대폰 결제</strong>
                       <small>{form.carrier}</small>
@@ -679,12 +755,12 @@ export default function AccountPayment() {
                     </div>
                     <div className="account-pay-auth-row">
                       <span>인증 상태</span>
-                      <strong>확인됨</strong>
+                      <strong>데모 확인</strong>
                     </div>
                   </div>
 
                   <p className="account-pay-help">
-                    실제 확인 코드 전송 없이 화면 흐름만 재현합니다.
+                  결제 수단으로 등록되었습니다.
                   </p>
                 </div>
               )}
