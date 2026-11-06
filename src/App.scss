@@ -3894,9 +3894,34 @@ main.sport-home {
   }
 }
 
+.auth-divider {
+  span {
+    @include body-default;
+  }
+}
+
+.auth-legal {
+  a {
+    @include body-default;
+  }
+
+  span {
+    @include body-default;
+  }
+
+}
+
+.auth-remember {
+  @include body-default;
+}
+
 // 단계가 바뀔 때 아래에서 살짝 올라오며 나타남
 .auth-step {
   animation: auth-step-in 0.4s ease both;
+}
+
+.auth-muted {
+  @include body-default;
 }
 
 @keyframes auth-step-in {
@@ -4131,13 +4156,11 @@ main.sport-home {
 
 // ---------- 또는 (구글 계정으로 계속 위 구분선) ----------
 .auth-divider {
-  @include label-default;
   display: flex;
   align-items: center;
   gap: $space-md;
   max-width: 428px;
   margin: $space-xl auto 0;
-  color: $text-tertiary;
 
   &::before,
   &::after {

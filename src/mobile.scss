@@ -171,6 +171,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     @include body-default;
   }
 
+
   .auth-actions--row {
     flex-direction: column-reverse;
     gap: $space-md;

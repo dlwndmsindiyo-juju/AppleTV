@@ -1113,7 +1113,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .movie-detail-page .player-box .title-logo {
   display: block;
-  max-width: 200px;
+  max-width: 12.5rem;
   max-height: 3.5rem;
   object-fit: contain;
   object-position: left center;
@@ -1152,7 +1152,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   line-height: 1.125rem;
   letter-spacing: 0;
   color: #E0E0E0;
-  max-width: 640px;
+  max-width: 40rem;
   margin-top: 0.25rem;
   word-break: keep-all;
   display: -webkit-box;
@@ -1173,7 +1173,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   gap: 0.625rem;
 }
 .movie-detail-page .player-box .icon-btn {
-  width: 36px;
+  width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
   border: none;
@@ -1205,7 +1205,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   line-height: 1.25rem;
   letter-spacing: 0;
   font-weight: 700;
-  width: 180px;
+  width: 11.25rem;
   height: 2.5rem;
   border: none;
   border-radius: 0.5rem;
@@ -1248,7 +1248,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   gap: 0.25rem;
 }
 .movie-detail-page .rating-section .rating-header .score-display .score-star {
-  width: 18px;
+  width: 1.125rem;
   height: 1.125rem;
   color: #FFD60A;
   flex-shrink: 0;
@@ -1274,7 +1274,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   padding: 0.25rem 0;
 }
 .movie-detail-page .rating-section .star-picker .star-item {
-  width: 48px;
+  width: 3rem;
   background: none;
   border: none;
   padding: 0;
@@ -1290,7 +1290,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   transition: color 0.15s ease, transform 0.15s ease;
 }
 .movie-detail-page .rating-section .star-picker .star-item .star svg {
-  width: 35px;
+  width: 2.1875rem;
   height: 2.1875rem;
 }
 .movie-detail-page .rating-section .star-picker .star-item .label {
@@ -1462,7 +1462,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .movie-detail-page .right-section .episode-card .thumb {
   position: relative;
-  width: 168px;
+  width: 10.5rem;
   aspect-ratio: 16/9;
   flex-shrink: 0;
   border-radius: 0.375rem;
@@ -1480,7 +1480,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 32px;
+  width: 2rem;
   height: 2rem;
   border-radius: 50%;
   font-family: "SF Pro", sans-serif;
@@ -1554,7 +1554,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   font-size: 1.25rem;
   line-height: 1.5625rem;
   letter-spacing: 0;
-  width: 72px;
+  width: 4.5rem;
   height: 4.5rem;
   border-radius: 50%;
   overflow: hidden;
@@ -3858,8 +3858,47 @@ main.sport-home .sport-series-card h4 {
   object-fit: contain;
 }
 
+.auth-divider span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+
+.auth-legal a {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.auth-legal span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+
+.auth-remember {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+
 .auth-step {
   animation: auth-step-in 0.4s ease both;
+}
+
+.auth-muted {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
 }
 
 @keyframes auth-step-in {
@@ -4120,17 +4159,11 @@ main.sport-home .sport-series-card h4 {
 }
 
 .auth-divider {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  letter-spacing: 0;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   max-width: 428px;
   margin: 1.5rem auto 0;
-  color: #A3A3A3;
 }
 .auth-divider::before, .auth-divider::after {
   content: "";
@@ -7802,7 +7835,7 @@ section.device-guide.device-guide--watch .watch-device-name {
 }
 
 .movie-detail-page .icon-heart {
-  width: 18px;
+  width: 1.125rem;
   height: 1.125rem;
 }
 .movie-detail-page .player-box .icon-btn.on {
@@ -8164,5 +8197,157 @@ main.wish-page {
   .ai-banner .ai-banner-btn,
   .ai-banner .ai-banner-btn::before {
     animation: none;
+  }
+}
+@media (min-width: 768px) {
+  .movie-detail-page.movie-detail-page {
+    padding-top: calc(4.5rem + 1.4375rem);
+    padding-bottom: 2.5rem;
+  }
+  .movie-detail-page.movie-detail-page .left-section {
+    gap: 1.25rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .player-info {
+    padding-top: 0.6875rem;
+    padding-bottom: 0.6875rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .original-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .player-box .genres,
+  .movie-detail-page.movie-detail-page .player-box .overview {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .player-box .icon-btn {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .icon-btn svg,
+  .movie-detail-page.movie-detail-page .player-box .icon-btn .icon-heart {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .btn-play {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    color: #171717;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header h3 {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 2.125rem;
+    line-height: 2.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display .score-star {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #FFCC00;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display .max-score {
+    color: #525252;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .star-picker .star-item .star svg {
+    width: 2.1875rem;
+    height: 2.1875rem;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .star-picker .star-item .label {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .btn-submit-rating {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    width: 11.25rem;
+    height: 3.875rem;
+    padding: 0;
+  }
+  .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    letter-spacing: 0;
+    color: #525252;
+  }
+  .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn:hover {
+    color: #C8C8C8;
+  }
+  .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn.active {
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .right-section .filter-bar {
+    grid-template-columns: repeat(2, minmax(0, 18.125rem));
+  }
+  .movie-detail-page.movie-detail-page .right-section .filter-bar select {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+    height: 3.125rem;
+    color: #171717;
+  }
+  .movie-detail-page.movie-detail-page .right-section .season-label {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .right-section .episode-card .info .ep-num,
+  .movie-detail-page.movie-detail-page .right-section .episode-card .info .runtime {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .right-section .episode-card .info .ep-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
   }
 }

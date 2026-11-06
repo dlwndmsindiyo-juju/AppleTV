@@ -456,7 +456,7 @@ const Login = () => {
         <div className="auth-divider"><span>아직 계정이 없으신가요?</span></div>
         <button type="button" className="auth-btn auth-btn--secondary" onClick={goSignup}>회원가입</button>
         {messages}
-        <p className="auth-legal"><a href="https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html" target="_blank" rel="noreferrer">이용약관</a> 및 <a href={APPLE_LINKS.privacy} target="_blank" rel="noreferrer">개인정보 처리방침</a></p>
+        <p className="auth-legal"><a href="https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html" target="_blank" rel="noreferrer">이용약관</a> <span>및</span> <a href={APPLE_LINKS.privacy} target="_blank" rel="noreferrer">개인정보 처리방침</a></p>
       </div>
     </>;
   }
@@ -515,7 +515,6 @@ const Login = () => {
           <div className="auth-divider"><span>또는</span></div>
           <button type="button" className="auth-btn auth-btn--secondary auth-google-btn" onClick={handleGoogleLogin} disabled={busy}><img className="auth-google-mark" src="/icons/google.svg" alt="" aria-hidden="true" />Google로 로그인</button>
           <button type="button" className="auth-login-link" onClick={() => { clearMessages(); setStep("select"); }}>다른 방법으로 로그인</button>
-          {remembered && <button type="button" className="auth-login-link" onClick={switchAccount}>다른 계정으로 로그인</button>}
         </div>
       </>
     );
