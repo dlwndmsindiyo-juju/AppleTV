@@ -333,6 +333,7 @@
     margin-top: 10px;
     overflow: hidden;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
@@ -1286,16 +1287,62 @@
   padding: 28px 40px;
   overflow-y: auto;
   scrollbar-width: none;
-  &::-webkit-scrollbar, *::-webkit-scrollbar { display: none; }
-  * { scrollbar-width: none; }
-  .ai-popup-header { max-width: none; }
-  .ai-popup-title-row { min-height: 36px; }
-  .ai-popup-title-row h2 { font-size: 26px; line-height: 1.25; }
-  .ai-popup-header > p { margin-top: 8px; font-size: 14px; line-height: 20px; }
-  .ai-popup-result-body { display: block; flex: 0 0 auto; min-height: 0; margin-top: 16px; padding: 0; overflow: visible; }
-  .ai-popup-tags { gap: 6px; margin: 0 0 10px; }
-  .ai-popup-tags button { padding: 6px 12px; gap: 8px; font-size: 12px; line-height: 17px; }
-  .ai-popup-hint { margin: 0 0 10px; font-size: 12px; line-height: 15px; }
+
+  &::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  * {
+    scrollbar-width: none;
+  }
+
+  .ai-popup-header {
+    max-width: none;
+  }
+
+  .ai-popup-title-row {
+    min-height: 36px;
+  }
+
+  .ai-popup-title-row h2 {
+    font-size: 26px;
+    line-height: 1.25;
+  }
+
+  .ai-popup-header>p {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .ai-popup-result-body {
+    display: block;
+    flex: 0 0 auto;
+    min-height: 0;
+    margin-top: 16px;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .ai-popup-tags {
+    gap: 6px;
+    margin: 0 0 10px;
+  }
+
+  .ai-popup-tags button {
+    padding: 6px 12px;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  .ai-popup-hint {
+    margin: 0 0 10px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
   .ai-popup-results {
     display: grid;
     flex: 0 0 auto;
@@ -1308,51 +1355,257 @@
     min-height: 0;
     height: auto;
   }
-  .ai-popup-result { display: flex; height: 140px; min-height: 140px; max-height: 140px; align-self: start; align-items: center; gap: 16px; padding: 0 16px 0 0; overflow: hidden; border-radius: 20px; background: #2e2e2e; }
-  .ai-popup-detail-link { appearance: none; border: 0; background: transparent; padding: 0; color: inherit; font: inherit; text-align: left; text-decoration: none; cursor: pointer; }
-  .ai-popup-detail-link:focus-visible { outline: 2px solid #9da3ff; outline-offset: -3px; }
-  .ai-popup-poster { display: flex; align-items: center; justify-content: center; width: 100px; height: 140px; flex: 0 0 100px; border-radius: 20px; overflow: hidden; background: #242424; }
-  .ai-popup-poster img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; border-radius: 0; }
-  .ai-popup-result-copy { min-width: 0; flex: 1 1 0; font-size: 13px; line-height: 18px; }
-  .ai-popup-result-heading { gap: 8px; }
-  .ai-popup-result-heading .ai-popup-detail-link { min-width: 0; flex: 1 1 auto; font-size: 17px; line-height: 22px; font-weight: 400; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .ai-popup-result-heading .ai-popup-icon-button { width: 24px; height: 24px; min-width: 24px; min-height: 24px; flex: 0 0 24px; }
-  .ai-popup-result-genre { margin-top: 4px; font-size: 13px; line-height: 18px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .ai-popup-result-overview { margin-top: 8px; font-size: 13px; line-height: 18px; -webkit-line-clamp: 2; }
-  .ai-popup-results-footer { flex: 0 0 auto; padding-top: 16px; }
-  .ai-popup-more { min-height: 40px; padding: 8px 14px; font-size: 14px; line-height: 20px; }
-  .ai-popup-edit { margin-top: 8px; font-size: 11px; line-height: 16px; }
-}
-@media (max-width: 767px) {
-  .ai-popup.ai-popup--results {
-    width: 936px; padding: 24px;
-    .ai-popup-title-row h2 { font-size: 23px; }
-    .ai-popup-results { gap: 12px; }
-    .ai-popup-result { gap: 13px; padding-right: 13px; }
-    .ai-popup-result-heading .ai-popup-detail-link { font-size: 14px; line-height: 19px; }
-    .ai-popup-result-genre, .ai-popup-result-overview { font-size: 11px; line-height: 16px; }
+
+  .ai-popup-result {
+    display: flex;
+    height: 140px;
+    min-height: 140px;
+    max-height: 140px;
+    align-self: start;
+    align-items: center;
+    gap: 16px;
+    padding: 0 16px 0 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #2e2e2e;
+  }
+
+  .ai-popup-detail-link {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .ai-popup-detail-link:focus-visible {
+    outline: 2px solid #9da3ff;
+    outline-offset: -3px;
+  }
+
+  .ai-popup-poster {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 140px;
+    flex: 0 0 100px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #242424;
+  }
+
+  .ai-popup-poster img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 0;
+  }
+
+  .ai-popup-result-copy {
+    min-width: 0;
+    flex: 1 1 0;
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .ai-popup-result-heading {
+    gap: 8px;
+  }
+
+  .ai-popup-result-heading .ai-popup-detail-link {
+    min-width: 0;
+    flex: 1 1 auto;
+    font-size: 17px;
+    line-height: 22px;
+    font-weight: 400;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .ai-popup-result-heading .ai-popup-icon-button {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    flex: 0 0 24px;
+  }
+
+  .ai-popup-result-genre {
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 18px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .ai-popup-result-overview {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 18px;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+  }
+
+  .ai-popup-results-footer {
+    flex: 0 0 auto;
+    padding-top: 16px;
+  }
+
+  .ai-popup-more {
+    min-height: 40px;
+    padding: 8px 14px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .ai-popup-edit {
+    margin-top: 8px;
+    font-size: 11px;
+    line-height: 16px;
   }
 }
+
+@media (max-width: 767px) {
+  .ai-popup.ai-popup--results {
+    width: 936px;
+    padding: 24px;
+
+    .ai-popup-title-row h2 {
+      font-size: 23px;
+    }
+
+    .ai-popup-results {
+      gap: 12px;
+    }
+
+    .ai-popup-result {
+      gap: 13px;
+      padding-right: 13px;
+    }
+
+    .ai-popup-result-heading .ai-popup-detail-link {
+      font-size: 14px;
+      line-height: 19px;
+    }
+
+    .ai-popup-result-genre,
+    .ai-popup-result-overview {
+      font-size: 11px;
+      line-height: 16px;
+    }
+  }
+}
+
 @media (max-width: 600px) {
   .ai-popup.ai-popup--results {
-    width: 358px; padding: 18px;
-    .ai-popup-title-row h2 { font-size: 20px; line-height: 26px; }
-    .ai-popup-header > p { margin-top: 6px; font-size: 11px; line-height: 16px; }
-    .ai-popup-result-body { margin-top: 12px; }
-    .ai-popup-tags { gap: 4px; margin-bottom: 8px; }
-    .ai-popup-tags button { padding: 4px 8px; font-size: 11px; line-height: 15px; gap: 4px; }
-    .ai-popup-tags button img { width: 12px; height: 12px; }
-    .ai-popup-hint { margin-bottom: 8px; font-size: 11px; line-height: 14px; }
-    .ai-popup-results { grid-template-columns: minmax(0, 1fr); grid-auto-rows: 100px; gap: 8px; }
-    .ai-popup-result { height: 100px; min-height: 100px; max-height: 100px; gap: 10px; padding-right: 10px; border-radius: 14px; }
-    .ai-popup-poster { width: 72px; height: 100px; flex-basis: 72px; border-radius: 14px; }
-    .ai-popup-result-heading .ai-popup-detail-link { font-size: 11px; line-height: 16px; }
-    .ai-popup-result-genre { margin-top: 2px; line-height: 14px; }
-    .ai-popup-result-overview { margin-top: 4px; line-height: 14px; -webkit-line-clamp: 1; }
-    .ai-popup-result-heading .ai-popup-icon-button { min-width: 24px; min-height: 24px; }
-    .ai-popup-results-footer { padding-top: 12px; }
-    .ai-popup-more { min-height: 36px; font-size: 12px; line-height: 18px; padding: 6px 12px; }
-    .ai-popup-edit { margin-top: 6px; }
+    width: 358px;
+    padding: 18px;
+
+    .ai-popup-title-row h2 {
+      font-size: 20px;
+      line-height: 26px;
+    }
+
+    .ai-popup-header>p {
+      margin-top: 6px;
+      font-size: 11px;
+      line-height: 16px;
+    }
+
+    .ai-popup-result-body {
+      margin-top: 12px;
+    }
+
+    .ai-popup-tags {
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .ai-popup-tags button {
+      padding: 4px 8px;
+      font-size: 11px;
+      line-height: 15px;
+      gap: 4px;
+    }
+
+    .ai-popup-tags button img {
+      width: 12px;
+      height: 12px;
+    }
+
+    .ai-popup-hint {
+      margin-bottom: 8px;
+      font-size: 11px;
+      line-height: 14px;
+    }
+
+    .ai-popup-results {
+      grid-template-columns: minmax(0, 1fr);
+      grid-auto-rows: 100px;
+      gap: 8px;
+    }
+
+    .ai-popup-result {
+      height: 100px;
+      min-height: 100px;
+      max-height: 100px;
+      gap: 10px;
+      padding-right: 10px;
+      border-radius: 14px;
+    }
+
+    .ai-popup-poster {
+      width: 72px;
+      height: 100px;
+      flex-basis: 72px;
+      border-radius: 14px;
+    }
+
+    .ai-popup-result-heading .ai-popup-detail-link {
+      font-size: 11px;
+      line-height: 16px;
+    }
+
+    .ai-popup-result-genre {
+      margin-top: 2px;
+      line-height: 14px;
+    }
+
+    .ai-popup-result-overview {
+      margin-top: 4px;
+      line-height: 14px;
+      line-clamp: 2;
+      -webkit-line-clamp: 1;
+    }
+
+    .ai-popup-result-heading .ai-popup-icon-button {
+      min-width: 24px;
+      min-height: 24px;
+    }
+
+    .ai-popup-results-footer {
+      padding-top: 12px;
+    }
+
+    .ai-popup-more {
+      min-height: 36px;
+      font-size: 12px;
+      line-height: 18px;
+      padding: 6px 12px;
+    }
+
+    .ai-popup-edit {
+      margin-top: 6px;
+    }
   }
 }
 
@@ -1368,12 +1621,14 @@
   font-size: 12px;
   cursor: pointer;
 }
+
 .ai-popup .ai-popup-match-note {
   margin-top: 2px;
   color: #ffd58a;
   font-size: 11px;
   line-height: 1.3;
 }
+
 .ai-popup .ai-popup-results-footer button:disabled {
   opacity: .5;
   cursor: default;
