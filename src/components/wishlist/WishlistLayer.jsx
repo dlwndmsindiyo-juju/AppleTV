@@ -61,8 +61,11 @@ const Modal = ({ labelId, onClose, className = "", children }) => {
 };
 
 // ---------- 어떤 그룹에 추가할까요? ----------
+// - [수정] 체크는 팝업 안에서만 · 아래 버튼 두 개: [새 그룹 만들기](회색) · [추가하기](프라이머리)로 저장
+// - [추가] 그룹이 하나도 없으면 안내 문구 (첫 이용자는 "전체"만)
 const GroupPicker = () => {
-  const { pickerKey, items, groups, onToggleGroup, onClosePicker, onOpenNewGroup } = useHeartStore();
+  const { pickerKey, pickerDraft, items, groups, onToggleDraft, onApplyPicker, onClosePicker, onOpenNewGroup } =
+    useHeartStore();
   const item = items[pickerKey];
   if (!item) return null;
 
@@ -82,10 +85,13 @@ const GroupPicker = () => {
         </button>
       </div>
 
+      {groups.length === 0 && (
+        <p className="wish-group-empty">아직 만든 그룹이 없어요. 새 그룹을 만들어 작품을 나눠 담아보세요.</p>
+      )}
       <ul className="wish-group-list">
         {groups.map((g) => {
           const { count, poster } = groupInfo(g.id);
-          const checked = item.groups.includes(g.id);
+          const checked = pickerDraft.includes(g.id);
           return (
             <li key={g.id}>
               <button
@@ -93,7 +99,7 @@ const GroupPicker = () => {
                 role="checkbox"
                 aria-checked={checked}
                 className={`wish-group-row${checked ? " is-checked" : ""}`}
-                onClick={() => onToggleGroup(pickerKey, g.id)}
+                onClick={() => onToggleDraft(g.id)}
               >
                 <span className="wish-group-thumb">
                   {poster ? (
@@ -118,9 +124,12 @@ const GroupPicker = () => {
         })}
       </ul>
 
-      <div className="wish-modal-foot">
-        <button type="button" className="wish-btn wish-btn--white wish-btn--full" onClick={onOpenNewGroup}>
+      <div className="wish-modal-foot wish-modal-foot--split">
+        <button type="button" className="wish-btn wish-btn--gray" onClick={onOpenNewGroup}>
           새 그룹 만들기
+        </button>
+        <button type="button" className="wish-btn wish-btn--primary" onClick={onApplyPicker}>
+          추가하기
         </button>
       </div>
     </Modal>
@@ -199,7 +208,7 @@ const NewGroup = () => {
           <button type="button" className="wish-btn wish-btn--gray" onClick={onCloseNewGroup}>
             취소
           </button>
-          <button type="submit" className="wish-btn wish-btn--white" disabled={!name.trim() || busy}>
+          <button type="submit" className="wish-btn wish-btn--primary" disabled={!name.trim() || busy}>
             만들기
           </button>
         </div>

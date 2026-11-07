@@ -150,11 +150,29 @@ const HeroTrailer = ({ videoKey, title, onStart, onEnd }) => {
             modestbranding: 1,
             rel: 0,
             playsinline: 1,
+            enablejsapi: 1,
+            origin: window.location.origin, // [추가] 휴대폰 브라우저에서 재생 신호(postMessage)가 막히지 않게
           },
           events: {
             onReady: (e) => {
+              // [추가] 휴대폰: 화면 안에서 · 소리 끈 채 자동 재생을 허용받도록 iframe 속성을 직접 넣고 다시 재생
+              const frame = e.target.getIframe?.();
+              frame?.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+              frame?.setAttribute("playsinline", "");
+              frame?.setAttribute("webkit-playsinline", "");
               e.target.mute();
               e.target.playVideo();
+              // 첫 재생 요청이 묻히는 경우가 있어 잠시 뒤 한 번 더
+              setTimeout(() => {
+                if (alive && !started) {
+                  try {
+                    e.target.mute();
+                    e.target.playVideo();
+                  } catch {
+                    // 무시
+                  }
+                }
+              }, 800);
             },
             onStateChange: (e) => {
               if (e.data === YT.PlayerState.PLAYING) {

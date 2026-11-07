@@ -9,7 +9,7 @@ import './Intro.scss'; // 스타일 파일
 //   · 저전력 모드 · 데이터 절약 모드처럼 기기가 영상 자동 재생을 아예 막으면
 //     → 같은 인트로의 움직이는 이미지(public/video/intro.webp)로 바꿔 보여 주고 영상 길이만큼 뒤에 끝냄
 //     → intro.webp 가 없으면 바로 끝냄 (빈 검정 화면에 멈추지 않게)
-// - [추가] 영상을 받는 동안: 검은 화면 대신 가운데 Apple TV 로고가 은은하게 빛나는 로딩 (재생되면 사라짐)
+// - [수정] 로딩 로고 없앰 → 들어오자마자 영상 화면 (로고가 영상 대신 보이는 일이 없게)
 // - [수정] 건너뛰기(Skip Intro) 버튼: 글자 body-default-b · ✕ 글자 대신 닫기(X) 아이콘 (구독 팝업 닫기와 같은 아이콘)
 const FALLBACK_IMAGE = '/video/intro.webp';
 const FALLBACK_DURATION = 5000; // 영상 길이를 모를 때 움직이는 이미지를 보여 줄 시간 (5초)
@@ -19,7 +19,6 @@ const Intro = ({ onFinish }) => {
   const finishedRef = useRef(false);
   const [isEnding, setIsEnding] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
-  const [started, setStarted] = useState(false); // [추가] 영상(또는 움직이는 이미지)이 화면에 나오기 시작했는지
 
   // 영상이 끝났을 때 · 건너뛰기 (한 번만)
   const handleVideoEnded = () => {
@@ -91,7 +90,6 @@ const Intro = ({ onFinish }) => {
         disablePictureInPicture
         controls={false}
         onEnded={handleVideoEnded}
-        onPlaying={() => setStarted(true)}
         className={`intro-video${useFallback ? ' is-hidden' : ''}`}
         aria-hidden="true"
       >
@@ -104,15 +102,9 @@ const Intro = ({ onFinish }) => {
           src={FALLBACK_IMAGE}
           alt=""
           aria-hidden="true"
-          onLoad={() => setStarted(true)}
           onError={handleVideoEnded}
         />
       )}
-
-      {/* [추가] 로딩: 영상이 나오기 전까지 로고 */}
-      <div className={`intro-loading${started ? ' is-done' : ''}`} aria-hidden="true">
-        <img src="/icons/login-logo.svg" alt="" />
-      </div>
 
       {/* 건너뛰기 버튼 */}
       <button type="button" className="skip-btn" onClick={handleVideoEnded}>

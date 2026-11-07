@@ -14,6 +14,7 @@ import { createPortal } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore, isSubscribed } from "../../store/useAuthStore";
 import { SubscribePopup } from "../../pages/Subscribe";
+import { saveResumeIntent, peekResumeIntent, resumePath } from "../../utils/resumeIntent"; // [추가] 로그인 · 구독 후 하던 화면으로
 
 // 들어가면 바로 영상이 재생되는 스포츠 페이지 (예정된 경기 /sport/upcoming 은 카운트다운이라 제외)
 const WATCH_ROUTES = ["/sport/match/", "/sport/replay", "/sport/highlights", "/sport/series"];
@@ -26,6 +27,25 @@ const WATCH_SELECTOR = [
 ].join(",");
 
 const isWatchRoute = (pathname) => WATCH_ROUTES.some((p) => pathname.startsWith(p));
+
+// [추가] 로그인 전에는 AI 추천 말고 콘텐츠 이용을 모두 막음 → "구독 후 이용해주세요."
+// - 작품 · 인물 상세로 가는 포스터 · 카드 · 재생 버튼 (상세에 들어가면 예고편이 바로 재생되므로)
+// - 메뉴 · 검색 · 로그인 · 구독 버튼 · AI 추천은 그대로
+// - [수정] 주소 앞에 배포 경로(base)가 붙어도 잡히도록 href 앞부분 대신 주소 모양으로 판단
+//   · /tv/123 · /movie/123 · /search/person/123 (숫자 id) — TV 디자인 미리보기(/tv)는 제외
+//   · TOP 10 포스터 · 영상 포스터 · 추천 · 공개 예정 카드 · 전체 보기 포스터 · 히어로 재생 버튼 모두 이 주소로 연결됨
+const GUEST_PATH = /(^|\/)(tv|movie|search\/person)\/\d+/;
+const isGuestRoute = (pathname) => GUEST_PATH.test(pathname);
+const guestLinkOf = (target) => {
+  const link = target.closest?.("a[href]");
+  if (!link) return null;
+  try {
+    const url = new URL(link.href, window.location.origin);
+    return url.origin === window.location.origin && isGuestRoute(url.pathname) ? link : null;
+  } catch {
+    return null;
+  }
+};
 
 const TEXT = {
   watch: {
@@ -116,6 +136,7 @@ const SubscribeGate = ({ onLogin } = {}) => {
   const [leaveOnClose, setLeaveOnClose] = useState(false); // 감상 페이지에 바로 들어온 경우: 닫으면 스포츠 홈으로
   const [subOpen, setSubOpen] = useState(false); // [추가] 구독 팝업 (로그인했지만 구독 전)
   const lastFocus = useRef(null);
+  const targetHref = useRef(""); // [추가] 누른 포스터 · 카드가 가려던 주소 (로그인 · 구독 후 그 화면으로)
 
   const loggedOut = authReady && !user;
   const notMember = authReady && Boolean(user) && !isSubscribed(user); // [추가] 로그인했지만 구독 전
@@ -128,6 +149,7 @@ const SubscribeGate = ({ onLogin } = {}) => {
       const r = ["account", "ai"].includes(e.detail?.reason) ? e.detail.reason : "watch";
       if (u && (isSubscribed(u) || r === "account" || onLogin)) return; // 구독 중 · 로그인한 계정의 계정 기능 · TV 미리보기는 그대로
       lastFocus.current = document.activeElement;
+      targetHref.current = "";
       setLeaveOnClose(false);
       setReason(r);
     };
@@ -139,36 +161,38 @@ const SubscribeGate = ({ onLogin } = {}) => {
   useEffect(() => {
     if (!gated) return undefined;
     const onClick = (e) => {
-      const el = e.target.closest?.(WATCH_SELECTOR);
+      const el = e.target.closest?.(WATCH_SELECTOR) || (loggedOut ? guestLinkOf(e.target) : null);
       if (!el || el.closest(".subscribe-gate")) return;
       e.preventDefault();
       e.stopPropagation();
       lastFocus.current = el;
+      targetHref.current = el.getAttribute("href") || "";
       setLeaveOnClose(false);
       setReason("watch");
     };
     document.addEventListener("click", onClick, true); // capture: 각 섹션의 onClick 보다 먼저
     return () => document.removeEventListener("click", onClick, true);
-  }, [gated]);
+  }, [gated, loggedOut]);
 
   // 감상 페이지 주소로 바로 들어온 경우 (새로고침 · 공유 링크)
   useEffect(() => {
-    if (gated && isWatchRoute(pathname)) {
+    if ((gated && isWatchRoute(pathname)) || (loggedOut && isGuestRoute(pathname))) {
+      targetHref.current = "";
       setLeaveOnClose(true);
       setReason("watch");
     } else {
       setReason(null); // 페이지가 바뀌거나 로그인 · 구독하면 닫기
     }
-  }, [pathname, gated]);
+  }, [pathname, gated, loggedOut]);
 
   const close = useCallback(() => {
     setReason(null);
     if (leaveOnClose) {
-      navigate("/sport", { replace: true });
+      navigate(pathname.startsWith("/sport") ? "/sport" : "/", { replace: true }); // [수정] 작품 상세는 홈으로
       return;
     }
     lastFocus.current?.focus?.(); // 누른 버튼으로 포커스 되돌리기
-  }, [leaveOnClose, navigate]);
+  }, [leaveOnClose, navigate, pathname]);
 
   // [추가] 구독 팝업: 닫으면 보던 화면 그대로 · 구독 완료 → [홈으로 돌아가기]
   if (subOpen) {
@@ -176,8 +200,10 @@ const SubscribeGate = ({ onLogin } = {}) => {
       <SubscribePopup
         onClose={() => setSubOpen(false)}
         onDone={() => {
+          // [수정] 구독 완료 → 메인 대신 지금 보던 화면 그대로 (AI 추천이면 고르려던 칩으로 팝업이 다시 열림)
           setSubOpen(false);
-          navigate("/", { replace: true });
+          const back = resumePath();
+          if (back && back !== `${window.location.pathname}${window.location.search}`) navigate(back, { replace: true });
         }}
       />
     );
@@ -203,8 +229,12 @@ const SubscribeGate = ({ onLogin } = {}) => {
       setSubOpen(true);
       return;
     }
+    // [추가] 로그인 · 구독을 마치면 돌아올 화면 기억 (AI 칩 기록이 이미 있으면 그대로 둠)
+    // 감상 페이지 주소로 바로 들어왔던 경우는 그 페이지로 (로그인 · 구독 후 바로 감상)
+    const back = targetHref.current.startsWith("/") ? targetHref.current : `${window.location.pathname}${window.location.search}`;
+    if (!peekResumeIntent()) saveResumeIntent({ path: back });
     navigate("/login", {
-      state: { from: leaveOnClose ? "/sport" : pathname, intent: reason === "account" ? "login" : "subscribe" },
+      state: { from: back, intent: reason === "account" ? "login" : "subscribe" },
     });
   };
 
