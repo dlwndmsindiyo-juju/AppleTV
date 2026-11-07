@@ -6173,3 +6173,34 @@ section.sport-hero .sport-hero-actions button.sport-btn {
   font-family: inherit;
   cursor: pointer;
 }
+
+// =====================================================================
+// [수정] 관심 구단 히어로 — 구단명이 또렷하게 보이도록 굵게 (Bold 700 · PC · 태블릿 · 모바일 공통)
+// - 글자 크기는 그대로 (display-xl / heading-h1 / display-l) · 굵기만 700
+// =====================================================================
+section.sport-hero.sport-hero--team .sport-team-hero-name {
+  font-weight: $font-weight-bold;
+}
+
+// [수정] 라이브 상세 오른쪽 경기 목록 아래 [예정된 경기 보러 가기 →] (예정된 경기 상세로 이동)
+.sport-live-page .sport-live-list-empty {
+  @include body-small-b;
+  display: block;
+  margin: $space-lg 0 0;
+  padding: $space-xl 0;
+  border-top: 0.0625rem solid $dark-color-400;
+  color: $light-color-500;
+  text-align: center;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    color: $light-color-0;
+  }
+}
+
+.sport-live-page .sport-live-list-arrow {
+  display: inline-block;
+  transform: scaleX(-1); // 돌아가기 "←" 를 뒤집어 "→" 방향
+}

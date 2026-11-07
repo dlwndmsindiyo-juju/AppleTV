@@ -42,6 +42,8 @@ export const TvActionButtons = ({ actions, focusOn, className = "" }) => {
 export const PlayIcon = () => <img className="tv-end-play" src="/icons/play-w.svg" alt="" aria-hidden="true" />;
 export const PlusIcon = ({ on = false }) => <span className={`tv-end-plus${on ? " is-on" : ""}`} aria-hidden="true" />;
 export const TextIcon = ({ children }) => <span className="tv-end-btn-text">{children}</span>;
+// [추가] 작품 · 경기 정보: 흰 원 + "i" (public/icons/tv/tv-info-icon.svg · 관심 버튼 + 원과 같은 크기)
+export const InfoIcon = () => <img className="tv-end-info-icon" src="/icons/tv/tv-info-icon.svg" alt="" aria-hidden="true" />;
 
 // 관심 경기 (이 기기에 저장) — [수정] 보관함 "스포츠" 에 보여주려고 제목 · 이미지도 같이 저장
 // - 저장 모양: [{ id, title, image, label, prefix, desc, videoId }] (예전 저장값: 영상 id 문자열)
