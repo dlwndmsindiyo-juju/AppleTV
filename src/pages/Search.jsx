@@ -6,10 +6,12 @@
 // - 결과 없음: 검색어 지우기
 // - 로그인 전에도 검색 · 둘러보기 가능 (작품을 재생할 때만 상세 페이지에서 구독 팝업)
 // - 최근 검색 항목은 로그인한 계정만 저장
+// - [추가] 검색 결과: [대한민국에서 시청할 수 없는 작품 숨기기] 체크박스 (TMDB watch/providers KR · useSearchStore availability)
+//   · 이용 방법을 확인하는 중인 작품은 그대로 보이고, 확인 결과 "시청 불가"면 숨김 · 인물은 그대로
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
-import { useSearchStore } from "../store/useSearchStore";
+import { useSearchStore, itemKey } from "../store/useSearchStore";
 import {
   PosterGrid,
   PosterSkeleton,
@@ -46,7 +48,10 @@ const Search = () => {
     onLoadRecent,
     onAddRecent,
     onClearRecent,
+    availability,
+    onLoadAvailability,
   } = useSearchStore();
+  const [hideUnavailable, setHideUnavailable] = useState(false); // [추가] 국내 시청 불가 작품 숨기기
   const toEntry = useResultEntry();
 
   // ---------- 모바일 검색창 (PC · 태블릿은 헤더 검색창 사용) ----------
@@ -94,14 +99,35 @@ const Search = () => {
     inputRef.current?.focus();
   };
 
+  // [추가] 검색 결과 작품의 대한민국 이용 방법 불러오기 (한 번 받은 값은 저장해 재사용)
+  useEffect(() => {
+    const items = [
+      ...results.movie.map((it) => ({ ...it, media_type: "movie" })),
+      ...results.tv.map((it) => ({ ...it, media_type: "tv" })),
+    ];
+    if (items.length) onLoadAvailability(items);
+  }, [results, onLoadAvailability]);
+
+  // 대한민국에서 시청할 수 없는 작품 (확인 끝난 것만 · 인물은 해당 없음)
+  const isUnavailable = (type, item) => type !== "person" && availability[itemKey(type, item.id)] === "none";
+  const keep = (type) => (item) => !hideUnavailable || !isUnavailable(type, item);
+
   // ---------- 목록 정리 ----------
   const topResults = useMemo(() => {
-    const all = [...results.movie, ...results.tv, ...results.person];
+    const all = [
+      ...results.movie.filter(keep("movie")),
+      ...results.tv.filter(keep("tv")),
+      ...results.person,
+    ];
     return all.sort((a, b) => (b.popularity || 0) - (a.popularity || 0)).slice(0, TOP_COUNT);
-  }, [results]);
-  const tvList = results.tv.slice(0, ROW_COUNT);
-  const movieList = results.movie.slice(0, ROW_COUNT);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results, hideUnavailable, availability]);
+  const tvList = results.tv.filter(keep("tv")).slice(0, ROW_COUNT);
+  const movieList = results.movie.filter(keep("movie")).slice(0, ROW_COUNT);
   const total = results.movie.length + results.tv.length + results.person.length;
+  const hiddenCount = hideUnavailable
+    ? results.movie.filter((it) => isUnavailable("movie", it)).length + results.tv.filter((it) => isUnavailable("tv", it)).length
+    : 0;
 
   // 작품 · 인물 페이지의 "검색 결과로 돌아가기"
   const backTo = {
@@ -182,6 +208,21 @@ const Search = () => {
   } else {
     body = (
       <>
+        {/* [추가] 국내 시청 불가 작품 숨기기 */}
+        <div className="search-filter">
+          <label className="search-filter-check">
+            <input
+              type="checkbox"
+              checked={hideUnavailable}
+              onChange={(e) => setHideUnavailable(e.target.checked)}
+            />
+            <span className="search-filter-box" aria-hidden="true" />
+            <span className="search-filter-label">대한민국에서 시청할 수 없는 작품 숨기기</span>
+          </label>
+          {hideUnavailable && hiddenCount > 0 && (
+            <span className="search-filter-count" aria-live="polite">{hiddenCount}개 숨김</span>
+          )}
+        </div>
         <section className="search-block">
           <div className="search-block-head">
             <h2 className="search-block-title">인기 검색 결과</h2>

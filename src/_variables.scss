@@ -387,6 +387,11 @@ $tablet-edge: 2.5rem; // 헤더·푸터·스포츠 섹션 좌우 여백
 // - [수정] 예전 값 12.5% (콘텐츠 75% · 1440)
 $desktop-gutter: 5%;
 
+// [추가] 위시리스트 — 왼쪽 그룹 메뉴 폭 · 세로 포스터 (전체 보기 포스터와 같은 크기 · member.scss $browse-poster-*)
+$wish-side-width: 15rem;
+$wish-poster-width: clamp(10.625rem, 14vw, 15rem);
+$wish-poster-gap: 1.375rem;
+
 
 // =====================================================================
 // [추가] TV 1920 × 1080 — 컴포넌트 토큰 (TV.scss 에서 사용)
