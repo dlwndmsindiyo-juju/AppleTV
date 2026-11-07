@@ -6,8 +6,13 @@ import { PAYMENT_URL } from "../data/appleLinks";
 import { PaymentRegisterPopup } from "./Subscribe"; // [추가] 지불 방법 추가 = 구독 팝업의 지불 방법 등록 화면
 // public 폴더의 파일은 import 없이 루트(/) 경로로 참조합니다.
 // 실제 경로: public/pay-icon/*.svg, public/method-icon/*.svg
+// [추가] 카드 아이콘 (credit-card.svg 그대로 · 파일 경로를 찾지 못해 깨지는 일이 없게 코드 안에 넣음)
+const CREDIT_CARD_ICON = `data:image/svg+xml;utf8,${encodeURIComponent(
+  '<svg width="36" height="24" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 21.5V12H36V21.5C36 22.1875 35.7552 22.776 35.2656 23.2656C34.776 23.7552 34.1875 24 33.5 24H2.5C1.8125 24 1.22396 23.7552 0.734375 23.2656C0.244792 22.776 0 22.1875 0 21.5ZM10 18V20H16V18H10ZM4 18V20H8V18H4ZM33.5 0C34.1875 0 34.776 0.244792 35.2656 0.734375C35.7552 1.22396 36 1.8125 36 2.5V6H0V2.5C0 1.8125 0.244792 1.22396 0.734375 0.734375C1.22396 0.244792 1.8125 0 2.5 0H33.5Z" fill="#5865F2"/></svg>'
+)}`;
+
 const METHOD_ICONS = {
-  card: "/icons/method-icon/card.svg",
+  card: CREDIT_CARD_ICON, // [수정] 카드사를 모를 때 카드 아이콘 (credit-card.svg 를 코드 안에 넣음 → 파일 위치 · 경로와 상관없이 항상 보임)
   pay: "/icons/method-icon/pay.svg",
   phone: "/icons/method-icon/phone.svg",
 };
@@ -407,6 +412,8 @@ export default function AccountPayment() {
                 return (
                   <li key={payment.id} className="account-pay-card">
                     <div className="account-pay-item-left">
+                      {/* [수정] 카드 이름 왼쪽 아이콘: 카드사 로고 → 없으면 카드 아이콘(credit-card.svg) */}
+                      <img className="account-pay-logo" src={getPaymentLogo(payment, meta)} alt="" aria-hidden="true" />
                       <div className="account-pay-card-text">
                         <strong className="account-pay-brand">{meta.title}</strong>
                         <span className="account-pay-number">{meta.detail}</span>
@@ -417,8 +424,6 @@ export default function AccountPayment() {
                     </div>
 
                     <div className="account-pay-item-right" ref={menuOpenId === payment.id ? menuRef : null}>
-                      {/* [수정] 카드사 로고: 시안처럼 카드 오른쪽 */}
-                      <img className="account-pay-logo" src={getPaymentLogo(payment, meta)} alt="" aria-hidden="true" />
                       <button
                         type="button"
                         className="account-pay-more"

@@ -18,6 +18,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore, isSubscribed, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
 import { KOREA_REGIONS, SIDO_LIST } from "../data/koreaRegions";
 import { PRIVACY_URL } from "../data/appleLinks";
+import { CARD_BRANDS } from "../components/profile/AccountShared"; // [추가] 카드사 (계정 설정 지불 방법에 카드사 로고로 보임)
 
 const AUTH_PATHS = ["/login", "/subscribe"];
 const TERMS_URL = "https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html";
@@ -58,6 +59,7 @@ const TERMS = [
 
 const EMPTY_FORM = {
   method: PAY_METHODS[0],
+  brand: "", // [추가] 카드사
   cardNumber: "",
   expiry: "",
   cardPw: "",
@@ -122,19 +124,63 @@ const validBirth = (v) => {
   return d.getMonth() === Number(m[2]) - 1 && d.getDate() === Number(m[3]) && d < new Date() && Number(m[1]) > 1900;
 };
 
-// 비어 있거나 모양이 틀린 칸 (key 목록)
-const getErrors = (f) => {
+// [추가] 청구 주소 칸 검사 (지불 방법 등록 · 청구 주소 팝업 공용)
+const getAddressErrors = (f) => {
   const e = [];
-  const len = digits(f.cardNumber).length;
-  if (len < 15 || len > 16) e.push("cardNumber");
-  if (!validExpiry(f.expiry)) e.push("expiry");
-  if (digits(f.cardPw).length !== 2) e.push("cardPw");
   if (!f.lastName.trim()) e.push("lastName");
   if (!f.firstName.trim()) e.push("firstName");
   if (!f.road.trim()) e.push("road");
   if (!f.sido) e.push("sido");
   if (!f.sigungu) e.push("sigungu");
   if (digits(f.postal).length !== 5) e.push("postal");
+  return e;
+};
+
+// [추가] 저장 모양 (users/{uid}.billing: name · address1 · address2 · postal · phone)
+const toBilling = (f, phone = "") => ({
+  name: `${f.lastName.trim()}${f.firstName.trim()}`,
+  address1: `${f.sido} ${f.sigungu} ${f.road.trim()}`,
+  address2: f.detail.trim(),
+  postal: digits(f.postal),
+  phone,
+});
+
+// [추가] 저장된 청구 주소 → 입력 칸 (편집할 때 채워 넣기 · 이름은 첫 글자를 성으로)
+const fromBilling = (b) => {
+  if (!b) return {};
+  const name = (b.name || "").trim();
+  let rest = (b.address1 || "").trim();
+  const sido = SIDO_LIST.find((x) => rest.startsWith(`${x} `)) || "";
+  if (sido) rest = rest.slice(sido.length + 1);
+  const sigungu = sido ? (KOREA_REGIONS[sido].find((x) => rest.startsWith(`${x} `)) || "") : "";
+  if (sigungu) rest = rest.slice(sigungu.length + 1);
+  return {
+    lastName: name.slice(0, 1),
+    firstName: name.slice(1),
+    road: rest,
+    detail: b.address2 || "",
+    sido,
+    sigungu,
+    postal: b.postal || "",
+    phone: b.phone ? fmtPhone(b.phone) : "",
+  };
+};
+
+// 비어 있거나 모양이 틀린 칸 (key 목록)
+// [추가] 카드 칸만 (계정 설정 지불 방법 추가)
+const getCardErrors = (f) => {
+  const e = [];
+  if (!f.brand) e.push("brand");
+  const len = digits(f.cardNumber).length;
+  if (len < 15 || len > 16) e.push("cardNumber");
+  if (!validExpiry(f.expiry)) e.push("expiry");
+  if (digits(f.cardPw).length !== 2) e.push("cardPw");
+  return e;
+};
+
+const getErrors = (f) => {
+  const e = getCardErrors(f);
+  e.push(...getAddressErrors(f));
   if (!f.idName.trim()) e.push("idName");
   if (!validBirth(f.birth)) e.push("birth");
   if (!f.carrier) e.push("carrier");
@@ -266,6 +312,44 @@ const Check = ({ checked, onChange, strong, children }) => (
   </label>
 );
 
+// [추가] 청구 주소 칸 묶음 (지불 방법 등록 · 계정 설정 청구 주소 팝업 공용)
+const BillingSection = ({ form, setForm, bad, children }) => {
+  const set = (key) => (value) => setForm((f) => ({ ...f, [key]: value }));
+  const sigunguList = KOREA_REGIONS[form.sido] || [];
+  return (
+    <section className="sub-section">
+      <h2 className="sub-section-title">청구 주소</h2>
+      <div className="sub-row">
+        <Field label="성" invalid={bad("lastName")}>
+          <input className="sub-field-input" autoComplete="family-name" placeholder="성" maxLength={20}
+            value={form.lastName} onChange={(e) => set("lastName")(e.target.value)} />
+        </Field>
+        <Field label="이름" invalid={bad("firstName")}>
+          <input className="sub-field-input" autoComplete="given-name" placeholder="이름" maxLength={30}
+            value={form.firstName} onChange={(e) => set("firstName")(e.target.value)} />
+        </Field>
+      </div>
+      <Field label="도로명 주소" invalid={bad("road")}>
+        <input className="sub-field-input" autoComplete="address-line1" placeholder="도로명과 건물번호" maxLength={100}
+          value={form.road} onChange={(e) => set("road")(e.target.value)} />
+      </Field>
+      <Field label="상세 주소">
+        <input className="sub-field-input" autoComplete="address-line2" placeholder="동·호수 등 (선택)" maxLength={100}
+          value={form.detail} onChange={(e) => set("detail")(e.target.value)} />
+      </Field>
+      <div className="sub-row">
+        <Dropdown label="시/도" invalid={bad("sido")} value={form.sido} placeholder="시/도 선택" options={SIDO_LIST} onChange={(v) => setForm((f) => ({ ...f, sido: v, sigungu: "" }))} />
+        <Dropdown label="시/군/구" invalid={bad("sigungu")} value={form.sigungu} placeholder="시/군/구 선택" options={sigunguList} onChange={set("sigungu")} disabled={!form.sido} />
+      </div>
+      <Field label="우편번호" invalid={bad("postal")}>
+        <input className="sub-field-input" inputMode="numeric" autoComplete="postal-code" placeholder="우편번호 입력"
+          value={form.postal} onChange={(e) => set("postal")(digits(e.target.value).slice(0, 5))} />
+      </Field>
+      {children}
+    </section>
+  );
+};
+
 // =====================================================================
 // [추가] 팝업 틀: 어두운 배경 + 가운데 창 (뒤 화면 스크롤 막기 · Esc 로 닫기)
 // =====================================================================
@@ -319,8 +403,9 @@ const SubModal = ({ step, onDismiss, dismissOnBackdrop = true, busy = false, chi
 // =====================================================================
 // [추가] 지불 방법 등록 (구독 팝업 2단계 · 계정 설정 [지불 방법 추가] 공용)
 // - 저장: 카드 종류 + 마지막 4자리 · 청구 주소(이름 · 주소 · 우편번호)만 → onSaved()
+// - [추가] cardOnly: 계정 설정 [지불 방법 추가] — 지불 유형 · 카드 세부사항만 (주소 · 신원 · 통신사 · 전화번호 · 약관 · 확인 코드 없음)
 // =====================================================================
-const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange }) => {
+const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false }) => {
   const footerEl = useContext(FooterSlot);
   const user = useAuthStore((s) => s.user);
   const onSavePayments = useAuthStore((s) => s.onSavePayments);
@@ -342,10 +427,10 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange }) => {
   const payments = getPayments(user);
   const full = payments.length >= PAYMENT_MAX;
   const set = (key) => (value) => setForm((f) => ({ ...f, [key]: value }));
-  const errors = tried ? getErrors(form) : [];
+  const check = cardOnly ? getCardErrors : getErrors;
+  const errors = tried ? check(form) : [];
   const bad = (key) => errors.includes(key);
 
-  const sigunguList = KOREA_REGIONS[form.sido] || [];
   const allTerms = TERMS.every((t) => form.terms[t.key]);
   const setTerm = (key) => (v) => setForm((f) => ({ ...f, terms: { ...f.terms, [key]: v } }));
   const setAllTerms = (v) => setForm((f) => ({ ...f, terms: Object.fromEntries(TERMS.map((t) => [t.key, v])) }));
@@ -358,7 +443,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange }) => {
       setError(`지불 방법은 최대 ${PAYMENT_MAX}개까지 등록할 수 있어요.`);
       return;
     }
-    const errs = getErrors(form);
+    const errs = check(form);
     if (errs.length) {
       setTried(true);
       setError("입력하지 않았거나 형식이 맞지 않는 항목을 확인해 주세요.");
@@ -368,26 +453,20 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange }) => {
       });
       return;
     }
-    if (!codeSent) {
+    if (!cardOnly && !codeSent) {
       setCodeSent(true);
       return;
     }
-    if (!/^\d{6}$/.test(code)) {
+    if (!cardOnly && !/^\d{6}$/.test(code)) {
       setError("휴대폰으로 받은 6자리 확인 코드를 입력해 주세요.");
       return;
     }
 
     setBusy(true);
     // 카드: 종류 + 마지막 4자리만 · 청구 주소: 이름 · 주소 · 우편번호만
-    const card = { id: makeId(), brand: "신용/체크카드", last4: digits(form.cardNumber).slice(-4) };
+    const card = { id: makeId(), brand: form.brand, last4: digits(form.cardNumber).slice(-4) }; // 카드사 + 마지막 4자리만
     const okPay = await onSavePayments([...payments, card].slice(0, PAYMENT_MAX));
-    const okBill = okPay && (await onSaveBilling({
-      name: `${form.lastName.trim()}${form.firstName.trim()}`,
-      address1: `${form.sido} ${form.sigungu} ${form.road.trim()}`,
-      address2: form.detail.trim(),
-      postal: digits(form.postal),
-      phone: "",
-    }));
+    const okBill = okPay && (cardOnly || (await onSaveBilling(toBilling(form)))); // 계정 설정: 카드만 저장
     setBusy(false);
     if (!okPay || !okBill) {
       setError("지불 방법을 등록하지 못했어요. 잠시 후 다시 시도해 주세요.");
@@ -421,6 +500,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange }) => {
 
           <section className="sub-section">
             <h2 className="sub-section-title">카드 세부사항</h2>
+            <Dropdown label="카드사" invalid={bad("brand")} value={form.brand} placeholder="카드사 선택" options={CARD_BRANDS} onChange={set("brand")} />
             <Field label="카드번호" invalid={bad("cardNumber")}>
               <input className="sub-field-input" inputMode="numeric" autoComplete="cc-number" placeholder="0000  0000  0000  0000"
                 value={form.cardNumber} onChange={(e) => set("cardNumber")(fmtCard(e.target.value))} />
@@ -437,35 +517,8 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange }) => {
             </div>
           </section>
 
-          <section className="sub-section">
-            <h2 className="sub-section-title">청구 주소</h2>
-            <div className="sub-row">
-              <Field label="성" invalid={bad("lastName")}>
-                <input className="sub-field-input" autoComplete="family-name" placeholder="성" maxLength={20}
-                  value={form.lastName} onChange={(e) => set("lastName")(e.target.value)} />
-              </Field>
-              <Field label="이름" invalid={bad("firstName")}>
-                <input className="sub-field-input" autoComplete="given-name" placeholder="이름" maxLength={30}
-                  value={form.firstName} onChange={(e) => set("firstName")(e.target.value)} />
-              </Field>
-            </div>
-            <Field label="도로명 주소" invalid={bad("road")}>
-              <input className="sub-field-input" autoComplete="address-line1" placeholder="도로명과 건물번호" maxLength={100}
-                value={form.road} onChange={(e) => set("road")(e.target.value)} />
-            </Field>
-            <Field label="상세 주소">
-              <input className="sub-field-input" autoComplete="address-line2" placeholder="동·호수 등 (선택)" maxLength={100}
-                value={form.detail} onChange={(e) => set("detail")(e.target.value)} />
-            </Field>
-            <div className="sub-row">
-              <Dropdown label="시/도" invalid={bad("sido")} value={form.sido} placeholder="시/도 선택" options={SIDO_LIST} onChange={(v) => setForm((f) => ({ ...f, sido: v, sigungu: "" }))} />
-              <Dropdown label="시/군/구" invalid={bad("sigungu")} value={form.sigungu} placeholder="시/군/구 선택" options={sigunguList} onChange={set("sigungu")} disabled={!form.sido} />
-            </div>
-            <Field label="우편번호" invalid={bad("postal")}>
-              <input className="sub-field-input" inputMode="numeric" autoComplete="postal-code" placeholder="우편번호 입력"
-                value={form.postal} onChange={(e) => set("postal")(digits(e.target.value).slice(0, 5))} />
-            </Field>
-          </section>
+          {!cardOnly && (<>
+          <BillingSection form={form} setForm={setForm} bad={bad} />
 
           <section className="sub-section">
             <h2 className="sub-section-title">신원 확인</h2>
@@ -517,6 +570,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange }) => {
               <p className="sub-note">입력한 휴대폰 번호로 확인 코드를 보냈어요. (데모 화면: 6자리 숫자를 입력하면 확인됩니다)</p>
             </section>
           )}
+          </>)}
 
           {error && <p className="sub-error" role="alert">{error}</p>}
 
@@ -527,7 +581,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange }) => {
       {footerEl && createPortal(
         <div className="sub-pay-footer">
           <button type="submit" form="sub-pay-form" className="sub-btn" disabled={busy}>
-            {busy ? "등록 중..." : codeSent ? "확인" : "확인 코드 보내기"}
+            {busy ? "등록 중..." : cardOnly ? "등록" : codeSent ? "확인" : "확인 코드 보내기"}
           </button>
         </div>,
         footerEl
@@ -668,7 +722,11 @@ export const SubscribePopup = ({ onClose, onDone }) => {
     const isTrial = sub?.status === "trial";
     content = (
       <div className="sub-pop-inner sub-pop-inner--narrow sub-pop-center sub-done">
-        <span className="sub-done-check" aria-hidden="true" />
+        {/* [수정] 체크 그리기: 원이 커지며 나타난 뒤 체크 선이 그려짐 (App.scss .sub-done-check) */}
+        <svg className="sub-done-check" viewBox="0 0 50 50" aria-hidden="true">
+          <circle className="sub-done-check-circle" cx="25" cy="25" r="25" />
+          <path className="sub-done-check-mark" d="M15.5 25.5l6.5 6.5 12.5-13" pathLength="1" />
+        </svg>
         <h1 className="sub-done-title">구독이 완료되었어요</h1>
         <p className="sub-done-desc">Apple TV를 바로 즐겨보세요.</p>
 
@@ -718,7 +776,87 @@ export const PaymentRegisterPopup = ({ onClose, onSaved }) => {
   const [busy, setBusy] = useState(false);
   return (
     <SubModal step="payment" onDismiss={() => !busy && onClose()} dismissOnBackdrop={false} busy={busy}>
-      <PaymentForm onBack={onClose} onClose={onClose} onSaved={onSaved} onBusyChange={setBusy} />
+      <PaymentForm onBack={onClose} onClose={onClose} onSaved={onSaved} onBusyChange={setBusy} cardOnly />
+    </SubModal>
+  );
+};
+
+// =====================================================================
+// [추가] 청구 주소 팝업 (계정 설정 → 청구 주소 추가 · 편집) — 지불 방법 등록과 같은 디자인
+// - [수정] 주소만 입력 (카드 · 전화번호 없음) · 저장: 이름 · 주소 · 우편번호 (users/{uid}.billing · 예전 전화번호는 그대로 둠)
+// =====================================================================
+const AddressForm = ({ initial, onClose, onSaved, onBusyChange }) => {
+  const footerEl = useContext(FooterSlot);
+  const onSaveBilling = useAuthStore((s) => s.onSaveBilling);
+  const [form, setForm] = useState(() => ({ ...EMPTY_FORM, ...fromBilling(initial) }));
+  const [tried, setTried] = useState(false);
+  const [error, setError] = useState("");
+  const [busy, setBusyState] = useState(false);
+  const formRef = useRef(null);
+
+  const setBusy = (v) => {
+    setBusyState(v);
+    onBusyChange?.(v);
+  };
+  const errors = tried ? getAddressErrors(form) : [];
+  const bad = (key) => errors.includes(key);
+
+  const submit = async () => {
+    if (busy) return;
+    setError("");
+    const errs = getAddressErrors(form);
+    if (errs.length) {
+      setTried(true);
+      setError("입력하지 않았거나 형식이 맞지 않는 항목을 확인해 주세요.");
+      requestAnimationFrame(() => {
+        formRef.current?.querySelector(".sub-field.is-invalid input, .sub-select.is-invalid .sub-select-trigger")?.focus();
+      });
+      return;
+    }
+    setBusy(true);
+    const ok = await onSaveBilling(toBilling(form, initial?.phone || ""));
+    setBusy(false);
+    if (!ok) {
+      setError("청구 주소를 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
+      return;
+    }
+    onSaved?.();
+  };
+
+  return (
+    <>
+      <SubNav onBack={onClose} onClose={onClose} />
+      <form
+        ref={formRef}
+        id="sub-address-form"
+        className="sub-pop-inner sub-pop-inner--form"
+        onSubmit={(e) => { e.preventDefault(); submit(); }}
+        noValidate
+      >
+        <SubHead title={initial ? "청구 주소 편집" : "청구 주소 추가"} desc="결제에 사용할 이름과 주소를 입력해 주세요." />
+
+        <BillingSection form={form} setForm={setForm} bad={bad} />
+
+        {error && <p className="sub-error" role="alert">{error}</p>}
+      </form>
+
+      {footerEl && createPortal(
+        <div className="sub-pay-footer">
+          <button type="submit" form="sub-address-form" className="sub-btn" disabled={busy}>
+            {busy ? "저장 중..." : "저장"}
+          </button>
+        </div>,
+        footerEl
+      )}
+    </>
+  );
+};
+
+export const AddressRegisterPopup = ({ initial, onClose, onSaved }) => {
+  const [busy, setBusy] = useState(false);
+  return (
+    <SubModal step="payment" onDismiss={() => !busy && onClose()} dismissOnBackdrop={false} busy={busy}>
+      <AddressForm initial={initial} onClose={onClose} onSaved={onSaved} onBusyChange={setBusy} />
     </SubModal>
   );
 };
