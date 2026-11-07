@@ -14,6 +14,8 @@ import resetIcon from "./assets/reset.svg";
 import plusIcon from "./assets/plus.svg";
 import removeIcon from "./assets/remove.svg";
 import "./AiAssistantPopup.scss";
+import { useAuthStore, isSubscribed } from "../../store/useAuthStore"; // [추가] 구독 전에는 취향을 고르면 구독 안내 팝업
+import { openSubscribeGate } from "../../utils/subscribeGate";
 
 const emptyPreferences = (taste) => ({
   genres: [],
@@ -54,7 +56,17 @@ function ResultLink({ item, children, onOpen, busy, disabled, className = "", ..
 
 // onRecommend: (preferences, { signal, page }) => Promise<작품[]>
 // 작품: { id, title, genre, overview, poster, detailPath?, appleUrl?, exactMatch?, relaxations? }
-export default function AiAssistantPopup({ initialTaste, onClose, onRecommend }) {
+// [추가] requireSubscription: 구독 전(로그인 전 포함) 계정이 취향 버튼을 누르면 이 팝업을 닫고 "구독 후 이용해주세요." 팝업
+//   · 로그인 전: [계정 만들기] → 로그인 화면 / 로그인했지만 구독 전: [구독하기] → 구독 팝업 (components/layout/SubscribeGate.jsx)
+export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, requireSubscription = false }) {
+  const gateUser = useAuthStore((s) => s.user);
+  const blocked = requireSubscription && !isSubscribed(gateUser);
+  const guard = (fn) => (...args) => {
+    if (!blocked) return fn(...args);
+    onClose();
+    openSubscribeGate(gateUser ? "watch" : "ai");
+    return undefined;
+  };
   const dialogRef = useRef(null);
   const navigate = useNavigate();
   const detailRequestRef = useRef(null);
@@ -79,9 +91,9 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend })
   const stepValid = [preferences.genres.length > 0, true, Boolean(preferences.duration)][step];
   const stepLabels = ["장르 선택", "분위기 선택", "시청 시간 선택"];
   const groups = [
-    { title: "어떤 장르가 좋아요?", description: "관심있는 장르를 하나 이상 선택해주세요.", options: GENRES, selected: preferences.genres, onSelect: toggleGenre, columns: 3 },
-    { title: "오늘 어떤 분위기를 원해요?", description: "보고 싶은 분위기를 선택해주세요.", options: MOODS, selected: [preferences.mood], onSelect: (v) => setSingle("mood", v), columns: 2 },
-    { title: "어떤 길이로 볼까요?", description: "시청할 수 있는 시간을 선택해 주세요.", options: DURATIONS, selected: [preferences.duration], onSelect: (v) => setSingle("duration", v), columns: 2 },
+    { title: "어떤 장르가 좋아요?", description: "관심있는 장르를 하나 이상 선택해주세요.", options: GENRES, selected: preferences.genres, onSelect: guard(toggleGenre), columns: 3 },
+    { title: "오늘 어떤 분위기를 원해요?", description: "보고 싶은 분위기를 선택해주세요.", options: MOODS, selected: [preferences.mood], onSelect: guard((v) => setSingle("mood", v)), columns: 2 },
+    { title: "어떤 길이로 볼까요?", description: "시청할 수 있는 시간을 선택해 주세요.", options: DURATIONS, selected: [preferences.duration], onSelect: guard((v) => setSingle("duration", v)), columns: 2 },
   ];
 
   useEffect(() => {

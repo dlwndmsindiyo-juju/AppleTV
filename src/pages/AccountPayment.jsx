@@ -3,6 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useAuthStore, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
 import { AccountSubPage, ConfirmDialog, CARD_BRANDS, CARD_BRAND_ICONS } from "../components/profile/AccountShared";
 import { PAYMENT_URL } from "../data/appleLinks";
+import { PaymentRegisterPopup } from "./Subscribe"; // [추가] 지불 방법 추가 = 구독 팝업의 지불 방법 등록 화면
 // public 폴더의 파일은 import 없이 루트(/) 경로로 참조합니다.
 // 실제 경로: public/pay-icon/*.svg, public/method-icon/*.svg
 const METHOD_ICONS = {
@@ -170,7 +171,8 @@ export default function AccountPayment() {
   const authReady = useAuthStore((s) => s.authReady);
   const onSavePayments = useAuthStore((s) => s.onSavePayments);
 
-  const [step, setStep] = useState("closed");
+  const [step, setStep] = useState("closed"); // (예전 지불 방법 추가 창 · 지금은 안 씀)
+  const [addOpen, setAddOpen] = useState(false); // [추가] 지불 방법 등록 팝업
   const [form, setForm] = useState(INITIAL);
   const [removing, setRemoving] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -243,10 +245,10 @@ export default function AccountPayment() {
     }
   };
 
+  // [수정] 지불 방법 추가 → 구독 팝업과 같은 "지불 방법 등록" 팝업
   const openAdd = () => {
     if (busy || full) return;
-    setForm({ ...INITIAL });
-    setStep("select");
+    setAddOpen(true);
   };
 
   const expiryMonth = Number(form.expiry.slice(0, 2));
@@ -819,6 +821,17 @@ export default function AccountPayment() {
           onConfirm={remove}
           onCancel={() => {
             if (!busy) setRemoving(null);
+          }}
+        />
+      )}
+
+      {/* [추가] 지불 방법 등록 팝업 (저장은 팝업 안에서: 카드 종류 + 마지막 4자리 · 청구 주소) */}
+      {addOpen && (
+        <PaymentRegisterPopup
+          onClose={() => setAddOpen(false)}
+          onSaved={() => {
+            setAddOpen(false);
+            setMessage("지불 방법이 등록되었습니다.");
           }}
         />
       )}

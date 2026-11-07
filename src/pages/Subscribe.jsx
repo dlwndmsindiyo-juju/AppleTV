@@ -1,6 +1,10 @@
 // src/pages/Subscribe.jsx
 // [수정] 구독 팝업 (시안: Apple TV 구독하기 → 지불 방법 등록 → 구독 확인 → 구독 완료)
-// - 헤더 · 푸터 없는 전체 화면 (App.jsx 에서 /subscribe 도 로그인처럼 독립 화면)
+// - [수정] 팝업: 지금 보고 있는 화면 위에 어두운 배경 + 가운데 창
+//   · 로그인 → 프로필을 누르면 그 화면(프로필 선택) 위에 바로 뜸 (Login.jsx 에서 <SubscribePopup />)
+//   · /subscribe 로 들어오면 보던 화면(from) 위에 뜸 (App.jsx 가 뒤에 원래 화면을 그림)
+//   · Esc · 배경 누르면 닫힘 (지불 방법 입력 중에는 배경 눌러도 안 닫힘 · 구독 완료 화면은 홈으로)
+// - [추가] 지불 방법 등록 화면은 계정 설정 [지불 방법 추가] 에서도 같은 팝업으로 씀 (<PaymentRegisterPopup />)
 // - 위 왼쪽 "‹" 뒤로 · 오른쪽 "×" 닫기: 플랜 선택 · 지불 방법 등록 화면에만 (시안)
 // - 로고: public/icons/login-logo.svg (로그인 화면과 같은 로고)
 // - 등록된 지불 방법이 이미 있으면 지불 방법 등록은 건너뜀
@@ -8,7 +12,8 @@
 //   (카드번호 전체 · 유효기간 · 비밀번호 · 신원 확인 · 통신사 정보는 저장하지 않음)
 // - 로그인 전이면 로그인으로, 이미 구독 중인 계정이 들어오면 화면 없이 원래 화면으로 이동
 // - 스타일: App.scss "구독 팝업" (.sub-pop-*) · 휴대폰 mobile.scss
-import React, { useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore, isSubscribed, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
 import { KOREA_REGIONS, SIDO_LIST } from "../data/koreaRegions";
@@ -142,6 +147,7 @@ const getErrors = (f) => {
 
 const makeId = () => `pm_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
 
+
 // =====================================================================
 // 화면 조각
 // =====================================================================
@@ -170,20 +176,88 @@ const SubHead = ({ title, desc }) => (
   </div>
 );
 
-// 라벨이 위에 붙은 입력 칸 (select 면 오른쪽 "⌄")
-const Field = ({ label, invalid, select, children }) => (
-  <label className={`sub-field${select ? " sub-field--select" : ""}${invalid ? " is-invalid" : ""}`}>
+// 라벨이 위에 붙은 입력 칸
+const Field = ({ label, invalid, children }) => (
+  <label className={`sub-field${invalid ? " is-invalid" : ""}`}>
     <span className="sub-field-label">{label}</span>
     {children}
   </label>
 );
 
-const Select = ({ value, onChange, placeholder, options, disabled }) => (
-  <select className="sub-field-input" value={value} onChange={(e) => onChange(e.target.value)} disabled={disabled}>
-    {placeholder && <option value="" disabled>{placeholder}</option>}
-    {options.map((o) => <option key={o} value={o}>{o}</option>)}
-  </select>
-);
+// [수정] 선택 칸: 기본 select 대신 펼쳐지는 목록 (시안: 칸 아래로 목록이 붙어서 열림 · 고른 항목 ✓ · 마우스를 올린 항목 프라이머리)
+// - 키보드: Enter · Space · ↓ 로 열기, ↑ ↓ 로 이동, Esc 로 닫기 (팝업은 안 닫힘)
+const Dropdown = ({ label, value, onChange, placeholder, options, disabled, invalid }) => {
+  const [open, setOpen] = useState(false);
+  const boxRef = useRef(null);
+  const listRef = useRef(null);
+  const listId = useId();
+
+  // 바깥을 누르면 닫기
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDown = (e) => !boxRef.current?.contains(e.target) && setOpen(false);
+    document.addEventListener("mousedown", onDown);
+    // 열리면 고른 항목(없으면 첫 항목)으로 포커스
+    const items = listRef.current?.querySelectorAll(".sub-select-option");
+    const idx = Math.max(0, options.indexOf(value));
+    items?.[idx]?.focus({ preventScroll: false });
+    return () => document.removeEventListener("mousedown", onDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const pick = (o) => {
+    onChange(o);
+    setOpen(false);
+    boxRef.current?.querySelector(".sub-select-trigger")?.focus();
+  };
+
+  const onListKey = (e) => {
+    const items = [...(listRef.current?.querySelectorAll(".sub-select-option") || [])];
+    const i = items.indexOf(document.activeElement);
+    if (e.key === "ArrowDown") { e.preventDefault(); items[Math.min(items.length - 1, i + 1)]?.focus(); }
+    if (e.key === "ArrowUp") { e.preventDefault(); items[Math.max(0, i - 1)]?.focus(); }
+    if (e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation(); // 팝업 Esc 닫기로 넘어가지 않게
+      setOpen(false);
+      boxRef.current?.querySelector(".sub-select-trigger")?.focus();
+    }
+    if (e.key === "Tab") setOpen(false);
+  };
+
+  return (
+    <div ref={boxRef} className={`sub-select${open ? " is-open" : ""}${invalid ? " is-invalid" : ""}${disabled ? " is-disabled" : ""}`}>
+      <button
+        type="button"
+        className="sub-select-trigger"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listId}
+        disabled={disabled}
+        onClick={() => setOpen((v) => !v)}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowDown" && !open) { e.preventDefault(); setOpen(true); }
+          if (e.key === "Escape" && open) { e.preventDefault(); e.stopPropagation(); setOpen(false); }
+        }}
+      >
+        <span className="sub-field-label">{label}</span>
+        <span className={`sub-select-value${value ? "" : " is-placeholder"}`}>{value || placeholder}</span>
+      </button>
+      {open && (
+        <ul ref={listRef} id={listId} className="sub-select-list" role="listbox" aria-label={label} onKeyDown={onListKey}>
+          {options.map((o) => (
+            <li key={o} role="presentation">
+              <button type="button" role="option" aria-selected={o === value} className="sub-select-option" onClick={() => pick(o)}>
+                <span>{o}</span>
+                {o === value && <span className="sub-select-check" aria-hidden="true" />}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
 
 const Check = ({ checked, onChange, strong, children }) => (
   <label className={`sub-check${strong ? " sub-check--all" : ""}`}>
@@ -193,77 +267,104 @@ const Check = ({ checked, onChange, strong, children }) => (
 );
 
 // =====================================================================
-const Subscribe = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = AUTH_PATHS.includes(location.state?.from) ? "/" : location.state?.from || "/";
+// [추가] 팝업 틀: 어두운 배경 + 가운데 창 (뒤 화면 스크롤 막기 · Esc 로 닫기)
+// =====================================================================
+// [추가] 팝업 아래 고정 띠 자리 (지불 방법 등록의 [확인 코드 보내기]) — 스크롤 영역 밖이라 스크롤바가 띠 위에서 끝남
+const FooterSlot = createContext(null);
 
-  const { user, authReady, onStartTrial, onSavePayments, onSaveBilling } = useAuthStore();
+const SubModal = ({ step, onDismiss, dismissOnBackdrop = true, busy = false, children }) => {
+  const dialogRef = useRef(null); // 스크롤 영역
+  const [footerEl, setFooterEl] = useState(null);
+  const latest = useRef(onDismiss);
+  latest.current = onDismiss;
 
-  // step: "plans" | "payment" | "confirm" | "done" | "fail"
-  const [step, setStep] = useState("plans");
-  const [plan, setPlan] = useState("monthly");
-  const [busy, setBusy] = useState(false);
+  // 단계가 바뀌면 팝업 안을 맨 위로
+  useEffect(() => {
+    if (dialogRef.current) dialogRef.current.scrollTop = 0;
+  }, [step]);
+
+  // 떠 있는 동안 뒤 화면 스크롤 막기 · Esc 로 닫기
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => e.key === "Escape" && latest.current();
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
+
+  const onBackdrop = (e) => {
+    if (e.target !== e.currentTarget || busy || !dismissOnBackdrop) return;
+    onDismiss();
+  };
+
+  return createPortal(
+    <div className="sub-pop-backdrop" onMouseDown={onBackdrop}>
+      <div className={`sub-pop sub-pop--${step}`} role="dialog" aria-modal="true" aria-label="Apple TV 구독">
+        {/* [수정] 스크롤은 창 안쪽 영역에서만 (스크롤바가 창 가장자리 · 둥근 모서리에서 떨어져 있음) */}
+        <div ref={dialogRef} className="sub-pop-scroll">
+          <div className="sub-pop-body page-fade" key={step}>
+            <FooterSlot.Provider value={footerEl}>{children}</FooterSlot.Provider>
+          </div>
+        </div>
+        <div ref={setFooterEl} className="sub-pop-foot" />
+      </div>
+    </div>,
+    document.body
+  );
+};
+
+// =====================================================================
+// [추가] 지불 방법 등록 (구독 팝업 2단계 · 계정 설정 [지불 방법 추가] 공용)
+// - 저장: 카드 종류 + 마지막 4자리 · 청구 주소(이름 · 주소 · 우편번호)만 → onSaved()
+// =====================================================================
+const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange }) => {
+  const footerEl = useContext(FooterSlot);
+  const user = useAuthStore((s) => s.user);
+  const onSavePayments = useAuthStore((s) => s.onSavePayments);
+  const onSaveBilling = useAuthStore((s) => s.onSaveBilling);
+
   const [form, setForm] = useState(EMPTY_FORM);
   const [tried, setTried] = useState(false); // 확인 코드 보내기를 한 번 눌렀는지 (그 뒤부터 틀린 칸 표시)
   const [codeSent, setCodeSent] = useState(false);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
-  const enteredChecked = useRef(false);
+  const [busy, setBusyState] = useState(false);
   const formRef = useRef(null);
 
-  // 처음 들어왔을 때 1번만: 로그인 전 → 로그인 / 이미 구독 중 → 원래 화면
-  useEffect(() => {
-    if (!authReady || enteredChecked.current) return;
-    enteredChecked.current = true;
-    if (!user) navigate("/login", { replace: true, state: { from } });
-    else if (isSubscribed(user)) navigate(from, { replace: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authReady]);
+  const setBusy = (v) => {
+    setBusyState(v);
+    onBusyChange?.(v);
+  };
 
-  // 단계가 바뀌면 맨 위로
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [step]);
-
-  // 세션 확인 전 / 바로 이동할 계정은 빈 화면
-  if (!authReady || !user || (isSubscribed(user) && step !== "done")) {
-    return <main className="sub-pop" />;
-  }
-
-  const p = PLANS[plan];
-  const trial = !user.trialUsed && !user.subscription; // 처음 구독하는 계정만 무료 체험
-  const today = startOfToday();
-  const trialEnd = addDays(today, TRIAL_DAYS - 1);
-  const billStart = trial ? addDays(today, TRIAL_DAYS) : today;
   const payments = getPayments(user);
-
-  const close = () => navigate(from, { replace: true });
+  const full = payments.length >= PAYMENT_MAX;
   const set = (key) => (value) => setForm((f) => ({ ...f, [key]: value }));
   const errors = tried ? getErrors(form) : [];
   const bad = (key) => errors.includes(key);
 
-  // 플랜 → (지불 방법이 없으면) 지불 방법 등록 → 구독 확인
-  const nextFromPlans = () => {
-    setError("");
-    if (payments.length > 0) {
-      setStep("confirm");
-    } else {
-      setStep("payment");
-    }
-  };
+  const sigunguList = KOREA_REGIONS[form.sido] || [];
+  const allTerms = TERMS.every((t) => form.terms[t.key]);
+  const setTerm = (key) => (v) => setForm((f) => ({ ...f, terms: { ...f.terms, [key]: v } }));
+  const setAllTerms = (v) => setForm((f) => ({ ...f, terms: Object.fromEntries(TERMS.map((t) => [t.key, v])) }));
 
   // 확인 코드 보내기 → (보낸 뒤) 확인
   const submitPayment = async () => {
     if (busy) return;
     setError("");
+    if (full) {
+      setError(`지불 방법은 최대 ${PAYMENT_MAX}개까지 등록할 수 있어요.`);
+      return;
+    }
     const errs = getErrors(form);
     if (errs.length) {
       setTried(true);
       setError("입력하지 않았거나 형식이 맞지 않는 항목을 확인해 주세요.");
       // 첫 번째로 틀린 칸으로 이동
       requestAnimationFrame(() => {
-        formRef.current?.querySelector(".sub-field.is-invalid input, .sub-field.is-invalid select, .sub-checks.is-invalid input")?.focus();
+        formRef.current?.querySelector(".sub-field.is-invalid input, .sub-select.is-invalid .sub-select-trigger, .sub-checks.is-invalid input")?.focus();
       });
       return;
     }
@@ -297,8 +398,169 @@ const Subscribe = () => {
     setCode("");
     setCodeSent(false);
     setTried(false);
-    setStep("confirm");
+    onSaved?.(card);
   };
+
+  return (
+    <>
+      <SubNav onBack={onBack} onClose={onClose} />
+      <div className="sub-pay-layout">
+        <form
+          ref={formRef}
+          id="sub-pay-form"
+          className="sub-pop-inner sub-pop-inner--form"
+          onSubmit={(e) => { e.preventDefault(); submitPayment(); }}
+          noValidate
+        >
+          <SubHead title="지불 방법 등록" desc="결제에 사용할 결제수단을 등록해 주세요." />
+
+          <section className="sub-section">
+            <h2 className="sub-section-title">지불 유형</h2>
+            <Dropdown label="결제수단" value={form.method} onChange={set("method")} options={PAY_METHODS} />
+          </section>
+
+          <section className="sub-section">
+            <h2 className="sub-section-title">카드 세부사항</h2>
+            <Field label="카드번호" invalid={bad("cardNumber")}>
+              <input className="sub-field-input" inputMode="numeric" autoComplete="cc-number" placeholder="0000  0000  0000  0000"
+                value={form.cardNumber} onChange={(e) => set("cardNumber")(fmtCard(e.target.value))} />
+            </Field>
+            <div className="sub-row">
+              <Field label="유효기간" invalid={bad("expiry")}>
+                <input className="sub-field-input" inputMode="numeric" autoComplete="cc-exp" placeholder="MM/YY"
+                  value={form.expiry} onChange={(e) => set("expiry")(fmtExpiry(e.target.value))} />
+              </Field>
+              <Field label="비밀번호" invalid={bad("cardPw")}>
+                <input className="sub-field-input" type="password" inputMode="numeric" autoComplete="off" placeholder="앞 2자리"
+                  value={form.cardPw} onChange={(e) => set("cardPw")(digits(e.target.value).slice(0, 2))} />
+              </Field>
+            </div>
+          </section>
+
+          <section className="sub-section">
+            <h2 className="sub-section-title">청구 주소</h2>
+            <div className="sub-row">
+              <Field label="성" invalid={bad("lastName")}>
+                <input className="sub-field-input" autoComplete="family-name" placeholder="성" maxLength={20}
+                  value={form.lastName} onChange={(e) => set("lastName")(e.target.value)} />
+              </Field>
+              <Field label="이름" invalid={bad("firstName")}>
+                <input className="sub-field-input" autoComplete="given-name" placeholder="이름" maxLength={30}
+                  value={form.firstName} onChange={(e) => set("firstName")(e.target.value)} />
+              </Field>
+            </div>
+            <Field label="도로명 주소" invalid={bad("road")}>
+              <input className="sub-field-input" autoComplete="address-line1" placeholder="도로명과 건물번호" maxLength={100}
+                value={form.road} onChange={(e) => set("road")(e.target.value)} />
+            </Field>
+            <Field label="상세 주소">
+              <input className="sub-field-input" autoComplete="address-line2" placeholder="동·호수 등 (선택)" maxLength={100}
+                value={form.detail} onChange={(e) => set("detail")(e.target.value)} />
+            </Field>
+            <div className="sub-row">
+              <Dropdown label="시/도" invalid={bad("sido")} value={form.sido} placeholder="시/도 선택" options={SIDO_LIST} onChange={(v) => setForm((f) => ({ ...f, sido: v, sigungu: "" }))} />
+              <Dropdown label="시/군/구" invalid={bad("sigungu")} value={form.sigungu} placeholder="시/군/구 선택" options={sigunguList} onChange={set("sigungu")} disabled={!form.sido} />
+            </div>
+            <Field label="우편번호" invalid={bad("postal")}>
+              <input className="sub-field-input" inputMode="numeric" autoComplete="postal-code" placeholder="우편번호 입력"
+                value={form.postal} onChange={(e) => set("postal")(digits(e.target.value).slice(0, 5))} />
+            </Field>
+          </section>
+
+          <section className="sub-section">
+            <h2 className="sub-section-title">신원 확인</h2>
+            <p className="sub-section-desc">결제수단 등록을 위해 본인 확인이 필요합니다. 이동통신사에 등록된 정보와 동일하게 입력해 주세요.</p>
+            <a className="sub-small-link" href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">본인 확인에 대해 알아보기</a>
+            <Field label="이름" invalid={bad("idName")}>
+              <input className="sub-field-input" autoComplete="name" placeholder="이동통신사에 등록된 이름" maxLength={30}
+                value={form.idName} onChange={(e) => set("idName")(e.target.value)} />
+            </Field>
+            <Field label="생년월일" invalid={bad("birth")}>
+              <input className="sub-field-input" inputMode="numeric" autoComplete="bday" placeholder="YYYY/MM/DD"
+                value={form.birth} onChange={(e) => set("birth")(fmtBirth(e.target.value))} />
+            </Field>
+          </section>
+
+          <section className="sub-section">
+            <h2 className="sub-section-title">이동통신사 정보</h2>
+            <Dropdown label="이동통신사" invalid={bad("carrier")} value={form.carrier} placeholder="이동통신사 선택" options={CARRIERS} onChange={set("carrier")} />
+            <Field label="휴대폰 번호" invalid={bad("phone")}>
+              <input className="sub-field-input" type="tel" inputMode="numeric" autoComplete="tel" placeholder="010-0000-0000"
+                value={form.phone} onChange={(e) => set("phone")(fmtPhone(e.target.value))} />
+            </Field>
+            <div className="sub-row">
+              <Dropdown label="국적" invalid={bad("nationality")} value={form.nationality} placeholder="국적 선택" options={NATIONALITIES} onChange={set("nationality")} />
+              <Dropdown label="성별" invalid={bad("gender")} value={form.gender} placeholder="성별 선택" options={GENDERS} onChange={set("gender")} />
+            </div>
+          </section>
+
+          <section className="sub-section">
+            <h2 className="sub-section-title">개인정보 보호 및 이용약관</h2>
+            <p className="sub-section-desc">입력한 내용을 확인하고 필수 약관에 동의해 주세요.</p>
+            <div className={`sub-checks${bad("terms") ? " is-invalid" : ""}`}>
+              <Check checked={allTerms} onChange={setAllTerms} strong>필수 약관에 모두 동의합니다.</Check>
+              {TERMS.map((t) => (
+                <Check key={t.key} checked={form.terms[t.key]} onChange={setTerm(t.key)}>{t.label}</Check>
+              ))}
+            </div>
+            <a className="sub-small-link" href={TERMS_URL} target="_blank" rel="noopener noreferrer">약관 상세 보기</a>
+          </section>
+
+          <p className="sub-note">아래 &apos;확인 코드 보내기&apos;를 누르면 입력한 휴대폰으로 본인 확인 코드가 전송됩니다.</p>
+
+          {codeSent && (
+            <section className="sub-section sub-section--code">
+              <Field label="확인 코드">
+                <input className="sub-field-input" inputMode="numeric" autoComplete="one-time-code" placeholder="6자리 숫자"
+                  value={code} onChange={(e) => setCode(digits(e.target.value).slice(0, 6))} autoFocus />
+              </Field>
+              <p className="sub-note">입력한 휴대폰 번호로 확인 코드를 보냈어요. (데모 화면: 6자리 숫자를 입력하면 확인됩니다)</p>
+            </section>
+          )}
+
+          {error && <p className="sub-error" role="alert">{error}</p>}
+
+        </form>
+      </div>
+
+      {/* [수정] 확인 코드 버튼: 팝업 맨 아래 고정 띠 (스크롤 영역 밖 · SubModal 의 .sub-pop-foot 에 그림) */}
+      {footerEl && createPortal(
+        <div className="sub-pay-footer">
+          <button type="submit" form="sub-pay-form" className="sub-btn" disabled={busy}>
+            {busy ? "등록 중..." : codeSent ? "확인" : "확인 코드 보내기"}
+          </button>
+        </div>,
+        footerEl
+      )}
+    </>
+  );
+};
+
+// =====================================================================
+// [추가] 구독 팝업 (지금 화면 위에 뜸)
+// - onClose: 닫기 · 플랜 화면의 뒤로 / onDone: 구독 완료 → [홈으로 돌아가기]
+// =====================================================================
+export const SubscribePopup = ({ onClose, onDone }) => {
+  const user = useAuthStore((s) => s.user);
+  const onStartTrial = useAuthStore((s) => s.onStartTrial);
+
+  // step: "plans" | "payment" | "confirm" | "done" | "fail"
+  const [step, setStep] = useState("plans");
+  const [plan, setPlan] = useState("monthly");
+  const [busy, setBusy] = useState(false);
+
+  if (!user || (isSubscribed(user) && step !== "done")) return null;
+
+  const p = PLANS[plan];
+  const trial = !user.trialUsed && !user.subscription; // 처음 구독하는 계정만 무료 체험
+  const today = startOfToday();
+  const trialEnd = addDays(today, TRIAL_DAYS - 1);
+  const billStart = trial ? addDays(today, TRIAL_DAYS) : today;
+  const payments = getPayments(user);
+  const close = onClose;
+
+  // 플랜 → (지불 방법이 없으면) 지불 방법 등록 → 구독 확인
+  const nextFromPlans = () => setStep(payments.length > 0 ? "confirm" : "payment");
 
   const handleConfirm = async () => {
     if (busy) return;
@@ -307,6 +569,8 @@ const Subscribe = () => {
     setBusy(false);
     setStep(data ? "done" : "fail");
   };
+
+  const dismiss = () => (step === "done" ? onDone() : onClose());
 
   let content = null;
 
@@ -345,157 +609,8 @@ const Subscribe = () => {
 
   // ---------- 2. 지불 방법 등록 ----------
   if (step === "payment") {
-    const sigunguList = KOREA_REGIONS[form.sido] || [];
-    const allTerms = TERMS.every((t) => form.terms[t.key]);
-    const setTerm = (key) => (v) => setForm((f) => ({ ...f, terms: { ...f.terms, [key]: v } }));
-    const setAllTerms = (v) => setForm((f) => ({ ...f, terms: Object.fromEntries(TERMS.map((t) => [t.key, v])) }));
-
     content = (
-      <>
-        <SubNav onBack={() => { setError(""); setStep("plans"); }} onClose={close} />
-        <div className="sub-pay-layout">
-          <form
-            ref={formRef}
-            className="sub-pop-inner sub-pop-inner--form"
-            onSubmit={(e) => { e.preventDefault(); submitPayment(); }}
-            noValidate
-          >
-            <SubHead title="지불 방법 등록" desc="결제에 사용할 결제수단을 등록해 주세요." />
-
-            <section className="sub-section">
-              <h2 className="sub-section-title">지불 유형</h2>
-              <Field label="결제수단" select>
-                <Select value={form.method} onChange={set("method")} options={PAY_METHODS} />
-              </Field>
-            </section>
-
-            <section className="sub-section">
-              <h2 className="sub-section-title">카드 세부사항</h2>
-              <Field label="카드번호" invalid={bad("cardNumber")}>
-                <input className="sub-field-input" inputMode="numeric" autoComplete="cc-number" placeholder="0000  0000  0000  0000"
-                  value={form.cardNumber} onChange={(e) => set("cardNumber")(fmtCard(e.target.value))} />
-              </Field>
-              <div className="sub-row">
-                <Field label="유효기간" invalid={bad("expiry")}>
-                  <input className="sub-field-input" inputMode="numeric" autoComplete="cc-exp" placeholder="MM/YY"
-                    value={form.expiry} onChange={(e) => set("expiry")(fmtExpiry(e.target.value))} />
-                </Field>
-                <Field label="비밀번호" invalid={bad("cardPw")}>
-                  <input className="sub-field-input" type="password" inputMode="numeric" autoComplete="off" placeholder="앞 2자리"
-                    value={form.cardPw} onChange={(e) => set("cardPw")(digits(e.target.value).slice(0, 2))} />
-                </Field>
-              </div>
-            </section>
-
-            <section className="sub-section">
-              <h2 className="sub-section-title">청구 주소</h2>
-              <div className="sub-row">
-                <Field label="성" invalid={bad("lastName")}>
-                  <input className="sub-field-input" autoComplete="family-name" placeholder="성" maxLength={20}
-                    value={form.lastName} onChange={(e) => set("lastName")(e.target.value)} />
-                </Field>
-                <Field label="이름" invalid={bad("firstName")}>
-                  <input className="sub-field-input" autoComplete="given-name" placeholder="이름" maxLength={30}
-                    value={form.firstName} onChange={(e) => set("firstName")(e.target.value)} />
-                </Field>
-              </div>
-              <Field label="도로명 주소" invalid={bad("road")}>
-                <input className="sub-field-input" autoComplete="address-line1" placeholder="도로명과 건물번호" maxLength={100}
-                  value={form.road} onChange={(e) => set("road")(e.target.value)} />
-              </Field>
-              <Field label="상세 주소">
-                <input className="sub-field-input" autoComplete="address-line2" placeholder="동·호수 등 (선택)" maxLength={100}
-                  value={form.detail} onChange={(e) => set("detail")(e.target.value)} />
-              </Field>
-              <div className="sub-row">
-                <Field label="시/도" select invalid={bad("sido")}>
-                  <Select value={form.sido} placeholder="시/도 선택" options={SIDO_LIST}
-                    onChange={(v) => setForm((f) => ({ ...f, sido: v, sigungu: "" }))} />
-                </Field>
-                <Field label="시/군/구" select invalid={bad("sigungu")}>
-                  <Select value={form.sigungu} placeholder="시/군/구 선택" options={sigunguList}
-                    onChange={set("sigungu")} disabled={!form.sido} />
-                </Field>
-              </div>
-              <Field label="우편번호" invalid={bad("postal")}>
-                <input className="sub-field-input" inputMode="numeric" autoComplete="postal-code" placeholder="우편번호 입력"
-                  value={form.postal} onChange={(e) => set("postal")(digits(e.target.value).slice(0, 5))} />
-              </Field>
-            </section>
-
-            <section className="sub-section">
-              <h2 className="sub-section-title">신원 확인</h2>
-              <p className="sub-section-desc">결제수단 등록을 위해 본인 확인이 필요합니다. 이동통신사에 등록된 정보와 동일하게 입력해 주세요.</p>
-              <a className="sub-small-link" href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">본인 확인에 대해 알아보기</a>
-              <Field label="이름" invalid={bad("idName")}>
-                <input className="sub-field-input" autoComplete="name" placeholder="이동통신사에 등록된 이름" maxLength={30}
-                  value={form.idName} onChange={(e) => set("idName")(e.target.value)} />
-              </Field>
-              <Field label="생년월일" invalid={bad("birth")}>
-                <input className="sub-field-input" inputMode="numeric" autoComplete="bday" placeholder="YYYY/MM/DD"
-                  value={form.birth} onChange={(e) => set("birth")(fmtBirth(e.target.value))} />
-              </Field>
-            </section>
-
-            <section className="sub-section">
-              <h2 className="sub-section-title">이동통신사 정보</h2>
-              <Field label="이동통신사" select invalid={bad("carrier")}>
-                <Select value={form.carrier} placeholder="이동통신사 선택" options={CARRIERS} onChange={set("carrier")} />
-              </Field>
-              <Field label="휴대폰 번호" invalid={bad("phone")}>
-                <input className="sub-field-input" type="tel" inputMode="numeric" autoComplete="tel" placeholder="010-0000-0000"
-                  value={form.phone} onChange={(e) => set("phone")(fmtPhone(e.target.value))} />
-              </Field>
-              <div className="sub-row">
-                <Field label="국적" select invalid={bad("nationality")}>
-                  <Select value={form.nationality} placeholder="국적 선택" options={NATIONALITIES} onChange={set("nationality")} />
-                </Field>
-                <Field label="성별" select invalid={bad("gender")}>
-                  <Select value={form.gender} placeholder="성별 선택" options={GENDERS} onChange={set("gender")} />
-                </Field>
-              </div>
-            </section>
-
-            <section className="sub-section">
-              <h2 className="sub-section-title">개인정보 보호 및 이용약관</h2>
-              <p className="sub-section-desc">입력한 내용을 확인하고 필수 약관에 동의해 주세요.</p>
-              <div className={`sub-checks${bad("terms") ? " is-invalid" : ""}`}>
-                <Check checked={allTerms} onChange={setAllTerms} strong>필수 약관에 모두 동의합니다.</Check>
-                {TERMS.map((t) => (
-                  <Check key={t.key} checked={form.terms[t.key]} onChange={setTerm(t.key)}>{t.label}</Check>
-                ))}
-              </div>
-              <a className="sub-small-link" href={TERMS_URL} target="_blank" rel="noopener noreferrer">약관 상세 보기</a>
-            </section>
-
-            <p className="sub-note">아래 &apos;확인 코드 보내기&apos;를 누르면 입력한 휴대폰으로 본인 확인 코드가 전송됩니다.</p>
-
-            {codeSent && (
-              <section className="sub-section sub-section--code">
-                <Field label="확인 코드">
-                  <input className="sub-field-input" inputMode="numeric" autoComplete="one-time-code" placeholder="6자리 숫자"
-                    value={code} onChange={(e) => setCode(digits(e.target.value).slice(0, 6))} autoFocus />
-                </Field>
-                <p className="sub-note">입력한 휴대폰 번호로 확인 코드를 보냈어요. (데모 화면: 6자리 숫자를 입력하면 확인됩니다)</p>
-              </section>
-            )}
-
-            {error && <p className="sub-error" role="alert">{error}</p>}
-
-            {/* 휴대폰: 폼 맨 아래 버튼 */}
-            <button type="submit" className="sub-btn sub-btn--form" disabled={busy}>
-              {busy ? "등록 중..." : codeSent ? "확인" : "확인 코드 보내기"}
-            </button>
-          </form>
-
-          {/* PC · 태블릿: 오른쪽에 떠 있는 버튼 (스크롤해도 화면 가운데) */}
-          <aside className="sub-pay-aside">
-            <button type="button" className="sub-btn sub-btn--aside" onClick={submitPayment} disabled={busy}>
-              {busy ? "등록 중..." : codeSent ? "확인" : "확인 코드 보내기"}
-            </button>
-          </aside>
-        </div>
-      </>
+      <PaymentForm onBack={() => setStep("plans")} onClose={close} onSaved={() => setStep("confirm")} onBusyChange={setBusy} />
     );
   }
 
@@ -564,7 +679,7 @@ const Subscribe = () => {
           </span>
         </div>
 
-        <button type="button" className="sub-btn" onClick={() => navigate("/", { replace: true })}>
+        <button type="button" className="sub-btn" onClick={onDone}>
           홈으로 돌아가기
         </button>
         <p className="sub-done-note">홈에서 원하는 콘텐츠를 선택하고 시청하세요.</p>
@@ -589,9 +704,52 @@ const Subscribe = () => {
   }
 
   return (
-    <main className={`sub-pop sub-pop--${step} page-fade`} key={step}>
+    <SubModal step={step} onDismiss={dismiss} dismissOnBackdrop={step !== "payment"} busy={busy}>
       {content}
-    </main>
+    </SubModal>
+  );
+};
+
+// =====================================================================
+// [추가] 지불 방법 추가 팝업 (계정 설정 → 지불 방법 → [지불 방법 추가])
+// - 구독 팝업의 지불 방법 등록과 같은 화면 · 뒤로 / 닫기 = 팝업 닫기
+// =====================================================================
+export const PaymentRegisterPopup = ({ onClose, onSaved }) => {
+  const [busy, setBusy] = useState(false);
+  return (
+    <SubModal step="payment" onDismiss={() => !busy && onClose()} dismissOnBackdrop={false} busy={busy}>
+      <PaymentForm onBack={onClose} onClose={onClose} onSaved={onSaved} onBusyChange={setBusy} />
+    </SubModal>
+  );
+};
+
+// =====================================================================
+// /subscribe 주소로 들어왔을 때 (구독하기 버튼 · 계정 설정 "모든 요금제 보기" 등)
+// - 로그인 전이면 로그인으로, 이미 구독 중이면 원래 화면으로
+// =====================================================================
+const Subscribe = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = AUTH_PATHS.includes(location.state?.from) ? "/" : location.state?.from || "/";
+  const user = useAuthStore((s) => s.user);
+  const authReady = useAuthStore((s) => s.authReady);
+  const enteredChecked = useRef(false);
+
+  useEffect(() => {
+    if (!authReady || enteredChecked.current) return;
+    enteredChecked.current = true;
+    if (!user) navigate("/login", { replace: true, state: { from } });
+    else if (isSubscribed(user)) navigate(from, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authReady]);
+
+  if (!authReady || !user) return null;
+
+  return (
+    <SubscribePopup
+      onClose={() => navigate(from, { replace: true })}
+      onDone={() => navigate("/", { replace: true })}
+    />
   );
 };
 

@@ -50,8 +50,20 @@ function App() {
   const initAuth = useAuthStore((state) => state.initAuth);
   const location = useLocation();
   const isTvPreview = location.pathname === "/tv";
-  const isLoginPage = ["/login", "/subscribe"].includes(location.pathname); // [수정] 구독 팝업(/subscribe)도 로그인처럼 헤더 · 푸터 없는 독립 화면
-  // 원래: location.pathname === "/login"; // [추가] 로그인은 독립 화면 // [추가] TV 미리보기: 웹 헤더 · 푸터 · 배너 · 떠 있는 버튼 숨김
+  const isLoginPage = location.pathname === "/login"; // [추가] 로그인은 독립 화면 // [추가] TV 미리보기: 웹 헤더 · 푸터 · 배너 · 떠 있는 버튼 숨김
+
+  // [추가] 구독 팝업(/subscribe): 뒤에는 보던 화면(state.from · 없으면 홈)을 그대로 그리고 그 위에 팝업
+  const isSubscribePopup = location.pathname === "/subscribe";
+  const subscribeFrom = location.state?.from;
+  const pageLocation = isSubscribePopup
+    ? {
+        pathname: subscribeFrom && !["/login", "/subscribe"].includes(subscribeFrom) ? subscribeFrom : "/",
+        search: "",
+        hash: "",
+        state: null,
+        key: "subscribe-bg",
+      }
+    : location;
 
   // 로그인 상태 초기화
   useEffect(() => {
@@ -80,8 +92,8 @@ function App() {
           {!isTvPreview && !isLoginPage && <Header />}
 
           {/* 메인 콘텐츠 */}
-          <div className="page-fade" key={location.pathname}>
-            <Routes>
+          <div className="page-fade" key={pageLocation.pathname}>
+            <Routes location={pageLocation}>
               <Route path="/" element={<Home />} />
 
               <Route path="/sport" element={<SportHome />} />
@@ -172,10 +184,7 @@ function App() {
                 }
               />
 
-              <Route
-                path="/subscribe"
-                element={<Subscribe />}
-              />
+              {/* [수정] /subscribe 는 팝업 — 아래 {isSubscribePopup && <Subscribe />} 에서 그림 */}
 
               <Route
                 path="*"
@@ -183,6 +192,9 @@ function App() {
               />
             </Routes>
           </div>
+
+          {/* [추가] 구독 팝업 (보던 화면 위에 뜸) */}
+          {isSubscribePopup && <Subscribe />}
 
           {/* 기존 프로모션 배너 */}
           {!isTvPreview && !isLoginPage && <PromoBanner />}

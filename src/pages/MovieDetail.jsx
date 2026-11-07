@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'reac
 import DetailBackLink from '../components/common/DetailBackLink' // [추가] 상세 공용 "← 홈으로"
 import { useMovieStore } from '../store/useMovieStore';
 import { toggleWish, useHeartStore, wishKey } from '../store/useHeartStore'; // 위시리스트 (Firestore)
-import { useAuthStore, useSettings } from '../store/useAuthStore'; // [수정] useSettings: 계정 설정 자동 재생 토글
+import { useAuthStore, useSettings, isSubscribed } from '../store/useAuthStore'; // [수정] useSettings: 계정 설정 자동 재생 토글
 import { isResumable, resumeAt, useWatchConnect, useWatchStore } from '../store/useWatchStore'; // 이어보기 (시청 기록)
 import CastFilmography from '../components/detail/CastFilmography';
 import WatchPlayer from '../components/common/WatchPlayer'; // 재생 위치를 알 수 있는 유튜브 플레이어
@@ -148,6 +148,7 @@ export const MovieDetail = ({ type: typeProp }) => {
 
   // ---------- 이어보기 (시청 기록) ----------
   const uid = useAuthStore((s) => s.user?.uid);
+  const subscribed = useAuthStore((s) => isSubscribed(s.user)); // [추가] 구독 여부 (구독 전에는 재생 대신 구독 안내 팝업)
   useWatchConnect(uid);
   const watchStatus = useWatchStore((s) => s.status);
   const history = useWatchStore((s) => s.items.find((h) => h.type === type && h.id === contentId));
@@ -160,7 +161,7 @@ export const MovieDetail = ({ type: typeProp }) => {
 
   // 영상 열기: 같은 영상을 보다 멈췄으면 그 위치부터
   const openPlayer = (key, meta = {}) => {
-    if (!uid) {
+    if (!uid || !subscribed) { // [수정] 로그인했지만 구독 전이어도 구독 안내 팝업
       askSubscribe();
       return;
     }
@@ -284,8 +285,8 @@ export const MovieDetail = ({ type: typeProp }) => {
 
   // (TV) 회차 재생: 회차 영상 → 없으면 작품 예고편 → 없으면 안내
   const handlePlayEpisode = async (ep) => {
-    if (!uid) {
-      askSubscribe(); // 로그인 전: 구독 팝업
+    if (!uid || !subscribed) {
+      askSubscribe(); // 로그인 전 · 구독 전: 구독 팝업
       return;
     }
     await onFetchEpisodeVideo(contentId, ep.season_number, ep.episode_number);

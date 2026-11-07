@@ -9953,6 +9953,7 @@ section.top10-section {
 // =====================================================================
 // [추가] 구독 팝업 (pages/Subscribe.jsx · /subscribe · .sub-pop-*) — PC · 태블릿 (휴대폰은 mobile.scss)
 // - 시안: Apple TV 구독하기 → 지불 방법 등록 → 구독 확인 → 구독 완료 · 배경 Dark/800
+// - [수정] 팝업: 보던 화면 위 어두운 배경(.sub-pop-backdrop) + 가운데 창(.sub-pop · 안에서 스크롤)
 // - 로고 public/icons/login-logo.svg · 뒤로 public/icons/nav/left-nav.svg (마스크 → 글자색) · 닫기 X 는 로그인 카드와 같은 아이콘
 // - 글자: 큰 제목 Display/L-B · 설명 Body/small · 카드 제목 Heading/h3-B · 본문 Body/default · 안내 Label/default
 // =====================================================================
@@ -9963,15 +9964,36 @@ $sub-logo-size: 3.5rem; // 로고 (그림자 포함 56)
 $sub-btn-height: 3.25rem; // 버튼 높이 (52)
 $sub-field-height: 4.375rem; // 입력 칸 높이 (70)
 $sub-field-radius: 0.25rem; // 입력 칸 모서리 (4)
-$sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
+$sub-pop-width: 56.25rem; // [수정] 팝업 창 폭: 플랜 선택 · 지불 방법 등록 (내용 804 + 좌우 48)
+$sub-pop-width-narrow: 36rem; // [추가] 팝업 창 폭: 구독 확인 · 완료 (내용 480 + 좌우 48)
+$sub-pop-pad: $space-4xl; // [추가] 팝업 창 안쪽 여백 (48)
+$sub-pop-surface: $dark-color-300; // [추가] 팝업(Dark/400) 위 카드 · 입력 칸 배경 (한 단계 밝게)
 
+// 뒤 화면을 어둡게 덮는 배경
+.sub-pop-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-xl;
+  box-sizing: border-box;
+  background-color: rgba($dark-color-black, 0.5); // [수정] 뒤 화면이 살짝 보이게
+  animation: page-fade-in 0.25s ease both;
+}
+
+// 팝업 창: 내용이 길면 창 안에서 스크롤
 .sub-pop {
   position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
-  padding: ($space-5xl + $space-xl) $space-xl $space-5xl;
-  box-sizing: border-box;
-  background-color: $dark-color-800;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, #{$sub-pop-width});
+  max-height: 100%; // [수정] 높이는 내용만큼 · 화면보다 길면 안쪽 영역(.sub-pop-scroll)에서 스크롤
+  overflow: hidden;
+  border-radius: $radius-lg;
+  background-color: $dark-color-400; // [수정] 팝업 배경 Dark/400
+  box-shadow: 0 1.25rem 3.75rem rgba($dark-color-black, 0.5);
   color: $light-color-0;
 
   // main h2 { padding-top } 같은 공통 규칙 영향 제거
@@ -9985,13 +10007,54 @@ $sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
   }
 }
 
-// 구독 확인 · 완료 · 실패: 화면 가운데
+// [수정] 스크롤 영역: 창 가장자리에서 안쪽으로 떨어진 얇고 어두운 스크롤바 (바탕 없음 · 둥근 모서리 · 아래 띠와 겹치지 않음)
+.sub-pop-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: $space-md $space-sm $space-md 0; // 스크롤바를 위 · 아래 · 오른쪽 끝에서 띄움
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: $dark-color-200 transparent;
+
+  &::-webkit-scrollbar {
+    width: 0.375rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $radius-pill;
+    background-color: $dark-color-200;
+
+    &:hover {
+      background-color: $dark-color-100;
+    }
+  }
+}
+
+.sub-pop-body {
+  position: relative; // 뒤로 · 닫기 버튼 기준 (내용과 같이 스크롤)
+  padding: ($sub-pop-pad - $space-md) ($sub-pop-pad - $space-sm) ($sub-pop-pad - $space-md) $sub-pop-pad; // 스크롤 영역 여백만큼 빼서 바깥 기준 48 유지
+  box-sizing: border-box;
+}
+
+// [추가] 아래 고정 띠 자리 (비어 있으면 안 보임)
+.sub-pop-foot {
+  flex-shrink: 0;
+
+  &:empty {
+    display: none;
+  }
+}
+
+// [수정] 구독 확인 · 완료 · 실패: 좁은 창
 .sub-pop--confirm,
 .sub-pop--done,
 .sub-pop--fail {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: min(100%, #{$sub-pop-width-narrow});
 }
 
 .sub-pop-inner {
@@ -10014,9 +10077,9 @@ $sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
 // ---------- 위 뒤로 · 닫기 ----------
 .sub-pop-nav {
   position: absolute;
-  top: $space-4xl;
-  left: $header-pad-x;
-  right: $header-pad-x;
+  top: $space-xl - $space-md; // 창 기준 24 (스크롤 영역 위 여백 12 뺌)
+  left: $space-xl;
+  right: $space-xl - $space-sm; // 창 기준 24 (스크롤 영역 오른쪽 여백 8 뺌)
   display: flex;
   justify-content: space-between;
   pointer-events: none;
@@ -10149,7 +10212,7 @@ $sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
   padding: $space-xl;
   border: 0.0625rem solid transparent;
   border-radius: $radius-card-sm;
-  background-color: $dark-color-400;
+  background-color: $sub-pop-surface;
   cursor: pointer;
   transition: border-color 0.2s ease;
 
@@ -10207,30 +10270,23 @@ $sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
 }
 
 // ---------- 2. 지불 방법 등록 ----------
-// PC · 태블릿: 가운데 폼 + 오른쪽 칸에 버튼 (스크롤해도 화면 가운데에 떠 있음)
+// [수정] 가운데 폼 한 줄 · 확인 코드 버튼은 팝업 맨 아래에 붙어 있음 (모든 기기)
 .sub-pay-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, $sub-form-width) minmax(0, 1fr);
+  display: block;
+}
 
-  .sub-pop-inner--form {
-    grid-column: 2;
+.sub-pay-footer {
+  display: flex;
+  justify-content: flex-end; // [수정] PC · 태블릿: 버튼은 아래 띠 오른쪽 (휴대폰은 폭 가득 · mobile.scss)
+  padding: $space-lg $space-xl;
+  border-top: 0.0625rem solid $dark-color-300;
+  background-color: $dark-color-500; // [수정] 팝업(Dark/400)보다 한 단계 어두운 아래 띠 (스크롤 영역 밖)
+
+  .sub-btn {
+    width: auto;
+    margin: 0;
+    padding: 0 $space-xl;
   }
-}
-
-.sub-pay-aside {
-  grid-column: 3;
-  padding-left: $space-lg;
-}
-
-.sub-btn--aside {
-  position: sticky;
-  top: calc(50vh - #{$sub-btn-height * 0.5});
-  width: min(100%, #{$sub-aside-btn-width});
-  margin: 0 0 0 auto;
-}
-
-.sub-btn--form {
-  display: none; // 휴대폰에서만 (mobile.scss)
 }
 
 .sub-pop--payment .sub-pop-head {
@@ -10278,6 +10334,7 @@ $sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
 .sub-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start; // [추가] 한쪽 선택 칸이 펼쳐져도 옆 칸 높이는 그대로
   gap: $space-md;
 }
 
@@ -10292,7 +10349,7 @@ $sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
   padding: $space-md $space-lg;
   border: 0.0625rem solid $dark-color-200;
   border-radius: $sub-field-radius;
-  background-color: $dark-color-400;
+  background-color: $sub-pop-surface;
   box-sizing: border-box;
   cursor: text;
   transition: border-color 0.2s ease;
@@ -10331,40 +10388,142 @@ $sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
   }
 }
 
-// 선택 칸: 기본 화살표 대신 작은 "⌄"
-.sub-field--select {
-  cursor: pointer;
+// [수정] 선택 칸 (Subscribe.jsx Dropdown): 칸 아래로 목록이 붙어서 펼쳐짐 (시안)
+// - [수정] 목록은 아래 내용을 밀지 않고 그 위에 덮임 (칸과 이어진 한 상자처럼)
+// - 열림: 테두리 프라이머리 · 화살표 위로 / 항목 사이 구분선 · 고른 항목 ✓ · 마우스 올린 항목 프라이머리 배경
+$sub-select-option-height: 3.5rem; // 목록 한 줄 높이 (56)
+$sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서 스크롤)
 
-  .sub-field-input {
-    appearance: none;
-    -webkit-appearance: none;
-    padding-right: $space-xl;
-    cursor: pointer;
+.sub-select {
+  position: relative;
+  border: 0.0625rem solid $dark-color-200;
+  border-radius: $sub-field-radius;
+  background-color: $sub-pop-surface;
+  transition: border-color 0.2s ease;
 
-    &:invalid,
-    option[value=""] {
-      color: $light-color-400;
-    }
-
-    option {
-      background-color: $dark-color-400;
-      color: $light-color-0;
-    }
+  &.is-open,
+  &:focus-within {
+    border-color: $primary-color-500;
   }
 
+  // 열리면 아래 모서리는 목록과 이어지게 · 다른 칸보다 위
+  &.is-open {
+    z-index: 5;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &.is-invalid {
+    border-color: $live-color;
+  }
+
+  &.is-disabled {
+    opacity: 0.5;
+  }
+}
+
+.sub-select-trigger {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: $space-xs;
+  width: 100%;
+  min-height: calc(#{$sub-field-height} - 0.125rem); // 테두리 안쪽 (입력 칸과 같은 높이)
+  padding: $space-md ($space-lg + $space-xl) $space-md $space-lg;
+  border: none;
+  outline: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  // 화살표 "⌄" (열리면 "⌃")
   &::after {
     content: "";
     position: absolute;
+    top: 50%;
     right: $space-lg;
-    bottom: $space-md + 0.125rem;
     width: $space-lg;
     height: $space-lg;
+    margin-top: -($space-lg * 0.5);
     background-color: $light-color-0;
     -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
     mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
     transform: rotate(-90deg);
-    pointer-events: none;
+    transition: transform 0.2s ease;
   }
+
+  .is-open > &::after {
+    transform: rotate(90deg);
+  }
+}
+
+.sub-select-value {
+  @include body-default;
+  color: $light-color-0;
+
+  &.is-placeholder {
+    color: $light-color-400;
+  }
+}
+
+.sub-select-list {
+  position: absolute;
+  top: 100%;
+  left: -0.0625rem;
+  right: -0.0625rem;
+  max-height: $sub-select-list-max;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  border: 0.0625rem solid $primary-color-500;
+  border-top-color: $dark-color-200;
+  border-radius: 0 0 $sub-field-radius $sub-field-radius;
+  background-color: $sub-pop-surface;
+  box-shadow: 0 0.75rem 1.5rem rgba($dark-color-black, 0.35);
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: $dark-color-200 transparent;
+
+  li + li {
+    border-top: 0.0625rem solid $dark-color-200;
+  }
+}
+
+.sub-select-option {
+  @include body-default;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+  width: 100%;
+  min-height: $sub-select-option-height;
+  padding: 0 $space-lg;
+  border: none;
+  outline: none;
+  background: none;
+  color: $light-color-0;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    background-color: $primary-color-500;
+  }
+}
+
+.sub-select-check {
+  flex-shrink: 0;
+  width: $space-lg;
+  height: $space-lg;
+  background-color: $light-color-0;
+  -webkit-mask: url("/icons/check.svg") center / contain no-repeat;
+  mask: url("/icons/check.svg") center / contain no-repeat;
 }
 
 // 약관 체크
@@ -10459,7 +10618,6 @@ $sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
 .sub-confirm-card {
   padding: $space-xl;
   border-radius: $radius-md;
-  background-color: $dark-color-900;
 }
 
 .sub-confirm-app {
@@ -10580,7 +10738,7 @@ $sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
   width: 100%;
   padding: $space-xl;
   border-radius: $radius-card-sm;
-  background-color: $dark-color-400;
+  background-color: $sub-pop-surface;
   box-sizing: border-box;
   text-align: left;
 }

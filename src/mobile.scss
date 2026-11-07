@@ -3664,22 +3664,28 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
 // =====================================================================
 // [추가] 구독 팝업 (pages/Subscribe.jsx · .sub-pop-*) — 휴대폰 (767px 이하)
 // - PC 와 같은 글자 위계 · 색, 여백 · 크기만 줄임 / 설명 Body/small → Label/default · 혜택 Body/large → Body/default
-// - 지불 방법 등록: 오른쪽 떠 있는 버튼 대신 폼 맨 아래 버튼
+// - 지불 방법 등록: 확인 코드 버튼은 PC 와 같이 팝업 맨 아래에 붙어 있음
+// - [수정] 휴대폰도 팝업 형태: 화면 가장자리 12 띄우고 바깥 모서리 둥글게 (PC 와 같은 $radius-lg)
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
+  .sub-pop-backdrop {
+    padding: $space-md;
+  }
+
+  // [수정] 화면 폭 가득 · 높이는 내용만큼 (길면 창 안에서 스크롤)
   .sub-pop {
-    padding: ($space-4xl + $space-lg) $space-xl $space-4xl;
+    width: 100%;
+  }
+
+  // 창 기준 여백 (스크롤 영역 위 · 아래 12 · 오른쪽 8 은 빼고)
+  .sub-pop-body {
+    padding: ($space-4xl + $space-sm - $space-md) ($space-xl - $space-sm) ($space-2xl - $space-md) $space-xl;
   }
 
   .sub-pop-nav {
-    top: $space-xl;
-    left: $space-md;
-    right: $space-md;
-  }
-
-  .sub-pop-inner--plans {
-    padding: 0 $space-lg;
-    box-sizing: border-box;
+    top: 0;
+    left: $space-sm;
+    right: 0;
   }
 
   .sub-pop-head {
@@ -3702,17 +3708,13 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     @include body-default;
   }
 
-  // 지불 방법 등록: 한 줄로 · 폼 아래 버튼
-  .sub-pay-layout {
-    display: block;
-  }
+  // [수정] 지불 방법 등록: 확인 코드 버튼은 팝업 아래 (휴대폰 안쪽 여백에 맞춤)
+  .sub-pay-footer {
+    padding: $space-md $space-xl $space-lg;
 
-  .sub-pay-aside {
-    display: none;
-  }
-
-  .sub-btn--form {
-    display: block;
+    .sub-btn {
+      width: 100%; // 휴대폰: 폭 가득
+    }
   }
 
   .sub-pop--payment .sub-pop-head {
