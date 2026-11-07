@@ -8755,16 +8755,36 @@ section.device-guide.device-guide--watch {
 }
 
 // =====================================================================
-// [추가] PC 슬라이드 카드 크기 고정 — TOP 10 (이너 90% 로 넓어져도 카드는 원래 크기)
-// - 원래 시안(본문 1440 · 간격 24) 기준: (1440 - 72) / 4 = 342 / 10위 카드 × 1.3 = 445
-// - 오리지널스(282px)는 원래 픽셀 값이라 그대로
+// [수정] PC · 태블릿 TOP 10 — 로그인 전 · 후 같은 디자인 (예전 member.scss 규칙을 옮김)
+// - 시안: 포스터 282 · 숫자 자리 96 · 간격 24 → 카드 378 / 10위 카드 469
+// - 순위 숫자: SVG viewBox 높이 140 을 140px 로 그림 → 글자 크기 195 = 화면 195px
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
-  section.top10-section .top10-slide {
-    width: 342px;
+  section.top10-section {
+    .top10-slide {
+      width: 23.625rem; // 378
 
-    &.top10-slide--wide {
-      width: 445px;
+      &.top10-slide--wide {
+        width: 29.3125rem; // 469 · 두 자리(10위): 숫자 한 자리 폭(약 111) − 붙인 글자 사이(20)만큼 넓게
+      }
+    }
+
+    .top10-card {
+      padding-left: 6rem; // 96
+    }
+
+    .top10-slide.top10-slide--wide .top10-card {
+      padding-left: 11.6875rem; // 숫자 자리 96 + 111 − 20
+    }
+
+    .top10-num {
+      height: 8.75rem;
+      bottom: 0.5rem;
+
+      .top10-num-glyph {
+        font-size: 12.1875rem; // 195
+        letter-spacing: $top10-num-letter-spacing;
+      }
     }
   }
 }
@@ -9888,26 +9908,6 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
   }
 }
 
-// =====================================================================
-// [수정] TOP 10 순위 숫자 — member.scss 디자인과 통일
-// 기존 App.scss 규칙은 유지하고 순위 숫자의 크기·자간·위치만 일치시킴.
-// 다른 카드·슬라이더·모바일 스타일은 변경하지 않음.
-// =====================================================================
-section.top10-section {
-  .top10-num {
-    height: 8.75rem;
-    bottom: 0.5rem;
-
-    .top10-num-glyph {
-      font-size: 6.25rem;
-      letter-spacing: $top10-num-letter-spacing;
-    }
-
-    .top10-num-stroke {
-      display: none;
-    }
-  }
-}
 
 
 // [추가] 메인 히어로 전용 SVG 네비게이션 (다른 슬라이더 영향 없음)
@@ -10793,4 +10793,407 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
   @include label-default;
   margin-top: $space-xl;
   color: $light-color-500;
+}
+
+// =====================================================================
+// [수정] 작품 상세 오른쪽 탭 메뉴바 — 스포츠 경기 메뉴바(.sport-live-tab)와 같은 방식 (모든 기기 공통)
+// - 탭 3개를 같은 폭으로 나누고, 아래 바는 탭 칸(좌우 패딩 포함) 전체 길이 · 고를 때 가운데서 늘어남
+// - 바 색은 작품 상세 그대로 흰색 (스포츠는 빨간색)
+// - 선택 상자(SelectDropdown variant="line"): 지불 방법 선택 상자와 같은 목록 디자인 · 테두리 대신 아래 선 · 어떤 기기든 그 자리에서 가운데 정렬
+// - .movie-detail-page 를 두 번 써서 기존 PC · mobile.scss 규칙(글자색 등)보다 우선
+// =====================================================================
+.movie-detail-page.movie-detail-page .right-section {
+  .tabs.tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    .tab-btn {
+      padding: 0 $space-sm $space-md; // 아래 바는 칸 전체 길이 (좌우 패딩 포함)
+      text-align: center;
+      white-space: nowrap;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -0.0625rem;
+        width: auto;
+        height: 0.125rem;
+        background-color: $light-color-0;
+        transform: scaleX(0);
+        transition: transform 0.25s ease;
+      }
+
+      &.active::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  .filter-bar.filter-bar {
+    justify-content: center;
+    position: relative;
+    z-index: 3; // 펼친 목록이 아래 에피소드 목록 위로
+  }
+
+}
+
+// =====================================================================
+// [추가] 선택 상자 — 아래 선만 (SelectDropdown variant="line" · 작품 상세 에피소드 시즌 / 정렬)
+// - 펼친 목록 · 고른 항목 ✓ · 마우스 올린 항목 프라이머리 배경은 지불 방법 선택 상자(.sub-select)와 같음 (목록 테두리만 없음)
+// - 닫힘: 상자 테두리 · 배경 없이 아래 선(Dark/200) / 열림 · 포커스: 아래 선 프라이머리
+// =====================================================================
+.sub-select.sub-select--line {
+  border: none;
+  border-bottom: 0.0625rem solid $dark-color-200;
+  border-radius: 0;
+  background-color: transparent;
+
+  &.is-open,
+  &:focus-within {
+    border-bottom-color: $primary-color-500;
+  }
+
+  .sub-select-trigger {
+    min-height: 3rem;
+    padding: 0 ($space-lg + $space-xl) 0 $space-xs;
+  }
+
+  .sub-select-trigger::after {
+    right: $space-xs;
+  }
+
+  .sub-select-value {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // 펼친 목록: 선 아래에 붙어서 (지불 방법 목록과 같은 상자)
+  .sub-select-list {
+    left: 0;
+    right: 0;
+    margin-top: 0.0625rem;
+    border: none; // [수정] 펼친 목록 테두리(프라이머리 스트로크) 없음
+    border-radius: $sub-field-radius;
+  }
+
+  .sub-select-trigger,
+  .sub-select-option {
+    font-family: inherit;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .sub-select.sub-select--line .sub-select-trigger {
+    min-height: 2.75rem;
+  }
+}
+
+// =====================================================================
+// [추가] 재생 플레이어 감싸개 + [소리 켜기] (components/common/WatchPlayer.jsx)
+// - 감싸개가 놓인 자리(재생 팝업 · 스포츠 상세 화면)를 가득 채움
+// - 터치 기기: 소리 끈 채 바로 재생 → 오른쪽 아래 [소리 켜기] 알약 버튼 (누르면 사라짐)
+// =====================================================================
+.watch-player-wrap {
+  position: absolute;
+  inset: 0;
+
+  >.watch-player {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.watch-unmute {
+  @include body-small-b;
+  position: absolute;
+  right: $space-lg;
+  bottom: $space-3xl;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  height: 2.5rem;
+  padding: 0 $space-lg;
+  border: none;
+  border-radius: 62.4375rem;
+  background-color: rgba($dark-color-black, 0.6);
+  color: $light-color-0;
+  font-family: inherit;
+  cursor: pointer;
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
+
+  svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+// =====================================================================
+// [추가] 로딩 뼈대 (components/common/Skeleton.jsx) — 내용이 오기 전에 화면 형태부터
+// - 어두운 회색 덩어리 위로 밝은 빛이 왼쪽 → 오른쪽으로 지나감
+// - 히어로 뼈대: 히어로 자리를 그대로 덮고, 배경 이미지를 받으면 서서히 사라짐 (.is-overlay.is-done)
+// - 아래 섹션: 히어로가 준비될 때까지 뼈대만 · 실제 섹션은 숨겨 둔 채 미리 그려 둠 (main.hero-waiting)
+// =====================================================================
+$skeleton-base: $dark-color-500;
+$skeleton-shine: rgba($light-color-0, 0.06);
+
+.skeleton-block {
+  display: block;
+  border-radius: $radius-card-sm;
+  background-color: $skeleton-base;
+  background-image: linear-gradient(90deg, rgba($light-color-0, 0) 0%, $skeleton-shine 50%, rgba($light-color-0, 0) 100%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: skeleton-shine 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shine {
+  0% {
+    background-position: 150% 0;
+  }
+
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+// 히어로 뼈대
+.skeleton-hero {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100svh;
+  background-color: $bg-page;
+  background-image: linear-gradient(to top, $bg-page 0%, $dark-color-800 100%);
+
+  &.is-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    min-height: 0;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  &.is-done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.skeleton-hero-body {
+  position: absolute;
+  left: 12.5%;
+  bottom: 18%;
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+  width: min(36rem, 70%);
+}
+
+.skeleton-hero-title {
+  width: 60%;
+  height: 4.5rem;
+}
+
+.skeleton-hero-chips {
+  display: flex;
+  gap: $space-sm;
+
+  .skeleton-block {
+    width: 4.5rem;
+    height: 1.75rem;
+    border-radius: 62.4375rem;
+  }
+}
+
+.skeleton-hero-line {
+  width: 100%;
+  height: 1rem;
+
+  &.is-short {
+    width: 70%;
+  }
+}
+
+.skeleton-hero-actions {
+  display: flex;
+  gap: $space-md;
+  margin-top: $space-sm;
+}
+
+.skeleton-hero-btn {
+  width: 10rem;
+  height: 3.25rem;
+  border-radius: 62.4375rem;
+}
+
+.skeleton-hero-round {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+}
+
+// 섹션 뼈대
+.skeleton-section {
+  padding: $space-5xl 0 0;
+}
+
+.skeleton-section-title {
+  width: 12rem;
+  height: 1.75rem;
+  margin-bottom: $space-xl;
+}
+
+.skeleton-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: $space-xl;
+  overflow: hidden;
+
+  &.is-landscape .skeleton-card {
+    aspect-ratio: 16 / 9;
+  }
+
+  &.is-poster {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+
+    .skeleton-card {
+      aspect-ratio: 2 / 3;
+    }
+  }
+}
+
+// 아래 섹션: 히어로 준비 전에는 자리를 차지하지 않고 숨긴 채 미리 그려 둠 (폭은 그대로라 슬라이더 크기가 맞음)
+// - main.hero-waiting : 히어로(.hero-swiper-container · .sport-hero)와 뼈대 말고 모두 숨김
+// - main.hero-revealed : 숨겼던 섹션이 서서히 나타남 (투명도만 · 위치 변화 없음)
+main.hero-waiting {
+  position: relative;
+
+  >:not(.hero-swiper-container):not(.sport-hero):not(.skeleton-after-hero) {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    visibility: hidden !important;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
+  animation: after-hero-in 0.5s ease both;
+}
+
+@keyframes after-hero-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .skeleton-hero-body {
+    left: $mobile-edge;
+    right: $mobile-edge;
+    bottom: 12%;
+    width: auto;
+    align-items: center;
+  }
+
+  .skeleton-hero-title {
+    width: 70%;
+    height: 3rem;
+  }
+
+  .skeleton-hero-line.is-short {
+    width: 60%;
+  }
+
+  .skeleton-section {
+    padding-top: 3.75rem; // 60 (mobile.scss $m-section-gap 과 같음)
+  }
+
+  .skeleton-section-title {
+    width: 8rem;
+    height: 1.25rem;
+    margin-bottom: $space-lg;
+  }
+
+  .skeleton-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-md;
+
+    &.is-poster {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .watch-unmute {
+    right: $space-md;
+    bottom: $space-2xl;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-block {
+    animation: none;
+  }
+}
+
+// =====================================================================
+// [수정] 관심 구단 전체 페이지 — "구독 중 N팀 · [전체 해제]" 한 줄 글자를 같은 값으로 (PC · 태블릿 · 모바일 공통)
+// - 글자 · 숫자 · 버튼 모두 Body/default (같은 크기 · 줄 높이 · 자간 · 글꼴) · 색 Light/0
+// - 숫자만 굵게 (강조) · 버튼 높이 · 테두리는 그대로
+// =====================================================================
+.sport-teams-page .sport-teams-summary.sport-teams-summary {
+  @include body-default;
+  color: $light-color-0;
+
+  span,
+  strong,
+  .sport-teams-clear {
+    @include body-default;
+    font-family: inherit;
+    letter-spacing: inherit;
+    color: $light-color-0;
+  }
+
+  strong {
+    font-weight: $font-weight-bold;
+  }
+}
+
+// =====================================================================
+// [수정] 작품 상세 정보 바 글자 위계 (PC · 태블릿) — 휴대폰은 mobile.scss
+// - 장르 · 연도 · 시즌: Caption/default (11) · Light/500 (한 단계 죽임)
+// - 줄거리: Light/0 → Light/100 (덜 밝게) · PC Body/default (15) · 태블릿 Body/small (13)
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) {
+  .movie-detail-page.movie-detail-page .player-box {
+    .genres.genres {
+      @include caption-default;
+      color: $light-color-500;
+    }
+
+    .overview.overview {
+      @include body-default;
+      color: $light-color-100;
+    }
+  }
+}
+
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  .movie-detail-page.movie-detail-page .player-box .overview.overview {
+    @include body-small;
+  }
 }

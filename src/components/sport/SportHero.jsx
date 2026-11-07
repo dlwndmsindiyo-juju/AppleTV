@@ -19,6 +19,28 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import TeamBadge from "./TeamBadge"; // [추가] 팀 뱃지 (배경 없이)
 import { openSubscribeGate } from "../../utils/subscribeGate"; // [정리] 구독 안내 팝업 열기 공용
+import WatchPlayer from "../common/WatchPlayer"; // [수정] 경기 시청: OTT 재생과 같은 플레이어 (휴대폰도 바로 재생)
+import { HeroSkeleton } from "../common/Skeleton"; // [추가] 로딩 뼈대
+import { useHeroReady, preloadImage } from "../../store/useHeroReady"; // [추가] 히어로 먼저 → 아래 섹션
+
+// [추가] 히어로 배경 이미지를 받으면 뼈대를 걷고 아래 섹션을 보여 줌
+const useHeroImage = (src) => {
+  const [loaded, setLoaded] = useState(false);
+  const markHeroReady = useHeroReady((state) => state.markHeroReady);
+  useEffect(() => {
+    let alive = true;
+    setLoaded(false);
+    preloadImage(src).then(() => {
+      if (!alive) return;
+      setLoaded(true);
+      markHeroReady();
+    });
+    return () => {
+      alive = false;
+    };
+  }, [src, markHeroReady]);
+  return loaded;
+};
 
 // 히어로 슬라이드 이미지 (public/images/sport/ 에 넣어 주세요)
 const SPORT_HERO_SLIDES = [
@@ -62,6 +84,8 @@ export const TeamHero = ({ team }) => {
     ? `${record.won ?? 0}승 ${record.draw ?? 0}무 ${record.lost ?? 0}패 · ${conferenceText} ${record.rank}위`
     : conferenceText;
 
+  const heroLoaded = useHeroImage(team.banner); // [추가] 배너가 없으면 바로 준비
+
   const bgStyle = team.banner
     ? { backgroundImage: `url(${team.banner})`, backgroundColor: team.color }
     : { backgroundImage: `linear-gradient(135deg, ${team.color} 0%, rgba(0, 0, 0, 0.85) 100%)` };
@@ -72,6 +96,7 @@ export const TeamHero = ({ team }) => {
       style={{ "--team-color": team.color }}
       aria-label={`${team.name} 팔로우 구단`}
     >
+      <HeroSkeleton className={`is-overlay${heroLoaded ? " is-done" : ""}`} />
       {/* 팀이 바뀌면 key 로 다시 그려 페이드 인 */}
       <div key={team.id} className="sport-team-hero-bg" style={bgStyle} role="img" aria-label={`${team.name} 배너`} />
       <div className="sport-team-hero-overlay" aria-hidden="true" />
@@ -142,6 +167,7 @@ const MatchHero = () => {
 
   const uid = useAuthStore((state) => state.user?.uid);
   const [playing, setPlaying] = useState(false);
+  const heroLoaded = useHeroImage(SPORT_HERO_SLIDES[0]); // [추가] 첫 슬라이드 이미지
 
   const handleWatch = () => {
     if (!uid) {
@@ -154,6 +180,7 @@ const MatchHero = () => {
 
   return (
     <section className="sport-hero">
+      <HeroSkeleton className={`is-overlay${heroLoaded ? " is-done" : ""}`} />
       {/* hero-swiper-container: 애플TV 홈 히어로의 화살표/페이지네이션 스타일을 그대로 사용 */}
       <div className="hero-swiper-container sport-hero-swiper">
         <Swiper
@@ -220,12 +247,11 @@ const MatchHero = () => {
 
       {/* [추가] 전체 화면 재생 팝업 (공용 VideoPopup · 영상은 화면을 100% 채움) */}
       <VideoPopup open={playing} onClose={() => setPlaying(false)} label="경기 시청">
+        {/* [수정] OTT 재생과 같은 플레이어 → 누르면 바로 재생 (휴대폰: 소리 끈 채 바로 시작 + 소리 켜기 버튼) */}
         {videoId ? (
-          <iframe
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1`}
+          <WatchPlayer
+            videoKey={videoId}
             title={`${sportTeamLabel(match.homeTeam)} vs ${sportTeamLabel(match.awayTeam)} 경기 시청`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-            allowFullScreen
           />
         ) : (
           <p>영상을 불러오는 중입니다…</p>

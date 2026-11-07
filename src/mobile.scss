@@ -502,8 +502,30 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       padding-right: 1.25rem;
     }
 
+    // [수정] 로그인 전 · 후 같은 디자인 (예전 로그인 후 휴대폰 규칙과 통일)
+    // - 포스터 123 × 201 + 왼쪽 숫자 자리 52
+    //   · [수정] 순위 ↔ 포스터 간격 좁힘: 숫자 글자 끝(약 50 ~ 57)에 포스터가 거의 붙음 (조금 겹치는 부분은 포스터 뒤로)
     .top10-slide {
-      width: 170px;
+      width: 10.9375rem; // 175 = 숫자 자리 52 + 포스터 123
+    }
+
+    .top10-card {
+      padding-left: 3.25rem; // 52 (예전 60)
+    }
+
+    .top10-poster {
+      aspect-ratio: 123 / 201;
+    }
+
+    // [수정] 순위 숫자 100 (6.25rem) — SVG 높이 140 = viewBox 140 → 글자 크기 그대로 100px
+    .top10-num {
+      height: 8.75rem;
+      bottom: 0.5rem;
+
+      .top10-num-glyph {
+        font-size: 6.25rem; // 100
+        letter-spacing: $top10-num-letter-spacing-mobile; // 10위 1 · 0 이 겹치지 않게 (_variables.scss)
+      }
     }
   }
 }
@@ -605,7 +627,11 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
 @media (max-width: $breakpoint-mobile) {
   section.top10-section .top10-slide.top10-slide--wide {
-    width: 170px * 1.3; // 221
+    width: 14.0625rem; // 225 = "10" 자리 102 + 포스터 123 · [수정] 간격 좁힘 (예전 231)
+
+    .top10-card {
+      padding-left: 6.375rem; // 102 (예전 108)
+    }
   }
 }
 
@@ -2794,36 +2820,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     }
 
 
-    // ---------- 인기 콘텐츠: 숫자 자리 48 + 포스터 123 × 201 (숫자 크기는 그대로 · 테두리 없음은 App.scss 공통) ----------
-    section.top10-section {
-      .top10-slide {
-        width: 171px;
-      }
-
-      .top10-slide--wide {
-        width: 217px; // 두 자리(10위)
-      }
-
-      .top10-card {
-        padding-left: $space-4xl;
-
-        .top10-num {
-          .top10-num-glyph {
-            font-size: 6.25rem;
-          }
-        }
-      }
-
-      .top10-slide--wide .top10-card {
-        padding-left: 5.84375rem; // 93.5 (PC 187 × 0.5)
-      }
-
-      .top10-poster {
-        aspect-ratio: 123 / 201;
-      }
-
-
-    }
+    // 인기 콘텐츠(TOP 10)는 로그인 전 · 후 같은 디자인 → 아래 공통 section.top10-section 휴대폰 규칙만 사용
 
     // ---------- Apple 추천: 포스터 130 × 204 · 가운데 [▶] 원 25 + [★ 8.7] (글자 없음) ----------
     .rail-recommend {
@@ -3756,6 +3753,283 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
 
     .member-browse-poster-title.member-browse-poster-title {
       @include caption-default-b;
+    }
+  }
+}
+
+// =====================================================================
+// [수정] 하단 무료 체험 배너 — 휴대폰 (LIVE 배너는 위 .is-live 규칙 그대로)
+// - 왼쪽은 타이틀만 (서브 텍스트 숨김) · 타이틀은 잘리지 않게 두 줄까지 · 오른쪽 버튼 강조
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .promo-banner:not(.is-live) {
+    // 타이틀이 두 줄로 들어가도록 버튼과의 사이를 좁힘
+    .promo-banner-inner {
+      gap: $space-md;
+    }
+
+    .promo-banner-text {
+      flex: 1 1 auto;
+    }
+
+    .promo-banner-desc {
+      display: none;
+    }
+
+    .promo-banner-title {
+      @include heading-h4-b;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      word-break: keep-all; // "1주일" 처럼 단어 중간에서 줄이 바뀌지 않게
+    }
+  }
+}
+
+// =====================================================================
+// [수정] 나의 목록 (휴대폰 세로 목록) — 박스 폭을 섹션 이너 폭에 맞춤
+// - 예전: 카드 최대 340 → 화면이 넓으면 오른쪽이 비고 아래 섹션 콘텐츠와 끝선이 안 맞음
+// - 이너 좌우 여백(20) 안을 꽉 채움 → 제목 줄 [전체 보기] 끝 · 아래 섹션 콘텐츠와 같은 폭 · 어떤 폭에서도 가운데
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  :is(main, div).member-home .member-wishlist.member-wishlist {
+    // [수정] 카드는 지금 크기 그대로 화면 가운데로 (좌우 여백 같게)
+    // - 휴대폰 목록은 슬라이드가 아니라 이너 좌우 여백을 같게 (예전: 오른쪽 0 → 카드가 왼쪽으로 치우침)
+    .inner {
+      padding-right: $mobile-edge;
+    }
+
+    .member-head {
+      margin-right: 0;
+    }
+
+    .member-wl-list {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      align-items: center;
+
+      li {
+        width: calc(100% - 1.25rem); // 지금 카드 폭 (화면 390 기준 약 330) · 좌우 같은 여백으로 가운데
+      }
+    }
+
+    // [수정] 마우스를 올리면 오른쪽에 어두운 덩어리가 생기던 문제
+    // - 원인: 카드의 배경 흐림(backdrop-filter) 위에서 [+] 버튼 · 카드 배경색이 바뀌는 효과가 겹치면
+    //   브라우저가 흐림을 다시 그리며 버튼 주변만 따로 어둡게 그림
+    // - 휴대폰 카드는 흐림 없이 반투명 배경만 · 카드 전체를 한 층으로 그림 · 마우스 효과는 마우스가 있는 기기에서만
+    .member-wl-card {
+      width: 100%;
+      max-width: none;
+      box-sizing: border-box;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      isolation: isolate;
+      transition: none;
+
+      &:hover {
+        background-color: $sport-opacity-b;
+      }
+    }
+
+    // [+] 버튼: 마우스를 올려도 배경 덩어리 없이 아이콘만 살짝 흐려짐
+    .member-wl-add {
+      background: transparent;
+      transition: opacity 0.2s ease;
+
+      &:hover,
+      &:focus-visible {
+        background: transparent;
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// [수정] 관심 구단 전체 페이지 — 휴대폰: 긴 가로 상자 → 정사각 카드 2열 (SportTeamsPage.jsx · SportTeamCard.jsx)
+// - 배경: 구단 대표색(--team-color) · 글자 · 별: 대표색 위에서 잘 보이는 색(--team-ink · 밝은 색이면 검정)
+// - 왼쪽 위 팔로우 별 · 가운데 엠블럼 · 아래 구단 이름(굵게) · 전체 이름은 숨김
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .sport-teams-page .sport-team-list.sport-team-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-md;
+  }
+
+  .sport-teams-page .sport-team-card.sport-team-card {
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    gap: $space-md;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    padding: $space-xl $space-md $space-lg;
+    border-width: 0.125rem;
+    border-radius: $radius-card;
+    background-color: var(--team-color, #{$bg-surface-raised});
+    color: var(--team-ink, #{$light-color-0});
+
+    &:hover {
+      background-color: var(--team-color, #{$bg-surface-hover});
+      filter: brightness(1.05);
+    }
+
+    &.on {
+      border-color: var(--team-ink, #{$light-color-0});
+    }
+
+    .sport-team-logo {
+      width: 4.5rem;
+      height: 4.5rem;
+      border-radius: 50%;
+    }
+
+    .sport-team-info {
+      flex: 0 0 auto;
+      width: 100%;
+      align-items: center;
+      text-align: center;
+    }
+
+    .sport-team-name {
+      @include heading-h4-b;
+      max-width: 100%;
+      color: var(--team-ink, #{$light-color-0});
+    }
+
+    .sport-team-meta {
+      display: none;
+    }
+
+    // 팔로우 별: 왼쪽 위
+    .sport-team-add {
+      position: absolute;
+      top: $space-sm;
+      left: $space-sm;
+      width: 2.25rem;
+      height: 2.25rem;
+      color: var(--team-ink, #{$light-color-0});
+    }
+  }
+}
+
+// [수정] 관심 구단 전체 페이지 — 휴대폰: 한 줄 4팀 (정사각 카드 크기 줄임 · 디자인은 위 규칙 그대로)
+@media (max-width: $breakpoint-mobile) {
+  .sport-teams-page .sport-team-list.sport-team-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: $space-sm;
+  }
+
+  .sport-teams-page .sport-team-card.sport-team-card {
+    gap: 0.375rem;
+    padding: $space-lg $space-xs $space-sm;
+    border-radius: $radius-card-sm;
+
+    .sport-team-logo {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .sport-team-name {
+      @include caption-default-b;
+    }
+
+    .sport-team-add {
+      top: 0.125rem;
+      left: 0.125rem;
+      width: 1.5rem;
+      height: 1.5rem;
+
+      svg {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// [수정] 관심 구단 전체 페이지 — 휴대폰: "← 스포츠 홈" 을 그라데이션 띠 아래 · 탭 위 왼쪽으로
+// - PC · 태블릿은 예전처럼 띠 안 위 (.is-top) · 휴대폰만 띠 아래 버튼(.is-below)
+// =====================================================================
+.sport-teams-page .sport-teams-back.is-below {
+  display: none;
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .sport-teams-page {
+    .sport-teams-back.is-top {
+      display: none;
+    }
+
+    .sport-teams-back.is-below {
+      display: inline-block;
+      margin: 0 0 $space-lg;
+      color: $light-color-0;
+    }
+  }
+}
+
+// =====================================================================
+// [수정] 하단 LIVE 배너 — 휴대폰: 서브 문구 없앰 · "LIVE" 는 위 줄 · "내슈빌 3 : 3 토론토" 는 아래 줄
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .promo-banner.is-live {
+    .promo-banner-desc {
+      display: none;
+    }
+
+    .live-title.live-title {
+      flex-wrap: wrap;
+      row-gap: $space-xs;
+      white-space: normal;
+    }
+
+    .live-badge {
+      flex: 0 0 100%;
+    }
+  }
+}
+
+// [수정] 나의 목록 (휴대폰) — 카드 목록을 화면 가운데로
+// - 이너 좌우 여백을 같게(20 · 20) 두고 목록은 가운데 정렬 → 제목 줄 [전체 보기] 끝선과도 같음
+@media (max-width: $breakpoint-mobile) {
+  :is(main, div).member-home .member-wishlist.member-wishlist {
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .member-head,
+    .member-wl-list {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .member-wl-list {
+      width: 100%;
+      padding: 0;
+    }
+  }
+}
+
+// =====================================================================
+// [수정] 작품 상세 정보 바 글자 위계 (휴대폰) — 장르 · 시즌 줄은 한 단계 죽이고 줄거리는 덜 밝게 · 작게
+// - 장르 · 연도 · 시즌: Caption/default (11) · Light/500
+// - 줄거리: Label/default (12) · Light/100
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .movie-detail-page.movie-detail-page .player-box {
+    .genres.genres {
+      @include caption-default;
+      color: $light-color-500;
+    }
+
+    .overview.overview {
+      @include label-default;
+      color: $light-color-100;
     }
   }
 }
