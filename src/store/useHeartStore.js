@@ -3,8 +3,11 @@
 // 저장 위치: Firestore 계정
 //   users/{uid}/wishlist/{movie_123}  작품 { id, type, title, poster_path, backdrop_path, genres, overview, addedAt, groups[] }
 //   users/{uid}/wishGroups/{groupId} 그룹 { name, icon, order, createdAt }
-// - 처음 로그인하면 기본 그룹 6개를 만들고, 이 브라우저에 남아 있던 예전 찜 목록(localStorage)을 옮겨 옴
-// - 하트 → 담기 → "어떤 그룹에 추가할까요?" 팝업 → 그룹 체크 → "OO에 추가되었어요" 토스트
+// - 처음 로그인하면 이 브라우저에 남아 있던 예전 찜 목록(localStorage)을 옮겨 옴
+// - [수정] 첫 이용자는 "전체"만 — 기본 그룹을 자동으로 만들지 않음 (그룹은 [새 그룹 만들기]로 직접 추가)
+//   · 이미 만들어 둔 그룹(예전 기본 그룹 포함)은 그대로 둠
+// - 하트 → 담기 → "어떤 그룹에 추가할까요?" 팝업 → 그룹 체크 → [추가하기] → "OO에 추가되었어요" 토스트
+//   · [수정] 체크는 팝업 안에서만 고르고(pickerDraft) [추가하기]를 눌러야 저장
 import { create } from "zustand";
 import {
   collection,
@@ -14,14 +17,13 @@ import {
   serverTimestamp,
   setDoc,
   updateDoc,
-  writeBatch,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { openSubscribeGate } from "../utils/subscribeGate"; // [정리] 로그인 안내 팝업 열기 공용
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-// 시안의 기본 그룹 6개 (아이콘: public/icons/wishlist/{icon}.svg)
+// 예전 기본 그룹 6개 (아이콘: public/icons/wishlist/{icon}.svg) — [수정] 자동 생성은 안 함 · 이미 있는 그룹 아이콘 맞추기용
 export const DEFAULT_GROUPS = [
   { id: "later", name: "나중에 볼 작품", icon: "bookmark" },
   { id: "horror", name: "호러", icon: "unhappy" },
@@ -127,6 +129,8 @@ export const useHeartStore = create((set, get) => ({
 
   // UI: 그룹 선택 팝업 · 새 그룹 만들기 · 토스트
   pickerKey: null, // 그룹을 고를 작품 key
+  pickerDraft: [], // [추가] 팝업에서 체크한 그룹 id ([추가하기] 전까지 저장 안 함)
+  pickerNew: false, // [추가] 하트로 방금 담은 작품인지 (그룹 변경과 토스트 문구 구분)
   newGroupOpen: false,
   toast: null, // { text, groupId }
 
@@ -136,13 +140,12 @@ export const useHeartStore = create((set, get) => ({
     if (get().uid === uid && get().pid === profile) return;
     unsubs.forEach((u) => u());
     unsubs = [];
-    set({ uid, pid: profile, ready: false, items: {}, groups: [], pickerKey: null, newGroupOpen: false, toast: null });
+    set({ uid, pid: profile, ready: false, items: {}, groups: [], pickerKey: null, pickerDraft: [], newGroupOpen: false, toast: null });
     if (!uid) return;
     const pre = prefixOf(profile);
 
-    let firstGroups = true;
     unsubs.push(
-      onSnapshot(groupsCol(uid), async (snap) => {
+      onSnapshot(groupsCol(uid), (snap) => {
         const groups = snap.docs
           .filter((d) => ownDoc(d.id, profile))
           .map((d) => {
@@ -152,22 +155,7 @@ export const useHeartStore = create((set, get) => ({
             return def && ICON_ALIAS[g.icon] ? { ...g, icon: def.icon } : g;
           })
           .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-        // 처음 한 번: 그룹이 하나도 없으면 기본 그룹 6개 만들기
-        if (firstGroups && groups.length === 0) {
-          firstGroups = false;
-          const batch = writeBatch(db);
-          DEFAULT_GROUPS.forEach((g, i) =>
-            batch.set(doc(groupsCol(uid), pre + g.id), {
-              name: g.name,
-              icon: g.icon,
-              order: i,
-              createdAt: serverTimestamp(),
-            })
-          );
-          await batch.commit().catch((e) => console.error("기본 그룹 생성 실패:", e));
-          return;
-        }
-        firstGroups = false;
+        // [수정] 그룹이 없어도 기본 그룹을 만들지 않음 (첫 이용자는 "전체"만)
         set({ groups });
       })
     );
@@ -226,7 +214,7 @@ export const useHeartStore = create((set, get) => ({
     };
     // 화면 먼저 반영
     set((s) => ({ items: { ...s.items, [key]: { ...base, key, addedAt: Date.now() } } }));
-    if (!silent) set({ pickerKey: key });
+    if (!silent) set({ pickerKey: key, pickerDraft: [], pickerNew: true });
 
     try {
       const detail = await fetchDetail(type, content.id);
@@ -305,12 +293,13 @@ export const useHeartStore = create((set, get) => ({
     const order = groups.reduce((m, g) => Math.max(m, g.order ?? 0), 0) + 1;
     try {
       await setDoc(ref, { name: clean, icon, order, createdAt: serverTimestamp() });
-      set({ newGroupOpen: false });
-      // 그룹 고르던 작품이 있으면 새 그룹에 바로 담기
-      if (pickerKey) {
-        set((s) => ({ groups: [...s.groups, { id: gid, name: clean, icon, order }] }));
-        await get().onToggleGroup(pickerKey, gid);
-      }
+      set((s) => ({
+        newGroupOpen: false,
+        groups: s.groups.some((g) => g.id === gid) ? s.groups : [...s.groups, { id: gid, name: clean, icon, order }],
+        // [수정] 그룹 고르던 작품이 있으면 새 그룹을 체크해 둠 ([추가하기]로 저장)
+        pickerDraft: pickerKey && !s.pickerDraft.includes(gid) ? [...s.pickerDraft, gid] : s.pickerDraft,
+      }));
+      if (!pickerKey) set({ toast: { text: `${clean} 그룹을 만들었어요.` } });
       return gid;
     } catch (error) {
       console.error("새 그룹 만들기 실패:", error);
@@ -319,8 +308,41 @@ export const useHeartStore = create((set, get) => ({
   },
 
   // ---------- 팝업 · 토스트 ----------
-  onOpenPicker: (key) => set({ pickerKey: key }),
-  onClosePicker: () => set({ pickerKey: null }),
+  onOpenPicker: (key) => set({ pickerKey: key, pickerDraft: [...(get().items[key]?.groups || [])], pickerNew: false }),
+  onClosePicker: () => set({ pickerKey: null, pickerDraft: [], pickerNew: false }),
+  // [추가] 팝업 안 체크 (저장 전)
+  onToggleDraft: (groupId) =>
+    set((s) => ({
+      pickerDraft: s.pickerDraft.includes(groupId)
+        ? s.pickerDraft.filter((g) => g !== groupId)
+        : [...s.pickerDraft, groupId],
+    })),
+  // [추가] [추가하기] — 체크한 그룹을 한 번에 저장하고 팝업 닫기
+  onApplyPicker: async () => {
+    const { uid, items, groups, pickerKey, pickerDraft, pickerNew } = get();
+    const item = items[pickerKey];
+    set({ pickerKey: null, pickerDraft: [], pickerNew: false });
+    if (!uid || !item) return;
+    const nextGroups = groups.map((g) => g.id).filter((id) => pickerDraft.includes(id));
+    const added = nextGroups.filter((id) => !item.groups.includes(id));
+    const same = nextGroups.length === item.groups.length && added.length === 0;
+    const first = groups.find((g) => g.id === added[0]);
+    set((s) => ({
+      items: { ...s.items, [pickerKey]: { ...item, groups: nextGroups } },
+      toast: first
+        ? { text: `${first.name}${added.length > 1 ? ` 외 ${added.length - 1}개` : ""} 모음에 추가되었어요.`, groupId: first.id }
+        : same
+          ? pickerNew ? { text: "위시리스트에 추가되었어요." } : s.toast
+          : { text: "그룹을 변경했어요." },
+    }));
+    if (same) return;
+    try {
+      await updateDoc(doc(itemsCol(uid), prefixOf(get().pid) + pickerKey), { groups: nextGroups });
+    } catch (error) {
+      console.error("그룹 변경 실패:", error);
+      set((s) => ({ items: { ...s.items, [pickerKey]: item } }));
+    }
+  },
   onOpenNewGroup: () => set({ newGroupOpen: true }),
   onCloseNewGroup: () => set({ newGroupOpen: false }),
   onCloseToast: () => set({ toast: null }),

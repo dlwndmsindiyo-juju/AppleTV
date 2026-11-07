@@ -14,6 +14,7 @@ import removeIcon from "./assets/remove.svg";
 import "./AiAssistantPopup.scss";
 import { useAuthStore, isSubscribed } from "../../store/useAuthStore"; // [추가] 구독 전에는 취향을 고르면 구독 안내 팝업
 import { openSubscribeGate } from "../../utils/subscribeGate";
+import { saveResumeIntent } from "../../utils/resumeIntent"; // [추가] 로그인 · 구독 후 고르려던 칩으로 돌아오기
 
 const emptyPreferences = (taste) => ({
   genres: [],
@@ -56,11 +57,17 @@ function ResultLink({ item, children, onOpen, busy, disabled, className = "", ..
 // 작품: { id, title, genre, overview, poster, detailPath?, appleUrl?, exactMatch?, relaxations? }
 // [추가] requireSubscription: 구독 전(로그인 전 포함) 계정이 취향 버튼을 누르면 이 팝업을 닫고 "구독 후 이용해주세요." 팝업
 //   · 로그인 전: [계정 만들기] → 로그인 화면 / 로그인했지만 구독 전: [구독하기] → 구독 팝업 (components/layout/SubscribeGate.jsx)
-export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, requireSubscription = false }) {
+// [추가] resumePick: { step, value } — 로그인 · 구독 전에 고르려던 칩 (열리면 그 단계에서 그 칩을 골라 둔 상태)
+export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, requireSubscription = false, resumePick = null }) {
   const gateUser = useAuthStore((s) => s.user);
   const blocked = requireSubscription && !isSubscribed(gateUser);
-  const guard = (fn) => (...args) => {
+  // stepIndex: 몇 번째 단계의 칩인지 (돌아왔을 때 같은 단계에서 다시 시작)
+  const guard = (fn, stepIndex) => (...args) => {
     if (!blocked) return fn(...args);
+    saveResumeIntent({
+      path: `${window.location.pathname}${window.location.search}`,
+      ai: { step: stepIndex, value: args[0] },
+    });
     onClose();
     openSubscribeGate(gateUser ? "watch" : "ai");
     return undefined;
@@ -92,9 +99,9 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
   const progressRatio = (step + (stepPicked ? 1 : 0.35)) / 3;
   const stepLabels = ["장르 선택", "분위기 선택", "시청 시간 선택"];
   const groups = [
-    { title: "어떤 장르가 좋아요?", description: "관심있는 장르를 하나 이상 선택해주세요.", options: GENRES, selected: preferences.genres, onSelect: guard(toggleGenre), columns: 3 },
-    { title: "오늘 어떤 분위기를 원해요?", description: "보고 싶은 분위기를 선택해주세요.", options: MOODS, selected: [preferences.mood], onSelect: guard((v) => setSingle("mood", v)), columns: 2 },
-    { title: "어떤 길이로 볼까요?", description: "시청할 수 있는 시간을 선택해 주세요.", options: DURATIONS, selected: [preferences.duration], onSelect: guard((v) => setSingle("duration", v)), columns: 2 },
+    { title: "어떤 장르가 좋아요?", description: "관심있는 장르를 하나 이상 선택해주세요.", options: GENRES, selected: preferences.genres, onSelect: guard(toggleGenre, 0), columns: 3 },
+    { title: "오늘 어떤 분위기를 원해요?", description: "보고 싶은 분위기를 선택해주세요.", options: MOODS, selected: [preferences.mood], onSelect: guard((v) => setSingle("mood", v), 1), columns: 2 },
+    { title: "어떤 길이로 볼까요?", description: "시청할 수 있는 시간을 선택해 주세요.", options: DURATIONS, selected: [preferences.duration], onSelect: guard((v) => setSingle("duration", v), 2), columns: 2 },
   ];
 
   useEffect(() => {
@@ -126,6 +133,19 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
       if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
     };
   }, []);
+
+  // [추가] 로그인 · 구독 후 돌아왔을 때: 고르려던 단계로 가서 그 칩을 골라 둠 (한 번만)
+  const resumedRef = useRef(false);
+  useEffect(() => {
+    if (!resumePick || resumedRef.current) return;
+    resumedRef.current = true;
+    const { step: s, value } = resumePick;
+    if (s === 0) toggleGenre(value);
+    if (s === 1) setSingle("mood", value);
+    if (s === 2) setSingle("duration", value);
+    if (s > 0) setStep(s);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumePick]);
 
   function setSingle(key, value) { setPreferences((prev) => ({ ...prev, [key]: prev[key] === value ? "" : value })); }
   function toggleGenre(value) { setPreferences((prev) => ({ ...prev, genres: prev.genres.includes(value) ? prev.genres.filter((g) => g !== value) : [...prev.genres, value] })); }

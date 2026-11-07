@@ -252,38 +252,73 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     margin-top: $space-2xl;
   }
 
+  // [수정] 그룹 메뉴: 왼쪽 세로 → 위쪽 가로 스크롤 (아이콘 + 이름 + 개수 알약)
+  .wish-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $space-xl;
+    margin-top: $space-2xl;
+  }
+
+  .wish-side {
+    position: static;
+  }
+
   .wish-tabs {
-    gap: $space-md;
+    flex-direction: row;
+    gap: $space-sm;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     li {
-      flex: 0 0 120px;
+      flex: 0 0 auto;
     }
   }
 
   .wish-tab {
-    height: 7rem;
+    width: auto;
+    height: 2.5rem;
+    padding: 0 $space-lg;
+    gap: $space-sm;
+    background-color: $bg-surface;
+    border-radius: $radius-pill;
+
+    strong {
+      @include body-small-b;
+      flex: none;
+    }
+
+    &--add {
+      margin-top: 0;
+    }
   }
 
   .wish-tab-icon {
-    font-size: 1.625rem;
+    font-size: 1.125rem;
   }
 
-  .wish-grid {
-    gap: $space-lg;
-    margin-top: $space-2xl;
+  // [수정] 포스터 3개씩
+  .wish-genres {
+    gap: $space-2xl;
+    margin-top: $space-lg;
   }
 
-  .wish-card {
-    gap: $space-lg;
-    padding: $space-lg;
+  .wish-posters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $space-lg $space-md;
   }
 
-  .wish-card-poster {
-    width: 112px;
+  .wish-poster-img {
+    border-radius: $radius-card-sm;
   }
 
-  .wish-card-title {
-    @include heading-h3;
+  .wish-more-btn {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 1.125rem;
   }
 }
 
@@ -306,35 +341,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
   .wish-desc {
     @include body-small;
-  }
-
-  .wish-tabs li {
-    flex-basis: 96px;
-  }
-
-  .wish-tab {
-    height: 6rem;
-
-    strong {
-      @include label-default-b;
-    }
-  }
-
-  .wish-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .wish-card-poster {
-    width: 96px;
-  }
-
-  .wish-card-title {
-    @include heading-h4-b;
-  }
-
-  .wish-card-overview {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
   }
 
   .wish-modal {

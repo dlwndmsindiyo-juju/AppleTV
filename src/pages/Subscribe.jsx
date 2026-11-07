@@ -12,6 +12,7 @@
 //   (카드번호 전체 · 유효기간 · 비밀번호 · 신원 확인 · 통신사 정보는 저장하지 않음)
 // - 로그인 전이면 로그인으로, 이미 구독 중인 계정이 들어오면 화면 없이 원래 화면으로 이동
 // - 스타일: App.scss "구독 팝업" (.sub-pop-*) · 휴대폰 mobile.scss
+import { resumePath } from "../utils/resumeIntent"; // [추가] 구독 후 하던 화면으로
 import React, { createContext, useContext, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -886,7 +887,7 @@ const Subscribe = () => {
   return (
     <SubscribePopup
       onClose={() => navigate(from, { replace: true })}
-      onDone={() => navigate("/", { replace: true })}
+      onDone={() => navigate(resumePath() || from, { replace: true })} // [수정] 하던 화면으로
     />
   );
 };
