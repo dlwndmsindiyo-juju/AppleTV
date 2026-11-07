@@ -7,7 +7,7 @@ import "../../member.scss";
 // 기존 랜딩 섹션 재사용 (수정 없음)
 import HeroSection from "../landing/HeroSection";
 import Top10Section from "../landing/Top10Section";
-import TrialWelcome from "../landing/TrialWelcome"; // 무료 체험 중 안내 (체험 중일 때만 표시)
+// [삭제] import TrialWelcome from "../landing/TrialWelcome"; — 무료 체험 중 안내 띠 뺌
 import SubscribeCTA from "../landing/SubscribeCTA"; // [추가] 홍보 배너 (시안: 공개예정작 다음) — 구독 중이면 컴포넌트가 알아서 숨김
 
 // 신규 섹션
@@ -35,8 +35,7 @@ const MemberHome = ({ userName = "회원" }) => {
 
   return (
     <main className="page-fade member-home">
-      {/* 0. 무료 체험 중 안내 (하얀 배너만, 하루/일주일 안 보기 가능) */}
-      <TrialWelcome />
+      {/* [삭제] 0. 무료 체험 중 안내 띠 (TrialWelcome) — 구독 완료는 구독 팝업에서 안내 */}
 
       {/* 1. 히어로 (기존 컴포넌트 재사용) */}
       {/* [수정] 시안: 히어로 바로 아래가 "이어서 감상하기" — 핵심 혜택(ValueProps) 띠는 로그인 후 메인에서 뺌 (로그인 전 홈은 그대로) */}

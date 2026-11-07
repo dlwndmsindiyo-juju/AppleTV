@@ -1113,7 +1113,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .movie-detail-page .player-box .title-logo {
   display: block;
-  max-width: 200px;
+  max-width: 12.5rem;
   max-height: 3.5rem;
   object-fit: contain;
   object-position: left center;
@@ -1148,11 +1148,11 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 .movie-detail-page .player-box .overview {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.8125rem;
-  line-height: 1.125rem;
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
   letter-spacing: 0;
   color: #E0E0E0;
-  max-width: 640px;
+  max-width: 40rem;
   margin-top: 0.25rem;
   word-break: keep-all;
   display: -webkit-box;
@@ -1173,7 +1173,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   gap: 0.625rem;
 }
 .movie-detail-page .player-box .icon-btn {
-  width: 36px;
+  width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
   border: none;
@@ -1205,7 +1205,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   line-height: 1.25rem;
   letter-spacing: 0;
   font-weight: 700;
-  width: 180px;
+  width: 11.25rem;
   height: 2.5rem;
   border: none;
   border-radius: 0.5rem;
@@ -1248,7 +1248,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   gap: 0.25rem;
 }
 .movie-detail-page .rating-section .rating-header .score-display .score-star {
-  width: 18px;
+  width: 1.125rem;
   height: 1.125rem;
   color: #FFD60A;
   flex-shrink: 0;
@@ -1274,7 +1274,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   padding: 0.25rem 0;
 }
 .movie-detail-page .rating-section .star-picker .star-item {
-  width: 48px;
+  width: 3rem;
   background: none;
   border: none;
   padding: 0;
@@ -1290,7 +1290,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   transition: color 0.15s ease, transform 0.15s ease;
 }
 .movie-detail-page .rating-section .star-picker .star-item .star svg {
-  width: 35px;
+  width: 2.1875rem;
   height: 2.1875rem;
 }
 .movie-detail-page .rating-section .star-picker .star-item .label {
@@ -1462,7 +1462,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .movie-detail-page .right-section .episode-card .thumb {
   position: relative;
-  width: 168px;
+  width: 10.5rem;
   aspect-ratio: 16/9;
   flex-shrink: 0;
   border-radius: 0.375rem;
@@ -1480,7 +1480,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 32px;
+  width: 2rem;
   height: 2rem;
   border-radius: 50%;
   font-family: "SF Pro", sans-serif;
@@ -1554,7 +1554,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   font-size: 1.25rem;
   line-height: 1.5625rem;
   letter-spacing: 0;
-  width: 72px;
+  width: 4.5rem;
   height: 4.5rem;
   border-radius: 50%;
   overflow: hidden;
@@ -1911,13 +1911,22 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
 }
 .subscribe-cta .subscribe-title {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 1.25rem;
-  line-height: 1.5625rem;
+  font-weight: 700;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
   word-break: keep-all;
+}
+.subscribe-cta .subscribe-title .subscribe-title-desktop span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
+  letter-spacing: 0;
+  display: flex;
+  flex-direction: column;
 }
 .subscribe-cta .subscribe-btn {
   font-family: "SF Pro", sans-serif;
@@ -3858,8 +3867,47 @@ main.sport-home .sport-series-card h4 {
   object-fit: contain;
 }
 
+.auth-divider span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+
+.auth-legal a {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.auth-legal span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+
+.auth-remember {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+
 .auth-step {
   animation: auth-step-in 0.4s ease both;
+}
+
+.auth-muted {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
 }
 
 @keyframes auth-step-in {
@@ -4120,17 +4168,11 @@ main.sport-home .sport-series-card h4 {
 }
 
 .auth-divider {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  letter-spacing: 0;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   max-width: 428px;
   margin: 1.5rem auto 0;
-  color: #A3A3A3;
 }
 .auth-divider::before, .auth-divider::after {
   content: "";
@@ -5636,8 +5678,21 @@ img.ui-icon.ui-icon-arrow {
   line-height: 2.5625rem;
   letter-spacing: 0;
   color: #2E2E2E;
-  padding-bottom: 1.5rem;
+  padding: 1rem 0 1.5rem;
   border-bottom: 0.0625rem solid #D5D5D5;
+}
+
+.account-back {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+}
+
+.account-back > svg {
+  display: inline-flex;
+  margin-right: 0.5rem;
 }
 
 .account-layout {
@@ -5709,6 +5764,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-section {
+  font-family: inherit;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
@@ -5745,6 +5801,7 @@ img.ui-icon.ui-icon-arrow {
   align-items: flex-start;
   gap: 1rem;
   transition: opacity 0.2s ease;
+  margin-bottom: 1rem;
 }
 .account-item.is-muted {
   opacity: 0.4;
@@ -5784,12 +5841,14 @@ img.ui-icon.ui-icon-arrow {
   font-size: 0.9375rem;
   line-height: 1.25rem;
   letter-spacing: 0;
+  font-family: inherit;
   padding: 0;
-  border: none;
-  background: none;
   color: #5865F2;
   cursor: pointer;
   text-align: left;
+  margin-bottom: 1rem;
+  display: inline-block;
+  margin-left: 0.25rem;
 }
 .account-link:hover {
   color: #6E7AF4;
@@ -6130,6 +6189,757 @@ img.ui-icon.ui-icon-arrow {
   transform: translate(-50%, 0);
 }
 
+.account-sub-heading {
+  margin: 2.25rem 0 1.5rem;
+}
+
+.account-pay .account-pay-layout {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.account-pay .account-pay-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: min(100%, 28.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.account-pay .account-pay-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1rem;
+  border-radius: 1.25rem;
+  background: #FFFFFF;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+.account-pay .account-pay-item-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+.account-pay .account-pay-item-right {
+  position: relative;
+  flex-shrink: 0;
+}
+.account-pay .account-pay-card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.account-pay .account-pay-brand {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.3125rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+.account-pay .account-pay-number {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+.account-pay .account-pay-default {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0;
+  color: #5865F2;
+}
+.account-pay .account-pay-badge,
+.account-pay .account-pay-provider-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 3.625rem;
+  height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: 0.5rem;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+}
+.account-pay .account-pay-badge.is-kakao,
+.account-pay .account-pay-provider-badge.is-kakao {
+  background: #FFD60A;
+  color: #171717;
+}
+.account-pay .account-pay-badge.is-naver,
+.account-pay .account-pay-provider-badge.is-naver {
+  background: #30d158;
+  color: #171717;
+}
+.account-pay .account-pay-badge.is-toss,
+.account-pay .account-pay-provider-badge.is-toss {
+  background: #5865F2;
+  color: #FFFFFF;
+}
+.account-pay .account-pay-badge.is-phone,
+.account-pay .account-pay-provider-badge.is-phone {
+  background: #F2F2F2;
+  color: #5865F2;
+  border: 1px solid #B0C1FA;
+}
+.account-pay .account-pay-provider-image {
+  display: block;
+  width: 3.625rem;
+  height: 2.25rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.account-pay .account-pay-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #171717;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.account-pay .account-pay-more:hover {
+  background: #F2F2F2;
+}
+.account-pay .account-pay-more:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: 2px;
+}
+.account-pay .account-pay-more-menu {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 12rem;
+  padding: 0.5rem;
+  border: 1px solid #E5E5E5;
+  border-radius: 0.75rem;
+  background: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.account-pay .account-pay-more-menu button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: #171717;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.account-pay .account-pay-more-menu button:hover {
+  background: #F2F2F2;
+}
+.account-pay .account-pay-more-menu button.is-danger {
+  color: #ff453a;
+}
+.account-pay .account-pay-more-menu button.is-close {
+  color: #525252;
+}
+.account-pay .account-pay-more-menu button:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: -2px;
+}
+.account-pay .account-pay-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.account-pay .account-icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  border: 0;
+  background: transparent;
+  color: #5865F2;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.account-pay .account-icon-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.account-pay .account-icon-link:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.account-pay .account-icon-link:focus-visible {
+  outline: 2px solid #5865F2;
+  outline-offset: 3px;
+}
+.account-pay .account-inline-plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1.5px solid #5865F2;
+  border-radius: 50%;
+  color: #5865F2;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
+  letter-spacing: 0;
+}
+.account-pay .account-pay-empty {
+  margin: 0;
+  padding: 1rem 0;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+
+.account-pay-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.account-pay-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 45rem);
+  max-height: min(90vh, 53.75rem);
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: #FFFFFF;
+  color: #171717;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.account-pay-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem 1rem;
+}
+.account-pay-modal-head h3 {
+  margin: 0;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+
+.account-pay-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #525252;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.account-pay-close:hover {
+  color: #171717;
+}
+
+.account-pay-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.5rem 2rem 2rem;
+}
+
+.account-pay-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.account-pay-method {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #D4D4D4;
+  border-radius: 1.25rem;
+  background: #F5F5F5;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.account-pay-method.is-selected {
+  border-color: #5865F2;
+  background: rgba(88, 101, 242, 0.06);
+}
+.account-pay-method:hover {
+  border-color: #5865F2;
+}
+
+.account-pay-method-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+.account-pay-method-radio input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.account-pay-method-radio-ui {
+  position: relative;
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #A3A3A3;
+  border-radius: 50%;
+  background: #FFFFFF;
+  pointer-events: none;
+}
+
+.account-pay-method.is-selected .account-pay-method-radio-ui {
+  border-color: #5865F2;
+}
+.account-pay-method.is-selected .account-pay-method-radio-ui::after {
+  content: "";
+  position: absolute;
+  inset: 0.5rem;
+  border-radius: 50%;
+  background: #5865F2;
+}
+
+.account-pay-method-radio input:focus-visible + .account-pay-method-radio-ui {
+  outline: 2px solid #5865F2;
+  outline-offset: 3px;
+}
+
+.account-pay-method-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.account-pay-method-copy strong {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+.account-pay-method-copy small {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+
+.account-pay-methods--provider .account-pay-method--provider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 16px;
+  min-height: 7.5rem;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-method-radio {
+  flex: 0 0 auto;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-provider-image {
+  display: block;
+  width: 88px;
+  height: 36px;
+  flex: 0 0 88px;
+  object-fit: contain;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-method-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+.account-pay-methods--provider .account-pay-method--provider .account-pay-method-copy strong {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.account-pay-fields {
+  display: grid;
+  gap: 1rem;
+}
+.account-pay-fields label {
+  display: grid;
+  gap: 0.5rem;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+.account-pay-fields input,
+.account-pay-fields select {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #C8C8C8;
+  border-radius: 0.625rem;
+  background: #F5F5F5;
+  color: #171717;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.account-pay-fields input:focus,
+.account-pay-fields select:focus {
+  outline: 2px solid #5865F2;
+  outline-offset: 1px;
+}
+.account-pay-fields input::placeholder,
+.account-pay-fields select::placeholder {
+  color: #525252;
+}
+
+.account-pay-help {
+  margin: 0;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+
+.account-pay-auth {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1.25rem;
+  background: #F5F5F5;
+}
+.account-pay-auth--kakao {
+  border-top: 4px solid #FFD60A;
+}
+.account-pay-auth--naver {
+  border-top: 4px solid #30d158;
+}
+.account-pay-auth--toss {
+  border-top: 4px solid #5865F2;
+}
+.account-pay-auth--phone {
+  border-top: 4px solid #5865F2;
+}
+
+.account-pay-auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.account-pay-auth-brand strong {
+  display: block;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  color: #171717;
+}
+.account-pay-auth-brand small {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #525252;
+}
+
+.account-pay-auth-box {
+  overflow: hidden;
+  border: 1px solid #E5E5E5;
+  border-radius: 0.75rem;
+  background: #FFFFFF;
+}
+
+.account-pay-auth-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #E5E5E5;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+}
+.account-pay-auth-row:last-child {
+  border-bottom: 0;
+}
+.account-pay-auth-row span {
+  color: #525252;
+}
+.account-pay-auth-row strong {
+  color: #171717;
+  font-weight: 700;
+}
+
+.account-pay-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 2rem 1.5rem;
+  border-top: 1px solid #E5E5E5;
+}
+
+.account-pay-primary,
+.account-pay-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6.5rem;
+  min-height: 3rem;
+  padding: 0 1.5rem;
+  border: 0;
+  border-radius: 0.625rem;
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.account-pay-primary {
+  background: #5865F2;
+  color: #FFFFFF;
+}
+.account-pay-primary:hover:not(:disabled) {
+  background: rgb(59.61, 74.82, 239.79);
+}
+
+.account-pay-secondary {
+  background: #E5E5E5;
+  color: #171717;
+}
+.account-pay-secondary:hover:not(:disabled) {
+  background: #D4D4D4;
+}
+
+.account-pay-primary:disabled,
+.account-pay-secondary:disabled,
+.account-pay button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 767px) {
+  .account-pay .account-pay-layout {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .account-pay .account-pay-list {
+    width: 100%;
+  }
+  .account-pay .account-pay-apple {
+    width: 100%;
+  }
+  .account-pay .account-pay-card {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+  .account-pay .account-pay-item-left {
+    gap: 0.75rem;
+  }
+  .account-pay .account-pay-more-menu {
+    right: 0;
+    min-width: 11rem;
+  }
+  .account-pay .account-pay-actions {
+    width: 100%;
+  }
+  .account-pay-overlay {
+    padding: 0.75rem;
+  }
+  .account-pay-modal {
+    width: 100%;
+    max-height: 94vh;
+    border-radius: 1.25rem;
+  }
+  .account-pay-modal-head {
+    padding: 1rem 1rem 0.75rem;
+  }
+  .account-pay-modal-head h3 {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+  }
+  .account-pay-modal-body {
+    padding: 0.5rem 1rem 1rem;
+  }
+  .account-pay-method {
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  .account-pay-method--provider {
+    min-height: 6rem;
+  }
+  .account-pay-method-copy strong {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    letter-spacing: 0;
+  }
+  .account-pay-auth {
+    padding: 0.75rem;
+  }
+  .account-pay-auth-row {
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+  .account-pay-modal-footer {
+    padding: 0.75rem 1rem 1rem;
+  }
+  .account-pay-primary,
+  .account-pay-secondary {
+    min-width: 5rem;
+  }
+}
+.account-pay-method-icon {
+  display: block;
+  width: 38px;
+  height: 28px;
+  flex: 0 0 58px;
+  object-fit: contain;
+}
+
+.account-pay-provider-image {
+  display: block;
+  width: 62px;
+  height: 34px;
+  flex: 0 0 92px;
+  object-fit: contain;
+}
+
+.account-pay-card-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.account-pay-card-fields input,
+.account-pay-card-fields select {
+  box-sizing: border-box;
+  min-width: 0;
+}
+.account-pay-card-fields .account-pay-card-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.account-pay-phone-fields label {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.account-pay-phone-fields label > span {
+  white-space: nowrap;
+}
+.account-pay-phone-fields input,
+.account-pay-phone-fields select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.account-pay-phone-fields select {
+  padding-right: 48px;
+}
+
+@media (max-width: 480px) {
+  .account-pay-phone-fields label {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .account-pay-provider-image {
+    width: 72px;
+    flex-basis: 72px;
+  }
+}
 .profile-avatar {
   display: inline-flex;
   align-items: center;
@@ -6519,13 +7329,7 @@ main.landing-home .subscribe-cta {
     letter-spacing: 0;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-posters {
-    top: 50%;
-    left: max(48%, 32.5rem);
-    gap: 0.75rem;
-    transform: translateY(-50%);
-  }
-  .subscribe-cta.subscribe-cta--tv .subscribe-poster {
-    --poster-h: 16.75rem;
+    display: none;
   }
 }
 .subscribe-cta.subscribe-cta--tv.subscribe-cta--sport .subscribe-bg {
@@ -6702,6 +7506,9 @@ section.device-guide.device-guide--watch .watch-subtitle {
   padding-top: 0;
   color: #FFFFFF;
   word-break: keep-all;
+}
+section.device-guide.device-guide--watch .watch-subtitle-mobile {
+  display: none;
 }
 section.device-guide.device-guide--watch .watch-link {
   font-family: "SF Pro", sans-serif;
@@ -6994,9 +7801,7 @@ section.device-guide.device-guide--watch .watch-device img {
   cursor: default;
 }
 .profile-picker-btn.is-ghost {
-  background-color: transparent;
-  color: #171717;
-  box-shadow: inset 0 0 0 0.0625rem #D5D5D5;
+  background-color: #2E2E2E;
 }
 
 .profile-picker.account-profile-picker {
@@ -7375,7 +8180,7 @@ section.device-guide.device-guide--watch .watch-device img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.1rem;
 }
 
 body.has-promo-banner .floating-actions {
@@ -7802,7 +8607,7 @@ section.device-guide.device-guide--watch .watch-device-name {
 }
 
 .movie-detail-page .icon-heart {
-  width: 18px;
+  width: 1.125rem;
   height: 1.125rem;
 }
 .movie-detail-page .player-box .icon-btn.on {
@@ -7833,6 +8638,11 @@ section.device-guide.device-guide--watch .watch-device-name {
     margin-top: 2.8125rem;
   }
   section.device-guide.device-guide--watch .watch-subtitle {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    letter-spacing: 0;
     margin-bottom: 1.625rem;
   }
   section.device-guide.device-guide--watch .watch-devices {
@@ -7948,7 +8758,7 @@ main.wish-page {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #525252;
+  color: #8F909D;
 }
 .ai-banner .ai-banner-title {
   font-family: "SF Pro", sans-serif;
@@ -7967,7 +8777,7 @@ main.wish-page {
   line-height: 1.25rem;
   letter-spacing: 0;
   margin-top: 0.5rem;
-  color: #525252;
+  color: #999AA6;
   word-break: keep-all;
 }
 .ai-banner .ai-banner-box {
@@ -8165,4 +8975,207 @@ main.wish-page {
   .ai-banner .ai-banner-btn::before {
     animation: none;
   }
+}
+@media (min-width: 768px) {
+  .movie-detail-page.movie-detail-page {
+    padding-top: calc(4.5rem + 1.4375rem);
+    padding-bottom: 2.5rem;
+  }
+  .movie-detail-page.movie-detail-page .left-section {
+    gap: 1.25rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .player-info {
+    padding-top: 0.6875rem;
+    padding-bottom: 0.6875rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .original-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .player-box .genres {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
+    letter-spacing: 0;
+    color: #C8C8C8;
+  }
+  .movie-detail-page.movie-detail-page .player-box .overview {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .player-box .icon-btn {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .icon-btn svg,
+  .movie-detail-page.movie-detail-page .player-box .icon-btn .icon-heart {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .movie-detail-page.movie-detail-page .player-box .btn-play {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    color: #171717;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header h3 {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display .score-star {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #FFCC00;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display .max-score {
+    color: #525252;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .rating-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .star-picker .star-item .star svg {
+    width: 2.1875rem;
+    height: 2.1875rem;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .star-picker .star-item .label {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .rating-section .btn-submit-rating {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    width: 11.25rem;
+    height: 3.875rem;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    color: #525252;
+  }
+  .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn:hover {
+    color: #C8C8C8;
+  }
+  .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn.active {
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .right-section .filter-bar {
+    grid-template-columns: repeat(2, minmax(0, 18.125rem));
+  }
+  .movie-detail-page.movie-detail-page .right-section .filter-bar select {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+    height: 3.125rem;
+    color: #171717;
+  }
+  .movie-detail-page.movie-detail-page .right-section .season-label {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .right-section .episode-card .info .ep-num,
+  .movie-detail-page.movie-detail-page .right-section .episode-card .info .runtime {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+  .movie-detail-page.movie-detail-page .right-section .episode-card .info .ep-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+    color: #FFFFFF;
+  }
+}
+section.top10-section .top10-num {
+  height: 8.75rem;
+  bottom: 0.5rem;
+}
+section.top10-section .top10-num .top10-num-glyph {
+  font-size: 6.25rem;
+  letter-spacing: -1.25rem;
+}
+section.top10-section .top10-num .top10-num-stroke {
+  display: none;
+}
+
+.hero-swiper-container.movie-home-hero .hero-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 4.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+.hero-swiper-container.movie-home-hero .hero-nav img {
+  display: block;
+  width: 2rem;
+  height: 3.75rem;
+  object-fit: contain;
+}
+.hero-swiper-container.movie-home-hero .hero-nav:focus-visible {
+  outline: 0.125rem solid #FFFFFF;
+  outline-offset: 0.125rem;
+}
+.hero-swiper-container.movie-home-hero .hero-nav--prev {
+  left: 5%;
+}
+.hero-swiper-container.movie-home-hero .hero-nav--next {
+  right: 5%;
 }

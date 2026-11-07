@@ -29,7 +29,7 @@ export default function AiAssistantLink({ children, initialTaste = null, classNa
       >
         {children}
       </Trigger>
-      {open && <AiAssistantPopup initialTaste={initialTaste} onClose={close} onRecommend={onRecommend} />}
+      {open && <AiAssistantPopup initialTaste={initialTaste} onClose={close} onRecommend={onRecommend} requireSubscription />} {/* [추가] 구독 전: 취향 버튼 → 구독 안내 팝업 */}
     </>
   );
 }

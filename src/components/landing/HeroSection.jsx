@@ -302,7 +302,7 @@ const HeroSection = () => {
         fadeEffect={{ crossFade: true }}
         slidesPerView={1}
         loop={true}
-        navigation={true}
+        navigation={false} // [수정] 히어로 전용 커스텀 SVG 네비게이션 사용
         pagination={{ clickable: true }}
         autoplay={{
           delay: 5000,
@@ -327,6 +327,23 @@ const HeroSection = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      {/* [추가] 히어로 전용 좌우 네비게이션 — 다른 Swiper에는 영향 없음 */}
+      <button
+        type="button"
+        className="hero-nav hero-nav--prev"
+        aria-label="이전 작품 보기"
+        onClick={() => swiperRef.current?.slidePrev()}
+      >
+        <img src="/icons/hero-nav-left.svg" alt="" aria-hidden="true" />
+      </button>
+      <button
+        type="button"
+        className="hero-nav hero-nav--next"
+        aria-label="다음 작품 보기"
+        onClick={() => swiperRef.current?.slideNext()}
+      >
+        <img src="/icons/hero-nav-right.svg" alt="" aria-hidden="true" />
+      </button>
     </div>
   );
 };

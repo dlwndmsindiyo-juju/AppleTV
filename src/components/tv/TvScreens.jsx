@@ -11,8 +11,9 @@ export const TvTerms = ({ onAgree, onCancel }) => (
   <main className="tv-screen tv-terms">
     <h1 className="tv-title tv-title--xl">Apple TV 이용 안내</h1>
     <p className="tv-desc">
-      Apple TV에서 콘텐츠를 시청하려면 Apple 계정으로 로그인하세요. 구독 및 시청 가능 여부는 계정과 콘텐츠에 따라
-      달라집니다. 개인정보와 계정 설정은 언제든지 변경할 수 있습니다.
+      <span>Apple TV에서 콘텐츠를 시청하려면 Apple 계정으로 로그인하세요.</span> <span>구독 및 시청 가능 여부는 계정과 콘텐츠에 따라
+        달라집니다.</span>
+      <span>개인정보와 계정 설정은 언제든지 변경할 수 있습니다.</span>
     </p>
 
     <div className="tv-actions">
