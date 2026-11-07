@@ -3,6 +3,7 @@ import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import { useSportStore } from "../../store/useSportStore";
 import { upcomingMatches, matchTitle, kickoffText } from "../../data/matchesData";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
+import { SPORT_SHORTS } from "../../data/sportShorts";
 import { decodeHtml, ytThumb } from "./sportUtils";
 import { REPLAY_LEAGUES, leagueThumb, playlistEmbedUrl, playlistWatchUrl } from "../../data/replayLeagues";
 import { LeagueCover } from "./SportReplay";
@@ -18,6 +19,7 @@ import { SportBack } from "./SportBack";
 //   /sport/upcoming    → 예정된 경기 상세   (SportUpcoming "전체 보기" · 카드)
 //   /sport/highlights  → 하이라이트 상세    (SportHighlights "전체 보기" · 카드)
 //   /sport/series      → 추천 시리즈 상세   (SportSeries 카드 · data/mockSportSeries.js 의 youtubeUrl 영상)
+//   /sport/shorts      → 숏폼 상세         (SportShorts "전체 보기" · data/sportShorts.js)
 //   ?id=영상ID(경기ID) 로 오른쪽 목록 중 선택된 항목을 지정 (없으면 첫 번째)
 // 구조: 왼쪽 큰 화면(영상 플레이어 / 카운트다운) + 아래 정보, 오른쪽 목록
 // =====================================================================
@@ -127,6 +129,25 @@ const DETAIL_CONFIG = {
         })),
   },
 
+  // 숏폼: data/sportShorts.js (정해진 경기 영상 · videoId 가 없으면 썸네일만)
+  shorts: {
+    title: "숏폼",
+    empty: "숏폼 영상이 없습니다.",
+    buildItems: () =>
+      SPORT_SHORTS.map((short) => {
+        const length = short.seconds ? `${Math.floor(short.seconds / 60)}:${String(short.seconds % 60).padStart(2, "0")}` : "";
+        const meta = [short.match, length].filter(Boolean).join(" · ");
+        return {
+          id: short.id,
+          videoId: short.videoId || "",
+          title: short.title,
+          meta,
+          thumb: short.thumb,
+          info: { label: short.tag, title: short.title, desc: short.match, meta },
+        };
+      }),
+  },
+
   // [수정] 예정된 경기: data/matchesData.js 25경기 (경기 이미지 · 가까운 순서 · 카운트다운)
   upcoming: {
     title: "예정된 경기",
@@ -216,6 +237,15 @@ const DetailPlayer = ({ item, next, onNext }) => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
+      </div>
+    );
+  }
+
+  // 영상 id 가 아직 없는 항목(숏폼)은 썸네일만
+  if (!item.videoId) {
+    return (
+      <div className="sport-detail-player">
+        <img className="sport-detail-player-poster" src={item.thumb} alt="" />
       </div>
     );
   }

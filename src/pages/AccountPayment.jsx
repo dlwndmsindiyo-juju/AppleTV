@@ -1,12 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuthStore, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
-import { AccountSubPage, ConfirmDialog, CARD_BRANDS } from "../components/profile/AccountShared";
+import { AccountSubPage, ConfirmDialog, CARD_BRANDS, CARD_BRAND_ICONS } from "../components/profile/AccountShared";
 import { PAYMENT_URL } from "../data/appleLinks";
+import { PaymentRegisterPopup } from "./Subscribe"; // [추가] 지불 방법 추가 = 구독 팝업의 지불 방법 등록 화면
 // public 폴더의 파일은 import 없이 루트(/) 경로로 참조합니다.
 // 실제 경로: public/pay-icon/*.svg, public/method-icon/*.svg
+// [추가] 카드 아이콘 (credit-card.svg 그대로 · 파일 경로를 찾지 못해 깨지는 일이 없게 코드 안에 넣음)
+const CREDIT_CARD_ICON = `data:image/svg+xml;utf8,${encodeURIComponent(
+  '<svg width="36" height="24" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 21.5V12H36V21.5C36 22.1875 35.7552 22.776 35.2656 23.2656C34.776 23.7552 34.1875 24 33.5 24H2.5C1.8125 24 1.22396 23.7552 0.734375 23.2656C0.244792 22.776 0 22.1875 0 21.5ZM10 18V20H16V18H10ZM4 18V20H8V18H4ZM33.5 0C34.1875 0 34.776 0.244792 35.2656 0.734375C35.7552 1.22396 36 1.8125 36 2.5V6H0V2.5C0 1.8125 0.244792 1.22396 0.734375 0.734375C1.22396 0.244792 1.8125 0 2.5 0H33.5Z" fill="#5865F2"/></svg>'
+)}`;
+
 const METHOD_ICONS = {
-  card: "/icons/method-icon/card.svg",
+  card: CREDIT_CARD_ICON, // [수정] 카드사를 모를 때 카드 아이콘 (credit-card.svg 를 코드 안에 넣음 → 파일 위치 · 경로와 상관없이 항상 보임)
   pay: "/icons/method-icon/pay.svg",
   phone: "/icons/method-icon/phone.svg",
 };
@@ -15,6 +21,14 @@ const PAY_ICONS = {
   "네이버페이": "/icons/pay-icon/naverpay.svg",
   "토스페이": "/icons/pay-icon/tosspay.svg",
 };
+
+// [추가] 카드 오른쪽 로고: 카드사 로고 → 간편결제 로고 → 결제 유형 아이콘 순서로 찾음
+// (brand 로도 찾으므로 저장 중 method · provider 가 빠져도 간편결제 로고가 나옴)
+const getPaymentLogo = (payment, meta) =>
+  CARD_BRAND_ICONS[payment.brand] ||
+  PAY_ICONS[payment.provider] ||
+  PAY_ICONS[payment.brand] ||
+  METHOD_ICONS[meta.type];
 
 const makeId = () =>
   `pm_${Date.now().toString(36)}_${Math.random()
@@ -162,7 +176,8 @@ export default function AccountPayment() {
   const authReady = useAuthStore((s) => s.authReady);
   const onSavePayments = useAuthStore((s) => s.onSavePayments);
 
-  const [step, setStep] = useState("closed");
+  const [step, setStep] = useState("closed"); // (예전 지불 방법 추가 창 · 지금은 안 씀)
+  const [addOpen, setAddOpen] = useState(false); // [추가] 지불 방법 등록 팝업
   const [form, setForm] = useState(INITIAL);
   const [removing, setRemoving] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -235,10 +250,10 @@ export default function AccountPayment() {
     }
   };
 
+  // [수정] 지불 방법 추가 → 구독 팝업과 같은 "지불 방법 등록" 팝업
   const openAdd = () => {
     if (busy || full) return;
-    setForm({ ...INITIAL });
-    setStep("select");
+    setAddOpen(true);
   };
 
   const expiryMonth = Number(form.expiry.slice(0, 2));
@@ -397,13 +412,8 @@ export default function AccountPayment() {
                 return (
                   <li key={payment.id} className="account-pay-card">
                     <div className="account-pay-item-left">
-                      <img
-                        className="account-pay-method-icon" style={{ width: 58, height: 48, objectFit: "contain", flexShrink: 0 }}
-                        src={METHOD_ICONS[meta.type]}
-                        alt=""
-                        aria-hidden="true"
-                      />
-
+                      {/* [수정] 카드 이름 왼쪽 아이콘: 카드사 로고 → 없으면 카드 아이콘(credit-card.svg) */}
+                      <img className="account-pay-logo" src={getPaymentLogo(payment, meta)} alt="" aria-hidden="true" />
                       <div className="account-pay-card-text">
                         <strong className="account-pay-brand">{meta.title}</strong>
                         <span className="account-pay-number">{meta.detail}</span>
@@ -449,7 +459,7 @@ export default function AccountPayment() {
               onClick={openAdd}
               disabled={busy || full}
             >
-              <span className="account-inline-plus">＋</span>
+              <span className="account-inline-plus" aria-hidden="true" /> {/* [수정] 원형 테두리(border) + 플러스 아이콘(/icons/plus.svg) */}
               지불 방법 추가
             </button>
 
@@ -816,6 +826,17 @@ export default function AccountPayment() {
           onConfirm={remove}
           onCancel={() => {
             if (!busy) setRemoving(null);
+          }}
+        />
+      )}
+
+      {/* [추가] 지불 방법 등록 팝업 (저장은 팝업 안에서: 카드 종류 + 마지막 4자리 · 청구 주소) */}
+      {addOpen && (
+        <PaymentRegisterPopup
+          onClose={() => setAddOpen(false)}
+          onSaved={() => {
+            setAddOpen(false);
+            setMessage("지불 방법이 등록되었습니다.");
           }}
         />
       )}

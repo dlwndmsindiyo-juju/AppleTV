@@ -431,12 +431,11 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     @include body-default-b;
   }
 
+  // [수정] 파란 글자 링크(.account-link · .account-icon-link)는 PC 와 같은 Body/default 로 통일 → 여기서 뺌
   .account-item-desc,
-  .account-link,
   .account-toggle,
   .account-check,
-  .account-address,
-  .account-icon-link {
+  .account-address {
     @include body-small;
   }
 
@@ -3222,7 +3221,6 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
   .account-sub-app-icon {
     width: 3.5rem;
     height: 3.5rem;
-    border-radius: $radius-card-sm;
   }
 
   .account-pay-layout {
@@ -3233,6 +3231,76 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
   .account-pay-card {
     min-height: 0;
     padding: $space-lg;
+  }
+
+  // [추가] 상세 글자 위계 — 계정 설정 휴대폰과 같음 (제목 Body/default-B · 설명 · 링크 · 뒤로 Body/small · 안내 Label/default)
+  .account-sub-body:not(.account-pay) {
+    gap: $space-xl;
+    padding: $space-2xl 0;
+  }
+
+  .account-sub-body:not(.account-pay) > .account-item {
+    gap: $space-sm;
+  }
+
+  .account-back-row {
+    margin-bottom: $space-xs;
+  }
+
+  .account-back {
+    @include body-small;
+    gap: $space-xs;
+  }
+
+  .account-sub-heading {
+    @include heading-h5-b;
+  }
+
+  // 지불 방법: 제목 위 여백은 구독 관리와 같게 (상자 위 여백만)
+  .account-pay > .account-sub-heading {
+    margin: 0 0 $space-lg;
+  }
+
+  .account-pay .account-pay-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .account-sub-canceled,
+  .account-plan-name,
+  .account-pay .account-pay-brand {
+    @include body-default-b;
+  }
+
+  .account-sub-facts li,
+  .account-plan-price {
+    @include body-small;
+  }
+
+  .account-sub-facts .account-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .account-plan-tag {
+    @include label-default;
+  }
+
+  .account-plan {
+    padding: $space-md;
+    border-radius: $radius-card-sm;
+  }
+
+  .account-sub-empty {
+    padding: $space-lg;
+    border-radius: $radius-card-sm;
+  }
+
+  .account-fill-btn,
+  .account-outline-btn {
+    @include body-small-b;
+    height: 2.25rem;
+    padding: 0 $space-lg;
   }
 }
 
@@ -3589,4 +3657,105 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     }
   }
 
+}
+
+
+// =====================================================================
+// [추가] 구독 팝업 (pages/Subscribe.jsx · .sub-pop-*) — 휴대폰 (767px 이하)
+// - PC 와 같은 글자 위계 · 색, 여백 · 크기만 줄임 / 설명 Body/small → Label/default · 혜택 Body/large → Body/default
+// - 지불 방법 등록: 확인 코드 버튼은 PC 와 같이 팝업 맨 아래에 붙어 있음
+// - [수정] 휴대폰도 팝업 형태: 화면 가장자리 12 띄우고 바깥 모서리 둥글게 (PC 와 같은 $radius-lg)
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .sub-pop-backdrop {
+    padding: $space-md;
+  }
+
+  // [수정] 화면 폭 가득 · 높이는 내용만큼 (길면 창 안에서 스크롤)
+  .sub-pop {
+    width: 100%;
+  }
+
+  // 창 기준 여백 (스크롤 영역 위 · 아래 12 · 오른쪽 8 은 빼고)
+  .sub-pop-body {
+    padding: ($space-4xl + $space-sm - $space-md) ($space-xl - $space-sm) ($space-2xl - $space-md) $space-xl;
+  }
+
+  .sub-pop-nav {
+    top: 0;
+    left: $space-sm;
+    right: 0;
+  }
+
+  .sub-pop-head {
+    margin-bottom: $space-3xl;
+  }
+
+  .sub-pop-desc {
+    @include label-default;
+  }
+
+  .sub-plan {
+    padding: $space-lg $space-xl;
+  }
+
+  .sub-benefit-title {
+    margin: $space-2xl 0 $space-lg;
+  }
+
+  .sub-benefits li {
+    @include body-default;
+  }
+
+  // [수정] 지불 방법 등록: 확인 코드 버튼은 팝업 아래 (휴대폰 안쪽 여백에 맞춤)
+  .sub-pay-footer {
+    padding: $space-md $space-xl $space-lg;
+
+    .sub-btn {
+      width: 100%; // 휴대폰: 폭 가득
+    }
+  }
+
+  .sub-pop--payment .sub-pop-head {
+    margin-bottom: $space-2xl;
+  }
+
+  .sub-section + .sub-section {
+    margin-top: $space-2xl;
+  }
+
+  .sub-note {
+    margin-top: $space-2xl;
+  }
+
+  // 구독 확인 · 완료
+  .sub-confirm-card {
+    padding: $space-xl $space-xl $space-lg;
+  }
+}
+
+// =====================================================================
+// [추가] 전체 보기 장르별 포스터 — 휴대폰 (숏폼 카드 휴대폰 폭 160 정도 · 한 줄 2개)
+// - member.scss 가 이 파일보다 나중에 불러와지므로 클래스 두 번으로 우선순위를 높임
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  :is(main, div).member-home.member-browse {
+    .member-browse-genres.member-browse-genres {
+      gap: $space-2xl;
+    }
+
+    .member-browse-genre-title.member-browse-genre-title {
+      @include body-large-b;
+      margin-bottom: $space-md;
+    }
+
+    .member-browse-posters.member-browse-posters {
+      grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+      gap: $space-lg $space-md;
+    }
+
+    .member-browse-poster-title.member-browse-poster-title {
+      @include caption-default-b;
+    }
+  }
 }
