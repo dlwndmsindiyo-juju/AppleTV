@@ -3733,3 +3733,29 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     padding: $space-xl $space-xl $space-lg;
   }
 }
+
+// =====================================================================
+// [추가] 전체 보기 장르별 포스터 — 휴대폰 (숏폼 카드 휴대폰 폭 160 정도 · 한 줄 2개)
+// - member.scss 가 이 파일보다 나중에 불러와지므로 클래스 두 번으로 우선순위를 높임
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  :is(main, div).member-home.member-browse {
+    .member-browse-genres.member-browse-genres {
+      gap: $space-2xl;
+    }
+
+    .member-browse-genre-title.member-browse-genre-title {
+      @include body-large-b;
+      margin-bottom: $space-md;
+    }
+
+    .member-browse-posters.member-browse-posters {
+      grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+      gap: $space-lg $space-md;
+    }
+
+    .member-browse-poster-title.member-browse-poster-title {
+      @include caption-default-b;
+    }
+  }
+}
