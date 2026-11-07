@@ -14,6 +14,7 @@ $account-inner-pc: 1440px; // [추가] 계정 설정 PC 이너 최대 폭 (다�
 $account-inner-max: 1440px; // [추가] PC 계정 설정 이너 최대 폭 (다른 화면 이너 90% 보다 좁게)
 $account-line: $light-color-400; // 구분선 (시안 #D2D2D7)
 $account-sub: $neutral-color-600; // 설명 · 안내 글자 (밝은 배경에서 읽히는 회색)
+$account-pay-logo: 3rem; // [추가] 지불 방법 카드 오른쪽 카드사 로고 (48)
 $accent-yellow: #FFCC00 !default; // [추가] _variables.scss 에 없을 때를 대비한 기본값 (작품 상세 평점 별)
 
 // =====================================================================
@@ -510,7 +511,7 @@ header {
         text-decoration: none;
 
         &:hover {
-          text-decoration: underline;
+          color: $primary-color-400; // [수정] 호버: 밑줄 대신 글자색
         }
       }
     }
@@ -572,7 +573,7 @@ header {
           padding: 0;
 
           &:hover {
-            text-decoration: underline;
+            color: $primary-color-400; // [수정] 호버: 밑줄 대신 글자색
           }
         }
       }
@@ -818,7 +819,7 @@ header {
       cursor: pointer;
 
       &:hover:not(:disabled) {
-        text-decoration: underline;
+        color: $primary-color-400; // [수정] 호버: 밑줄 대신 글자색
       }
 
       &:disabled {
@@ -4210,7 +4211,6 @@ main.sport-home {
 
   &:hover:not(:disabled) {
     color: $primary-color-300;
-    text-decoration: underline;
   }
 
   &:disabled {
@@ -5131,7 +5131,7 @@ img.ui-icon.ui-icon-arrow {
   overflow: hidden;
 
   &:hover {
-    text-decoration: underline;
+    color: $light-color-400; // [수정] 호버: 밑줄 대신 글자색
   }
 }
 
@@ -5499,7 +5499,7 @@ img.ui-icon.ui-icon-arrow {
   cursor: pointer;
 
   &:hover {
-    text-decoration: underline;
+    color: $primary-color-400; // [수정] 호버: 밑줄 대신 글자색
   }
 }
 
@@ -5729,7 +5729,8 @@ img.ui-icon.ui-icon-arrow {
     padding-top: 0;
   }
 
-  button {
+  // [수정] :where — 버튼 글꼴을 .account-link 등 글자 배리어블이 이기도록 (우선순위 낮춤)
+  :where(button) {
     font-family: inherit;
   }
 }
@@ -5747,13 +5748,34 @@ img.ui-icon.ui-icon-arrow {
   border-bottom: 0.0625rem solid $account-line;
 }
 
-.account-back {
-  @include body-small;
+// [수정] 상세(구독 관리 · 지불 방법) "‹ 뒤로" — 제목 위 · 글자 Body/default · Dark/400 (계정 설정 토글 글자와 같음)
+.account-back-row {
+  margin-bottom: $space-sm;
 }
 
-.account-back>svg {
+.account-back {
+  @include body-default;
   display: inline-flex;
-  margin-right: $space-sm;
+  align-items: center;
+  gap: $space-sm;
+  color: $dark-color-400;
+  text-decoration: none;
+
+  &:hover {
+    color: $primary-color-500;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+    border-radius: $space-xs;
+  }
+}
+
+.account-back-icon {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.75rem;
 }
 
 // ---------- [추가] 왼쪽 메뉴 + 오른쪽 섹션 ----------
@@ -5894,21 +5916,20 @@ img.ui-icon.ui-icon-arrow {
 
 // 파란 글자 링크 (모든 브라우저에서 로그아웃 · 연결된 계정 관리 · 재생 기록 지우기)
 .account-link {
-  @include body-default;
-  font-family: inherit;
+  @include body-default; // [수정] 파란 글자 링크 전부 Body/default (PC · 휴대폰 같음)
   padding: 0;
+  border: none; // [수정] 버튼(프로필 아이콘 변경 · 청구 주소 추가 등)도 링크(지불 방법 관리)와 같게 — 테두리 · 배경 없음
+  background: none;
   color: $primary-color-500;
   cursor: pointer;
   text-align: left;
   margin-bottom: $space-lg;
 
   display: inline-block;
-  margin-left: $space-xs;
 
 
   &:hover {
     color: $primary-color-400;
-    text-decoration: underline;
   }
 
   &:focus-visible {
@@ -6242,7 +6263,201 @@ img.ui-icon.ui-icon-arrow {
 }
 
 .account-sub-heading {
+  @include heading-h2-b; // [수정] 계정 설정 메뉴 글자와 같음 · Dark/400
+  color: $dark-color-400;
   margin: $space-3xl 0 $space-xl;
+}
+
+// =====================================================================
+// [추가] 계정 설정 상세 — 구독 관리 (pages/AccountSubscription.jsx)
+// - 글자 위계는 계정 설정과 같음: 항목 제목 Heading/h5-B · Dark/400 / 설명 Body/default · Dark/100 / 안내 Body/small
+// - 버튼은 전부 프라이머리 채움 (구독 취소만 Live 색 채움)
+// =====================================================================
+.account-sub-body:not(.account-pay) {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2xl;
+  padding: $space-3xl 0;
+}
+
+// 항목 사이는 위 gap 으로만 (계정 설정 섹션과 같은 간격)
+.account-sub-body:not(.account-pay) > .account-item {
+  margin-bottom: 0;
+}
+
+.account-sub-body--line {
+  border-bottom: 0.0625rem solid $account-line;
+}
+
+// Apple TV 앱 아이콘 + 이름
+.account-sub-app {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+
+  .account-sub-heading {
+    margin: 0;
+  }
+}
+
+.account-sub-app-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: $radius-md;
+  background-color: $dark-color-900;
+
+  img {
+    width: 60%;
+    height: auto;
+  }
+}
+
+// 요금 · 갱신 예정일 (Body/default · Dark/100)
+.account-sub-facts {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    @include body-default;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    color: $dark-color-100;
+  }
+
+  .account-icon {
+    flex-shrink: 0;
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+}
+
+// "구독을 취소했습니다." (항목 제목과 같은 Heading/h5-B · Live 색)
+.account-sub-canceled {
+  @include heading-h5-b;
+  color: $live-color;
+}
+
+.account-sub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+}
+
+// 구독 없음 안내 상자
+.account-sub-empty {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  padding: $space-2xl;
+  border-radius: $radius-md;
+  background-color: $light-color-0;
+}
+
+// 버튼 (가족 설정 · 모든 요금제 보기 · 갱신 · 구독 취소): 확인 팝업 버튼과 같은 Body/default-B · 높이 44 · 프라이머리 채움
+.account-fill-btn,
+.account-outline-btn {
+  @include body-default-b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.75rem;
+  padding: 0 $space-xl;
+  border: none;
+  border-radius: $radius-xs;
+  background-color: $primary-color-500;
+  color: $text-primary;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-color-400;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+  }
+}
+
+.account-outline-btn--danger {
+  background-color: $live-color;
+
+  &:hover:not(:disabled) {
+    background-color: $live-color;
+    opacity: 0.85;
+  }
+}
+
+// 요금제 목록 (이름 Heading/h5-B · 금액 Body/default · "현재 요금제" Body/small 프라이머리)
+.account-plan-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  width: min(100%, 28.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-plan {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: $space-xs $space-lg;
+  width: 100%;
+  padding: $space-lg;
+  border: 0.125rem solid transparent;
+  border-radius: $radius-md;
+  background-color: $light-color-0;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  &:hover:not(:disabled),
+  &.is-on {
+    border-color: $primary-color-500;
+  }
+
+  &.is-on {
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+  }
+}
+
+.account-plan-name {
+  @include heading-h5-b;
+  color: $dark-color-400;
+}
+
+.account-plan-price {
+  @include body-default;
+  grid-column: 1;
+  color: $dark-color-100;
+}
+
+.account-plan-tag {
+  @include body-small;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: $primary-color-500;
 }
 
 // ========================================
@@ -6251,11 +6466,11 @@ img.ui-icon.ui-icon-arrow {
 
 .account-pay {
 
-  // 결제 수단 목록 레이아웃
+  // 결제 수단 목록 레이아웃 — [수정] PC · 태블릿: 카드 목록 오른쪽에 [지불 방법 추가] 나란히 (휴대폰은 아래 · 767 이하에서 세로)
   .account-pay-layout {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: flex-start;
     gap: $space-xl;
     margin-top: $space-xl;
@@ -6294,10 +6509,21 @@ img.ui-icon.ui-icon-arrow {
     min-width: 0;
   }
 
-  // 우측: 더보기
+  // 우측: [수정] 카드사 로고 + 더보기
   .account-pay-item-right {
     position: relative;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+  }
+
+  .account-pay-logo {
+    display: block;
+    flex-shrink: 0;
+    width: $account-pay-logo;
+    height: $account-pay-logo;
+    object-fit: contain;
   }
 
   .account-pay-card-text {
@@ -6310,7 +6536,7 @@ img.ui-icon.ui-icon-arrow {
 
   .account-pay-brand {
     @include heading-h5-b;
-    color: $text-inverse;
+    color: $dark-color-400; // [수정] 계정 설정 항목 제목과 같은 Dark/400
   }
 
   .account-pay-number {
@@ -6479,7 +6705,7 @@ img.ui-icon.ui-icon-arrow {
     cursor: pointer;
 
     &:hover:not(:disabled) {
-      text-decoration: underline;
+      color: $primary-color-400; // [수정] 호버: 밑줄 대신 글자색
     }
 
     &:disabled {
@@ -6493,6 +6719,7 @@ img.ui-icon.ui-icon-arrow {
     }
   }
 
+  // [수정] 플러스 아이콘: 원형 테두리는 border · 안의 십자는 /icons/plus.svg (마스크 → 글자색 따라감) · 24
   .account-inline-plus {
     display: inline-flex;
     align-items: center;
@@ -6500,10 +6727,18 @@ img.ui-icon.ui-icon-arrow {
     flex-shrink: 0;
     width: $space-xl;
     height: $space-xl;
-    border: 1.5px solid $brand-primary;
+    border: 0.09375rem solid currentColor;
     border-radius: 50%;
-    color: $brand-primary;
-    @include body-large;
+    box-sizing: border-box;
+
+    &::before {
+      content: "";
+      width: $space-lg;
+      height: $space-lg;
+      background-color: currentColor;
+      -webkit-mask: url("/icons/plus.svg") center / contain no-repeat;
+      mask: url("/icons/plus.svg") center / contain no-repeat;
+    }
   }
 
   .account-pay-empty {
@@ -7805,7 +8040,6 @@ section.device-guide.device-guide--watch {
 
     &:hover {
       color: $primary-color-400;
-      text-decoration: underline;
     }
   }
 
@@ -8249,7 +8483,7 @@ section.device-guide.device-guide--watch {
     cursor: pointer;
 
     &:hover:not(:disabled) {
-      text-decoration: underline;
+      color: $primary-color-400; // [수정] 호버: 밑줄 대신 글자색
     }
 
     &:disabled {
@@ -9713,4 +9947,656 @@ section.top10-section {
   .hero-nav--next {
     right: 5%;
   }
+}
+
+
+// =====================================================================
+// [추가] 구독 팝업 (pages/Subscribe.jsx · /subscribe · .sub-pop-*) — PC · 태블릿 (휴대폰은 mobile.scss)
+// - 시안: Apple TV 구독하기 → 지불 방법 등록 → 구독 확인 → 구독 완료 · 배경 Dark/800
+// - 로고 public/icons/login-logo.svg · 뒤로 public/icons/nav/left-nav.svg (마스크 → 글자색) · 닫기 X 는 로그인 카드와 같은 아이콘
+// - 글자: 큰 제목 Display/L-B · 설명 Body/small · 카드 제목 Heading/h3-B · 본문 Body/default · 안내 Label/default
+// =====================================================================
+$sub-plans-width: 50.25rem; // 플랜 선택 폭 (804)
+$sub-form-width: 26.25rem; // 지불 방법 등록 폭 (420)
+$sub-narrow-width: 30rem; // 구독 확인 · 완료 폭 (480)
+$sub-logo-size: 3.5rem; // 로고 (그림자 포함 56)
+$sub-btn-height: 3.25rem; // 버튼 높이 (52)
+$sub-field-height: 4.375rem; // 입력 칸 높이 (70)
+$sub-field-radius: 0.25rem; // 입력 칸 모서리 (4)
+$sub-aside-btn-width: 11.875rem; // PC 오른쪽 떠 있는 버튼 폭 (190)
+
+.sub-pop {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: ($space-5xl + $space-xl) $space-xl $space-5xl;
+  box-sizing: border-box;
+  background-color: $dark-color-800;
+  color: $light-color-0;
+
+  // main h2 { padding-top } 같은 공통 규칙 영향 제거
+  :where(h1, h2, h3, p, ul) {
+    margin: 0;
+    padding: 0;
+  }
+
+  :where(button, input, select) {
+    font-family: inherit;
+  }
+}
+
+// 구독 확인 · 완료 · 실패: 화면 가운데
+.sub-pop--confirm,
+.sub-pop--done,
+.sub-pop--fail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-pop-inner {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.sub-pop-inner--plans {
+  max-width: $sub-plans-width;
+}
+
+.sub-pop-inner--form {
+  max-width: $sub-form-width;
+}
+
+.sub-pop-inner--narrow {
+  max-width: $sub-narrow-width;
+}
+
+// ---------- 위 뒤로 · 닫기 ----------
+.sub-pop-nav {
+  position: absolute;
+  top: $space-4xl;
+  left: $header-pad-x;
+  right: $header-pad-x;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.sub-pop-nav-btn {
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $light-color-0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $light-color-400;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-400;
+    outline-offset: 0.125rem;
+    border-radius: $radius-xs;
+  }
+}
+
+.sub-pop-back-icon {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+}
+
+.sub-pop-close svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+// ---------- 로고 + 제목 + 설명 ----------
+.sub-pop-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: $space-4xl;
+  text-align: center;
+}
+
+.sub-pop-logo {
+  display: block;
+  width: $sub-logo-size;
+  height: $sub-logo-size;
+  margin-bottom: $space-lg;
+}
+
+.sub-pop-title {
+  @include display-l-b;
+  color: $light-color-0;
+  word-break: keep-all;
+}
+
+.sub-pop-desc {
+  @include body-small;
+  margin-top: $space-sm;
+  color: $light-color-400;
+  word-break: keep-all;
+}
+
+// ---------- 버튼 (프라이머리 채움) ----------
+.sub-btn {
+  @include body-default-b;
+  display: block;
+  width: 100%;
+  height: $sub-btn-height;
+  margin-top: $space-xl;
+  padding: 0 $space-lg;
+  border: none;
+  border-radius: $radius-xs;
+  background-color: $primary-color-500;
+  color: $light-color-0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-color-400;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-300;
+    outline-offset: 0.125rem;
+  }
+}
+
+.sub-text-btn {
+  @include body-default;
+  display: block;
+  margin: $space-lg auto 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $light-color-400;
+  cursor: pointer;
+
+  &:hover {
+    color: $light-color-0;
+  }
+}
+
+// ---------- 1. 플랜 선택 ----------
+.sub-plans {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.sub-plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  padding: $space-xl;
+  border: 0.0625rem solid transparent;
+  border-radius: $radius-card-sm;
+  background-color: $dark-color-400;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:hover,
+  &.is-on {
+    border-color: $primary-color-500;
+  }
+
+  &:focus-within {
+    outline: 0.125rem solid $primary-color-400;
+    outline-offset: 0.125rem;
+  }
+}
+
+.sub-plan-name {
+  @include heading-h3-b;
+  color: $light-color-0;
+}
+
+.sub-plan-price {
+  @include body-default;
+  color: $light-color-400;
+}
+
+.sub-benefit-title {
+  @include heading-h3-b;
+  margin: $space-3xl 0 $space-xl;
+  color: $light-color-0;
+}
+
+.sub-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+  list-style: none;
+
+  li {
+    @include body-large;
+    color: $light-color-0;
+    word-break: keep-all;
+  }
+}
+
+.sub-fineprint {
+  @include label-default;
+  margin-top: $space-xl;
+  color: $light-color-500;
+  word-break: keep-all;
+}
+
+// ---------- 2. 지불 방법 등록 ----------
+// PC · 태블릿: 가운데 폼 + 오른쪽 칸에 버튼 (스크롤해도 화면 가운데에 떠 있음)
+.sub-pay-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, $sub-form-width) minmax(0, 1fr);
+
+  .sub-pop-inner--form {
+    grid-column: 2;
+  }
+}
+
+.sub-pay-aside {
+  grid-column: 3;
+  padding-left: $space-lg;
+}
+
+.sub-btn--aside {
+  position: sticky;
+  top: calc(50vh - #{$sub-btn-height * 0.5});
+  width: min(100%, #{$sub-aside-btn-width});
+  margin: 0 0 0 auto;
+}
+
+.sub-btn--form {
+  display: none; // 휴대폰에서만 (mobile.scss)
+}
+
+.sub-pop--payment .sub-pop-head {
+  margin-bottom: $space-3xl;
+}
+
+.sub-section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+
+  & + & {
+    margin-top: $space-3xl;
+  }
+}
+
+.sub-section--code {
+  margin-top: $space-xl;
+}
+
+.sub-section-title {
+  @include heading-h3-b;
+  margin-bottom: $space-xs;
+  color: $light-color-0;
+}
+
+.sub-section-desc {
+  @include body-small;
+  color: $light-color-400;
+  word-break: keep-all;
+}
+
+.sub-small-link {
+  @include label-default;
+  align-self: flex-start;
+  color: $light-color-500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $light-color-0;
+  }
+}
+
+.sub-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-md;
+}
+
+// 입력 칸: 위 라벨 Label/default · 값 Body/default
+.sub-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: $space-xs;
+  min-height: $sub-field-height;
+  padding: $space-md $space-lg;
+  border: 0.0625rem solid $dark-color-200;
+  border-radius: $sub-field-radius;
+  background-color: $dark-color-400;
+  box-sizing: border-box;
+  cursor: text;
+  transition: border-color 0.2s ease;
+
+  &:focus-within {
+    border-color: $primary-color-500;
+  }
+
+  &.is-invalid {
+    border-color: $live-color;
+  }
+}
+
+.sub-field-label {
+  @include label-default;
+  color: $light-color-400;
+}
+
+.sub-field-input {
+  @include body-default;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: $light-color-0;
+
+  &::placeholder {
+    color: $light-color-400;
+    opacity: 1;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+// 선택 칸: 기본 화살표 대신 작은 "⌄"
+.sub-field--select {
+  cursor: pointer;
+
+  .sub-field-input {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: $space-xl;
+    cursor: pointer;
+
+    &:invalid,
+    option[value=""] {
+      color: $light-color-400;
+    }
+
+    option {
+      background-color: $dark-color-400;
+      color: $light-color-0;
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: $space-lg;
+    bottom: $space-md + 0.125rem;
+    width: $space-lg;
+    height: $space-lg;
+    background-color: $light-color-0;
+    -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+    mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+    transform: rotate(-90deg);
+    pointer-events: none;
+  }
+}
+
+// 약관 체크
+.sub-checks {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  margin-top: $space-xs;
+}
+
+.sub-check {
+  @include body-small;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-md;
+  color: $light-color-300;
+  cursor: pointer;
+
+  input {
+    appearance: none;
+    -webkit-appearance: none;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin: 0;
+    border-radius: $sub-field-radius;
+    background-color: $light-color-300;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &::after {
+      content: "";
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: $light-color-0;
+      -webkit-mask: url("/icons/check.svg") center / contain no-repeat;
+      mask: url("/icons/check.svg") center / contain no-repeat;
+      opacity: 0;
+    }
+
+    &:checked {
+      background-color: $primary-color-500;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $primary-color-400;
+      outline-offset: 0.125rem;
+    }
+  }
+}
+
+.sub-check--all {
+  @include body-small-b;
+  color: $light-color-0;
+}
+
+.sub-checks.is-invalid .sub-check input:not(:checked) {
+  box-shadow: 0 0 0 0.125rem $live-color;
+}
+
+.sub-note {
+  @include label-default;
+  margin-top: $space-3xl;
+  color: $light-color-500;
+  word-break: keep-all;
+
+  .sub-section--code & {
+    margin-top: 0;
+  }
+}
+
+.sub-error {
+  @include body-small;
+  margin-top: $space-md;
+  color: $live-color;
+}
+
+// ---------- 3. 구독 확인 ----------
+.sub-confirm-title {
+  @include heading-h2-b;
+  margin-bottom: $space-xl;
+  color: $light-color-0;
+  text-align: center;
+}
+
+.sub-confirm-card {
+  padding: $space-xl;
+  border-radius: $radius-md;
+  background-color: $dark-color-900;
+}
+
+.sub-confirm-app {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-lg;
+  padding-bottom: $space-xl;
+  border-bottom: 0.0625rem solid $dark-color-300;
+}
+
+.sub-confirm-logo {
+  flex-shrink: 0;
+  width: $sub-logo-size;
+  height: $sub-logo-size;
+}
+
+.sub-confirm-app-text {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  min-width: 0;
+}
+
+.sub-confirm-app-name {
+  @include heading-h2-b;
+  color: $light-color-0;
+}
+
+.sub-confirm-plan {
+  @include body-default;
+  color: $light-color-400;
+}
+
+.sub-confirm-share {
+  @include label-default;
+  color: $light-color-500;
+}
+
+.sub-confirm-terms {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+  padding: $space-xl 0;
+  border-bottom: 0.0625rem solid $dark-color-300;
+}
+
+.sub-confirm-row {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.sub-confirm-label {
+  @include heading-h5-b;
+  color: $light-color-0;
+}
+
+.sub-confirm-price {
+  @include heading-h2-b;
+  color: $light-color-0;
+}
+
+.sub-confirm-date {
+  @include body-default;
+  color: $light-color-400;
+}
+
+.sub-confirm-fine {
+  @include label-default;
+  padding-top: $space-xl;
+  color: $light-color-500;
+  word-break: keep-all;
+}
+
+// ---------- 4. 구독 완료 ----------
+.sub-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sub-done-check {
+  display: grid;
+  place-items: center;
+  width: 3.125rem;
+  height: 3.125rem;
+  margin-bottom: $space-xl;
+  border-radius: 50%;
+  background-color: $primary-color-500;
+
+  &::after {
+    content: "";
+    width: $space-lg;
+    height: $space-lg;
+    background-color: $light-color-0;
+    -webkit-mask: url("/icons/check.svg") center / contain no-repeat;
+    mask: url("/icons/check.svg") center / contain no-repeat;
+  }
+}
+
+.sub-done-title {
+  @include display-l-b;
+  color: $light-color-0;
+  word-break: keep-all;
+}
+
+.sub-done-desc {
+  @include body-default;
+  margin: $space-xl 0;
+  color: $light-color-400;
+}
+
+.sub-done-box {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  width: 100%;
+  padding: $space-xl;
+  border-radius: $radius-card-sm;
+  background-color: $dark-color-400;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.sub-done-plan {
+  @include body-default-b;
+  color: $light-color-0;
+}
+
+.sub-done-period {
+  @include body-default;
+  color: $light-color-400;
+}
+
+.sub-done-note {
+  @include label-default;
+  margin-top: $space-xl;
+  color: $light-color-500;
 }

@@ -17,7 +17,7 @@ const FAMILY_LINK = "/profile#account-profile"; // 가족(프로필) 설정 = �
 const AppHead = () => (
   <div className="account-sub-app">
     <span className="account-sub-app-icon" aria-hidden="true">
-      <img src="/icons/shorts/logo_w.svg" alt="" />
+      <img src="/icons/login-logo.svg" alt="" />
     </span>
     <h2 className="account-sub-heading">Apple TV</h2>
   </div>

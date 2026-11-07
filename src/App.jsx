@@ -50,7 +50,8 @@ function App() {
   const initAuth = useAuthStore((state) => state.initAuth);
   const location = useLocation();
   const isTvPreview = location.pathname === "/tv";
-  const isLoginPage = location.pathname === "/login"; // [추가] 로그인은 독립 화면 // [추가] TV 미리보기: 웹 헤더 · 푸터 · 배너 · 떠 있는 버튼 숨김
+  const isLoginPage = ["/login", "/subscribe"].includes(location.pathname); // [수정] 구독 팝업(/subscribe)도 로그인처럼 헤더 · 푸터 없는 독립 화면
+  // 원래: location.pathname === "/login"; // [추가] 로그인은 독립 화면 // [추가] TV 미리보기: 웹 헤더 · 푸터 · 배너 · 떠 있는 버튼 숨김
 
   // 로그인 상태 초기화
   useEffect(() => {

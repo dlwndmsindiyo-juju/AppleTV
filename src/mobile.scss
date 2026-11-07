@@ -431,12 +431,11 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     @include body-default-b;
   }
 
+  // [수정] 파란 글자 링크(.account-link · .account-icon-link)는 PC 와 같은 Body/default 로 통일 → 여기서 뺌
   .account-item-desc,
-  .account-link,
   .account-toggle,
   .account-check,
-  .account-address,
-  .account-icon-link {
+  .account-address {
     @include body-small;
   }
 
@@ -3234,6 +3233,76 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     min-height: 0;
     padding: $space-lg;
   }
+
+  // [추가] 상세 글자 위계 — 계정 설정 휴대폰과 같음 (제목 Body/default-B · 설명 · 링크 · 뒤로 Body/small · 안내 Label/default)
+  .account-sub-body:not(.account-pay) {
+    gap: $space-xl;
+    padding: $space-2xl 0;
+  }
+
+  .account-sub-body:not(.account-pay) > .account-item {
+    gap: $space-sm;
+  }
+
+  .account-back-row {
+    margin-bottom: $space-xs;
+  }
+
+  .account-back {
+    @include body-small;
+    gap: $space-xs;
+  }
+
+  .account-sub-heading {
+    @include heading-h5-b;
+  }
+
+  // 지불 방법: 제목 위 여백은 구독 관리와 같게 (상자 위 여백만)
+  .account-pay > .account-sub-heading {
+    margin: 0 0 $space-lg;
+  }
+
+  .account-pay .account-pay-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .account-sub-canceled,
+  .account-plan-name,
+  .account-pay .account-pay-brand {
+    @include body-default-b;
+  }
+
+  .account-sub-facts li,
+  .account-plan-price {
+    @include body-small;
+  }
+
+  .account-sub-facts .account-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .account-plan-tag {
+    @include label-default;
+  }
+
+  .account-plan {
+    padding: $space-md;
+    border-radius: $radius-card-sm;
+  }
+
+  .account-sub-empty {
+    padding: $space-lg;
+    border-radius: $radius-card-sm;
+  }
+
+  .account-fill-btn,
+  .account-outline-btn {
+    @include body-small-b;
+    height: 2.25rem;
+    padding: 0 $space-lg;
+  }
 }
 
 // =====================================================================
@@ -3589,4 +3658,77 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     }
   }
 
+}
+
+
+// =====================================================================
+// [추가] 구독 팝업 (pages/Subscribe.jsx · .sub-pop-*) — 휴대폰 (767px 이하)
+// - PC 와 같은 글자 위계 · 색, 여백 · 크기만 줄임 / 설명 Body/small → Label/default · 혜택 Body/large → Body/default
+// - 지불 방법 등록: 오른쪽 떠 있는 버튼 대신 폼 맨 아래 버튼
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .sub-pop {
+    padding: ($space-4xl + $space-lg) $space-xl $space-4xl;
+  }
+
+  .sub-pop-nav {
+    top: $space-xl;
+    left: $space-md;
+    right: $space-md;
+  }
+
+  .sub-pop-inner--plans {
+    padding: 0 $space-lg;
+    box-sizing: border-box;
+  }
+
+  .sub-pop-head {
+    margin-bottom: $space-3xl;
+  }
+
+  .sub-pop-desc {
+    @include label-default;
+  }
+
+  .sub-plan {
+    padding: $space-lg $space-xl;
+  }
+
+  .sub-benefit-title {
+    margin: $space-2xl 0 $space-lg;
+  }
+
+  .sub-benefits li {
+    @include body-default;
+  }
+
+  // 지불 방법 등록: 한 줄로 · 폼 아래 버튼
+  .sub-pay-layout {
+    display: block;
+  }
+
+  .sub-pay-aside {
+    display: none;
+  }
+
+  .sub-btn--form {
+    display: block;
+  }
+
+  .sub-pop--payment .sub-pop-head {
+    margin-bottom: $space-2xl;
+  }
+
+  .sub-section + .sub-section {
+    margin-top: $space-2xl;
+  }
+
+  .sub-note {
+    margin-top: $space-2xl;
+  }
+
+  // 구독 확인 · 완료
+  .sub-confirm-card {
+    padding: $space-xl $space-xl $space-lg;
+  }
 }

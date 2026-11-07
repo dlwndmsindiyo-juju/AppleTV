@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuthStore, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
-import { AccountSubPage, ConfirmDialog, CARD_BRANDS } from "../components/profile/AccountShared";
+import { AccountSubPage, ConfirmDialog, CARD_BRANDS, CARD_BRAND_ICONS } from "../components/profile/AccountShared";
 import { PAYMENT_URL } from "../data/appleLinks";
 // public 폴더의 파일은 import 없이 루트(/) 경로로 참조합니다.
 // 실제 경로: public/pay-icon/*.svg, public/method-icon/*.svg
@@ -15,6 +15,14 @@ const PAY_ICONS = {
   "네이버페이": "/icons/pay-icon/naverpay.svg",
   "토스페이": "/icons/pay-icon/tosspay.svg",
 };
+
+// [추가] 카드 오른쪽 로고: 카드사 로고 → 간편결제 로고 → 결제 유형 아이콘 순서로 찾음
+// (brand 로도 찾으므로 저장 중 method · provider 가 빠져도 간편결제 로고가 나옴)
+const getPaymentLogo = (payment, meta) =>
+  CARD_BRAND_ICONS[payment.brand] ||
+  PAY_ICONS[payment.provider] ||
+  PAY_ICONS[payment.brand] ||
+  METHOD_ICONS[meta.type];
 
 const makeId = () =>
   `pm_${Date.now().toString(36)}_${Math.random()
@@ -397,13 +405,6 @@ export default function AccountPayment() {
                 return (
                   <li key={payment.id} className="account-pay-card">
                     <div className="account-pay-item-left">
-                      <img
-                        className="account-pay-method-icon" style={{ width: 58, height: 48, objectFit: "contain", flexShrink: 0 }}
-                        src={METHOD_ICONS[meta.type]}
-                        alt=""
-                        aria-hidden="true"
-                      />
-
                       <div className="account-pay-card-text">
                         <strong className="account-pay-brand">{meta.title}</strong>
                         <span className="account-pay-number">{meta.detail}</span>
@@ -414,6 +415,8 @@ export default function AccountPayment() {
                     </div>
 
                     <div className="account-pay-item-right" ref={menuOpenId === payment.id ? menuRef : null}>
+                      {/* [수정] 카드사 로고: 시안처럼 카드 오른쪽 */}
+                      <img className="account-pay-logo" src={getPaymentLogo(payment, meta)} alt="" aria-hidden="true" />
                       <button
                         type="button"
                         className="account-pay-more"
@@ -449,7 +452,7 @@ export default function AccountPayment() {
               onClick={openAdd}
               disabled={busy || full}
             >
-              <span className="account-inline-plus">＋</span>
+              <span className="account-inline-plus" aria-hidden="true" /> {/* [수정] 원형 테두리(border) + 플러스 아이콘(/icons/plus.svg) */}
               지불 방법 추가
             </button>
 
