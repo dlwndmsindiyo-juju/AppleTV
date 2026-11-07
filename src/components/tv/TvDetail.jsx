@@ -8,7 +8,7 @@ import { TMDB_IMG } from "../../utils/tmdb";
 import { TV_SPORT_BG } from "../../data/tvSportData";
 import { TV_REPLAY_MATCHES } from "../../data/tvReplayMatches";
 import { TvDetailHero } from "./TvDetailHero";
-import { PlayIcon, PlusIcon, TextIcon, useInterest } from "./TvActions";
+import { PlayIcon, PlusIcon, InfoIcon, useInterest } from "./TvActions";
 import { ReplayCard } from "./TvEndScreen";
 import { ottItem, videoItem, matchItem, seriesItem, sportSummary, cleanText } from "./tvDetailItems";
 import { CONFERENCES } from "../../data/sportTeams";
@@ -180,7 +180,7 @@ const SportDetail = ({ item, onOpen }) => {
   const actions = [
     { key: "watch", label: "시청하기", onClick: watch, icon: <PlayIcon /> },
     { key: "interest", label: "관심 경기", onClick: toggle, pressed: saved, icon: <PlusIcon on={saved} /> },
-    { key: "info", label: "경기 정보", onClick: () => setInfoOpen((v) => !v), pressed: infoOpen, icon: <TextIcon>경기정보</TextIcon> },
+    { key: "info", label: "경기 정보", onClick: () => setInfoOpen((v) => !v), pressed: infoOpen, icon: <InfoIcon /> },
   ];
 
   return (
@@ -335,7 +335,7 @@ const OttDetail = ({ item, onOpen }) => {
   const actions = [
     { key: "watch", label: "시청하기", onClick: watch, icon: <PlayIcon /> },
     { key: "interest", label: "관심 콘텐츠", onClick: toggleWish, pressed: wished, icon: <PlusIcon on={wished} /> },
-    { key: "info", label: "작품 정보", onClick: () => setInfoOpen((v) => !v), pressed: infoOpen, icon: <TextIcon>작품정보</TextIcon> },
+    { key: "info", label: "작품 정보", onClick: () => setInfoOpen((v) => !v), pressed: infoOpen, icon: <InfoIcon /> },
   ];
 
   const infoRows = [

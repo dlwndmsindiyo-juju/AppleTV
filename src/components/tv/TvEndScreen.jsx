@@ -5,7 +5,7 @@ import { TV_SPORT_BG } from "../../data/tvSportData";
 import TeamBadge from "../sport/TeamBadge";
 import { findNext } from "./tvFocus";
 import { sportSummary, cleanText } from "./tvDetailItems";
-import { TvActionButtons, PlayIcon, PlusIcon, TextIcon, useInterest } from "./TvActions"; // [정리] 상세 화면과 같은 버튼
+import { TvActionButtons, PlayIcon, PlusIcon, InfoIcon, useInterest } from "./TvActions"; // [정리] 상세 화면과 같은 버튼
 import { useAutoCountdown } from "../common/AutoNext"; // [추가] 5초 뒤 다음 영상
 
 // TV 영상 끝 화면 (시안: 10 · 처음부터 보기) — 영상을 끝까지 보면 TvPlayer 가 보여줌 · 스타일: TV.scss (.tv-end)
@@ -87,7 +87,7 @@ export const TvEndScreen = ({ video, related = [], onReplay, onPlay, onPlayMatch
   const actions = [
     { key: "watch", label: "시청하기", onClick: onReplay, icon: <PlayIcon /> },
     { key: "interest", label: "관심 경기", onClick: toggleInterest, pressed: saved, icon: <PlusIcon on={saved} /> },
-    { key: "info", label: "경기 정보", onClick: () => setInfoOpen((v) => !v), pressed: infoOpen, icon: <TextIcon>경기정보</TextIcon> },
+    { key: "info", label: "경기 정보", onClick: () => setInfoOpen((v) => !v), pressed: infoOpen, icon: <InfoIcon /> },
   ];
 
   const others = related.filter((v) => v.id !== video.id);

@@ -1,4 +1,90 @@
 @use "./variables" as *;
+@use "sass:meta";
+@use "sass:list";
+@use "sass:string";
+
+// =====================================================================
+// [추가] TV 디자인 글자 위계 — 태블릿 · 휴대폰(눕혀서 보기)만 한두 단계 큰 글자 변수로 (PC 는 그대로)
+// - TV 화면은 1920 기준으로 그린 뒤 창 크기에 맞춰 통째로 줄여서(scale) 보여 줌
+//   → 태블릿 · 휴대폰에서는 글자가 너무 작아져 읽기 어려움
+// - @include tv-type(body-default) = PC 는 body-default 그대로 · 태블릿 +2단계 · 휴대폰 +3단계 큰 변수
+//   (단계: _variables.scss 글자 변수 크기 순서 · 굵기(-b · -m)는 그대로 · H1(48) 이상 큰 제목은 그대로)
+// - 기기 구분: pages/TvPreview.jsx 가 .tv-preview 에 is-tablet / is-phone 클래스 (터치 기기 + 화면 크기)
+// - TV 화면(.tv-preview-stage) 안에만 적용 · 왼쪽 메뉴(실제 크기)는 그대로
+// =====================================================================
+$tv-type-ladder: (caption-small, caption-default, label-default, body-small, body-default, heading-h5, body-large, heading-h3, heading-h2, display-M, display-l);
+$tv-type-alias: (heading-h4: body-large); // 같은 크기 변수
+$tv-type-step-tablet: 2;
+$tv-type-step-phone: 3;
+
+@function tv-type-split($name) {
+  @each $suffix in ("-b", "-m") {
+    $len: string.length($name);
+    @if $len > 2 and string.slice($name, $len - 1) == $suffix {
+      @return (string.slice($name, 1, $len - 2), $suffix);
+    }
+  }
+  @return ($name, "");
+}
+
+@function tv-type-bump($name, $steps) {
+  $parts: tv-type-split($name);
+  $base: list.nth($parts, 1);
+  $suffix: list.nth($parts, 2);
+  @if map-has-key($tv-type-alias, $base) { $base: map-get($tv-type-alias, $base); }
+  $i: list.index($tv-type-ladder, $base);
+  @if not $i { @return $name; } // 큰 제목 · TV 전용 변수는 그대로
+  $next: list.nth($tv-type-ladder, math-min($i + $steps, list.length($tv-type-ladder)));
+  $candidate: "#{$next}#{$suffix}";
+  @if meta.mixin-exists($candidate) { @return $candidate; }
+  @if $suffix == "-m" and meta.mixin-exists("#{$next}-b") { @return "#{$next}"; }
+  @return "#{$next}";
+}
+
+@function math-min($a, $b) {
+  @return if($a < $b, $a, $b);
+}
+
+// 단계별 글자 크기 · 줄 높이 (_variables.scss 글자 변수와 같은 값)
+$tv-type-sizes: (
+  caption-small: (0.5625rem, normal),
+  caption-default: (0.6875rem, 0.8125rem),
+  label-default: (0.75rem, 1rem),
+  body-small: (0.8125rem, 1.125rem),
+  body-default: (0.9375rem, 1.25rem),
+  heading-h5: (1rem, 1.3125rem),
+  body-large: (1.0625rem, 1.375rem),
+  heading-h3: (1.25rem, 1.5625rem),
+  heading-h2: (1.375rem, 1.75rem),
+  display-M: (1.75rem, 2.125rem),
+  display-l: (2.125rem, 2.5625rem),
+);
+
+@mixin tv-type-size($name) {
+  $base: list.nth(tv-type-split($name), 1);
+  $v: map-get($tv-type-sizes, $base);
+  font-size: list.nth($v, 1);
+  line-height: list.nth($v, 2);
+}
+
+@mixin tv-type($name) {
+  @include meta.apply(meta.get-mixin($name));
+
+  $tablet: tv-type-bump($name, $tv-type-step-tablet);
+  $phone: tv-type-bump($name, $tv-type-step-phone);
+  // 큰 변수의 글자 크기 · 줄 높이만 (굵기 · 색 등 원래 규칙은 그대로)
+  @if $tablet != $name {
+    :where(.tv-preview.is-tablet .tv-preview-stage) & {
+      @include tv-type-size($tablet);
+    }
+  }
+  @if $phone != $name {
+    :where(.tv-preview.is-phone .tv-preview-stage) & {
+      @include tv-type-size($phone);
+    }
+  }
+}
+
 
 // =====================================================================
 // TV 디자인 (1920 × 1080) — 시안: 재생 오류 안내 · 이용 안내 · Apple 계정 로그인 · 계정 정보 입력
@@ -80,7 +166,7 @@
 // ---------- 제목 · 설명 ----------
 // 기본 제목: Display/L · Light/0 (재생 오류 안내)
 .tv-screen .tv-title {
-  @include display-l;
+  @include tv-type(display-l);
   margin: 0;
   padding: 0;
   color: $light-color-0;
@@ -88,17 +174,15 @@
 
   // 큰 제목: Display/XL · Light/0 (이용 안내 · 로그인 · 계정 정보 입력)
   &.tv-title--xl {
-    @include display-xl;
-    font-weight: 600
+    @include tv-type(display-xl);
   }
 }
 
 // 설명: Display/M · Light/0
 .tv-screen .tv-desc {
-  @include display-M;
+  @include tv-type(display-M);
   max-width: 860px;
   margin: 0;
-  line-height: 2.525rem;
   color: $light-color-0;
   word-break: keep-all;
 }
@@ -106,11 +190,10 @@
 // ---------- 버튼 ----------
 // 글자 Display/L · 모서리 12 · 크기는 화면별로 지정
 .tv-screen .tv-btn {
-  @include display-l;
+  @include tv-type(display-l);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;
   height: 4.875rem;
   padding: 0.75rem 0;
   border-radius: $tv-btn-radius;
@@ -182,11 +265,11 @@
 // 2. 이용 안내 — 제목 · 설명은 위, 버튼은 화면 아래
 // =====================================================================
 .tv-screen.tv-terms {
-  padding-top: 7.375rem;
-  padding-bottom: 9.25rem;
+  padding-top: 4.5rem;
+  padding-bottom: 2.5625rem;
 
   .tv-desc {
-    margin-top: 2.25rem;
+    margin-top: 3.875rem;
   }
 
   .tv-actions {
@@ -227,21 +310,10 @@
   cursor: pointer;
 
   // 프로필마다 배경색 (PC .auth-profile 과 같음)
-  &--1 .tv-profile-avatar {
-    background-color: $primary-color-500;
-  }
-
-  &--2 .tv-profile-avatar {
-    background-color: $sports-color;
-  }
-
-  &--3 .tv-profile-avatar {
-    background-color: $accent-color;
-  }
-
-  &--4 .tv-profile-avatar {
-    background-color: $success-color;
-  }
+  &--1 .tv-profile-avatar { background-color: $primary-color-500; }
+  &--2 .tv-profile-avatar { background-color: $sports-color; }
+  &--3 .tv-profile-avatar { background-color: $accent-color; }
+  &--4 .tv-profile-avatar { background-color: $success-color; }
 
   // 리모컨 포커스 · 마우스: 조금 커지고 흰 테두리
   &:focus-visible,
@@ -277,7 +349,7 @@
 }
 
 .tv-profile-name {
-  @include display-l;
+  @include tv-type(display-l);
 }
 
 
@@ -285,7 +357,7 @@
 // 3. Apple 계정 로그인 · 계정 정보 입력 — 리모컨 자판
 // =====================================================================
 .tv-screen.tv-keyboard {
-  padding-top: 7.375rem;
+  padding-top: 9.375rem;
   padding-bottom: 9.25rem;
 
   .tv-desc {
@@ -294,7 +366,7 @@
 
   // 리모컨 안내 박스: 715 × 66 (패딩 12 93) · Display/L · Light/0
   .tv-guide {
-    @include display-l;
+    @include tv-type(display-l);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -366,7 +438,7 @@
 
   // 글자 · 숫자 한 칸: 54 × 64 (패딩 포함)
   .tv-key {
-    @include heading-h1;
+    @include tv-type(heading-h1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -403,10 +475,10 @@
 
   // [공백]: 90 × 40 · Heading/h3-B · Dark/900 · 흰 배경
   .tv-key-space {
-    @include heading-h3-b;
+    @include tv-type(heading-h3-b);
     width: 90px;
     height: 2.5rem;
-    margin-right: 0.75rem;
+    margin-right: 1.75rem;
     padding: 0;
     border-radius: $radius-xs;
     background-color: $tv-key-space-bg;
@@ -430,14 +502,13 @@
   }
 
   .tv-key-mode {
-    @include display-M-b;
-    font-weight: 500;
+    @include tv-type(display-M-b);
     flex: 1;
     padding: 0;
     background: transparent;
     color: $light-color-0;
 
-    &+.tv-key-mode {
+    & + .tv-key-mode {
       border-left: 0.125rem solid $tv-key-mode-divider;
     }
 
@@ -506,7 +577,6 @@
   align-items: center;
   gap: $space-md;
   margin-bottom: $space-3xl;
-  padding-left: 12px;
 }
 
 .tv-side-logo {
@@ -618,8 +688,8 @@
 
 .tv-side-search-icon {
   flex-shrink: 0;
-  width: 22px;
-  height: 1.375rem;
+  width: 1rem; // [수정] 22 → 16 (너무 커 보여서)
+  height: 1rem;
   background-color: $light-color-0; // [수정] 흰색
   -webkit-mask: url("/icons/search.svg") center / contain no-repeat;
   mask: url("/icons/search.svg") center / contain no-repeat;
@@ -749,7 +819,7 @@
 }
 
 .tv-side-group-head {
-  @include heading-h2-b;
+  @include tv-type(heading-h2-b);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -804,13 +874,13 @@
 
 // 리모컨 안내 — 메뉴 맨 아래
 .tv-side-guide {
-  @include body-small-b;
+  @include tv-type(body-small-b);
   margin: auto 0 0;
   padding-top: $space-xl;
   color: $light-color-0;
 
   span {
-    @include body-small;
+    @include tv-type(body-small);
     display: block;
     margin-top: $space-xs;
     color: $text-tertiary;
@@ -897,7 +967,7 @@
     background-color: rgba(0, 0, 0, 0.8);
   }
 
-  >* {
+  > * {
     position: relative;
     z-index: 1;
   }
@@ -936,7 +1006,7 @@
 }
 
 .tv-sport .tv-header-tab {
-  @include display-M-b;
+  @include tv-type(display-M-b);
   flex: 1;
   height: 3.5rem;
   padding: 0;
@@ -967,12 +1037,12 @@
 }
 
 // 줄 사이 64 = 52 + 카드 줄 아래 여백 12
-.tv-sport-row+.tv-sport-row {
+.tv-sport-row + .tv-sport-row {
   margin-top: 3.25rem;
 }
 
 .tv-sport-title {
-  @include display-l-b;
+  @include tv-type(display-l-b);
   margin: 0 0 0.8125rem; // 25 = 13 + 카드 줄 위 여백 12
   padding: 0 5rem;
   color: $light-color-0;
@@ -1023,9 +1093,7 @@
 }
 
 .tv-sport-card-title {
-  @include tv-card-title;
-  font-size: 1.75rem;
-  font-weight: 450;
+  @include tv-type(tv-card-title);
   max-width: 100%;
   color: $tv-card-title-color;
   white-space: nowrap;
@@ -1076,7 +1144,7 @@
 
 // 데이터를 받기 전 안내 (홈 · 스포츠 공통)
 .tv-sport-empty {
-  @include display-M;
+  @include tv-type(display-M);
   margin: 0;
   padding: 0 5rem;
   color: $light-color-500;
@@ -1084,12 +1152,12 @@
 
 
 // [추가] TV 화면 안 요소가 높이가 모자라도 줄어들어 겹치지 않게 (제목 · 설명 · 안내 박스 · 자판 · 버튼)
-.tv-screen>* {
+.tv-screen > * {
   flex-shrink: 0;
 }
 
 // 스포츠 · 홈의 섹션 영역은 남은 높이만 채우고 안에서 위아래로 이동 (줄어들 수 있어야 함)
-.tv-screen>.tv-sport-body {
+.tv-screen > .tv-sport-body {
   flex-shrink: 1;
 }
 
@@ -1153,14 +1221,14 @@
 }
 
 .tv-team-name {
-  @include heading-h1-b;
+  @include tv-type(heading-h1-b);
   margin: 0;
   padding: 0;
   color: $light-color-0;
 }
 
 .tv-team-record {
-  @include heading-h4;
+  @include tv-type(heading-h4);
   margin: 0.75rem 0 0;
   color: $light-color-0;
 }
@@ -1210,7 +1278,7 @@
 
 // LIVE — PC 라이브 카드 표시와 같은 크기 (14 · 위아래 8 · 좌우 15)
 .tv-team-live {
-  @include label-default-b;
+  @include tv-type(label-default-b);
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -1229,7 +1297,7 @@
 }
 
 .tv-team-desc {
-  @include heading-h2;
+  @include tv-type(heading-h2);
   margin: 2.5rem 0 0;
   color: $light-color-0;
   word-break: keep-all;
@@ -1250,7 +1318,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    @include display-xl-b;
+    @include tv-type(display-xl-b);
     color: $light-color-0;
   }
 }
@@ -1260,12 +1328,12 @@
   padding: 2.5rem 0 5rem;
 }
 
-.tv-team-row+.tv-team-row {
+.tv-team-row + .tv-team-row {
   margin-top: 3.5rem;
 }
 
 .tv-team-row-title {
-  @include display-l-b;
+  @include tv-type(display-l-b);
   display: flex;
   align-items: center;
   gap: $space-sm;
@@ -1280,7 +1348,7 @@
 }
 
 .tv-team-row-desc {
-  @include body-default;
+  @include tv-type(body-default);
   margin: $space-xs 0 0;
   padding: 0 5rem;
   color: $light-color-500;
@@ -1347,9 +1415,7 @@
 }
 
 .tv-team-card-title {
-  @include body-default-b;
-  font-size: 1.2rem;
-  font-weight: 600;
+  @include tv-type(body-default-b);
   color: $light-color-0;
   white-space: nowrap;
   overflow: hidden;
@@ -1357,9 +1423,7 @@
 }
 
 .tv-team-card-desc {
-  @include caption-default;
-  line-height: normal;
-  margin-top: 4px;
+  @include tv-type(caption-default);
   display: -webkit-box;
   overflow: hidden;
   color: $light-color-500;
@@ -1369,7 +1433,7 @@
 }
 
 .tv-team-card-meta {
-  @include caption-small;
+  @include tv-type(caption-small);
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -1383,7 +1447,7 @@
 }
 
 .tv-team-empty {
-  @include display-M;
+  @include tv-type(display-M);
   margin: 0;
   padding: 2.5rem 5rem;
   color: $text-secondary;
@@ -1481,7 +1545,7 @@
   }
 
   figcaption {
-    @include label-default-b;
+    @include tv-type(label-default-b);
     margin-top: 0.625rem;
     color: $light-color-0;
     text-align: center;
@@ -1497,14 +1561,14 @@
   left: 14.5rem;
 
   h1 {
-    @include display-xl;
+    @include tv-type(display-xl);
     margin: 0;
     padding: 0;
     color: $light-color-0;
   }
 
   p {
-    @include display-M;
+    @include tv-type(display-M);
     margin: 0.25rem 0 0;
     color: $light-color-500;
   }
@@ -1597,9 +1661,17 @@
 }
 
 .tv-end-btn-text {
-  @include heading-h3;
+  @include tv-type(heading-h3);
   color: $light-color-0;
   white-space: nowrap;
+}
+
+// [추가] 작품 · 경기 정보 버튼 아이콘: 흰 원 + "i" (관심 버튼 + 원과 같은 크기 40)
+.tv-end-info-icon {
+  display: block;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 // 경기정보: 버튼 아래 설명 상자
@@ -1614,13 +1686,13 @@
   background-color: rgba(0, 0, 0, 0.8);
 
   strong {
-    @include heading-h4-b;
+    @include tv-type(heading-h4-b);
     display: block;
     color: $light-color-0;
   }
 
   p {
-    @include body-default;
+    @include tv-type(body-default);
     display: -webkit-box;
     margin: $space-sm 0 0;
     overflow: hidden;
@@ -1640,13 +1712,13 @@
   left: 0;
 }
 
-.tv-end-row+.tv-end-row {
+.tv-end-row + .tv-end-row {
   margin-top: 2.75rem;
 }
 
 // 다른 TV 섹션 제목과 같음 (Display/L-B · Light/0)
 .tv-end-row-title {
-  @include display-l-b;
+  @include tv-type(display-l-b);
   margin: 0;
   padding: 0 4.125rem;
   color: $light-color-0;
@@ -1745,20 +1817,20 @@
   }
 
   .sport-badge-initial {
-    @include display-M-b;
+    @include tv-type(display-M-b);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   strong {
-    @include heading-h2-b;
+    @include tv-type(heading-h2-b);
     margin-top: 0.625rem;
     color: $light-color-0;
   }
 
   span:last-child {
-    @include label-default-b;
+    @include tv-type(label-default-b);
     color: $light-color-0;
   }
 
@@ -1769,7 +1841,7 @@
 }
 
 .tv-end-replay-date {
-  @include label-default-b;
+  @include tv-type(label-default-b);
   position: absolute;
   bottom: 1.875rem;
   left: 50%;
@@ -1779,7 +1851,7 @@
 }
 
 .tv-end-notice {
-  @include heading-h4;
+  @include tv-type(heading-h4);
   position: absolute;
   bottom: 2.5rem;
   left: 4.125rem;
@@ -1808,12 +1880,12 @@
 }
 
 .tv-end-next-kind {
-  @include heading-h4;
+  @include tv-type(heading-h4);
   color: $light-color-500;
 }
 
 .tv-end-next-title {
-  @include heading-h3-b;
+  @include tv-type(heading-h3-b);
   overflow: hidden;
   color: $light-color-0;
   text-overflow: ellipsis;
@@ -1821,7 +1893,7 @@
 }
 
 .tv-end-next-cancel {
-  @include heading-h4-b;
+  @include tv-type(heading-h4-b);
   height: 4rem;
   padding: 0 2.25rem;
   border: 0;
@@ -1906,7 +1978,7 @@
 }
 
 .tv-search-mode {
-  @include display-M-b;
+  @include tv-type(display-M-b);
   flex: 1;
   padding: 0;
   border: 0;
@@ -1915,7 +1987,7 @@
   opacity: 0.55; // 고르지 않은 종류는 흐리게 (시안)
   cursor: pointer;
 
-  &+.tv-search-mode {
+  & + .tv-search-mode {
     border-left: 0.125rem solid $tv-key-mode-divider;
   }
 
@@ -1943,7 +2015,7 @@
 }
 
 .tv-search-key {
-  @include heading-h1;
+  @include tv-type(heading-h1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2022,7 +2094,7 @@
 }
 
 .tv-search-voice {
-  @include display-M;
+  @include tv-type(display-M);
   position: absolute;
   top: 3.4375rem;
   right: 0;
@@ -2094,7 +2166,7 @@
 }
 
 .tv-search-filter {
-  @include display-M-b;
+  @include tv-type(display-M-b);
   flex: 1;
   padding: 0;
   border: 0;
@@ -2102,7 +2174,7 @@
   color: $light-color-500;
   cursor: pointer;
 
-  &+.tv-search-filter {
+  & + .tv-search-filter {
     border-left: 0.125rem solid rgba($dark-color-900, 0.6);
   }
 
@@ -2182,7 +2254,7 @@
 }
 
 .tv-search-card-title {
-  @include tv-card-title;
+  @include tv-type(tv-card-title);
   max-width: 100%;
   color: $tv-card-title-color;
   white-space: nowrap;
@@ -2191,7 +2263,7 @@
 }
 
 .tv-search-empty {
-  @include display-M;
+  @include tv-type(display-M);
   grid-column: 1 / -1;
   margin: 2.5rem 0 0;
   color: $text-secondary;
@@ -2252,17 +2324,15 @@
 .tv-detail-hero-body {
   position: absolute;
   top: 10.625rem;
-  left: 5.25rem;
+  left: 11.25rem;
   display: flex;
   flex-direction: column;
   width: 900px;
-  height: 28.25rem; // 버튼은 맨 아래 (시안 y 540)
+  height: 31.25rem; // 버튼은 맨 아래 (시안 y 540)
 }
 
 .tv-detail-title {
-  @include heading-h1-b;
-  line-height: 5rem;
-  font-size: 4rem;
+  @include tv-type(heading-h1-b);
   margin: 0;
   padding: 0;
   color: $light-color-0;
@@ -2272,20 +2342,20 @@
   margin: 2.5rem 0 0;
   color: $light-color-0;
   font-family: $font-family-base;
-  font-size: 1.375rem;
+  font-size: 2.375rem;
   font-weight: $font-weight-regular;
-  line-height: 1.875rem;
+  line-height: 2.875rem;
 }
 
 .tv-detail-desc {
   display: -webkit-box;
-  margin: 0.875rem 0 0;
+  margin: 1.875rem 0 0;
   overflow: hidden;
   color: $light-color-0;
   font-family: $font-family-base;
-  font-size: 1.375rem;
-  font-weight: 450;
-  line-height: 1.95rem;
+  font-size: 1.8125rem;
+  font-weight: $font-weight-medium;
+  line-height: 2.25rem;
   word-break: keep-all;
   -webkit-line-clamp: 3;
   line-clamp: 3;
@@ -2299,7 +2369,7 @@
 }
 
 .tv-detail-notice {
-  @include heading-h4;
+  @include tv-type(heading-h4);
   position: absolute;
   bottom: -3rem;
   left: 0;
@@ -2320,13 +2390,13 @@
   -webkit-backdrop-filter: blur(1.25rem);
 
   strong {
-    @include heading-h3-b;
+    @include tv-type(heading-h3-b);
     display: block;
     color: $light-color-0;
   }
 
   p {
-    @include heading-h5;
+    @include tv-type(heading-h5);
     display: -webkit-box;
     margin: $space-md 0 0;
     overflow: hidden;
@@ -2344,12 +2414,12 @@
   }
 
   dt {
-    @include heading-h5;
+    @include tv-type(heading-h5);
     color: $light-color-500;
   }
 
   dd {
-    @include heading-h5;
+    @include tv-type(heading-h5);
     margin: 0;
     color: $light-color-0;
   }
@@ -2386,7 +2456,7 @@
   }
 
   strong {
-    @include body-large-b;
+    @include tv-type(body-large-b);
     max-width: 100%;
     margin-top: $space-md;
     overflow: hidden;
@@ -2396,13 +2466,12 @@
   }
 
   span {
-    @include body-small;
+    @include tv-type(body-small);
     max-width: 100%;
     overflow: hidden;
     color: $light-color-500;
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin-top: 3px;
   }
 }
 
@@ -2445,25 +2514,25 @@
   margin-bottom: $space-md;
 
   strong {
-    @include heading-h2-b;
+    @include tv-type(heading-h2-b);
   }
 
   span {
-    @include body-default;
+    @include tv-type(body-default);
     color: $light-color-500;
   }
 }
 
 // 순위 · 구단 · 경기 · 승 · 무 · 패 · 승점
 .tv-detail-standings-row {
-  @include heading-h5;
+  @include tv-type(heading-h5);
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr) repeat(5, 64px);
   align-items: center;
   min-height: 3.25rem;
   border-top: 0.0625rem solid rgba($light-color-0, 0.08);
 
-  >span {
+  > span {
     text-align: center;
   }
 
@@ -2492,12 +2561,12 @@
 
   // 머리 줄
   &.is-label {
-    @include body-small;
+    @include tv-type(body-small);
     min-height: 2rem;
     border-top: 0;
     color: $light-color-500;
 
-    >span:nth-child(2) {
+    > span:nth-child(2) {
       text-align: left;
     }
   }
@@ -2559,5 +2628,117 @@
     outline: none;
     transform: scale(1.1);
     box-shadow: 0 0 0 0.25rem $light-color-0, 0 0 0 0.5rem $primary-color-500;
+  }
+}
+
+// =====================================================================
+// [추가] TV 디자인 — 태블릿 · 휴대폰을 눕혀서(가로) 볼 때도 지금 화면 그대로 · 스크롤바만 눈에 덜 띄게
+// - 높이가 낮은 가로 화면에서 왼쪽 메뉴(.tv-side) 등이 스크롤될 때 기본 회색 막대 대신 얇고 은은한 막대
+// - 막대: 폭 6 · 반투명 흰색(18%) · 바탕 투명 · 마우스를 올리면 조금 진하게(32%)
+// - :where() 로 우선순위 0 → 이미 스크롤바를 숨긴 목록(scrollbar-width: none)은 그대로 숨김
+// =====================================================================
+$tv-scrollbar-thumb: rgba($light-color-0, 0.18);
+$tv-scrollbar-thumb-hover: rgba($light-color-0, 0.32);
+
+:where(.tv-preview),
+:where(.tv-preview) :where(*) {
+  scrollbar-width: thin;
+  scrollbar-color: $tv-scrollbar-thumb transparent;
+}
+
+:where(.tv-preview) ::-webkit-scrollbar {
+  width: 0.375rem;
+  height: 0.375rem;
+}
+
+:where(.tv-preview) ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:where(.tv-preview) ::-webkit-scrollbar-thumb {
+  border-radius: 62.4375rem;
+  background-color: $tv-scrollbar-thumb;
+}
+
+:where(.tv-preview) ::-webkit-scrollbar-thumb:hover {
+  background-color: $tv-scrollbar-thumb-hover;
+}
+
+:where(.tv-preview) ::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+// =====================================================================
+// [추가] TV 디자인 — 태블릿 · 휴대폰을 세웠을 때(세로) "가로로 돌려 주세요" 안내 (pages/TvPreview.jsx .tv-rotate-notice)
+// - 왼쪽 메뉴 · TV 화면을 모두 덮음 (세로로는 TV 화면이 너무 작아 보이지 않게)
+// - 터치 기기 + 세로 방향에서만 · PC 는 창을 세로로 길게 해도 그대로
+// - 아이콘: 세운 기기가 왼쪽으로 눕혀졌다 다시 서는 움직임 (반복)
+// =====================================================================
+.tv-rotate-notice {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) and (orientation: portrait) {
+  .tv-preview .tv-rotate-notice {
+    position: fixed;
+    inset: 0;
+    z-index: 10001; // 메뉴 · TV 화면 · 영상 팝업보다 위
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $space-md;
+    padding: 0 $space-2xl;
+    background-color: $bg-page;
+    color: $light-color-0;
+    text-align: center;
+  }
+
+  .tv-rotate-icon {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: $space-md;
+    color: $light-color-0;
+
+    // 세운 기기가 왼쪽으로 눕혀졌다가 다시 섬 (반복)
+    .tv-rotate-icon-phone {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: tv-rotate-hint 2.4s ease-in-out infinite;
+    }
+  }
+
+  .tv-rotate-title {
+    @include heading-h4-b;
+    margin: 0;
+  }
+
+  .tv-rotate-desc {
+    @include body-small;
+    margin: 0;
+    color: $light-color-500;
+  }
+}
+
+@keyframes tv-rotate-hint {
+  0%,
+  20% {
+    transform: rotate(0deg);
+  }
+
+  50%,
+  80% {
+    transform: rotate(-90deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tv-rotate-icon .tv-rotate-icon-phone {
+    animation: none;
+    transform: rotate(-90deg);
   }
 }

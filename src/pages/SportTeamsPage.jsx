@@ -59,7 +59,8 @@ const SportTeamsPage = () => {
       {/* 상단 그라데이션 띠 */}
       <div className="sport-teams-hero">
         <div className="inner">
-          <button type="button" className="sport-teams-back" onClick={() => navigate(-1)}>
+          {/* PC · 태블릿: 띠 안 위 (휴대폰은 숨김 → 아래 띠 밑 버튼) */}
+          <button type="button" className="sport-teams-back is-top" onClick={() => navigate(-1)}>
             ← 스포츠 홈
           </button>
           <h2 className="sport-teams-page-title">관심 구단 구독</h2>
@@ -80,6 +81,10 @@ const SportTeamsPage = () => {
       </div>
 
       <div className="inner sport-teams-body">
+        {/* [추가] 휴대폰: "← 스포츠 홈" 을 띠 아래 · 탭 위로 (PC · 태블릿은 숨김) */}
+        <button type="button" className="sport-teams-back is-below" onClick={() => navigate(-1)}>
+          ← 스포츠 홈
+        </button>
         {/* 탭 + 검색 */}
         <div className="sport-teams-toolbar">
           <ul className="sport-team-filter" role="tablist">

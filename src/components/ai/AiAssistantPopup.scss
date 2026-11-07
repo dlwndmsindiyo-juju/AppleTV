@@ -1,3 +1,5 @@
+@use "../../variables" as *; // [추가] 빛나는 버튼 믹스인 · AI 색 토큰
+
 // 기존 전역 SCSS와 충돌하지 않도록 모든 셀렉터를 ai-popup으로 한정합니다.
 .ai-popup {
   --ai-primary: #5865f2;
@@ -881,9 +883,9 @@
   .ai-popup-header>p {
     margin-top: 24px;
     color: #fff;
-    font-size: 24px;
+    font-size: 22px;
     line-height: 28px;
-    font-weight: 500;
+    font-weight: 700;
     text-align: center;
     height: 22px;
   }
@@ -939,16 +941,15 @@
   }
 
   .ai-popup-question h3 {
-    margin-top: 15px;
     font-size: 22px;
-    font-weight: 500;
+    font-weight: 700;
     line-height: 28px;
   }
 
   .ai-popup-question p {
     margin-top: 8px;
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 12px;
+    font-weight: 700;
     line-height: 16px;
     color: var(--ai-subtle);
   }
@@ -959,7 +960,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    gap: 10px 8px;
+    gap: 10px 5px;
     width: 100%;
     max-width: none;
   }
@@ -1634,4 +1635,342 @@
 .ai-popup .ai-popup-results-footer button:disabled {
   opacity: .5;
   cursor: default;
+}
+
+// =====================================================================
+// [추가] 취향 선택 팝업 — AI 홍보 배너와 같은 인터랙티브 효과
+// - [다음 단계로] · [바로 추천받기]: 홍보 배너 버튼과 같은 빛나는 버튼 (@include ai-glow-btn)
+// - 제목 앞 AI 아이콘 (AiLogo) · 소제목 앞 반짝이는 점 (홍보 배너 질문 앞 점과 같은 색 흐름 · 빛)
+// - 진행 바: 고르면 그 단계 끝까지 부드럽게 늘어남 + 바 위로 빛이 지나감
+// - .ai-popup 을 두 번 써서 위쪽 화면별 규칙(배경색 등)보다 우선
+// =====================================================================
+.ai-popup.ai-popup {
+  .ai-glow-btn {
+    @include ai-glow-btn;
+  }
+
+  // 제목 앞 AI 아이콘
+  .ai-popup-title-row h2 {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+  }
+
+  .ai-popup-title-logo {
+    flex-shrink: 0;
+  }
+
+  // 소제목 앞 반짝이는 점
+  .ai-popup-desc::before {
+    content: "";
+    display: inline-block;
+    flex-shrink: 0;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    margin-right: $space-sm;
+    border-radius: 50%;
+    vertical-align: middle;
+    background-color: $ai-glow-2;
+    animation: ai-dot-color 4s linear infinite, ai-dot-glow 2.4s ease-in-out infinite;
+  }
+
+  // 진행 바: 늘어나는 바 (AI 그라데이션 · 끝이 빛남 · 위로 빛이 지나감)
+  .ai-popup-progress [role=progressbar]>span {
+    position: relative;
+    overflow: hidden;
+    background: $ai-banner-gradient;
+    box-shadow: 0 0 0.5rem $ai-glow-bright;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba($light-color-0, 0) 0%, rgba($light-color-0, 0.45) 50%, rgba($light-color-0, 0) 100%);
+      transform: translateX(-100%);
+      animation: ai-progress-shine 2s ease-in-out infinite;
+    }
+  }
+}
+
+// 휴대폰: 제목 글자가 작아지는 만큼 아이콘도 작게
+@media (max-width: $breakpoint-mobile) {
+  .ai-popup.ai-popup .ai-popup-title-logo {
+    --ai-logo-size: 1.5rem !important; // AiLogo 가 style 로 넣는 크기(32)를 덮어씀
+  }
+
+  .ai-popup.ai-popup .ai-popup-title-row h2 {
+    gap: $space-sm;
+  }
+}
+
+@keyframes ai-progress-shine {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-popup.ai-popup {
+    .ai-popup-desc::before,
+    .ai-popup-progress [role=progressbar]>span::after {
+      animation: none;
+    }
+
+    .ai-popup-progress [role=progressbar]>span {
+      transition: none;
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 닫기 X — 인트로 건너뛰기 버튼과 같은 아이콘 (취향 선택 · 추천 결과 공통)
+// =====================================================================
+.ai-popup.ai-popup .ai-popup-close {
+  color: $light-color-0;
+  background: none;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  .ai-popup-close-icon {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .ai-popup.ai-popup .ai-popup-close .ai-popup-close-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+// =====================================================================
+// [수정] 추천 결과 팝업 — 여백 · 카드 위계 정리
+// - 팝업 안쪽 여백: PC 48 · 56 / 태블릿 40 / 휴대폰 24 · 20
+// - 고른 취향 칩: 가운데 정렬
+// - 카드: 사이 간격 일정 (PC · 태블릿 20 / 휴대폰 12) · 카드 안 여백 · 제목 > 장르 > 줄거리 위계 (사이 6 · 10)
+// - [조건 넓혀서 추천받기]: 취향 버튼과 같은 빛나는 버튼 (.ai-glow-btn · 테두리 선 없음)
+// - [마지막 추천 결과예요]: 버튼이 아닌 안내 글자 (.ai-popup-last)
+// - .ai-popup--results 를 두 번 써서 위쪽 화면별 규칙보다 우선
+// =====================================================================
+.ai-popup.ai-popup--results.ai-popup--results {
+  padding: 3rem 3.5rem;
+
+  .ai-popup-header>p {
+    margin-top: $space-md;
+  }
+
+  .ai-popup-result-body {
+    margin-top: $space-2xl;
+  }
+
+  .ai-popup-tags {
+    justify-content: center;
+    gap: $space-sm;
+    margin: 0 0 $space-lg;
+  }
+
+  .ai-popup-hint {
+    margin: 0 0 $space-xl;
+    text-align: center;
+  }
+
+  .ai-popup-results {
+    grid-auto-rows: 9.5rem; // 152
+    gap: 1.25rem;
+  }
+
+  .ai-popup-result {
+    height: 9.5rem;
+    min-height: 9.5rem;
+    max-height: 9.5rem;
+    gap: 1.25rem;
+    padding: 0 1.25rem 0 0;
+  }
+
+  .ai-popup-poster {
+    width: 6.75rem;
+    height: 9.5rem;
+    flex-basis: 6.75rem;
+  }
+
+  .ai-popup-result-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: $space-lg 0;
+  }
+
+  .ai-popup-result-heading .ai-popup-detail-link {
+    @include body-large-b;
+    color: $light-color-0;
+  }
+
+  .ai-popup-result-genre {
+    @include caption-default;
+    margin-top: 0.375rem;
+    color: $light-color-300;
+  }
+
+  .ai-popup-match-note {
+    margin-top: 0.25rem;
+  }
+
+  .ai-popup-result-overview {
+    @include caption-default;
+    margin-top: 0.625rem;
+    color: $light-color-500;
+  }
+
+  .ai-popup-results-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-md;
+    padding-top: $space-2xl;
+  }
+
+  .ai-popup-expand {
+    @include body-small-b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    margin: 0 0 $space-xs;
+    padding: 0 $space-xl;
+    border-radius: 62.4375rem;
+  }
+
+  .ai-popup-more {
+    width: 100%;
+  }
+
+  .ai-popup-last {
+    @include body-small;
+    margin: $space-xs 0;
+    color: $dark-color-100;
+    text-align: center;
+  }
+
+  .ai-popup-edit {
+    margin-top: 0;
+  }
+}
+
+// 태블릿
+@media (max-width: $breakpoint-tablet) {
+  .ai-popup.ai-popup--results.ai-popup--results {
+    padding: 2.5rem;
+  }
+}
+
+// 휴대폰
+@media (max-width: $breakpoint-mobile) {
+  .ai-popup.ai-popup--results.ai-popup--results {
+    padding: 2rem 1.5rem;
+
+    .ai-popup-result-body {
+      margin-top: $space-xl;
+    }
+
+    .ai-popup-results {
+      grid-auto-rows: 8rem;
+      gap: $space-md;
+    }
+
+    .ai-popup-result {
+      height: 8rem;
+      min-height: 8rem;
+      max-height: 8rem;
+      gap: $space-lg;
+      padding-right: $space-lg;
+    }
+
+    .ai-popup-poster {
+      width: 5.75rem;
+      height: 8rem;
+      flex-basis: 5.75rem;
+    }
+
+    .ai-popup-result-copy {
+      padding: $space-md 0;
+    }
+
+    .ai-popup-result-heading .ai-popup-detail-link {
+      @include body-default-b;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .ai-popup.ai-popup--results.ai-popup--results {
+    padding: 1.5rem 1.25rem;
+
+    // 제목이 한 줄에 들어가게 (아이콘 포함)
+    .ai-popup-title-row h2 {
+      @include heading-h4-b;
+      gap: $space-sm;
+    }
+
+    .ai-popup-title-logo {
+      --ai-logo-size: 1.25rem !important;
+    }
+
+    .ai-popup-results {
+      grid-auto-rows: 7rem;
+    }
+
+    .ai-popup-result {
+      height: 7rem;
+      min-height: 7rem;
+      max-height: 7rem;
+      gap: $space-md;
+      padding-right: $space-md;
+    }
+
+    .ai-popup-poster {
+      width: 5rem;
+      height: 7rem;
+      flex-basis: 5rem;
+    }
+
+    .ai-popup-result-heading .ai-popup-detail-link {
+      @include body-small-b;
+    }
+
+    .ai-popup-result-genre,
+    .ai-popup-result-overview {
+      @include caption-small;
+    }
+
+    .ai-popup-result-overview {
+      margin-top: 0.375rem;
+    }
+  }
+}
+
+// =====================================================================
+// [수정] 팝업 창 테두리(스트로크) 없음 — 취향 선택 · 추천 결과 공통
+// - 브라우저 기본 dialog 테두리 · 포커스 링(열릴 때 · 키보드로 들어올 때)까지 모두 없앰
+// =====================================================================
+.ai-popup.ai-popup.ai-popup {
+
+  &,
+  &:focus,
+  &:focus-visible,
+  &:modal {
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
 }
