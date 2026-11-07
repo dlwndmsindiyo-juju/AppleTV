@@ -115,6 +115,9 @@ const HeartIcon = ({ filled }) => <span className={`hero-wish-icon${filled ? " i
 // YouTube IFrame API 불러오기는 공용 파일 (components/common/youtubeApi.js) — 영상이 끝났는지 알기 위해 사용
 
 // [추가] 히어로 배경 예고편 (소리 끔 · 컨트롤 없음) — 재생 시작 · 끝 · 오류를 알려줌
+// - [수정] 정해진 시간 안에 재생이 시작되지 않으면(기기가 자동 재생을 막음 등) 다음 슬라이드로 → 이미지에서 멈춰 있지 않게
+const HERO_VIDEO_TIMEOUT = 10000; // 10초
+
 const HeroTrailer = ({ videoKey, title, onStart, onEnd }) => {
   const holderRef = useRef(null);
   const [playing, setPlaying] = useState(false);
@@ -126,6 +129,10 @@ const HeroTrailer = ({ videoKey, title, onStart, onEnd }) => {
   useEffect(() => {
     let player = null;
     let alive = true;
+    let started = false;
+    const timeout = setTimeout(() => {
+      if (alive && !started) endRef.current?.();
+    }, HERO_VIDEO_TIMEOUT);
     loadYouTubeApi()
       .then((YT) => {
         if (!alive || !holderRef.current) return;
@@ -149,6 +156,7 @@ const HeroTrailer = ({ videoKey, title, onStart, onEnd }) => {
             },
             onStateChange: (e) => {
               if (e.data === YT.PlayerState.PLAYING) {
+                started = true;
                 setPlaying(true);
                 startRef.current?.();
               }
@@ -162,6 +170,7 @@ const HeroTrailer = ({ videoKey, title, onStart, onEnd }) => {
 
     return () => {
       alive = false;
+      clearTimeout(timeout);
       try {
         player?.destroy();
       } catch {
@@ -178,9 +187,14 @@ const HeroTrailer = ({ videoKey, title, onStart, onEnd }) => {
 };
 
 // 개별 작품 슬라이드 아이템
-const HERO_VIDEO_DELAY = 2000; // 슬라이드에 머문 뒤 영상이 시작되기까지 (2초)
+// [수정] 슬라이드에 머문 뒤 영상을 띄우기까지: PC · 태블릿 2초 / 휴대폰 1초
+const HERO_VIDEO_DELAY = 2000;
+const HERO_VIDEO_DELAY_MOBILE = 1000;
+const PHONE_QUERY = "(max-width: 767px)"; // _variables.scss $breakpoint-mobile
+const heroVideoDelay = () =>
+  typeof window !== "undefined" && window.matchMedia?.(PHONE_QUERY).matches ? HERO_VIDEO_DELAY_MOBILE : HERO_VIDEO_DELAY;
 
-const HeroItem = ({ tv, active, onVideoStart, onVideoEnd }) => {
+const HeroItem = ({ tv, active, onVideoLoad, onVideoStart, onVideoEnd }) => {
   const { tvVideo, onFetchTvVideo } = useMovieStore();
   const [showVideo, setShowVideo] = useState(false);
   const rating = useKrRating(tv.id);
@@ -194,7 +208,7 @@ const HeroItem = ({ tv, active, onVideoStart, onVideoEnd }) => {
       return undefined;
     }
     onFetchTvVideo(tv.id);
-    const timer = setTimeout(() => setShowVideo(true), HERO_VIDEO_DELAY);
+    const timer = setTimeout(() => setShowVideo(true), heroVideoDelay());
     return () => clearTimeout(timer);
   }, [active, tv?.id, onFetchTvVideo]);
 
@@ -205,6 +219,16 @@ const HeroItem = ({ tv, active, onVideoStart, onVideoEnd }) => {
 
   const genres = shortGenres("tv", tv.genre_ids).slice(0, 2);
 
+  // [수정] 예고편을 띄우기 시작하면 자동 넘김을 멈춤
+  // - 예전: 재생이 "시작된 뒤"에야 멈춤 → 휴대폰은 영상 준비가 느려 5초 자동 넘김이 먼저 와서 영상이 매번 끊기고 이미지만 보였음
+  // - 재생이 안 되면 HeroTrailer 의 10초 제한으로 다음 슬라이드
+  const videoReady = active && showVideo && Boolean(trailer);
+  const loadRef = useRef(onVideoLoad);
+  loadRef.current = onVideoLoad;
+  useEffect(() => {
+    if (videoReady) loadRef.current?.();
+  }, [videoReady]);
+
   return (
     <div className="hero-slide-item">
       {/* 배경 및 트레일러 */}
@@ -214,7 +238,7 @@ const HeroItem = ({ tv, active, onVideoStart, onVideoEnd }) => {
           backgroundImage: `url(https://image.tmdb.org/t/p/original${tv.backdrop_path})`,
         }}
       >
-        {active && showVideo && trailer && (
+        {videoReady && (
           <HeroTrailer videoKey={trailer.key} title={trailer.name} onStart={onVideoStart} onEnd={onVideoEnd} />
         )}
         {/* 영상 위 투명 막: 마우스가 YouTube 영상에 닿지 않아 일시정지 등 버튼이 뜨지 않음 */}
@@ -282,12 +306,18 @@ const HeroSection = () => {
   const swiperRef = useRef(null);
 
   // 영상이 재생되면 자동 넘김 멈춤 · 영상이 끝나면 다음 슬라이드 (넘어가면 자동 넘김 다시 켬)
+  const handleVideoLoad = () => swiperRef.current?.autoplay?.stop(); // [추가] 예고편을 불러오기 시작할 때 멈춤
   const handleVideoStart = () => swiperRef.current?.autoplay?.stop();
   const handleVideoEnd = () => swiperRef.current?.slideNext();
 
   useEffect(() => {
     onFetchAppleOriginals(); // 이미 불러왔으면 다시 요청하지 않음
   }, [onFetchAppleOriginals]);
+
+  // [추가] YouTube API 를 미리 불러 둠 → 첫 예고편이 늦게 뜨지 않게 (실패해도 HeroTrailer 에서 다시 시도)
+  useEffect(() => {
+    loadYouTubeApi().catch(() => {});
+  }, []);
 
   // Apple TV+ 오리지널 인기순 상위 6개 (배경 이미지가 있는 작품만)
   const heroItems = (appleOriginals || []).filter((tv) => tv.backdrop_path).slice(0, 6);
@@ -321,6 +351,7 @@ const HeroSection = () => {
             <HeroItem
               tv={tv}
               active={index === activeIndex}
+              onVideoLoad={handleVideoLoad}
               onVideoStart={handleVideoStart}
               onVideoEnd={handleVideoEnd}
             />

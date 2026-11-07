@@ -1,3 +1,5 @@
+@use "../../variables" as *;
+
 .intro-container {
   position: fixed;
   top: 0;
@@ -20,6 +22,25 @@
     width: 100%;
     height: 100%;
     object-fit: cover; // 화면 비율 유지하며 꽉 채우기
+
+    // [추가] iOS 가운데 큰 재생 버튼 · 기본 컨트롤 숨김 (누르지 않아도 바로 재생)
+    &::-webkit-media-controls,
+    &::-webkit-media-controls-panel,
+    &::-webkit-media-controls-start-playback-button,
+    &::-webkit-media-controls-overlay-play-button {
+      display: none !important;
+      -webkit-appearance: none;
+      opacity: 0;
+    }
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+
+  // [추가] 기기가 영상 자동 재생을 막을 때 대신 보여 주는 움직이는 이미지 (intro.webp)
+  .intro-fallback {
+    display: block;
   }
 
   .skip-btn {
@@ -30,13 +51,23 @@
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.4);
     color: #fff;
-    font-size: 14px;
+    @include body-default-b; // [수정] 글자 body-default-b (예전 14px)
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
     border-radius: 20px;
     cursor: pointer;
     backdrop-filter: blur(5px);
 
     &:hover {
       background: rgba(255, 255, 255, 0.4);
+    }
+
+    // [추가] 닫기(X) 아이콘 — 글자 색(currentColor)을 따라감
+    .skip-btn-icon {
+      flex: none;
+      width: 0.75rem;
+      height: 0.75rem;
     }
   }
 }

@@ -502,8 +502,30 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       padding-right: 1.25rem;
     }
 
+    // [수정] 로그인 전 · 후 같은 디자인 (예전 로그인 후 휴대폰 규칙과 통일)
+    // - 포스터 123 × 201 + 왼쪽 숫자 자리 52
+    //   · [수정] 순위 ↔ 포스터 간격 좁힘: 숫자 글자 끝(약 50 ~ 57)에 포스터가 거의 붙음 (조금 겹치는 부분은 포스터 뒤로)
     .top10-slide {
-      width: 170px;
+      width: 10.9375rem; // 175 = 숫자 자리 52 + 포스터 123
+    }
+
+    .top10-card {
+      padding-left: 3.25rem; // 52 (예전 60)
+    }
+
+    .top10-poster {
+      aspect-ratio: 123 / 201;
+    }
+
+    // [수정] 순위 숫자 100 (6.25rem) — SVG 높이 140 = viewBox 140 → 글자 크기 그대로 100px
+    .top10-num {
+      height: 8.75rem;
+      bottom: 0.5rem;
+
+      .top10-num-glyph {
+        font-size: 6.25rem; // 100
+        letter-spacing: $top10-num-letter-spacing-mobile; // 10위 1 · 0 이 겹치지 않게 (_variables.scss)
+      }
     }
   }
 }
@@ -605,7 +627,11 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
 @media (max-width: $breakpoint-mobile) {
   section.top10-section .top10-slide.top10-slide--wide {
-    width: 170px * 1.3; // 221
+    width: 14.0625rem; // 225 = "10" 자리 102 + 포스터 123 · [수정] 간격 좁힘 (예전 231)
+
+    .top10-card {
+      padding-left: 6.375rem; // 102 (예전 108)
+    }
   }
 }
 
@@ -2794,36 +2820,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     }
 
 
-    // ---------- 인기 콘텐츠: 숫자 자리 48 + 포스터 123 × 201 (숫자 크기는 그대로 · 테두리 없음은 App.scss 공통) ----------
-    section.top10-section {
-      .top10-slide {
-        width: 171px;
-      }
-
-      .top10-slide--wide {
-        width: 217px; // 두 자리(10위)
-      }
-
-      .top10-card {
-        padding-left: $space-4xl;
-
-        .top10-num {
-          .top10-num-glyph {
-            font-size: 6.25rem;
-          }
-        }
-      }
-
-      .top10-slide--wide .top10-card {
-        padding-left: 5.84375rem; // 93.5 (PC 187 × 0.5)
-      }
-
-      .top10-poster {
-        aspect-ratio: 123 / 201;
-      }
-
-
-    }
+    // 인기 콘텐츠(TOP 10)는 로그인 전 · 후 같은 디자인 → 아래 공통 section.top10-section 휴대폰 규칙만 사용
 
     // ---------- Apple 추천: 포스터 130 × 204 · 가운데 [▶] 원 25 + [★ 8.7] (글자 없음) ----------
     .rail-recommend {
@@ -3756,6 +3753,35 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
 
     .member-browse-poster-title.member-browse-poster-title {
       @include caption-default-b;
+    }
+  }
+}
+
+// =====================================================================
+// [수정] 하단 무료 체험 배너 — 휴대폰 (LIVE 배너는 위 .is-live 규칙 그대로)
+// - 왼쪽은 타이틀만 (서브 텍스트 숨김) · 타이틀은 잘리지 않게 두 줄까지 · 오른쪽 버튼 강조
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .promo-banner:not(.is-live) {
+    // 타이틀이 두 줄로 들어가도록 버튼과의 사이를 좁힘
+    .promo-banner-inner {
+      gap: $space-md;
+    }
+
+    .promo-banner-text {
+      flex: 1 1 auto;
+    }
+
+    .promo-banner-desc {
+      display: none;
+    }
+
+    .promo-banner-title {
+      @include heading-h4-b;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      word-break: keep-all; // "1주일" 처럼 단어 중간에서 줄이 바뀌지 않게
     }
   }
 }
