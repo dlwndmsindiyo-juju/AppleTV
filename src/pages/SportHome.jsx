@@ -14,6 +14,7 @@ import SportSeries from "../components/sport/SportSeries";
 import SubscribeCTA from "../components/landing/SubscribeCTA"; // [추가] 홍보 배너 (TV 홈과 같은 글자 · 버튼)
 import "../sport-member.scss"; // [복구] 스포츠 스타일 (PC · 태블릿 · 모바일)
 import "./sport-home-banner.css";
+import { useHeroGate, heroGateClass, HeroWaitSkeleton } from "../components/common/Skeleton"; // [추가] 히어로 먼저 · 로딩 뼈대
 
 const SportHome = () => {
   const {
@@ -26,6 +27,7 @@ const SportHome = () => {
   } = useSportStore();
 
   const user = useAuthStore((state) => state.user);
+  const heroReady = useHeroGate(); // [추가] 히어로가 준비될 때까지 아래 섹션 대신 뼈대
 
   useEffect(() => {
     onFetchUpcomingMatches(); // 예정된 경기
@@ -52,9 +54,10 @@ const SportHome = () => {
   ]);
 
   return (
-    <main className={`page-fade sport-home${user ? " sport-home-member" : ""}`}>
+    <main className={`page-fade sport-home${user ? " sport-home-member" : ""}${heroGateClass(heroReady)}`}>
       {/* 1. 히어로 (로그인 전: 메인 이미지 / 로그인 후: 라이브 + 경기 카드) */}
       <SportHero />
+      <HeroWaitSkeleton ready={heroReady} />
       {user && <SportLive />}
 
       {/* 2. 예정된 경기 */}

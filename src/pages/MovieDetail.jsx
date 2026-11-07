@@ -11,6 +11,7 @@ import AutoNext from '../components/common/AutoNext'; // [추가] 영상이 끝�
 import VideoPopup from '../components/common/VideoPopup'; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { openSubscribeGate } from '../utils/subscribeGate'; // [정리] 구독 안내 팝업 열기 공용
 import { TMDB_IMG as IMG } from '../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
+import SelectDropdown from '../components/common/SelectDropdown'; // [추가] 지불 방법 선택 상자와 같은 디자인 (아래 선만)
 
 // =====================================================================
 // 영화 / TV 공통 상세 (Apple TV 토글의 모든 작품 상세)
@@ -497,34 +498,41 @@ export const MovieDetail = ({ type: typeProp }) => {
             {/* 에피소드 (영화: 관련 영상 / TV: 시즌 회차) */}
             {activeTab === 'episodes' && (
               <>
+                {/* [수정] 기본 select → 지불 방법 선택 상자와 같은 목록 (목록은 아래 내용 위에 덮임 · 상자 대신 아래 선) */}
                 <div className="filter-bar">
                   {isTv ? (
-                    <select
-                      value={currentSeason ?? ''}
-                      onChange={(e) => setSeason(Number(e.target.value))}
+                    <SelectDropdown
+                      variant="line"
+                      ariaLabel="시즌"
+                      value={seasons.length === 0 ? '' : currentSeason}
+                      onChange={(v) => setSeason(Number(v))}
                       disabled={seasons.length === 0}
-                    >
-                      {seasons.length === 0 && <option value="">시즌 정보 없음</option>}
-                      {seasons.map((s) => (
-                        <option key={s.id} value={s.season_number}>
-                          {s.name || `시즌 ${s.season_number}`}
-                        </option>
-                      ))}
-                    </select>
+                      options={seasons.length === 0
+                        ? [{ value: '', label: '시즌 정보 없음' }]
+                        : seasons.map((s) => ({ value: s.season_number, label: s.name || `시즌 ${s.season_number}` }))}
+                    />
                   ) : (
-                    <select value={videoType} onChange={(e) => setVideoType(e.target.value)}>
-                      <option value="all">전체 영상</option>
-                      {videoTypes.map((t) => (
-                        <option key={t} value={t}>
-                          {VIDEO_TYPE_LABEL[t] || t}
-                        </option>
-                      ))}
-                    </select>
+                    <SelectDropdown
+                      variant="line"
+                      ariaLabel="영상 유형"
+                      value={videoType}
+                      onChange={setVideoType}
+                      options={[
+                        { value: 'all', label: '전체 영상' },
+                        ...videoTypes.map((t) => ({ value: t, label: VIDEO_TYPE_LABEL[t] || t })),
+                      ]}
+                    />
                   )}
-                  <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                    <option value="oldest">{isTv ? '1화부터' : '오래된 순'}</option>
-                    <option value="newest">{isTv ? '최신화부터' : '최신 순'}</option>
-                  </select>
+                  <SelectDropdown
+                    variant="line"
+                    ariaLabel="정렬"
+                    value={sortOrder}
+                    onChange={setSortOrder}
+                    options={[
+                      { value: 'oldest', label: isTv ? '1화부터' : '오래된 순' },
+                      { value: 'newest', label: isTv ? '최신화부터' : '최신 순' },
+                    ]}
+                  />
                 </div>
 
                 {listLabel && <p className="season-label">{listLabel}</p>}

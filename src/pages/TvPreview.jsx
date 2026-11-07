@@ -63,6 +63,28 @@ const SideGroup = ({ title, open, empty = false, onToggle, children }) => (
 
 // [정리] 방향키로 가장 가까운 버튼 찾기 → components/tv/tvFocus.js (영상 끝 화면과 같이 사용)
 
+// [추가] 터치 기기 구분 (창 크기 · 방향이 바뀌면 다시 계산)
+const touchDeviceClass = () => {
+  if (typeof window === "undefined") return "";
+  const touch = window.matchMedia?.("(hover: none) and (pointer: coarse)").matches;
+  if (!touch) return "";
+  return Math.min(window.innerWidth, window.innerHeight) < 600 ? " is-phone" : " is-tablet";
+};
+
+const useTouchDeviceClass = () => {
+  const [value, setValue] = useState(touchDeviceClass);
+  useEffect(() => {
+    const update = () => setValue(touchDeviceClass());
+    window.addEventListener("resize", update);
+    window.addEventListener("orientationchange", update);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("orientationchange", update);
+    };
+  }, []);
+  return value;
+};
+
 const TvPreview = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState("terms");
@@ -102,6 +124,10 @@ const TvPreview = () => {
   const previewRef = useRef(null);
   const areaRef = useRef(null);
   const stageRef = useRef(null);
+
+  // [추가] 태블릿 · 휴대폰(터치 기기)에서는 TV 화면 글자를 한두 단계 크게 (TV.scss tv-type · PC 는 그대로)
+  // - 휴대폰: 화면 짧은 쪽이 600px 미만 / 태블릿: 그 이상인 터치 기기
+  const deviceClass = useTouchDeviceClass();
 
   // 창 크기에 맞게 TV 화면 비율 계산
   useLayoutEffect(() => {
@@ -231,7 +257,18 @@ const TvPreview = () => {
   };
 
   return (
-    <div className={`tv-preview${showSide && sideOpen ? " is-side-open" : ""}`} ref={previewRef}>
+    <div className={`tv-preview${showSide && sideOpen ? " is-side-open" : ""}${deviceClass}`} ref={previewRef}>
+      {/* [추가] 태블릿 · 휴대폰을 세웠을 때: 메뉴 · TV 화면을 모두 덮는 "가로로 돌려 주세요" 안내 (TV.scss · 세로 화면에서만 보임) */}
+      <div className="tv-rotate-notice" role="alert">
+        <svg className="tv-rotate-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <g className="tv-rotate-icon-phone">
+            <rect x="21" y="12" width="22" height="40" rx="4" />
+            <path d="M29 46h6" />
+          </g>
+        </svg>
+        <p className="tv-rotate-title">기기를 가로로 돌려 주세요</p>
+        <p className="tv-rotate-desc">TV 화면은 가로로 볼 때 가장 잘 보여요.</p>
+      </div>
       {/* [수정] 화면 메뉴: 아래 바 → 왼쪽 사이드 메뉴 (기본 열림 · 화살표로 닫고 열기 · 영상 재생 중에는 숨김) */}
       {showSide && sideOpen && (
         <aside className="tv-side" aria-label="TV 화면 메뉴">

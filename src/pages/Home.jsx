@@ -12,6 +12,7 @@ import SubscribeCTA from "../components/landing/SubscribeCTA"; // 구독 유도 
 import DeviceGuide from "../components/landing/DeviceGuide";
 import MemberHome from "../components/member/MemberHome"; // [추가] 로그인 후 메인
 import { useAuthStore } from "../store/useAuthStore"; // [추가] 로그인 상태
+import { useHeroGate, heroGateClass, HeroWaitSkeleton } from "../components/common/Skeleton"; // [추가] 히어로 먼저 · 로딩 뼈대
 
 const Home = () => {
   // const { popMovie, onFetchPopular, tvs, onFetchTv } = useMovieStore();
@@ -26,11 +27,19 @@ const Home = () => {
   // [추가] 로그인 사용자가 확인되면 같은 홈(/)에서 로그인 후 메인(MemberHome)을 보여줌
   const user = useAuthStore((s) => s.user);
   if (user) return <MemberHome userName={user.name} />;
+  return <GuestHome />;
+};
+
+// 로그인 전 홈
+// - [추가] 히어로가 준비될 때까지 아래 섹션 대신 뼈대 → 준비되면 히어로부터 보이고 아래 섹션이 이어서 나타남
+const GuestHome = () => {
+  const heroReady = useHeroGate();
 
   return (
-    <main className="page-fade landing-home">
+    <main className={`page-fade landing-home${heroGateClass(heroReady)}`}>
       {/* 1. 상단 히어로 섹션 */}
       <HeroSection />
+      <HeroWaitSkeleton ready={heroReady} />
 
       {/* 3. TOP 10 (호버 시 제목/평점) */}
       <Top10Section />
