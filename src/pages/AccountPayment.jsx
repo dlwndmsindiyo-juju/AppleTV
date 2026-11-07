@@ -1,82 +1,380 @@
-// src/pages/AccountPayment.jsx
-// [추가] 계정 설정 → "지불 방법 관리" (/profile/payment)
-// - 지불 방법 카드 목록 (맨 위가 기본 · 기본으로 결제가 안 되면 위에서부터 순서대로 시도)
-// - [+ 지불 방법 추가]: 카드사 · 끝 4자리만 입력 (데모용 · 카드 번호 전체는 받지 않음)
-// - [순서 변경]: 카드 2개 이상일 때 · 위 / 아래로 옮기기 · 삭제 → [완료]
-// - 글자 위계는 계정 설정과 같음 · 버튼 · 링크는 프라이머리
-// - 스타일: App.scss "계정 설정 — 구독 관리 · 지불 방법" (.account-pay-*)
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuthStore, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
-import { AccountSubPage, AccountIcon, ConfirmDialog, CARD_BRANDS } from "../components/profile/AccountShared";
+import { AccountSubPage, ConfirmDialog, CARD_BRANDS, CARD_BRAND_ICONS } from "../components/profile/AccountShared";
 import { PAYMENT_URL } from "../data/appleLinks";
+import { PaymentRegisterPopup } from "./Subscribe"; // [추가] 지불 방법 추가 = 구독 팝업의 지불 방법 등록 화면
+// public 폴더의 파일은 import 없이 루트(/) 경로로 참조합니다.
+// 실제 경로: public/pay-icon/*.svg, public/method-icon/*.svg
+// [추가] 카드 아이콘 (credit-card.svg 그대로 · 파일 경로를 찾지 못해 깨지는 일이 없게 코드 안에 넣음)
+const CREDIT_CARD_ICON = `data:image/svg+xml;utf8,${encodeURIComponent(
+  '<svg width="36" height="24" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 21.5V12H36V21.5C36 22.1875 35.7552 22.776 35.2656 23.2656C34.776 23.7552 34.1875 24 33.5 24H2.5C1.8125 24 1.22396 23.7552 0.734375 23.2656C0.244792 22.776 0 22.1875 0 21.5ZM10 18V20H16V18H10ZM4 18V20H8V18H4ZM33.5 0C34.1875 0 34.776 0.244792 35.2656 0.734375C35.7552 1.22396 36 1.8125 36 2.5V6H0V2.5C0 1.8125 0.244792 1.22396 0.734375 0.734375C1.22396 0.244792 1.8125 0 2.5 0H33.5Z" fill="#5865F2"/></svg>'
+)}`;
 
-const newId = () => `pm_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+const METHOD_ICONS = {
+  card: CREDIT_CARD_ICON, // [수정] 카드사를 모를 때 카드 아이콘 (credit-card.svg 를 코드 안에 넣음 → 파일 위치 · 경로와 상관없이 항상 보임)
+  pay: "/icons/method-icon/pay.svg",
+  phone: "/icons/method-icon/phone.svg",
+};
+const PAY_ICONS = {
+  "카카오페이": "/icons/pay-icon/kakaopay.svg",
+  "네이버페이": "/icons/pay-icon/naverpay.svg",
+  "토스페이": "/icons/pay-icon/tosspay.svg",
+};
 
-const MoreLink = () => (
-  <a className="account-link account-link--inline" href={PAYMENT_URL} target="_blank" rel="noopener noreferrer">
-    더 알아보기
-    <span className="account-link-arrow" aria-hidden="true" />
-  </a>
-);
+// [추가] 카드 오른쪽 로고: 카드사 로고 → 간편결제 로고 → 결제 유형 아이콘 순서로 찾음
+// (brand 로도 찾으므로 저장 중 method · provider 가 빠져도 간편결제 로고가 나옴)
+const getPaymentLogo = (payment, meta) =>
+  CARD_BRAND_ICONS[payment.brand] ||
+  PAY_ICONS[payment.provider] ||
+  PAY_ICONS[payment.brand] ||
+  METHOD_ICONS[meta.type];
 
-const AccountPayment = () => {
+const makeId = () =>
+  `pm_${Date.now().toString(36)}_${Math.random()
+    .toString(36)
+    .slice(2, 7)}`;
+
+const METHODS = [
+  {
+    value: "card",
+    label: "신용/체크카드",
+    desc: "카드 정보 입력 후 등록",
+  },
+  {
+    value: "pay",
+    label: "간편결제",
+    desc: "카카오페이 · 네이버페이 · 토스페이",
+  },
+  {
+    value: "phone",
+    label: "휴대폰 결제",
+    desc: "통신사 정보 입력 및 인증",
+  },
+  {
+    value: "apple",
+    label: "Apple 계정 잔액",
+    desc: "잔액은 별도 관리",
+  },
+];
+
+const PAY_PROVIDERS = [
+  {
+    value: "카카오페이",
+    tone: "kakao",
+    accountHint: "@kakao.com",
+  },
+  {
+    value: "네이버페이",
+    tone: "naver",
+    accountHint: "@naver.com",
+  },
+  {
+    value: "토스페이",
+    tone: "toss",
+    accountHint: "@toss.im",
+  },
+];
+
+const INITIAL = {
+  method: "card",
+  brand: CARD_BRANDS[0],
+  last4: "",
+  cardNumber: "",
+  expiry: "",
+  cvc: "",
+  billingName: "",
+  billingAddress: "",
+  billingPostal: "",
+  billingPhone: "",
+  provider: PAY_PROVIDERS[0].value,
+  carrier: "SKT",
+  phone: "",
+  holder: "",
+};
+
+const digits = (value) => value.replace(/\D/g, "");
+const formatCardNumber = (value) =>
+  digits(value).slice(0, 19).replace(/(.{4})/g, "$1 ").trim();
+const formatExpiry = (value) => {
+  const raw = digits(value).slice(0, 4);
+  return raw.length > 2 ? `${raw.slice(0, 2)}/${raw.slice(2)}` : raw;
+};
+
+const maskPhone = (value) =>
+  value ? `${value.slice(0, 3)}-****-${value.slice(-4)}` : "";
+
+const getProviderMeta = (provider) =>
+  PAY_PROVIDERS.find((item) => item.value === provider) || PAY_PROVIDERS[0];
+
+const getPaymentMeta = (payment) => {
+  if (payment.method === "phone") {
+    return {
+      type: "phone",
+      title: "휴대폰 결제",
+      detail: `${payment.carrier || ""} ${payment.phoneMasked || ""}`.trim(),
+      badge: "phone",
+      badgeText: "휴",
+    };
+  }
+
+  if (payment.method === "pay") {
+    const provider = payment.provider || payment.brand || "간편결제";
+    const meta = getProviderMeta(provider);
+
+    return {
+      type: "pay",
+      title: provider,
+      detail: payment.isDefault
+        ? "기본결제수단"
+        : "간편결제 연결됨",
+      badge: meta.tone,
+      badgeText:
+        provider === "카카오페이"
+          ? "pay"
+          : provider === "네이버페이"
+            ? "N"
+            : "toss",
+    };
+  }
+
+  return {
+    type: "card",
+    title: payment.brand || "신용/체크카드",
+    detail: `•••• ${payment.last4 || "----"}`,
+    badge: "card",
+    badgeText: "💳",
+  };
+};
+
+function MoreMenu({ isDefault, onDefault, onDelete, onClose }) {
+  return (
+    <div className="account-pay-more-menu">
+      {!isDefault && (
+        <button type="button" onClick={onDefault}>
+          기본 결제 수단으로 설정
+        </button>
+      )}
+      <button
+        type="button"
+        className="is-danger"
+        onClick={onDelete}
+      >
+        삭제
+      </button>
+      <button type="button" className="is-close" onClick={onClose}>
+        닫기
+      </button>
+    </div>
+  );
+}
+
+export default function AccountPayment() {
   const location = useLocation();
+
   const user = useAuthStore((s) => s.user);
   const authReady = useAuthStore((s) => s.authReady);
   const onSavePayments = useAuthStore((s) => s.onSavePayments);
 
-  const [adding, setAdding] = useState(false);
-  const [brand, setBrand] = useState(CARD_BRANDS[0]);
-  const [last4, setLast4] = useState("");
-  const [ordering, setOrdering] = useState(false);
+  const [step, setStep] = useState("closed"); // (예전 지불 방법 추가 창 · 지금은 안 씀)
+  const [addOpen, setAddOpen] = useState(false); // [추가] 지불 방법 등록 팝업
+  const [form, setForm] = useState(INITIAL);
+  const [removing, setRemoving] = useState(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
+  const [menuOpenId, setMenuOpenId] = useState(null);
+
+  const menuRef = useRef(null);
 
   useEffect(() => {
     if (!message) return;
-    const t = setTimeout(() => setMessage(""), 3000);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setMessage(""), 3000);
+    return () => clearTimeout(timer);
   }, [message]);
 
+  useEffect(() => {
+    if (!menuOpenId) return;
+
+    const handleClickOutside = (e) => {
+      if (!menuRef.current) return;
+      if (!menuRef.current.contains(e.target)) {
+        setMenuOpenId(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpenId]);
+
   if (!authReady) return <main className="account-page" />;
-  if (!user) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+
+  if (!user) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location.pathname }}
+      />
+    );
+  }
 
   const payments = getPayments(user);
   const full = payments.length >= PAYMENT_MAX;
 
-  const save = async (next, okText) => {
+  const providerMeta = getProviderMeta(form.provider);
+
+  const update = (key, value) => {
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const closeModal = () => {
+    if (!busy) setStep("closed");
+  };
+
+  const save = async (next, successText) => {
     setBusy(true);
-    const ok = await onSavePayments(next);
-    setBusy(false);
-    setMessage(ok ? okText : "지불 방법을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
-    return ok;
+
+    try {
+      const ok = await onSavePayments(next);
+      setMessage(ok ? successText : "지불 방법을 저장하지 못했어요.");
+      return Boolean(ok);
+    } catch {
+      setMessage("저장 중 오류가 발생했어요.");
+      return false;
+    } finally {
+      setBusy(false);
+    }
   };
 
+  // [수정] 지불 방법 추가 → 구독 팝업과 같은 "지불 방법 등록" 팝업
   const openAdd = () => {
-    setBrand(CARD_BRANDS[0]);
-    setLast4("");
-    setAdding(true);
+    if (busy || full) return;
+    setAddOpen(true);
   };
 
-  const add = async () => {
-    if (!/^\d{4}$/.test(last4)) return;
-    const ok = await save([...payments, { id: newId(), brand, last4 }], "지불 방법을 추가했어요.");
-    if (ok) setAdding(false);
+  const expiryMonth = Number(form.expiry.slice(0, 2));
+  const expiryYear = Number(`20${form.expiry.slice(3, 5)}`);
+  const currentMonth = new Date().getMonth() + 1;
+  const currentYear = new Date().getFullYear();
+  const isCardValid =
+    /^\d{13,19}$/.test(digits(form.cardNumber)) &&
+    /^\d{2}\/\d{2}$/.test(form.expiry) &&
+    expiryMonth >= 1 && expiryMonth <= 12 &&
+    (expiryYear > currentYear || (expiryYear === currentYear && expiryMonth >= currentMonth)) &&
+    /^\d{3,4}$/.test(form.cvc) &&
+    form.billingName.trim().length >= 2 &&
+    form.billingAddress.trim().length > 0 &&
+    form.billingPostal.trim().length > 0 &&
+    /^01\d{8,9}$/.test(digits(form.billingPhone));
+
+  const isPhoneValid =
+    /^01\d{8,9}$/.test(digits(form.phone)) &&
+    form.holder.trim().length >= 2;
+
+  const next = () => {
+    if (form.method === "apple") return;
+
+    if (step === "select") {
+      setStep("form");
+      return;
+    }
+
+    if (step === "form" && form.method === "card" && isCardValid) {
+      void register();
+      return;
+    }
+
+    if (step === "form" && form.method === "pay") {
+      setStep("verify");
+      return;
+    }
+
+    if (step === "form" && form.method === "phone" && isPhoneValid) {
+      setStep("verify");
+    }
   };
 
-  const move = (index, dir) => {
-    const to = index + dir;
-    if (to < 0 || to >= payments.length) return;
-    const next = [...payments];
-    [next[index], next[to]] = [next[to], next[index]];
-    save(next, to === 0 || index === 0 ? "기본 지불 방법을 바꿨어요." : "순서를 바꿨어요.");
+  const register = async () => {
+    if (busy || full) return;
+    if (form.method === "card" && !isCardValid) return;
+    if (form.method === "phone" && !isPhoneValid) return;
+
+    const base = {
+      id: makeId(),
+      method: form.method,
+    };
+
+    let entry = null;
+
+    if (form.method === "card") {
+      entry = {
+        ...base,
+        brand: form.brand,
+        // 저장에는 마지막 4자리만 사용합니다. 전체 카드번호/CVC는 저장하지 않습니다.
+        last4: digits(form.cardNumber).slice(-4),
+      };
+    }
+
+    if (form.method === "pay") {
+      entry = {
+        ...base,
+        brand: form.provider,
+        provider: form.provider,
+        last4: "",
+      };
+    }
+
+    if (form.method === "phone") {
+      entry = {
+        ...base,
+        brand: "휴대폰 결제",
+        carrier: form.carrier,
+        phoneMasked: maskPhone(digits(form.phone)),
+        last4: digits(form.phone).slice(-4),
+      };
+    }
+
+    if (!entry) return;
+
+    const ok = await save(
+      [...payments, entry],
+      "지불 방법이 등록되었습니다."
+    );
+
+    if (ok) setStep("closed");
   };
 
-  const remove = (id) => {
-    const next = payments.filter((p) => p.id !== id);
-    if (next.length < 2) setOrdering(false);
-    save(next, "지불 방법을 삭제했어요.");
+  const setAsDefault = async (targetId) => {
+    if (busy) return;
+
+    const currentIndex = payments.findIndex((item) => item.id === targetId);
+    if (currentIndex <= 0) {
+      setMenuOpenId(null);
+      return;
+    }
+
+    const selected = payments[currentIndex];
+    const rest = payments.filter((item) => item.id !== targetId);
+    const nextPayments = [selected, ...rest];
+
+    const ok = await save(nextPayments, "기본 결제 수단을 변경했어요.");
+    if (ok) setMenuOpenId(null);
+  };
+
+  const remove = async () => {
+    if (busy || !removing) return;
+
+    const nextPayments = payments.filter((item) => item.id !== removing.id);
+
+    const ok = await save(nextPayments, "지불 방법을 삭제했어요.");
+    if (ok) {
+      setRemoving(null);
+      setMenuOpenId(null);
+    }
   };
 
   return (
@@ -87,111 +385,469 @@ const AccountPayment = () => {
         <div className="account-item">
           <h3 className="account-item-title">미디어 구입 및 구독</h3>
           <p className="account-item-desc">
-            Apple 계정에 여러 지불 방법을 추가하여 사용할 수 있습니다. 구입에 기본 지불 방법을 사용할 수 없는 경우
-            Apple이 위에서부터 순서대로 다른 지불 방법으로 결제를 시도하도록 허용합니다. <MoreLink />
-          </p>
-          <p className="account-item-desc">
-            설정된 국가 또는 지역에서 사용 가능한 지불 방법을 알아보십시오. <MoreLink />
+            위에서부터 결제 우선순위가 적용됩니다. 실제 Apple 계정의 결제 수단은
+            이 화면에서 변경되지 않습니다.{" "}
+            <a
+              className="account-link"
+              href={PAYMENT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              더 알아보기
+            </a>
           </p>
         </div>
 
         <div className="account-pay-layout">
           {payments.length === 0 ? (
-            <p className="account-pay-empty account-item-desc">등록된 지불 방법이 없습니다.</p>
+            <p className="account-pay-empty account-item-desc">
+              등록된 지불 방법이 없습니다.
+            </p>
           ) : (
-            <ol className="account-pay-list" aria-label="지불 방법 (위에서부터 결제 순서)">
-              {payments.map((p, i) => (
-                <li key={p.id} className="account-pay-card">
-                  <div className="account-pay-card-text">
-                    <strong className="account-pay-brand">{p.brand}</strong>
-                    <span className="account-pay-number">•••• {p.last4}</span>
-                    {i === 0 && <span className="account-pay-default">기본</span>}
-                  </div>
-                  {ordering ? (
-                    <div className="account-pay-order">
-                      <button type="button" className="account-pay-move" onClick={() => move(i, -1)} disabled={busy || i === 0} aria-label={`${p.brand} 위로`}>
-                        ↑
-                      </button>
-                      <button type="button" className="account-pay-move" onClick={() => move(i, 1)} disabled={busy || i === payments.length - 1} aria-label={`${p.brand} 아래로`}>
-                        ↓
-                      </button>
-                      <button type="button" className="account-link account-pay-remove" onClick={() => remove(p.id)} disabled={busy}>
-                        삭제
-                      </button>
+            <ol className="account-pay-list" aria-label="등록된 지불 방법">
+              {payments.map((payment, index) => {
+                const meta = getPaymentMeta(payment);
+                const isDefault = index === 0;
+
+                return (
+                  <li key={payment.id} className="account-pay-card">
+                    <div className="account-pay-item-left">
+                      {/* [수정] 카드 이름 왼쪽 아이콘: 카드사 로고 → 없으면 카드 아이콘(credit-card.svg) */}
+                      <img className="account-pay-logo" src={getPaymentLogo(payment, meta)} alt="" aria-hidden="true" />
+                      <div className="account-pay-card-text">
+                        <strong className="account-pay-brand">{meta.title}</strong>
+                        <span className="account-pay-number">{meta.detail}</span>
+                        {isDefault && (
+                          <span className="account-pay-default">기본결제수단</span>
+                        )}
+                      </div>
                     </div>
-                  ) : (
-                    <span className="account-pay-card-icon" aria-hidden="true">
-                      <AccountIcon name="card" />
-                    </span>
-                  )}
-                </li>
-              ))}
+
+                    <div className="account-pay-item-right" ref={menuOpenId === payment.id ? menuRef : null}>
+                      <button
+                        type="button"
+                        className="account-pay-more"
+                        aria-label={`${meta.title} 더보기`}
+                        onClick={() =>
+                          setMenuOpenId((prev) =>
+                            prev === payment.id ? null : payment.id
+                          )
+                        }
+                      >
+                        ⋯
+                      </button>
+
+                      {menuOpenId === payment.id && (
+                        <MoreMenu
+                          isDefault={isDefault}
+                          onDefault={() => setAsDefault(payment.id)}
+                          onDelete={() => setRemoving(payment)}
+                          onClose={() => setMenuOpenId(null)}
+                        />
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
             </ol>
           )}
 
           <div className="account-pay-actions">
-            <button type="button" className="account-icon-link" onClick={openAdd} disabled={busy || full}>
-              <AccountIcon name="plus" />
+            <button
+              className="account-icon-link"
+              type="button"
+              onClick={openAdd}
+              disabled={busy || full}
+            >
+              <span className="account-inline-plus" aria-hidden="true" /> {/* [수정] 원형 테두리(border) + 플러스 아이콘(/icons/plus.svg) */}
               지불 방법 추가
             </button>
-            <button
-              type="button"
-              className="account-icon-link"
-              onClick={() => setOrdering((v) => !v)}
-              disabled={busy || (payments.length < 2 && !ordering)}
-              aria-pressed={ordering}
-            >
-              <AccountIcon name="order" />
-              {ordering ? "완료" : "순서 변경"}
-            </button>
-            {full && <p className="account-note">지불 방법은 최대 {PAYMENT_MAX}개까지 등록할 수 있습니다.</p>}
+
+            {full && (
+              <p className="account-note">
+                최대 {PAYMENT_MAX}개까지 등록할 수 있습니다.
+              </p>
+            )}
           </div>
         </div>
       </div>
 
-      {adding && (
-        <ConfirmDialog
-          title="지불 방법 추가"
-          desc="카드사와 카드 번호 끝 4자리를 입력해 주세요."
-          confirmLabel="추가"
-          busy={busy}
-          confirmDisabled={!/^\d{4}$/.test(last4)}
-          onConfirm={add}
-          onCancel={() => setAdding(false)}
+      {step !== "closed" && (
+        <div
+          className="account-pay-overlay"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) closeModal();
+          }}
         >
-          <div className="account-form">
-            <label className="account-field">
-              <span className="account-item-title">카드사</span>
-              <select value={brand} onChange={(e) => setBrand(e.target.value)}>
-                {CARD_BRANDS.map((b) => (
-                  <option key={b} value={b}>
-                    {b}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="account-field">
-              <span className="account-item-title">카드 번호 끝 4자리</span>
-              <input
-                type="text"
-                inputMode="numeric"
-                autoComplete="off"
-                maxLength={4}
-                placeholder="0000"
-                value={last4}
-                onChange={(e) => setLast4(e.target.value.replace(/\D/g, "").slice(0, 4))}
-                onKeyDown={(e) => e.key === "Enter" && add()}
-              />
-            </label>
+          <div
+            className="account-pay-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="payment-flow-title"
+          >
+            <div className="account-pay-modal-head">
+              <h3 id="payment-flow-title">
+                {step === "select"
+                  ? "지불 방법 추가"
+                  : step === "form"
+                    ? form.method === "phone"
+                      ? "휴대폰"
+                      : form.method === "pay"
+                        ? `${form.provider} 연결`
+                        : "신용/체크카드"
+                    : form.method === "phone"
+                      ? "휴대폰 결제 인증"
+                      : `${form.provider} 인증`}
+              </h3>
+
+              <button
+                type="button"
+                className="account-pay-close"
+                aria-label="닫기"
+                onClick={closeModal}
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="account-pay-modal-body">
+              {step === "select" && (
+                <>
+                  <p className="account-item-desc">
+                    지불 방법을 선택하세요.
+                  </p>
+
+                  <div className="account-pay-methods">
+                    {METHODS.map((m) => (
+                      <label
+                        key={m.value}
+                        className={`account-pay-method${form.method === m.value ? " is-selected" : ""
+                          }`}
+                      >
+                        <span className="account-pay-method-radio">
+                          <input
+                            type="radio"
+                            name="payment-method"
+                            value={m.value}
+                            checked={form.method === m.value}
+                            onChange={() => update("method", m.value)}
+                          />
+                          <span className="account-pay-method-radio-ui" />
+                        </span>
+
+                        <span className="account-pay-method-copy">
+                          <strong>{m.label}</strong>
+                          <small>{m.desc}</small>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+
+                  {form.method === "apple" && (
+                    <p className="account-pay-help">
+                      Apple 계정 잔액은 이 화면에서 새로 등록하지 않습니다.
+                    </p>
+                  )}
+                </>
+              )}
+
+              {step === "form" && form.method === "card" && (
+                <div className="account-pay-fields account-pay-card-fields" style={{ minWidth: 0 }}>
+                  <label>
+                    <span>지불 방법 · 카드사</span>
+                    <select value={form.brand} onChange={(e) => update("brand", e.target.value)}>
+                      {CARD_BRANDS.map((brand) => <option key={brand}>{brand}</option>)}
+                    </select>
+                  </label>
+                  <label>
+                    <span>카드 번호</span>
+                    <input
+                      inputMode="numeric"
+                      autoComplete="cc-number"
+                      placeholder="0000 0000 0000 0000"
+                      value={form.cardNumber}
+                      onChange={(e) => update("cardNumber", formatCardNumber(e.target.value))}
+                    />
+                  </label>
+                  <div className="account-pay-card-field-row" style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 16 }}>
+                    <label>
+                      <span>유효기간</span>
+                      <input
+                        inputMode="numeric"
+                        autoComplete="cc-exp"
+                        placeholder="MM/YY"
+                        maxLength={5}
+                        value={form.expiry}
+                        onChange={(e) => update("expiry", formatExpiry(e.target.value))}
+                      />
+                    </label>
+                    <label>
+                      <span>보안 코드</span>
+                      <input
+                        type="password"
+                        inputMode="numeric"
+                        autoComplete="cc-csc"
+                        placeholder="CVC"
+                        maxLength={4}
+                        value={form.cvc}
+                        onChange={(e) => update("cvc", digits(e.target.value).slice(0, 4))}
+                      />
+                    </label>
+                  </div>
+                  <label>
+                    <span>청구지 이름</span>
+                    <input autoComplete="cc-name" placeholder="이름" value={form.billingName}
+                      onChange={(e) => update("billingName", e.target.value)} />
+                  </label>
+                  <label>
+                    <span>청구지 주소</span>
+                    <input autoComplete="street-address" placeholder="도로명 주소" value={form.billingAddress}
+                      onChange={(e) => update("billingAddress", e.target.value)} />
+                  </label>
+                  <label>
+                    <span>우편번호</span>
+                    <input autoComplete="postal-code" placeholder="우편번호" value={form.billingPostal}
+                      onChange={(e) => update("billingPostal", e.target.value)} />
+                  </label>
+                  <label>
+                    <span>전화번호</span>
+                    <input type="tel" autoComplete="tel" placeholder="010-0000-0000"
+                      value={form.billingPhone}
+                      onChange={(e) => update("billingPhone", e.target.value)} />
+                  </label>
+                  <p className="account-pay-help">데모 화면입니다. 카드번호와 CVC는 저장되지 않습니다.</p>
+                </div>
+              )}
+
+              {step === "form" && form.method === "pay" && (
+                <div className="account-pay-fields">
+                  <p className="account-item-desc">
+                    사용할 간편결제 서비스를 선택하세요.
+                  </p>
+
+                  <div className="account-pay-methods account-pay-methods--provider">
+                    {PAY_PROVIDERS.map((item) => (
+                      <label
+                        key={item.value}
+                        className={`account-pay-method account-pay-method--provider${form.provider === item.value ? " is-selected" : ""
+                          }`}
+                      >
+                        <span className="account-pay-method-radio">
+                          <input
+                            type="radio"
+                            name="pay-provider"
+                            checked={form.provider === item.value}
+                            onChange={() => update("provider", item.value)}
+                          />
+                          <span className="account-pay-method-radio-ui" />
+                        </span>
+
+                        <img className="account-pay-provider-image" style={{ width: 58, height: 48, objectFit: "contain", flexShrink: 0 }} src={PAY_ICONS[item.value]}
+                          alt="" aria-hidden="true" />
+
+                        <span className="account-pay-method-copy">
+                          <strong>{item.value}</strong>
+                          <small>{item.desc}</small>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {step === "form" && form.method === "phone" && (
+                <div className="account-pay-fields account-pay-phone-fields">
+                  <label style={{ display: "grid", gridTemplateColumns: "120px minmax(0, 1fr)", alignItems: "center", gap: 16, minWidth: 0 }}>
+                    <span style={{ whiteSpace: "nowrap" }}>통신사</span>
+                    <select
+                      style={{ minWidth: 0, paddingRight: 48 }}
+                      value={form.carrier}
+                      onChange={(e) => update("carrier", e.target.value)}
+                    >
+                      <option>SKT</option>
+                      <option>KT</option>
+                      <option>LG U+</option>
+                    </select>
+                  </label>
+
+                  <label style={{ display: "grid", gridTemplateColumns: "120px minmax(0, 1fr)", alignItems: "center", gap: 16, minWidth: 0 }}>
+                    <span style={{ whiteSpace: "nowrap" }}>휴대폰 번호</span>
+                    <input
+                      style={{ minWidth: 0, boxSizing: "border-box" }}
+                      inputMode="tel"
+                      autoComplete="off"
+                      placeholder="01012345678"
+                      value={form.phone}
+                      onChange={(e) =>
+                        update("phone", digits(e.target.value).slice(0, 11))
+                      }
+                    />
+                  </label>
+
+                  <label style={{ display: "grid", gridTemplateColumns: "120px minmax(0, 1fr)", alignItems: "center", gap: 16, minWidth: 0 }}>
+                    <span style={{ whiteSpace: "nowrap" }}>명의자</span>
+                    <input
+                      style={{ minWidth: 0, boxSizing: "border-box" }}
+                      autoComplete="off"
+                      placeholder="이름"
+                      value={form.holder}
+                      onChange={(e) => update("holder", e.target.value)}
+                    />
+                  </label>
+
+                  <label style={{ display: "grid", gridTemplateColumns: "120px minmax(0, 1fr)", alignItems: "center", gap: 16, minWidth: 0 }}>
+                    <span style={{ whiteSpace: "nowrap" }}>인증번호</span>
+                    <input
+                      style={{ minWidth: 0, boxSizing: "border-box" }}
+                      autoComplete="number"
+                      placeholder="1234"
+                      value={form.last4}
+                      onChange={(e) => update("last4", e.target.value)}
+                    />
+                  </label>
+
+                  <p className="account-pay-help">
+                    인증번호 발송까지 1분 정도 소요됩니다.
+                  </p>
+                </div>
+              )}
+
+              {step === "verify" && form.method === "pay" && (
+                <div className={`account-pay-auth account-pay-auth--${providerMeta.tone}`}>
+                  <div className="account-pay-auth-brand">
+                    <img className="account-pay-provider-image" style={{ width: 58, height: 48, objectFit: "contain", flexShrink: 0 }} src={PAY_ICONS[form.provider]}
+                      alt="" aria-hidden="true" />
+                    <div>
+                      <strong>{form.provider}</strong>
+                      <small>{providerMeta.accountHint}</small>
+                    </div>
+                  </div>
+
+                  <div className="account-pay-auth-box">
+                    <div className="account-pay-auth-row">
+                      <span>지불 방법</span>
+                      <strong>{form.provider}</strong>
+                    </div>
+                    <div className="account-pay-auth-row">
+                      <span>계정</span>
+                      <strong>{providerMeta.accountHint}</strong>
+                    </div>
+                    <div className="account-pay-auth-row">
+                      <span>상태</span>
+                      <strong>인증 대기</strong>
+                    </div>
+                  </div>
+
+                  <p className="account-pay-help">
+                    앱에서 인증 후 완료 버튼을 눌러주세요
+                  </p>
+                </div>
+              )}
+
+              {step === "verify" && form.method === "phone" && (
+                <div className="account-pay-auth account-pay-auth--phone">
+                  <div className="account-pay-auth-brand">
+                    <img className="account-pay-method-icon" style={{ width: 58, height: 48, objectFit: "contain", flexShrink: 0 }} src={METHOD_ICONS.phone} alt="" aria-hidden="true" />
+                    <div>
+                      <strong>휴대폰 결제</strong>
+                      <small>{form.carrier}</small>
+                    </div>
+                  </div>
+
+                  <div className="account-pay-auth-box">
+                    <div className="account-pay-auth-row">
+                      <span>지불 방법</span>
+                      <strong>휴대폰</strong>
+                    </div>
+                    <div className="account-pay-auth-row">
+                      <span>전화번호</span>
+                      <strong>{maskPhone(digits(form.phone))}</strong>
+                    </div>
+                    <div className="account-pay-auth-row">
+                      <span>인증 상태</span>
+                      <strong>데모 확인</strong>
+                    </div>
+                  </div>
+
+                  <p className="account-pay-help">
+                  결제 수단으로 등록되었습니다.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div className="account-pay-modal-footer">
+              <button
+                className="account-pay-secondary"
+                type="button"
+                disabled={busy}
+                onClick={() =>
+                  step === "select"
+                    ? closeModal()
+                    : setStep(step === "verify" ? "form" : "select")
+                }
+              >
+                {step === "select" ? "취소" : "뒤로"}
+              </button>
+
+              <button
+                className="account-pay-primary"
+                type="button"
+                disabled={
+                  busy ||
+                  (step === "select" && form.method === "apple") ||
+                  (step === "form" && form.method === "card" && !isCardValid) ||
+                  (step === "form" && form.method === "phone" && !isPhoneValid)
+                }
+                onClick={step === "verify" ? register : next}
+              >
+                {busy
+                  ? "저장 중..."
+                  : step === "verify"
+                    ? "완료"
+                    : step === "form" && form.method === "card"
+                      ? "등록"
+                      : "계속"}
+              </button>
+            </div>
           </div>
-        </ConfirmDialog>
+        </div>
       )}
 
-      <p className={`account-toast${message ? " is-show" : ""}`} role="status" aria-live="polite">
+      {removing && (
+        <ConfirmDialog
+          title="지불 방법을 삭제할까요?"
+          desc={`"${getPaymentMeta(removing).title}" 항목을 삭제합니다.${payments[0]?.id === removing.id && payments.length > 1
+              ? " 삭제하면 다음 결제 수단이 기본으로 설정됩니다."
+              : ""
+            }`}
+          confirmLabel="삭제"
+          busy={busy}
+          onConfirm={remove}
+          onCancel={() => {
+            if (!busy) setRemoving(null);
+          }}
+        />
+      )}
+
+      {/* [추가] 지불 방법 등록 팝업 (저장은 팝업 안에서: 카드 종류 + 마지막 4자리 · 청구 주소) */}
+      {addOpen && (
+        <PaymentRegisterPopup
+          onClose={() => setAddOpen(false)}
+          onSaved={() => {
+            setAddOpen(false);
+            setMessage("지불 방법이 등록되었습니다.");
+          }}
+        />
+      )}
+
+      <p
+        className={`account-toast${message ? " is-show" : ""}`}
+        role="status"
+        aria-live="polite"
+      >
         {message}
       </p>
     </AccountSubPage>
   );
-};
-
-export default AccountPayment;
+}
