@@ -22,6 +22,7 @@ import {
 import { MANAGE_URL } from "../data/appleLinks";
 import ProfilePicker from "../components/profile/ProfilePicker"; // [추가] 프로필 고르기 · 추가
 import { SubscribePopup } from "./Subscribe"; // [추가] 구독 팝업
+import { resumePath } from "../utils/resumeIntent"; // [추가] 로그인 · 구독 후 하던 화면으로 돌아가기
 import { GateCard, WATCH_DESC } from "../components/layout/SubscribeGate"; // [추가] "구독 후 이용해주세요." 팝업 (스포츠 등과 같은 디자인)
 // 로그인 · 구독 카드 스타일(.auth-*)은 App.scss 맨 아래에 있음
 
@@ -236,8 +237,10 @@ const Login = () => {
   // 구독 중이면 로그인 후 메인 홈, 아니면 플랜 선택
   // [수정] 구독 전이면 메인으로 넘기지 않고 지금 화면(프로필 선택) 위에
   //   "구독 후 이용해주세요." → [구독하기] → 구독 팝업 → 구독 완료 → 메인
+  // [수정] 구독까지 끝나면 메인 대신 로그인 전에 하던 화면으로 (AI 추천 칩 등 · utils/resumeIntent.js)
+  const backTo = () => resumePath() || from;
   const goNext = (u) => {
-    if (isSubscribed(u)) navigate("/", { replace: true });
+    if (isSubscribed(u)) navigate(backTo(), { replace: true });
     else setGateOpen(true);
   };
 
@@ -669,7 +672,7 @@ const Login = () => {
         />
       )}
       {subOpen && (
-        <SubscribePopup onClose={() => setSubOpen(false)} onDone={() => navigate("/", { replace: true })} />
+        <SubscribePopup onClose={() => setSubOpen(false)} onDone={() => navigate(backTo(), { replace: true })} />
       )}
     </AuthCard>
   );

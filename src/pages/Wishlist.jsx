@@ -1,9 +1,10 @@
 // src/pages/Wishlist.jsx
 // 위시리스트 (/wishlist?group=all&sort=latest) — 시안: 위시리스트 PC · Tablet · Mobile
-// - 정렬(최신 추가순 · 오래된 추가순 · 제목순) · 그룹 탭(아이콘 + 이름 + 개수)
-// - 카드: 포스터(▶ 누르면 상세 페이지에서 바로 재생) · 제목 · 장르 · 줄거리 · ••• (그룹 변경 · 공유 · 삭제)
+// - 정렬(최신 추가순 · 오래된 추가순 · 제목순) · 그룹 메뉴(아이콘 + 이름 + 개수)
+// - [수정] 그룹 메뉴는 왼쪽 세로 정렬 · 첫 이용자는 "전체"만 · [새 그룹 만들기]로 추가 (휴대폰은 위쪽 가로 스크롤)
+// - [수정] 작품: 전체 보기처럼 장르별 섹션 + 세로 포스터 (누르면 상세) · ••• (그룹 변경 · 공유 · 삭제)
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import { formatCount, useHeartStore } from "../store/useHeartStore";
 import { WishIcon } from "../components/wishlist/WishlistLayer";
@@ -163,46 +164,50 @@ const CardMenu = ({ item }) => {
   );
 };
 
-const WishCard = ({ item }) => {
-  const navigate = useNavigate();
-  const genres = (item.genres || []).join(" / ") || (item.type === "tv" ? "시리즈" : "영화");
-
-  return (
-    <li className="wish-card">
-      <button
-        type="button"
-        className="wish-card-poster"
-        onClick={() => navigate(`${detailPath(item.type, item.id)}?play=1`)}
-        aria-label={`${item.title} 재생`}
-      >
+// [수정] 세로 포스터 카드 — 전체 보기(MemberBrowse)와 같은 모양 · 누르면 상세 · ••• 는 포스터 오른쪽 위
+const WishPoster = ({ item }) => (
+  <li className="wish-poster">
+    <Link className="wish-poster-link" to={detailPath(item.type, item.id)} aria-label={`${item.title} 상세 보기`}>
+      <span className="wish-poster-img">
         {item.poster_path ? (
           <img src={`${IMG}/w342${item.poster_path}`} alt="" loading="lazy" />
         ) : (
-          <span className="wish-card-noimg">이미지 준비 중</span>
+          <span className="wish-poster-noimg">이미지 준비 중</span>
         )}
-        <span className="wish-card-play" aria-hidden="true">
-          <img src="/icons/play-w.svg" alt="" />
-        </span>
-      </button>
+      </span>
+      <span className="wish-poster-title">{item.title}</span>
+    </Link>
+    <CardMenu item={item} />
+  </li>
+);
 
-      <div className="wish-card-info">
-        <Link className="wish-card-title" to={detailPath(item.type, item.id)}>
-          {item.title}
-        </Link>
-        <p className="wish-card-genre">{genres}</p>
-        {item.overview && <p className="wish-card-overview">{item.overview}</p>}
-      </div>
+const OTHER_GENRE = "기타";
 
-      <CardMenu item={item} />
-    </li>
-  );
+// [추가] 장르별로 묶기 — 작품의 첫 번째 장르 (정렬 순서대로 처음 나온 장르부터 · "기타"는 맨 뒤)
+const groupByGenre = (list) => {
+  const rows = new Map();
+  list.forEach((item) => {
+    const name = item.genres?.[0] || OTHER_GENRE;
+    if (!rows.has(name)) rows.set(name, []);
+    rows.get(name).push(item);
+  });
+  const all = [...rows.entries()].map(([genre, items]) => ({ genre, items }));
+  return [...all.filter((r) => r.genre !== OTHER_GENRE), ...all.filter((r) => r.genre === OTHER_GENRE)];
 };
+
+const PlusIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+    <line x1="12" y1="5" x2="12" y2="19" />
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+);
 
 const Wishlist = () => {
   const [params, setParams] = useSearchParams();
   const user = useAuthStore((s) => s.user);
   const authReady = useAuthStore((s) => s.authReady);
-  const { items, groups, ready } = useHeartStore();
+  const { items, groups, ready, onOpenNewGroup } = useHeartStore();
 
   const groupId = params.get("group") || "all";
   const sort = SORTS.some((s) => s.key === params.get("sort")) ? params.get("sort") : "latest";
@@ -233,6 +238,7 @@ const Wishlist = () => {
     const filtered = activeTab.id === "all" ? all : all.filter((it) => it.groups.includes(activeTab.id));
     return [...filtered].sort(sorters[sort]);
   }, [all, activeTab, sort]);
+  const genreRows = useMemo(() => groupByGenre(list), [list]);
 
   const update = (next) => {
     const merged = { group: activeTab.id, sort, ...next };
@@ -248,45 +254,69 @@ const Wishlist = () => {
       <DetailBackLink to="/" label="홈으로" overlay />
       <div className="wish-inner">
         <h2 className="wish-title">나의 목록</h2>
-        <SortMenu value={sort} onChange={(v) => update({ sort: v })} />
 
-        {/* 그룹 탭 */}
-        <ul className="wish-tabs" role="tablist" aria-label="위시리스트 그룹">
-          {tabs.map((t) => (
-            <li key={t.id}>
-              <button
-                type="button"
-                role="tab"
-                aria-selected={t.id === activeTab.id}
-                className={`wish-tab${t.id === activeTab.id ? " is-active" : ""}`}
-                onClick={() => update({ group: t.id })}
-              >
-                <WishIcon name={t.icon} className="wish-tab-icon" />
-                <strong>{t.name}</strong>
-                <span>{formatCount(t.count)}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="wish-layout">
+          {/* [수정] 그룹 메뉴 — 왼쪽 세로 정렬 · 첫 이용자는 "전체"만 · [새 그룹] 으로 추가 */}
+          <nav className="wish-side" aria-label="위시리스트 그룹">
+            <ul className="wish-tabs" role="tablist">
+              {tabs.map((t) => (
+                <li key={t.id}>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={t.id === activeTab.id}
+                    className={`wish-tab${t.id === activeTab.id ? " is-active" : ""}`}
+                    onClick={() => update({ group: t.id })}
+                  >
+                    <WishIcon name={t.icon} className="wish-tab-icon" />
+                    <strong>{t.name}</strong>
+                    <span>{formatCount(t.count)}</span>
+                  </button>
+                </li>
+              ))}
+              {user && (
+                <li>
+                  <button type="button" className="wish-tab wish-tab--add" onClick={onOpenNewGroup}>
+                    <span className="wish-tab-icon" aria-hidden="true">
+                      <PlusIcon />
+                    </span>
+                    <strong>새 그룹 만들기</strong>
+                  </button>
+                </li>
+              )}
+            </ul>
+          </nav>
 
-        {/* 작품 */}
-        {!user ? (
-          <p className="wish-empty">로그인 후 위시리스트를 이용할 수 있어요.</p>
-        ) : !ready ? (
-          <p className="wish-empty">위시리스트를 불러오는 중입니다.</p>
-        ) : list.length === 0 ? (
-          <p className="wish-empty">
-            {activeTab.id === "all"
-              ? "아직 저장한 작품이 없어요. 작품의 하트를 눌러 담아보세요."
-              : `${activeTab.name} 그룹에 담긴 작품이 없어요.`}
-          </p>
-        ) : (
-          <ul className="wish-grid">
-            {list.map((item) => (
-              <WishCard key={item.key} item={item} />
-            ))}
-          </ul>
-        )}
+          <div className="wish-content">
+            <SortMenu value={sort} onChange={(v) => update({ sort: v })} />
+
+            {/* 작품 — [수정] 장르별 섹션 · 세로 포스터 */}
+            {!user ? (
+              <p className="wish-empty">로그인 후 위시리스트를 이용할 수 있어요.</p>
+            ) : !ready ? (
+              <p className="wish-empty">위시리스트를 불러오는 중입니다.</p>
+            ) : list.length === 0 ? (
+              <p className="wish-empty">
+                {activeTab.id === "all"
+                  ? "아직 저장한 작품이 없어요. 작품의 하트를 눌러 담아보세요."
+                  : `${activeTab.name} 그룹에 담긴 작품이 없어요.`}
+              </p>
+            ) : (
+              <div className="wish-genres">
+                {genreRows.map(({ genre, items: rowItems }) => (
+                  <section className="wish-genre" key={genre} aria-label={genre}>
+                    <h3 className="wish-genre-title">{genre}</h3>
+                    <ul className="wish-posters">
+                      {rowItems.map((item) => (
+                        <WishPoster key={item.key} item={item} />
+                      ))}
+                    </ul>
+                  </section>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </main>
   );
