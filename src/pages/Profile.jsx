@@ -12,6 +12,7 @@ import { useAuthStore, getSettings, ALERT_CHANNELS, getProfiles, MAIN_PROFILE_ID
 import ProfileAvatar, { AVATAR_OPTIONS, sameAvatar, profileLook } from "../components/profile/ProfileAvatar";
 import ProfilePicker from "../components/profile/ProfilePicker"; // [추가] 프로필 고르기 · 추가
 import { ConfirmDialog, subscriptionSummary } from "../components/profile/AccountShared"; // [추가] 구독 · 지불 방법 (확인 팝업은 공용으로 옮김)
+import { AddressRegisterPopup } from "./Subscribe"; // [추가] 청구 주소 추가 · 편집 = 지불 방법 등록과 같은 팝업 디자인
 // 스타일: App.scss 맨 아래 "계정 설정" (.account-*)
 
 const CHANNEL_LABELS = { email: "이메일", sms: "문자 메시지", push: "앱 푸시 알림" };
@@ -549,8 +550,16 @@ export const Profile = () => {
         </div>
       </div>
 
+      {/* [수정] 청구 주소: 지불 방법 등록과 같은 팝업 (저장은 팝업 안에서) · 예전 BillingDialog 는 안 씀 */}
       {billingOpen && (
-        <BillingDialog initial={billing} busy={busy} onSave={saveBilling} onCancel={() => setBillingOpen(false)} />
+        <AddressRegisterPopup
+          initial={billing}
+          onClose={() => setBillingOpen(false)}
+          onSaved={() => {
+            setBillingOpen(false);
+            setMessage("청구 주소를 저장했어요.");
+          }}
+        />
       )}
       {dialog === "logout" && (
         <ConfirmDialog

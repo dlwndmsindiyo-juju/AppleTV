@@ -21,6 +21,8 @@ import {
 } from "../store/useAuthStore";
 import { MANAGE_URL } from "../data/appleLinks";
 import ProfilePicker from "../components/profile/ProfilePicker"; // [추가] 프로필 고르기 · 추가
+import { SubscribePopup } from "./Subscribe"; // [추가] 구독 팝업
+import { GateCard, WATCH_DESC } from "../components/layout/SubscribeGate"; // [추가] "구독 후 이용해주세요." 팝업 (스포츠 등과 같은 디자인)
 // 로그인 · 구독 카드 스타일(.auth-*)은 App.scss 맨 아래에 있음
 
 // =====================================================================
@@ -177,6 +179,8 @@ const Login = () => {
 
   // step: "login" | "signup" | "code" | "done" | "profile"
   const [step, setStep] = useState("select");
+  const [gateOpen, setGateOpen] = useState(false); // [추가] 프로필 선택 화면 위 "구독 후 이용해주세요."
+  const [subOpen, setSubOpen] = useState(false); // [추가] 그다음 구독 팝업
   // [추가] 새 시안의 입력 상태
   const [confirmPassword, setConfirmPassword] = useState("");
   const [termsAgreed, setTermsAgreed] = useState(false);
@@ -230,9 +234,11 @@ const Login = () => {
   };
 
   // 구독 중이면 로그인 후 메인 홈, 아니면 플랜 선택
+  // [수정] 구독 전이면 메인으로 넘기지 않고 지금 화면(프로필 선택) 위에
+  //   "구독 후 이용해주세요." → [구독하기] → 구독 팝업 → 구독 완료 → 메인
   const goNext = (u) => {
     if (isSubscribed(u)) navigate("/", { replace: true });
-    else navigate("/subscribe", { replace: true, state: { from } });
+    else setGateOpen(true);
   };
 
   // 로그인 · 인증 완료: 이 기기에 계정 기억 → "인증 완료" 화면
@@ -241,7 +247,8 @@ const Login = () => {
     setPassword("");
     setCode("");
     clearMessages();
-    setStep("done");
+    // [수정] 인증 완료 직후 반드시 프로필 선택 화면으로 이동
+    setStep("profile");
   };
 
   // 인증 완료 → 로그인할 때마다 항상 가족 프로필 선택 (새 계정도 포함)
@@ -455,7 +462,7 @@ const Login = () => {
         <div className="auth-divider"><span>아직 계정이 없으신가요?</span></div>
         <button type="button" className="auth-btn auth-btn--secondary" onClick={goSignup}>회원가입</button>
         {messages}
-        <p className="auth-legal"><a href="https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html" target="_blank" rel="noreferrer">이용약관</a> 및 <a href={APPLE_LINKS.privacy} target="_blank" rel="noreferrer">개인정보 처리방침</a></p>
+        <p className="auth-legal"><a href="https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html" target="_blank" rel="noreferrer">이용약관</a> <span>및</span> <a href={APPLE_LINKS.privacy} target="_blank" rel="noreferrer">개인정보 처리방침</a></p>
       </div>
     </>;
   }
@@ -484,7 +491,7 @@ const Login = () => {
               className="auth-login-input"
               type="email"
               autoComplete="username"
-              placeholder="이메일을 입력하세요"
+              placeholder="hi1234@naver.com"
               aria-label="이메일"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -494,7 +501,7 @@ const Login = () => {
               className="auth-login-input"
               type="password"
               autoComplete="current-password"
-              placeholder="비밀번호를 입력하세요"
+              placeholder="123456"
               aria-label="비밀번호"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -648,6 +655,22 @@ const Login = () => {
   return (
     <AuthCard className="auth-card--login" onClose={handleClose} stepKey={step}>
       {content}
+      {/* [추가] 1. 구독 안내 팝업 → 2. 구독 팝업 (닫으면 프로필 선택 화면 그대로 · 구독 완료 → 홈) */}
+      {gateOpen && (
+        <GateCard
+          title="구독 후 이용해주세요."
+          desc={WATCH_DESC}
+          button="구독하기"
+          onPrimary={() => {
+            setGateOpen(false);
+            setSubOpen(true);
+          }}
+          onClose={() => setGateOpen(false)}
+        />
+      )}
+      {subOpen && (
+        <SubscribePopup onClose={() => setSubOpen(false)} onDone={() => navigate("/", { replace: true })} />
+      )}
     </AuthCard>
   );
 };

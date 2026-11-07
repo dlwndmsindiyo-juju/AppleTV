@@ -13,7 +13,26 @@ export const PLAN_INFO = {
 };
 
 // 카드사 (지불 방법 추가 · 데모용 목록)
-export const CARD_BRANDS = ["신한카드", "KB국민카드", "현대카드", "삼성카드", "우리카드", "하나카드", "롯데카드", "BC카드", "NH농협카드"];
+// [수정] 카드사 로고 (public/icons/card-brand/*.svg) — 목록 순서 = 지불 방법 추가의 카드사 선택 순서
+const CARD_BRAND_DIR = "/icons/card-brand";
+export const CARD_BRAND_ICONS = {
+  "신한카드": `${CARD_BRAND_DIR}/shinhan.svg`,
+  "KB국민카드": `${CARD_BRAND_DIR}/kb.svg`,
+  "현대카드": `${CARD_BRAND_DIR}/hyundai.svg`,
+  "삼성카드": `${CARD_BRAND_DIR}/samsung.svg`,
+  "우리카드": `${CARD_BRAND_DIR}/woori.svg`,
+  "하나카드": `${CARD_BRAND_DIR}/hana.svg`,
+  "롯데카드": `${CARD_BRAND_DIR}/lotte.svg`,
+  "BC카드": `${CARD_BRAND_DIR}/bc.svg`,
+  "NH농협카드": `${CARD_BRAND_DIR}/nh.svg`,
+  "IBK기업은행": `${CARD_BRAND_DIR}/ibk.svg`,
+  "BNK부산은행": `${CARD_BRAND_DIR}/bnk.svg`,
+  "우체국": `${CARD_BRAND_DIR}/epost.svg`,
+  "카카오뱅크": `${CARD_BRAND_DIR}/kakaobank.svg`,
+  "케이뱅크": `${CARD_BRAND_DIR}/kbank.svg`,
+  "토스뱅크": `${CARD_BRAND_DIR}/tossbank.svg`,
+};
+export const CARD_BRANDS = Object.keys(CARD_BRAND_ICONS);
 
 const toMillis = (t) => (t?.toMillis ? t.toMillis() : t ? Number(t) : 0);
 
