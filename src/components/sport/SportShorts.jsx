@@ -1,15 +1,13 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useSportStore } from "../../store/useSportStore";
-import { SPORT_TEAMS } from "../../data/sportTeams";
-import { decodeHtml, ytThumb } from "./sportUtils";
+import { SPORT_SHORTS } from "../../data/sportShorts";
 
 import "swiper/css";
 import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
 
 // =====================================================================
 // 숏폼 (세로 카드 슬라이드)
-// - 데이터: YouTube #shorts 검색 → 3분 이하 (useSportStore.onFetchShorts, 6시간 캐시)
+// - 데이터: data/sportShorts.js (정해진 경기 영상만 · 썸네일은 public/images/sport/shorts/)
 // - 가운데(활성) 카드만 밝게, 양옆 카드는 어둡게 / 좌우 끝 카드는 이너 밖으로 잘림
 // - 카드 안: Apple TV · MLS 배지, 소리, 재생, 좋아요 · 공유, 팀 · 제목 · 경기 · 길이, 진행 바
 // - 재생 버튼을 누르면 카드 안에서 바로 재생 (기본 음소거, 소리 버튼으로 켜고 끄기)
@@ -18,32 +16,8 @@ import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공
 
 const ICON_BASE = `${import.meta.env.BASE_URL}icons/shorts/`;
 
-// MLS 구단 약칭 (data/sportTeams.js 의 id 기준)
-const TEAM_ABBR = {
-  atlanta: "ATL", charlotte: "CLT", chicago: "CHI", cincinnati: "CIN", columbus: "CLB",
-  dc: "DC", miami: "MIA", montreal: "MTL", nashville: "NSH", "new-england": "NE",
-  nycfc: "NYC", "red-bulls": "RBNY", orlando: "ORL", philadelphia: "PHI", toronto: "TOR",
-  austin: "ATX", colorado: "COL", dallas: "DAL", houston: "HOU", "kansas-city": "SKC",
-  "la-galaxy": "LA", lafc: "LAFC", minnesota: "MIN", portland: "POR", "salt-lake": "RSL",
-  "san-diego": "SD", "san-jose": "SJ", seattle: "SEA", "st-louis": "STL", vancouver: "VAN",
-};
-
-// 제목에 나오는 구단 찾기 (한글 짧은 이름 / 영문 이름, 나오는 순서대로 최대 2팀)
-const findTeams = (text = "") => {
-  const lower = text.toLowerCase();
-  return SPORT_TEAMS
-    .map((team) => {
-      const idx = [team.shortName, team.name, team.enName]
-        .filter(Boolean)
-        .map((n) => lower.indexOf(n.toLowerCase()))
-        .filter((i) => i >= 0);
-      return idx.length ? { team, at: Math.min(...idx) } : null;
-    })
-    .filter(Boolean)
-    .sort((a, b) => a.at - b.at)
-    .slice(0, 2)
-    .map(({ team }) => team);
-};
+// 영상 길이: 24 → 0:24
+const formatDuration = (sec = 0) => `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
 
 // 좋아요 수: 12.8만 / 3.4천 / 512
 const formatCount = (n) => {
@@ -92,35 +66,18 @@ const ShareIcon = () => (
 );
 
 const SportShorts = ({ title = "숏폼" }) => {
-  const shortsVideos = useSportStore((state) => state.shortsVideos);
-  const fetchShorts = useSportStore((state) => state.onFetchShorts);
-  useEffect(() => { fetchShorts(); }, [fetchShorts]);
-
   const [playingId, setPlayingId] = useState(null);
   const [muted, setMuted] = useState(true);
   const [liked, setLiked] = useState({});
   const frames = useRef({});
 
-  // 카드에 쓸 값 정리 (팀 약칭 · 경기 · 길이 · 좋아요)
-  const items = useMemo(() => (shortsVideos || [])
-    .filter((v) => v?.id?.videoId)
-    .map((v) => {
-      const sn = v.snippet || {};
-      const videoTitle = decodeHtml(sn.title);
-      const teams = findTeams(videoTitle);
-      const match = teams.length === 2
-        ? `${teams[0].shortName} vs. ${teams[1].shortName}`
-        : decodeHtml(sn.channelTitle);
-      return {
-        id: v.id.videoId,
-        title: videoTitle,
-        tag: teams[0] ? TEAM_ABBR[teams[0].id] || teams[0].shortName : decodeHtml(sn.channelTitle),
-        meta: [match, v.durationText].filter(Boolean).join(" · "),
-        seconds: Number.isFinite(v.seconds) ? v.seconds : 30,
-        likeCount: v.likeCount || 0,
-        thumb: ytThumb(v),
-      };
-    }), [shortsVideos]);
+  // 카드에 쓸 값 정리 (경기 · 길이)
+  const items = useMemo(() => SPORT_SHORTS.map((v) => ({
+    ...v,
+    meta: [v.match, v.seconds ? formatDuration(v.seconds) : ""].filter(Boolean).join(" · "),
+    seconds: v.seconds || 30,
+    likeCount: v.likeCount || 0,
+  })), []);
 
   // 소리 켜기 / 끄기 (재생 중인 영상에 바로 적용)
   const toggleSound = (id) => {
@@ -132,7 +89,7 @@ const SportShorts = ({ title = "숏폼" }) => {
   const toggleLike = (id) => setLiked((prev) => ({ ...prev, [id]: !prev[id] }));
 
   const share = async (item) => {
-    const url = `https://www.youtube.com/shorts/${item.id}`;
+    const url = item.videoId ? `https://www.youtube.com/shorts/${item.videoId}` : window.location.href;
     try {
       if (navigator.share) await navigator.share({ title: item.title, url });
       else {
@@ -145,7 +102,7 @@ const SportShorts = ({ title = "숏폼" }) => {
   return (
     <section className="sport-shorts sport-shortform" aria-labelledby="sport-shortform-title">
       <div className="inner">
-        <SportSectionHead title={title} titleId="sport-shortform-title" href="https://www.youtube.com/@MLS/shorts" />
+        <SportSectionHead title={title} titleId="sport-shortform-title" to="/sport/shorts" />
 
         {items.length === 0 ? (
           <p className="sport-empty">숏폼 영상이 없습니다.</p>
@@ -171,7 +128,7 @@ const SportShorts = ({ title = "숏폼" }) => {
                       <iframe
                         ref={(el) => { frames.current[item.id] = el; }}
                         className="sport-sf-media"
-                        src={`https://www.youtube.com/embed/${item.id}?autoplay=1&mute=${muted ? 1 : 0}&controls=0&loop=1&playlist=${item.id}&playsinline=1&rel=0&enablejsapi=1`}
+                        src={`https://www.youtube.com/embed/${item.videoId}?autoplay=1&mute=${muted ? 1 : 0}&controls=0&loop=1&playlist=${item.videoId}&playsinline=1&rel=0&enablejsapi=1`}
                         title={item.title}
                         allow="autoplay; encrypted-media"
                       />
@@ -199,7 +156,8 @@ const SportShorts = ({ title = "숏폼" }) => {
                       </button>
                     </div>
 
-                    {/* 가운데 재생 / 일시정지 */}
+                    {/* 가운데 재생 / 일시정지 (영상 id 가 있을 때만) */}
+                    {item.videoId && (
                     <button
                       type="button"
                       className="sport-sf-play"
@@ -208,6 +166,7 @@ const SportShorts = ({ title = "숏폼" }) => {
                     >
                       {playing ? <span aria-hidden="true">❚❚</span> : <img className="play-icon" src="/icons/play-b.svg" alt="" aria-hidden="true" />}
                     </button>
+                    )}
 
                     {/* 오른쪽: 좋아요 · 공유 */}
                     <div className="sport-sf-side">

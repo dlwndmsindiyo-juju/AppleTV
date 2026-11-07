@@ -1698,6 +1698,104 @@ $member-section-space: $space-5xl * 2; // 128 (섹션 사이 간격)
   }
 }
 
+// [추가] 전체 보기 — 장르별 세로 포스터 나열 (추천 · 최신작 · 공개 예정)
+// - 포스터 폭: 스포츠 숏폼 카드와 같은 정도 (clamp 170 ~ 240) · 세로 2:3 · 휴대폰은 mobile.scss
+// =====================================================================
+$browse-poster-width: clamp(10.625rem, 14vw, 15rem); // 숏폼 카드 폭과 같음
+$browse-poster-gap: 1.375rem; // 숏폼 카드 사이 간격 (22)
+
+:is(main, div).member-home.member-browse {
+  .member-browse-genres {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4xl;
+  }
+
+  .member-browse-genre-title {
+    @include heading-h4-b;
+    margin: 0 0 $space-lg;
+    padding: 0;
+    color: $text-primary;
+  }
+
+  .member-browse-posters {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, $browse-poster-width);
+    gap: $space-xl $browse-poster-gap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    >li {
+      min-width: 0;
+    }
+  }
+
+  .member-browse-poster {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+    color: $text-primary;
+    text-decoration: none;
+
+    &:hover .member-browse-poster-img img {
+      transform: scale(1.04);
+    }
+
+    &:hover .member-browse-poster-title {
+      color: $light-color-0;
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.25rem;
+      border-radius: $radius-card;
+    }
+  }
+
+  .member-browse-poster-img {
+    position: relative;
+    display: block;
+    aspect-ratio: 2 / 3;
+    border-radius: $radius-card;
+    overflow: hidden;
+    background: $bg-surface-hover;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  // [추가] 이어보기 시청 진행 바 — 포스터 맨 아래 (숏폼 .sport-sf-progress 와 같은 모양)
+  .member-browse-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0.1875rem;
+    background: rgba($light-color-0, 0.25);
+
+    span {
+      display: block;
+      height: 100%;
+      background: $light-color-0;
+    }
+  }
+
+  .member-browse-poster-title {
+    @include body-small-b;
+    color: $text-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+  }
+}
+
 // [추가] 휴대폰: 포스터 4개 격자 사이 간격을 좁게 (위아래 16 · 좌우 12)
 @media (max-width: $breakpoint-mobile) {
 
