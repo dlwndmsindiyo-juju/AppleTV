@@ -85,7 +85,6 @@ $search-content: math.div($inner-width * (100% - $desktop-gutter * 2), 100%); //
 
   &:hover {
     color: $primary-color-200;
-    text-decoration: underline;
   }
 }
 
@@ -346,7 +345,7 @@ $search-content: math.div($inner-width * (100% - $desktop-gutter * 2), 100%); //
   }
 
   &:hover {
-    text-decoration: underline;
+    color: $light-color-400; // [수정] 호버: 밑줄 대신 글자색
   }
 }
 
@@ -457,7 +456,7 @@ $search-content: math.div($inner-width * (100% - $desktop-gutter * 2), 100%); //
   cursor: pointer;
 
   &:hover {
-    text-decoration: underline;
+    color: $light-color-400; // [수정] 호버: 밑줄 대신 글자색
   }
 }
 
