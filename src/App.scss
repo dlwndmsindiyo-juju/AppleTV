@@ -11172,3 +11172,28 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
     font-weight: $font-weight-bold;
   }
 }
+
+// =====================================================================
+// [수정] 작품 상세 정보 바 글자 위계 (PC · 태블릿) — 휴대폰은 mobile.scss
+// - 장르 · 연도 · 시즌: Caption/default (11) · Light/500 (한 단계 죽임)
+// - 줄거리: Light/0 → Light/100 (덜 밝게) · PC Body/default (15) · 태블릿 Body/small (13)
+// =====================================================================
+@media (min-width: ($breakpoint-mobile + 1)) {
+  .movie-detail-page.movie-detail-page .player-box {
+    .genres.genres {
+      @include caption-default;
+      color: $light-color-500;
+    }
+
+    .overview.overview {
+      @include body-default;
+      color: $light-color-100;
+    }
+  }
+}
+
+@media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+  .movie-detail-page.movie-detail-page .player-box .overview.overview {
+    @include body-small;
+  }
+}

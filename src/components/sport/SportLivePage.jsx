@@ -3,7 +3,7 @@ import { addDoc, collection, limit, onSnapshot, orderBy, query, serverTimestamp 
 import { auth, db } from "../../firebase/firebase";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useSportStore } from "../../store/useSportStore";
+import { useSportStore, playerPhotoKey } from "../../store/useSportStore";
 import { useTeamStore, selectHeroTeam } from "../../store/useTeamStore";
 import { getTeamById } from "../../data/sportTeams";
 import SportHero, { TeamHero } from "./SportHero";
@@ -34,10 +34,23 @@ const TABS = [
 const halfLabel = (minute) => (minute > 45 ? `후반 ${minute}'` : `전반 ${minute}'`);
 
 // 선수 사진 (없으면 등번호 원)
-const PlayerPhoto = ({ player, className }) => {
+// - [추가] 사진이 없으면 TheSportsDB 에서 선수 프로필을 찾아옴 (선수 id · 영문 이름 enName + 팀 영문 이름)
+//   · 못 찾으면 지금처럼 등번호 원
+const PlayerPhoto = ({ player, team, className }) => {
   const [failed, setFailed] = useState(false);
-  return player.photo && !failed ? (
-    <img className={className} src={player.photo} alt="" loading="lazy" onError={() => setFailed(true)} />
+  const lookup = { playerId: player.playerId, enName: player.enName, teamName: team?.enName || team?.name };
+  const canLookup = !player.photo && Boolean(lookup.playerId || lookup.enName);
+  const key = canLookup ? playerPhotoKey(lookup) : "";
+  const apiPhoto = useSportStore((state) => (key ? state.playerPhotos[key] : null));
+  const fetchPhoto = useSportStore((state) => state.onFetchPlayerPhoto);
+  useEffect(() => {
+    if (canLookup) fetchPhoto(lookup);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+  const src = player.photo || apiPhoto;
+
+  return src && !failed ? (
+    <img className={className} src={src} alt="" loading="lazy" onError={() => setFailed(true)} />
   ) : (
     <span className={`${className} is-empty`} aria-hidden="true">{player.num}</span>
   );
@@ -84,7 +97,7 @@ const Pitch = ({ team, lineup }) => (
     <ul className="sport-pitch-players">
       {lineup.starters.map((player) => (
         <li key={player.num} style={{ left: `${player.x}%`, top: `${player.y}%` }} title={`${player.num} ${player.name}`}>
-          <PlayerPhoto player={player} className="sport-pitch-photo" />
+          <PlayerPhoto player={player} team={team} className="sport-pitch-photo" />
           <span className="sport-pitch-label"><b>{player.num}</b> {player.pos}</span>
         </li>
       ))}
@@ -119,7 +132,7 @@ const LineupPanel = ({ teams }) => {
             <ul>
               {lineup.subs.map((player) => (
                 <li key={`${player.num}-${player.name}`}>
-                  <PlayerPhoto player={player} className="sport-subs-photo" />
+                  <PlayerPhoto player={player} team={team} className="sport-subs-photo" />
                   <b>{player.num}</b>
                   <span>{player.name}</span>
                 </li>
@@ -447,6 +460,10 @@ const ChatPanel = ({ matchId, room, seed }) => {
 
 const isMockId = (id) => !id || MOCK_LIVE_IDS.includes(id);
 
+// [수정] 라이브 상세 오른쪽 "다른 경기" 목록: 토론토 vs 내슈빌(sample) · 토론토 vs 휴스턴(l1) 만
+// - 나머지 경기는 목록에서 빼고 아래 [예정된 경기 보러 가기 →] → 예정된 경기 상세(/sport/upcoming)
+const LIVE_LIST_IDS = ["sample", "l1"];
+
 // 오른쪽 목록 한 줄 (실제 라이브 경기)
 const toListTeam = (t) => toTeam({ name: t?.shortName || t?.name, badge: t?.crest });
 
@@ -521,7 +538,7 @@ const SportLivePage = () => {
       video: videoAt(0),
     };
     const others = isMock
-      ? MOCK_LIVE_IDS.filter((mid) => mid !== match.id).map(getMockLiveMatch).filter(Boolean).map((m) => {
+      ? LIVE_LIST_IDS.filter((mid) => mid !== match.id).map(getMockLiveMatch).filter(Boolean).map((m) => {
         const mid = m.id;
         const h = m.teams[m.homeId], a = m.teams[m.awayId];
         return { id: mid, title: `${h.shortName} VS ${a.shortName}`, sub: m.minute ? halfLabel(m.minute) : "", note: `${h.name} vs ${a.name}` };
@@ -562,7 +579,9 @@ const SportLivePage = () => {
   const current = items[0];
   const list = items.slice(1);
   const thumbOf = (item) => item.video?.snippet?.thumbnails?.high?.url || FALLBACK_THUMB;
-  const lineupTeams = [away, home].map((team) => ({
+  // [수정] 경기장에 먼저 보일 팀: 경기마다 다른 팀 (예시 경기는 홈팀 · 시안 경기 · 실제 경기는 예전처럼 원정팀)
+  const lineupOrder = match.lineupFirst === home.id ? [home, away] : [away, home];
+  const lineupTeams = lineupOrder.map((team) => ({
     team,
     lineup: match.lineups[team.id] || { formation: "-", coach: "-", starters: [], subs: [] },
   }));
@@ -647,6 +666,13 @@ const SportLivePage = () => {
                   </li>
                 ))}
               </ul>
+              {/* [수정] 그 밖의 경기: 예정된 경기 상세(/sport/upcoming)로 이동 */}
+              {isMock && (
+                <Link className="sport-live-list-empty" to="/sport/upcoming">
+                  {/* 화살표: "← 스포츠 홈으로" 와 같은 "←" 를 좌우로 뒤집어 사용 (같은 모양 · 반대 방향) */}
+                  예정된 경기 보러 가기 <span className="sport-live-list-arrow" aria-hidden="true">←</span>
+                </Link>
+              )}
             </aside>
           </div>
         </div>

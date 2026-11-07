@@ -3793,17 +3793,26 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
 // =====================================================================
 @media (max-width: $breakpoint-mobile) {
   :is(main, div).member-home .member-wishlist.member-wishlist {
-    // [수정] 목록 오른쪽 끝 = 제목 줄 [전체 보기] 오른쪽 끝 (둘 다 이너 오른쪽에서 같은 여백)
-    .member-head,
-    .member-wl-list {
-      margin-right: $mobile-edge;
+    // [수정] 카드는 지금 크기 그대로 화면 가운데로 (좌우 여백 같게)
+    // - 휴대폰 목록은 슬라이드가 아니라 이너 좌우 여백을 같게 (예전: 오른쪽 0 → 카드가 왼쪽으로 치우침)
+    .inner {
+      padding-right: $mobile-edge;
+    }
+
+    .member-head {
+      margin-right: 0;
     }
 
     .member-wl-list {
-      width: auto;
-      padding-right: 0;
+      width: 100%;
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
-      align-items: stretch;
+      align-items: center;
+
+      li {
+        width: calc(100% - 1.25rem); // 지금 카드 폭 (화면 390 기준 약 330) · 좌우 같은 여백으로 가운데
+      }
     }
 
     // [수정] 마우스를 올리면 오른쪽에 어두운 덩어리가 생기던 문제
@@ -3980,6 +3989,47 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
 
     .live-badge {
       flex: 0 0 100%;
+    }
+  }
+}
+
+// [수정] 나의 목록 (휴대폰) — 카드 목록을 화면 가운데로
+// - 이너 좌우 여백을 같게(20 · 20) 두고 목록은 가운데 정렬 → 제목 줄 [전체 보기] 끝선과도 같음
+@media (max-width: $breakpoint-mobile) {
+  :is(main, div).member-home .member-wishlist.member-wishlist {
+    .inner {
+      padding-left: $mobile-edge;
+      padding-right: $mobile-edge;
+    }
+
+    .member-head,
+    .member-wl-list {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .member-wl-list {
+      width: 100%;
+      padding: 0;
+    }
+  }
+}
+
+// =====================================================================
+// [수정] 작품 상세 정보 바 글자 위계 (휴대폰) — 장르 · 시즌 줄은 한 단계 죽이고 줄거리는 덜 밝게 · 작게
+// - 장르 · 연도 · 시즌: Caption/default (11) · Light/500
+// - 줄거리: Label/default (12) · Light/100
+// =====================================================================
+@media (max-width: $breakpoint-mobile) {
+  .movie-detail-page.movie-detail-page .player-box {
+    .genres.genres {
+      @include caption-default;
+      color: $light-color-500;
+    }
+
+    .overview.overview {
+      @include label-default;
+      color: $light-color-100;
     }
   }
 }
