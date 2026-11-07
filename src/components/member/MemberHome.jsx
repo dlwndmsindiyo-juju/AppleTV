@@ -19,9 +19,11 @@ import { useSettings } from "../../store/useAuthStore"; // [추가] 계정 설�
 import NewRelease from "./NewRelease";
 import ComingSoon from "./ComingSoon"; // 공개예정작 (시안: 신규출시와 같은 카드)
 import DeviceGuide from "../landing/DeviceGuide"; // 에코시스템 (시안: 랜딩 홈의 기기 안내와 같은 회색 박스)
+import { useHeroGate, heroGateClass, HeroWaitSkeleton } from "../common/Skeleton"; // [추가] 히어로 먼저 · 로딩 뼈대
 
 const MemberHome = ({ userName = "회원" }) => {
   const settings = useSettings(); // [추가]
+  const heroReady = useHeroGate(); // [추가] 히어로가 준비될 때까지 아래 섹션 대신 뼈대
   const { onFetchAppleOriginals, onFetchUpcoming, onFetchRecommended } =
     useMovieStore();
 
@@ -34,12 +36,13 @@ const MemberHome = ({ userName = "회원" }) => {
   // [삭제] 첫 구독(무료 체험) 직후 환영 화면(문구 + TOP 10 + 홈으로 바로가기) — 로그인하면 항상 바로 메인 홈
 
   return (
-    <main className="page-fade member-home">
+    <main className={`page-fade member-home${heroGateClass(heroReady)}`}>
       {/* [삭제] 0. 무료 체험 중 안내 띠 (TrialWelcome) — 구독 완료는 구독 팝업에서 안내 */}
 
       {/* 1. 히어로 (기존 컴포넌트 재사용) */}
       {/* [수정] 시안: 히어로 바로 아래가 "이어서 감상하기" — 핵심 혜택(ValueProps) 띠는 로그인 후 메인에서 뺌 (로그인 전 홈은 그대로) */}
       <HeroSection />
+      <HeroWaitSkeleton ready={heroReady} />
 
       {/* 2. 이어보기 */}
       <ContinueWatching />

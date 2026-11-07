@@ -97,6 +97,10 @@ const formatDuration = (sec) => {
 // MLS 리그 ID (lookupleague.php?id=4346 으로 MLS 가 맞는지 한 번 확인해 주세요)
 const SPORTSDB_MLS_ID = "4346";
 // V1: 키가 URL 경로 / V2: X-API-KEY 헤더 (헤더가 있어 브라우저에서 CORS 사전 요청이 발생)
+// [추가] 선수 사진 캐시 키 (선수 id 우선 · 없으면 영문 이름 + 팀)
+export const playerPhotoKey = ({ playerId, enName, teamName }) =>
+    playerId ? `id:${playerId}` : `name:${String(enName || "").trim().toLowerCase()}|${String(teamName || "").toLowerCase()}`;
+
 const sportsDbV1 = async (path) => {
     const res = await fetch(`${SPORTSDB_BASE}/api/v1/json/${SPORTSDB_KEY}/${path}`);
     if (!res.ok) throw new Error(`TheSportsDB v1 HTTP ${res.status}`);
@@ -592,6 +596,40 @@ export const useSportStore = create((set, get) => ({
             set({ shortsVideos: items });
         } catch (error) {
             console.error("숏츠 영상 조회 실패:", error);
+        }
+    },
+
+    // [추가] 라인업 선수 프로필 사진 (TheSportsDB) — 라이브 상세 라인업에서 등번호 대신 선수 얼굴
+    // - 선수 id 가 있으면 lookupplayer (실제 경기 라인업) · 없으면 영문 이름으로 searchplayers (예시 경기)
+    // - 이름 검색은 같은 이름의 다른 선수가 섞이지 않게 그 경기 팀(strTeam)의 축구 선수만 고름
+    //   (팀이 안 맞아도 검색 결과가 축구 선수 1명뿐이면 그 선수)
+    // - 사진: strCutout(누끼) → strThumb → strRender · 없으면 null → 화면은 등번호 원 그대로
+    // - 하루 캐시 (사진은 자주 바뀌지 않음) · 같은 선수는 한 번만 요청
+    playerPhotos: {},
+    onFetchPlayerPhoto: async ({ playerId, enName, teamName }) => {
+        if (!SPORTSDB_KEY || (!playerId && !enName)) return;
+        const key = playerPhotoKey({ playerId, enName, teamName });
+        if (key in get().playerPhotos) return;
+        set((state) => ({ playerPhotos: { ...state.playerPhotos, [key]: null } })); // 요청 중 표시 (중복 요청 막기)
+        const photoOf = (pl) => pl?.strCutout || pl?.strThumb || pl?.strRender || null;
+        const norm = (v = "") => String(v).toLowerCase().replace(/[^a-z0-9]/g, "");
+        try {
+            const result = await withCache(`sport-sdb-player-photo:${key}`, async () => {
+                if (playerId) {
+                    const data = await sportsDbV1(`lookupplayer.php?id=${encodeURIComponent(playerId)}`);
+                    return { url: photoOf((data?.players || [])[0]) };
+                }
+                const query = encodeURIComponent(enName.trim().replace(/\s+/g, "_"));
+                const data = await sportsDbV1(`searchplayers.php?p=${query}`);
+                const soccer = (data?.player || []).filter((pl) => !pl.strSport || pl.strSport === "Soccer");
+                const team = norm(teamName);
+                const sameTeam = team ? soccer.find((pl) => norm(pl.strTeam) === team || norm(pl.strTeam2) === team) : null;
+                const pick = sameTeam || (soccer.length === 1 ? soccer[0] : null);
+                return { url: photoOf(pick) };
+            }, 24 * 60 * 60 * 1000);
+            set((state) => ({ playerPhotos: { ...state.playerPhotos, [key]: result?.url || null } }));
+        } catch (error) {
+            console.error("TheSportsDB 선수 사진 조회 실패:", error);
         }
     },
 

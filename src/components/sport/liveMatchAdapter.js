@@ -8,7 +8,7 @@
 // - 3) 실제 라이브 경기(TheSportsDB idEvent): lookupevent · lookuplineup · lookuptimeline · lookupeventstats 응답을 변환
 // =====================================================================
 import { SPORT_TEAMS, getTeamById } from "../../data/sportTeams";
-import { LIVE_MATCH, LIVE_OTHER_MATCHES } from "../../data/mockLiveMatch";
+import { LIVE_MATCH, LIVE_OTHER_MATCHES, MOCK_TEAM_PHOTOS, MOCK_TEAM_COACHES } from "../../data/mockLiveMatch";
 import { teamInfo } from "./standingsUtils";
 
 const num = (v) => (v === null || v === undefined || v === "" || Number.isNaN(Number(v)) ? null : Number(v));
@@ -85,9 +85,33 @@ const defaultChat = (competition, teamId) =>
 
 // ---------- 2) 목업 다른 경기 ----------
 // 예시용 선수단 (구단별 실제 선수 데이터가 없어 포지션 · 등번호만 같은 틀을 사용)
-const genericLineup = (team) => ({
+// 후보 포지션 이름 (실제 선수 이름 데이터가 없을 때 이름 자리에 표시)
+const SUB_PARTS = ["수비수", "미드필더", "공격수"];
+
+// - [추가] 사진이 있는 구단(data/mockLiveMatch.js MOCK_TEAM_PHOTOS · 휴스턴 · 올랜도)은 등번호 자리에 선수 사진
+const withTeamPhotos = (team, lineup) => {
+  const photos = MOCK_TEAM_PHOTOS[team.id];
+  if (!photos) return lineup;
+  return {
+    ...lineup,
+    starters: lineup.starters.map((pl) => ({ ...pl, photo: photos.starters?.[pl.num] || pl.photo })),
+    // 후보: 사진 목록 그대로 (사진 수만큼 · 이름 자리는 맡은 포지션)
+    subs: photos.subs?.length
+      ? (() => {
+        let field = 0;
+        return photos.subs.map(({ num, photo, keeper }) => ({
+          num,
+          name: keeper ? "골키퍼" : SUB_PARTS[(field++) % SUB_PARTS.length],
+          photo,
+        }));
+      })()
+      : lineup.subs,
+  };
+};
+
+const genericLineup = (team) => withTeamPhotos(team, {
   formation: "4-3-3",
-  coach: "-",
+  coach: MOCK_TEAM_COACHES[team.id] || "-", // [수정] 팀마다 그 팀 감독
   starters: placeByFormation(
     [
       { num: 1, name: `${team.shortName} 골키퍼`, pos: "골키퍼" },
@@ -99,7 +123,8 @@ const genericLineup = (team) => ({
     ].map((pl) => ({ ...pl, photo: null })),
     "4-3-3"
   ),
-  subs: [12, 14, 15, 16, 17, 18, 20, 21].map((n) => ({ num: n, name: `후보 ${n}`, photo: null })),
+  // [수정] 후보 이름 자리: "후보 N" 대신 맡은 포지션 (12번 골키퍼 · 나머지 수비수 · 미드필더 · 공격수 순서)
+  subs: [12, 14, 15, 16, 17, 18, 20, 21].map((n, i) => ({ num: n, name: i === 0 ? "골키퍼" : SUB_PARTS[(i - 1) % SUB_PARTS.length], photo: null })),
 });
 
 const buildMockOther = (other) => {
@@ -124,6 +149,7 @@ const buildMockOther = (other) => {
     title: LIVE_MATCH.title,
     date: LIVE_MATCH.date,
     lineups: { [away.id]: LIVE_MATCH.lineups[away.id], [home.id]: genericLineup(home) },
+    lineupFirst: home.id, // [추가] 라인업 경기장은 경기마다 그 경기 홈팀부터 (원정 토론토는 모든 예시 경기에 같아서)
     commentary: withHalf(events, away.id, home.id, other.minute),
     stats: LIVE_MATCH.stats.map((row) => ({
       ...row,
@@ -183,6 +209,8 @@ export const buildFromSportsDb = ({ event, lineup = [], timeline = [], stats = [
       name: r.strPlayer,
       pos: r.strPosition || r.strPositionShort || "",
       photo: r.strCutout || r.strThumb || null,
+      playerId: r.idPlayer || null, // [추가] 사진이 비어 있으면 이 id 로 선수 프로필 사진을 찾아옴
+      enName: r.strPlayer || "",
     });
     const starters = rows.filter((r) => !isHome(r.strSubstitute)).map(toPlayer);
     const formation = homeSide ? event.strHomeFormation : event.strAwayFormation;
