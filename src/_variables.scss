@@ -77,6 +77,7 @@ $card-shadow-gradient: linear-gradient(to top, $card-shadow-start 0%, $card-shad
 $top10-num-gradient-start: #F1F1F1; // 0% (위)
 $top10-num-gradient-end: #606060; // 100% (아래)
 $top10-num-letter-spacing: -1.25rem; // [추가] 순위 숫자 글자 사이 (두 자리 10위의 1 · 0 사이를 붙임 · 한 자리 숫자는 영향 없음)
+$top10-num-letter-spacing-mobile: -0.625rem; // [추가] 휴대폰 순위 숫자(100) 글자 사이 — PC(195) 값을 글자 크기 비율만큼 줄임
 
 $thumb-shadow-gradient: linear-gradient(to bottom,
     rgba(0, 0, 0, 0.28) 0%,
@@ -443,4 +444,67 @@ $ai-glow-bright: rgba(124, 69, 239, 0.75); // 밝게 빛날 때 ($ai-glow-2 · 7
 // TV 카드 제목: SF Pro Medium 32 / 46 · 자간 0%
 @mixin tv-card-title {
   @include type-style(2rem, 2.875rem, $font-weight-medium);
+}
+
+// [추가] AI 빛나는 버튼 — 로그인 전 홈 AI 홍보 배너 버튼(.ai-banner-btn)과 같은 효과
+// - 보라 그라데이션 바탕 · 밝은 빛줄기가 테두리를 따라 돎(::before) · 바깥 보라 빛이 숨 쉬듯 빛남
+// - 쓰는 곳: AI 팝업 [다음 단계로] · [바로 추천받기] · 로그인 후 홈 AI 어시스트 [취향 더 반영하기]
+// - 애니메이션(ai-border-spin · ai-btn-glow)은 App.scss 에 있음 · 크기 · 글자는 각 버튼 규칙 그대로
+@mixin ai-glow-btn {
+  position: relative;
+  isolation: isolate;
+  border: none;
+  background: $ai-banner-gradient;
+  color: $light-color-0;
+  animation: ai-btn-glow 2.4s ease-in-out infinite;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    padding: 0.09375rem; // 1.5px = 테두리 두께
+    border-radius: inherit;
+    background: conic-gradient(from var(--ai-border-angle),
+        rgba($light-color-0, 0) 0deg,
+        rgba($light-color-0, 0) 200deg,
+        $ai-glow-1 260deg,
+        $light-color-0 300deg,
+        $ai-glow-3 330deg,
+        rgba($light-color-0, 0) 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: ai-border-spin 3s linear infinite;
+    pointer-events: none;
+  }
+
+  >* {
+    position: relative;
+  }
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+
+  // 고를 수 없을 때: 빛 효과 없이 흐리게
+  &:disabled {
+    animation: none;
+    opacity: 0.5;
+
+    &::before {
+      animation: none;
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+
+    &::before {
+      animation: none;
+    }
+  }
 }

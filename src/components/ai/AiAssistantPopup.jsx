@@ -4,10 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useMovieStore } from "../../store/useMovieStore";
 import { resolveContentDetail } from "./resolveContentDetail";
 import { DURATIONS, GENRES, MOODS, getContentRecommendations } from "./aiRecommendations";
-import closeIcon from "./assets/close.svg";
 import checkIcon from "./assets/check.svg";
 import AiLogo from "./AiLogo"; // [수정] AI 아이콘 공용 (예전 selection-stars.svg)
-import selectionCloseIcon from "./assets/selection-close.svg";
 import selectionCheckIcon from "./assets/selection-check.svg";
 import selectionArrowIcon from "./assets/selection-arrow.svg";
 import resetIcon from "./assets/reset.svg";
@@ -89,6 +87,9 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
   const [loading, setLoading] = useState(false);
   const complete = preferences.genres.length > 0 && preferences.duration;
   const stepValid = [preferences.genres.length > 0, true, Boolean(preferences.duration)][step];
+  // [추가] 취향 선택 진행 바: 이번 단계에서 고르면 그 단계 끝까지 늘어남 (고르기 전에는 조금만)
+  const stepPicked = [preferences.genres.length > 0, Boolean(preferences.mood), Boolean(preferences.duration)][step];
+  const progressRatio = (step + (stepPicked ? 1 : 0.35)) / 3;
   const stepLabels = ["장르 선택", "분위기 선택", "시청 시간 선택"];
   const groups = [
     { title: "어떤 장르가 좋아요?", description: "관심있는 장르를 하나 이상 선택해주세요.", options: GENRES, selected: preferences.genres, onSelect: guard(toggleGenre), columns: 3 },
@@ -211,10 +212,21 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
       }}>
       <div className="ai-popup-header">
         <div className="ai-popup-title-row">
-          <h2 id={titleId} ref={headingRef} tabIndex={-1}>{screen === "results" ? "당신을 위한 추천 작품이에요!" : "AI 작품 추천"}</h2>
-          <button type="button" className="ai-popup-icon-button" onClick={onClose} aria-label="AI 작품 추천 닫기"><img src={screen === "preferences" ? selectionCloseIcon : closeIcon} alt="" /></button>
+          <h2 id={titleId} ref={headingRef} tabIndex={-1}>
+            {/* [추가] 제목 앞 AI 아이콘 (홍보 배너와 같은 빛나는 아이콘 · 취향 선택 · 추천 결과 공통) */}
+            <AiLogo size={32} className="ai-popup-title-logo" />
+            {screen === "results" ? "당신을 위한 추천 작품이에요!" : "AI 작품 추천"}
+          </h2>
+          {/* [수정] 닫기: 인트로 건너뛰기 버튼과 같은 X 아이콘 */}
+          <button type="button" className="ai-popup-icon-button ai-popup-close" onClick={onClose} aria-label="AI 작품 추천 닫기">
+            <svg className="ai-popup-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
-        <p id={descriptionId}>{screen === "results" ? "선택 취향을 바탕으로 이런 작품을 추천해 드려요." : "지금 나에게 맞는 이야기를 찾아보세요."}</p>
+        {/* [추가] 소제목 앞 반짝이는 점 (홍보 배너 질문 앞 점과 같음 · 취향 선택 · 추천 결과 공통) */}
+        <p id={descriptionId} className="ai-popup-desc">{screen === "results" ? "선택 취향을 바탕으로 이런 작품을 추천해 드려요." : "지금 나에게 맞는 이야기를 찾아보세요."}</p>
       </div>
 
       {screen === "preferences" ? <>
@@ -223,17 +235,17 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
             <p><strong>{step + 1} / 3</strong><span>취향 선택</span></p>
             <button type="button" className="ai-popup-back ai-popup-sr-only" disabled={step === 0 || loading} onClick={() => setStep((prev) => prev - 1)}>이전</button>
           </div>
-          <div role="progressbar" aria-label={stepLabels[step]} aria-valuemin={1} aria-valuemax={3} aria-valuenow={step + 1}><span style={{ width: `${(step + 1) / 3 * 100}%` }} /></div>
+          <div role="progressbar" aria-label={stepLabels[step]} aria-valuemin={1} aria-valuemax={3} aria-valuenow={step + 1}><span style={{ width: `${progressRatio * 100}%` }} /></div>
         </div>
         <div className="ai-popup-form" aria-live="polite">
           <PreferenceGroup key={step} {...groups[step]} />
         </div>
         <div className="ai-popup-footer">
-          {step < 2 ? <button type="button" className="ai-popup-skip" disabled={!stepValid} onClick={() => setStep((prev) => prev + 1)}>다음 단계로<img className="ai-popup-next-arrow" src={selectionArrowIcon} alt="" /></button> : <>
+          {step < 2 ? <button type="button" className="ai-popup-skip ai-glow-btn" disabled={!stepValid} onClick={() => setStep((prev) => prev + 1)}>다음 단계로<img className="ai-popup-next-arrow" src={selectionArrowIcon} alt="" /></button> : <>
             <p className="ai-popup-helper"><span className="ai-popup-sparkle" aria-hidden="true"><AiLogo size={24} /></span><span>선택한 취향을 바탕으로 맞춤 작품을 찾아드릴게요.</span></p>
             <div className="ai-popup-actions">
               <button type="button" className="ai-popup-reset ai-popup-sr-only" disabled={loading} onClick={() => { setPreferences(emptyPreferences()); setStep(0); setError(""); }}><img src={resetIcon} alt="" />초기화</button>
-              <button type="button" className="ai-popup-primary" disabled={!stepValid || loading} onClick={() => {
+              <button type="button" className="ai-popup-primary ai-glow-btn" disabled={!stepValid || loading} onClick={() => {
                 if (step < 2) { setStep((prev) => prev + 1); } else { recommend(); }
               }}>{loading ? "추천 중…" : "바로 추천받기"}</button>
             </div>
@@ -264,8 +276,11 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
         </div>
         <div className="ai-popup-results-footer">
           {openingId && <p className="ai-popup-hint" role="status">작품 상세 정보를 불러오고 있어요…</p>}
-          {!onRecommend && !expanded && exactTotal < 20 && <button type="button" className="ai-popup-expand" disabled={loading} onClick={() => recommend(0, true)}>조건 넓혀서 추천받기</button>}
-          <button type="button" className="ai-popup-more" disabled={loading || Boolean(openingId) || !hasMore} onClick={() => recommend(page + 1, expanded)}><img src={resetIcon} alt="" />{loading ? "추천 중…" : !hasMore ? "마지막 추천 결과예요" : "다른 추천 결과보기"}</button>
+          {!onRecommend && !expanded && exactTotal < 20 && <button type="button" className="ai-popup-expand ai-glow-btn" disabled={loading} onClick={() => recommend(0, true)}>조건 넓혀서 추천받기</button>}
+          {/* [수정] 더 보여 줄 결과가 없으면 버튼 대신 안내 글자만 */}
+          {!loading && !hasMore
+            ? <p className="ai-popup-last" role="status">마지막 추천 결과예요</p>
+            : <button type="button" className="ai-popup-more" disabled={loading || Boolean(openingId)} onClick={() => recommend(page + 1, expanded)}><img src={resetIcon} alt="" />{loading ? "추천 중…" : "다른 추천 결과보기"}</button>}
           <button type="button" className="ai-popup-edit" onClick={() => { setStep(0); setScreen("preferences"); dialogRef.current.scrollTop = 0; headingRef.current?.focus(); }}>취향 다시 선택하기</button>
         </div>
       </>}

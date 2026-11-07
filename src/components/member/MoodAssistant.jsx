@@ -195,7 +195,8 @@ const MoodAssistant = ({ userName = "회원" }) => {
         <div className="member-notice">
           <p>{userName}님의 기분에 맞춰 추천하는 콘텐츠입니다.</p>
 
-          <AiAssistantLink asButton className="member-btn">
+          {/* [수정] 홍보 배너 버튼과 같은 빛나는 버튼 (ai-glow-btn · _variables.scss 믹스인) */}
+          <AiAssistantLink asButton className="member-btn ai-glow-btn">
             취향 더 반영하기
           </AiAssistantLink>
         </div>
