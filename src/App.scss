@@ -4,7 +4,6 @@
 $auth-line: $dark-color-100; // 입력 칸 · 플랜 카드 테두리
 $trial-gap: 8rem;
 $wish-content: math.div($inner-width * (100% - $desktop-gutter * 2), 100%); // 1440px (본문 영역)
-$wish-poster: 160px;
 $mobile-edge: 1.25rem;
 $auth-light-line: $light-color-400; // 입력 칸 · 플랜 카드 테두리
 $auth-light-sub: $neutral-color-600; // 라벨 · 안내 문구 (밝은 배경 위 가독성)
@@ -219,6 +218,7 @@ header {
               font-size: 0.8125rem;
 
               &::placeholder {
+                @include body-default-b;
                 color: $text-tertiary;
               }
             }
@@ -4974,115 +4974,169 @@ img.ui-icon.ui-icon-arrow {
   }
 }
 
-// ---------- 그룹 탭 (아이콘 + 이름 + 개수) ----------
+// ---------- [수정] 레이아웃: 왼쪽 그룹 메뉴 + 오른쪽 작품 ----------
+.wish-layout {
+  display: grid;
+  grid-template-columns: $wish-side-width minmax(0, 1fr);
+  align-items: start;
+  gap: $space-4xl;
+  margin-top: $space-4xl;
+}
+
+.wish-side {
+  position: sticky;
+  top: calc(#{$header-height} + #{$space-xl});
+}
+
+.wish-content {
+  min-width: 0;
+
+  .wish-sort {
+    margin-top: 0;
+  }
+}
+
+// ---------- [수정] 그룹 메뉴 (세로 · 아이콘 + 이름 + 개수) ----------
 .wish-tabs {
   display: flex;
-  gap: 1.25rem;
-  margin: $space-2xl 0 0;
+  flex-direction: column;
+  gap: $space-xs;
+  margin: 0;
   padding: 0;
   list-style: none;
-  overflow-x: auto;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  li {
-    flex: 1 0 160px;
-  }
 }
 
 .wish-tab {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: $space-xs;
+  gap: $space-md;
   width: 100%;
-  height: 8.5rem;
-  border: 0.0625rem solid transparent;
+  height: 3.25rem;
+  padding: 0 $space-lg;
+  border: none;
   border-radius: $radius-sm;
-  background-color: $bg-surface;
-  color: $text-primary;
+  background-color: transparent;
+  color: $text-secondary;
+  text-align: left;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 
   strong {
-    @include body-small-b;
-    margin-top: $space-sm;
+    @include body-default-b;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  span:last-child {
+  >span:last-child:not(.wish-tab-icon) {
     @include label-default;
-    color: $text-secondary;
+    color: $text-tertiary;
   }
 
   &:hover {
-    background-color: $bg-surface-raised;
+    background-color: $bg-surface;
+    color: $text-primary;
   }
 
   &.is-active {
-    border-color: $dark-color-200;
     background-color: $bg-surface-hover;
+    color: $text-primary;
+
+    >span:last-child:not(.wish-tab-icon) {
+      color: $text-secondary;
+    }
   }
 
   &:focus-visible {
     outline: 0.125rem solid $primary-color-200;
     outline-offset: 0.125rem;
   }
+
+  // [추가] 새 그룹 만들기
+  &--add {
+    margin-top: $space-sm;
+    color: $text-tertiary;
+  }
 }
 
 .wish-tab-icon {
-  font-size: 1.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.25rem;
 }
 
-// ---------- 작품 카드 (2열) ----------
-.wish-grid {
+// ---------- [수정] 작품: 장르별 섹션 + 세로 포스터 (전체 보기 .member-browse-* 와 같은 모양) ----------
+.wish-genres {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4xl;
+  margin-top: $space-xl;
+}
+
+.wish-genre-title {
+  @include heading-h4-b;
+  margin: 0 0 $space-lg !important;
+  color: $text-primary;
+}
+
+.wish-posters {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: $space-xl;
-  margin: $space-4xl 0 0;
+  grid-template-columns: repeat(auto-fill, $wish-poster-width);
+  gap: $space-xl $wish-poster-gap;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.wish-card {
+.wish-poster {
   position: relative;
-  display: flex;
-  gap: $space-xl;
   min-width: 0;
-  padding: $space-xl;
-  border-radius: $radius-sm;
-  background-color: $bg-surface;
 }
 
-.wish-card-poster {
-  position: relative;
-  flex-shrink: 0;
-  width: $wish-poster;
-  aspect-ratio: 2 / 3;
-  padding: 0;
-  border: none;
-  border-radius: $radius-xs;
-  overflow: hidden;
-  background-color: $bg-surface-hover;
-  cursor: pointer;
+.wish-poster-link {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  color: $text-primary;
+  text-decoration: none;
 
-  >img {
+  &:hover .wish-poster-img img {
+    transform: scale(1.04);
+  }
+
+  &:hover .wish-poster-title {
+    color: $light-color-0;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $light-color-0;
+    outline-offset: 0.25rem;
+    border-radius: $radius-card;
+  }
+}
+
+.wish-poster-img {
+  position: relative;
+  display: block;
+  aspect-ratio: 2 / 3;
+  border-radius: $radius-card;
+  overflow: hidden;
+  background: $bg-surface-hover;
+
+  img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
   }
-
-  &:hover>img {
-    transform: scale(1.05);
-  }
 }
 
-.wish-card-noimg {
+.wish-poster-noimg {
   @include label-default;
   display: flex;
   align-items: center;
@@ -5091,89 +5145,40 @@ img.ui-icon.ui-icon-arrow {
   color: $text-tertiary;
 }
 
-// 포스터 가운데 ▶
-.wish-card-play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 3rem;
-  border-radius: 50%;
-  background-color: rgba($dark-color-900, 0.55);
-  transform: translate(-50%, -50%);
-
-  img {
-    width: 24px;
-    height: 1.5rem;
-    object-fit: contain;
-  }
-}
-
-.wish-card-info {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  padding-right: 2.5rem; // ••• 버튼 자리
-}
-
-.wish-card-title {
-  @include display-M;
-  color: $text-primary;
-  text-decoration: none;
-  word-break: keep-all;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-
-  &:hover {
-    color: $light-color-400; // [수정] 호버: 밑줄 대신 글자색
-  }
-}
-
-.wish-card-genre {
+.wish-poster-title {
   @include body-small-b;
-  margin-top: $space-xs !important;
-}
-
-.wish-card-overview {
-  @include label-default;
-  margin-top: $space-lg !important;
   color: $text-secondary;
-  word-break: keep-all;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s ease;
 }
 
+// ••• — 포스터 오른쪽 위
 .wish-card-menu {
   position: absolute;
-  top: $space-lg;
-  right: $space-lg;
+  top: $space-sm;
+  right: $space-sm;
+  z-index: 2;
 }
 
 .wish-more-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
+  width: 2.25rem;
   height: 2.25rem;
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: transparent;
+  background-color: rgba($dark-color-900, 0.55);
   color: $text-primary;
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: rgba($light-color-0, 0.1);
+    background-color: rgba($dark-color-900, 0.8);
   }
 }
 
@@ -5327,6 +5332,21 @@ img.ui-icon.ui-icon-arrow {
   margin-top: $space-lg;
   padding-top: $space-lg;
   border-top: 0.0625rem solid $dark-color-400;
+
+  // [추가] 버튼 두 개 — [새 그룹 만들기](회색) · [추가하기](프라이머리)
+  &--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-md;
+  }
+}
+
+// [추가] 그룹이 없을 때 안내
+.wish-group-empty {
+  @include body-small;
+  padding: $space-xl 0;
+  text-align: center;
+  color: $text-tertiary;
 }
 
 // 버튼
@@ -5359,6 +5379,16 @@ img.ui-icon.ui-icon-arrow {
 
     &:hover {
       background-color: $dark-color-200;
+    }
+  }
+
+  // [추가] 프라이머리 — [추가하기] · [만들기]
+  &--primary {
+    background-color: $brand-primary;
+    color: $light-color-0;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-color-400;
     }
   }
 
@@ -9042,7 +9072,7 @@ body.has-promo-banner .floating-actions {
     inset: 0;
     overflow: hidden;
     container-type: size; // 아래 iframe 크기를 이 영역 기준(cqw · cqh)으로 계산
-    opacity: 0;
+    opacity: 0.01; // [수정] 0 → 0.01: 완전히 투명하면 휴대폰(iOS)이 "안 보이는 영상"으로 보고 자동 재생을 멈춤 · 눈에는 안 보임
     pointer-events: none;
     transition: opacity 0.6s ease;
 
@@ -11196,4 +11226,13 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
   .movie-detail-page.movie-detail-page .player-box .overview.overview {
     @include body-small;
   }
+}
+
+// [수정] 헤더 검색창 — 누르거나 입력할 때 브라우저 기본 테두리(포커스 링) 없이 바탕색만 바뀜 (PC · 태블릿)
+.gnb-right .search-box input,
+.gnb-right .search-box input:focus,
+.gnb-right .search-box input:focus-visible {
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
