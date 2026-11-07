@@ -6173,3 +6173,11 @@ section.sport-hero .sport-hero-actions button.sport-btn {
   font-family: inherit;
   cursor: pointer;
 }
+
+// =====================================================================
+// [수정] 관심 구단 히어로 — 구단명이 또렷하게 보이도록 굵게 (Bold 700 · PC · 태블릿 · 모바일 공통)
+// - 글자 크기는 그대로 (display-xl / heading-h1 / display-l) · 굵기만 700
+// =====================================================================
+section.sport-hero.sport-hero--team .sport-team-hero-name {
+  font-weight: $font-weight-bold;
+}

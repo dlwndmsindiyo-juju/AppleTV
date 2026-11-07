@@ -10890,3 +10890,285 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
     min-height: 2.75rem;
   }
 }
+
+// =====================================================================
+// [추가] 재생 플레이어 감싸개 + [소리 켜기] (components/common/WatchPlayer.jsx)
+// - 감싸개가 놓인 자리(재생 팝업 · 스포츠 상세 화면)를 가득 채움
+// - 터치 기기: 소리 끈 채 바로 재생 → 오른쪽 아래 [소리 켜기] 알약 버튼 (누르면 사라짐)
+// =====================================================================
+.watch-player-wrap {
+  position: absolute;
+  inset: 0;
+
+  >.watch-player {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.watch-unmute {
+  @include body-small-b;
+  position: absolute;
+  right: $space-lg;
+  bottom: $space-3xl;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  height: 2.5rem;
+  padding: 0 $space-lg;
+  border: none;
+  border-radius: 62.4375rem;
+  background-color: rgba($dark-color-black, 0.6);
+  color: $light-color-0;
+  font-family: inherit;
+  cursor: pointer;
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
+
+  svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+// =====================================================================
+// [추가] 로딩 뼈대 (components/common/Skeleton.jsx) — 내용이 오기 전에 화면 형태부터
+// - 어두운 회색 덩어리 위로 밝은 빛이 왼쪽 → 오른쪽으로 지나감
+// - 히어로 뼈대: 히어로 자리를 그대로 덮고, 배경 이미지를 받으면 서서히 사라짐 (.is-overlay.is-done)
+// - 아래 섹션: 히어로가 준비될 때까지 뼈대만 · 실제 섹션은 숨겨 둔 채 미리 그려 둠 (main.hero-waiting)
+// =====================================================================
+$skeleton-base: $dark-color-500;
+$skeleton-shine: rgba($light-color-0, 0.06);
+
+.skeleton-block {
+  display: block;
+  border-radius: $radius-card-sm;
+  background-color: $skeleton-base;
+  background-image: linear-gradient(90deg, rgba($light-color-0, 0) 0%, $skeleton-shine 50%, rgba($light-color-0, 0) 100%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: skeleton-shine 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shine {
+  0% {
+    background-position: 150% 0;
+  }
+
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+// 히어로 뼈대
+.skeleton-hero {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100svh;
+  background-color: $bg-page;
+  background-image: linear-gradient(to top, $bg-page 0%, $dark-color-800 100%);
+
+  &.is-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    min-height: 0;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  &.is-done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.skeleton-hero-body {
+  position: absolute;
+  left: 12.5%;
+  bottom: 18%;
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+  width: min(36rem, 70%);
+}
+
+.skeleton-hero-title {
+  width: 60%;
+  height: 4.5rem;
+}
+
+.skeleton-hero-chips {
+  display: flex;
+  gap: $space-sm;
+
+  .skeleton-block {
+    width: 4.5rem;
+    height: 1.75rem;
+    border-radius: 62.4375rem;
+  }
+}
+
+.skeleton-hero-line {
+  width: 100%;
+  height: 1rem;
+
+  &.is-short {
+    width: 70%;
+  }
+}
+
+.skeleton-hero-actions {
+  display: flex;
+  gap: $space-md;
+  margin-top: $space-sm;
+}
+
+.skeleton-hero-btn {
+  width: 10rem;
+  height: 3.25rem;
+  border-radius: 62.4375rem;
+}
+
+.skeleton-hero-round {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+}
+
+// 섹션 뼈대
+.skeleton-section {
+  padding: $space-5xl 0 0;
+}
+
+.skeleton-section-title {
+  width: 12rem;
+  height: 1.75rem;
+  margin-bottom: $space-xl;
+}
+
+.skeleton-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: $space-xl;
+  overflow: hidden;
+
+  &.is-landscape .skeleton-card {
+    aspect-ratio: 16 / 9;
+  }
+
+  &.is-poster {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+
+    .skeleton-card {
+      aspect-ratio: 2 / 3;
+    }
+  }
+}
+
+// 아래 섹션: 히어로 준비 전에는 자리를 차지하지 않고 숨긴 채 미리 그려 둠 (폭은 그대로라 슬라이더 크기가 맞음)
+// - main.hero-waiting : 히어로(.hero-swiper-container · .sport-hero)와 뼈대 말고 모두 숨김
+// - main.hero-revealed : 숨겼던 섹션이 서서히 나타남 (투명도만 · 위치 변화 없음)
+main.hero-waiting {
+  position: relative;
+
+  >:not(.hero-swiper-container):not(.sport-hero):not(.skeleton-after-hero) {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    visibility: hidden !important;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
+  animation: after-hero-in 0.5s ease both;
+}
+
+@keyframes after-hero-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .skeleton-hero-body {
+    left: $mobile-edge;
+    right: $mobile-edge;
+    bottom: 12%;
+    width: auto;
+    align-items: center;
+  }
+
+  .skeleton-hero-title {
+    width: 70%;
+    height: 3rem;
+  }
+
+  .skeleton-hero-line.is-short {
+    width: 60%;
+  }
+
+  .skeleton-section {
+    padding-top: 3.75rem; // 60 (mobile.scss $m-section-gap 과 같음)
+  }
+
+  .skeleton-section-title {
+    width: 8rem;
+    height: 1.25rem;
+    margin-bottom: $space-lg;
+  }
+
+  .skeleton-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-md;
+
+    &.is-poster {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .watch-unmute {
+    right: $space-md;
+    bottom: $space-2xl;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-block {
+    animation: none;
+  }
+}
+
+// =====================================================================
+// [수정] 관심 구단 전체 페이지 — "구독 중 N팀 · [전체 해제]" 한 줄 글자를 같은 값으로 (PC · 태블릿 · 모바일 공통)
+// - 글자 · 숫자 · 버튼 모두 Body/default (같은 크기 · 줄 높이 · 자간 · 글꼴) · 색 Light/0
+// - 숫자만 굵게 (강조) · 버튼 높이 · 테두리는 그대로
+// =====================================================================
+.sport-teams-page .sport-teams-summary.sport-teams-summary {
+  @include body-default;
+  color: $light-color-0;
+
+  span,
+  strong,
+  .sport-teams-clear {
+    @include body-default;
+    font-family: inherit;
+    letter-spacing: inherit;
+    color: $light-color-0;
+  }
+
+  strong {
+    font-weight: $font-weight-bold;
+  }
+}

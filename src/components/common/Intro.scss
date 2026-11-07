@@ -38,6 +38,29 @@
     }
   }
 
+  // [추가] 영상을 받는 동안 보여 주는 로딩 (가운데 로고가 숨 쉬듯 빛남 · 재생되면 서서히 사라짐)
+  .intro-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+
+    img {
+      width: 7.5rem;
+      height: auto;
+      animation: intro-logo-pulse 1.6s ease-in-out infinite;
+    }
+
+    &.is-done {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
   // [추가] 기기가 영상 자동 재생을 막을 때 대신 보여 주는 움직이는 이미지 (intro.webp)
   .intro-fallback {
     display: block;
@@ -45,6 +68,7 @@
 
   .skip-btn {
     position: absolute;
+    z-index: 2; // [추가] 로딩 화면 위에서도 누를 수 있게
     bottom: 40px;
     right: 40px;
     padding: 10px 20px;
@@ -69,5 +93,22 @@
       width: 0.75rem;
       height: 0.75rem;
     }
+  }
+}
+
+@keyframes intro-logo-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-container .intro-loading img {
+    animation: none;
   }
 }

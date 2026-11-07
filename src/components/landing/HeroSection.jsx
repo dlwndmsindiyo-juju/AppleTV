@@ -6,6 +6,8 @@ import { useMovieStore } from "../../store/useMovieStore";
 import { useWish } from "../../store/useHeartStore"; // 위시리스트 (찜)
 import { shortGenres } from "../member/useContentInfo";
 import { loadYouTubeApi } from "../common/youtubeApi"; // [정리] YouTube API 불러오기 공용
+import { HeroSkeleton } from "../common/Skeleton"; // [추가] 로딩 뼈대 (화면 형태 먼저)
+import { useHeroReady, preloadImage } from "../../store/useHeroReady"; // [추가] 히어로 먼저 → 아래 섹션
 
 // Swiper 기본 스타일
 import "swiper/css";
@@ -322,10 +324,36 @@ const HeroSection = () => {
   // Apple TV+ 오리지널 인기순 상위 6개 (배경 이미지가 있는 작품만)
   const heroItems = (appleOriginals || []).filter((tv) => tv.backdrop_path).slice(0, 6);
 
-  if (heroItems.length === 0) return null;
+  // [추가] 첫 슬라이드 배경 이미지를 다 받으면 뼈대를 걷고 → 아래 섹션도 이때부터 보여 줌 (AfterHero)
+  const firstBackdrop = heroItems[0]?.backdrop_path;
+  const [imageReady, setImageReady] = useState(false);
+  const markHeroReady = useHeroReady((s) => s.markHeroReady);
+  useEffect(() => {
+    if (!firstBackdrop) return undefined;
+    let alive = true;
+    preloadImage(`https://image.tmdb.org/t/p/original${firstBackdrop}`).then(() => {
+      if (!alive) return;
+      setImageReady(true);
+      markHeroReady();
+    });
+    return () => {
+      alive = false;
+    };
+  }, [firstBackdrop, markHeroReady]);
+
+  // [수정] 작품을 받기 전: 빈 화면 대신 히어로 뼈대
+  if (heroItems.length === 0) {
+    return (
+      <div className="hero-swiper-container movie-home-hero is-loading">
+        <HeroSkeleton />
+      </div>
+    );
+  }
 
   return (
-    <div className="hero-swiper-container movie-home-hero">
+    <div className={`hero-swiper-container movie-home-hero${imageReady ? "" : " is-loading"}`}>
+      {/* [추가] 배경 이미지를 받는 동안 뼈대를 위에 덮어 둠 → 받으면 서서히 사라짐 */}
+      <HeroSkeleton className={`is-overlay${imageReady ? " is-done" : ""}`} />
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
         effect="fade"
