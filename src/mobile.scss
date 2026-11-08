@@ -1451,10 +1451,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
         @include body-small;
       }
 
-      .overview {
-        line-clamp: 4;
-        -webkit-line-clamp: 4;
-      }
+      // [수정] 줄거리 전체 보이기 (예전: 4줄에서 자름)
 
       // 재생하기(가득) + 찜/공유 아이콘 한 줄
       .info-actions {

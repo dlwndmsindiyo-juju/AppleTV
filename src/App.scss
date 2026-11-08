@@ -210,6 +210,7 @@ header {
             }
 
             input {
+              @include body-default;
               width: 100%;
               border: none;
               outline: none;
@@ -218,7 +219,6 @@ header {
               font-size: 0.8125rem;
 
               &::placeholder {
-                @include body-default;
                 color: $text-tertiary;
               }
             }
@@ -1265,6 +1265,7 @@ header {
       align-items: flex-end;
       gap: $space-2xl;
       padding: 1.25rem 1.75rem $space-xl;
+      height: 100%;
     }
 
     .info-text {
@@ -1300,17 +1301,13 @@ header {
       color: $text-tertiary;
     }
 
+    // [수정] 줄거리 전체 보이기 (예전: 3줄에서 자름)
     .overview {
-      @include caption-default;
+      @include caption-small;
       color: $light-color-300;
       max-width: 40rem;
       margin-top: $space-xs;
       word-break: keep-all;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
 
     .info-actions {
@@ -9887,7 +9884,17 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
     .player-box {
       .player-info {
         padding-top: 0.6875rem; // 11
-        padding-bottom: 0.6875rem;
+        padding-bottom: $space-xl; // [수정] 11 → 24: 줄거리 · [재생하기] 아래도 위쪽처럼 넉넉하게
+      }
+
+      // [수정] [재생하기] 폭 = 위 찜 · 공유 버튼 두 개를 합친 길이 (50 + 10 + 50)
+      //   · 묶음 폭이 위 버튼 줄에 맞춰지고, 재생하기는 그 폭을 꽉 채움 (글자 Heading/h4-B 그대로 들어감)
+      .info-actions {
+        align-items: stretch;
+      }
+
+      .icon-btns {
+        justify-content: flex-end;
       }
 
       .original-title {
@@ -9918,6 +9925,8 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
 
       .btn-play {
         @include heading-h4-b;
+        width: auto;
+        padding: 0 $space-sm;
         color: $dark-color-900;
       }
     }
