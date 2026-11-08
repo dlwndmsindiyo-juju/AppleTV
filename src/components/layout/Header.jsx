@@ -228,7 +228,7 @@ const Header = () => {
                   {menuOpen && (
                     <div className="profile-menu" role="menu">
                       <Link to="/wishlist" className="profile-menu-item" role="menuitem">
-                        위시리스트
+                        나의 목록
                         <WishIcon name="heart" className="profile-menu-icon" />
                       </Link>
                       <Link to="/profile" className="profile-menu-item" role="menuitem">

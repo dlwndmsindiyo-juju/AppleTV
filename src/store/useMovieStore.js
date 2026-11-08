@@ -8,18 +8,28 @@ if (!TMDB_KEY) {
   console.warn("[useMovieStore] VITE_TMDB_API_KEY 가 없어 영화·TV 데이터를 불러오지 못합니다. (.env 확인)");
 }
 
+// [추가] TMDB 요청 공용 — 네트워크 오류 · 401 · 429(한도 초과) 등 실패하면 null (화면이 멈추지 않게)
+const tmdbJson = async (url) => {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`TMDB ${res.status}`);
+    return await res.json();
+  } catch (error) {
+    console.error("TMDB 요청 실패:", url.split("?")[0], error.message);
+    return null;
+  }
+};
+
 export const useMovieStore = create((set, get) => ({
   // 인기 영화 저장할 배열
   popMovie: [],
   // 인기영화를 불러올 메서드
+  // [수정] 실패하면 빈 목록 유지 · 디버그용 console.log 지움
   onFetchPopular: async () => {
-    const res = await fetch(
+    const data = await tmdbJson(
       `https://api.themoviedb.org/3/trending/movie/day?api_key=${TMDB_KEY}&language=ko-KR`,
     );
-    console.log(res);
-    const data = await res.json();
-    console.log(data);
-    set({ popMovie: data.results });
+    if (data) set({ popMovie: data.results || [] });
   },
   // 개봉 예정작을 저장할 배열
   upcoming: [],
@@ -65,20 +75,18 @@ export const useMovieStore = create((set, get) => ({
     // 이미 데이터가 존재하고 비어있지 않다면 리턴
     if (popVideo[id] && popVideo[id].length > 0) return;
 
-    // 1. 한국어(ko-KR)로 비디오 요청
-    let res = await fetch(
+    // 1. 한국어(ko-KR)로 비디오 요청 — [수정] 실패하면 빈 목록
+    let data = await tmdbJson(
       `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${TMDB_KEY}&language=ko-KR`,
     );
-    let data = await res.json();
-    let videoList = data.results || [];
+    let videoList = data?.results || [];
 
     // 2. 한국어 비디오가 없으면 영어(en-US)로 fallback 재요청
     if (videoList.length === 0) {
-      res = await fetch(
+      data = await tmdbJson(
         `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${TMDB_KEY}&language=en-US`,
       );
-      data = await res.json();
-      videoList = data.results || [];
+      videoList = data?.results || [];
     }
 
     // 3. 최종 결과 저장
@@ -116,13 +124,12 @@ export const useMovieStore = create((set, get) => ({
   // 인기 티비프로그램의 영상을 저장할 오브젝트
   tvVideo: {},
   // 인기 티비프로그램을 불러올 메서드
+  // [수정] 실패하면 빈 목록 유지 · 디버그용 console.log 지움
   onFetchTv: async () => {
-    const res = await fetch(
+    const data = await tmdbJson(
       `https://api.themoviedb.org/3/tv/popular?api_key=${TMDB_KEY}&language=ko-KR&page=1`,
     );
-    const data = await res.json();
-    console.log("인기티비", data);
-    set({ tvs: data.results });
+    if (data) set({ tvs: data.results || [] });
   },
 
   // 인기 티비프로그램 영상을 불러올 메서드
@@ -130,15 +137,15 @@ export const useMovieStore = create((set, get) => ({
     const { tvVideo } = get();
     if (tvVideo[id]) return;
 
-    const res = await fetch(
+    // [수정] 실패하면 빈 목록 (저장하지 않아 다음에 다시 시도)
+    const data = await tmdbJson(
       `https://api.themoviedb.org/3/tv/${id}/videos?&api_key=${TMDB_KEY}&language=en-US`,
     );
-
-    const data = await res.json();
+    if (!data) return;
     set((state) => ({
       tvVideo: {
         ...state.tvVideo,
-        [id]: data.results,
+        [id]: data.results || [],
       },
     }));
   },
@@ -151,10 +158,11 @@ export const useMovieStore = create((set, get) => ({
     const { tvDetails } = get();
     if (tvDetails[id]) return;
 
-    const res = await fetch(
+    // [수정] 실패하면 저장하지 않음 (오류 응답이 상세 정보로 들어가지 않게 · 다음에 다시 시도)
+    const data = await tmdbJson(
       `https://api.themoviedb.org/3/tv/${id}?api_key=${TMDB_KEY}&language=ko-KR`,
     );
-    const data = await res.json();
+    if (!data) return;
     set((state) => ({
       tvDetails: {
         ...state.tvDetails,
@@ -169,12 +177,11 @@ export const useMovieStore = create((set, get) => ({
     const { episodes } = get();
     if (episodes[key]) return; // 시즌별로 캐싱 (기존: episodes[id] 로 확인해 다른 시즌이 안 불러와짐)
 
-    const res = await fetch(
+    // [수정] 네트워크 오류도 같은 오류로 (부르는 쪽 MovieDetail 에서 .catch 로 처리)
+    const data = await tmdbJson(
       `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${TMDB_KEY}&language=ko-KR`,
     );
-    const data = await res.json();
-
-    if (!res.ok) throw new Error("시즌 정보를 불러오지 못했습니다.");
+    if (!data) throw new Error("시즌 정보를 불러오지 못했습니다.");
 
     // 중요: TMDB 시즌 에피소드 API의 결과 배열은 data.episodes 입니다.
     set((state) => ({

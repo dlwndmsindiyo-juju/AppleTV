@@ -2742,3 +2742,65 @@ $tv-scrollbar-thumb-hover: rgba($light-color-0, 0.32);
     transform: rotate(-90deg);
   }
 }
+
+// =====================================================================
+// [추가] 터치 기기(태블릿 · 휴대폰) — 손가락으로 누르고 밀어서 이동 (TvPreview .is-touch)
+// - PC(리모컨 · 방향키)는 그대로: 카드 줄 · 화면은 포커스가 옮겨 갈 때만 밀림(overflow: hidden)
+// - 터치: 카드 줄은 옆으로, 홈 · 스포츠 · 보관함 · 검색 화면 본문은 위아래로 손가락 스크롤
+//   · 스크롤바는 숨김 · 줄 끝에서 화면 전체가 같이 밀리지 않게(overscroll-behavior)
+//   · 누를 때 브라우저 기본 파란 박스 없음
+// =====================================================================
+.tv-preview.is-touch {
+  -webkit-tap-highlight-color: transparent;
+
+  // 위아래 (화면 본문)
+  .tv-sport-body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  // 옆으로 (카드 줄 · 상세 · 팀 화면 줄)
+  .tv-sport-track,
+  .tv-team-track {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    >* {
+      scroll-snap-align: start;
+    }
+  }
+}
+
+// 영상 끝 화면 추천 줄 — 영상 팝업은 body 에 그려져 html.is-tv-touch 로 구분 (TvPreview 에서 붙임)
+html.is-tv-touch .tv-end-track {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  >* {
+    scroll-snap-align: start;
+  }
+}
