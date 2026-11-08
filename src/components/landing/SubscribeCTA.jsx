@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuthStore, isSubscribed } from "../../store/useAuthStore";
 
 
@@ -18,6 +18,7 @@ const TV_POSTERS = [
  */
 const SubscribeCTA = ({ type = "tv" }) => {
   const { user, authReady } = useAuthStore();
+  const location = useLocation(); // [추가] 구독 팝업 뒤에 지금 화면(스포츠 등)을 그대로 두기 위해 from 으로 넘김
   const isSport = type === "sport";
 
   // 이미 구독 중이면 배너 숨김 (훅 호출 이후에 return)
@@ -76,7 +77,7 @@ const SubscribeCTA = ({ type = "tv" }) => {
                 </>
               )}
             </h3>
-            <Link className="subscribe-btn" to={to}>
+            <Link className="subscribe-btn" to={to} state={{ from: location.pathname }}>
               7일 무료 체험하기
             </Link>
             <p className="subscribe-note">7일 무료 체험 후 월 ₩6,500입니다.</p>
