@@ -38,7 +38,8 @@ const CloseIcon = () => (
 );
 
 // 팝업 공통: Esc 로 닫기 · 뒤 화면 스크롤 막기 · 바깥 클릭으로 닫기
-const Modal = ({ labelId, onClose, className = "", children }) => {
+// - [추가] 위시리스트 페이지의 그룹 삭제 확인 팝업에서도 같이 씀 (export)
+export const Modal = ({ labelId, onClose, className = "", children }) => {
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
