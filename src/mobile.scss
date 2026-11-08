@@ -2897,6 +2897,19 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
       background-color: $sport-opacity-b;
       text-align: left;
 
+      // [수정] 휴대폰: 안내 문구 Body/small(13) · 짧은 문구 "기분에 맞춰 추천해요" 만 보임
+      p {
+        @include body-small;
+      }
+
+      .member-notice-text {
+        display: none;
+      }
+
+      .member-notice-text--short {
+        display: inline;
+      }
+
       .member-btn {
         align-self: center;
         height: 1.875rem;

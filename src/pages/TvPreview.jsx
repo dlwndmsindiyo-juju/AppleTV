@@ -28,6 +28,9 @@ import AiLogo from "../components/ai/AiLogo"; // [수정] AI 아이콘 공용 (�
 //   · 가로 1920 기준으로 비율을 맞추고, 세로는 창 높이만큼 늘이거나 줄임
 //   · 화면 탭은 아래쪽에 작게 띄워 둠
 // - 리모컨처럼 방향키(← ↑ → ↓)로 버튼 사이를 이동 · Enter 로 누르기 (왼쪽 메뉴 ↔ TV 화면도 이동)
+// - [추가] 입력 방식: PC(마우스) = 리모컨(방향키) / 태블릿 · 휴대폰(터치) = 손가락으로 누르고 밀어서 이동
+//   · 터치 기기면 .is-touch → TV.scss 에서 카드 줄은 옆으로, 화면은 위아래로 손가락 스크롤
+//   · PC 는 예전처럼 방향키로 포커스가 옮겨 갈 때만 줄이 밀림
 // - 헤더 · 푸터 · 하단 배너 · 떠 있는 버튼은 App.jsx 에서 /tv 일 때 숨김
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,11 +67,12 @@ const SideGroup = ({ title, open, empty = false, onToggle, children }) => (
 // [정리] 방향키로 가장 가까운 버튼 찾기 → components/tv/tvFocus.js (영상 끝 화면과 같이 사용)
 
 // [추가] 터치 기기 구분 (창 크기 · 방향이 바뀌면 다시 계산)
+// - [수정] 터치 기기는 is-touch 도 붙임 (손가락 스크롤 · 터치 안내 문구)
 const touchDeviceClass = () => {
   if (typeof window === "undefined") return "";
   const touch = window.matchMedia?.("(hover: none) and (pointer: coarse)").matches;
   if (!touch) return "";
-  return Math.min(window.innerWidth, window.innerHeight) < 600 ? " is-phone" : " is-tablet";
+  return Math.min(window.innerWidth, window.innerHeight) < 600 ? " is-touch is-phone" : " is-touch is-tablet";
 };
 
 const useTouchDeviceClass = () => {
@@ -150,12 +154,21 @@ const TvPreview = () => {
     return () => ro.disconnect();
   }, []);
 
-  // 화면이 바뀌면 시안에서 선택된 버튼에 포커스
+  const isTouch = deviceClass.includes("is-touch");
+  // [추가] 영상 팝업(끝 화면)은 TV 화면 밖(body)에 그려져서 html 에도 표시 → TV.scss 에서 끝 화면 추천 줄도 손가락 스크롤
   useEffect(() => {
+    document.documentElement.classList.toggle("is-tv-touch", isTouch);
+    return () => document.documentElement.classList.remove("is-tv-touch");
+  }, [isTouch]);
+
+  // 화면이 바뀌면 시안에서 선택된 버튼에 포커스
+  // - [수정] 터치 기기는 건너뜀 (누르지 않은 카드가 커져 보이거나 화면이 저절로 밀리지 않게)
+  useEffect(() => {
+    if (isTouch) return;
     const stage = stageRef.current;
     const first = stage?.querySelector("[data-tv-autofocus]") || stage?.querySelector("button");
     first?.focus({ preventScroll: true });
-  }, [tab]);
+  }, [tab, isTouch]);
 
   // [수정] 리모컨 방향키 — 화면 어디에 포커스가 있어도 동작 (왼쪽 메뉴 ↔ TV 화면 사이도 이동)
   // - 아무 것도 선택되지 않은 상태면 TV 화면의 첫 버튼부터
@@ -411,11 +424,18 @@ const TvPreview = () => {
             </SideGroup>
           </nav>
 
-          {/* 리모컨 안내 — 방향키로 이동 · Enter 로 선택 */}
-          <p className="tv-side-guide">
-            리모컨으로 이용해 주세요
-            <span>키보드 방향키(← ↑ → ↓)로 이동하고 Enter 로 선택</span>
-          </p>
+          {/* 안내 — PC: 리모컨(방향키) / [추가] 태블릿 · 휴대폰: 손가락 터치 */}
+          {isTouch ? (
+            <p className="tv-side-guide">
+              손가락으로 이용해 주세요
+              <span>눌러서 선택하고, 카드 줄은 옆으로 · 화면은 위아래로 밀어서 이동</span>
+            </p>
+          ) : (
+            <p className="tv-side-guide">
+              리모컨으로 이용해 주세요
+              <span>키보드 방향키(← ↑ → ↓)로 이동하고 Enter 로 선택</span>
+            </p>
+          )}
 
         </aside>
       )}
