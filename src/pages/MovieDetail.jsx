@@ -113,7 +113,6 @@ export const MovieDetail = ({ type: typeProp }) => {
 
   // 영화 / TV 필드 이름 차이 정리
   const title = item?.title || item?.name || '';
-  const originalTitle = item?.original_title || item?.original_name;
   const releaseYear = (item?.release_date || item?.first_air_date)?.slice(0, 4);
   const runtime = detail?.runtime || detail?.episode_run_time?.[0];
 
@@ -387,6 +386,7 @@ export const MovieDetail = ({ type: typeProp }) => {
               {/* 하단 정보 바 */}
               <div className="player-info">
                 <div className="info-text">
+                  {/* [수정] 제목은 하나만 — 작품 로고(TMDB 타이틀 이미지)가 있으면 로고, 없으면 글자 제목 (원제 줄 없앰) */}
                   {logo ? (
                     <img
                       className="title-logo"
@@ -395,9 +395,6 @@ export const MovieDetail = ({ type: typeProp }) => {
                     />
                   ) : (
                     <h2 className="title">{title}</h2>
-                  )}
-                  {originalTitle && (
-                    <p className="original-title">{originalTitle}</p>
                   )}
                   <p className="genres">{metaText}</p>
                   <p className="overview">{item?.overview || '줄거리 정보가 없습니다.'}</p>
