@@ -296,8 +296,14 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
   }
 
-  .wish-tab-icon {
-    font-size: 1.125rem;
+  // [추가] 선택 삭제 버튼은 알약 줄 위 오른쪽 · 선택 버튼은 알약 안 왼쪽
+  .wish-side-head {
+    margin-bottom: $space-xs;
+  }
+
+  .wish-tab-radio {
+    width: 1rem;
+    height: 1rem;
   }
 
   // [수정] 포스터 3개씩
@@ -1445,10 +1451,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
         @include body-small;
       }
 
-      .overview {
-        line-clamp: 4;
-        -webkit-line-clamp: 4;
-      }
+      // [수정] 줄거리 전체 보이기 (예전: 4줄에서 자름)
 
       // 재생하기(가득) + 찜/공유 아이콘 한 줄
       .info-actions {

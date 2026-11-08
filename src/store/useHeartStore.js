@@ -4,26 +4,31 @@
 //   users/{uid}/wishlist/{movie_123}  작품 { id, type, title, poster_path, backdrop_path, genres, overview, addedAt, groups[] }
 //   users/{uid}/wishGroups/{groupId} 그룹 { name, icon, order, createdAt }
 // - 처음 로그인하면 이 브라우저에 남아 있던 예전 찜 목록(localStorage)을 옮겨 옴
-// - [수정] 첫 이용자는 "전체"만 — 기본 그룹을 자동으로 만들지 않음 (그룹은 [새 그룹 만들기]로 직접 추가)
-//   · 이미 만들어 둔 그룹(예전 기본 그룹 포함)은 그대로 둠
+// - [수정] 기본 그룹은 "전체" + "나중에 볼 작품" 둘만 (나중에 볼 작품이 없으면 만들어 둠 · 삭제 불가)
+//   · 예전 기본 그룹(호러 · 키즈 · 코미디 · 로맨스 · 시리즈)은 처음 연결될 때 지움 → 담긴 작품은 "전체"에 그대로
+//   · 그 밖의 그룹은 사용자가 [새 그룹 만들기]로 추가하고, 위시리스트 왼쪽 메뉴에서 삭제
 // - 하트 → 담기 → "어떤 그룹에 추가할까요?" 팝업 → 그룹 체크 → [추가하기] → "OO에 추가되었어요" 토스트
 //   · [수정] 체크는 팝업 안에서만 고르고(pickerDraft) [추가하기]를 눌러야 저장
 import { create } from "zustand";
 import {
   collection,
+  arrayRemove,
   deleteDoc,
   doc,
+  getDocs,
   onSnapshot,
   serverTimestamp,
   setDoc,
   updateDoc,
+  writeBatch,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { openSubscribeGate } from "../utils/subscribeGate"; // [정리] 로그인 안내 팝업 열기 공용
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-// 예전 기본 그룹 6개 (아이콘: public/icons/wishlist/{icon}.svg) — [수정] 자동 생성은 안 함 · 이미 있는 그룹 아이콘 맞추기용
+// 예전 기본 그룹 6개 (아이콘: public/icons/wishlist/{icon}.svg)
+// - [수정] "나중에 볼 작품"(FIXED_GROUP)만 기본으로 남기고 나머지(RETIRED_GROUPS)는 지움
 export const DEFAULT_GROUPS = [
   { id: "later", name: "나중에 볼 작품", icon: "bookmark" },
   { id: "horror", name: "호러", icon: "unhappy" },
@@ -32,6 +37,21 @@ export const DEFAULT_GROUPS = [
   { id: "romance", name: "로맨스", icon: "romance" },
   { id: "series", name: "시리즈", icon: "series" },
 ];
+
+export const FIXED_GROUP = DEFAULT_GROUPS[0]; // 나중에 볼 작품 — 삭제 불가
+const RETIRED_GROUPS = DEFAULT_GROUPS.slice(1).map((g) => g.id); // 호러 · 키즈 · 코미디 · 로맨스 · 시리즈
+
+// [추가] 그룹 지우기 — 그룹 문서 + 작품에 붙어 있던 그룹 표시까지 (작품은 "전체"에 그대로)
+const purgeGroups = async (uid, pre, ids, itemDocs) => {
+  if (!ids.length) return;
+  const batch = writeBatch(db);
+  ids.forEach((gid) => batch.delete(doc(groupsCol(uid), pre + gid)));
+  itemDocs.forEach(({ id, groups = [] }) => {
+    const hit = groups.filter((g) => ids.includes(g));
+    if (hit.length) batch.update(doc(itemsCol(uid), pre + id), { groups: arrayRemove(...hit) });
+  });
+  await batch.commit();
+};
 
 // 예전 기본 아이콘 이름 → 시안 아이콘 (이미 만들어진 기본 그룹도 시안 아이콘으로 보이게)
 export const ICON_ALIAS = {
@@ -144,6 +164,7 @@ export const useHeartStore = create((set, get) => ({
     if (!uid) return;
     const pre = prefixOf(profile);
 
+    let groupsChecked = false;
     unsubs.push(
       onSnapshot(groupsCol(uid), (snap) => {
         const groups = snap.docs
@@ -155,8 +176,36 @@ export const useHeartStore = create((set, get) => ({
             return def && ICON_ALIAS[g.icon] ? { ...g, icon: def.icon } : g;
           })
           .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-        // [수정] 그룹이 없어도 기본 그룹을 만들지 않음 (첫 이용자는 "전체"만)
-        set({ groups });
+        // [수정] 처음 한 번: 예전 기본 그룹 지우기 · "나중에 볼 작품"이 없으면 만들기
+        if (!groupsChecked) {
+          groupsChecked = true;
+          const retired = groups.filter((g) => RETIRED_GROUPS.includes(g.id)).map((g) => g.id);
+          const needFixed = !groups.some((g) => g.id === FIXED_GROUP.id);
+          if (retired.length || needFixed) {
+            (async () => {
+              try {
+                if (needFixed) {
+                  await setDoc(doc(groupsCol(uid), pre + FIXED_GROUP.id), {
+                    name: FIXED_GROUP.name,
+                    icon: FIXED_GROUP.icon,
+                    order: 0,
+                    createdAt: serverTimestamp(),
+                  });
+                }
+                if (retired.length) {
+                  const snapItems = await getDocs(itemsCol(uid));
+                  const itemDocs = snapItems.docs
+                    .filter((d) => ownDoc(d.id, profile))
+                    .map((d) => ({ id: d.id.slice(pre.length), groups: d.data().groups || [] }));
+                  await purgeGroups(uid, pre, retired, itemDocs);
+                }
+              } catch (e) {
+                console.error("기본 그룹 정리 실패:", e);
+              }
+            })();
+          }
+        }
+        set({ groups: groups.filter((g) => !RETIRED_GROUPS.includes(g.id)) });
       })
     );
 
@@ -304,6 +353,35 @@ export const useHeartStore = create((set, get) => ({
     } catch (error) {
       console.error("새 그룹 만들기 실패:", error);
       return null;
+    }
+  },
+
+  // [추가] 그룹 삭제 (여러 개 한 번에 · 선택 삭제) — "나중에 볼 작품"은 삭제 불가 · 담긴 작품은 "전체"에 그대로
+  onDeleteGroups: async (groupIds = []) => {
+    const { uid, pid, groups, items } = get();
+    const targets = groups.filter((g) => groupIds.includes(g.id) && g.id !== FIXED_GROUP.id);
+    if (!uid || targets.length === 0) return false;
+    const ids = targets.map((g) => g.id);
+    const prevGroups = groups;
+    const prevItems = items;
+    const nextItems = {};
+    Object.entries(items).forEach(([k, it]) => {
+      nextItems[k] = it.groups.some((g) => ids.includes(g)) ? { ...it, groups: it.groups.filter((g) => !ids.includes(g)) } : it;
+    });
+    set({
+      groups: groups.filter((g) => !ids.includes(g.id)),
+      items: nextItems,
+      toast: {
+        text: targets.length === 1 ? `${targets[0].name} 그룹을 삭제했어요.` : `그룹 ${targets.length}개를 삭제했어요.`,
+      },
+    });
+    try {
+      await purgeGroups(uid, prefixOf(pid), ids, Object.values(items).map((it) => ({ id: it.key, groups: it.groups })));
+      return true;
+    } catch (error) {
+      console.error("그룹 삭제 실패:", error);
+      set({ groups: prevGroups, items: prevItems, toast: { text: "그룹을 삭제하지 못했어요. 다시 시도해 주세요." } });
+      return false;
     }
   },
 
