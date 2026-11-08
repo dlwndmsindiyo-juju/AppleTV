@@ -386,6 +386,9 @@ $mobile-edge: 1.25rem;
       margin: 0;
       color: $neutral-color-300;
     }
+    .member-notice-text{
+      @include body-default;
+    }
 
     // [추가] 휴대폰 전용 짧은 문구 — PC · 태블릿에서는 숨김 (mobile.scss 에서 바꿔 보임)
     .member-notice-text--short {
