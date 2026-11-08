@@ -218,7 +218,7 @@ header {
               font-size: 0.8125rem;
 
               &::placeholder {
-                @include body-default-b;
+                @include body-default;
                 color: $text-tertiary;
               }
             }
@@ -5061,12 +5061,78 @@ img.ui-icon.ui-icon-arrow {
   }
 }
 
-.wish-tab-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+// [수정] 선택 삭제 — 메뉴 위 오른쪽 [선택 삭제] → [취소] [삭제 N]
+.wish-side-head {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-xs;
+  margin-bottom: $space-sm;
+}
+
+.wish-side-action {
+  @include body-small-b;
+  padding: $space-xs $space-sm;
+  border: none;
+  border-radius: $radius-xs;
+  background: transparent;
+  color: $text-secondary;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $bg-surface;
+    color: $text-primary;
+  }
+
+  &.is-danger {
+    color: $brand-primary;
+
+    &:hover:not(:disabled) {
+      color: $primary-color-200;
+    }
+  }
+
+  &:disabled {
+    color: $text-tertiary;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-200;
+    outline-offset: 0.125rem;
+  }
+}
+
+// 선택 모드: 지울 수 있는 그룹 왼쪽에 선택(라디오 모양) · 나머지(전체 · 나중에 볼 작품)는 흐리게
+.wish-side.is-selecting {
+  .wish-tab:disabled {
+    opacity: 0.4;
+    cursor: default;
+    background-color: transparent;
+  }
+}
+
+.wish-tab.is-pickable {
+  color: $text-primary;
+
+  &.is-picked {
+    background-color: $bg-surface;
+  }
+}
+
+.wish-tab-radio {
   flex-shrink: 0;
-  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 0.125rem solid $text-tertiary;
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+
+  .is-picked & {
+    border-color: $brand-primary;
+    background: radial-gradient(circle, $brand-primary 0 40%, transparent 45%);
+  }
 }
 
 // ---------- [수정] 작품: 장르별 섹션 + 세로 포스터 (전체 보기 .member-browse-* 와 같은 모양) ----------
@@ -5474,6 +5540,21 @@ img.ui-icon.ui-icon-arrow {
   grid-template-columns: 1fr 1fr;
   gap: $space-md;
   margin-top: $space-xl;
+}
+
+// [추가] 그룹 삭제 확인 팝업
+.wish-confirm {
+  width: min(400px, 100%);
+
+  .wish-modal-head {
+    margin-bottom: $space-sm;
+  }
+}
+
+.wish-confirm-text {
+  @include body-small;
+  color: $text-secondary;
+  word-break: keep-all;
 }
 
 // =====================================================================

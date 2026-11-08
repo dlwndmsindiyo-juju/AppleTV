@@ -118,7 +118,37 @@ const HeartIcon = ({ filled }) => <span className={`hero-wish-icon${filled ? " i
 
 // [추가] 히어로 배경 예고편 (소리 끔 · 컨트롤 없음) — 재생 시작 · 끝 · 오류를 알려줌
 // - [수정] 정해진 시간 안에 재생이 시작되지 않으면(기기가 자동 재생을 막음 등) 다음 슬라이드로 → 이미지에서 멈춰 있지 않게
+// - [수정] 휴대폰에서 누르지 않아도 재생되도록
+//   · iframe 을 처음부터 직접 만듦: 자동 재생 허용(allow="autoplay") · 소리 끔 · 화면 안 재생(playsinline)이
+//     처음 열릴 때부터 들어감 (예전: YouTube 가 만든 뒤에 allow 를 바꿔서 적용되지 않았음)
+//   · iframe 은 YouTube API 를 기다리지 않고 바로 열기 시작 → 휴대폰에서 재생 시작이 빨라짐
+//   · 재생 요청이 묻히면(시작 전 · 대기 · 멈춤 상태) 잠시 뒤 다시 요청 (최대 6번)
+//   · 다른 앱에 갔다 돌아오면(화면이 다시 보이면) 다시 재생
+//   · [추가] 화면 아무 곳이나 터치하거나 스크롤을 놓으면(touchend) 다시 재생 요청 (히어로를 누르지 않아도 됨)
+//   · 저전력 모드 · 일부 앱 안 브라우저처럼 기기가 자동 재생을 아예 막으면 어떤 사이트도 재생할 수 없음
+//     → 한 번 막힌 걸 알면 다음 슬라이드부터는 10초가 아니라 3초만 기다리고 넘어감 (재생되면 다시 10초)
 const HERO_VIDEO_TIMEOUT = 10000; // 10초
+const HERO_VIDEO_TIMEOUT_BLOCKED = 3000; // 자동 재생이 막힌 걸 안 뒤
+const HERO_KICK_DELAY = 700;
+const HERO_KICK_MAX = 6;
+let heroAutoplayBlocked = false;
+
+const trailerSrc = (videoKey) => {
+  const params = new URLSearchParams({
+    autoplay: "1",
+    mute: "1",
+    controls: "0",
+    disablekb: "1",
+    fs: "0",
+    iv_load_policy: "3",
+    modestbranding: "1",
+    rel: "0",
+    playsinline: "1",
+    enablejsapi: "1",
+    origin: window.location.origin, // 휴대폰 브라우저에서 재생 신호(postMessage)가 막히지 않게
+  });
+  return `https://www.youtube.com/embed/${videoKey}?${params}`;
+};
 
 const HeroTrailer = ({ videoKey, title, onStart, onEnd }) => {
   const holderRef = useRef(null);
@@ -129,75 +159,116 @@ const HeroTrailer = ({ videoKey, title, onStart, onEnd }) => {
   endRef.current = onEnd;
 
   useEffect(() => {
+    const holder = holderRef.current;
+    if (!holder) return undefined;
     let player = null;
     let alive = true;
     let started = false;
+    let ended = false;
+    let kicks = 0;
+    let kickTimer = null;
+
+    const finish = () => {
+      if (ended || !alive) return;
+      ended = true;
+      endRef.current?.();
+    };
+
+    // iframe 을 바로 만들어 열기 시작 (자동 재생 허용 · 소리 끔 · 화면 안 재생)
+    const frame = document.createElement("iframe");
+    frame.src = trailerSrc(videoKey);
+    frame.title = title || "예고편";
+    frame.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+    frame.setAttribute("playsinline", "");
+    frame.setAttribute("webkit-playsinline", "");
+    frame.setAttribute("frameborder", "0");
+    frame.setAttribute("tabindex", "-1");
+    holder.appendChild(frame);
+
+    // 재생 요청 (묻히면 잠시 뒤 다시)
+    const kick = () => {
+      clearTimeout(kickTimer);
+      if (!alive || started || !player?.playVideo) return;
+      try {
+        player.mute();
+        player.playVideo();
+      } catch {
+        // 아직 준비 전이면 무시
+      }
+      if (kicks < HERO_KICK_MAX) {
+        kicks += 1;
+        kickTimer = setTimeout(kick, HERO_KICK_DELAY);
+      }
+    };
+
     const timeout = setTimeout(() => {
-      if (alive && !started) endRef.current?.();
-    }, HERO_VIDEO_TIMEOUT);
+      if (alive && !started) {
+        heroAutoplayBlocked = true; // 기기가 자동 재생을 막는 것으로 봄 → 다음부터 짧게 기다림
+        finish();
+      }
+    }, heroAutoplayBlocked ? HERO_VIDEO_TIMEOUT_BLOCKED : HERO_VIDEO_TIMEOUT);
+
+    // 다른 앱에 갔다 돌아오면 다시 재생
+    const onVisible = () => {
+      if (document.visibilityState === "visible" && !started) {
+        kicks = 0;
+        kick();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("pageshow", onVisible);
+    // [추가] 페이지 어디든 터치 → 다시 재생 요청
+    const onTouch = () => {
+      if (!started) {
+        kicks = 0;
+        kick();
+      }
+    };
+    document.addEventListener("touchend", onTouch, { passive: true });
+
     loadYouTubeApi()
       .then((YT) => {
-        if (!alive || !holderRef.current) return;
-        player = new YT.Player(holderRef.current, {
-          videoId: videoKey,
-          playerVars: {
-            autoplay: 1,
-            mute: 1,
-            controls: 0,
-            disablekb: 1,
-            fs: 0,
-            iv_load_policy: 3,
-            modestbranding: 1,
-            rel: 0,
-            playsinline: 1,
-            enablejsapi: 1,
-            origin: window.location.origin, // [추가] 휴대폰 브라우저에서 재생 신호(postMessage)가 막히지 않게
-          },
+        if (!alive) return;
+        player = new YT.Player(frame, {
           events: {
-            onReady: (e) => {
-              // [추가] 휴대폰: 화면 안에서 · 소리 끈 채 자동 재생을 허용받도록 iframe 속성을 직접 넣고 다시 재생
-              const frame = e.target.getIframe?.();
-              frame?.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
-              frame?.setAttribute("playsinline", "");
-              frame?.setAttribute("webkit-playsinline", "");
-              e.target.mute();
-              e.target.playVideo();
-              // 첫 재생 요청이 묻히는 경우가 있어 잠시 뒤 한 번 더
-              setTimeout(() => {
-                if (alive && !started) {
-                  try {
-                    e.target.mute();
-                    e.target.playVideo();
-                  } catch {
-                    // 무시
-                  }
-                }
-              }, 800);
-            },
+            onReady: kick,
             onStateChange: (e) => {
-              if (e.data === YT.PlayerState.PLAYING) {
+              const S = YT.PlayerState;
+              if (e.data === S.PLAYING) {
                 started = true;
+                heroAutoplayBlocked = false;
+                clearTimeout(kickTimer);
                 setPlaying(true);
                 startRef.current?.();
+              } else if (e.data === S.ENDED) {
+                finish();
+              } else if (!started && (e.data === S.UNSTARTED || e.data === S.CUED || e.data === S.PAUSED)) {
+                // 시작 전 · 대기 · 멈춤에 머물면 다시 요청
+                clearTimeout(kickTimer);
+                kickTimer = setTimeout(kick, HERO_KICK_DELAY);
               }
-              if (e.data === YT.PlayerState.ENDED) endRef.current?.();
             },
-            onError: () => endRef.current?.(), // 재생할 수 없는 영상 → 다음 슬라이드
+            onError: finish, // 재생할 수 없는 영상 → 다음 슬라이드
           },
         });
       })
-      .catch(() => endRef.current?.());
+      .catch(finish);
 
     return () => {
       alive = false;
       clearTimeout(timeout);
+      clearTimeout(kickTimer);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("pageshow", onVisible);
+      document.removeEventListener("touchend", onTouch);
       try {
         player?.destroy();
       } catch {
         // 이미 사라진 플레이어는 무시
       }
+      frame.remove();
     };
-  }, [videoKey]);
+  }, [videoKey, title]);
 
   return (
     <div className={`hero-trailer${playing ? " is-playing" : ""}`} aria-hidden="true" title={title}>
