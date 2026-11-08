@@ -193,7 +193,11 @@ const MoodAssistant = ({ userName = "회원" }) => {
         </div>
 
         <div className="member-notice">
-          <p>{userName}님의 기분에 맞춰 추천하는 콘텐츠입니다.</p>
+          {/* [수정] 휴대폰(767px 이하)에서는 짧은 문구 (mobile.scss 에서 둘 중 하나만 보임) */}
+          <p>
+            <span className="member-notice-text">{userName}님의 기분에 맞춰 추천하는 콘텐츠입니다.</span>
+            <span className="member-notice-text--short">기분에 맞춰 추천해요</span>
+          </p>
 
           {/* [수정] 홍보 배너 버튼과 같은 빛나는 버튼 (ai-glow-btn · _variables.scss 믹스인) */}
           <AiAssistantLink asButton className="member-btn ai-glow-btn">
