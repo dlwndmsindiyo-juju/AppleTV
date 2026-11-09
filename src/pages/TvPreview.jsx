@@ -15,7 +15,7 @@ import TvDetail from "../components/tv/TvDetail";
 import TvLibrary from "../components/tv/TvLibrary";
 import { useTeamStore } from "../store/useTeamStore";
 import { getTeamById } from "../data/sportTeams";
-import TvHome from "../components/tv/TvHome";
+import TvHome, { TvGenre } from "../components/tv/TvHome"; // [추가] TvGenre: 장르별 모음 → 장르 화면
 import { ottItem } from "../components/tv/tvDetailItems"; // [추가] AI 추천 → TV 상세 항목
 import "../TV.scss";
 import AiLogo from "../components/ai/AiLogo"; // [수정] AI 아이콘 공용 (빛나며 움직임 · 원본 components/ai/assets/ai-logo.svg)
@@ -111,7 +111,7 @@ const TvPreview = () => {
   // [추가] 상세에서 다른 상세(추천 · 하이라이트 등)로 넘어간 기록 — 뒤로 가면 하나씩 이전 상세로
   const [detailStack, setDetailStack] = useState([]);
   // [추가] 상세를 열기 전 보던 화면에서 고르고 있던 버튼 순서 (뒤로 오면 그 카드에 다시 포커스 · 줄도 그 자리로)
-  const returnFocusRef = useRef(null);
+  const returnFocusRef = useRef({}); // { 화면(tab): 버튼 순서 } — 홈 → 장르 → 상세처럼 여러 번 들어가도 화면마다 기억
   // [추가] AI 추천에서 연 상세: 뒤로 가면 AI 팝업을 보던 결과 그대로 다시 엶 (aiSnapshot · AiAssistantPopup)
   const detailFromAiRef = useRef(null);
   const openDetail = (item, aiSnapshot = null) => {
@@ -122,7 +122,7 @@ const TvPreview = () => {
       detailFromAiRef.current = aiSnapshot;
       const stage = stageRef.current;
       const buttons = stage ? [...stage.querySelectorAll("button:not([disabled])")] : [];
-      returnFocusRef.current = aiSnapshot ? null : buttons.indexOf(document.activeElement);
+      if (!aiSnapshot) returnFocusRef.current[tab] = buttons.indexOf(document.activeElement); // 돌아갈 화면 · 버튼 순서
     } else if (detailItem) {
       setDetailStack((st) => [...st, detailItem]);
     }
@@ -150,6 +150,14 @@ const TvPreview = () => {
   const favorites = useTeamStore((s) => s.favorites);
   const followedTeams = favorites.map(getTeamById).filter(Boolean);
   const teamTabId = tab.startsWith("team:") ? tab.slice(5) : null;
+  // [추가] 장르 화면 (tab: "genre:genre-sf") — 홈의 장르별 모음 카드 · Esc 로 홈(고르던 카드)으로
+  const genreId = tab.startsWith("genre:") ? tab.slice(6) : null;
+  const openGenre = (id) => {
+    const stage = stageRef.current;
+    const buttons = stage ? [...stage.querySelectorAll("button:not([disabled])")] : [];
+    returnFocusRef.current[tab] = buttons.indexOf(document.activeElement); // 돌아갈 화면 · 버튼 순서
+    setTab(`genre:${id}`);
+  };
   const screenTeam = teamTabId ? getTeamById(teamTabId) : null;
   const [query, setQuery] = useState(""); // [추가] 왼쪽 메뉴 검색창
   const [scale, setScale] = useState(1);
@@ -199,13 +207,13 @@ const TvPreview = () => {
   useEffect(() => {
     if (isTouch) return undefined;
     const stage = stageRef.current;
-    const target = tab !== "detail" ? returnFocusRef.current : null;
+    const target = tab !== "detail" ? returnFocusRef.current[tab] : null; // 그 화면으로 돌아왔을 때만
     if (target == null || target < 0) {
       const first = stage?.querySelector("[data-tv-autofocus]") || stage?.querySelector("button");
       first?.focus({ preventScroll: true });
       return undefined;
     }
-    returnFocusRef.current = null;
+    delete returnFocusRef.current[tab];
     let tries = 0;
     let timer = null;
     const restore = () => {
@@ -218,7 +226,7 @@ const TvPreview = () => {
       if (tries++ < 20) timer = setTimeout(restore, 100);
       else (stage?.querySelector("[data-tv-autofocus]") || buttons[0])?.focus({ preventScroll: true });
     };
-    restore();
+    timer = setTimeout(restore, 150); // 이미 받아 둔 줄(캐시)이 다시 그려진 뒤에 찾기 (줄 순서가 밀리지 않게)
     return () => clearTimeout(timer);
   }, [tab, isTouch]);
 
@@ -243,6 +251,17 @@ const TvPreview = () => {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  // [추가] 장르 화면에서 Esc (리모컨 뒤로) → 홈 (장르 카드에 다시 포커스)
+  useEffect(() => {
+    if (!tab.startsWith("genre:")) return undefined;
+    const onKey = (e) => {
+      if (e.key !== "Escape" || document.querySelector(".subscribe-gate, .ai-popup, .video-popup")) return;
+      setTab("home");
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [tab]);
 
   // [추가] 상세 페이지에서 Esc (리모컨 뒤로) → 보던 화면으로 (팝업 · 영상이 열려 있으면 그쪽이 먼저 닫힘)
   useEffect(() => {
@@ -562,7 +581,8 @@ const TvPreview = () => {
                 }}
               />
             )}
-            {tab === "home" && <TvHome onMenu={setTab} onDetail={openDetail} />}
+            {tab === "home" && <TvHome onMenu={setTab} onDetail={openDetail} onGenre={openGenre} />}
+            {genreId && <TvGenre key={genreId} id={genreId} onMenu={setTab} onDetail={openDetail} />}
             {tab === "sport" && <TvSportHome onMenu={setTab} onDetail={openDetail} />}
             {tab === "library" && <TvLibrary onMenu={setTab} onDetail={openDetail} />}
             {tab === "detail" && detailItem && <TvDetail key={detailItem.key || detailItem.title} item={detailItem} onOpen={openDetail} onBack={closeDetail} />}

@@ -50,23 +50,26 @@ const RankNumber = ({ rank }) => {
   );
 };
 
-const Top10Section = () => {
+// [추가] title · items: 다른 TOP 10 (영화 TOP 10 · 시리즈 TOP 10 · PosterShelves.jsx)도 같은 디자인으로
+// - items 를 넘기면 그 목록 (영화 · 시리즈 모두 · media_type 으로 상세 주소 구분) · 없으면 기존 Apple TV+ 오리지널
+const Top10Section = ({ title = TITLE, items = null }) => {
   const appleOriginals = useMovieStore((s) => s.appleOriginals);
   const onFetchAppleOriginals = useMovieStore((s) => s.onFetchAppleOriginals);
 
   useEffect(() => {
-    onFetchAppleOriginals();
-  }, [onFetchAppleOriginals]);
+    if (!items) onFetchAppleOriginals();
+  }, [items, onFetchAppleOriginals]);
 
-  if (!appleOriginals || appleOriginals.length === 0) return null;
+  const source = items || appleOriginals;
+  if (!source || source.length === 0) return null;
 
-  const top10 = appleOriginals.filter((tv) => tv.poster_path).slice(0, 10);
+  const top10 = source.filter((tv) => tv.poster_path).slice(0, 10);
 
   return (
     <section className="top10-section">
       <div className="inner">
         {/* [수정] 소제목 없앰 · 제목 ↔ 콘텐츠 60px (App.scss) */}
-        <h3 className="top10-title">{TITLE}</h3>
+        <h3 className="top10-title">{title}</h3>
 
         <Swiper
           className="top10-swiper"
@@ -78,26 +81,29 @@ const Top10Section = () => {
             768: { spaceBetween: 24 }, // [수정] 태블릿 · 데스크톱 (태블릿도 PC 와 같음)
           }}
         >
-          {top10.map((tv, index) => (
+          {top10.map((tv, index) => {
+            const type = tv.media_type === "movie" ? "movie" : "tv"; // [추가] 영화 TOP 10 은 영화 상세로
+            const name = tv.name || tv.title;
+            return (
             <SwiperSlide
-              key={tv.id}
+              key={`${type}_${tv.id}`}
               // 두 자리 순위(10위)는 숫자가 넓어 포스터에 가려지지 않게 숫자 자리를 넓힌 카드 (포스터 크기는 같음)
               className={`top10-slide${index + 1 >= 10 ? " top10-slide--wide" : ""}`}
             >
-              <Link to={`/tv/${tv.id}`} className="top10-card" aria-label={`${index + 1}위 ${tv.name}`}>
+              <Link to={`/${type}/${tv.id}`} className="top10-card" aria-label={`${index + 1}위 ${name}`}>
                 {/* 순위 숫자 (포스터 뒤) */}
                 <RankNumber rank={index + 1} />
 
                 <div className="top10-poster">
                   <img
                     src={`https://image.tmdb.org/t/p/w500${tv.poster_path}`}
-                    alt={tv.name}
+                    alt={name}
                     loading="lazy"
                   />
 
                   {/* 마우스 호버 시 작품 이름 + 평점 */}
                   <div className="top10-hover">
-                    <strong className="top10-movie-title">{tv.name}</strong>
+                    <strong className="top10-movie-title">{name}</strong>
                     <span className="top10-rating">
                       ★ {tv.vote_average ? (tv.vote_average / 2).toFixed(1) : "-"} {/* [수정] 10점 → 5점 만점 */}
                     </span>
@@ -105,7 +111,8 @@ const Top10Section = () => {
                 </div>
               </Link>
             </SwiperSlide>
-          ))}
+            );
+          })}
         </Swiper>
       </div>
     </section>
