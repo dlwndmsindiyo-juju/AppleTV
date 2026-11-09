@@ -1,5 +1,6 @@
 // src/components/search/SearchParts.jsx
 // 검색하기 플로우 공용 조각 (검색 결과 · 인물 · 작품 페이지에서 함께 사용)
+import { openShare } from "../../utils/share"; // [추가] 공유 팝업
 import React from "react";
 import { Link } from "react-router-dom";
 import VideoPopup from "../common/VideoPopup"; // [추가] 전체 화면 영상 팝업 공용
@@ -221,19 +222,8 @@ export const ResultCard = ({ entry, backTo, onPick }) => (
 );
 
 // ---------- 공유 (기존 상세 페이지와 같은 방식) ----------
-export const shareCurrentPage = async (title) => {
-  const url = window.location.href;
-  try {
-    if (navigator.share) {
-      await navigator.share({ title, url });
-    } else {
-      await navigator.clipboard.writeText(url);
-      alert("링크가 복사되었습니다.");
-    }
-  } catch {
-    // 공유 취소 등은 무시
-  }
-};
+// [수정] 기기 기본 공유 창 대신 공유 팝업 (components/common/ShareSheet.jsx)
+export const shareCurrentPage = (title) => openShare({ title, url: window.location.href });
 
 // ---------- 예고편 팝업 ----------
 // [수정] 공용 VideoPopup 사용: 왼쪽 위 "← 뒤로" · Esc · 브라우저 뒤로가기로 닫기 · 뒤 화면 스크롤 막기

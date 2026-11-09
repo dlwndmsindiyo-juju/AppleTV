@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // [추가] 사이트 안 주소(/faq 등)는 새로고침 없이 이동
 import { footerMainLinks, footerSubLinks } from '../../data/footerData';
 
 const Footer = () => {
@@ -15,9 +16,15 @@ const Footer = () => {
         <ul className="footer-main-menu">
           {footerMainLinks.map((item, index) => (
             <li key={index}>
-              <a href={item.path}>
-                {item.label} <img className="arrow ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-              </a>
+              {item.path.startsWith('/') ? (
+                <Link to={item.path}>
+                  {item.label} <img className="arrow ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
+                </Link>
+              ) : (
+                <a href={item.path}>
+                  {item.label} <img className="arrow ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
+                </a>
+              )}
             </li>
           ))}
         </ul>

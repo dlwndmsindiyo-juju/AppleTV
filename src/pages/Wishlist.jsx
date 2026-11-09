@@ -12,6 +12,7 @@ import { FIXED_GROUP, formatCount, useHeartStore } from "../store/useHeartStore"
 import { Modal, WishIcon } from "../components/wishlist/WishlistLayer";
 import DetailBackLink from "../components/common/DetailBackLink"; // [추가] 상세 공용 "← 홈으로" (같은 자리)
 import { detailPath } from "./MovieDetail";
+import { openShare } from "../utils/share"; // [추가] 공유 팝업
 import { openSubscribeGate } from "../utils/subscribeGate"; // [정리] 로그인 안내 팝업 열기 공용
 import { TMDB_IMG as IMG } from "../utils/tmdb"; // [정리] TMDB 이미지 주소 공용
 
@@ -99,18 +100,10 @@ const CardMenu = ({ item }) => {
     };
   }, [open]);
 
-  const share = async () => {
+  // [수정] 공유 팝업 (components/common/ShareSheet.jsx)
+  const share = () => {
     setOpen(false);
-    const url = `${window.location.origin}${detailPath(item.type, item.id)}`;
-    try {
-      if (navigator.share) await navigator.share({ title: item.title, url });
-      else {
-        await navigator.clipboard.writeText(url);
-        alert("링크가 복사되었습니다.");
-      }
-    } catch {
-      // 공유 취소 무시
-    }
+    openShare({ title: item.title, url: `${window.location.origin}${detailPath(item.type, item.id)}` });
   };
 
   return (

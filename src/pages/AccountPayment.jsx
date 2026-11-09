@@ -3,6 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useAuthStore, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
 import { AccountSubPage, ConfirmDialog, CARD_BRANDS, CARD_BRAND_ICONS } from "../components/profile/AccountShared";
 import { PAYMENT_URL } from "../data/appleLinks";
+import { openPostcode } from "../utils/daumPostcode"; // [추가] 도로명 주소 검색 팝업
 import { PaymentRegisterPopup } from "./Subscribe"; // [추가] 지불 방법 추가 = 구독 팝업의 지불 방법 등록 화면
 // public 폴더의 파일은 import 없이 루트(/) 경로로 참조합니다.
 // 실제 경로: public/pay-icon/*.svg, public/method-icon/*.svg
@@ -601,8 +602,27 @@ export default function AccountPayment() {
                   </label>
                   <label>
                     <span>청구지 주소</span>
-                    <input autoComplete="street-address" placeholder="도로명 주소" value={form.billingAddress}
-                      onChange={(e) => update("billingAddress", e.target.value)} />
+                    {/* [추가] 주소 검색 (Daum 우편번호) — 고르면 도로명 주소 · 우편번호를 채움 */}
+                    <span className="account-address-search">
+                      <input autoComplete="street-address" placeholder="도로명 주소" value={form.billingAddress}
+                        onChange={(e) => update("billingAddress", e.target.value)} />
+                      <button
+                        type="button"
+                        className="account-address-btn"
+                        onClick={async () => {
+                          try {
+                            const picked = await openPostcode();
+                            if (!picked) return;
+                            update("billingAddress", picked.full);
+                            update("billingPostal", picked.postal);
+                          } catch {
+                            // 불러오지 못하면 직접 입력
+                          }
+                        }}
+                      >
+                        주소 검색
+                      </button>
+                    </span>
                   </label>
                   <label>
                     <span>우편번호</span>

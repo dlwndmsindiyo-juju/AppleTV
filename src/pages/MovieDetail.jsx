@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DetailBackLink from '../components/common/DetailBackLink' // [추가] 상세 공용 "← 홈으로"
 import { useMovieStore } from '../store/useMovieStore';
@@ -11,8 +11,14 @@ import AutoNext from '../components/common/AutoNext'; // [추가] 영상이 끝�
 import VideoPopup from '../components/common/VideoPopup'; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { openSubscribeGate } from '../utils/subscribeGate'; // [정리] 구독 안내 팝업 열기 공용
 import { TMDB_IMG as IMG } from '../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
-import InfoBadges from '../components/common/InfoBadges'; // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (홈 히어로와 공용)
+import InfoBadges from '../components/common/InfoBadges';
+import { openShare } from '../utils/share'; // [추가] 공유 팝업 // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (홈 히어로와 공용)
 import SelectDropdown from '../components/common/SelectDropdown'; // [추가] 지불 방법 선택 상자와 같은 디자인 (아래 선만)
+import { createPortal } from 'react-dom';
+import { BsChatDotsFill } from 'react-icons/bs';
+import { FaWhatsapp, FaFacebookF, FaRedditAlien, FaTelegramPlane } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { MdEmail } from 'react-icons/md';
 
 // =====================================================================
 // 영화 / TV 공통 상세 (Apple TV 토글의 모든 작품 상세)
@@ -141,6 +147,35 @@ export const MovieDetail = ({ type: typeProp }) => {
     logoList.find((l) => l.iso_639_1 === 'ko') ||
     logoList.find((l) => l.iso_639_1 === 'en') ||
     logoList[0];
+  // [추가] 전체보기 — 위 영상(예고편 · 이미지) 칸을 화면 가득 (브라우저 전체 화면) · 다시 누르거나 Esc 로 원래대로
+  // - 아이콘: public/icons/full-screen.svg (mask 로 써서 파일 색과 상관없이 흰색) · [수정] 버튼 위치: 영상 칸 오른쪽 위
+  // - 요소 전체 화면을 지원하지 않는 브라우저(아이폰 Safari 등)는 재생 팝업으로 대신 크게 보기
+  const mediaRef = useRef(null);
+  const [isFull, setIsFull] = useState(false);
+  useEffect(() => {
+    const onChange = () => {
+      const el = document.fullscreenElement || document.webkitFullscreenElement;
+      setIsFull(Boolean(el) && el === mediaRef.current);
+    };
+    document.addEventListener('fullscreenchange', onChange);
+    document.addEventListener('webkitfullscreenchange', onChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', onChange);
+      document.removeEventListener('webkitfullscreenchange', onChange);
+    };
+  }, []);
+  const toggleFull = () => {
+    const el = mediaRef.current;
+    if (!el) return;
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+      return;
+    }
+    const request = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (request) request.call(el);
+    else playFromHistory();
+  };
+
   // [추가] 제목 아래 정보 배지 줄 (InfoBadges · 홈 히어로와 같은 모양)
   // - Apple Original 판단: 시리즈 = 방송사 Apple TV+(2552) / 영화 = Apple Original Films · Apple Studios
   const isAppleOriginal = isTv
@@ -279,20 +314,33 @@ export const MovieDetail = ({ type: typeProp }) => {
     });
   };
 
-  // 공유하기
-  const handleShare = async () => {
-    const url = window.location.href;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title, url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        alert('링크가 복사되었습니다.');
-      }
-    } catch {
-      // 공유 취소 등은 무시
-    }
-  };
+  // [수정] 공유하기 — 기기 기본 공유 창 대신 공유 팝업 (components/common/ShareSheet.jsx)
+  const handleShare = () => openShare({ title, url: window.location.href });
+
+  useEffect(() => {
+    if (!shareOpen) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setShareOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const oldOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = oldOverflow;
+    };
+  }, [shareOpen]);
+
+  const shareOptions = [
+    { name: '메시지', icon: <BsChatDotsFill />, kind: 'message', onClick: () => { window.location.href = `sms:?body=${encodeURIComponent(shareUrl)}`; } },
+    { name: 'WhatsApp', icon: <FaWhatsapp />, kind: 'whatsapp', onClick: () => window.open(`https://wa.me/?text=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+    { name: 'Facebook', icon: <FaFacebookF />, kind: 'facebook', onClick: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+    { name: 'X', icon: <FaXTwitter />, kind: 'twitter', onClick: () => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+    { name: '이메일', icon: <MdEmail />, kind: 'email', onClick: () => { window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(shareUrl)}`; } },
+    { name: 'Reddit', icon: <FaRedditAlien />, kind: 'reddit', onClick: () => window.open(`https://www.reddit.com/submit?url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+    { name: 'Telegram', icon: <FaTelegramPlane />, kind: 'telegram', onClick: () => window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+  ];
+
 
   // (TV) 회차 재생: 회차 영상 → 없으면 작품 예고편 → 없으면 안내
   const handlePlayEpisode = async (ep) => {
@@ -375,7 +423,7 @@ export const MovieDetail = ({ type: typeProp }) => {
           <div className="left-section">
             <div className="player-box">
               {/* 상단 미디어 (트레일러 또는 배경 이미지) */}
-              <div className="player-media">
+              <div className={`player-media${isFull ? ' is-full' : ''}`} ref={mediaRef}>
                 {trailer ? (
                   <iframe
                     key={trailer.key}
@@ -392,6 +440,16 @@ export const MovieDetail = ({ type: typeProp }) => {
                     />
                   )
                 )}
+                {/* [추가] 전체보기 버튼 (영상 칸 오른쪽 아래) */}
+                <button
+                  type="button"
+                  className="btn-fullscreen"
+                  onClick={toggleFull}
+                  aria-label={isFull ? '전체 화면 닫기' : '전체 화면으로 보기'}
+                  title={isFull ? '전체 화면 닫기' : '전체보기'}
+                >
+                  <span className="btn-fullscreen-icon" aria-hidden="true" />
+                </button>
               </div>
 
               {/* 하단 정보 바 */}
@@ -667,6 +725,44 @@ export const MovieDetail = ({ type: typeProp }) => {
           <AutoNext kind={upNext.kind} title={upNext.title} image={upNext.image} onPlay={runUpNext} onCancel={() => setUpNext(null)} />
         )}
       </VideoPopup>
+
+      {/* 공유 모달은 body로 렌더링되므로 .movie-detail-page 내부 스타일에 의존하지 않습니다. */}
+      {shareOpen && createPortal(
+        <div className="movie-share-overlay" onMouseDown={(event) => {
+          if (event.target === event.currentTarget) closeShare();
+        }}>
+          <div className="movie-share-modal" role="dialog" aria-modal="true" aria-label="공유">
+            <div className="movie-share-header">
+              <h3>공유</h3>
+              <button type="button" className="movie-share-close" onClick={closeShare} aria-label="공유창 닫기">×</button>
+            </div>
+
+            <div className="movie-share-services">
+              <div className="movie-share-list">
+                {shareOptions.slice(shareStart, shareStart + 5).map((option) => (
+                  <button type="button" className="movie-share-service" key={option.name} onClick={option.onClick}>
+                    <span className={`movie-share-icon movie-share-icon--${option.kind}`} aria-hidden="true">{option.icon}</span>
+                    <span className="movie-share-name">{option.name}</span>
+                  </button>
+                ))}
+              </div>
+              {shareStart > 0 && (
+                <button type="button" className="movie-share-arrow movie-share-arrow--prev" onClick={() => setShareStart((v) => Math.max(0, v - 1))} aria-label="이전 공유 수단">‹</button>
+              )}
+              {shareStart < shareOptions.length - 5 && (
+                <button type="button" className="movie-share-arrow movie-share-arrow--next" onClick={() => setShareStart((v) => Math.min(shareOptions.length - 5, v + 1))} aria-label="다음 공유 수단">›</button>
+              )}
+            </div>
+
+            <div className="movie-share-link">
+              <span className="movie-share-url" title={shareUrl}>{shareUrl}</span>
+              <button type="button" className="movie-share-copy" onClick={handleCopy}>{copied ? '복사됨' : '복사'}</button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
     </section>
   )
 }
