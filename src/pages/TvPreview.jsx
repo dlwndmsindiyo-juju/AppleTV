@@ -15,7 +15,8 @@ import TvDetail from "../components/tv/TvDetail";
 import TvLibrary from "../components/tv/TvLibrary";
 import { useTeamStore } from "../store/useTeamStore";
 import { getTeamById } from "../data/sportTeams";
-import TvHome from "../components/tv/TvHome";
+import TvHome, { TvGenre } from "../components/tv/TvHome"; // [추가] TvGenre: 장르별 모음 → 장르 화면
+import { ottItem } from "../components/tv/tvDetailItems"; // [추가] AI 추천 → TV 상세 항목
 import "../TV.scss";
 import AiLogo from "../components/ai/AiLogo"; // [수정] AI 아이콘 공용 (빛나며 움직임 · 원본 components/ai/assets/ai-logo.svg)
 
@@ -102,17 +103,26 @@ const TvPreview = () => {
   const currentProfile = profiles.find((p) => p.id === currentProfileId);
   const onLogout = useAuthStore((s) => s.onLogout);
   const [aiOpen, setAiOpen] = useState(false); // [추가] 메뉴의 AI → AI 어시스트 팝업
+  const [aiRestore, setAiRestore] = useState(null); // [추가] AI 추천에서 상세로 갔다가 뒤로 → 보던 추천 결과 그대로 (팝업 상태 기록)
   const assistantOn = useSettings().assistant; // [추가] 계정 설정 "Apple Assistant 사용"
   // [추가] 영상 상세 페이지 (TvDetail) — 카드를 누르면 열림 · Esc 로 보던 화면으로
   const [detailItem, setDetailItem] = useState(null);
   const [detailBack, setDetailBack] = useState("home");
   // [추가] 상세에서 다른 상세(추천 · 하이라이트 등)로 넘어간 기록 — 뒤로 가면 하나씩 이전 상세로
   const [detailStack, setDetailStack] = useState([]);
-  const openDetail = (item) => {
+  // [추가] 상세를 열기 전 보던 화면에서 고르고 있던 버튼 순서 (뒤로 오면 그 카드에 다시 포커스 · 줄도 그 자리로)
+  const returnFocusRef = useRef({}); // { 화면(tab): 버튼 순서 } — 홈 → 장르 → 상세처럼 여러 번 들어가도 화면마다 기억
+  // [추가] AI 추천에서 연 상세: 뒤로 가면 AI 팝업을 보던 결과 그대로 다시 엶 (aiSnapshot · AiAssistantPopup)
+  const detailFromAiRef = useRef(null);
+  const openDetail = (item, aiSnapshot = null) => {
     if (!item) return;
     if (tab !== "detail") {
       setDetailBack(tab);
       setDetailStack([]);
+      detailFromAiRef.current = aiSnapshot;
+      const stage = stageRef.current;
+      const buttons = stage ? [...stage.querySelectorAll("button:not([disabled])")] : [];
+      if (!aiSnapshot) returnFocusRef.current[tab] = buttons.indexOf(document.activeElement); // 돌아갈 화면 · 버튼 순서
     } else if (detailItem) {
       setDetailStack((st) => [...st, detailItem]);
     }
@@ -127,6 +137,12 @@ const TvPreview = () => {
       return;
     }
     setTab(detailBack);
+    // [추가] AI 추천에서 왔으면 보던 추천 결과로 팝업 다시 열기
+    if (detailFromAiRef.current) {
+      setAiRestore(detailFromAiRef.current);
+      setAiOpen(true);
+      detailFromAiRef.current = null;
+    }
   };
   const [closedGroups, setClosedGroups] = useState({}); // [추가] 접은 메뉴 묶음 { team, settings }
   const toggleGroup = (key) => setClosedGroups((g) => ({ ...g, [key]: !g[key] }));
@@ -134,6 +150,14 @@ const TvPreview = () => {
   const favorites = useTeamStore((s) => s.favorites);
   const followedTeams = favorites.map(getTeamById).filter(Boolean);
   const teamTabId = tab.startsWith("team:") ? tab.slice(5) : null;
+  // [추가] 장르 화면 (tab: "genre:genre-sf") — 홈의 장르별 모음 카드 · Esc 로 홈(고르던 카드)으로
+  const genreId = tab.startsWith("genre:") ? tab.slice(6) : null;
+  const openGenre = (id) => {
+    const stage = stageRef.current;
+    const buttons = stage ? [...stage.querySelectorAll("button:not([disabled])")] : [];
+    returnFocusRef.current[tab] = buttons.indexOf(document.activeElement); // 돌아갈 화면 · 버튼 순서
+    setTab(`genre:${id}`);
+  };
   const screenTeam = teamTabId ? getTeamById(teamTabId) : null;
   const [query, setQuery] = useState(""); // [추가] 왼쪽 메뉴 검색창
   const [scale, setScale] = useState(1);
@@ -179,11 +203,31 @@ const TvPreview = () => {
 
   // 화면이 바뀌면 시안에서 선택된 버튼에 포커스
   // - [수정] 터치 기기는 건너뜀 (누르지 않은 카드가 커져 보이거나 화면이 저절로 밀리지 않게)
+  // - [추가] 상세에서 뒤로 왔으면 상세를 열 때 고르고 있던 카드에 다시 포커스 (데이터가 그려질 때까지 최대 약 2초 기다림)
   useEffect(() => {
-    if (isTouch) return;
+    if (isTouch) return undefined;
     const stage = stageRef.current;
-    const first = stage?.querySelector("[data-tv-autofocus]") || stage?.querySelector("button");
-    first?.focus({ preventScroll: true });
+    const target = tab !== "detail" ? returnFocusRef.current[tab] : null; // 그 화면으로 돌아왔을 때만
+    if (target == null || target < 0) {
+      const first = stage?.querySelector("[data-tv-autofocus]") || stage?.querySelector("button");
+      first?.focus({ preventScroll: true });
+      return undefined;
+    }
+    delete returnFocusRef.current[tab];
+    let tries = 0;
+    let timer = null;
+    const restore = () => {
+      const buttons = stage ? [...stage.querySelectorAll("button:not([disabled])")] : [];
+      if (buttons[target]) {
+        buttons[target].focus({ preventScroll: true });
+        buttons[target].scrollIntoView({ block: "nearest", inline: "nearest" }); // 카드 줄 · 화면을 그 카드 자리로
+        return;
+      }
+      if (tries++ < 20) timer = setTimeout(restore, 100);
+      else (stage?.querySelector("[data-tv-autofocus]") || buttons[0])?.focus({ preventScroll: true });
+    };
+    timer = setTimeout(restore, 150); // 이미 받아 둔 줄(캐시)이 다시 그려진 뒤에 찾기 (줄 순서가 밀리지 않게)
+    return () => clearTimeout(timer);
   }, [tab, isTouch]);
 
   // [수정] 리모컨 방향키 — 화면 어디에 포커스가 있어도 동작 (왼쪽 메뉴 ↔ TV 화면 사이도 이동)
@@ -207,6 +251,17 @@ const TvPreview = () => {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  // [추가] 장르 화면에서 Esc (리모컨 뒤로) → 홈 (장르 카드에 다시 포커스)
+  useEffect(() => {
+    if (!tab.startsWith("genre:")) return undefined;
+    const onKey = (e) => {
+      if (e.key !== "Escape" || document.querySelector(".subscribe-gate, .ai-popup, .video-popup")) return;
+      setTab("home");
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [tab]);
 
   // [추가] 상세 페이지에서 Esc (리모컨 뒤로) → 보던 화면으로 (팝업 · 영상이 열려 있으면 그쪽이 먼저 닫힘)
   useEffect(() => {
@@ -298,9 +353,11 @@ const TvPreview = () => {
         <p className="tv-rotate-title">기기를 가로로 돌려 주세요</p>
         <p className="tv-rotate-desc">TV 화면은 가로로 볼 때 가장 잘 보여요.</p>
       </div>
-      {/* [수정] 화면 메뉴: 아래 바 → 왼쪽 사이드 메뉴 (기본 열림 · 화살표로 닫고 열기 · 영상 재생 중에는 숨김) */}
-      {showSide && sideOpen && (
-        <aside className="tv-side" aria-label="TV 화면 메뉴">
+      {/* [수정] 화면 메뉴: 아래 바 → 왼쪽 사이드 메뉴 (기본 열림 · 화살표로 닫고 열기 · 영상 재생 중에는 숨김)
+          [수정] 닫으면 숨기지 않고 아이콘만 남은 좁은 메뉴(is-rail) — 방향키로 아이콘 · 열기 화살표까지 이동 가능
+          - 글자는 .tv-side-label 로 감싸서 좁은 메뉴에서는 화면에서만 숨김 (화면 읽기 프로그램은 그대로 읽음) · TV.scss */}
+      {showSide && (
+        <aside className={`tv-side${sideOpen ? "" : " is-rail"}`} aria-label="TV 화면 메뉴">
           <div className="tv-side-head">
             <img className="tv-side-logo" src="/icons/shorts/logo_w.svg" alt="Apple TV" />
 
@@ -320,12 +377,36 @@ const TvPreview = () => {
               </button>
             )}
 
-            <button type="button" className="tv-side-toggle" aria-label="메뉴 닫기" onClick={() => setSideOpen(false)}>
-              <img src="/icons/nav/left-nav.svg" alt="" aria-hidden="true" />
+            <button
+              type="button"
+              className="tv-side-toggle"
+              aria-label={sideOpen ? "메뉴 닫기" : "메뉴 열기"}
+              aria-expanded={sideOpen}
+              onClick={() => setSideOpen((v) => !v)}
+            >
+              <img src={sideOpen ? "/icons/nav/left-nav.svg" : "/icons/nav/right-nav.svg"} alt="" aria-hidden="true" />
             </button>
           </div>
 
-          {/* [추가] 검색창 (시안: 회색 둥근 칸 + 검색 아이콘 + Search) */}
+          {/* [추가] 좁은 메뉴: 검색칸 대신 검색 아이콘 → 누르면 메뉴를 열고 검색칸에 바로 입력 */}
+          {!sideOpen && (
+            <button
+              type="button"
+              className="tv-side-item tv-side-search-btn"
+              aria-label="검색"
+              onClick={() => {
+                setSideOpen(true);
+                requestAnimationFrame(() => document.querySelector(".tv-side-search input")?.focus());
+              }}
+            >
+              <span className="tv-side-icon" aria-hidden="true">
+                <span className="tv-side-search-icon" />
+              </span>
+            </button>
+          )}
+
+          {/* [추가] 검색창 (시안: 회색 둥근 칸 + 검색 아이콘 + Search) · 좁은 메뉴에서는 숨김 */}
+          {sideOpen && (
           <label className="tv-side-search">
             <span className="tv-side-search-icon" aria-hidden="true" />
             <input
@@ -338,6 +419,7 @@ const TvPreview = () => {
               onKeyDown={handleSearch}
             />
           </label>
+          )}
 
           {/* [수정] 메뉴를 묶음으로 (시안: Library · Apps 처럼 제목 + 접기 화살표) */}
           <nav className="tv-side-menu" role="tablist" aria-label="TV 화면">
@@ -352,7 +434,7 @@ const TvPreview = () => {
                 onClick={() => setTab(t.id)}
               >
                 <SideIcon name={t.icon} />
-                {t.label}
+                <span className="tv-side-label">{t.label}</span>
               </button>
             ))}
 
@@ -367,7 +449,7 @@ const TvPreview = () => {
               <span className="tv-side-icon" aria-hidden="true">
                 <span className="tv-side-heart-icon" />
               </span>
-              보관함
+              <span className="tv-side-label">보관함</span>
             </button>
 
             {/* AI 어시스트: 홈 섹션 대신 메뉴에서 팝업으로 · 아이콘은 그라데이션이 흐르며 반짝임 */}
@@ -377,7 +459,7 @@ const TvPreview = () => {
                 <span className="tv-side-icon tv-side-icon--ai" aria-hidden="true">
                   <AiLogo size={26} />
                 </span>
-                AI
+                <span className="tv-side-label">AI</span>
               </button>
             )}
 
@@ -385,7 +467,7 @@ const TvPreview = () => {
                 팔로우한 팀이 없으면 제목만 (누르면 스포츠 홈) */}
             <SideGroup
               title="관심구단"
-              open={!closedGroups.team}
+              open={!sideOpen || !closedGroups.team} // [수정] 좁은 메뉴에서는 묶음 제목 없이 아이콘만 항상 보임
               empty={followedTeams.length === 0}
               onToggle={() => (followedTeams.length ? toggleGroup("team") : setTab("sport"))}
             >
@@ -401,13 +483,13 @@ const TvPreview = () => {
                   <span className="tv-side-icon" aria-hidden="true">
                     <span className="tv-side-star-icon" />
                   </span>
-                  {t.name}
+                  <span className="tv-side-label">{t.name}</span>
                 </button>
               ))}
             </SideGroup>
 
             {/* 설정 묶음 — 프로필 변경 · 이용 안내 · 웹 화면으로 · 로그아웃(로그인했을 때만) */}
-            <SideGroup title="설정" open={!closedGroups.settings} onToggle={() => toggleGroup("settings")}>
+            <SideGroup title="설정" open={!sideOpen || !closedGroups.settings} onToggle={() => toggleGroup("settings")}>
               <button
                 type="button"
                 role="tab"
@@ -416,7 +498,7 @@ const TvPreview = () => {
                 onClick={() => (user ? setTab("profiles") : goLogin())}
               >
                 <SideIcon name="tv-family-icon.svg" />
-                프로필 변경
+                <span className="tv-side-label">프로필 변경</span>
               </button>
               <button
                 type="button"
@@ -426,11 +508,11 @@ const TvPreview = () => {
                 onClick={() => setTab("terms")}
               >
                 <SideIcon name="tv-apple-tv-icon.svg" />
-                이용 안내
+                <span className="tv-side-label">이용 안내</span>
               </button>
               <button type="button" className="tv-side-item" onClick={exit}>
                 <SideIcon name="tv-show-icon.svg" />
-                웹 화면으로
+                <span className="tv-side-label">웹 화면으로</span>
               </button>
               {user && (
                 <button type="button" className="tv-side-item tv-side-logout" onClick={handleLogout}>
@@ -441,7 +523,7 @@ const TvPreview = () => {
           </nav>
 
           {/* 안내 — PC: 리모컨(방향키) / [추가] 태블릿 · 휴대폰: 손가락 터치 */}
-          {isTouch ? (
+          {!sideOpen ? null : isTouch ? (
             <p className="tv-side-guide">
               손가락으로 이용해 주세요
               <span>눌러서 선택하고, 카드 줄은 옆으로 · 화면은 위아래로 밀어서 이동</span>
@@ -456,11 +538,7 @@ const TvPreview = () => {
         </aside>
       )}
 
-      {showSide && !sideOpen && (
-        <button type="button" className="tv-side-toggle tv-side-open" aria-label="메뉴 열기" onClick={() => setSideOpen(true)}>
-          <img src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-        </button>
-      )}
+      {/* [삭제] 메뉴를 닫았을 때 TV 화면 위에 떠 있던 열기 화살표 → 좁은 메뉴(is-rail) 안의 화살표로 (방향키로 갈 수 있음) */}
 
       <div className="tv-preview-area" ref={areaRef}>
         <div
@@ -503,7 +581,8 @@ const TvPreview = () => {
                 }}
               />
             )}
-            {tab === "home" && <TvHome onMenu={setTab} onDetail={openDetail} />}
+            {tab === "home" && <TvHome onMenu={setTab} onDetail={openDetail} onGenre={openGenre} />}
+            {genreId && <TvGenre key={genreId} id={genreId} onMenu={setTab} onDetail={openDetail} />}
             {tab === "sport" && <TvSportHome onMenu={setTab} onDetail={openDetail} />}
             {tab === "library" && <TvLibrary onMenu={setTab} onDetail={openDetail} />}
             {tab === "detail" && detailItem && <TvDetail key={detailItem.key || detailItem.title} item={detailItem} onOpen={openDetail} onBack={closeDetail} />}
@@ -516,7 +595,19 @@ const TvPreview = () => {
       <SubscribeGate onLogin={goLogin} />
 
       {/* [추가] AI 어시스트 팝업 (웹과 같은 팝업) */}
-      {aiOpen && assistantOn && <AiAssistantPopup onClose={() => setAiOpen(false)} />}
+      {/* [수정] TV: 결과 카드 전체가 버튼 (+ 없음) · 방향키 이동 · Enter 로 TV 상세 (웹 주소로 나가지 않음)
+          · 상세에서 뒤로 오면 보던 결과 그대로 (restoreState) */}
+      {aiOpen && assistantOn && (
+        <AiAssistantPopup
+          tv
+          restoreState={aiRestore}
+          onOpenDetail={(r, snapshot) => openDetail(ottItem({ title: r.title, ...r.detail, id: r.id }, r.type), snapshot)}
+          onClose={() => {
+            setAiOpen(false);
+            setAiRestore(null);
+          }}
+        />
+      )}
     </div>
   );
 };

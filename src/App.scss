@@ -1158,7 +1158,9 @@ header {
     }
   }
 
-  .top10-card:hover {
+  // [수정] 키보드(Tab)로 골라도 마우스를 올린 것과 같게 — 줄거리 · 평점 정보가 보이고 흰 테두리
+  .top10-card:hover,
+  .top10-card:focus-visible {
     .top10-hover {
       opacity: 1;
     }
@@ -1649,7 +1651,9 @@ header {
       cursor: pointer;
       transition: background-color 0.2s ease;
 
-      &:hover {
+      // [수정] 키보드(Tab)로 골라도 마우스를 올린 것과 같게 (재생 아이콘 보임)
+      &:hover,
+      &:focus-visible {
         background-color: $bg-surface-raised;
 
         .thumb-play {
@@ -8450,7 +8454,8 @@ section.device-guide.device-guide--watch {
     animation: watch-marquee var(--marquee-duration) linear infinite;
   }
 
-  .watch-marquee:hover .watch-track {
+  .watch-marquee:hover .watch-track,
+.watch-marquee:focus-within .watch-track {
     animation-play-state: paused;
   }
 
@@ -12056,4 +12061,14 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
   .share-modal {
     animation: none;
   }
+}
+
+// =====================================================================
+// [추가] 키보드 포커스 기본 표시 — 키보드(Tab)로 고른 링크 · 버튼 · 카드가 어디인지 항상 보이게
+// - 따로 포커스 모양을 정한 곳(각 컴포넌트의 :focus-visible)이 있으면 그쪽이 우선 (여기는 기본값)
+// - 마우스로 누를 때는 보이지 않음 (:focus-visible) · 입력 칸은 각 칸의 테두리 표시를 그대로 씀
+// =====================================================================
+:where(a[href], button, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 0.125rem solid $primary-color-400;
+  outline-offset: 0.125rem;
 }
