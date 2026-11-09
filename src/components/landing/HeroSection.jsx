@@ -6,6 +6,7 @@ import { useMovieStore } from "../../store/useMovieStore";
 import { useWish } from "../../store/useHeartStore"; // 위시리스트 (찜)
 import { shortGenres } from "../member/useContentInfo";
 import { loadYouTubeApi } from "../common/youtubeApi"; // [정리] YouTube API 불러오기 공용
+import InfoBadges from "../common/InfoBadges"; // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (상세와 공용)
 import { HeroSkeleton } from "../common/Skeleton"; // [추가] 로딩 뼈대 (화면 형태 먼저)
 import { useHeroReady, preloadImage } from "../../store/useHeroReady"; // [추가] 히어로 먼저 → 아래 섹션
 
@@ -355,6 +356,9 @@ const HeroItem = ({ tv, active, onVideoLoad, onVideoStart, onVideoEnd }) => {
             <li key={g} className="hero-chip">{g}</li>
           ))}
         </ul>
+
+        {/* [추가] 평점(5점 만점) + 화질 · 자막 배지 — 상세 페이지와 같은 줄 (히어로는 모두 Apple TV+ 오리지널) */}
+        <InfoBadges type="tv" id={tv.id} voteAverage={tv.vote_average} apple className="hero-info-badges" />
 
         {tv.overview && <p className="hero-overview">{tv.overview}</p>}
 

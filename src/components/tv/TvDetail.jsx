@@ -342,7 +342,7 @@ const OttDetail = ({ item, onOpen }) => {
     ["장르", genres.join(", ")],
     [item.type === "tv" ? "첫 방영" : "개봉", detail?.release_date || detail?.first_air_date],
     item.type === "tv" ? ["시즌", detail?.number_of_seasons ? `${detail.number_of_seasons}개 시즌` : ""] : ["러닝타임", detail?.runtime ? `${detail.runtime}분` : ""],
-    ["평점", detail?.vote_average ? `★ ${detail.vote_average.toFixed(1)}` : ""],
+    ["평점", detail?.vote_average ? `★ ${(detail.vote_average / 2).toFixed(1)} / 5` : ""], // [수정] 10점 → 5점 만점
     ["출연", cast.slice(0, 3).map((c) => c.name).join(", ")],
   ].filter(([, v]) => v);
 
