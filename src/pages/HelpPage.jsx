@@ -10,12 +10,12 @@ import { HELP_LINKS, HELP_PAGES } from "../data/helpData";
 
 const HelpPage = ({ page = "faq" }) => {
   const data = HELP_PAGES[page] || HELP_PAGES.faq;
-  const [openSet, setOpenSet] = useState(() => new Set([0]));
+  const [openSet, setOpenSet] = useState(() => new Set());
   const itemRefs = useRef([]);
 
   // 다른 도움말 페이지로 이동하면 첫 질문만 열고 맨 위로
   useEffect(() => {
-    setOpenSet(new Set([0]));
+    setOpenSet(new Set());
     window.scrollTo(0, 0);
   }, [page]);
 
