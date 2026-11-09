@@ -304,6 +304,12 @@ $tv-type-sizes: (
 
   .tv-desc {
     margin-top: 3.875rem;
+    max-width: none; // [추가] 860 폭 제한을 풀어서 한 문장이 중간에 또 꺾이지 않게
+
+    // [추가] 안내 문장마다 한 줄씩 끊어서 (TvScreens.jsx 의 <span> 하나 = 한 문장)
+    span {
+      display: block;
+    }
   }
 
   .tv-actions {
