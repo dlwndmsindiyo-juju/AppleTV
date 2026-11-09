@@ -10,8 +10,23 @@ import { TvActionButtons } from "./TvActions";
 // - bg: 배경 이미지 (스포츠는 경기장 · OTT 는 작품 가로 이미지)
 // - actions: TvActionButtons 와 같은 모양 · info: "정보" 버튼을 눌렀을 때 보이는 내용 (없으면 숨김)
 // - focusOn: 값이 바뀌면 "시청하기" 에 포커스 (다른 상세로 바뀔 때)
+// - [추가] 아래 줄에서 방향키 ↑ 로 히어로 버튼에 돌아오면 화면을 맨 위로 올려 히어로 전체가 보이게
+//   (예전: 포커스만 버튼으로 오고 화면은 아래에 머물러 히어로가 안 보였음)
+// - [수정] 카드의 scrollIntoView 가 TV 화면 바깥 칸(.tv-preview-area 등 · overflow hidden 이어도 밀림)까지
+//   밀어 둔 경우가 있어서, TV 화면부터 미리보기 틀까지 모두 맨 위로 되돌림
+//   (예전: TV 화면만 올려서 ↑ 를 눌러도 버튼 줄에서 멈추고 히어로 위쪽이 안 보였음)
+export const scrollScreenTop = (e) => {
+  const screen = e.currentTarget.closest(".tv-screen");
+  if (!screen) return;
+  for (let el = screen.parentElement; el && !el.classList.contains("tv-preview"); el = el.parentElement) {
+    if (el.scrollTop) el.scrollTop = 0;
+    if (el.scrollLeft) el.scrollLeft = 0;
+  }
+  if (screen.scrollTop > 0) screen.scrollTo({ top: 0, behavior: "smooth" });
+};
+
 export const TvDetailHero = ({ title, subtitle, desc, bg, actions, info, focusOn, notice }) => (
-  <section className="tv-detail-hero" aria-label={title}>
+  <section className="tv-detail-hero" aria-label={title} onFocus={scrollScreenTop}>
     <div className="tv-detail-hero-bg" style={bg ? { backgroundImage: `url(${bg})` } : undefined} aria-hidden="true" />
     <div className="tv-detail-hero-overlay" aria-hidden="true" />
 
