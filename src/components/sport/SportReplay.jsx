@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, A11y } from "swiper/modules"; // [수정] A11y: 키보드(Tab)로 화면 밖 카드를 고르면 그 카드가 보이게 밀어 줌
 import "swiper/css";
 import "swiper/css/navigation";
 import { useSportStore } from "../../store/useSportStore";
@@ -42,7 +42,7 @@ const SportReplay = () => {
         ) : (
           <Swiper
             className="sport-replay-swiper"
-            modules={[Navigation]}
+            modules={[Navigation, A11y]}
             navigation
             grabCursor
             slidesPerView="auto"

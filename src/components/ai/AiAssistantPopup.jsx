@@ -15,6 +15,8 @@ import "./AiAssistantPopup.scss";
 import { useAuthStore, isSubscribed } from "../../store/useAuthStore"; // [추가] 구독 전에는 취향을 고르면 구독 안내 팝업
 import { openSubscribeGate } from "../../utils/subscribeGate";
 import { saveResumeIntent } from "../../utils/resumeIntent"; // [추가] 로그인 · 구독 후 고르려던 칩으로 돌아오기
+import { saveAiReturn } from "../../utils/aiReturn"; // [추가] 웹: 상세에서 뒤로 오면 보던 추천 결과로
+import { findNext } from "../tv/tvFocus"; // [추가] TV: 방향키로 팝업 안 버튼 이동
 
 const emptyPreferences = (taste) => ({
   genres: [],
@@ -58,7 +60,10 @@ function ResultLink({ item, children, onOpen, busy, disabled, className = "", ..
 // [추가] requireSubscription: 구독 전(로그인 전 포함) 계정이 취향 버튼을 누르면 이 팝업을 닫고 "구독 후 이용해주세요." 팝업
 //   · 로그인 전: [계정 만들기] → 로그인 화면 / 로그인했지만 구독 전: [구독하기] → 구독 팝업 (components/layout/SubscribeGate.jsx)
 // [추가] resumePick: { step, value } — 로그인 · 구독 전에 고르려던 칩 (열리면 그 단계에서 그 칩을 골라 둔 상태)
-export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, requireSubscription = false, resumePick = null }) {
+// [추가] tv: TV 화면용 — 결과 카드 전체가 하나의 버튼(+ 없음) · 방향키로 이동 · Enter(리모컨 확인)로 상세
+// [추가] onOpenDetail(r, snapshot): 있으면 웹 주소로 이동하지 않고 이 함수로 상세를 엶 (TV) · r = { type, id, title, detail }
+// [추가] restoreState: 상세에서 뒤로 왔을 때 보던 추천 결과 그대로 (snapshot) — 고른 작품 카드에 포커스
+export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, requireSubscription = false, resumePick = null, tv = false, onOpenDetail = null, restoreState = null }) {
   const gateUser = useAuthStore((s) => s.user);
   const blocked = requireSubscription && !isSubscribed(gateUser);
   // stepIndex: 몇 번째 단계의 칩인지 (돌아왔을 때 같은 단계에서 다시 시작)
@@ -80,16 +85,17 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
   const requestRef = useRef(null);
   const titleId = useId();
   const descriptionId = useId();
-  const [preferences, setPreferences] = useState(() => emptyPreferences(initialTaste));
-  const [screen, setScreen] = useState("preferences");
+  const rs = restoreState; // [추가] 뒤로 왔을 때 보던 결과
+  const [preferences, setPreferences] = useState(() => rs?.preferences || emptyPreferences(initialTaste));
+  const [screen, setScreen] = useState(rs ? "results" : "preferences");
   const [step, setStep] = useState(0);
-  const [results, setResults] = useState([]);
-  const [marked, setMarked] = useState([]);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(false);
-  const [expanded, setExpanded] = useState(false);
-  const [total, setTotal] = useState(0);
-  const [exactTotal, setExactTotal] = useState(0);
+  const [results, setResults] = useState(() => rs?.results || []);
+  const [marked, setMarked] = useState(() => rs?.marked || []);
+  const [page, setPage] = useState(rs?.page || 0);
+  const [hasMore, setHasMore] = useState(Boolean(rs?.hasMore));
+  const [expanded, setExpanded] = useState(Boolean(rs?.expanded));
+  const [total, setTotal] = useState(rs?.total || 0);
+  const [exactTotal, setExactTotal] = useState(rs?.exactTotal || 0);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const complete = preferences.genres.length > 0 && preferences.duration;
@@ -111,7 +117,12 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
     document.body.style.overflow = "hidden";
     // Native modal: 배경을 inert 처리하고 Tab 포커스를 팝업 안에 유지합니다.
     dialog.showModal();
-    headingRef.current?.focus();
+    // [수정] 뒤로 왔으면 고르려던 작품 카드에 포커스 · 아니면 제목
+    const back = rs?.focusId != null && dialog.querySelector(`[data-ai-id="${CSS.escape(String(rs.focusId))}"]`);
+    if (back) {
+      back.focus();
+      back.scrollIntoView({ block: "nearest" });
+    } else headingRef.current?.focus();
     const trapFocus = (event) => {
       if (event.key !== "Tab") return;
       const nodes = [...dialog.querySelectorAll('a[href], button:not([disabled]), [tabindex="0"]')];
@@ -124,8 +135,21 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
       }
     };
     dialog.addEventListener("keydown", trapFocus);
+    // [추가] TV: 방향키로 팝업 안 버튼 사이 이동 (TV 화면의 방향키 이동은 팝업이 열려 있으면 멈춤)
+    const moveFocus = (event) => {
+      if (!tv || !["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) return;
+      event.preventDefault();
+      const current = dialog.contains(document.activeElement) && document.activeElement.tagName === "BUTTON" ? document.activeElement : null;
+      const next = findNext(dialog, current, event.key);
+      if (next) {
+        next.focus({ preventScroll: true });
+        next.scrollIntoView({ block: "nearest" });
+      }
+    };
+    dialog.addEventListener("keydown", moveFocus);
     return () => {
       dialog.removeEventListener("keydown", trapFocus);
+      dialog.removeEventListener("keydown", moveFocus);
       requestRef.current?.abort();
       detailRequestRef.current?.abort();
       dialog.close();
@@ -177,12 +201,29 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
     }
   }
 
+  // [추가] 지금 보고 있는 추천 결과 (상세에서 뒤로 왔을 때 그대로 다시 보여 주기)
+  const snapshotOf = (item) => ({ preferences, results, marked, page, hasMore, expanded, total, exactTotal, focusId: item.id });
+
+  // [추가] 상세 열기 — TV: onOpenDetail · 웹: 주소 이동 (+ 뒤로 오면 다시 열 결과 저장)
+  function goDetail(item, type, id, detail = null) {
+    const snapshot = snapshotOf(item);
+    if (onOpenDetail) {
+      onOpenDetail({ type, id, title: item.title, detail }, snapshot);
+    } else {
+      saveAiReturn(`${window.location.pathname}${window.location.search}`, snapshot);
+      navigate(`/${type}/${id}`);
+    }
+    onClose();
+  }
+
   async function openResult(item) {
     if (openingId) return;
     setError("");
     // 외부 onRecommend가 이미 유효한 내부 상세 경로를 준 경우 그대로 사용합니다.
-    if (item.detailPath && /^\/(tv|movie)\/\d+(?:[?#].*)?$/.test(item.detailPath)) {
-      navigate(item.detailPath); onClose(); return;
+    const pathMatch = item.detailPath?.match(/^\/(tv|movie)\/(\d+)(?:[?#].*)?$/);
+    if (pathMatch) {
+      goDetail(item, pathMatch[1], Number(pathMatch[2]));
+      return;
     }
     const controller = new AbortController();
     detailRequestRef.current?.abort();
@@ -201,8 +242,7 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
           ...state.contentDetails, [`${match.type}_${match.id}`]: match.detail,
         }
       }));
-      navigate(`/${match.type}/${match.id}`);
-      onClose();
+      goDetail(item, match.type, match.id, match.detail); // [수정] TV · 웹 공통 (뒤로 오면 보던 결과로)
     } catch (err) {
       if (err.name !== "AbortError") setError("상세 정보를 불러오지 못했어요. 다시 눌러 주세요.");
     } finally {
@@ -280,8 +320,21 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
             ? `연관 추천 포함 ${total}개 · 시간과 분위기 차이를 확인해 주세요.`
             : `선택한 취향과 일치하는 작품 ${total}개`}</p>}
           <ul className="ai-popup-results" aria-label="추천 작품" aria-busy={loading} >
-            {results.map((item) => <li key={item.id} className="ai-popup-result">
-              <ResultLink item={item} onOpen={openResult} busy={openingId === item.id} disabled={Boolean(openingId)} aria-label={`${item.title} 자세히 보기`} className="ai-popup-poster"><img src={item.poster} alt={item.title} /></ResultLink>
+            {results.map((item) => tv ? (
+              // [추가] TV: 카드 전체가 버튼 하나 (+ 관심 표시 없음) · 방향키로 고르고 Enter(리모컨 확인)로 상세
+              <li key={item.id} className="ai-popup-result is-tv">
+                <ResultLink item={item} onOpen={openResult} busy={openingId === item.id} disabled={Boolean(openingId)} aria-label={`${item.title} 자세히 보기`} className="ai-popup-result-card" data-ai-id={item.id}>
+                  <span className="ai-popup-poster"><img src={item.poster} alt="" /></span>
+                  <span className="ai-popup-result-copy">
+                    <span className="ai-popup-result-heading"><span className="ai-popup-result-title">{item.title}</span></span>
+                    <span className="ai-popup-result-genre">{item.genre}{item.runtimeText && ` · ${item.runtimeText}`}</span>
+                    {item.exactMatch === false && <span className="ai-popup-match-note">연관 추천 · {item.relaxations?.map(value => `${value} 다름`).join(" · ")}</span>}
+                    <span className="ai-popup-result-overview">{item.overview}</span>
+                  </span>
+                </ResultLink>
+              </li>
+            ) : <li key={item.id} className="ai-popup-result">
+              <ResultLink item={item} onOpen={openResult} busy={openingId === item.id} disabled={Boolean(openingId)} aria-label={`${item.title} 자세히 보기`} className="ai-popup-poster" data-ai-id={item.id}><img src={item.poster} alt={item.title} /></ResultLink>
               <div className="ai-popup-result-copy">
                 <div className="ai-popup-result-heading"><ResultLink item={item} onOpen={openResult} busy={openingId === item.id} disabled={Boolean(openingId)}>{item.title}</ResultLink>
                   <button type="button" className="ai-popup-icon-button" aria-label={`${item.title} 관심 표시`} aria-pressed={marked.includes(item.id)} onClick={() => setMarked((prev) => prev.includes(item.id) ? prev.filter((id) => id !== item.id) : [...prev, item.id])}><img src={marked.includes(item.id) ? checkIcon : plusIcon} alt="" /></button>
