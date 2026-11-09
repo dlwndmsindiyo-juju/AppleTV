@@ -11192,7 +11192,7 @@ main.hero-revealed > :not(.hero-swiper-container):not(.sport-hero) {
   line-height: 1.2;
 }
 .info-badges.hero-info-badges {
-  margin: -0.5rem 0 0.75rem;
+  margin: 0.75rem 0;
 }
 
 .share-dim {
