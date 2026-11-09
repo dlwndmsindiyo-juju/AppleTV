@@ -9,7 +9,7 @@
 // - [수정] 추천 · 최신작 · 공개 예정: 세로 포스터 나열 (숏폼 카드 정도 크기) · 장르별 제목으로 나눔
 //   · 장르는 작품의 첫 번째 장르 (TMDB genre_ids · memberUtils 의 TV_GENRES / MOVIE_GENRES) · 없으면 "기타"
 //   · [수정] 이어보기도 같은 포스터 · 포스터 맨 아래 시청 진행 바 (숏폼 진행 바와 같은 모양) · 누르면 멈춘 곳부터 재생
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import "../member.scss";
 import { useAuthStore } from "../store/useAuthStore";
@@ -20,12 +20,60 @@ import { useNewReleaseItems } from "../components/member/NewRelease";
 import { useComingSoonItems } from "../components/member/ComingSoon";
 import { img, detailPath, TV_GENRES, MOVIE_GENRES } from "../components/member/memberUtils";
 import DetailBackLink from "../components/common/DetailBackLink"; // [추가] 상세 공용 "← 홈으로" (같은 자리)
+import { POSTER_SHELVES, BROWSE_LIMIT } from "../data/posterShelves"; // [추가] TMDB 섹션 전체 보기 (모든 영화 · 장르별 모음 등)
+import { loadShelf } from "../components/member/posterShelfData";
 
 const PAGES = {
   continue: { title: "이어보기", empty: "아직 시청 내역이 없습니다." },
   recommend: { title: "Apple 추천" },
   new: { title: "최신작" },
   soon: { title: "공개 예정" },
+};
+
+// [추가] TMDB 섹션(data/posterShelves.js) 전체 보기 — /browse/all-movies · /browse/genre-sf 등
+// - 다른 전체 보기와 같은 구성(제목 + 포스터 목록) · 장르 페이지 · 섞인 목록은 "영화" · "시리즈" 로 나눔
+const shelfPage = (key) => {
+  const shelf = POSTER_SHELVES[key];
+  return shelf ? { title: shelf.title, shelf: true } : null;
+};
+
+const ShelfGrid = ({ id }) => {
+  const [items, setItems] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    setItems(null);
+    loadShelf(id, BROWSE_LIMIT)
+      .then((list) => alive && setItems(list))
+      .catch(() => alive && setItems([]));
+    return () => {
+      alive = false;
+    };
+  }, [id]);
+
+  if (items === null) return <p className="member-empty">보여드릴 작품을 불러오는 중입니다…</p>;
+  if (items.length === 0) return <p className="member-empty">작품을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</p>;
+
+  const rows = [
+    { genre: "영화", entries: items.filter((r) => r.media_type !== "tv") },
+    { genre: "시리즈", entries: items.filter((r) => r.media_type === "tv") },
+  ].filter((r) => r.entries.length);
+
+  return (
+    <div className="member-browse-genres">
+      {rows.map(({ genre, entries }) => (
+        <section className="member-browse-genre" key={genre} aria-label={genre}>
+          {rows.length > 1 && <h2 className="member-browse-genre-title">{genre}</h2>}
+          <ul className="member-browse-posters">
+            {entries.map((item) => (
+              <li key={`${item.media_type}_${item.id}`}>
+                <BrowsePoster item={item} type={item.media_type === "tv" ? "tv" : "movie"} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  );
 };
 
 const ALL = Infinity;
@@ -144,7 +192,7 @@ const MemberBrowse = () => {
     window.scrollTo(0, 0);
   }, [key]);
 
-  const page = PAGES[key];
+  const page = PAGES[key] || shelfPage(key); // [수정] TMDB 섹션 전체 보기도
   if (!page) return <Navigate to="/" replace />;
   if (!authReady) return <main className="member-home member-browse" />;
   if (!user) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
@@ -161,7 +209,7 @@ const MemberBrowse = () => {
             </div>
           </div>
 
-          <BrowseGrid kind={key} />
+          {page.shelf ? <ShelfGrid id={key} /> : <BrowseGrid kind={key} />}
         </div>
       </section>
     </main>
