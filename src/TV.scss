@@ -2,6 +2,8 @@
 @use "sass:meta";
 @use "sass:list";
 @use "sass:string";
+@use "sass:map";
+@use "sass:math";
 
 // =====================================================================
 // [추가] TV 디자인 글자 위계 — 태블릿 · 휴대폰(눕혀서 보기)만 한두 단계 큰 글자 변수로 (PC 는 그대로)
@@ -1489,6 +1491,7 @@ $tv-type-sizes: (
   display: -webkit-box;
   overflow: hidden;
   color: $light-color-500;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   line-height: 1.15rem;
   font-size: 14px;

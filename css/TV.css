@@ -1322,6 +1322,7 @@
   display: -webkit-box;
   overflow: hidden;
   color: #C8C8C8;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   line-height: 1.15rem;
   font-size: 14px;
@@ -2361,6 +2362,58 @@
 }
 .tv-screen.tv-detail::-webkit-scrollbar {
   display: none;
+}
+
+.tv-screen.tv-detail {
+  position: relative;
+}
+
+.tv-screen .tv-detail-back {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+  letter-spacing: 0;
+}
+:where(.tv-preview.is-tablet .tv-preview-stage) .tv-screen .tv-detail-back {
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
+}
+:where(.tv-preview.is-phone .tv-preview-stage) .tv-screen .tv-detail-back {
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
+}
+.tv-screen .tv-detail-back {
+  position: absolute;
+  top: 3.5rem;
+  left: 11.25rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 4rem;
+  padding: 0 2rem 0 1.5rem;
+  border-radius: 62.4375rem;
+  background-color: rgba(245, 245, 245, 0.4);
+  color: #FFFFFF;
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.tv-screen .tv-detail-back:hover, .tv-screen .tv-detail-back:focus-visible, .tv-screen .tv-detail-back.is-focused {
+  outline: none;
+  background-color: #FFFFFF;
+  color: #171717;
+  transform: scale(1.05);
+}
+
+.tv-detail-back-icon {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/nav/left-nav.svg") center/contain no-repeat;
+  mask: url("/icons/nav/left-nav.svg") center/contain no-repeat;
 }
 
 .tv-detail-hero {
