@@ -13,6 +13,11 @@ import { openSubscribeGate } from '../utils/subscribeGate'; // [정리] 구독 �
 import { TMDB_IMG as IMG } from '../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
 import InfoBadges from '../components/common/InfoBadges'; // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (홈 히어로와 공용)
 import SelectDropdown from '../components/common/SelectDropdown'; // [추가] 지불 방법 선택 상자와 같은 디자인 (아래 선만)
+import { createPortal } from 'react-dom';
+import { BsChatDotsFill } from 'react-icons/bs';
+import { FaWhatsapp, FaFacebookF, FaRedditAlien, FaTelegramPlane } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { MdEmail } from 'react-icons/md';
 
 // =====================================================================
 // 영화 / TV 공통 상세 (Apple TV 토글의 모든 작품 상세)
@@ -279,20 +284,54 @@ export const MovieDetail = ({ type: typeProp }) => {
     });
   };
 
-  // 공유하기
-  const handleShare = async () => {
-    const url = window.location.href;
+  // 공유 모달: 운영체제 기본 공유창 대신 사이트 자체 팝업 사용
+  const [shareOpen, setShareOpen] = useState(false);
+  const [shareStart, setShareStart] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+  const handleShare = () => {
+    setShareStart(0);
+    setCopied(false);
+    setShareOpen(true);
+  };
+
+  const closeShare = () => setShareOpen(false);
+
+  const handleCopy = async () => {
     try {
-      if (navigator.share) {
-        await navigator.share({ title, url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        alert('링크가 복사되었습니다.');
-      }
-    } catch {
-      // 공유 취소 등은 무시
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+    } catch (error) {
+      console.error('링크 복사 실패:', error);
+      window.prompt('아래 링크를 복사하세요.', shareUrl);
     }
   };
+
+  useEffect(() => {
+    if (!shareOpen) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setShareOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const oldOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = oldOverflow;
+    };
+  }, [shareOpen]);
+
+  const shareOptions = [
+    { name: '메시지', icon: <BsChatDotsFill />, kind: 'message', onClick: () => { window.location.href = `sms:?body=${encodeURIComponent(shareUrl)}`; } },
+    { name: 'WhatsApp', icon: <FaWhatsapp />, kind: 'whatsapp', onClick: () => window.open(`https://wa.me/?text=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+    { name: 'Facebook', icon: <FaFacebookF />, kind: 'facebook', onClick: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+    { name: 'X', icon: <FaXTwitter />, kind: 'twitter', onClick: () => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+    { name: '이메일', icon: <MdEmail />, kind: 'email', onClick: () => { window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(shareUrl)}`; } },
+    { name: 'Reddit', icon: <FaRedditAlien />, kind: 'reddit', onClick: () => window.open(`https://www.reddit.com/submit?url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+    { name: 'Telegram', icon: <FaTelegramPlane />, kind: 'telegram', onClick: () => window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer') },
+  ];
+
 
   // (TV) 회차 재생: 회차 영상 → 없으면 작품 예고편 → 없으면 안내
   const handlePlayEpisode = async (ep) => {
@@ -667,6 +706,44 @@ export const MovieDetail = ({ type: typeProp }) => {
           <AutoNext kind={upNext.kind} title={upNext.title} image={upNext.image} onPlay={runUpNext} onCancel={() => setUpNext(null)} />
         )}
       </VideoPopup>
+
+      {/* 공유 모달은 body로 렌더링되므로 .movie-detail-page 내부 스타일에 의존하지 않습니다. */}
+      {shareOpen && createPortal(
+        <div className="movie-share-overlay" onMouseDown={(event) => {
+          if (event.target === event.currentTarget) closeShare();
+        }}>
+          <div className="movie-share-modal" role="dialog" aria-modal="true" aria-label="공유">
+            <div className="movie-share-header">
+              <h3>공유</h3>
+              <button type="button" className="movie-share-close" onClick={closeShare} aria-label="공유창 닫기">×</button>
+            </div>
+
+            <div className="movie-share-services">
+              <div className="movie-share-list">
+                {shareOptions.slice(shareStart, shareStart + 5).map((option) => (
+                  <button type="button" className="movie-share-service" key={option.name} onClick={option.onClick}>
+                    <span className={`movie-share-icon movie-share-icon--${option.kind}`} aria-hidden="true">{option.icon}</span>
+                    <span className="movie-share-name">{option.name}</span>
+                  </button>
+                ))}
+              </div>
+              {shareStart > 0 && (
+                <button type="button" className="movie-share-arrow movie-share-arrow--prev" onClick={() => setShareStart((v) => Math.max(0, v - 1))} aria-label="이전 공유 수단">‹</button>
+              )}
+              {shareStart < shareOptions.length - 5 && (
+                <button type="button" className="movie-share-arrow movie-share-arrow--next" onClick={() => setShareStart((v) => Math.min(shareOptions.length - 5, v + 1))} aria-label="다음 공유 수단">›</button>
+              )}
+            </div>
+
+            <div className="movie-share-link">
+              <span className="movie-share-url" title={shareUrl}>{shareUrl}</span>
+              <button type="button" className="movie-share-copy" onClick={handleCopy}>{copied ? '복사됨' : '복사'}</button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
     </section>
   )
 }

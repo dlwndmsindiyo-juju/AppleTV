@@ -1835,6 +1835,245 @@ header {
 }
 
 
+// 공유 모달 
+.movie-share-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-xl;
+  background: $opacity-b-55;
+}
+
+.movie-share-modal {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 560px;
+  padding: 28px 30px 36px;
+  background: $light-color-0;
+  color: $dark-color-900;
+  border-radius: $radius-md;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+
+  button {
+    font-family: inherit;
+  }
+
+  .movie-share-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    h3 {
+      margin: 0;
+      padding: 0;
+      @include heading-h2;
+      color: $dark-color-900;
+    }
+  }
+
+  .movie-share-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: $dark-color-900;
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .movie-share-services {
+    position: relative;
+    margin-bottom: $space-2xl;
+  }
+
+  .movie-share-list {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: $space-sm;
+  }
+
+  .movie-share-service {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-md;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .movie-share-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(68px, 100%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    color: $light-color-0;
+    @include display-l;
+    transition: transform 0.2s ease;
+
+    &--message {
+      background: #f4f7ff;
+      color: #1761e8;
+    }
+
+    &--whatsapp {
+      background: #20ce63;
+    }
+
+    &--facebook {
+      background: #3b5998;
+    }
+
+    &--twitter {
+      background: #000;
+    }
+
+    &--email {
+      background: #8e8e8e;
+    }
+
+    &--reddit {
+      background: #ff4500;
+    }
+
+    &--telegram {
+      background: #229ed9;
+    }
+  }
+
+  .movie-share-service:hover .movie-share-icon {
+    transform: scale(1.07);
+  }
+
+  .movie-share-name {
+    @include body-small;
+    color: $dark-color-500;
+    white-space: nowrap;
+  }
+
+  .movie-share-arrow {
+    position: absolute;
+    top: 16px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid $light-color-400;
+    border-radius: 50%;
+    background: $light-color-0;
+    color: $dark-color-900;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+
+    &--prev {
+      left: -18px;
+    }
+
+    &--next {
+      right: -18px;
+    }
+
+    &:hover {
+      background: $light-color-100;
+    }
+  }
+
+  .movie-share-link {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    height: 64px;
+    padding: 8px 10px 8px 20px;
+    border: 1px solid $light-color-400;
+    border-radius: $radius-card-sm;
+  }
+
+  .movie-share-url {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    @include body-default;
+    color: $dark-color-400;
+  }
+
+  .movie-share-copy {
+    flex-shrink: 0;
+    min-width: 64px;
+    height: 42px;
+    padding: 0 $space-lg;
+    border: 1px solid $light-color-400;
+    border-radius: $radius-lg;
+    background: $light-color-0;
+    color: $dark-color-900;
+    @include body-default;
+    cursor: pointer;
+
+    &:hover {
+      background: $light-color-100;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .movie-share-overlay {
+    padding: $space-lg;
+  }
+
+  .movie-share-modal {
+    padding: 24px 18px 28px;
+
+    .movie-share-list {
+      gap: $base-unit;
+    }
+
+    .movie-share-icon {
+      @include heading-h2;
+    }
+
+    .movie-share-name {
+      @include caption-default;
+    }
+
+    .movie-share-arrow {
+      top: 10px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .movie-share-link {
+      height: 58px;
+      padding-left: 12px;
+    }
+
+    .movie-share-url {
+      @include label-default;
+    }
+  }
+}
+
+
+
+
+
 
 // ===== AI 어시스턴트 안내 띠 (로그인 전 메인 · 시안) =====
 // - 바깥 section 은 페이지 배경, 안쪽 .ai-promo-band 가 화면 전체 폭 회색 띠
@@ -5631,6 +5870,46 @@ img.ui-icon.ui-icon-arrow {
     transform: translate(-50%, 1rem);
   }
 }
+
+// 청구 주소 검색
+.sub-address-search-row {
+  display: flex;
+  align-items: stretch;
+  gap: $base-unit;
+  min-width: 0;
+
+  .sub-field-input {
+    flex: 1;
+    min-width: 0;
+    cursor: pointer;
+  }
+}
+
+.sub-address-search-btn {
+  flex-shrink: 0;
+  padding: $space-xs $space-md;
+  border: 0;
+  border-radius: $radius-xs;
+  background: $primary-color-500;
+  color: $light-color-0;
+  font: inherit;
+  @include body-small-m;
+  cursor: pointer;
+
+  &:hover {
+    background: $primary-color-400;
+  }
+}
+
+.sub-address-postcode {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: $radius-xs;
+  background: $light-color-0;
+  margin: $base-unit 0 $space-md;
+}
+
 
 // (태블릿 · 모바일 규칙은 mobile.scss 로 옮김)
 

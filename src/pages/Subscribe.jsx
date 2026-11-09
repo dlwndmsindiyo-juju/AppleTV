@@ -20,6 +20,7 @@ import { useAuthStore, isSubscribed, getPayments, PAYMENT_MAX } from "../store/u
 import { KOREA_REGIONS, SIDO_LIST } from "../data/koreaRegions";
 import { PRIVACY_URL } from "../data/appleLinks";
 import { CARD_BRANDS } from "../components/profile/AccountShared"; // [추가] 카드사 (계정 설정 지불 방법에 카드사 로고로 보임)
+import DaumPostcode from "react-daum-postcode";
 
 const AUTH_PATHS = ["/login", "/subscribe"];
 const TERMS_URL = "https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html";
@@ -313,10 +314,48 @@ const Check = ({ checked, onChange, strong, children }) => (
   </label>
 );
 
-// [추가] 청구 주소 칸 묶음 (지불 방법 등록 · 계정 설정 청구 주소 팝업 공용)
+// 청구 주소 검색: 기존 form.road / sido / sigungu / postal 상태를 그대로 사용
 const BillingSection = ({ form, setForm, bad, children }) => {
+  const [postcodeOpen, setPostcodeOpen] = useState(false);
   const set = (key) => (value) => setForm((f) => ({ ...f, [key]: value }));
   const sigunguList = KOREA_REGIONS[form.sido] || [];
+
+  const handleAddressComplete = (data) => {
+    const fullAddress = data.roadAddress || data.address || "";
+    const apiSido = data.sido || "";
+    const apiSigungu = data.sigungu || "";
+
+    // 검색 API의 시/도 표기(예: '서울')를 프로젝트 선택지(예: '서울특별시')로 변환
+    const sidoAliases = {
+      서울: "서울특별시", 부산: "부산광역시", 대구: "대구광역시",
+      인천: "인천광역시", 광주: "광주광역시", 대전: "대전광역시",
+      울산: "울산광역시", 세종: "세종특별자치시", 경기: "경기도",
+      강원: "강원특별자치도", 충북: "충청북도", 충남: "충청남도",
+      전북: "전북특별자치도", 전남: "전라남도", 경북: "경상북도",
+      경남: "경상남도", 제주: "제주특별자치도",
+    };
+    const mappedSido = sidoAliases[apiSido] || apiSido;
+    const sido = SIDO_LIST.find((name) => name === mappedSido || name === apiSido)
+      || SIDO_LIST.find((name) => name.startsWith(apiSido) && apiSido)
+      || mappedSido;
+
+    // 전체 도로명주소에서 시/도 및 시/군/구를 빼고 저장 (toBilling에서 다시 합침)
+    let road = fullAddress;
+    for (const prefix of [apiSido, apiSigungu]) {
+      if (prefix && road.startsWith(`${prefix} `)) road = road.slice(prefix.length).trimStart();
+    }
+
+    setForm((prev) => ({
+      ...prev,
+      road,
+      sido,
+      sigungu: apiSigungu,
+      postal: data.zonecode || "",
+      detail: "",
+    }));
+    setPostcodeOpen(false);
+  };
+
   return (
     <section className="sub-section">
       <h2 className="sub-section-title">청구 주소</h2>
@@ -330,21 +369,37 @@ const BillingSection = ({ form, setForm, bad, children }) => {
             value={form.firstName} onChange={(e) => set("firstName")(e.target.value)} />
         </Field>
       </div>
+
       <Field label="도로명 주소" invalid={bad("road")}>
-        <input className="sub-field-input" autoComplete="address-line1" placeholder="도로명과 건물번호" maxLength={100}
-          value={form.road} onChange={(e) => set("road")(e.target.value)} />
+        <div className="sub-address-search-row">
+          <input className="sub-field-input" autoComplete="address-line1"
+            placeholder="주소 검색을 눌러주세요" value={form.road} readOnly
+            onClick={() => setPostcodeOpen(true)} />
+          <button type="button" className="sub-address-search-btn"
+            onClick={() => setPostcodeOpen((open) => !open)}>
+            {postcodeOpen ? "닫기" : "주소 검색"}
+          </button>
+        </div>
       </Field>
+      {postcodeOpen && (
+        <div className="sub-address-postcode" onKeyDown={(e) => e.stopPropagation()}>
+          <DaumPostcode onComplete={handleAddressComplete} autoClose={false}
+            style={{ width: "100%", height: "420px" }} />
+        </div>
+      )}
       <Field label="상세 주소">
         <input className="sub-field-input" autoComplete="address-line2" placeholder="동·호수 등 (선택)" maxLength={100}
           value={form.detail} onChange={(e) => set("detail")(e.target.value)} />
       </Field>
       <div className="sub-row">
-        <Dropdown label="시/도" invalid={bad("sido")} value={form.sido} placeholder="시/도 선택" options={SIDO_LIST} onChange={(v) => setForm((f) => ({ ...f, sido: v, sigungu: "" }))} />
-        <Dropdown label="시/군/구" invalid={bad("sigungu")} value={form.sigungu} placeholder="시/군/구 선택" options={sigunguList} onChange={set("sigungu")} disabled={!form.sido} />
+        <Dropdown label="시/도" invalid={bad("sido")} value={form.sido} placeholder="시/도 선택" options={SIDO_LIST}
+          onChange={(v) => setForm((f) => ({ ...f, sido: v, sigungu: "" }))} />
+        <Dropdown label="시/군/구" invalid={bad("sigungu")} value={form.sigungu} placeholder="시/군/구 선택"
+          options={sigunguList} onChange={set("sigungu")} disabled={!form.sido} />
       </div>
       <Field label="우편번호" invalid={bad("postal")}>
-        <input className="sub-field-input" inputMode="numeric" autoComplete="postal-code" placeholder="우편번호 입력"
-          value={form.postal} onChange={(e) => set("postal")(digits(e.target.value).slice(0, 5))} />
+        <input className="sub-field-input" autoComplete="postal-code" placeholder="주소 검색 시 자동 입력"
+          value={form.postal} readOnly onClick={() => setPostcodeOpen(true)} />
       </Field>
       {children}
     </section>
@@ -519,58 +574,58 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
           </section>
 
           {!cardOnly && (<>
-          <BillingSection form={form} setForm={setForm} bad={bad} />
+            <BillingSection form={form} setForm={setForm} bad={bad} />
 
-          <section className="sub-section">
-            <h2 className="sub-section-title">신원 확인</h2>
-            <p className="sub-section-desc">결제수단 등록을 위해 본인 확인이 필요합니다. 이동통신사에 등록된 정보와 동일하게 입력해 주세요.</p>
-            <a className="sub-small-link" href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">본인 확인에 대해 알아보기</a>
-            <Field label="이름" invalid={bad("idName")}>
-              <input className="sub-field-input" autoComplete="name" placeholder="이동통신사에 등록된 이름" maxLength={30}
-                value={form.idName} onChange={(e) => set("idName")(e.target.value)} />
-            </Field>
-            <Field label="생년월일" invalid={bad("birth")}>
-              <input className="sub-field-input" inputMode="numeric" autoComplete="bday" placeholder="YYYY/MM/DD"
-                value={form.birth} onChange={(e) => set("birth")(fmtBirth(e.target.value))} />
-            </Field>
-          </section>
-
-          <section className="sub-section">
-            <h2 className="sub-section-title">이동통신사 정보</h2>
-            <Dropdown label="이동통신사" invalid={bad("carrier")} value={form.carrier} placeholder="이동통신사 선택" options={CARRIERS} onChange={set("carrier")} />
-            <Field label="휴대폰 번호" invalid={bad("phone")}>
-              <input className="sub-field-input" type="tel" inputMode="numeric" autoComplete="tel" placeholder="010-0000-0000"
-                value={form.phone} onChange={(e) => set("phone")(fmtPhone(e.target.value))} />
-            </Field>
-            <div className="sub-row">
-              <Dropdown label="국적" invalid={bad("nationality")} value={form.nationality} placeholder="국적 선택" options={NATIONALITIES} onChange={set("nationality")} />
-              <Dropdown label="성별" invalid={bad("gender")} value={form.gender} placeholder="성별 선택" options={GENDERS} onChange={set("gender")} />
-            </div>
-          </section>
-
-          <section className="sub-section">
-            <h2 className="sub-section-title">개인정보 보호 및 이용약관</h2>
-            <p className="sub-section-desc">입력한 내용을 확인하고 필수 약관에 동의해 주세요.</p>
-            <div className={`sub-checks${bad("terms") ? " is-invalid" : ""}`}>
-              <Check checked={allTerms} onChange={setAllTerms} strong>필수 약관에 모두 동의합니다.</Check>
-              {TERMS.map((t) => (
-                <Check key={t.key} checked={form.terms[t.key]} onChange={setTerm(t.key)}>{t.label}</Check>
-              ))}
-            </div>
-            <a className="sub-small-link" href={TERMS_URL} target="_blank" rel="noopener noreferrer">약관 상세 보기</a>
-          </section>
-
-          <p className="sub-note">아래 &apos;확인 코드 보내기&apos;를 누르면 입력한 휴대폰으로 본인 확인 코드가 전송됩니다.</p>
-
-          {codeSent && (
-            <section className="sub-section sub-section--code">
-              <Field label="확인 코드">
-                <input className="sub-field-input" inputMode="numeric" autoComplete="one-time-code" placeholder="6자리 숫자"
-                  value={code} onChange={(e) => setCode(digits(e.target.value).slice(0, 6))} autoFocus />
+            <section className="sub-section">
+              <h2 className="sub-section-title">신원 확인</h2>
+              <p className="sub-section-desc">결제수단 등록을 위해 본인 확인이 필요합니다. 이동통신사에 등록된 정보와 동일하게 입력해 주세요.</p>
+              <a className="sub-small-link" href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">본인 확인에 대해 알아보기</a>
+              <Field label="이름" invalid={bad("idName")}>
+                <input className="sub-field-input" autoComplete="name" placeholder="이동통신사에 등록된 이름" maxLength={30}
+                  value={form.idName} onChange={(e) => set("idName")(e.target.value)} />
               </Field>
-              <p className="sub-note">입력한 휴대폰 번호로 확인 코드를 보냈어요. (데모 화면: 6자리 숫자를 입력하면 확인됩니다)</p>
+              <Field label="생년월일" invalid={bad("birth")}>
+                <input className="sub-field-input" inputMode="numeric" autoComplete="bday" placeholder="YYYY/MM/DD"
+                  value={form.birth} onChange={(e) => set("birth")(fmtBirth(e.target.value))} />
+              </Field>
             </section>
-          )}
+
+            <section className="sub-section">
+              <h2 className="sub-section-title">이동통신사 정보</h2>
+              <Dropdown label="이동통신사" invalid={bad("carrier")} value={form.carrier} placeholder="이동통신사 선택" options={CARRIERS} onChange={set("carrier")} />
+              <Field label="휴대폰 번호" invalid={bad("phone")}>
+                <input className="sub-field-input" type="tel" inputMode="numeric" autoComplete="tel" placeholder="010-0000-0000"
+                  value={form.phone} onChange={(e) => set("phone")(fmtPhone(e.target.value))} />
+              </Field>
+              <div className="sub-row">
+                <Dropdown label="국적" invalid={bad("nationality")} value={form.nationality} placeholder="국적 선택" options={NATIONALITIES} onChange={set("nationality")} />
+                <Dropdown label="성별" invalid={bad("gender")} value={form.gender} placeholder="성별 선택" options={GENDERS} onChange={set("gender")} />
+              </div>
+            </section>
+
+            <section className="sub-section">
+              <h2 className="sub-section-title">개인정보 보호 및 이용약관</h2>
+              <p className="sub-section-desc">입력한 내용을 확인하고 필수 약관에 동의해 주세요.</p>
+              <div className={`sub-checks${bad("terms") ? " is-invalid" : ""}`}>
+                <Check checked={allTerms} onChange={setAllTerms} strong>필수 약관에 모두 동의합니다.</Check>
+                {TERMS.map((t) => (
+                  <Check key={t.key} checked={form.terms[t.key]} onChange={setTerm(t.key)}>{t.label}</Check>
+                ))}
+              </div>
+              <a className="sub-small-link" href={TERMS_URL} target="_blank" rel="noopener noreferrer">약관 상세 보기</a>
+            </section>
+
+            <p className="sub-note">아래 &apos;확인 코드 보내기&apos;를 누르면 입력한 휴대폰으로 본인 확인 코드가 전송됩니다.</p>
+
+            {codeSent && (
+              <section className="sub-section sub-section--code">
+                <Field label="확인 코드">
+                  <input className="sub-field-input" inputMode="numeric" autoComplete="one-time-code" placeholder="6자리 숫자"
+                    value={code} onChange={(e) => setCode(digits(e.target.value).slice(0, 6))} autoFocus />
+                </Field>
+                <p className="sub-note">입력한 휴대폰 번호로 확인 코드를 보냈어요. (데모 화면: 6자리 숫자를 입력하면 확인됩니다)</p>
+              </section>
+            )}
           </>)}
 
           {error && <p className="sub-error" role="alert">{error}</p>}
@@ -780,6 +835,7 @@ export const PaymentRegisterPopup = ({ onClose, onSaved }) => {
       <PaymentForm onBack={onClose} onClose={onClose} onSaved={onSaved} onBusyChange={setBusy} cardOnly />
     </SubModal>
   );
+
 };
 
 // =====================================================================
