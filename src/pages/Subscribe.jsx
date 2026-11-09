@@ -21,7 +21,6 @@ import { useAuthStore, isSubscribed, getPayments, PAYMENT_MAX } from "../store/u
 import { KOREA_REGIONS, SIDO_LIST } from "../data/koreaRegions";
 import { PRIVACY_URL } from "../data/appleLinks";
 import { CARD_BRANDS } from "../components/profile/AccountShared"; // [추가] 카드사 (계정 설정 지불 방법에 카드사 로고로 보임)
-import DaumPostcode from "react-daum-postcode";
 
 const AUTH_PATHS = ["/login", "/subscribe"];
 const TERMS_URL = "https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html";
