@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import { Navigation, Pagination, Autoplay, EffectFade, A11y } from "swiper/modules"; // [수정] A11y: 키보드(Tab)로 화면 밖 카드를 고르면 그 카드가 보이게 밀어 줌
 import { useMovieStore } from "../../store/useMovieStore";
 import { useWish } from "../../store/useHeartStore"; // 위시리스트 (찜)
 import { shortGenres } from "../member/useContentInfo";
@@ -448,7 +448,7 @@ const HeroSection = () => {
       {/* [추가] 배경 이미지를 받는 동안 뼈대를 위에 덮어 둠 → 받으면 서서히 사라짐 */}
       <HeroSkeleton className={`is-overlay${imageReady ? " is-done" : ""}`} />
       <Swiper
-        modules={[Navigation, Pagination, Autoplay, EffectFade]}
+        modules={[Navigation, Pagination, Autoplay, EffectFade, A11y]}
         effect="fade"
         fadeEffect={{ crossFade: true }}
         slidesPerView={1}
