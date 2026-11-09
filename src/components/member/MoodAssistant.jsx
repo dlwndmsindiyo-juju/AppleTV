@@ -12,7 +12,7 @@ import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 �
 
 // AI 어시스트 — 시안: 기분 칩 → 안내 바(취향 더 반영하기) → 가로형 카드 4장 슬라이드
 // - 작품: 기분별 Apple TV+ 시리즈 + 영화를 번갈아 섞음 (store/moodRecommendations.mjs)
-// - 썸네일 안 문구: 작품 소개 한 줄(tagline)만 · 없으면 표시하지 않음
+// - 썸네일 안 문구: [수정] 모든 카드에 표시 — TMDB 소개 한 줄(tagline) → 없으면 MOOD_TAGLINES → 그래도 없으면 줄거리 첫 문장
 // - 설명 줄: "{키워드 · 장르} · {시리즈|영화} · {Apple Original 또는 다른 장르}" (useContentInfo)
 // - 링크: 시청 기록이 있으면 "이어보기"(멈춘 곳부터 재생 ?play=1), 없으면 "상세 보기"
 
@@ -101,6 +101,56 @@ const MOOD_ARTWORK_BY_TITLE = new Map(
   ),
 );
 
+// [추가] TMDB 에 한국어 소개 한 줄(tagline)이 없는 작품용 문구 — 영문 원제 기준
+const MOOD_TAGLINES = Object.fromEntries(
+  Object.entries({
+    // 시리즈
+    "Silo": "지하 144층, 진실은 바깥에 있다.",
+    "Dark Matter": "선택하지 않은 삶이 문을 두드린다.",
+    "Severance": "회사의 나와 집의 나, 기억이 나뉘었다.",
+    "Foundation": "무너지는 제국, 인류를 구할 계획.",
+    "Slow Horses": "낙오자 요원들의 반격이 시작된다.",
+    "Murderbot": "사람은 싫지만 지켜야 하는 경비 로봇.",
+    "Ted Lasso": "축구는 몰라도 사람은 믿는 감독.",
+    "Shrinking": "상처 입은 상담사의 솔직한 처방.",
+    "Acapulco": "꿈의 리조트에서 시작된 인생 역전.",
+    "Loot": "억만장자, 진짜 하고 싶은 일을 찾다.",
+    "Stick": "한물간 골프 선수, 천재 소년을 만나다.",
+    "Platonic": "다시 만난 오랜 친구, 다시 시작된 소동.",
+    "The Studio": "할리우드 스튜디오 수장의 좌충우돌.",
+    "Mythic Quest": "게임보다 더 시끄러운 개발 스튜디오.",
+    "Carpool Karaoke: The Series": "차 안에서 펼쳐지는 스타들의 라이브.",
+    "See": "시력을 잃은 세상, 보는 아이들이 태어나다.",
+    "Monarch: Legacy of Monsters": "괴수의 흔적을 쫓는 3대의 비밀.",
+    "Criminal Record": "오래된 사건을 두고 맞선 두 형사.",
+    // 영화
+    "F1": "다시 트랙에 선 베테랑 레이서.",
+    "The Gorge": "협곡을 사이에 둔 두 저격수.",
+    "Ghosted": "첫 데이트 상대가 비밀 요원이었다.",
+    "CODA": "가족의 목소리가 된 소녀, 자신의 노래를 찾다.",
+    "Finch": "마지막 남은 남자와 로봇, 그리고 개.",
+    "The Lost Bus": "산불 한가운데 갇힌 스쿨버스.",
+    "Fly Me to the Moon": "달 착륙, 플랜 B가 필요하다.",
+    "Wolfs": "같은 현장에 불려 온 두 해결사.",
+    "The Instigators": "엉망이 된 강도 계획, 도망치는 두 남자.",
+    "Greyhound": "대서양 한가운데, 호위함의 48시간.",
+    "Emancipation": "자유를 향한 늪지대의 탈주.",
+    "Napoleon": "황제의 야망과 사랑, 그리고 전쟁.",
+  }).map(([title, line]) => [normalizeMoodTitle(title), line]),
+);
+
+// [추가] 썸네일 문구 — TMDB tagline → MOOD_TAGLINES → 줄거리 첫 문장 (항상 한 줄은 나오게)
+const getMoodTagline = (item, info) => {
+  const tmdb = (item.tagline || info?.tagline || "").trim();
+  if (tmdb) return tmdb;
+  for (const title of [item.original_name, item.original_title, item.name, item.title]) {
+    const line = MOOD_TAGLINES[normalizeMoodTitle(title || "")];
+    if (line) return line;
+  }
+  const firstSentence = (item.overview || "").trim().split(/(?<=[.!?。])\s/)[0];
+  return firstSentence || "지금 Apple TV에서 만나보세요.";
+};
+
 const getMoodArtwork = (tv) => {
   for (const title of [tv.name, tv.original_name, tv.title, tv.original_title]) {
     const artwork = MOOD_ARTWORK_BY_TITLE.get(
@@ -118,7 +168,7 @@ const AiCard = ({ item, history }) => {
   const type = item.media_type === "movie" ? "movie" : "tv";
   const title = item.title || item.name;
   const info = useContentInfo(type, item.id);
-  const tagline = (item.tagline || info?.tagline || "").trim();
+  const tagline = getMoodTagline(item, info); // [수정] 모든 카드에 문구 표시
   const resumable = isResumable(history);
   const path = detailPath(type, item.id);
   const artwork = getMoodArtwork(item);

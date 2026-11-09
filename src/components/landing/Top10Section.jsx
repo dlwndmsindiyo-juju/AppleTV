@@ -99,7 +99,7 @@ const Top10Section = () => {
                   <div className="top10-hover">
                     <strong className="top10-movie-title">{tv.name}</strong>
                     <span className="top10-rating">
-                      ★ {tv.vote_average ? tv.vote_average.toFixed(1) : "-"}
+                      ★ {tv.vote_average ? (tv.vote_average / 2).toFixed(1) : "-"} {/* [수정] 10점 → 5점 만점 */}
                     </span>
                   </div>
                 </div>
