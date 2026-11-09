@@ -8679,6 +8679,7 @@ section.device-guide.device-guide--watch .watch-device img {
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-title .hero-title-logo {
   display: none;
+  margin-bottom: 2rem;
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo {
   margin-bottom: 1.5rem;
@@ -11028,8 +11029,8 @@ main.hero-revealed > :not(.hero-swiper-container):not(.sport-hero) {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.375rem;
-  margin: 0.2rem 0 0.2rem;
-  padding: 0.1rem 0;
+  margin: 0.2rem 0 0.1rem;
+  padding: 0;
   list-style: none;
 }
 .info-badges .info-score {
@@ -11087,5 +11088,5 @@ main.hero-revealed > :not(.hero-swiper-container):not(.sport-hero) {
   line-height: 1.2;
 }
 .info-badges.hero-info-badges {
-  margin: -0.5rem 0 0.75rem;
+  margin: 0.2rem 0 0.5rem;
 }
