@@ -132,9 +132,22 @@ export const MovieDetail = ({ type: typeProp }) => {
     runtime && `${runtime}분`,
   ].filter(Boolean).join(' · ');
 
+  // [수정] 타이틀 로고 — 한국어 → 영어 → 첫 로고 순 (홈 히어로와 같은 순서)
+  // - 색은 CSS 에서 항상 흰색(light-0 #FFFFFF)으로 바꿔서 표시 (App.scss .title-logo)
+  //   예전: 검정 로고(예: 슬로 호시스)가 그대로 나와 어두운 배경에 묻혔음
+  const logoList = detail?.images?.logos || [];
   const logo =
-    detail?.images?.logos?.find((l) => l.iso_639_1 === 'ko') ||
-    detail?.images?.logos?.[0];
+    logoList.find((l) => l.iso_639_1 === 'ko') ||
+    logoList.find((l) => l.iso_639_1 === 'en') ||
+    logoList[0];
+  // [추가] 제목 아래 정보 배지 줄 — 시안(Apple TV 상세)의 "평점 · 4K · HDR10+ · CC · AD"
+  // - 평점: TMDB vote_average(10점) → 5점 만점 (아래 "작품 평점"과 같은 값)
+  // - 4K · HDR10+ · CC · AD: TMDB 에는 화질 · 자막 · 화면 해설 정보가 없음
+  //   → Apple Original(시리즈: 방송사 Apple TV+ 2552 / 영화: Apple Original Films · Apple Studios) 작품에만 고정으로 표시
+  const isAppleOriginal = isTv
+    ? Boolean(detail?.networks?.some((n) => n.id === 2552))
+    : Boolean(detail?.production_companies?.some((c) => [151347, 194232].includes(c.id)));
+  const infoBadges = isAppleOriginal ? ['4K', 'HDR10+', 'CC', 'AD'] : [];
   const cast = detail?.credits?.cast?.slice(0, 21) || [];
   const similar = detail?.similar?.results?.filter((m) => m.poster_path) || [];
 
@@ -397,6 +410,20 @@ export const MovieDetail = ({ type: typeProp }) => {
                     <h2 className="title">{title}</h2>
                   )}
                   <p className="genres">{metaText}</p>
+                  {/* [추가] 평점(5점 만점) + 화질 · 자막 배지 */}
+                  {(item?.vote_average > 0 || infoBadges.length > 0) && (
+                    <ul className="info-badges" aria-label="작품 정보">
+                      {item?.vote_average > 0 && (
+                        <li className="info-score" aria-label={`평점 5점 만점에 ${score}점`}>
+                          <RatingStar filled className="info-score-star" />
+                          {score}
+                        </li>
+                      )}
+                      {infoBadges.map((b) => (
+                        <li key={b} className="info-badge">{b}</li>
+                      ))}
+                    </ul>
+                  )}
                   <p className="overview">{item?.overview || '줄거리 정보가 없습니다.'}</p>
                 </div>
 
