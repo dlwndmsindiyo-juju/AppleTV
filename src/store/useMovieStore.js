@@ -1,3 +1,4 @@
+import { showToast } from "../utils/toast"; // [추가] 공개 알림 켜기 · 끄기 토스트
 import { create } from "zustand";
 import { fetchMoodRecommendations } from "./moodRecommendations.mjs";
 
@@ -362,19 +363,55 @@ export const useMovieStore = create((set, get) => ({
   },
 
   // 공개 알림 설정 (키: "tv_123" / "movie_456")
+  // - [추가] meta: { title, poster_path, backdrop_path, date } — 계정 설정 "알림 설정한 콘텐츠" 목록에 보여 줄 정보 (alarmItems)
+  // - [추가] 켜고 끌 때 토스트 ("…공개 알림을 설정했어요." / "…알림을 해제했어요.")
   alarms: loadLocal("alarms"),
-  onToggleAlarm: (key) => {
-    const { alarms } = get();
-    const next = alarms.includes(key)
-      ? alarms.filter((k) => k !== key)
-      : [...alarms, key];
+  alarmItems: loadLocalObject("alarmItems"),
+  onToggleAlarm: (key, meta = null) => {
+    const { alarms, alarmItems } = get();
+    const on = !alarms.includes(key);
+    const next = on ? [...alarms, key] : alarms.filter((k) => k !== key);
+    const items = { ...alarmItems };
+    if (on) items[key] = { ...(items[key] || {}), ...(meta || {}), addedAt: Date.now() };
+    else delete items[key];
     saveLocal("alarms", next);
-    set({ alarms: next });
+    saveLocal("alarmItems", items);
+    set({ alarms: next, alarmItems: items });
+    const name = meta?.title || items[key]?.title || alarmItems[key]?.title;
+    showToast(
+      on ? `${name ? `'${name}' ` : ""}공개 알림을 설정했어요.` : `${name ? `'${name}' ` : ""}공개 알림을 해제했어요.`,
+      { icon: on ? "bell" : "bell-off" },
+    );
+  },
+
+  // [추가] 내가 남긴 평점 (키: "movie_123" / "tv_456" → { score, title, savedAt }) · localStorage 에 유지
+  // - 처음 남기면 "평점을 남겼어요." · 다시 남기면 "평점을 수정했어요." 토스트
+  myRatings: loadLocalObject("myRatings"),
+  onSaveRating: (key, score, title = "") => {
+    const { myRatings } = get();
+    const edited = Boolean(myRatings[key]);
+    const next = { ...myRatings, [key]: { score, title, savedAt: Date.now() } };
+    saveLocal("myRatings", next);
+    set({ myRatings: next });
+    showToast(
+      edited ? `평점을 ${score}점으로 수정했어요.` : `${title ? `'${title}'에 ` : ""}${score}점 평점을 남겼어요.`,
+      { icon: "star" },
+    );
   },
 }));
 
 
 // [추가] 로그인 후 메인 페이지용 헬퍼 (function 은 호이스팅되어 위쪽 store 에서 사용 가능)
+// [추가] 객체로 저장한 값 (알림 설정한 콘텐츠 정보 등) · 없으면 {}
+function loadLocalObject(key) {
+  try {
+    const v = JSON.parse(localStorage.getItem(key));
+    return v && typeof v === "object" && !Array.isArray(v) ? v : {};
+  } catch {
+    return {};
+  }
+}
+
 function loadLocal(key) {
   try {
     return JSON.parse(localStorage.getItem(key)) || [];
