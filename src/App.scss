@@ -6723,7 +6723,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 // 항목 사이는 위 gap 으로만 (계정 설정 섹션과 같은 간격)
-.account-sub-body:not(.account-pay) > .account-item {
+.account-sub-body:not(.account-pay)>.account-item {
   margin-bottom: 0;
 }
 
@@ -8486,7 +8486,6 @@ section.device-guide.device-guide--watch {
 
   .watch-subtitle {
     @include display-M;
-    margin: 0 0 $space-lg 0;
     padding-top: 0;
     color: $light-color-0;
     word-break: keep-all;
@@ -8494,25 +8493,6 @@ section.device-guide.device-guide--watch {
 
   .watch-subtitle-mobile {
     display: none
-  }
-
-  .watch-link {
-    @include body-large-b;
-    display: inline-flex;
-    align-items: center;
-    gap: $space-xs;
-    margin-top: $space-lg;
-    color: $primary-color-500;
-    text-decoration: none;
-
-    &:hover {
-      color: $primary-color-400;
-    }
-  }
-
-  .watch-link-arrow {
-    font-size: 1.2em;
-    line-height: 1;
   }
 
   .watch-devices {
@@ -9847,7 +9827,6 @@ section.device-guide.device-guide--watch {
 
     .watch-subtitle {
       @include heading-h2;
-      margin-bottom: $watch-gap-text-link;
     }
 
     .watch-devices {
@@ -9857,7 +9836,7 @@ section.device-guide.device-guide--watch {
   }
 }
 
-section.device-guide.device-guide--watch .watch-link {
+section.device-guide.device-guide--watch {
   margin-top: 0;
 }
 
@@ -10792,7 +10771,7 @@ $sub-pop-surface: $dark-color-300; // [추가] 팝업(Dark/400) 위 카드 · �
   flex-direction: column;
   gap: $space-md;
 
-  & + & {
+  &+& {
     margin-top: $space-3xl;
   }
 }
@@ -10958,7 +10937,8 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
   gap: $space-xs;
   width: 100%;
   min-height: calc(#{$sub-field-height} - 0.125rem); // 테두리 안쪽 (입력 칸과 같은 높이)
-  padding: $space-md ($space-lg + $space-xl) $space-md $space-lg;
+  padding: $space-md (
+    $space-lg + $space-xl) $space-md $space-lg;
   border: none;
   outline: none;
   background: none;
@@ -10977,17 +10957,18 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
     right: $space-lg;
     width: $space-lg;
     height: $space-lg;
-    margin-top: -($space-lg * 0.5);
-    background-color: $light-color-0;
-    -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
-    mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
-    transform: rotate(-90deg);
-    transition: transform 0.2s ease;
-  }
+    margin-top: -($space-lg * 0.5
+    );
+  background-color: $light-color-0;
+  -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  transform: rotate(-90deg);
+  transition: transform 0.2s ease;
+}
 
-  .is-open > &::after {
-    transform: rotate(90deg);
-  }
+.is-open>&::after {
+  transform: rotate(90deg);
+}
 }
 
 .sub-select-value {
@@ -11017,7 +10998,7 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
   scrollbar-width: thin;
   scrollbar-color: $dark-color-200 transparent;
 
-  li + li {
+  li+li {
     border-top: 0.0625rem solid $dark-color-200;
   }
 }
@@ -11801,7 +11782,7 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
 
   // 홈 히어로: 칩 줄 아래 · 줄거리 위
   &.hero-info-badges {
-    margin: (-$space-sm) 0 $space-md;
+    margin: $space-md 0;
   }
 }
 
@@ -12070,6 +12051,7 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .share-dim,
   .share-modal {
     animation: none;

@@ -2,6 +2,8 @@
 @use "sass:meta";
 @use "sass:list";
 @use "sass:string";
+@use "sass:map";
+@use "sass:math";
 
 // =====================================================================
 // [추가] TV 디자인 글자 위계 — 태블릿 · 휴대폰(눕혀서 보기)만 한두 단계 큰 글자 변수로 (PC 는 그대로)
@@ -48,8 +50,8 @@ $tv-type-step-phone: 3;
   $base: list.nth($parts, 1);
   $suffix: list.nth($parts, 2);
 
-  @if map-has-key($tv-type-alias, $base) {
-    $base: map-get($tv-type-alias, $base);
+  @if map.has-key($tv-type-alias, $base) {
+    $base: map.get($tv-type-alias, $base);
   }
 
   $i: list.index($tv-type-ladder, $base);
@@ -59,7 +61,7 @@ $tv-type-step-phone: 3;
   }
 
   // 큰 제목 · TV 전용 변수는 그대로
-  $next: list.nth($tv-type-ladder, math-min($i + $steps, list.length($tv-type-ladder)));
+  $next: list.nth($tv-type-ladder, math.min($i + $steps, list.length($tv-type-ladder)));
   $candidate: "#{$next}#{$suffix}";
 
   @if meta.mixin-exists($candidate) {
@@ -71,10 +73,6 @@ $tv-type-step-phone: 3;
   }
 
   @return "#{$next}";
-}
-
-@function math-min($a, $b) {
-  @return if($a < $b, $a, $b);
 }
 
 // 단계별 글자 크기 · 줄 높이 (_variables.scss 글자 변수와 같은 값)
@@ -94,7 +92,7 @@ $tv-type-sizes: (
 
 @mixin tv-type-size($name) {
   $base: list.nth(tv-type-split($name), 1);
-  $v: map-get($tv-type-sizes, $base);
+  $v: map.get($tv-type-sizes, $base);
   font-size: list.nth($v, 1);
   line-height: list.nth($v, 2);
 }
@@ -1489,6 +1487,7 @@ $tv-type-sizes: (
   display: -webkit-box;
   overflow: hidden;
   color: $light-color-500;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   line-height: 1.15rem;
   font-size: 14px;

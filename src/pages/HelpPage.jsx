@@ -4,14 +4,38 @@
 // 2) 카드 3개 (01 · 02 · 03): 누르면 아래 목록의 해당 질문을 펼치고 그 자리로 부드럽게 이동
 // 3) 펼침 목록: 질문을 누르면 답변이 열리고 닫힘 (∨ / ∧) · 첫 질문은 열린 채로 시작 · 여러 개 함께 열 수 있음
 // - 데이터: data/helpData.js · 스타일: help.scss
+// - [추가] 히어로 아래 "← 돌아가기" (public/icons/nav/left-nav.svg) — 푸터 메뉴를 누르기 전에 보던 페이지 · 스크롤 위치로
+//   돌아갈 곳은 Footer.jsx 가 주소 state(returnTo)로 넘김 · 도움말끼리 오가도 유지 · 주소로 바로 들어왔으면 홈으로
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HELP_LINKS, HELP_PAGES } from "../data/helpData";
 
 const HelpPage = ({ page = "faq" }) => {
   const data = HELP_PAGES[page] || HELP_PAGES.faq;
   const [openSet, setOpenSet] = useState(() => new Set());
   const itemRefs = useRef([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const returnTo = location.state?.returnTo; // { path, scrollY } · 없으면 홈
+
+  // [추가] 돌아가기: 보던 페이지로 이동한 뒤, 내용이 다 그려지면 보던 스크롤 위치로 (최대 약 2초 기다림)
+  const goBack = () => {
+    const path = returnTo?.path || "/";
+    const y = returnTo?.scrollY || 0;
+    navigate(path);
+    if (!y) return;
+    let tries = 0;
+    const restore = () => {
+      const enough = document.documentElement.scrollHeight >= y + window.innerHeight;
+      if (enough || tries >= 20) {
+        window.scrollTo(0, y);
+        return;
+      }
+      tries += 1;
+      setTimeout(restore, 100);
+    };
+    setTimeout(restore, 100);
+  };
 
   // 다른 도움말 페이지로 이동하면 첫 질문만 열고 맨 위로
   useEffect(() => {
@@ -46,7 +70,7 @@ const HelpPage = ({ page = "faq" }) => {
         <p className="help-desc">{data.desc}</p>
         <nav className="help-links" aria-label="도움말 메뉴">
           {HELP_LINKS.map((l) => (
-            <Link key={l.key} to={l.path} className={`help-link${l.key === page ? " is-current" : ""}`} aria-current={l.key === page ? "page" : undefined}>
+            <Link key={l.key} to={l.path} state={{ returnTo }} className={`help-link${l.key === page ? " is-current" : ""}`} aria-current={l.key === page ? "page" : undefined}>
               {l.label}
               <span className="help-link-arrow" aria-hidden="true">›</span>
             </Link>
@@ -55,6 +79,12 @@ const HelpPage = ({ page = "faq" }) => {
       </section>
 
       <div className="help-body">
+        {/* [수정] 돌아가기 — 본문(.help-body) 맨 위 · 카드 섹션 제목 바로 위 왼쪽 */}
+        <button type="button" className="help-back" onClick={goBack}>
+          <span className="help-back-icon" aria-hidden="true" />
+          돌아가기
+        </button>
+
         {/* 2. 카드 3개 */}
         <section className="help-section" aria-labelledby="help-cards-title">
           <h2 className="help-section-title" id="help-cards-title">{data.cardsTitle}</h2>
