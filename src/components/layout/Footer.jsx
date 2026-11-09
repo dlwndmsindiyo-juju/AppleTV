@@ -1,8 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // [추가] 사이트 안 주소(/faq 등)는 새로고침 없이 이동
+import { Link, useLocation } from 'react-router-dom'; // [추가] 사이트 안 주소(/faq 등)는 새로고침 없이 이동
 import { footerMainLinks, footerSubLinks } from '../../data/footerData';
 
+// [추가] 도움말 페이지(이용 가이드 · FAQ · 지원)에서 "돌아가기"로 돌아올 곳 = 푸터 메뉴를 누를 때 보던 페이지 + 스크롤 위치
+// - 이미 도움말 페이지 안이면 처음 들어오기 전 페이지를 그대로 넘김 (도움말끼리 오가도 돌아갈 곳은 그대로)
+const HELP_PATHS = ['/guide', '/faq', '/support'];
+
 const Footer = () => {
+  const location = useLocation();
+  const inHelp = HELP_PATHS.includes(location.pathname);
+  const returnTo = inHelp
+    ? location.state?.returnTo
+    : { path: `${location.pathname}${location.search}${location.hash}`, scrollY: 0 };
+
   return (
     <footer className="footer">
       <div className="inner">
@@ -17,7 +27,12 @@ const Footer = () => {
           {footerMainLinks.map((item, index) => (
             <li key={index}>
               {item.path.startsWith('/') ? (
-                <Link to={item.path}>
+                <Link
+                  to={item.path}
+                  // [추가] 보던 페이지 · 스크롤 위치 (누르는 순간의 위치)
+                  state={{ returnTo }}
+                  onClick={() => { if (returnTo && !inHelp) returnTo.scrollY = window.scrollY; }}
+                >
                   {item.label} <img className="arrow ui-icon ui-icon-arrow" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
                 </Link>
               ) : (
