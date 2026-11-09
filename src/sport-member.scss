@@ -1745,6 +1745,12 @@ main.sport-home.sport-standings-page {
     display: flex;
     flex-direction: column;
     gap: 7.5rem;
+
+    width: 100%;
+    max-width: 1720px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    align-items: center;
   }
 
   .sport-standings-block,
@@ -1758,14 +1764,14 @@ main.sport-home.sport-standings-page {
     display: flex;
     flex-direction: column;
     gap: $space-md;
-    margin-bottom: -3.5rem;
+    margin-bottom:-3.5rem;
   }
 
   // 제목 ↔ 팀 순위는 64px
   .sport-standings-title {
     @include heading-h1;
     font-family: inherit;
-    margin: 0;
+    margin-top: $space-3xl;
     padding: 0;
     color: $text-primary;
   }
