@@ -199,10 +199,7 @@ const Search = () => {
     body = (
       <section className="search-state">
         <h2 className="search-state-title">검색 결과가 없습니다.</h2>
-        <p className="search-state-desc">검색어를 짧게 입력하거나 작품명·인물 이름을 다시 확인해 주세요.</p>
-        <button type="button" className="search-btn search-btn--gray" onClick={clear}>
-          검색어 지우기
-        </button>
+        <p className="search-state-desc">작품명 혹은 인물 이름을 다시 확인해 주세요.</p>
       </section>
     );
   } else {

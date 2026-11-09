@@ -85,9 +85,6 @@ const SearchPerson = () => {
           <BackLink to={backTo.path} label={backTo.label} />
           <section className="search-state" role="alert">
             <h3 className="search-state-title">인물 정보를 불러오지 못했습니다.</h3>
-            <button type="button" className="search-btn search-btn--white" onClick={() => onLoadPerson(personId)}>
-              다시 시도
-            </button>
           </section>
         </div>
       </main>
