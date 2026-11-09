@@ -20,7 +20,7 @@ export const RecommendCard = ({ item }) => { // [수정] export: 전체 보기 �
   const title = item.title || item.name;
   const info = useContentInfo(type, item.id);
   const path = detailPath(type, item.id);
-  const rating = item.vote_average ? item.vote_average.toFixed(1) : "-";
+  const rating = item.vote_average ? (item.vote_average / 2).toFixed(1) : "-"; // [수정] TMDB 10점 만점 → 5점 만점
 
   return (
     <div className="member-rc-card">
