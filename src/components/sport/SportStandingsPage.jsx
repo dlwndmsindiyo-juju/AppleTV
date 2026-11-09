@@ -89,9 +89,10 @@ const SportStandingsPage = () => {
 
       <section className="sport-standings" aria-labelledby="sport-standings-page-title">
         <div className="inner">
-          <SportBack />
+
           {/* 페이지 제목 */}
           <div className="sport-standings-head">
+            <SportBack />
             <h2 className="sport-standings-title" id="sport-standings-page-title">{SEASON} 정규시즌 리그 순위</h2>
             <p className="sport-standings-sub">동부와 서부의 전체 구단 순위를 확인하세요</p>
           </div>
