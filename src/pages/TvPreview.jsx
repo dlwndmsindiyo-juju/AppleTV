@@ -106,11 +106,27 @@ const TvPreview = () => {
   // [추가] 영상 상세 페이지 (TvDetail) — 카드를 누르면 열림 · Esc 로 보던 화면으로
   const [detailItem, setDetailItem] = useState(null);
   const [detailBack, setDetailBack] = useState("home");
+  // [추가] 상세에서 다른 상세(추천 · 하이라이트 등)로 넘어간 기록 — 뒤로 가면 하나씩 이전 상세로
+  const [detailStack, setDetailStack] = useState([]);
   const openDetail = (item) => {
     if (!item) return;
-    if (tab !== "detail") setDetailBack(tab);
+    if (tab !== "detail") {
+      setDetailBack(tab);
+      setDetailStack([]);
+    } else if (detailItem) {
+      setDetailStack((st) => [...st, detailItem]);
+    }
     setDetailItem(item);
     setTab("detail");
+  };
+  // [추가] 뒤로 ("← 뒤로" 버튼 · Esc): 이전 상세가 있으면 그 상세로, 없으면 상세를 열기 전 화면으로
+  const closeDetail = () => {
+    if (detailStack.length) {
+      setDetailItem(detailStack[detailStack.length - 1]);
+      setDetailStack((st) => st.slice(0, -1));
+      return;
+    }
+    setTab(detailBack);
   };
   const [closedGroups, setClosedGroups] = useState({}); // [추가] 접은 메뉴 묶음 { team, settings }
   const toggleGroup = (key) => setClosedGroups((g) => ({ ...g, [key]: !g[key] }));
@@ -197,11 +213,11 @@ const TvPreview = () => {
     if (tab !== "detail") return undefined;
     const onKey = (e) => {
       if (e.key !== "Escape" || document.querySelector(".subscribe-gate, .ai-popup, .video-popup")) return;
-      setTab(detailBack);
+      closeDetail(); // [수정] 이전 상세 → 없으면 보던 화면
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [tab, detailBack]);
+  }, [tab, detailBack, detailStack]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // [추가] 영상 재생 중(전체 화면) 에는 왼쪽 메뉴를 숨김
   useEffect(() => {
@@ -490,7 +506,7 @@ const TvPreview = () => {
             {tab === "home" && <TvHome onMenu={setTab} onDetail={openDetail} />}
             {tab === "sport" && <TvSportHome onMenu={setTab} onDetail={openDetail} />}
             {tab === "library" && <TvLibrary onMenu={setTab} onDetail={openDetail} />}
-            {tab === "detail" && detailItem && <TvDetail key={detailItem.key || detailItem.title} item={detailItem} onOpen={openDetail} />}
+            {tab === "detail" && detailItem && <TvDetail key={detailItem.key || detailItem.title} item={detailItem} onOpen={openDetail} onBack={closeDetail} />}
             {tab === "search" && <TvSearch key={searchKey} onMenu={setTab} onDetail={openDetail} initialQuery={query.trim()} />}
             {screenTeam && <TvTeam key={screenTeam.id} team={screenTeam} />}
         </div>
