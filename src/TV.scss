@@ -50,8 +50,8 @@ $tv-type-step-phone: 3;
   $base: list.nth($parts, 1);
   $suffix: list.nth($parts, 2);
 
-  @if map-has-key($tv-type-alias, $base) {
-    $base: map-get($tv-type-alias, $base);
+  @if map.has-key($tv-type-alias, $base) {
+    $base: map.get($tv-type-alias, $base);
   }
 
   $i: list.index($tv-type-ladder, $base);
@@ -61,7 +61,7 @@ $tv-type-step-phone: 3;
   }
 
   // 큰 제목 · TV 전용 변수는 그대로
-  $next: list.nth($tv-type-ladder, math-min($i + $steps, list.length($tv-type-ladder)));
+  $next: list.nth($tv-type-ladder, math.min($i + $steps, list.length($tv-type-ladder)));
   $candidate: "#{$next}#{$suffix}";
 
   @if meta.mixin-exists($candidate) {
@@ -73,10 +73,6 @@ $tv-type-step-phone: 3;
   }
 
   @return "#{$next}";
-}
-
-@function math-min($a, $b) {
-  @return if($a < $b, $a, $b);
 }
 
 // 단계별 글자 크기 · 줄 높이 (_variables.scss 글자 변수와 같은 값)
@@ -96,7 +92,7 @@ $tv-type-sizes: (
 
 @mixin tv-type-size($name) {
   $base: list.nth(tv-type-split($name), 1);
-  $v: map-get($tv-type-sizes, $base);
+  $v: map.get($tv-type-sizes, $base);
   font-size: list.nth($v, 1);
   line-height: list.nth($v, 2);
 }
