@@ -11782,7 +11782,7 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
 
   // 홈 히어로: 칩 줄 아래 · 줄거리 위
   &.hero-info-badges {
-    margin: (-$space-sm) 0 $space-md;
+    margin: $space-md 0;
   }
 }
 
