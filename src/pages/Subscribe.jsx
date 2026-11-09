@@ -13,6 +13,7 @@
 // - 로그인 전이면 로그인으로, 이미 구독 중인 계정이 들어오면 화면 없이 원래 화면으로 이동
 // - 스타일: App.scss "구독 팝업" (.sub-pop-*) · 휴대폰 mobile.scss
 import { resumePath } from "../utils/resumeIntent"; // [추가] 구독 후 하던 화면으로
+import { openPostcode } from "../utils/daumPostcode"; // [추가] 도로명 주소 검색 팝업
 import React, { createContext, useContext, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -318,6 +319,24 @@ const Check = ({ checked, onChange, strong, children }) => (
 const BillingSection = ({ form, setForm, bad, children }) => {
   const [postcodeOpen, setPostcodeOpen] = useState(false);
   const set = (key) => (value) => setForm((f) => ({ ...f, [key]: value }));
+  // [추가] 도로명 주소 검색 팝업
+  const [addressError, setAddressError] = useState("");
+  const searchAddress = async () => {
+    setAddressError("");
+    try {
+      const picked = await openPostcode();
+      if (!picked) return; // 그냥 닫음
+      setForm((f) => ({
+        ...f,
+        road: picked.road,
+        sido: picked.sido || f.sido,
+        sigungu: picked.sido ? picked.sigungu : f.sigungu,
+        postal: picked.postal,
+      }));
+    } catch {
+      setAddressError("주소 검색을 열지 못했어요. 직접 입력하거나 잠시 후 다시 시도해 주세요.");
+    }
+  };
   const sigunguList = KOREA_REGIONS[form.sido] || [];
 
   const handleAddressComplete = (data) => {
@@ -369,24 +388,17 @@ const BillingSection = ({ form, setForm, bad, children }) => {
             value={form.firstName} onChange={(e) => set("firstName")(e.target.value)} />
         </Field>
       </div>
-
-      <Field label="도로명 주소" invalid={bad("road")}>
-        <div className="sub-address-search-row">
-          <input className="sub-field-input" autoComplete="address-line1"
-            placeholder="주소 검색을 눌러주세요" value={form.road} readOnly
-            onClick={() => setPostcodeOpen(true)} />
-          <button type="button" className="sub-address-search-btn"
-            onClick={() => setPostcodeOpen((open) => !open)}>
-            {postcodeOpen ? "닫기" : "주소 검색"}
-          </button>
-        </div>
-      </Field>
-      {postcodeOpen && (
-        <div className="sub-address-postcode" onKeyDown={(e) => e.stopPropagation()}>
-          <DaumPostcode onComplete={handleAddressComplete} autoClose={false}
-            style={{ width: "100%", height: "420px" }} />
-        </div>
-      )}
+      {/* [추가] 도로명 주소 검색 (Daum 우편번호) — 고르면 도로명 · 시/도 · 시/군/구 · 우편번호를 한 번에 채움 */}
+      <div className="sub-address-search">
+        <Field label="도로명 주소" invalid={bad("road")}>
+          <input className="sub-field-input" autoComplete="address-line1" placeholder="도로명과 건물번호" maxLength={100}
+            value={form.road} onChange={(e) => set("road")(e.target.value)} />
+        </Field>
+        <button type="button" className="sub-address-btn" onClick={searchAddress}>
+          주소 검색
+        </button>
+      </div>
+      {addressError && <p className="sub-address-error" role="alert">{addressError}</p>}
       <Field label="상세 주소">
         <input className="sub-field-input" autoComplete="address-line2" placeholder="동·호수 등 (선택)" maxLength={100}
           value={form.detail} onChange={(e) => set("detail")(e.target.value)} />

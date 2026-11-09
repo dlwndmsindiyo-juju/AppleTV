@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DetailBackLink from '../components/common/DetailBackLink' // [추가] 상세 공용 "← 홈으로"
 import { useMovieStore } from '../store/useMovieStore';
@@ -11,7 +11,8 @@ import AutoNext from '../components/common/AutoNext'; // [추가] 영상이 끝�
 import VideoPopup from '../components/common/VideoPopup'; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { openSubscribeGate } from '../utils/subscribeGate'; // [정리] 구독 안내 팝업 열기 공용
 import { TMDB_IMG as IMG } from '../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
-import InfoBadges from '../components/common/InfoBadges'; // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (홈 히어로와 공용)
+import InfoBadges from '../components/common/InfoBadges';
+import { openShare } from '../utils/share'; // [추가] 공유 팝업 // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (홈 히어로와 공용)
 import SelectDropdown from '../components/common/SelectDropdown'; // [추가] 지불 방법 선택 상자와 같은 디자인 (아래 선만)
 import { createPortal } from 'react-dom';
 import { BsChatDotsFill } from 'react-icons/bs';
@@ -146,6 +147,35 @@ export const MovieDetail = ({ type: typeProp }) => {
     logoList.find((l) => l.iso_639_1 === 'ko') ||
     logoList.find((l) => l.iso_639_1 === 'en') ||
     logoList[0];
+  // [추가] 전체보기 — 위 영상(예고편 · 이미지) 칸을 화면 가득 (브라우저 전체 화면) · 다시 누르거나 Esc 로 원래대로
+  // - 아이콘: public/icons/full-screen.svg (mask 로 써서 파일 색과 상관없이 흰색) · [수정] 버튼 위치: 영상 칸 오른쪽 위
+  // - 요소 전체 화면을 지원하지 않는 브라우저(아이폰 Safari 등)는 재생 팝업으로 대신 크게 보기
+  const mediaRef = useRef(null);
+  const [isFull, setIsFull] = useState(false);
+  useEffect(() => {
+    const onChange = () => {
+      const el = document.fullscreenElement || document.webkitFullscreenElement;
+      setIsFull(Boolean(el) && el === mediaRef.current);
+    };
+    document.addEventListener('fullscreenchange', onChange);
+    document.addEventListener('webkitfullscreenchange', onChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', onChange);
+      document.removeEventListener('webkitfullscreenchange', onChange);
+    };
+  }, []);
+  const toggleFull = () => {
+    const el = mediaRef.current;
+    if (!el) return;
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+      return;
+    }
+    const request = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (request) request.call(el);
+    else playFromHistory();
+  };
+
   // [추가] 제목 아래 정보 배지 줄 (InfoBadges · 홈 히어로와 같은 모양)
   // - Apple Original 판단: 시리즈 = 방송사 Apple TV+(2552) / 영화 = Apple Original Films · Apple Studios
   const isAppleOriginal = isTv
@@ -284,29 +314,8 @@ export const MovieDetail = ({ type: typeProp }) => {
     });
   };
 
-  // 공유 모달: 운영체제 기본 공유창 대신 사이트 자체 팝업 사용
-  const [shareOpen, setShareOpen] = useState(false);
-  const [shareStart, setShareStart] = useState(0);
-  const [copied, setCopied] = useState(false);
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
-
-  const handleShare = () => {
-    setShareStart(0);
-    setCopied(false);
-    setShareOpen(true);
-  };
-
-  const closeShare = () => setShareOpen(false);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-    } catch (error) {
-      console.error('링크 복사 실패:', error);
-      window.prompt('아래 링크를 복사하세요.', shareUrl);
-    }
-  };
+  // [수정] 공유하기 — 기기 기본 공유 창 대신 공유 팝업 (components/common/ShareSheet.jsx)
+  const handleShare = () => openShare({ title, url: window.location.href });
 
   useEffect(() => {
     if (!shareOpen) return undefined;
@@ -414,7 +423,7 @@ export const MovieDetail = ({ type: typeProp }) => {
           <div className="left-section">
             <div className="player-box">
               {/* 상단 미디어 (트레일러 또는 배경 이미지) */}
-              <div className="player-media">
+              <div className={`player-media${isFull ? ' is-full' : ''}`} ref={mediaRef}>
                 {trailer ? (
                   <iframe
                     key={trailer.key}
@@ -431,6 +440,16 @@ export const MovieDetail = ({ type: typeProp }) => {
                     />
                   )
                 )}
+                {/* [추가] 전체보기 버튼 (영상 칸 오른쪽 아래) */}
+                <button
+                  type="button"
+                  className="btn-fullscreen"
+                  onClick={toggleFull}
+                  aria-label={isFull ? '전체 화면 닫기' : '전체 화면으로 보기'}
+                  title={isFull ? '전체 화면 닫기' : '전체보기'}
+                >
+                  <span className="btn-fullscreen-icon" aria-hidden="true" />
+                </button>
               </div>
 
               {/* 하단 정보 바 */}

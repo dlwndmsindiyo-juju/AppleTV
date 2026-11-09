@@ -33,8 +33,7 @@ const SECTIONS = [
   { id: "account-history", title: "재생 기록" },
   { id: "account-autoplay", title: "자동 재생" },
   { id: "account-assistant", title: "AI 어시스트" },
-  { id: "account-release", title: "최신작 알림" },
-  { id: "account-sport", title: "경기 알림" },
+  { id: "account-alert", title: "알림" }, // [수정] 최신작 알림 · 경기 알림 → "알림" 섹션 하나로 묶음
 ];
 const SECTION_TITLE = Object.fromEntries(SECTIONS.map((s) => [s.id, s.title]));
 
@@ -276,6 +275,32 @@ export const Profile = () => {
     if (!ok) setMessage("설정을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
   };
 
+  // [추가] 알림 저장 + 안내 문구 (켜기 · 끄기 · 받기 방식 변경)
+  const saveAlert = async (key, name, next) => {
+    const prev = settings[key];
+    const ok = await onUpdateSetting(key, next);
+    if (!ok) {
+      setMessage("알림 설정을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
+      return;
+    }
+    if (prev.on !== next.on) {
+      setMessage(next.on ? `${name}을 켰어요.` : `${name}을 껐어요.`);
+    } else if (!next.channels.length) {
+      setMessage(`${name}을 받을 방식이 없어요. 하나 이상 골라 주세요.`);
+    } else {
+      setMessage(`${name} 받기 방식을 바꿨어요. (${next.channels.map((c) => CHANNEL_LABELS[c] || c).join(" · ")})`);
+    }
+  };
+  // [추가] 모든 알림 한 번에 켜기 · 끄기
+  const saveAllAlerts = async (on) => {
+    const results = await Promise.all([
+      onUpdateSetting("releaseAlert", { ...settings.releaseAlert, on }),
+      onUpdateSetting("sportAlert", { ...settings.sportAlert, on }),
+    ]);
+    if (results.every(Boolean)) setMessage(on ? "모든 알림을 켰어요." : "모든 알림을 껐어요.");
+    else setMessage("알림 설정을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
+  };
+
   // [수정] 프로필 아이콘은 지금 보고 있는 프로필에 저장 (프로필마다 다른 아이콘)
   const pickAvatar = async (opt) => {
     const ok = await onUpdateProfile(currentProfileId, { avatar: opt });
@@ -512,39 +537,48 @@ export const Profile = () => {
               </Item>
             </Section>
 
-            {/* ---------- 최신작 알림 ---------- */}
-            <Section id="account-release">
-              <Item title="최신작 알림 받기" desc="새로운 영화와 시리즈가 공개되면 선택한 방식으로 알려드립니다.">
+            {/* ---------- [수정] 알림 (최신작 · 경기) — 섹션 하나로 묶음 · 켜고 끌 때 안내 문구 ---------- */}
+            <Section id="account-alert">
+              <Item title="모든 알림 받기" desc="최신작 알림과 경기 알림을 한 번에 켜거나 끕니다.">
                 <Toggle
-                  label="최신작 알림 받기"
-                  checked={settings.releaseAlert.on}
-                  onChange={(v) => save("releaseAlert", { ...settings.releaseAlert, on: v })}
+                  label="모든 알림 받기"
+                  checked={settings.releaseAlert.on || settings.sportAlert.on}
+                  onChange={(v) => saveAllAlerts(v)}
                 />
               </Item>
-              <ChannelPicker
-                name="최신작"
-                alert={settings.releaseAlert}
-                onChange={(v) => save("releaseAlert", v)}
-              />
-            </Section>
 
-            {/* ---------- 경기 알림 ---------- */}
-            <Section id="account-sport">
-              <Item
-                title="경기 알림 받기"
-                desc="관심 있는 팀과 리그의 경기가 시작되기 전에 선택한 방식으로 알려드립니다."
-              >
-                <Toggle
-                  label="경기 알림 받기"
-                  checked={settings.sportAlert.on}
-                  onChange={(v) => save("sportAlert", { ...settings.sportAlert, on: v })}
+              <div className="account-alert-group">
+                <Item title="최신작 알림 받기" desc="새로운 영화와 시리즈가 공개되면 선택한 방식으로 알려드립니다.">
+                  <Toggle
+                    label="최신작 알림 받기"
+                    checked={settings.releaseAlert.on}
+                    onChange={(v) => saveAlert("releaseAlert", "최신작 알림", { ...settings.releaseAlert, on: v })}
+                  />
+                </Item>
+                <ChannelPicker
+                  name="최신작"
+                  alert={settings.releaseAlert}
+                  onChange={(v) => saveAlert("releaseAlert", "최신작 알림", v)}
                 />
-              </Item>
-              <ChannelPicker
-                name="경기"
-                alert={settings.sportAlert}
-                onChange={(v) => save("sportAlert", v)}
-              />
+              </div>
+
+              <div className="account-alert-group">
+                <Item
+                  title="경기 알림 받기"
+                  desc="관심 있는 팀과 리그의 경기가 시작되기 전에 선택한 방식으로 알려드립니다."
+                >
+                  <Toggle
+                    label="경기 알림 받기"
+                    checked={settings.sportAlert.on}
+                    onChange={(v) => saveAlert("sportAlert", "경기 알림", { ...settings.sportAlert, on: v })}
+                  />
+                </Item>
+                <ChannelPicker
+                  name="경기"
+                  alert={settings.sportAlert}
+                  onChange={(v) => saveAlert("sportAlert", "경기 알림", v)}
+                />
+              </div>
             </Section>
           </div>
         </div>

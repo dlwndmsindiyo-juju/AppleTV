@@ -20,7 +20,6 @@ const SportHome = () => {
   const {
     onFetchUpcomingMatches,
     onFetchLiveMatches,
-    onFetchShorts,
     onFetchStandings,
     onFetchHighlightList,
     onFetchFinishedMatches,
@@ -31,7 +30,7 @@ const SportHome = () => {
 
   useEffect(() => {
     onFetchUpcomingMatches(); // 예정된 경기
-    onFetchShorts(); // 숏츠
+    // [삭제] onFetchShorts() — 숏츠는 data/sportShorts.js (직접 만든 데이터) 만 사용 · YouTube 검색 요청(쿼터) 안 함
     onFetchStandings(); // 관심있는 구단 (리그 순위표의 팀)
     onFetchHighlightList(); // 하이라이트
     onFetchFinishedMatches(); // 영상 다시보기 (종료된 경기)
@@ -47,7 +46,6 @@ const SportHome = () => {
     user,
     onFetchUpcomingMatches,
     onFetchLiveMatches,
-    onFetchShorts,
     onFetchStandings,
     onFetchHighlightList,
     onFetchFinishedMatches,
