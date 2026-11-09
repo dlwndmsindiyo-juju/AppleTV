@@ -1887,3 +1887,33 @@ $browse-poster-gap: 1.375rem; // 숏폼 카드 사이 간격 (22)
   }
 }
 
+// =====================================================================
+// [추가] 공개예정 "N월 공개" · "N월 공개예정" — 버튼이 아니라 표기만 (ShowcaseCard.jsx · .is-label)
+// - 누르는 모양(손가락 커서 · 마우스를 올렸을 때 색 변화) 없음 · 알림은 종 버튼(.member-sc-alarm)으로
+// =====================================================================
+.member-home,
+.member-browse {
+  .member-sc-month.is-label,
+  .member-sc-release.is-label {
+    cursor: default;
+    pointer-events: none; // 아래 카드 링크(상세)는 그대로 눌림
+
+    &:hover {
+      background-color: inherit;
+    }
+  }
+
+  .member-sc-month.is-label:hover {
+    background-color: $sport-opacity-b;
+  }
+
+  .member-sc-release.is-label {
+    background-color: rgba($light-color-0, 0.16);
+  }
+
+  .member-sc-month.is-label .member-sc-bell {
+    width: 14px;
+    height: 0.875rem;
+  }
+}
+

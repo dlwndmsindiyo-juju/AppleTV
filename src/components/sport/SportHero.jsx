@@ -239,7 +239,8 @@ const MatchHero = () => {
             <img className="play-icon" src="/icons/play-w.svg" alt="" aria-hidden="true" />
             경기 시청
           </button>
-          <Link className="sport-btn secondary" to={`/sport/match/${match.id}`}>
+          {/* [수정] 경기 정보: 상세 아래 중계 · 라인업 · 기록 탭으로 바로 스크롤 (#match-info) */}
+          <Link className="sport-btn secondary" to={`/sport/match/${match.id}#match-info`}>
             경기 정보
           </Link>
         </div>

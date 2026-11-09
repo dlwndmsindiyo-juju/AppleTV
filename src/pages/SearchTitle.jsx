@@ -174,7 +174,17 @@ const SearchTitle = () => {
         <button
           type="button"
           className={`search-btn search-btn--white search-btn--icon${alarmOn ? " is-on" : ""}`}
-          onClick={() => onToggleAlarm(alarmKey)}
+          onClick={() =>
+            // [수정] 계정 설정 "알림 설정한 콘텐츠" 에 보여 줄 정보도 같이 (토스트는 store 에서)
+            onToggleAlarm(alarmKey, {
+              type,
+              id: contentId,
+              title,
+              poster_path: detail.poster_path,
+              backdrop_path: detail.backdrop_path,
+              date: detail.release_date || detail.first_air_date || "",
+            })
+          }
           aria-pressed={alarmOn}
         >
           {alarmOn && <MaskIcon name="check" />}

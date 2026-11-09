@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { addDoc, collection, limit, onSnapshot, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { useAuthStore } from "../../store/useAuthStore";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSportStore, playerPhotoKey } from "../../store/useSportStore";
 import { useTeamStore, selectHeroTeam } from "../../store/useTeamStore";
 import { getTeamById } from "../../data/sportTeams";
@@ -509,20 +509,40 @@ const SportLivePage = () => {
   useEffect(() => { fetchLiveClips(); fetchHighlightList(); }, [fetchLiveClips, fetchHighlightList]);
   const highlightList = clips.length > 0 ? clips : sdbVideos;
 
+  // [수정] 히어로 [경기 정보] 로 들어오면 (#match-info) 아래 중계 · 라인업 · 기록 탭으로 바로 스크롤
+  // - 같은 경기 화면에서 다시 눌러도 동작하게 location.key 로 다시 실행
+  const location = useLocation();
+  const toInfo = location.hash === "#match-info";
   useEffect(() => {
+    let timer = null;
     const frame = requestAnimationFrame(() => {
-      document.querySelector(".sport-live-stage")
-        ?.scrollIntoView({
-          behavior: "instant",
-          block: "start",
-        });
+      if (!toInfo) {
+        document.querySelector(".sport-live-stage")?.scrollIntoView({ behavior: "instant", block: "start" });
+        return;
+      }
+      // 히어로 · 영상 높이가 잡힌 다음 이동 (바로 하면 위치가 어긋남)
+      timer = setTimeout(() => {
+        document.getElementById("sport-live-info")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 300);
     });
-
-    return () => cancelAnimationFrame(frame);
-  }, [routeId]);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timer);
+    };
+  }, [routeId, toInfo, location.key]);
 
   const [tab, setTab] = useState("lineup");
   const [chatOpen, setChatOpen] = useState(false);
+  // [추가] 채팅을 펼치면 왼쪽 영상과 같은 높이 (넘치는 메시지는 채팅 안에서 스크롤) → --chat-h
+  const playerRef = useRef(null);
+  const [playerH, setPlayerH] = useState(0);
+  useEffect(() => {
+    const el = playerRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return undefined;
+    const ro = new ResizeObserver(([entry]) => setPlayerH(Math.round(entry.contentRect.height)));
+    ro.observe(el);
+    return () => ro.disconnect();
+  });
 
   // 오른쪽 "다른 라이브 경기": 목업 경기면 목업 목록, 실제 경기면 livescore 목록 (누르면 그 경기 상세로 이동)
   const items = useMemo(() => {
@@ -596,7 +616,7 @@ const SportLivePage = () => {
           <SportBack />
           <div className="sport-detail-layout">
             <article className="sport-detail-stage">
-              <div className="sport-detail-player">
+              <div className="sport-detail-player" ref={playerRef}>
                 {current.video ? (
                   <iframe
                     key={current.video.id.videoId}
@@ -620,15 +640,22 @@ const SportLivePage = () => {
             </article>
 
             <aside className="sport-live-sidebar">
-              <div className={`sport-live-chat-card${chatOpen ? " is-open" : ""}`}>
+              <div
+                className={`sport-live-chat-card${chatOpen ? " is-open" : ""}`}
+                style={playerH ? { "--chat-h": `${playerH}px` } : undefined}
+              >
                 <button
                   type="button"
                   className="sport-live-chat-toggle"
                   onClick={() => setChatOpen(prev => !prev)}
                   aria-expanded={chatOpen}
+                  aria-label={chatOpen ? "채팅 접기" : "채팅 펼쳐 보기"}
                 >
                   <span>채팅</span>
-                  <span>{chatOpen ? "⌃" : "⌄"}</span>
+                  {/* [수정] 채팅 내려보기 아이콘 (펼치면 위로 뒤집힘) */}
+                  <svg className="sport-live-chat-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </button>
 
                 {chatOpen ? (
@@ -679,7 +706,7 @@ const SportLivePage = () => {
       </section>
 
       {/* ===== 탭: 중계 · 라인업 · 기록===== */}
-      <section className="sport-live-tabs-section" aria-label="경기 정보">
+      <section className="sport-live-tabs-section" id="sport-live-info" aria-label="경기 정보">
         <div className="sport-live-tabs" role="tablist" aria-label="경기 정보 탭">
           {TABS.map((t) => (
             <button
