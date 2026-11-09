@@ -11,6 +11,7 @@ import AutoNext from '../components/common/AutoNext'; // [추가] 영상이 끝�
 import VideoPopup from '../components/common/VideoPopup'; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { openSubscribeGate } from '../utils/subscribeGate'; // [정리] 구독 안내 팝업 열기 공용
 import { TMDB_IMG as IMG } from '../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
+import InfoBadges from '../components/common/InfoBadges'; // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (홈 히어로와 공용)
 import SelectDropdown from '../components/common/SelectDropdown'; // [추가] 지불 방법 선택 상자와 같은 디자인 (아래 선만)
 
 // =====================================================================
@@ -132,9 +133,19 @@ export const MovieDetail = ({ type: typeProp }) => {
     runtime && `${runtime}분`,
   ].filter(Boolean).join(' · ');
 
+  // [수정] 타이틀 로고 — 한국어 → 영어 → 첫 로고 순 (홈 히어로와 같은 순서)
+  // - 색은 CSS 에서 항상 흰색(light-0 #FFFFFF)으로 바꿔서 표시 (App.scss .title-logo)
+  //   예전: 검정 로고(예: 슬로 호시스)가 그대로 나와 어두운 배경에 묻혔음
+  const logoList = detail?.images?.logos || [];
   const logo =
-    detail?.images?.logos?.find((l) => l.iso_639_1 === 'ko') ||
-    detail?.images?.logos?.[0];
+    logoList.find((l) => l.iso_639_1 === 'ko') ||
+    logoList.find((l) => l.iso_639_1 === 'en') ||
+    logoList[0];
+  // [추가] 제목 아래 정보 배지 줄 (InfoBadges · 홈 히어로와 같은 모양)
+  // - Apple Original 판단: 시리즈 = 방송사 Apple TV+(2552) / 영화 = Apple Original Films · Apple Studios
+  const isAppleOriginal = isTv
+    ? Boolean(detail?.networks?.some((n) => n.id === 2552))
+    : Boolean(detail?.production_companies?.some((c) => [151347, 194232].includes(c.id)));
   const cast = detail?.credits?.cast?.slice(0, 21) || [];
   const similar = detail?.similar?.results?.filter((m) => m.poster_path) || [];
 
@@ -397,6 +408,8 @@ export const MovieDetail = ({ type: typeProp }) => {
                     <h2 className="title">{title}</h2>
                   )}
                   <p className="genres">{metaText}</p>
+                  {/* [추가] 평점(5점 만점) + 화질 · 자막 배지 */}
+                  <InfoBadges type={type} id={contentId} voteAverage={item?.vote_average} apple={isAppleOriginal} />
                   <p className="overview">{item?.overview || '줄거리 정보가 없습니다.'}</p>
                 </div>
 

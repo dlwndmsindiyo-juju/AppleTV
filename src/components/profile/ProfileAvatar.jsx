@@ -6,7 +6,10 @@
 import React from "react";
 
 // 고를 수 있는 기본 아이콘 (아이콘 + 배경색 조합)
+// [추가] 맨 앞 "기본 프로필" = 사람 아이콘(public/icons/profile.svg) + 프라이머리 배경
+export const DEFAULT_AVATAR_ICON = "profile";
 export const AVATAR_OPTIONS = [
+  { icon: DEFAULT_AVATAR_ICON, color: "primary", label: "기본 프로필" },
   { icon: "face-smile", color: "primary", label: "웃는 얼굴" },
   { icon: "face-baby-smile", color: "rating", label: "아기 얼굴" },
   { icon: "face-surprise", color: "accent", label: "놀란 얼굴" },
@@ -60,6 +63,17 @@ const ProfileAvatar = ({ avatar, tone, size = "md", className = "" }) => {
   if (!isValidAvatar(avatar)) {
     return (
       <span className={`profile-avatar profile-avatar--${size} profile-avatar--empty ${className}`}>
+        <img src="/icons/profile.svg" alt="" aria-hidden="true" />
+      </span>
+    );
+  }
+  // [추가] 기본 프로필 아이콘을 고른 경우 — 기존 기본 이미지와 같은 모양 (App.scss 의 profile.svg 규칙 그대로 적용)
+  if (avatar.icon === DEFAULT_AVATAR_ICON) {
+    return (
+      <span
+        className={`profile-avatar profile-avatar--${size} profile-avatar--${avatar.color} ${className}`}
+        aria-hidden="true"
+      >
         <img src="/icons/profile.svg" alt="" aria-hidden="true" />
       </span>
     );
