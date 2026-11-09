@@ -11,7 +11,8 @@ import AutoNext from '../components/common/AutoNext'; // [추가] 영상이 끝�
 import VideoPopup from '../components/common/VideoPopup'; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { openSubscribeGate } from '../utils/subscribeGate'; // [정리] 구독 안내 팝업 열기 공용
 import { TMDB_IMG as IMG } from '../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
-import InfoBadges from '../components/common/InfoBadges'; // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (홈 히어로와 공용)
+import InfoBadges from '../components/common/InfoBadges';
+import { openShare } from '../utils/share'; // [추가] 공유 팝업 // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (홈 히어로와 공용)
 import SelectDropdown from '../components/common/SelectDropdown'; // [추가] 지불 방법 선택 상자와 같은 디자인 (아래 선만)
 
 // =====================================================================
@@ -308,20 +309,8 @@ export const MovieDetail = ({ type: typeProp }) => {
     });
   };
 
-  // 공유하기
-  const handleShare = async () => {
-    const url = window.location.href;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title, url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        alert('링크가 복사되었습니다.');
-      }
-    } catch {
-      // 공유 취소 등은 무시
-    }
-  };
+  // [수정] 공유하기 — 기기 기본 공유 창 대신 공유 팝업 (components/common/ShareSheet.jsx)
+  const handleShare = () => openShare({ title, url: window.location.href });
 
   // (TV) 회차 재생: 회차 영상 → 없으면 작품 예고편 → 없으면 안내
   const handlePlayEpisode = async (ep) => {

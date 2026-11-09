@@ -11525,3 +11525,274 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
     margin: (-$space-sm) 0 $space-md;
   }
 }
+
+// =====================================================================
+// [추가] 공유 팝업 (components/common/ShareSheet.jsx) — 시안: 공유
+// - 팝업 704 · 모서리 24 · Dark/400 / 안쪽 여백 32
+// - 제목 "공유" Heading/h3-B · Light/0 · 닫기 × 24
+// - 아이콘 원 64 · Dark/200 · 아이콘 28 (public/icons/share/) · 이름 Body/default · Light/500 · 5칸 같은 폭
+// - 주소 칸 높이 70 · 모서리 12 · Dark/100 · 주소 Body/default · Light/500 (넘치면 …)
+// - [링크 복사] 알약 136 × 44 · Primary/500 · Body/large-B · Light/0
+// - 안내 문구 Body/default · Light/500
+// =====================================================================
+.share-dim {
+  position: fixed;
+  inset: 0;
+  z-index: 10600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-lg;
+  background-color: rgba(0, 0, 0, 0.6);
+  animation: share-fade 0.2s ease both;
+}
+
+.share-modal {
+  box-sizing: border-box;
+  width: min(44rem, 100%); // 704
+  padding: $space-2xl;
+  border-radius: $radius-lg;
+  background-color: $dark-color-400;
+  color: $light-color-0;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.5);
+  animation: share-up 0.25s ease both;
+}
+
+.share-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    @include heading-h3-b;
+    margin: 0;
+    padding: 0;
+    color: $light-color-0;
+  }
+}
+
+.share-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: -0.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: $light-color-0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: rgba($light-color-0, 0.12);
+  }
+}
+
+// 아이콘 5칸
+.share-targets {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: $space-2xl 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.share-target {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-md;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+
+  &:hover .share-target-icon,
+  &:focus-visible .share-target-icon {
+    background-color: $dark-color-100;
+    transform: scale(1.06);
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    .share-target-icon {
+      box-shadow: 0 0 0 0.125rem $primary-color-500;
+    }
+  }
+}
+
+.share-target-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: $dark-color-200;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  img {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+.share-target-label {
+  @include body-default;
+  color: $light-color-500;
+  white-space: nowrap;
+}
+
+// 주소 칸 + [링크 복사]
+.share-link {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+  height: 4.375rem; // 70
+  margin-top: $space-2xl;
+  padding: 0 0.8125rem 0 $space-xl;
+  border-radius: $radius-card-sm;
+  background-color: $dark-color-100;
+}
+
+.share-url {
+  @include body-default;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: $light-color-500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.share-copy {
+  @include body-large-b;
+  flex-shrink: 0;
+  min-width: 8.5rem; // 136
+  height: 2.75rem; // 44
+  padding: 0 $space-xl;
+  border: none;
+  border-radius: 62.4375rem;
+  background-color: $primary-color-500;
+  color: $light-color-0;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background-color: $primary-color-400;
+  }
+
+  // 복사한 뒤
+  &.is-done {
+    background-color: $primary-color-400;
+  }
+}
+
+.share-guide {
+  @include body-default;
+  margin: $space-2xl 0 0;
+  color: $light-color-500;
+  word-break: keep-all;
+}
+
+@keyframes share-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes share-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+// 휴대폰: 아래에서 올라오는 시트 · 아이콘 줄 가로 스크롤 없이 5칸 유지 (원 조금 작게)
+@media (max-width: 767px) {
+  .share-dim {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .share-modal {
+    width: 100%;
+    padding: $space-xl $space-lg calc(#{$space-xl} + env(safe-area-inset-bottom));
+    border-radius: $radius-lg $radius-lg 0 0;
+  }
+
+  .share-targets {
+    margin-top: $space-xl;
+  }
+
+  .share-target {
+    gap: $space-sm;
+  }
+
+  .share-target-icon {
+    width: 3.25rem;
+    height: 3.25rem;
+
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  .share-target-label {
+    @include label-default;
+  }
+
+  .share-link {
+    height: 3.5rem;
+    margin-top: $space-xl;
+    padding-left: $space-lg;
+    gap: $space-sm;
+  }
+
+  .share-copy {
+    @include body-default-b;
+    min-width: 0;
+    height: 2.5rem;
+    padding: 0 $space-lg;
+  }
+
+  .share-guide {
+    @include label-default;
+    margin-top: $space-lg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-dim,
+  .share-modal {
+    animation: none;
+  }
+}

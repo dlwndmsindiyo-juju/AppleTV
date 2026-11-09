@@ -1,3 +1,4 @@
+import { openShare } from "../../utils/share"; // [추가] 공유 팝업
 import React, { useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SPORT_SHORTS } from "../../data/sportShorts";
@@ -88,15 +89,10 @@ const SportShorts = ({ title = "숏폼" }) => {
 
   const toggleLike = (id) => setLiked((prev) => ({ ...prev, [id]: !prev[id] }));
 
-  const share = async (item) => {
+  // [수정] 공유 팝업 (components/common/ShareSheet.jsx)
+  const share = (item) => {
     const url = item.videoId ? `https://www.youtube.com/shorts/${item.videoId}` : window.location.href;
-    try {
-      if (navigator.share) await navigator.share({ title: item.title, url });
-      else {
-        await navigator.clipboard.writeText(url);
-        alert("링크가 복사되었습니다.");
-      }
-    } catch { /* 공유 취소 무시 */ }
+    openShare({ title: item.title, url });
   };
 
   return (

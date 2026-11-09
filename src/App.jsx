@@ -36,6 +36,7 @@ import SearchTitle from "./pages/SearchTitle";
 import Wishlist from "./pages/Wishlist";
 import MemberBrowse from "./pages/MemberBrowse"; // [추가] 로그인 후 메인 "전체 보기" (/browse/:key)
 import WishlistLayer from "./components/wishlist/WishlistLayer";
+import ShareSheet from "./components/common/ShareSheet"; // [추가] 공유 팝업 (utils/share.js openShare 로 열기)
 import { Profile } from "./pages/Profile";
 import AccountSubscription from "./pages/AccountSubscription"; // [추가] 계정 설정 → 구독 관리
 import AccountPayment from "./pages/AccountPayment"; // [추가] 계정 설정 → 지불 방법
@@ -214,6 +215,7 @@ function App() {
 
           {/* 위시리스트 팝업 및 토스트 */}
           <WishlistLayer />
+          <ShareSheet /> {/* [추가] 공유 팝업 */}
         </>
       )}
     </>
