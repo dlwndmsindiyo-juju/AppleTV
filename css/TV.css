@@ -39,6 +39,7 @@
   font-size: 4.75rem;
   line-height: 6rem;
   letter-spacing: 0;
+  font-weight: 600;
 }
 
 .tv-screen .tv-desc {
@@ -61,6 +62,7 @@
   margin: 0;
   color: #FFFFFF;
   word-break: keep-all;
+  line-height: 2.525rem;
 }
 
 .tv-screen .tv-btn {
@@ -72,6 +74,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-weight: 500;
   height: 4.875rem;
   padding: 0.75rem 0;
   border-radius: 0.75rem;
@@ -121,11 +124,17 @@
 }
 
 .tv-screen.tv-terms {
-  padding-top: 4.5rem;
-  padding-bottom: 2.5625rem;
+  padding-top: 7.375rem;
+  padding-bottom: 9.25rem;
 }
 .tv-screen.tv-terms .tv-desc {
   margin-top: 3.875rem;
+  max-width: none;
+}
+.tv-screen.tv-terms .tv-desc span {
+  display: block;
+  line-height: 2.6rem;
+  font-family: "SF Pro", sans-serif;
 }
 .tv-screen.tv-terms .tv-actions {
   margin-top: auto;
@@ -178,7 +187,7 @@
   box-shadow: 0 0 0 0.375rem #FFFFFF;
 }
 .tv-profile.is-current .tv-profile-name {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .tv-profile-avatar {
@@ -205,7 +214,7 @@
 }
 
 .tv-screen.tv-keyboard {
-  padding-top: 9.375rem;
+  padding-top: 7.375rem;
   padding-bottom: 9.25rem;
 }
 .tv-screen.tv-keyboard .tv-desc {
@@ -319,8 +328,9 @@
 }
 .tv-screen.tv-keyboard .tv-key-space {
   width: 90px;
-  height: 2.5rem;
+  height: 3.2rem;
   margin-right: 1.75rem;
+  font-size: 24px;
   padding: 0;
   border-radius: 0.5rem;
   background-color: #FFFFFF;
@@ -415,6 +425,7 @@
   width: auto;
   height: 1.5rem;
   margin-right: auto;
+  margin-left: 12px;
 }
 
 .tv-side-profile {
@@ -859,6 +870,7 @@
   margin: 0 0 0.8125rem;
   padding: 0 5rem;
   color: #FFFFFF;
+  font-weight: 600;
 }
 
 .tv-sport-track {
@@ -908,6 +920,7 @@
   line-height: 2.875rem;
   letter-spacing: 0;
   max-width: 100%;
+  font-size: 1.5rem;
   color: #A3A3A3;
   white-space: nowrap;
   overflow: hidden;
@@ -1282,10 +1295,12 @@
   line-height: 1.5625rem;
 }
 .tv-team-card-title {
+  font-size: 18px;
   color: #FFFFFF;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 4px;
 }
 
 .tv-team-card-desc {
@@ -1308,7 +1323,8 @@
   overflow: hidden;
   color: #C8C8C8;
   -webkit-line-clamp: 2;
-  line-clamp: 2;
+  line-height: 1.15rem;
+  font-size: 14px;
   -webkit-box-orient: vertical;
 }
 
@@ -1329,6 +1345,8 @@
 }
 .tv-team-card-meta {
   display: inline-flex;
+  height: 20px;
+  font-size: 0.9rem;
   align-items: center;
   gap: 0.375rem;
   margin-top: 0.375rem;
@@ -2302,6 +2320,7 @@
   font-size: 2rem;
   line-height: 2.875rem;
   letter-spacing: 0;
+  font-size: 1.5rem;
   max-width: 100%;
   color: #A3A3A3;
   white-space: nowrap;
@@ -2388,13 +2407,14 @@
   margin: 0;
   padding: 0;
   color: #FFFFFF;
+  line-height: 4rem;
 }
 
 .tv-detail-subtitle {
-  margin: 2.5rem 0 0;
+  margin: 1.5rem 0 0;
   color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
-  font-size: 2.375rem;
+  font-size: 1.5rem;
   font-weight: 400;
   line-height: 2.875rem;
 }
@@ -2405,8 +2425,8 @@
   overflow: hidden;
   color: #FFFFFF;
   font-family: "SF Pro", sans-serif;
-  font-size: 1.8125rem;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 450;
   line-height: 2.25rem;
   word-break: keep-all;
   -webkit-line-clamp: 3;
@@ -2416,7 +2436,7 @@
 
 .tv-end-actions.tv-detail-actions {
   position: static;
-  margin-top: auto;
+  margin-top: 3.5rem;
 }
 
 .tv-detail-notice {
@@ -2608,6 +2628,7 @@
   overflow: hidden;
   color: #C8C8C8;
   white-space: nowrap;
+  line-height: 1.5rem;
   text-overflow: ellipsis;
 }
 
@@ -2702,6 +2723,7 @@
 }
 .tv-detail-standings-row > span {
   text-align: center;
+  font-family: "SF Pro", sans-serif;
 }
 .tv-detail-standings-row .rank {
   color: #C8C8C8;
@@ -2715,6 +2737,7 @@
   text-align: left;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-family: "SF Pro", sans-serif;
 }
 .tv-detail-standings-row .club img,
 .tv-detail-standings-row .club .sport-badge-initial {
