@@ -382,3 +382,76 @@ $help-sub: $dark-color-100;
     animation: none;
   }
 }
+
+// =====================================================================
+// [추가] "← 돌아가기" (pages/HelpPage.jsx) — .help-body 맨 위 · 카드 섹션 제목 바로 위 왼쪽
+// - 아이콘: public/icons/nav/left-nav.svg (mask · 글자색과 같은 색)
+// - 글자 Body/default-B · $help-text · 마우스를 올리면 Primary/500 (위 .help-link 와 같은 보라)
+// - 누르면 푸터 메뉴를 누르기 전에 보던 페이지 · 스크롤 위치로 (주소로 바로 들어왔으면 홈)
+// =====================================================================
+// [수정] 버튼을 .help-body 맨 위에 넣음 (띄우지 않고 본문 흐름 안) → 왼쪽 줄은 카드 섹션과 자동으로 같음
+// - 간격: 히어로 → 버튼 = .help-body 위 여백 / 버튼 → "처음부터 차근차근." = 버튼 아래 여백 (아래 숫자만 조절)
+.help-body {
+  padding-top: $space-xl; // 히어로 → 버튼 (원래 7.5rem 은 아래 .help-back 의 margin-bottom 으로 나눔)
+}
+
+.help-back {
+  @include body-default-b;
+  margin: 0 0 4.25rem; // 버튼 → 섹션 제목 (24 + 버튼 28 + 68 = 원래 간격 120 그대로)
+  display: flex;
+  width: fit-content; // 글자 폭만큼만 (누르는 영역이 줄 전체로 넓어지지 않게)
+  align-items: center;
+  gap: $space-xs;
+  padding: $space-xs 0;
+  border: none;
+  border-radius: $radius-xs;
+  background: none;
+  color: $help-text;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    color: $primary-color-500;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-500;
+    outline-offset: 0.125rem;
+  }
+}
+
+.help-back-icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+}
+
+// 태블릿: 원래 위 여백 5rem 유지
+@media (max-width: 1023px) {
+  .help-body {
+    padding-top: $space-xl;
+  }
+
+  .help-back {
+    margin-bottom: 1.75rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .help-body {
+    padding-top: $space-md;
+  }
+
+  .help-back {
+    @include body-small-b;
+    margin-bottom: 1rem; // 16 + 버튼 24 + 16 = 원래 3.5rem(56)
+  }
+
+  .help-back-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
