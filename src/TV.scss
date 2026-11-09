@@ -12,18 +12,34 @@
 // - 기기 구분: pages/TvPreview.jsx 가 .tv-preview 에 is-tablet / is-phone 클래스 (터치 기기 + 화면 크기)
 // - TV 화면(.tv-preview-stage) 안에만 적용 · 왼쪽 메뉴(실제 크기)는 그대로
 // =====================================================================
-$tv-type-ladder: (caption-small, caption-default, label-default, body-small, body-default, heading-h5, body-large, heading-h3, heading-h2, display-M, display-l);
-$tv-type-alias: (heading-h4: body-large); // 같은 크기 변수
+$tv-type-ladder: (
+  caption-small,
+  caption-default,
+  label-default,
+  body-small,
+  body-default,
+  heading-h5,
+  body-large,
+  heading-h3,
+  heading-h2,
+  display-M,
+  display-l
+);
+$tv-type-alias: (
+  heading-h4: body-large
+); // 같은 크기 변수
 $tv-type-step-tablet: 2;
 $tv-type-step-phone: 3;
 
 @function tv-type-split($name) {
   @each $suffix in ("-b", "-m") {
     $len: string.length($name);
-    @if $len > 2 and string.slice($name, $len - 1) == $suffix {
+
+    @if $len >2 and string.slice($name, $len - 1)==$suffix {
       @return (string.slice($name, 1, $len - 2), $suffix);
     }
   }
+
   @return ($name, "");
 }
 
@@ -31,13 +47,29 @@ $tv-type-step-phone: 3;
   $parts: tv-type-split($name);
   $base: list.nth($parts, 1);
   $suffix: list.nth($parts, 2);
-  @if map-has-key($tv-type-alias, $base) { $base: map-get($tv-type-alias, $base); }
+
+  @if map-has-key($tv-type-alias, $base) {
+    $base: map-get($tv-type-alias, $base);
+  }
+
   $i: list.index($tv-type-ladder, $base);
-  @if not $i { @return $name; } // 큰 제목 · TV 전용 변수는 그대로
+
+  @if not $i {
+    @return $name;
+  }
+
+  // 큰 제목 · TV 전용 변수는 그대로
   $next: list.nth($tv-type-ladder, math-min($i + $steps, list.length($tv-type-ladder)));
   $candidate: "#{$next}#{$suffix}";
-  @if meta.mixin-exists($candidate) { @return $candidate; }
-  @if $suffix == "-m" and meta.mixin-exists("#{$next}-b") { @return "#{$next}"; }
+
+  @if meta.mixin-exists($candidate) {
+    @return $candidate;
+  }
+
+  @if $suffix =="-m" and meta.mixin-exists("#{$next}-b") {
+    @return "#{$next}";
+  }
+
   @return "#{$next}";
 }
 
@@ -72,13 +104,15 @@ $tv-type-sizes: (
 
   $tablet: tv-type-bump($name, $tv-type-step-tablet);
   $phone: tv-type-bump($name, $tv-type-step-phone);
+
   // 큰 변수의 글자 크기 · 줄 높이만 (굵기 · 색 등 원래 규칙은 그대로)
-  @if $tablet != $name {
+  @if $tablet !=$name {
     :where(.tv-preview.is-tablet .tv-preview-stage) & {
       @include tv-type-size($tablet);
     }
   }
-  @if $phone != $name {
+
+  @if $phone !=$name {
     :where(.tv-preview.is-phone .tv-preview-stage) & {
       @include tv-type-size($phone);
     }
@@ -175,6 +209,7 @@ $tv-type-sizes: (
   // 큰 제목: Display/XL · Light/0 (이용 안내 · 로그인 · 계정 정보 입력)
   &.tv-title--xl {
     @include tv-type(display-xl);
+    font-weight: 600;
   }
 }
 
@@ -185,6 +220,7 @@ $tv-type-sizes: (
   margin: 0;
   color: $light-color-0;
   word-break: keep-all;
+  line-height: 2.525rem
 }
 
 // ---------- 버튼 ----------
@@ -194,6 +230,7 @@ $tv-type-sizes: (
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-weight: 500;
   height: 4.875rem;
   padding: 0.75rem 0;
   border-radius: $tv-btn-radius;
@@ -265,11 +302,19 @@ $tv-type-sizes: (
 // 2. 이용 안내 — 제목 · 설명은 위, 버튼은 화면 아래
 // =====================================================================
 .tv-screen.tv-terms {
-  padding-top: 4.5rem;
-  padding-bottom: 2.5625rem;
+  padding-top: 7.375rem;
+  padding-bottom: 9.25rem;
 
   .tv-desc {
     margin-top: 3.875rem;
+    max-width: none; // [추가] 860 폭 제한을 풀어서 한 문장이 중간에 또 꺾이지 않게
+
+    // [추가] 안내 문장마다 한 줄씩 끊어서 (TvScreens.jsx 의 <span> 하나 = 한 문장)
+    span {
+      display: block;
+      line-height: 2.6rem;
+      font-family: "SF Pro", sans-serif;
+    }
   }
 
   .tv-actions {
@@ -310,10 +355,21 @@ $tv-type-sizes: (
   cursor: pointer;
 
   // 프로필마다 배경색 (PC .auth-profile 과 같음)
-  &--1 .tv-profile-avatar { background-color: $primary-color-500; }
-  &--2 .tv-profile-avatar { background-color: $sports-color; }
-  &--3 .tv-profile-avatar { background-color: $accent-color; }
-  &--4 .tv-profile-avatar { background-color: $success-color; }
+  &--1 .tv-profile-avatar {
+    background-color: $primary-color-500;
+  }
+
+  &--2 .tv-profile-avatar {
+    background-color: $sports-color;
+  }
+
+  &--3 .tv-profile-avatar {
+    background-color: $accent-color;
+  }
+
+  &--4 .tv-profile-avatar {
+    background-color: $success-color;
+  }
 
   // 리모컨 포커스 · 마우스: 조금 커지고 흰 테두리
   &:focus-visible,
@@ -328,7 +384,7 @@ $tv-type-sizes: (
 
   // 지금 쓰는 프로필: 이름 굵게
   &.is-current .tv-profile-name {
-    font-weight: $font-weight-bold;
+    font-weight: 600;
   }
 }
 
@@ -357,7 +413,7 @@ $tv-type-sizes: (
 // 3. Apple 계정 로그인 · 계정 정보 입력 — 리모컨 자판
 // =====================================================================
 .tv-screen.tv-keyboard {
-  padding-top: 9.375rem;
+  padding-top: 7.375rem;
   padding-bottom: 9.25rem;
 
   .tv-desc {
@@ -477,8 +533,9 @@ $tv-type-sizes: (
   .tv-key-space {
     @include tv-type(heading-h3-b);
     width: 90px;
-    height: 2.5rem;
+    height: 3.2rem;
     margin-right: 1.75rem;
+    font-size: 24px;
     padding: 0;
     border-radius: $radius-xs;
     background-color: $tv-key-space-bg;
@@ -508,7 +565,7 @@ $tv-type-sizes: (
     background: transparent;
     color: $light-color-0;
 
-    & + .tv-key-mode {
+    &+.tv-key-mode {
       border-left: 0.125rem solid $tv-key-mode-divider;
     }
 
@@ -584,6 +641,7 @@ $tv-type-sizes: (
   width: auto;
   height: 1.5rem;
   margin-right: auto; // 로고는 맨 왼쪽, 나머지는 오른쪽으로
+  margin-left: 12px;
 }
 
 // 프로필 아이콘 (헤더와 같은 ProfileAvatar) — 로그인 전에는 눌러서 TV 로그인 화면으로
@@ -967,7 +1025,7 @@ $tv-type-sizes: (
     background-color: rgba(0, 0, 0, 0.8);
   }
 
-  > * {
+  >* {
     position: relative;
     z-index: 1;
   }
@@ -1037,7 +1095,7 @@ $tv-type-sizes: (
 }
 
 // 줄 사이 64 = 52 + 카드 줄 아래 여백 12
-.tv-sport-row + .tv-sport-row {
+.tv-sport-row+.tv-sport-row {
   margin-top: 3.25rem;
 }
 
@@ -1046,6 +1104,7 @@ $tv-type-sizes: (
   margin: 0 0 0.8125rem; // 25 = 13 + 카드 줄 위 여백 12
   padding: 0 5rem;
   color: $light-color-0;
+  font-weight: 600;
 }
 
 // 카드 줄: 왼쪽 80 에서 시작해 오른쪽 화면 끝에서 잘림 (리모컨 이동 시 옆으로 밀림)
@@ -1095,6 +1154,7 @@ $tv-type-sizes: (
 .tv-sport-card-title {
   @include tv-type(tv-card-title);
   max-width: 100%;
+  font-size: 1.5rem;
   color: $tv-card-title-color;
   white-space: nowrap;
   overflow: hidden;
@@ -1152,12 +1212,12 @@ $tv-type-sizes: (
 
 
 // [추가] TV 화면 안 요소가 높이가 모자라도 줄어들어 겹치지 않게 (제목 · 설명 · 안내 박스 · 자판 · 버튼)
-.tv-screen > * {
+.tv-screen>* {
   flex-shrink: 0;
 }
 
 // 스포츠 · 홈의 섹션 영역은 남은 높이만 채우고 안에서 위아래로 이동 (줄어들 수 있어야 함)
-.tv-screen > .tv-sport-body {
+.tv-screen>.tv-sport-body {
   flex-shrink: 1;
 }
 
@@ -1328,7 +1388,7 @@ $tv-type-sizes: (
   padding: 2.5rem 0 5rem;
 }
 
-.tv-team-row + .tv-team-row {
+.tv-team-row+.tv-team-row {
   margin-top: 3.5rem;
 }
 
@@ -1416,10 +1476,12 @@ $tv-type-sizes: (
 
 .tv-team-card-title {
   @include tv-type(body-default-b);
+  font-size: 18px;
   color: $light-color-0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 4px
 }
 
 .tv-team-card-desc {
@@ -1428,13 +1490,16 @@ $tv-type-sizes: (
   overflow: hidden;
   color: $light-color-500;
   -webkit-line-clamp: 2;
-  line-clamp: 2;
+  line-height: 1.15rem;
+  font-size: 14px;
   -webkit-box-orient: vertical;
 }
 
 .tv-team-card-meta {
   @include tv-type(caption-small);
   display: inline-flex;
+  height: 20px;
+  font-size: 0.9rem;
   align-items: center;
   gap: 0.375rem;
   margin-top: 0.375rem;
@@ -1712,7 +1777,7 @@ $tv-type-sizes: (
   left: 0;
 }
 
-.tv-end-row + .tv-end-row {
+.tv-end-row+.tv-end-row {
   margin-top: 2.75rem;
 }
 
@@ -1987,7 +2052,7 @@ $tv-type-sizes: (
   opacity: 0.55; // 고르지 않은 종류는 흐리게 (시안)
   cursor: pointer;
 
-  & + .tv-search-mode {
+  &+.tv-search-mode {
     border-left: 0.125rem solid $tv-key-mode-divider;
   }
 
@@ -2174,7 +2239,7 @@ $tv-type-sizes: (
   color: $light-color-500;
   cursor: pointer;
 
-  & + .tv-search-filter {
+  &+.tv-search-filter {
     border-left: 0.125rem solid rgba($dark-color-900, 0.6);
   }
 
@@ -2255,6 +2320,7 @@ $tv-type-sizes: (
 
 .tv-search-card-title {
   @include tv-type(tv-card-title);
+  font-size: 1.5rem;
   max-width: 100%;
   color: $tv-card-title-color;
   white-space: nowrap;
@@ -2290,6 +2356,51 @@ $tv-type-sizes: (
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+// [추가] 상세 "← 뒤로" (TvDetail.jsx onBack) — 히어로 왼쪽 위 · 글자 줄(왼쪽 180)에 맞춤
+// - 이전 상세가 있으면 그 상세로, 없으면 상세를 열기 전 화면으로 (TvPreview.jsx closeDetail · Esc 도 같음)
+// - 히어로 버튼에서 방향키 ↑ 로 올 수 있음 · 리모컨 포커스는 다른 TV 버튼처럼 흰 배경
+.tv-screen.tv-detail {
+  position: relative;
+}
+
+.tv-screen .tv-detail-back {
+  @include tv-type(display-M-b);
+  position: absolute;
+  top: 3.5rem;
+  left: 11.25rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 4rem;
+  padding: 0 2rem 0 1.5rem;
+  border-radius: 62.4375rem;
+  background-color: $tv-btn-secondary-bg;
+  color: $tv-btn-secondary-text;
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible,
+  &.is-focused {
+    outline: none;
+    background-color: $tv-btn-primary-bg;
+    color: $tv-btn-primary-text;
+    transform: scale(1.05);
+  }
+}
+
+// 화살표: public/icons/nav/left-nav.svg 모양 · 글자색을 따라감
+.tv-detail-back-icon {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
 }
 
 .tv-detail-hero {
@@ -2336,13 +2447,14 @@ $tv-type-sizes: (
   margin: 0;
   padding: 0;
   color: $light-color-0;
+  line-height: 4rem;
 }
 
 .tv-detail-subtitle {
-  margin: 2.5rem 0 0;
+  margin: 1.5rem 0 0;
   color: $light-color-0;
   font-family: $font-family-base;
-  font-size: 2.375rem;
+  font-size: 1.5rem;
   font-weight: $font-weight-regular;
   line-height: 2.875rem;
 }
@@ -2353,8 +2465,8 @@ $tv-type-sizes: (
   overflow: hidden;
   color: $light-color-0;
   font-family: $font-family-base;
-  font-size: 1.8125rem;
-  font-weight: $font-weight-medium;
+  font-size: 1.5rem;
+  font-weight: 450;
   line-height: 2.25rem;
   word-break: keep-all;
   -webkit-line-clamp: 3;
@@ -2365,7 +2477,7 @@ $tv-type-sizes: (
 // 버튼: 끝 화면 버튼(.tv-end-actions)을 왼쪽 정렬로
 .tv-end-actions.tv-detail-actions {
   position: static;
-  margin-top: auto;
+  margin-top: 3.5rem
 }
 
 .tv-detail-notice {
@@ -2471,6 +2583,7 @@ $tv-type-sizes: (
     overflow: hidden;
     color: $light-color-500;
     white-space: nowrap;
+    line-height: 1.5rem;
     text-overflow: ellipsis;
   }
 }
@@ -2532,8 +2645,9 @@ $tv-type-sizes: (
   min-height: 3.25rem;
   border-top: 0.0625rem solid rgba($light-color-0, 0.08);
 
-  > span {
+  >span {
     text-align: center;
+    font-family: "SF Pro", sans-serif;
   }
 
   .rank {
@@ -2549,6 +2663,7 @@ $tv-type-sizes: (
     text-align: left;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-family: "SF Pro", sans-serif;
 
     img,
     .sport-badge-initial {
@@ -2566,7 +2681,7 @@ $tv-type-sizes: (
     border-top: 0;
     color: $light-color-500;
 
-    > span:nth-child(2) {
+    >span:nth-child(2) {
       text-align: left;
     }
   }
@@ -2721,6 +2836,7 @@ $tv-scrollbar-thumb-hover: rgba($light-color-0, 0.32);
 }
 
 @keyframes tv-rotate-hint {
+
   0%,
   20% {
     transform: rotate(0deg);

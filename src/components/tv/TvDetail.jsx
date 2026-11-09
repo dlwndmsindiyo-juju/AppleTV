@@ -7,7 +7,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { TMDB_IMG } from "../../utils/tmdb";
 import { TV_SPORT_BG } from "../../data/tvSportData";
 import { TV_REPLAY_MATCHES } from "../../data/tvReplayMatches";
-import { TvDetailHero } from "./TvDetailHero";
+import { TvDetailHero, scrollScreenTop } from "./TvDetailHero";
 import { PlayIcon, PlusIcon, InfoIcon, useInterest } from "./TvActions";
 import { ReplayCard } from "./TvEndScreen";
 import { ottItem, videoItem, matchItem, seriesItem, sportSummary, cleanText } from "./tvDetailItems";
@@ -23,7 +23,7 @@ import TvPlayer from "./TvPlayer";
 //   · 스포츠: 하이라이트 · 경기 다시보기
 //   · OTT  : 에피소드(시리즈) · 등장인물 · 추천 콘텐츠
 // - 아래 카드를 누르면 그 콘텐츠의 상세로 바뀜 · "시청하기" 를 누르면 화면 가득 재생 (TvPlayer)
-// - item: tvDetailItems.js 로 만든 항목 · onOpen(item): 다른 상세 열기
+// - item: tvDetailItems.js 로 만든 항목 · onOpen(item): 다른 상세 열기 · [추가] onBack: 뒤로
 
 const year = (d) => (d ? String(d).slice(0, 4) : "");
 
@@ -418,8 +418,15 @@ const OttDetail = ({ item, onOpen }) => {
   );
 };
 
-export const TvDetail = ({ item, onOpen }) => (
+// [추가] onBack: "← 뒤로" (화면 왼쪽 위 · 히어로 버튼에서 ↑ 로도 갈 수 있음) — 이전 상세 또는 보던 화면으로 (TvPreview)
+export const TvDetail = ({ item, onOpen, onBack }) => (
   <main className="tv-screen tv-detail">
+    {onBack && (
+      <button type="button" className="tv-detail-back" onClick={onBack} onFocus={scrollScreenTop}>
+        <span className="tv-detail-back-icon" aria-hidden="true" />
+        뒤로
+      </button>
+    )}
     {item.kind === "ott" ? <OttDetail item={item} onOpen={onOpen} /> : <SportDetail item={item} onOpen={onOpen} />}
   </main>
 );
