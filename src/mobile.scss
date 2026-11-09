@@ -728,9 +728,6 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       @include heading-h2-b;
     }
 
-    .watch-link {
-      @include body-default-b;
-    }
 
     .watch-devices {
       gap: $space-lg $space-xl;
@@ -3079,7 +3076,6 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
       @include body-small;
       display: block;
       color: $light-color-0;
-      margin-bottom: $space-md;
     }
 
     // 시안: 위 3개 (iPhone · iPad · Mac 및 Windows) / 아래 4개 → 줄 폭 280 안에서 줄바꿈

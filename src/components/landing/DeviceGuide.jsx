@@ -39,7 +39,6 @@ const MOBILE_DEVICES = [
 ];
 
 const ICON_PATH = "/icons/devices/";
-const HELP_LINK = "https://support.apple.com/ko-kr/guide/tvapp/welcome/web";
 
 const LogoList = ({ hidden = false }) => (
   <ul className="watch-logo-list" aria-hidden={hidden || undefined}>
@@ -72,10 +71,6 @@ const DeviceGuide = () => {
         {/* [수정] 설명 문구 다시 넣음 (시안: 로고 띠 → 설명 → 링크) */}
         <h4 className="watch-subtitle">Apple TV는 Apple 기기, 스마트 TV, Apple TV app 에서도 시청하실 수 있습니다.</h4>
         <h4 className="watch-subtitle-mobile">Apple TV는 다양한 기기에서 시청하실 수 있습니다.</h4>
-        <a className="watch-link" href={HELP_LINK} target="_blank" rel="noopener noreferrer">
-          Apple TV를 시청할 수 있는 모든 방법 보기
-          <span className="watch-link-arrow" aria-hidden="true">›</span>
-        </a>
 
         <ul className="watch-devices">
           {MOBILE_DEVICES.map((device) => (
