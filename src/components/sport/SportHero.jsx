@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import VideoPopup from "../common/VideoPopup"; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import { Navigation, Pagination, Autoplay, EffectFade, A11y } from "swiper/modules"; // [수정] A11y: 키보드(Tab)로 화면 밖 카드를 고르면 그 카드가 보이게 밀어 줌
 import { useSportStore } from "../../store/useSportStore";
 import { useAuthStore } from "../../store/useAuthStore"; // [추가] 경기 시청: 로그인 전에는 구독 안내 팝업
 import { useTeamStore, selectHeroTeam } from "../../store/useTeamStore";
@@ -184,7 +184,7 @@ const MatchHero = () => {
       {/* hero-swiper-container: 애플TV 홈 히어로의 화살표/페이지네이션 스타일을 그대로 사용 */}
       <div className="hero-swiper-container sport-hero-swiper">
         <Swiper
-          modules={[Navigation, Pagination, Autoplay, EffectFade]}
+          modules={[Navigation, Pagination, Autoplay, EffectFade, A11y]}
           effect="fade"
           fadeEffect={{ crossFade: true }}
           slidesPerView={1}
