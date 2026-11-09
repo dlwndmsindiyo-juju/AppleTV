@@ -330,9 +330,9 @@
   }
   .account-nav-link {
     font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 0.8125rem;
-    line-height: 1.125rem;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1rem;
     letter-spacing: 0;
     padding: 0.5rem 0.5rem 0.5rem 0.75rem;
     border-radius: 0.5rem;
@@ -344,6 +344,14 @@
   }
   .account-section {
     padding: 2rem 0;
+  }
+  .account-section-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    letter-spacing: 0;
+    margin-bottom: 1rem;
   }
   .account-section-body {
     gap: 1.5rem;
@@ -618,13 +626,6 @@
     font-weight: 700;
     font-size: 1.375rem;
     line-height: 1.75rem;
-    letter-spacing: 0;
-  }
-  section.device-guide.device-guide--watch .watch-link {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 0.9375rem;
-    line-height: 1.25rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-devices {
@@ -2563,7 +2564,6 @@ header .inner nav .gnb-right ul .search-icon-item {
     letter-spacing: 0;
     display: block;
     color: #FFFFFF;
-    margin-bottom: 0.75rem;
   }
   section.device-guide.device-guide--watch.device-guide--watch .watch-devices {
     max-width: 280px;
