@@ -262,6 +262,12 @@
 
   .auth-profile-picker {
     margin-top: 0.75rem;
+
+    // [수정] 프로필 이름이 안 보이던 문제 — 로그인 카드 글자색($text-inverse · 어두운 색)을 이어받아
+    // 어두운 배경 위에 어두운 글자가 됨 → 이름 · "프로필 추가" 를 밝게 (지금 쓰는 프로필 이름은 보라 그대로)
+    .profile-picker-item {
+      color: v.$light-color-0;
+    }
   }
 
   button:focus-visible,

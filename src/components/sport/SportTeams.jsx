@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode } from "swiper/modules";
+import { FreeMode, A11y } from "swiper/modules"; // [수정] A11y: 키보드(Tab)로 화면 밖 카드를 고르면 그 카드가 보이게 밀어 줌
 import "swiper/css";
 import "swiper/css/free-mode";
 import { SPORT_TEAMS } from "../../data/sportTeams";
@@ -77,7 +77,7 @@ const SportTeams = ({ title = "관심있는 구단" }) => {
           <Swiper
             key={filter}
             className="sport-team-swiper"
-            modules={[FreeMode]}
+            modules={[FreeMode, A11y]}
             slidesPerView="auto"
             spaceBetween={36}
             freeMode
