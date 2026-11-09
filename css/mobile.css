@@ -188,35 +188,67 @@
   .wish-sort {
     margin-top: 2rem;
   }
-  .wish-tabs {
-    gap: 0.75rem;
-  }
-  .wish-tabs li {
-    flex: 0 0 120px;
-  }
-  .wish-tab {
-    height: 7rem;
-  }
-  .wish-tab-icon {
-    font-size: 1.625rem;
-  }
-  .wish-grid {
-    gap: 1rem;
+  .wish-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
     margin-top: 2rem;
   }
-  .wish-card {
-    gap: 1rem;
-    padding: 1rem;
+  .wish-side {
+    position: static;
   }
-  .wish-card-poster {
-    width: 112px;
+  .wish-tabs {
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-  .wish-card-title {
+  .wish-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .wish-tabs li {
+    flex: 0 0 auto;
+  }
+  .wish-tab {
+    width: auto;
+    height: 2.5rem;
+    padding: 0 1rem;
+    gap: 0.5rem;
+    background-color: #1f1f1f;
+    border-radius: 1.75rem;
+  }
+  .wish-tab strong {
     font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
     letter-spacing: 0;
+    flex: none;
+  }
+  .wish-tab--add {
+    margin-top: 0;
+  }
+  .wish-side-head {
+    margin-bottom: 0.25rem;
+  }
+  .wish-tab-radio {
+    width: 1rem;
+    height: 1rem;
+  }
+  .wish-genres {
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+  .wish-posters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem 0.75rem;
+  }
+  .wish-poster-img {
+    border-radius: 0.75rem;
+  }
+  .wish-more-btn {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 1.125rem;
   }
 }
 @media (max-width: 767px) {
@@ -239,36 +271,6 @@
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
-  }
-  .wish-tabs li {
-    flex-basis: 96px;
-  }
-  .wish-tab {
-    height: 6rem;
-  }
-  .wish-tab strong {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    letter-spacing: 0;
-  }
-  .wish-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .wish-card-poster {
-    width: 96px;
-  }
-  .wish-card-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 1.0625rem;
-    line-height: 1.375rem;
-    letter-spacing: 0;
-  }
-  .wish-card-overview {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
   }
   .wish-modal {
     padding: 1.25rem;
@@ -357,11 +359,9 @@
     letter-spacing: 0;
   }
   .account-item-desc,
-  .account-link,
   .account-toggle,
   .account-check,
-  .account-address,
-  .account-icon-link {
+  .account-address {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
@@ -434,7 +434,21 @@
     padding-right: 1.25rem;
   }
   section.top10-section .top10-slide {
-    width: 170px;
+    width: 10.9375rem;
+  }
+  section.top10-section .top10-card {
+    padding-left: 3.25rem;
+  }
+  section.top10-section .top10-poster {
+    aspect-ratio: 123/201;
+  }
+  section.top10-section .top10-num {
+    height: 8.75rem;
+    bottom: 0.5rem;
+  }
+  section.top10-section .top10-num .top10-num-glyph {
+    font-size: 6.25rem;
+    letter-spacing: -0.625rem;
   }
 }
 @media (max-width: 767px) {
@@ -525,7 +539,10 @@
 }
 @media (max-width: 767px) {
   section.top10-section .top10-slide.top10-slide--wide {
-    width: 221px;
+    width: 14.0625rem;
+  }
+  section.top10-section .top10-slide.top10-slide--wide .top10-card {
+    padding-left: 6.375rem;
   }
 }
 @media (max-width: 767px) {
@@ -716,6 +733,9 @@
     line-height: 1.125rem;
     letter-spacing: 0;
     color: #FFFFFF;
+  }
+  .hero-swiper-container .hero-slide-item .hero-info .hero-title-logo {
+    margin-bottom: 0;
   }
 }
 @media (max-width: 767px) {
@@ -1206,10 +1226,6 @@
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
-  }
-  .movie-detail-page .player-box .overview {
-    line-clamp: 4;
-    -webkit-line-clamp: 4;
   }
   .movie-detail-page .player-box .info-actions {
     flex-direction: row-reverse;
@@ -2354,24 +2370,6 @@ header .inner nav .gnb-right ul .search-icon-item {
   :is(main, div).member-home.member-home .member-wl-card {
     padding: 0.625rem 1rem;
   }
-  :is(main, div).member-home.member-home section.top10-section .top10-slide {
-    width: 171px;
-  }
-  :is(main, div).member-home.member-home section.top10-section .top10-slide--wide {
-    width: 217px;
-  }
-  :is(main, div).member-home.member-home section.top10-section .top10-card {
-    padding-left: 3rem;
-  }
-  :is(main, div).member-home.member-home section.top10-section .top10-card .top10-num .top10-num-glyph {
-    font-size: 6.25rem;
-  }
-  :is(main, div).member-home.member-home section.top10-section .top10-slide--wide .top10-card {
-    padding-left: 5.84375rem;
-  }
-  :is(main, div).member-home.member-home section.top10-section .top10-poster {
-    aspect-ratio: 123/201;
-  }
   :is(main, div).member-home.member-home .rail-recommend {
     --rail-col: 130px;
   }
@@ -2424,6 +2422,19 @@ header .inner nav .gnb-right ul .search-icon-item {
     border-radius: 0;
     background-color: rgba(0, 0, 0, 0.5);
     text-align: left;
+  }
+  :is(main, div).member-home.member-home .member-mood .member-notice.member-notice p {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+  }
+  :is(main, div).member-home.member-home .member-mood .member-notice.member-notice .member-notice-text {
+    display: none;
+  }
+  :is(main, div).member-home.member-home .member-mood .member-notice.member-notice .member-notice-text--short {
+    display: inline;
   }
   :is(main, div).member-home.member-home .member-mood .member-notice.member-notice .member-btn {
     align-self: center;
@@ -2674,7 +2685,6 @@ header .inner nav .gnb-right ul .search-icon-item {
   .account-sub-app-icon {
     width: 3.5rem;
     height: 3.5rem;
-    border-radius: 0.75rem;
   }
   .account-pay-layout {
     flex-direction: column;
@@ -2683,6 +2693,84 @@ header .inner nav .gnb-right ul .search-icon-item {
   .account-pay-card {
     min-height: 0;
     padding: 1rem;
+  }
+  .account-sub-body:not(.account-pay) {
+    gap: 1.5rem;
+    padding: 2rem 0;
+  }
+  .account-sub-body:not(.account-pay) > .account-item {
+    gap: 0.5rem;
+  }
+  .account-back-row {
+    margin-bottom: 0.25rem;
+  }
+  .account-back {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+    gap: 0.25rem;
+  }
+  .account-sub-heading {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    letter-spacing: 0;
+  }
+  .account-pay > .account-sub-heading {
+    margin: 0 0 1rem;
+  }
+  .account-pay .account-pay-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .account-sub-canceled,
+  .account-plan-name,
+  .account-pay .account-pay-brand {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+  }
+  .account-sub-facts li,
+  .account-plan-price {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+  }
+  .account-sub-facts .account-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .account-plan-tag {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0;
+  }
+  .account-plan {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+  }
+  .account-sub-empty {
+    padding: 1rem;
+    border-radius: 0.75rem;
+  }
+  .account-fill-btn,
+  .account-outline-btn {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    letter-spacing: 0;
+    height: 2.25rem;
+    padding: 0 1rem;
   }
 }
 @media (max-width: 767px) {
@@ -2978,5 +3066,295 @@ header .inner nav .gnb-right ul .search-icon-item {
   .ai-banner-box .ai-banner-chip {
     width: 3.8rem;
     height: 2.375rem;
+  }
+}
+@media (max-width: 767px) {
+  .sub-pop-backdrop {
+    padding: 0.75rem;
+  }
+  .sub-pop {
+    width: 100%;
+  }
+  .sub-pop-body {
+    padding: 2.75rem 1rem 1.25rem 1.5rem;
+  }
+  .sub-pop-nav {
+    top: 0;
+    left: 0.5rem;
+    right: 0;
+  }
+  .sub-pop-head {
+    margin-bottom: 2.25rem;
+  }
+  .sub-pop-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0;
+  }
+  .sub-plan {
+    padding: 1rem 1.5rem;
+  }
+  .sub-benefit-title {
+    margin: 2rem 0 1rem;
+  }
+  .sub-benefits li {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+  }
+  .sub-pay-footer {
+    padding: 0.75rem 1.5rem 1rem;
+  }
+  .sub-pay-footer .sub-btn {
+    width: 100%;
+  }
+  .sub-pop--payment .sub-pop-head {
+    margin-bottom: 2rem;
+  }
+  .sub-section + .sub-section {
+    margin-top: 2rem;
+  }
+  .sub-note {
+    margin-top: 2rem;
+  }
+  .sub-confirm-card {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+}
+@media (max-width: 767px) {
+  :is(main, div).member-home.member-browse .member-browse-genres.member-browse-genres {
+    gap: 2rem;
+  }
+  :is(main, div).member-home.member-browse .member-browse-genre-title.member-browse-genre-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    margin-bottom: 0.75rem;
+  }
+  :is(main, div).member-home.member-browse .member-browse-posters.member-browse-posters {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    gap: 1rem 0.75rem;
+  }
+  :is(main, div).member-home.member-browse .member-browse-poster-title.member-browse-poster-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
+    letter-spacing: 0;
+  }
+}
+@media (max-width: 767px) {
+  .promo-banner:not(.is-live) .promo-banner-inner {
+    gap: 0.75rem;
+  }
+  .promo-banner:not(.is-live) .promo-banner-text {
+    flex: 1 1 auto;
+  }
+  .promo-banner:not(.is-live) .promo-banner-desc {
+    display: none;
+  }
+  .promo-banner:not(.is-live) .promo-banner-title {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    word-break: keep-all;
+  }
+}
+@media (max-width: 767px) {
+  :is(main, div).member-home .member-wishlist.member-wishlist .inner {
+    padding-right: 1.25rem;
+  }
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-head {
+    margin-right: 0;
+  }
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-wl-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    align-items: center;
+  }
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-wl-list li {
+    width: calc(100% - 1.25rem);
+  }
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-wl-card {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    isolation: isolate;
+    transition: none;
+  }
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-wl-card:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-wl-add {
+    background: transparent;
+    transition: opacity 0.2s ease;
+  }
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-wl-add:hover, :is(main, div).member-home .member-wishlist.member-wishlist .member-wl-add:focus-visible {
+    background: transparent;
+    opacity: 0.7;
+  }
+}
+@media (max-width: 767px) {
+  .sport-teams-page .sport-team-list.sport-team-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .sport-teams-page .sport-team-card.sport-team-card {
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.75rem;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 1.5rem 0.75rem 1rem;
+    border-width: 0.125rem;
+    border-radius: 1.25rem;
+    background-color: var(--team-color, #242424);
+    color: var(--team-ink, #FFFFFF);
+  }
+  .sport-teams-page .sport-team-card.sport-team-card:hover {
+    background-color: var(--team-color, #2E2E2E);
+    filter: brightness(1.05);
+  }
+  .sport-teams-page .sport-team-card.sport-team-card.on {
+    border-color: var(--team-ink, #FFFFFF);
+  }
+  .sport-teams-page .sport-team-card.sport-team-card .sport-team-logo {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+  }
+  .sport-teams-page .sport-team-card.sport-team-card .sport-team-info {
+    flex: 0 0 auto;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+  .sport-teams-page .sport-team-card.sport-team-card .sport-team-name {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
+    letter-spacing: 0;
+    max-width: 100%;
+    color: var(--team-ink, #FFFFFF);
+  }
+  .sport-teams-page .sport-team-card.sport-team-card .sport-team-meta {
+    display: none;
+  }
+  .sport-teams-page .sport-team-card.sport-team-card .sport-team-add {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--team-ink, #FFFFFF);
+  }
+}
+@media (max-width: 767px) {
+  .sport-teams-page .sport-team-list.sport-team-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+  .sport-teams-page .sport-team-card.sport-team-card {
+    gap: 0.375rem;
+    padding: 1rem 0.25rem 0.5rem;
+    border-radius: 0.75rem;
+  }
+  .sport-teams-page .sport-team-card.sport-team-card .sport-team-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .sport-teams-page .sport-team-card.sport-team-card .sport-team-name {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
+    letter-spacing: 0;
+  }
+  .sport-teams-page .sport-team-card.sport-team-card .sport-team-add {
+    top: 0.125rem;
+    left: 0.125rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .sport-teams-page .sport-team-card.sport-team-card .sport-team-add svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+}
+.sport-teams-page .sport-teams-back.is-below {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .sport-teams-page .sport-teams-back.is-top {
+    display: none;
+  }
+  .sport-teams-page .sport-teams-back.is-below {
+    display: inline-block;
+    margin: 0 0 1rem;
+    color: #FFFFFF;
+  }
+}
+@media (max-width: 767px) {
+  .promo-banner.is-live .promo-banner-desc {
+    display: none;
+  }
+  .promo-banner.is-live .live-title.live-title {
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
+    white-space: normal;
+  }
+  .promo-banner.is-live .live-badge {
+    flex: 0 0 100%;
+  }
+}
+@media (max-width: 767px) {
+  :is(main, div).member-home .member-wishlist.member-wishlist .inner {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-head,
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-wl-list {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  :is(main, div).member-home .member-wishlist.member-wishlist .member-wl-list {
+    width: 100%;
+    padding: 0;
+  }
+}
+@media (max-width: 767px) {
+  .movie-detail-page.movie-detail-page .player-box .genres.genres {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.6875rem;
+    line-height: 0.8125rem;
+    letter-spacing: 0;
+    color: #C8C8C8;
+  }
+  .movie-detail-page.movie-detail-page .player-box .overview.overview {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0;
+    color: #F5F5F5;
   }
 }

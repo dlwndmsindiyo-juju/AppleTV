@@ -12,18 +12,34 @@
 // - 기기 구분: pages/TvPreview.jsx 가 .tv-preview 에 is-tablet / is-phone 클래스 (터치 기기 + 화면 크기)
 // - TV 화면(.tv-preview-stage) 안에만 적용 · 왼쪽 메뉴(실제 크기)는 그대로
 // =====================================================================
-$tv-type-ladder: (caption-small, caption-default, label-default, body-small, body-default, heading-h5, body-large, heading-h3, heading-h2, display-M, display-l);
-$tv-type-alias: (heading-h4: body-large); // 같은 크기 변수
+$tv-type-ladder: (
+  caption-small,
+  caption-default,
+  label-default,
+  body-small,
+  body-default,
+  heading-h5,
+  body-large,
+  heading-h3,
+  heading-h2,
+  display-M,
+  display-l
+);
+$tv-type-alias: (
+  heading-h4: body-large
+); // 같은 크기 변수
 $tv-type-step-tablet: 2;
 $tv-type-step-phone: 3;
 
 @function tv-type-split($name) {
   @each $suffix in ("-b", "-m") {
     $len: string.length($name);
-    @if $len > 2 and string.slice($name, $len - 1) == $suffix {
+
+    @if $len >2 and string.slice($name, $len - 1)==$suffix {
       @return (string.slice($name, 1, $len - 2), $suffix);
     }
   }
+
   @return ($name, "");
 }
 
@@ -31,13 +47,29 @@ $tv-type-step-phone: 3;
   $parts: tv-type-split($name);
   $base: list.nth($parts, 1);
   $suffix: list.nth($parts, 2);
-  @if map-has-key($tv-type-alias, $base) { $base: map-get($tv-type-alias, $base); }
+
+  @if map-has-key($tv-type-alias, $base) {
+    $base: map-get($tv-type-alias, $base);
+  }
+
   $i: list.index($tv-type-ladder, $base);
-  @if not $i { @return $name; } // 큰 제목 · TV 전용 변수는 그대로
+
+  @if not $i {
+    @return $name;
+  }
+
+  // 큰 제목 · TV 전용 변수는 그대로
   $next: list.nth($tv-type-ladder, math-min($i + $steps, list.length($tv-type-ladder)));
   $candidate: "#{$next}#{$suffix}";
-  @if meta.mixin-exists($candidate) { @return $candidate; }
-  @if $suffix == "-m" and meta.mixin-exists("#{$next}-b") { @return "#{$next}"; }
+
+  @if meta.mixin-exists($candidate) {
+    @return $candidate;
+  }
+
+  @if $suffix =="-m" and meta.mixin-exists("#{$next}-b") {
+    @return "#{$next}";
+  }
+
   @return "#{$next}";
 }
 
@@ -72,13 +104,15 @@ $tv-type-sizes: (
 
   $tablet: tv-type-bump($name, $tv-type-step-tablet);
   $phone: tv-type-bump($name, $tv-type-step-phone);
+
   // 큰 변수의 글자 크기 · 줄 높이만 (굵기 · 색 등 원래 규칙은 그대로)
-  @if $tablet != $name {
+  @if $tablet !=$name {
     :where(.tv-preview.is-tablet .tv-preview-stage) & {
       @include tv-type-size($tablet);
     }
   }
-  @if $phone != $name {
+
+  @if $phone !=$name {
     :where(.tv-preview.is-phone .tv-preview-stage) & {
       @include tv-type-size($phone);
     }
@@ -310,10 +344,21 @@ $tv-type-sizes: (
   cursor: pointer;
 
   // 프로필마다 배경색 (PC .auth-profile 과 같음)
-  &--1 .tv-profile-avatar { background-color: $primary-color-500; }
-  &--2 .tv-profile-avatar { background-color: $sports-color; }
-  &--3 .tv-profile-avatar { background-color: $accent-color; }
-  &--4 .tv-profile-avatar { background-color: $success-color; }
+  &--1 .tv-profile-avatar {
+    background-color: $primary-color-500;
+  }
+
+  &--2 .tv-profile-avatar {
+    background-color: $sports-color;
+  }
+
+  &--3 .tv-profile-avatar {
+    background-color: $accent-color;
+  }
+
+  &--4 .tv-profile-avatar {
+    background-color: $success-color;
+  }
 
   // 리모컨 포커스 · 마우스: 조금 커지고 흰 테두리
   &:focus-visible,
@@ -508,7 +553,7 @@ $tv-type-sizes: (
     background: transparent;
     color: $light-color-0;
 
-    & + .tv-key-mode {
+    &+.tv-key-mode {
       border-left: 0.125rem solid $tv-key-mode-divider;
     }
 
@@ -967,7 +1012,7 @@ $tv-type-sizes: (
     background-color: rgba(0, 0, 0, 0.8);
   }
 
-  > * {
+  >* {
     position: relative;
     z-index: 1;
   }
@@ -1037,7 +1082,7 @@ $tv-type-sizes: (
 }
 
 // 줄 사이 64 = 52 + 카드 줄 아래 여백 12
-.tv-sport-row + .tv-sport-row {
+.tv-sport-row+.tv-sport-row {
   margin-top: 3.25rem;
 }
 
@@ -1152,12 +1197,12 @@ $tv-type-sizes: (
 
 
 // [추가] TV 화면 안 요소가 높이가 모자라도 줄어들어 겹치지 않게 (제목 · 설명 · 안내 박스 · 자판 · 버튼)
-.tv-screen > * {
+.tv-screen>* {
   flex-shrink: 0;
 }
 
 // 스포츠 · 홈의 섹션 영역은 남은 높이만 채우고 안에서 위아래로 이동 (줄어들 수 있어야 함)
-.tv-screen > .tv-sport-body {
+.tv-screen>.tv-sport-body {
   flex-shrink: 1;
 }
 
@@ -1328,7 +1373,7 @@ $tv-type-sizes: (
   padding: 2.5rem 0 5rem;
 }
 
-.tv-team-row + .tv-team-row {
+.tv-team-row+.tv-team-row {
   margin-top: 3.5rem;
 }
 
@@ -1712,7 +1757,7 @@ $tv-type-sizes: (
   left: 0;
 }
 
-.tv-end-row + .tv-end-row {
+.tv-end-row+.tv-end-row {
   margin-top: 2.75rem;
 }
 
@@ -1987,7 +2032,7 @@ $tv-type-sizes: (
   opacity: 0.55; // 고르지 않은 종류는 흐리게 (시안)
   cursor: pointer;
 
-  & + .tv-search-mode {
+  &+.tv-search-mode {
     border-left: 0.125rem solid $tv-key-mode-divider;
   }
 
@@ -2174,7 +2219,7 @@ $tv-type-sizes: (
   color: $light-color-500;
   cursor: pointer;
 
-  & + .tv-search-filter {
+  &+.tv-search-filter {
     border-left: 0.125rem solid rgba($dark-color-900, 0.6);
   }
 
@@ -2532,7 +2577,7 @@ $tv-type-sizes: (
   min-height: 3.25rem;
   border-top: 0.0625rem solid rgba($light-color-0, 0.08);
 
-  > span {
+  >span {
     text-align: center;
   }
 
@@ -2566,7 +2611,7 @@ $tv-type-sizes: (
     border-top: 0;
     color: $light-color-500;
 
-    > span:nth-child(2) {
+    >span:nth-child(2) {
       text-align: left;
     }
   }
@@ -2721,6 +2766,7 @@ $tv-scrollbar-thumb-hover: rgba($light-color-0, 0.32);
 }
 
 @keyframes tv-rotate-hint {
+
   0%,
   20% {
     transform: rotate(0deg);
