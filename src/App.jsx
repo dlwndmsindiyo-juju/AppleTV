@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./App.scss";
 import "./mobile.scss";
 import "./auth.scss"; // [추가] 로그인 화면에만 적용되는 스타일
+import "./help.scss"; // [추가] 이용 가이드 · FAQ · 지원 (/guide · /faq · /support)
 
 import {
   Navigate,
@@ -39,6 +40,7 @@ import { Profile } from "./pages/Profile";
 import AccountSubscription from "./pages/AccountSubscription"; // [추가] 계정 설정 → 구독 관리
 import AccountPayment from "./pages/AccountPayment"; // [추가] 계정 설정 → 지불 방법
 import TvPreview from "./pages/TvPreview"; // [추가] TV 디자인 미리보기 (/tv)
+import HelpPage from "./pages/HelpPage"; // [추가] 푸터 메뉴 페이지 (이용 가이드 · FAQ · 지원)
 import FloatingActions from "./components/common/FloatingActions"; // [추가] 하단 TV · TOP 버튼
 
 function App() {
@@ -97,6 +99,11 @@ function App() {
               <Route path="/" element={<Home />} />
 
               <Route path="/sport" element={<SportHome />} />
+
+              {/* [추가] 푸터 메뉴 페이지 — 같은 틀 · 내용만 다름 (data/helpData.js) */}
+              <Route path="/guide" element={<HelpPage page="guide" />} />
+              <Route path="/faq" element={<HelpPage page="faq" />} />
+              <Route path="/support" element={<HelpPage page="support" />} />
 
               {/* [추가] TV 디자인 미리보기 (/tv/:id 상세와 다른 주소) */}
               <Route path="/tv" element={<TvPreview />} />

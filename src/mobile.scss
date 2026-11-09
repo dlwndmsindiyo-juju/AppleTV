@@ -417,7 +417,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
   }
 
   .account-nav-link {
-    @include body-small-b;
+    @include label-default; // [수정] 메뉴 글자 줄임 (보고 있는 메뉴만 굵게)
     padding: $space-sm $space-sm $space-sm $space-md;
     border-radius: $radius-xs;
     word-break: keep-all;
@@ -430,6 +430,12 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
   .account-section {
     padding: $space-2xl 0;
+  }
+
+  // [추가] 섹션 제목 (휴대폰) — Heading/h2-B
+  .account-section-title {
+    @include heading-h2-b;
+    margin-bottom: $space-lg;
   }
 
   .account-section-body {

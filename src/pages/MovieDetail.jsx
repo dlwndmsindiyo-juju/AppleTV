@@ -142,7 +142,7 @@ export const MovieDetail = ({ type: typeProp }) => {
     logoList.find((l) => l.iso_639_1 === 'en') ||
     logoList[0];
   // [추가] 전체보기 — 위 영상(예고편 · 이미지) 칸을 화면 가득 (브라우저 전체 화면) · 다시 누르거나 Esc 로 원래대로
-  // - 아이콘: public/icons/fullscreen.svg (mask 로 써서 파일 색과 상관없이 흰색)
+  // - 아이콘: public/icons/full-screen.svg (mask 로 써서 파일 색과 상관없이 흰색) · [수정] 버튼 위치: 영상 칸 오른쪽 위
   // - 요소 전체 화면을 지원하지 않는 브라우저(아이폰 Safari 등)는 재생 팝업으로 대신 크게 보기
   const mediaRef = useRef(null);
   const [isFull, setIsFull] = useState(false);

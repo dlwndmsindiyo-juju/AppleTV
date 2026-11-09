@@ -1257,11 +1257,11 @@ header {
         pointer-events: none; // 배경 재생용 (클릭은 재생하기 버튼으로)
       }
 
-      // [추가] 전체보기 버튼 — 영상 칸 오른쪽 아래 · 아이콘 public/icons/fullscreen.svg (흰색 mask)
+      // [수정] 전체보기 버튼 — 영상 칸 오른쪽 위 · 아이콘 public/icons/full-screen.svg (흰색 mask)
       .btn-fullscreen {
         position: absolute;
+        top: $space-lg;
         right: $space-lg;
-        bottom: $space-lg;
         z-index: 2;
         display: flex;
         align-items: center;
@@ -1288,8 +1288,8 @@ header {
         width: 1.25rem;
         height: 1.25rem;
         background-color: currentColor;
-        -webkit-mask: url("/icons/fullscreen.svg") center / contain no-repeat;
-        mask: url("/icons/fullscreen.svg") center / contain no-repeat;
+        -webkit-mask: url("/icons/full-screen.svg") center / contain no-repeat;
+        mask: url("/icons/full-screen.svg") center / contain no-repeat;
       }
 
       // 전체 화면일 때: 화면 가득 · 영상 비율 유지 (남는 곳은 검정)
@@ -5961,7 +5961,7 @@ img.ui-icon.ui-icon-arrow {
 // [수정] 메뉴 행 (사이드바 탭형): 글자 Heading/h2-B
 // - 보고 있는 섹션: 연회색 배경 + 왼쪽 세로 막대 · Dark/400 / 나머지: 회색 글자 · 호버 시 배경
 .account-nav-link {
-  @include heading-h2-b;
+  @include body-large; // [수정] Heading/h2-B → Body/large (메뉴 글자 줄임 · 섹션 제목과 위계 구분) · 보고 있는 메뉴만 굵게
   position: relative;
   display: block;
   width: 100%;
@@ -5996,6 +5996,7 @@ img.ui-icon.ui-icon-arrow {
   &.is-active {
     background-color: $light-color-200;
     color: $dark-color-400;
+    font-weight: $font-weight-bold;
 
     &::before {
       transform: translateY(-50%) scaleY(1);
@@ -6019,16 +6020,14 @@ img.ui-icon.ui-icon-arrow {
   scroll-margin-top: $header-height; // 메뉴로 이동했을 때 헤더에 가리지 않게
 }
 
-// [수정] 섹션 이름은 화면 읽기 프로그램용으로만 남김 (보이는 이름은 왼쪽 메뉴)
+// [수정] 섹션 제목을 화면에 크게 보이게 — Display/M-B (메뉴 Body/large 보다 훨씬 크게 · 섹션마다 구분)
+// - 예전: 화면 읽기 프로그램용으로만 숨겨 두었음
 .account-section-title {
-  @include heading-h3-b;
-  position: absolute;
-  width: 1px;
-  height: 0.0625rem;
-  margin: -0.0625rem;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+  @include display-M-b;
+  margin: 0 0 $space-2xl;
+  padding: 0;
+  color: $dark-color-400; // 항목 제목과 같은 색
+  word-break: keep-all;
 }
 
 .account-section-body {
