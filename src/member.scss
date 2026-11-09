@@ -1688,6 +1688,7 @@ $browse-poster-gap: 1.375rem; // 숏폼 카드 사이 간격 (22)
   .member-browse-posters {
     display: grid;
     grid-template-columns: repeat(auto-fill, $browse-poster-width);
+    justify-content: space-between; // [수정] 남는 폭을 칸 사이에 고르게 나눔 → 포스터 줄이 왼쪽에 몰리지 않고 이너 양 끝까지 (가운데 정렬)
     gap: $space-xl $browse-poster-gap;
     margin: 0;
     padding: 0;
