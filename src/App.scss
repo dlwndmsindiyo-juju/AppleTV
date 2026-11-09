@@ -1302,42 +1302,6 @@ header {
       color: $text-tertiary;
     }
 
-    // [추가] 평점(5점 만점) + 4K · HDR10+ · CC · AD 배지 — 시안(Apple TV 상세) 정보 줄
-    .info-badges {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.375rem;
-      margin: 0.25rem 0 0.5rem;
-      padding: 0;
-      list-style: none;
-    }
-
-    .info-score {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      margin-right: 0.25rem;
-      @include label-default;
-      color: $text-secondary;
-    }
-
-    .info-score-star {
-      width: 0.875rem;
-      height: 0.875rem;
-      color: $rating-color;
-      flex-shrink: 0;
-    }
-
-    .info-badge {
-      @include label-default;
-      padding: 0.0625rem 0.3125rem;
-      border: 1px solid $text-tertiary;
-      border-radius: 0.25rem;
-      color: $text-secondary;
-      line-height: 1.2;
-    }
-
     // [수정] 줄거리 전체 보이기 (예전: 3줄에서 자름)
     .overview {
       @include caption-small;
@@ -6426,7 +6390,7 @@ img.ui-icon.ui-icon-arrow {
 }
 
 // 항목 사이는 위 gap 으로만 (계정 설정 섹션과 같은 간격)
-.account-sub-body:not(.account-pay) > .account-item {
+.account-sub-body:not(.account-pay)>.account-item {
   margin-bottom: 0;
 }
 
@@ -10455,7 +10419,7 @@ $sub-pop-surface: $dark-color-300; // [추가] 팝업(Dark/400) 위 카드 · �
   flex-direction: column;
   gap: $space-md;
 
-  & + & {
+  &+& {
     margin-top: $space-3xl;
   }
 }
@@ -10587,7 +10551,8 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
   gap: $space-xs;
   width: 100%;
   min-height: calc(#{$sub-field-height} - 0.125rem); // 테두리 안쪽 (입력 칸과 같은 높이)
-  padding: $space-md ($space-lg + $space-xl) $space-md $space-lg;
+  padding: $space-md (
+    $space-lg + $space-xl) $space-md $space-lg;
   border: none;
   outline: none;
   background: none;
@@ -10606,17 +10571,18 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
     right: $space-lg;
     width: $space-lg;
     height: $space-lg;
-    margin-top: -($space-lg * 0.5);
-    background-color: $light-color-0;
-    -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
-    mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
-    transform: rotate(-90deg);
-    transition: transform 0.2s ease;
-  }
+    margin-top: -($space-lg * 0.5
+    );
+  background-color: $light-color-0;
+  -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
+  transform: rotate(-90deg);
+  transition: transform 0.2s ease;
+}
 
-  .is-open > &::after {
-    transform: rotate(90deg);
-  }
+.is-open>&::after {
+  transform: rotate(90deg);
+}
 }
 
 .sub-select-value {
@@ -10646,7 +10612,7 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
   scrollbar-width: thin;
   scrollbar-color: $dark-color-200 transparent;
 
-  li + li {
+  li+li {
     border-top: 0.0625rem solid $dark-color-200;
   }
 }
@@ -11362,4 +11328,74 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
   border: none;
   outline: none;
   box-shadow: none;
+}
+
+
+// =====================================================================
+// [추가] 작품 정보 배지 줄 (components/common/InfoBadges.jsx) — 상세 · 홈 히어로 공용
+// - 시안(Apple TV)의 "평점 · 4K · HDR10+ · CC · AD" · 평점은 5점 만점
+// =====================================================================
+.info-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0.2rem 0 0.2rem;
+  padding: 0.1rem 0;
+  list-style: none;
+
+  .info-score {
+    @include label-default;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-right: 0.25rem;
+    color: $text-secondary;
+  }
+
+  .info-score-star {
+    width: 0.875rem;
+    height: 0.875rem;
+    color: $rating-color;
+    flex-shrink: 0;
+  }
+
+  // [추가] 로튼 토마토 점수 (OMDb) — 점 색: 60% 이상 빨강 · 미만 초록
+  .info-rt {
+    @include label-default;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-right: 0.25rem;
+    color: $text-secondary;
+
+    &.is-fresh .info-rt-dot {
+      background-color: $live-color;
+    }
+
+    &.is-rotten .info-rt-dot {
+      background-color: $success-color;
+    }
+  }
+
+  .info-rt-dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .info-badge {
+    @include label-default;
+    padding: 0.0625rem 0.3125rem;
+    border: 1px solid $text-tertiary;
+    border-radius: 0.25rem;
+    color: $text-secondary;
+    line-height: 1.2;
+  }
+
+  // 홈 히어로: 칩 줄 아래 · 줄거리 위
+  &.hero-info-badges {
+    margin: (-$space-sm) 0 $space-md;
+  }
 }

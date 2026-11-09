@@ -11,6 +11,7 @@ import AutoNext from '../components/common/AutoNext'; // [추가] 영상이 끝�
 import VideoPopup from '../components/common/VideoPopup'; // [추가] 전체 화면 영상 팝업 공용 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기)
 import { openSubscribeGate } from '../utils/subscribeGate'; // [정리] 구독 안내 팝업 열기 공용
 import { TMDB_IMG as IMG } from '../utils/tmdb'; // [정리] TMDB 이미지 주소 공용
+import InfoBadges from '../components/common/InfoBadges'; // [추가] 평점 · 4K · HDR10+ · CC · AD 배지 줄 (홈 히어로와 공용)
 import SelectDropdown from '../components/common/SelectDropdown'; // [추가] 지불 방법 선택 상자와 같은 디자인 (아래 선만)
 
 // =====================================================================
@@ -140,14 +141,11 @@ export const MovieDetail = ({ type: typeProp }) => {
     logoList.find((l) => l.iso_639_1 === 'ko') ||
     logoList.find((l) => l.iso_639_1 === 'en') ||
     logoList[0];
-  // [추가] 제목 아래 정보 배지 줄 — 시안(Apple TV 상세)의 "평점 · 4K · HDR10+ · CC · AD"
-  // - 평점: TMDB vote_average(10점) → 5점 만점 (아래 "작품 평점"과 같은 값)
-  // - 4K · HDR10+ · CC · AD: TMDB 에는 화질 · 자막 · 화면 해설 정보가 없음
-  //   → Apple Original(시리즈: 방송사 Apple TV+ 2552 / 영화: Apple Original Films · Apple Studios) 작품에만 고정으로 표시
+  // [추가] 제목 아래 정보 배지 줄 (InfoBadges · 홈 히어로와 같은 모양)
+  // - Apple Original 판단: 시리즈 = 방송사 Apple TV+(2552) / 영화 = Apple Original Films · Apple Studios
   const isAppleOriginal = isTv
     ? Boolean(detail?.networks?.some((n) => n.id === 2552))
     : Boolean(detail?.production_companies?.some((c) => [151347, 194232].includes(c.id)));
-  const infoBadges = isAppleOriginal ? ['4K', 'HDR10+', 'CC', 'AD'] : [];
   const cast = detail?.credits?.cast?.slice(0, 21) || [];
   const similar = detail?.similar?.results?.filter((m) => m.poster_path) || [];
 
@@ -411,19 +409,7 @@ export const MovieDetail = ({ type: typeProp }) => {
                   )}
                   <p className="genres">{metaText}</p>
                   {/* [추가] 평점(5점 만점) + 화질 · 자막 배지 */}
-                  {(item?.vote_average > 0 || infoBadges.length > 0) && (
-                    <ul className="info-badges" aria-label="작품 정보">
-                      {item?.vote_average > 0 && (
-                        <li className="info-score" aria-label={`평점 5점 만점에 ${score}점`}>
-                          <RatingStar filled className="info-score-star" />
-                          {score}
-                        </li>
-                      )}
-                      {infoBadges.map((b) => (
-                        <li key={b} className="info-badge">{b}</li>
-                      ))}
-                    </ul>
-                  )}
+                  <InfoBadges type={type} id={contentId} voteAverage={item?.vote_average} apple={isAppleOriginal} />
                   <p className="overview">{item?.overview || '줄거리 정보가 없습니다.'}</p>
                 </div>
 
