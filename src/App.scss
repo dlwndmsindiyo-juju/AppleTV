@@ -1282,6 +1282,7 @@ header {
       object-fit: contain;
       object-position: left center;
       margin-bottom: 0.375rem;
+      filter: brightness(0) invert(1); // [추가] 로고 색과 상관없이 항상 흰색 light-0 (모양 · 투명 부분은 그대로) — 홈 히어로와 같은 방식
     }
 
     .title {
@@ -1299,6 +1300,42 @@ header {
     .genres {
       @include label-default;
       color: $text-tertiary;
+    }
+
+    // [추가] 평점(5점 만점) + 4K · HDR10+ · CC · AD 배지 — 시안(Apple TV 상세) 정보 줄
+    .info-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0.25rem 0 0.5rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .info-score {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-right: 0.25rem;
+      @include label-default;
+      color: $text-secondary;
+    }
+
+    .info-score-star {
+      width: 0.875rem;
+      height: 0.875rem;
+      color: $rating-color;
+      flex-shrink: 0;
+    }
+
+    .info-badge {
+      @include label-default;
+      padding: 0.0625rem 0.3125rem;
+      border: 1px solid $text-tertiary;
+      border-radius: 0.25rem;
+      color: $text-secondary;
+      line-height: 1.2;
     }
 
     // [수정] 줄거리 전체 보이기 (예전: 3줄에서 자름)
@@ -6206,7 +6243,7 @@ img.ui-icon.ui-icon-arrow {
 
 .account-avatar-grid {
   display: grid;
-  grid-template-columns: repeat(6, 56px);
+  grid-template-columns: repeat(7, 56px); // [수정] 기본 프로필 아이콘 추가로 13개 → 한 줄 7개
   gap: $space-md;
   margin: $space-sm 0 0;
   padding: 0;
@@ -8380,7 +8417,7 @@ section.device-guide.device-guide--watch {
 
 .profile-picker-icons {
   display: grid;
-  grid-template-columns: repeat(6, 52px);
+  grid-template-columns: repeat(7, 52px); // [수정] 기본 프로필 아이콘 추가로 13개 → 한 줄 7개
   justify-content: space-between;
   gap: $space-md;
   margin: 0;
