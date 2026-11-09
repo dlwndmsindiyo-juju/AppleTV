@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DetailBackLink from '../components/common/DetailBackLink' // [추가] 상세 공용 "← 홈으로"
 import { useMovieStore } from '../store/useMovieStore';
@@ -141,6 +141,35 @@ export const MovieDetail = ({ type: typeProp }) => {
     logoList.find((l) => l.iso_639_1 === 'ko') ||
     logoList.find((l) => l.iso_639_1 === 'en') ||
     logoList[0];
+  // [추가] 전체보기 — 위 영상(예고편 · 이미지) 칸을 화면 가득 (브라우저 전체 화면) · 다시 누르거나 Esc 로 원래대로
+  // - 아이콘: public/icons/fullscreen.svg (mask 로 써서 파일 색과 상관없이 흰색)
+  // - 요소 전체 화면을 지원하지 않는 브라우저(아이폰 Safari 등)는 재생 팝업으로 대신 크게 보기
+  const mediaRef = useRef(null);
+  const [isFull, setIsFull] = useState(false);
+  useEffect(() => {
+    const onChange = () => {
+      const el = document.fullscreenElement || document.webkitFullscreenElement;
+      setIsFull(Boolean(el) && el === mediaRef.current);
+    };
+    document.addEventListener('fullscreenchange', onChange);
+    document.addEventListener('webkitfullscreenchange', onChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', onChange);
+      document.removeEventListener('webkitfullscreenchange', onChange);
+    };
+  }, []);
+  const toggleFull = () => {
+    const el = mediaRef.current;
+    if (!el) return;
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+      return;
+    }
+    const request = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (request) request.call(el);
+    else playFromHistory();
+  };
+
   // [추가] 제목 아래 정보 배지 줄 (InfoBadges · 홈 히어로와 같은 모양)
   // - Apple Original 판단: 시리즈 = 방송사 Apple TV+(2552) / 영화 = Apple Original Films · Apple Studios
   const isAppleOriginal = isTv
@@ -375,7 +404,7 @@ export const MovieDetail = ({ type: typeProp }) => {
           <div className="left-section">
             <div className="player-box">
               {/* 상단 미디어 (트레일러 또는 배경 이미지) */}
-              <div className="player-media">
+              <div className={`player-media${isFull ? ' is-full' : ''}`} ref={mediaRef}>
                 {trailer ? (
                   <iframe
                     key={trailer.key}
@@ -392,6 +421,16 @@ export const MovieDetail = ({ type: typeProp }) => {
                     />
                   )
                 )}
+                {/* [추가] 전체보기 버튼 (영상 칸 오른쪽 아래) */}
+                <button
+                  type="button"
+                  className="btn-fullscreen"
+                  onClick={toggleFull}
+                  aria-label={isFull ? '전체 화면 닫기' : '전체 화면으로 보기'}
+                  title={isFull ? '전체 화면 닫기' : '전체보기'}
+                >
+                  <span className="btn-fullscreen-icon" aria-hidden="true" />
+                </button>
               </div>
 
               {/* 하단 정보 바 */}
