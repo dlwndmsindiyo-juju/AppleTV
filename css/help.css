@@ -353,17 +353,13 @@
     margin-top: 0.75rem;
   }
   .help-cards {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 0.25rem;
     margin-top: 2rem;
   }
   .help-card {
     min-height: 0;
-    height: 15rem;
     padding: 1.5rem;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 1rem;
   }
   .help-card-num {
     font-family: "SF Pro", sans-serif;

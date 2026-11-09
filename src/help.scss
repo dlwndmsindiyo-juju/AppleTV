@@ -329,18 +329,14 @@ $help-sub: $dark-color-100;
   }
 
   .help-cards {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: $space-xs;
     margin-top: $space-2xl;
   }
 
   .help-card {
     min-height: 0;
-    height: 15rem;
     padding: $space-xl;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 1rem;
   }
 
 
