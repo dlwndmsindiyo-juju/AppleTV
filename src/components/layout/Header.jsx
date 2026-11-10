@@ -231,31 +231,50 @@ const Header = () => {
                   </button>
 
                   {menuOpen && (
+                    // [수정] 시안: 어두운 메뉴 · 위에 지금 프로필 이름 + "프로필 전환" · 아이콘 왼쪽 + 글자 · 구분선 아래 로그아웃
                     <div className="profile-menu" role="menu">
+                      <div className="profile-menu-head">
+                        <strong className="profile-menu-name">
+                          {getProfiles(user).find((p) => p.id === (currentProfileId || MAIN_PROFILE_ID))?.name || user.name || "Apple 사용자"}
+                        </strong>
+                        {/* 계정 설정 > 프로필 (다른 프로필로 보기) */}
+                        <Link to="/profile#account-profile" className="profile-menu-switch" role="menuitem">
+                          프로필 전환
+                        </Link>
+                      </div>
+
                       <Link to="/wishlist" className="profile-menu-item" role="menuitem">
-                        나의 목록
                         <WishIcon name="heart" className="profile-menu-icon" />
+                        나의 목록
                       </Link>
                       {/* [추가] 관심 구단 */}
                       <Link to="/my-teams" className="profile-menu-item" role="menuitem">
-                        관심 구단
                         <span className="profile-menu-icon is-star" aria-hidden="true"><StarIcon filled size={18} /></span>
+                        관심 구단
                       </Link>
                       <Link to="/profile" className="profile-menu-item" role="menuitem">
-                        계정 설정
                         <img
-                          className="profile-menu-icon"
+                          className="profile-menu-icon is-img"
                           src="/icons/setting-icon.svg"
                           alt=""
                           aria-hidden="true"
                         />
+                        계정 설정
                       </Link>
+
+                      <hr className="profile-menu-divider" aria-hidden="true" />
+
                       <button
                         type="button"
-                        className="profile-menu-item"
+                        className="profile-menu-item is-logout"
                         role="menuitem"
                         onClick={handleLogout}
                       >
+                        {/* 로그아웃 아이콘 (문 + 오른쪽 화살표) · 글자색을 따라감 */}
+                        <svg className="profile-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M10 4H6.5A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20H10" />
+                          <path d="M11 12h9M17 8.5 20.5 12 17 15.5" />
+                        </svg>
                         로그아웃
                       </button>
                     </div>

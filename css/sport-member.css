@@ -569,8 +569,12 @@ main.sport-home .sport-series-description {
 }
 @media (max-width: 767px) {
   main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
-    width: min(350px, 100% - 40px);
+    width: calc(100% - 40px);
+    max-width: 704px;
+    min-width: 0;
+    margin: 0 auto;
     padding: 0;
+    box-sizing: border-box;
   }
   main.sport-home .sport-section-head {
     display: flex;
@@ -2437,7 +2441,7 @@ section.sport-hero.sport-hero--team .sport-team-hero-badge {
 section.sport-hero.sport-hero--team .sport-team-hero-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 4.75rem;
+  font-size: 4rem;
   line-height: 6rem;
   letter-spacing: 0;
   font-family: inherit;
@@ -5305,7 +5309,7 @@ main.sport-home .sport-replay .swiper-button-prev {
 }
 @media (max-width: 767px) {
   main.sport-home .sport-replay .sport-replay-slide {
-    width: 72%;
+    width: clamp(260px, 52vw, 360px);
     max-width: none;
   }
   main.sport-home .sport-replay .swiper-button-next,
@@ -5513,7 +5517,7 @@ main.sport-home .sport-series .swiper-button-prev {
 }
 @media (max-width: 767px) {
   main.sport-home .sport-hl-slide {
-    width: 82%;
+    width: clamp(280px, 55vw, 380px);
   }
   main.sport-home .sport-sc-slide {
     width: 44%;
@@ -5715,7 +5719,7 @@ main.sport-home .sport-live .swiper-button-prev {
 }
 @media (max-width: 767px) {
   main.sport-home .sport-lv-slide {
-    width: 86%;
+    width: clamp(280px, 55vw, 380px);
   }
   main.sport-home .sport-live .swiper-button-next,
   main.sport-home .sport-live .swiper-button-prev {
@@ -5821,7 +5825,7 @@ main.sport-home .sport-live .swiper-button-prev {
 }
 @media (max-width: 767px) {
   .sport-upcoming .sport-up-slide {
-    width: 82%;
+    width: clamp(280px, 52vw, 360px);
   }
   .sport-upcoming .sport-up-logo {
     height: 1rem;

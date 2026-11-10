@@ -60,9 +60,10 @@ const SubscribeCTA = ({ type = "tv" }) => {
             <h3 className="subscribe-title">
               {isSport ? (
                 <>
-                  이번주 놓칠 수 없는 경기,
-                  <br />
-                  지금 Apple TV로 경험해보세요.
+                  <p className="subscribe-title-desktop">
+                    <span>이번주 놓칠 수 없는 경기,</span>
+                    <span>지금 Apple TV로 경험해보세요.</span>
+                  </p>
                 </>
               ) : (
                 <>
