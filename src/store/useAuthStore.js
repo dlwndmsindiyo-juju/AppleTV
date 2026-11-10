@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { birthKey, normalizeBirth } from "../utils/ageRating"; // [추가] 생년월일 (미성년자 판단)
 import { auth, db, googleProvider, functions } from "../firebase/firebase";
 import {
     signInWithPopup,
@@ -627,6 +628,18 @@ export const useAuthStore = create((set, get) => ({
     // - 데모용: 카드 번호 전체는 받지 않고 카드사 · 끝 4자리만 저장
     onSavePayments: (payments) =>
         get()._saveUserFields({ payments: payments.slice(0, PAYMENT_MAX).map(({ id, brand, last4 }) => ({ id, brand, last4 })) }),
+
+    // [추가] 생년월일 저장 (users/{uid}.birthDate = "YYYY-MM-DD") — 구독 신원 확인에서 입력 · 미성년자 판단용 (utils/ageRating.js)
+    // - 이 브라우저(localStorage)에도 같이 저장 → 계정 문서 저장이 막혀도(보안 규칙) 미성년자 제한은 동작
+    onSaveBirthDate: async (birth) => {
+        const value = normalizeBirth(birth);
+        const uid = get().user?.uid || auth.currentUser?.uid;
+        if (!value || !uid) return false;
+        try { localStorage.setItem(birthKey(uid), value); } catch { /* 무시 */ }
+        const ok = await get()._saveUserFields({ birthDate: value });
+        if (!ok) set((s) => (s.user ? { user: { ...s.user, birthDate: value } } : {})); // 화면에서는 바로 반영
+        return true;
+    },
 
     // [추가] 청구 주소 저장 (users/{uid}.billing) — 앞뒤 공백 정리 · 칸마다 최대 100자
     onSaveBilling: (billing) =>

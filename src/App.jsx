@@ -40,6 +40,7 @@ import WishlistLayer from "./components/wishlist/WishlistLayer";
 import ShareSheet from "./components/common/ShareSheet"; // [추가] 공유 팝업 (utils/share.js openShare 로 열기)
 import ReturnPosition from "./components/common/ReturnPosition"; // [추가] 뒤로 오면 보던 스크롤 · 포커스 그대로
 import AppToast from "./components/common/AppToast"; // [추가] 공용 토스트 (utils/toast.js showToast)
+import AgeGuard from "./components/common/AgeGuard"; // [추가] 미성년자: 청소년 관람불가 콘텐츠 흐림 + 안내 팝업
 import { Profile } from "./pages/Profile";
 import AccountSubscription from "./pages/AccountSubscription"; // [추가] 계정 설정 → 구독 관리
 import AccountPayment from "./pages/AccountPayment"; // [추가] 계정 설정 → 지불 방법
@@ -227,6 +228,7 @@ function App() {
           <ShareSheet /> {/* [추가] 공유 팝업 */}
           <ReturnPosition /> {/* [추가] 뒤로 오면 보던 자리 그대로 */}
           <AppToast /> {/* [추가] 공용 토스트 */}
+          <AgeGuard /> {/* [추가] 청소년 관람불가 (미성년자 계정) */}
         </>
       )}
     </>
