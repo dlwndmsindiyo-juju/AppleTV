@@ -420,7 +420,7 @@ const TvPreview = () => {
               <input
                 type="search"
                 value={query}
-                placeholder="Search"
+                placeholder="검색"
                 aria-label="작품 · 인물 · 장르 검색"
                 enterKeyHint="search"
                 onChange={(e) => setQuery(e.target.value)}
