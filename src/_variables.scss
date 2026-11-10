@@ -377,7 +377,7 @@ $font-family-base: "SF Pro", sans-serif;
 // 반응형
 // =====================================================================
 $breakpoint-tablet: 1024px; // 태블릿 시안 1024 (이하 적용)
-$breakpoint-mobile: 767px; // 모바일 (mobile.scss 에서 사용)
+$breakpoint-mobile: 395px; // 모바일 (mobile.scss 에서 사용)
 
 // 태블릿 시안: 본문 좌우 여백 (1024 기준 약 134px ≒ 13%)
 $tablet-gutter: 13%;

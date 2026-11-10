@@ -187,7 +187,7 @@
   cursor: default;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 395px) {
   .login-page .login-card.plan-card {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -212,7 +212,7 @@
     grid-area: note;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 395px) {
   .login-page .login-card.plan-card {
     padding: 4.75rem 1.25rem 2rem;
   }
@@ -343,7 +343,7 @@
   color: #007aff;
 }
 .login-page .login-card.plan-card .plan-link:hover {
-  text-decoration: underline;
+  opacity: 0.7;
 }
 .login-page .login-card.plan-card .plan-links + .plan-submit,
 .login-page .login-card.plan-card .plan-error + .plan-submit {
@@ -469,7 +469,7 @@
   text-decoration: none;
 }
 .login-page .login-card.plan-card.plan-card--done .plan-manage:hover {
-  text-decoration: underline;
+  color: #6E7AF4;
 }
 
 @keyframes plan-spin {
@@ -555,7 +555,7 @@
   color: #C8C8C8;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 395px) {
   .login-page .login-card.plan-card.plan-card--processing, .login-page .login-card.plan-card.plan-card--done {
     padding-top: 4.75rem;
   }

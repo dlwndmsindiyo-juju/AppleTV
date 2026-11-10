@@ -810,7 +810,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 395px) {
   .search-page {
     padding-top: calc(4.5rem + 3rem);
     padding-bottom: 4rem;
@@ -831,7 +831,7 @@
     width: 160px;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 395px) {
   .search-page {
     padding-top: calc(4.5rem + 1.5rem);
   }
