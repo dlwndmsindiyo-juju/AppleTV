@@ -415,9 +415,8 @@
     animation: none;
   }
 }
-.help-back-bar {
-  position: relative;
-  height: 0;
+.help-body {
+  padding-top: 1.5rem;
 }
 
 .help-back {
@@ -426,11 +425,9 @@
   font-size: 0.9375rem;
   line-height: 1.25rem;
   letter-spacing: 0;
-  position: absolute;
-  top: 1.5rem;
-  left: 0;
-  z-index: 1;
-  display: inline-flex;
+  margin: 0 0 4.25rem;
+  display: flex;
+  width: fit-content;
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 0;
@@ -458,15 +455,25 @@
   mask: url("/icons/nav/left-nav.svg") center/contain no-repeat;
 }
 
+@media (max-width: 1023px) {
+  .help-body {
+    padding-top: 1.5rem;
+  }
+  .help-back {
+    margin-bottom: 1.75rem;
+  }
+}
 @media (max-width: 767px) {
+  .help-body {
+    padding-top: 0.75rem;
+  }
   .help-back {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
-    top: 0.75rem;
-    left: 0.75rem;
+    margin-bottom: 1rem;
   }
   .help-back-icon {
     width: 1rem;
