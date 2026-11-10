@@ -278,7 +278,7 @@ header .inner nav .gnb-right ul .profile-menu-switch {
   font-size: 0.8125rem;
   line-height: 1.125rem;
   letter-spacing: 0;
-  color: #525252;
+  color: #D5D5D5;
   text-decoration: none;
   transition: color 0.15s ease;
 }
@@ -331,7 +331,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon.is-img {
   filter: brightness(0) invert(1);
 }
 header .inner nav .gnb-right ul .profile-menu-item.is-logout {
-  color: #525252;
+  color: #C8C8C8;
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.9375rem;
@@ -339,7 +339,7 @@ header .inner nav .gnb-right ul .profile-menu-item.is-logout {
   letter-spacing: 0;
 }
 header .inner nav .gnb-right ul .profile-menu-item.is-logout:hover {
-  color: #EBEBEB;
+  color: #FFFFFF;
 }
 header .inner nav .gnb-right ul .profile-menu-divider {
   height: 0.0625rem;

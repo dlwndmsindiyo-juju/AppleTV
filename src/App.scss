@@ -337,7 +337,7 @@ header {
 
           .profile-menu-switch {
             @include body-small;
-            color: $dark-color-100;
+            color: $light-color-400;
             text-decoration: none;
             transition: color 0.15s ease;
 
@@ -397,11 +397,11 @@ header {
 
             // 로그아웃: 아이콘 · 글자 Dark/100
             &.is-logout {
-              color: $dark-color-100;
+              color: $light-color-500;
               @include body-default;
 
               &:hover {
-                color: $light-color-200;
+                color: $light-color-0;
               }
             }
           }
