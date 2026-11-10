@@ -8759,7 +8759,6 @@ section.device-guide.device-guide--watch .watch-device img {
   height: 10.125rem;
   max-width: 100%;
   object-fit: contain;
-  object-position: left bottom;
   filter: brightness(0) invert(1);
 }
 .hero-swiper-container .hero-slide-item .hero-info .hero-title.has-logo .hero-title-text {
