@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { usePlayableIds, checkPlayable } from "../utils/youtubePlayable"; // [추가] 연령 제한 · 퍼가기 금지 예고편 빼기
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DetailBackLink from '../components/common/DetailBackLink' // [추가] 상세 공용 "← 홈으로"
 import { useMovieStore } from '../store/useMovieStore';
@@ -183,9 +184,15 @@ export const MovieDetail = ({ type: typeProp }) => {
   const similar = detail?.similar?.results?.filter((m) => m.poster_path) || [];
 
   // 영상 정보 (한국어 → 영어 순으로 함께 받음)
-  const youtubeVideos = useMemo(
+  const allYoutube = useMemo(
     () => (detail?.videos?.results || []).filter((v) => v.site === 'YouTube'),
     [detail]
+  );
+  // [수정] 연령 제한 · 퍼가기 금지 영상은 빼고 예고편 고르기
+  const playableKeys = usePlayableIds(allYoutube.map((v) => v.key));
+  const youtubeVideos = useMemo(
+    () => allYoutube.filter((v) => playableKeys.has(v.key)),
+    [allYoutube, playableKeys]
   );
   const trailer =
     youtubeVideos.find((v) => v.type === 'Trailer') || youtubeVideos[0];
@@ -326,7 +333,9 @@ export const MovieDetail = ({ type: typeProp }) => {
     await onFetchEpisodeVideo(contentId, ep.season_number, ep.episode_number);
     const key = `${contentId}_${ep.season_number}_${ep.episode_number}`;
     const list = useMovieStore.getState().episodeVideos[key] || [];
-    const video = list.find((v) => v.site === 'YouTube');
+    const ytEp = list.filter((v) => v.site === 'YouTube');
+    const okEp = await checkPlayable(ytEp.map((v) => v.key)); // [추가] 재생 안 되는 회차 영상은 건너뛰고 예고편으로
+    const video = ytEp.find((v) => okEp.has(v.key));
     openPlayer(video?.key || trailer?.key, {
       season: ep.season_number,
       episode: ep.episode_number,

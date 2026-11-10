@@ -6262,3 +6262,35 @@ main.sport-home.sport-live-page {
     }
   }
 }
+
+// ============================================================
+// [추가] 라이브 상세: 히어로 없이 바로 영상 → 고정 헤더 아래에서 시작
+// ============================================================
+main.sport-home.sport-live-page {
+  padding-top: calc(#{$header-height} + #{$space-xl});
+}
+
+// [추가] 라이브 채팅 목록 스크롤바: 사이트 공용 얇은 스크롤바 (바탕 없음 · 둥근 · Dark/200) — 시안처럼 거의 보이지 않게
+main.sport-home.sport-live-page .sport-chat-list {
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: $dark-color-200 transparent;
+
+  &::-webkit-scrollbar {
+    width: 0.375rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: $space-md 0;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $radius-pill;
+    background-color: $dark-color-200;
+
+    &:hover {
+      background-color: $dark-color-100;
+    }
+  }
+}

@@ -4,16 +4,18 @@ import { auth, db } from "../../firebase/firebase";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSportStore, playerPhotoKey } from "../../store/useSportStore";
-import { useTeamStore, selectHeroTeam } from "../../store/useTeamStore";
+import { useTeamStore } from "../../store/useTeamStore";
 import { getTeamById } from "../../data/sportTeams";
-import SportHero, { TeamHero } from "./SportHero";
+// [삭제] 라이브 상세에서는 히어로를 보여 주지 않음 (SportHero · TeamHero import 제거)
 import { getMockLiveMatch, MOCK_LIVE_IDS, buildFromSportsDb, liveRowToEvent, toTeam } from "./liveMatchAdapter";
 import { SportBack } from "./SportBack";
 import TeamBadgeImg from "./TeamBadge"; // [추가] 팀 뱃지 (배경 없이)
+import ChatReportSheet from "./ChatReportSheet"; // [추가] 채팅 신고 팝업 (UI)
+import { showToast } from "../../utils/toast"; // [추가] 이미 신고한 메시지 안내
 
 // =====================================================================
 // 라이브 상세 (/sport/match/:id) — 시안: 라이브 상세.pdf
-// 1. 히어로: 팔로우한 팀이 있으면 그 팀 배너(TeamHero), 팔로우하지 않았으면 스포츠 홈과 같은 기본 배너(SportHero)
+// 1. [수정] 히어로 없음 → 들어오면 바로 라이브 영상(상세 영상)으로 (히어로 [경기 정보] 로 오면 중계 · 라인업 · 기록 탭으로)
 //    (하단 LIVE 배너는 App 의 PromoBanner 가 그대로 표시)
 // 2. 왼쪽 큰 화면(라이브 영상 + 경기 정보) / 오른쪽 다른 라이브 경기 목록  ← 상세(SportDetail) 레이아웃 재사용
 // 3. 탭: 중계 · 라인업 · 기록 · 채팅
@@ -278,6 +280,14 @@ const SEND_GAP_MS = 1000; // 연속 전송 간격
 
 const minutesSince = (date, now) => (date ? Math.max(0, Math.floor((now - date.getTime()) / 60000)) : 0);
 
+// [추가] 채팅 시간 표시: 방금 전 → n분 전 → n시간 전 → 24시간이 지나면 n일 전 (1일 · 2일 …)
+const chatTimeLabel = (minutes) => {
+  if (minutes < 1) return "방금 전";
+  if (minutes < 60) return `${minutes}분 전`;
+  if (minutes < 60 * 24) return `${Math.floor(minutes / 60)}시간 전`;
+  return `${Math.floor(minutes / (60 * 24))}일 전`;
+};
+
 // 채팅 프로필 아바타 (팀 로고 or 기본 아이콘)
 const ChatAvatar = ({ team }) =>
   team ? (
@@ -348,13 +358,21 @@ const ChatPanel = ({ matchId, room, seed }) => {
     return unsub;
   }, [uid, matchId]);
 
+  // [수정] 입력한 시간순 (가장 최근 메시지가 맨 위 · 시안 순서) — 실시간 메시지와 예시 메시지를 섞어서 시간으로 정렬
+  // - ageMs: 지금으로부터 얼마나 지났는지 (실시간: 보낸 시각 · 예시: minutesAgo)
   const messages = useMemo(() => {
-    const realtime = live.map((m) => ({ ...m, minutesAgo: minutesSince(m.createdAt, now), mine: m.uid === uid }));
-    return [...realtime, ...seed];
+    const realtime = live.map((m) => ({
+      ...m,
+      minutesAgo: minutesSince(m.createdAt, now),
+      ageMs: m.createdAt ? Math.max(0, now - m.createdAt.getTime()) : 0,
+      mine: m.uid === uid,
+    }));
+    const examples = seed.map((m, i) => ({ ...m, ageMs: (m.minutesAgo || 0) * 60000 + i })); // 같은 분이면 원래 순서
+    return [...realtime, ...examples].sort((a, b) => a.ageMs - b.ageMs);
   }, [live, seed, now, uid]);
 
   const list = useMemo(() => {
-    if (filter === "latest") return [...messages].sort((a, b) => a.minutesAgo - b.minutesAgo);
+    if (filter === "latest") return messages; // [수정] 이미 시간순 (최근 메시지가 위)
     if (filter === "popular") return [...messages].sort((a, b) => (b.likes || 0) - (a.likes || 0));
     return messages;
   }, [messages, filter]);
@@ -388,7 +406,10 @@ const ChatPanel = ({ matchId, room, seed }) => {
     }
   };
 
-  const timeLabel = (m) => (m.minutesAgo < 1 ? "방금 전" : `${m.minutesAgo}분 전`);
+  const timeLabel = (m) => chatTimeLabel(m.minutesAgo); // [수정] 24시간이 지나면 n일 전
+
+  // [추가] 신고 팝업: 사이렌 버튼 → 사유 고르기 → [신고] → "신고가 접수되었습니다." (UI만 · 서버 전송 없음)
+  const [reportTarget, setReportTarget] = useState(null);
 
   return (
     <div className="sport-chat">
@@ -427,9 +448,9 @@ const ChatPanel = ({ matchId, room, seed }) => {
                 <button
                   type="button"
                   className={`sport-chat-siren${alerts[m.id] ? " is-on" : ""}`}
-                  aria-pressed={!!alerts[m.id]}
-                  aria-label={alerts[m.id] ? `${m.user} 메시지 신고 취소` : `${m.user} 메시지 신고`}
-                  onClick={() => setAlerts((prev) => ({ ...prev, [m.id]: !prev[m.id] }))}
+                  aria-haspopup="dialog"
+                  aria-label={alerts[m.id] ? `${m.user} 메시지 신고됨` : `${m.user} 메시지 신고`}
+                  onClick={() => (alerts[m.id] ? showToast("이미 신고한 메시지예요.") : setReportTarget(m))} // [수정] 바로 켜지 않고 신고 팝업 열기
                 >
                   <img src={ICON("siren-icon")} alt="" />
                 </button>
@@ -439,6 +460,16 @@ const ChatPanel = ({ matchId, room, seed }) => {
         })}
       </ul>
       {error && <p className="sport-chat-error" role="alert">{error}</p>}
+
+      {/* [추가] 채팅 신고 팝업 */}
+      <ChatReportSheet
+        open={!!reportTarget}
+        onClose={() => setReportTarget(null)}
+        onSubmit={() => {
+          setAlerts((prev) => ({ ...prev, [reportTarget.id]: true }));
+          setReportTarget(null);
+        }}
+      />
 
       <form className="sport-chat-form" onSubmit={send}>
         <input
@@ -500,7 +531,6 @@ const SportLivePage = () => {
   }, [isMock, routeId, details, liveRow, hasSportsDbDetail]);
 
   // 히어로 배너: 스포츠 홈과 같은 팀 (내가 고른 팀 → 처음 팔로우한 팀)
-  const followedHero = useTeamStore(selectHeroTeam);
   // 영상: 짧은 MLS 하이라이트 클립(YouTube) → 없으면 TheSportsDB 하이라이트 (홈 "라이브" 카드와 같은 영상)
   const clips = useSportStore((state) => state.liveClips);
   const sdbVideos = useSportStore((state) => state.highlightList);
@@ -608,8 +638,6 @@ const SportLivePage = () => {
 
   return (
     <main className="sport-home sport-detail-page sport-live-page">
-      {followedHero ? <TeamHero team={followedHero} /> : <SportHero />}
-
       {/* ===== 라이브 영상 + 채팅 + 다른 경기 ===== */}
       <section className="sport-detail sport-live-stage" aria-label="라이브 중계">
         <div className="inner">
