@@ -14,7 +14,7 @@
 // - 스타일: App.scss "구독 팝업" (.sub-pop-*) · 휴대폰 mobile.scss
 import { resumePath } from "../utils/resumeIntent"; // [추가] 구독 후 하던 화면으로
 import { openPostcode } from "../utils/daumPostcode"; // [추가] 도로명 주소 검색 팝업
-import React, { createContext, useContext, useEffect, useId, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useId, useMemo, useRef, useState } from "react"; // [수정] useMemo: 생년월일 데이트 피커
 import { createPortal } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore, isSubscribed, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
@@ -307,6 +307,171 @@ const Dropdown = ({ label, value, onChange, placeholder, options, disabled, inva
   );
 };
 
+// [추가] 생년월일 데이트 피커 (신원 확인) — 칸 모양은 선택 칸(Dropdown)과 같음 · 아래로 달력이 붙어서 펼쳐짐
+// - 값: "YYYY/MM/DD" (기존 검사 validBirth 그대로)
+// - 달력 위: 연도 · 월 선택 (생년월일이라 연도를 빨리 고를 수 있게) + 이전 · 다음 달
+// - 오늘 이후 날짜는 고를 수 없음 · 바깥 누르기 / Esc 로 닫기
+// - 키보드: 방향키로 날짜 이동 · Enter / Space 로 고르기 · PageUp / PageDown 으로 달 이동
+const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+const toBirth = (d) => `${d.getFullYear()}/${pad2(d.getMonth() + 1)}/${pad2(d.getDate())}`;
+const fromBirth = (v) => {
+  const m = /^(\d{4})\/(\d{2})\/(\d{2})$/.exec(v || "");
+  return m ? new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])) : null;
+};
+const sameDay = (a, b) => a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+
+const BirthDatePicker = ({ label, value, onChange, invalid }) => {
+  const today = useMemo(() => {
+    const t = new Date();
+    return new Date(t.getFullYear(), t.getMonth(), t.getDate());
+  }, []);
+  const minYear = 1900;
+  const selected = fromBirth(value);
+  const [open, setOpen] = useState(false);
+  const [view, setView] = useState(() => selected || new Date(2000, 0, 1)); // 보고 있는 달 (1일 기준 아님 · 포커스 날짜)
+  const boxRef = useRef(null);
+  const gridRef = useRef(null);
+  const popId = useId();
+
+  const year = view.getFullYear();
+  const month = view.getMonth();
+  const clamp = (d) => (d > today ? today : d.getFullYear() < minYear ? new Date(minYear, 0, 1) : d);
+
+  // 열 때: 고른 날(없으면 2000년 1월 1일)부터
+  const toggle = () => {
+    if (!open) setView(selected || new Date(2000, 0, 1));
+    setOpen((v) => !v);
+  };
+
+  // 바깥을 누르면 닫기
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDown = (e) => !boxRef.current?.contains(e.target) && setOpen(false);
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [open]);
+
+  // 포커스 날짜가 바뀌면 그 날짜 버튼으로 포커스 (달력 안에서 움직일 때만)
+  const keyNavRef = useRef(false);
+  useEffect(() => {
+    if (!open || !keyNavRef.current) return;
+    keyNavRef.current = false;
+    gridRef.current?.querySelector(`[data-day="${view.getDate()}"]`)?.focus();
+  }, [open, view]);
+
+  const pick = (d) => {
+    if (d > today) return;
+    onChange(toBirth(d));
+    setOpen(false);
+    boxRef.current?.querySelector(".sub-select-trigger")?.focus();
+  };
+
+  const moveDays = (n) => {
+    keyNavRef.current = true;
+    setView((v) => clamp(new Date(v.getFullYear(), v.getMonth(), v.getDate() + n)));
+  };
+  const moveMonths = (n) => {
+    setView((v) => {
+      const last = new Date(v.getFullYear(), v.getMonth() + n + 1, 0).getDate();
+      return clamp(new Date(v.getFullYear(), v.getMonth() + n, Math.min(v.getDate(), last)));
+    });
+  };
+  const setYM = (y, m) => {
+    const last = new Date(y, m + 1, 0).getDate();
+    setView(clamp(new Date(y, m, Math.min(view.getDate(), last))));
+  };
+
+  const onGridKey = (e) => {
+    const map = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 };
+    if (map[e.key]) { e.preventDefault(); moveDays(map[e.key]); }
+    if (e.key === "PageUp") { e.preventDefault(); keyNavRef.current = true; moveMonths(-1); }
+    if (e.key === "PageDown") { e.preventDefault(); keyNavRef.current = true; moveMonths(1); }
+  };
+  const onPopKey = (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation(); // 팝업 Esc 닫기로 넘어가지 않게
+      setOpen(false);
+      boxRef.current?.querySelector(".sub-select-trigger")?.focus();
+    }
+  };
+
+  // 달력 칸: 앞쪽 빈칸 + 1일 ~ 말일
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
+  const cells = [...Array(firstDay).fill(null), ...Array.from({ length: lastDate }, (_, i) => i + 1)];
+  const years = Array.from({ length: today.getFullYear() - minYear + 1 }, (_, i) => today.getFullYear() - i);
+  const canPrev = !(year === minYear && month === 0);
+  const canNext = !(year === today.getFullYear() && month === today.getMonth());
+
+  return (
+    <div ref={boxRef} className={`sub-select sub-date${open ? " is-open" : ""}${invalid ? " is-invalid" : ""}`}>
+      <button
+        type="button"
+        className="sub-select-trigger"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-controls={popId}
+        onClick={toggle}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowDown" && !open) { e.preventDefault(); toggle(); }
+          if (e.key === "Escape" && open) { e.preventDefault(); e.stopPropagation(); setOpen(false); }
+        }}
+      >
+        <span className="sub-field-label">{label}</span>
+        <span className={`sub-select-value${value ? "" : " is-placeholder"}`}>{value || "YYYY/MM/DD"}</span>
+      </button>
+
+      {open && (
+        <div id={popId} className="sub-date-pop" role="dialog" aria-label={`${label} 선택`} onKeyDown={onPopKey}>
+          <div className="sub-date-head">
+            <button type="button" className="sub-date-nav is-prev" onClick={() => moveMonths(-1)} disabled={!canPrev} aria-label="이전 달" />
+            <div className="sub-date-ym">
+              <select className="sub-date-select" value={year} onChange={(e) => setYM(Number(e.target.value), month)} aria-label="연도">
+                {years.map((y) => <option key={y} value={y}>{y}년</option>)}
+              </select>
+              <select className="sub-date-select" value={month} onChange={(e) => setYM(year, Number(e.target.value))} aria-label="월">
+                {Array.from({ length: 12 }, (_, m) => (
+                  <option key={m} value={m} disabled={year === today.getFullYear() && m > today.getMonth()}>{m + 1}월</option>
+                ))}
+              </select>
+            </div>
+            <button type="button" className="sub-date-nav is-next" onClick={() => moveMonths(1)} disabled={!canNext} aria-label="다음 달" />
+          </div>
+
+          <div className="sub-date-week" aria-hidden="true">
+            {WEEK.map((w) => <span key={w}>{w}</span>)}
+          </div>
+
+          <div ref={gridRef} className="sub-date-grid" role="grid" onKeyDown={onGridKey}>
+            {cells.map((day, i) => {
+              if (!day) return <span key={`e${i}`} className="sub-date-empty" />;
+              const d = new Date(year, month, day);
+              const isSel = sameDay(d, selected);
+              const isFocus = day === view.getDate();
+              return (
+                <button
+                  key={day}
+                  type="button"
+                  data-day={day}
+                  className={`sub-date-day${isSel ? " is-selected" : ""}${sameDay(d, today) ? " is-today" : ""}`}
+                  disabled={d > today}
+                  tabIndex={isFocus ? 0 : -1}
+                  aria-selected={isSel}
+                  aria-label={`${year}년 ${month + 1}월 ${day}일`}
+                  onClick={() => pick(d)}
+                >
+                  {day}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Check = ({ checked, onChange, strong, children }) => (
   <label className={`sub-check${strong ? " sub-check--all" : ""}`}>
     <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
@@ -476,6 +641,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
   const footerEl = useContext(FooterSlot);
   const user = useAuthStore((s) => s.user);
   const onSavePayments = useAuthStore((s) => s.onSavePayments);
+  const onSaveBirthDate = useAuthStore((s) => s.onSaveBirthDate); // [추가] 신원 확인 생년월일 → 미성년자 판단
   const onSaveBilling = useAuthStore((s) => s.onSaveBilling);
 
   const [form, setForm] = useState(EMPTY_FORM);
@@ -534,6 +700,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
     const card = { id: makeId(), brand: form.brand, last4: digits(form.cardNumber).slice(-4) }; // 카드사 + 마지막 4자리만
     const okPay = await onSavePayments([...payments, card].slice(0, PAYMENT_MAX));
     const okBill = okPay && (cardOnly || (await onSaveBilling(toBilling(form)))); // 계정 설정: 카드만 저장
+    if (okBill && !cardOnly) await onSaveBirthDate(form.birth); // [추가] 생년월일 저장 (미성년자면 청소년 관람불가 콘텐츠 제한)
     setBusy(false);
     if (!okPay || !okBill) {
       setError("지불 방법을 등록하지 못했어요. 잠시 후 다시 시도해 주세요.");
@@ -595,10 +762,8 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
                 <input className="sub-field-input" autoComplete="name" placeholder="이동통신사에 등록된 이름" maxLength={30}
                   value={form.idName} onChange={(e) => set("idName")(e.target.value)} />
               </Field>
-              <Field label="생년월일" invalid={bad("birth")}>
-                <input className="sub-field-input" inputMode="numeric" autoComplete="bday" placeholder="YYYY/MM/DD"
-                  value={form.birth} onChange={(e) => set("birth")(fmtBirth(e.target.value))} />
-              </Field>
+              {/* [수정] 생년월일: 데이트 피커 (미성년자 판단에 사용 · 구독할 때 계정에 저장) */}
+              <BirthDatePicker label="생년월일" invalid={bad("birth")} value={form.birth} onChange={set("birth")} />
             </section>
 
             <section className="sub-section">
