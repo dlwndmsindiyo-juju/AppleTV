@@ -390,8 +390,8 @@ $tv-type-sizes: (
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 200px;
-  height: 12.5rem;
+  width: 150px;
+  height: 9.5rem;
   border-radius: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
@@ -2240,7 +2240,7 @@ $tv-type-sizes: (
   padding: 0;
   border: 0;
   background: transparent;
-  color: $light-color-500;
+  color: $dark-color-100;
   cursor: pointer;
 
   &+.tv-search-filter {
