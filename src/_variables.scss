@@ -230,7 +230,7 @@ $font-family-base: "SF Pro", sans-serif;
 // ---------- Display ----------
 // Display XL 76 / 96 · 대형 히어로 타이틀
 @mixin display-xl {
-  @include type-style(4.75rem, 6rem);
+  @include type-style(4rem, 6rem);
 }
 
 @mixin display-xl-b {

@@ -11,7 +11,7 @@ import MemberSectionHead from "./MemberSectionHead"; // [정리] 섹션 머리 �
 // 이어서 감상하기 (이어보기) — 실제 시청 기록 (Firestore users/{uid}/watchHistory · 계정 하나에 저장)
 // - 상세 페이지 재생 팝업에서 본 위치가 저장되고, 가장 최근에 본 작품이 맨 앞
 // - 끝까지 본 작품(95% 이상)은 빠짐
-// - 기록이 없으면(처음 구독 등) "아직 시청 내역이 없습니다."
+// - [수정] 기록이 없으면(처음 구독 · 계정 설정에서 시청 기록 삭제) 안내 문구 대신 섹션 자체를 숨김
 // - 카드를 누르면 상세 페이지에서 멈춘 곳부터 바로 재생 (?play=1)
 // - 시안: 썸네일 안 왼쪽 아래 "시즌 1 · 3화 · 38분 남음" + 맨 아래 진행 바
 
@@ -69,6 +69,9 @@ const ContinueWatching = () => {
   // 기록을 불러오는 동안은 비워 둠 (빈 안내가 잠깐 보였다 사라지지 않게)
   const loading = status === "idle" || status === "loading";
 
+  // [수정] 불러오는 중이거나 기록이 없으면 섹션을 그리지 않음 (제목만 남은 빈 섹션 · 안내 문구 없음)
+  if (loading || items.length === 0) return null;
+
   return (
     <section className="member-section member-continue">
       <div className="inner">
@@ -78,17 +81,13 @@ const ContinueWatching = () => {
           moreTo={items.length > 0 ? "/browse/continue" : undefined}
         />
 
-        {loading ? null : items.length === 0 ? (
-          <p className="member-empty">아직 시청 내역이 없습니다.</p>
-        ) : (
-          <Rail className="rail-continue" label="이어보기" desktopGap={28}>
-            {items.map((h) => (
-              <SwiperSlide key={`${h.type}_${h.id}`}>
-                <ContinueCard h={h} />
-              </SwiperSlide>
-            ))}
-          </Rail>
-        )}
+        <Rail className="rail-continue" label="이어보기" desktopGap={28}>
+          {items.map((h) => (
+            <SwiperSlide key={`${h.type}_${h.id}`}>
+              <ContinueCard h={h} />
+            </SwiperSlide>
+          ))}
+        </Rail>
       </div>
     </section>
   );
