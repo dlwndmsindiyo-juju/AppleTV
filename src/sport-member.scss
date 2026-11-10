@@ -6210,3 +6210,55 @@ section.sport-hero.sport-hero--team .sport-team-hero-name {
   display: inline-block;
   transform: scaleX(-1); // 돌아가기 "←" 를 뒤집어 "→" 방향
 }
+// ============================================================
+// [추가] 라이브 상세 — 경기 정보 스크롤 · 채팅 내려보기 아이콘 · 채팅 높이
+// ============================================================
+main.sport-home.sport-live-page {
+  // 히어로 [경기 정보] → 탭 영역으로 스크롤할 때 고정 헤더에 가리지 않게
+  .sport-live-tabs-section {
+    scroll-margin-top: $header-height;
+  }
+
+  .sport-live-chat-chevron {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .sport-live-chat-card.is-open .sport-live-chat-chevron {
+    transform: rotate(180deg);
+  }
+
+  // PC: 펼친 채팅 = 왼쪽 영상 높이 (--chat-h · SportLivePage.jsx 에서 측정) · 메시지는 안에서 스크롤
+  @media (min-width: calc(#{$breakpoint-tablet} + 1px)) {
+    .sport-live-chat-card.is-open {
+      display: flex;
+      flex-direction: column;
+      height: var(--chat-h, auto);
+      min-height: 0;
+
+      .sport-live-chat-toggle {
+        flex: 0 0 auto;
+      }
+
+      .sport-live-chat-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+
+      .sport-chat {
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+
+      .sport-chat-list {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: auto;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+    }
+  }
+}
