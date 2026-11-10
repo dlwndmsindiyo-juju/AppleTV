@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { usePlayableIds, checkPlayable } from "../utils/youtubePlayable"; // [추가] 연령 제한 · 퍼가기 금지 예고편 빼기
+import { usePlayableIds, checkPlayable } from "../utils/youtubePlayable";
+import { fetchIsAdult, isMinorUser } from '../utils/ageRating'; // [추가] 미성년자: 청소년 관람불가 작품은 재생하지 않음 // [추가] 연령 제한 · 퍼가기 금지 예고편 빼기
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DetailBackLink from '../components/common/DetailBackLink' // [추가] 상세 공용 "← 홈으로"
 import { useMovieStore } from '../store/useMovieStore';
@@ -211,11 +212,13 @@ export const MovieDetail = ({ type: typeProp }) => {
     openSubscribeGate('watch');
 
   // 영상 열기: 같은 영상을 보다 멈췄으면 그 위치부터
-  const openPlayer = (key, meta = {}) => {
+  const openPlayer = async (key, meta = {}) => {
     if (!uid || !subscribed) { // [수정] 로그인했지만 구독 전이어도 구독 안내 팝업
       askSubscribe();
       return;
     }
+    // [추가] 미성년자 계정 + 청소년 관람불가 → 재생하지 않음 (안내 팝업은 AgeGuard 가 띄움)
+    if (isMinorUser(useAuthStore.getState().user) && (await fetchIsAdult(type, contentId))) return;
     setUpNext(null);
     setPlaying(key ? { key, ...meta, startAt: resumeAt(history, key) } : { key: 'none' });
   };
