@@ -30,8 +30,8 @@
 .member-home .member-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.375rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0 0 0.5rem;
@@ -1023,8 +1023,8 @@
   :is(main, div).member-home .member-section.member-wishlist .member-head .member-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
     letter-spacing: 0;
     color: #C8C8C8;
   }
@@ -1237,7 +1237,7 @@
 .member-home .member-sc-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.375rem;
+  font-size: 1.3rem;
   line-height: 1.75rem;
   letter-spacing: 0;
   color: #F5F5F5;
@@ -1665,7 +1665,7 @@
   .member-home .member-genre-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.375rem;
+    font-size: 1.3rem;
     line-height: 1.75rem;
     letter-spacing: 0;
   }

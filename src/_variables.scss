@@ -272,11 +272,11 @@ $font-family-base: "SF Pro", sans-serif;
 
 // H2 22 / 28 · 섹션 헤더
 @mixin heading-h2 {
-  @include type-style(1.375rem, 1.75rem);
+  @include type-style(1.2rem, 1.5rem);
 }
 
 @mixin heading-h2-b {
-  @include type-style(1.375rem, 1.75rem, $font-weight-bold);
+  @include type-style(1.3rem, 1.75rem, $font-weight-bold);
 }
 
 // H3 20 / 25 · 콘텐츠 그룹 제목
