@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { filterPlayable, isPlayableVideo } from "../utils/youtubePlayable"; // [추가] 연령 제한 · 퍼가기 금지 영상 미리 거르기
 import { isLiveFootballVideo } from "../components/sport/liveFootball";
 import { CONFERENCE_STANDINGS } from "../data/mockStandings";
 
@@ -316,12 +317,13 @@ export const useSportStore = create((set, get) => ({
             if (!ids.length) { set({ liveVideos: [] }); return; }
 
             const params = new URLSearchParams({
-                part: "snippet,topicDetails,liveStreamingDetails", id: ids.join(","), key: YOUTUBE_KEY,
+                part: "snippet,topicDetails,liveStreamingDetails,contentDetails,status", id: ids.join(","), key: YOUTUBE_KEY, // [수정] contentDetails · status: 연령 제한 · 퍼가기 확인
             });
             const details = await fetch(`https://www.googleapis.com/youtube/v3/videos?${params}`);
             if (!details.ok) throw new Error(`YouTube videos HTTP ${details.status}`);
             const videos = await details.json();
             set({ liveVideos: (videos.items || [])
+                .filter(isPlayableVideo) // [추가] 연령 제한 · 퍼가기 금지 영상 빼기
                 .map((video) => ({ ...video, id: { videoId: video.id } }))
                 .filter(isLiveFootballVideo) });
         } catch (error) {
@@ -343,10 +345,11 @@ export const useSportStore = create((set, get) => ({
                 `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=5&key=${YOUTUBE_KEY}`
             );
             const data = await res.json();
+            const items = await filterPlayable(data.items || []); // [추가] 재생 안 되는 영상 빼기
             set((state) => ({
                 highlights: {
                     ...state.highlights,
-                    [matchId]: data.items || []
+                    [matchId]: items
                 }
             }));
         } catch (error) {
@@ -367,10 +370,11 @@ export const useSportStore = create((set, get) => ({
                 `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=3&key=${YOUTUBE_KEY}`
             );
             const data = await res.json();
+            const items = await filterPlayable(data.items || []); // [추가] 재생 안 되는 영상 빼기
             set((state) => ({
                 fullMatches: {
                     ...state.fullMatches,
-                    [matchId]: data.items || []
+                    [matchId]: items
                 }
             }));
         } catch (error) {
@@ -450,7 +454,7 @@ export const useSportStore = create((set, get) => ({
         const pool = await get().onFetchSportsDbHighlights();
         if (pool.length === 0) return;
 
-        const picks = pool.slice(0, 6);
+        const picks = (await filterPlayable(pool, (v) => v.id?.videoId)).slice(0, 6); // [수정] 재생 안 되는 영상을 빼고 6개
         let seconds = {};
         if (YOUTUBE_KEY) {
             try {
@@ -474,13 +478,13 @@ export const useSportStore = create((set, get) => ({
             const away = latestMatch?.awayTeam?.shortName || latestMatch?.awayTeam?.name;
             const matchQuery = home && away ? `${home} vs ${away} 하이라이트` : null;
 
-            const rows = await withCache(`sport-yt-categories:${matchQuery || "default"}`, async () => {
+            const rows = await withCache(`sport-yt-categories-pv1:${matchQuery || "default"}`, async () => { // [수정] 캐시 이름 변경: 거르기 전 저장분은 안 씀
                 // 위 LIVE 카드(TheSportsDB)와 같은 영상은 제외
                 const used = new Set(get().highlightList.map((v) => v.id?.videoId));
                 const results = await Promise.all(HIGHLIGHT_CATEGORIES.map(async (cat, i) => {
                     const q = i === 0 && matchQuery ? matchQuery : cat.query;
                     const data = await youtubeGet("search", { part: "snippet", q, type: "video", maxResults: "5" });
-                    return { cat, items: data.items || [] };
+                    return { cat, items: await filterPlayable(data.items || []) }; // [추가] 재생 안 되는 영상 빼기
                 }));
                 return results.map(({ cat, items }) => {
                     const video = items.find((v) => v.id?.videoId && !used.has(v.id.videoId)) || items[0] || null;
@@ -502,16 +506,17 @@ export const useSportStore = create((set, get) => ({
     onFetchLiveClips: async (query = "MLS 하이라이트 highlights") => {
         if (get().liveClips.length > 0 || !YOUTUBE_KEY) return;
         try {
-            const items = await withCache(`sport-yt-live-clips:${query}`, async () => {
+            const items = await withCache(`sport-yt-live-clips-pv1:${query}`, async () => { // [수정] 캐시 이름 변경
                 const search = await youtubeGet("search", {
                     part: "snippet", q: query, type: "video", videoDuration: "short",
                     videoEmbeddable: "true", maxResults: "25", order: "date",
                 });
                 const ids = (search.items || []).map((v) => v.id?.videoId).filter(Boolean);
                 if (!ids.length) return [];
-                const details = await youtubeGet("videos", { part: "contentDetails", id: ids.join(",") });
+                // [수정] status 도 받아 연령 제한 · 퍼가기 금지 영상 빼기 (응답에 없는 영상 = 길이 없음 → 아래에서 빠짐)
+                const details = await youtubeGet("videos", { part: "contentDetails,status", id: ids.join(",") });
                 const seconds = Object.fromEntries(
-                    (details.items || []).map((v) => [v.id, durationToSeconds(v.contentDetails?.duration)])
+                    (details.items || []).filter(isPlayableVideo).map((v) => [v.id, durationToSeconds(v.contentDetails?.duration)])
                 );
                 return (search.items || [])
                     .filter((v) => seconds[v.id?.videoId] >= 60 && seconds[v.id?.videoId] <= 240)
@@ -534,15 +539,16 @@ export const useSportStore = create((set, get) => ({
         if (!team?.id || !YOUTUBE_KEY || get().teamVideos[team.id]) return;
         const name = team.enName || team.name;
         const searchTeam = (kind, q, minSec, maxSec) =>
-            withCache(`sport-yt-team:${team.id}:${kind}`, async () => {
+            withCache(`sport-yt-team-pv1:${team.id}:${kind}`, async () => {
                 const search = await youtubeGet("search", {
                     part: "snippet", q, type: "video", videoEmbeddable: "true", maxResults: "20", order: "relevance",
                 });
                 const ids = (search.items || []).map((v) => v.id?.videoId).filter(Boolean);
                 if (!ids.length) return [];
-                const details = await youtubeGet("videos", { part: "contentDetails", id: ids.join(",") });
+                // [수정] status 도 받아 연령 제한 · 퍼가기 금지 영상 빼기 (응답에 없는 영상 = 길이 없음 → 아래에서 빠짐)
+                const details = await youtubeGet("videos", { part: "contentDetails,status", id: ids.join(",") });
                 const seconds = Object.fromEntries(
-                    (details.items || []).map((v) => [v.id, durationToSeconds(v.contentDetails?.duration)])
+                    (details.items || []).filter(isPlayableVideo).map((v) => [v.id, durationToSeconds(v.contentDetails?.duration)])
                 );
                 return (search.items || [])
                     .filter((v) => seconds[v.id?.videoId] >= minSec && seconds[v.id?.videoId] <= maxSec)
@@ -571,16 +577,16 @@ export const useSportStore = create((set, get) => ({
         try {
             // v2: 숏폼 카드에 쓰는 영상 길이(초 · "0:24") 와 좋아요 수(statistics)도 함께 저장
             //     (videos API 의 part 만 늘린 것이라 추가 쿼터 없음)
-            const items = await withCache(`sport-yt-shorts-v2:${query}`, async () => {
+            const items = await withCache(`sport-yt-shorts-v3:${query}`, async () => { // [수정] v3: 재생 안 되는 영상 거름
                 const search = await youtubeGet("search", {
                     part: "snippet", q: query, type: "video", videoDuration: "short", maxResults: "25",
                     videoCategoryId: "17", relevanceLanguage: "ko", regionCode: "KR",
                 });
                 const ids = (search.items || []).map((v) => v.id?.videoId).filter(Boolean);
                 if (!ids.length) return [];
-                const details = await youtubeGet("videos", { part: "contentDetails,statistics", id: ids.join(",") });
+                const details = await youtubeGet("videos", { part: "contentDetails,statistics,status", id: ids.join(",") }); // [수정] status 추가
                 const info = Object.fromEntries(
-                    (details.items || []).map((v) => [v.id, {
+                    (details.items || []).filter(isPlayableVideo).map((v) => [v.id, {
                         seconds: durationToSeconds(v.contentDetails?.duration),
                         likes: Number(v.statistics?.likeCount) || 0,
                     }])

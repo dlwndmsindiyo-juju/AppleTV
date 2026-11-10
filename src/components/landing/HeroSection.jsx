@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { usePlayableIds } from "../../utils/youtubePlayable"; // [추가] 연령 제한 · 퍼가기 금지 예고편 빼기
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade, A11y } from "swiper/modules"; // [수정] A11y: 키보드(Tab)로 화면 밖 카드를 고르면 그 카드가 보이게 밀어 줌
@@ -305,8 +306,10 @@ const HeroItem = ({ tv, active, onVideoLoad, onVideoStart, onVideoEnd }) => {
   }, [active, tv?.id, onFetchTvVideo]);
 
   const videoList = tvVideo?.[tv.id] || [];
+  // [수정] 연령 제한 · 퍼가기 금지 예고편은 건너뜀 (없으면 이미지 슬라이드 그대로)
+  const playableKeys = usePlayableIds(videoList.filter((v) => v.site === "YouTube").map((v) => v.key));
   const trailer = videoList.find(
-    (v) => v.site === "YouTube" && (v.type === "Trailer" || v.type === "Teaser")
+    (v) => v.site === "YouTube" && (v.type === "Trailer" || v.type === "Teaser") && playableKeys.has(v.key)
   );
 
   const genres = shortGenres("tv", tv.genre_ids).slice(0, 2);
