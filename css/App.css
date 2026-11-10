@@ -6233,6 +6233,13 @@ img.ui-icon.ui-icon-arrow {
 .account-item.is-muted {
   opacity: 0.4;
 }
+.account-item .account-toggle-text {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
 
 .account-alert-group {
   display: flex;
@@ -7311,6 +7318,18 @@ img.ui-icon.ui-icon-arrow {
 }
 .account-pay-fields input::placeholder,
 .account-pay-fields select::placeholder {
+  color: #525252;
+}
+
+.account-address {
+  font-style: normal;
+}
+.account-address span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
   color: #525252;
 }
 
@@ -8876,8 +8895,8 @@ body.has-promo-banner .floating-actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   margin: 0;
   padding: 0;
   border: none;
@@ -8963,8 +8982,8 @@ body.has-promo-banner .floating-actions {
 }
 @media (min-width: 768px) {
   .floating-btn {
-    width: 70px;
-    height: 4.375rem;
+    width: 3.5rem;
+    height: 3.5rem;
   }
 }
 .swiper-button-prev,
@@ -11562,8 +11581,8 @@ main.hero-revealed > :not(.hero-swiper-container):not(.sport-hero) {
 .account-alarm-empty {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
   letter-spacing: 0;
   margin: 1rem 0 0;
   color: #525252;

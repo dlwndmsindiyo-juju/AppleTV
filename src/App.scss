@@ -6332,6 +6332,10 @@ img.ui-icon.ui-icon-arrow {
   &.is-muted {
     opacity: 0.4;
   }
+
+  .account-toggle-text {
+    @include body-default;
+  }
 }
 
 // [수정] 항목 제목 Heading/h5-B · Dark/400 / 설명 Body/default · Dark/100 / 맨 아래 안내 Body/small · Dark/100
@@ -7447,6 +7451,15 @@ img.ui-icon.ui-icon-arrow {
 }
 
 // [추가] 청구지 주소 + [주소 검색] 버튼 (Daum 우편번호 · utils/daumPostcode.js)
+.account-address {
+  font-style: normal;
+
+  span {
+    @include body-default;
+    color: $dark-color-100;
+  }
+}
+
 .account-pay-fields .account-address-search {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -9288,8 +9301,8 @@ body.has-promo-banner .floating-actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   margin: 0;
   padding: 0;
   border: none;
@@ -9411,8 +9424,8 @@ body.has-promo-banner .floating-actions {
 // =====================================================================
 @media (min-width: ($breakpoint-mobile + 1)) {
   .floating-btn {
-    width: 70px;
-    height: 4.375rem;
+    width: 3.5rem;
+    height: 3.5rem;
   }
 }
 
@@ -12164,7 +12177,7 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
 }
 
 .account-alarm-empty {
-  @include body-default;
+  @include body-small;
   margin: $space-lg 0 0;
   color: $dark-color-100;
 }
