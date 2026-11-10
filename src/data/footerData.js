@@ -5,8 +5,9 @@ export const footerMainLinks = [
     { label: "지원", path: "/support" },
 ];
 
+// [수정] 개인정보 처리방침 · 이용 약관 → 사이트 안 정책 페이지 (pages/LegalPage.jsx) · 접근성은 Apple 사이트 그대로
 export const footerSubLinks = [
-    { label: "개인정보 처리방침", path: "https://www.apple.com/legal/privacy/ko/" },
-    { label: "이용 약관", path: "https://www.apple.com/legal/internet-services/terms/site.html" },
-    { label: "접근성", path: "https://www.apple.com/kr/accessibility/" },
+    { label: "개인정보 처리방침", path: "/privacy" },
+    { label: "이용 약관", path: "/terms" },
+    { label: "환불 안내", path: "/refund" },
 ];

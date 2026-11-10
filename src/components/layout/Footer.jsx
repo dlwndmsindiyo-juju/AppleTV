@@ -48,7 +48,8 @@ const Footer = () => {
         <ul className="footer-policy-menu">
           {footerSubLinks.map((item, index) => (
             <li key={index}>
-              <a href={item.path}>{item.label}</a>
+              {/* [수정] 사이트 안 정책 페이지(/privacy · /terms)는 새로고침 없이 이동 · 바깥 주소는 그대로 */}
+              {item.path.startsWith('/') ? <Link to={item.path}>{item.label}</Link> : <a href={item.path}>{item.label}</a>}
             </li>
           ))}
           <li className="footer-region">대한민국 · 한국어</li>
