@@ -2999,3 +2999,20 @@ html.is-tv-touch .tv-end-track {
   }
 }
 
+// =====================================================================
+// [추가] 왼쪽 메뉴 검색칸 — 방향키로 고르면 홈 · 스포츠 메뉴처럼 흰 배경 + 어두운 글자 · 아이콘 (components/tv/tvFocus.js)
+// - 입력칸은 마우스로 눌러도 :focus-visible 이라 같은 모양 (글자를 쓰는 중에도 어두운 글자로 잘 보임)
+// =====================================================================
+.tv-side-search:has(input:focus-visible) {
+  box-shadow: none;
+  background-color: $tv-btn-primary-bg;
+
+  .tv-side-search-icon {
+    background-color: $tv-btn-primary-text;
+  }
+
+  input,
+  input::placeholder {
+    color: $tv-btn-primary-text;
+  }
+}

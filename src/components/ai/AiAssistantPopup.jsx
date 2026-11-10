@@ -5,7 +5,7 @@ import { useMovieStore } from "../../store/useMovieStore";
 import { resolveContentDetail } from "./resolveContentDetail";
 import { DURATIONS, GENRES, MOODS, getContentRecommendations } from "./aiRecommendations";
 import checkIcon from "./assets/check.svg";
-import AiLogo from "./AiLogo"; // [수정] AI 아이콘 공용 (예전 selection-stars.svg)
+import AiLogo from "./AiLogo"; // [수정] AI 아이콘 공용 
 import selectionCheckIcon from "./assets/selection-check.svg";
 import selectionArrowIcon from "./assets/selection-arrow.svg";
 import resetIcon from "./assets/reset.svg";
