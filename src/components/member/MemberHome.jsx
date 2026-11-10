@@ -57,7 +57,7 @@ const MemberHome = ({ userName = "회원" }) => {
     <Shelf key="series-top10" id="series-top10" />,
     <Shelf key="all-series" id="all-series" />,
     <ComingSoon key="soon" />,
-    <Shelf key="documentary" id="documentary" />,
+    //  [삭제] Apple 다큐멘터리 섹션 — 다큐멘터리는 아래 한 섹션만
     <Shelf key="all-documentaries" id="all-documentaries" />,
     <GenreCollection key="genres" />,
     <Shelf key="kids" id="kids" />,
