@@ -46,6 +46,7 @@ import AccountSubscription from "./pages/AccountSubscription"; // [추가] 계�
 import AccountPayment from "./pages/AccountPayment"; // [추가] 계정 설정 → 지불 방법
 import TvPreview from "./pages/TvPreview"; // [추가] TV 디자인 미리보기 (/tv)
 import HelpPage from "./pages/HelpPage"; // [추가] 푸터 메뉴 페이지 (이용 가이드 · FAQ · 지원)
+import LegalPage from "./pages/LegalPage"; // [추가] 푸터 정책 링크 페이지 (개인정보 처리방침 · 이용약관 · 환불안내)
 import FloatingActions from "./components/common/FloatingActions"; // [추가] 하단 TV · TOP 버튼
 
 function App() {
@@ -109,6 +110,10 @@ function App() {
               <Route path="/guide" element={<HelpPage page="guide" />} />
               <Route path="/faq" element={<HelpPage page="faq" />} />
               <Route path="/support" element={<HelpPage page="support" />} />
+              {/* [추가] 푸터 정책 링크 페이지 */}
+              <Route path="/privacy" element={<LegalPage page="privacy" />} />
+              <Route path="/terms" element={<LegalPage page="terms" />} />
+              <Route path="/refund" element={<LegalPage page="refund" />} />
 
               {/* [추가] TV 디자인 미리보기 (/tv/:id 상세와 다른 주소) */}
               <Route path="/tv" element={<TvPreview />} />

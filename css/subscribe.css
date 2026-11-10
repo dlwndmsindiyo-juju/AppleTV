@@ -343,7 +343,7 @@
   color: #007aff;
 }
 .login-page .login-card.plan-card .plan-link:hover {
-  text-decoration: underline;
+  opacity: 0.7;
 }
 .login-page .login-card.plan-card .plan-links + .plan-submit,
 .login-page .login-card.plan-card .plan-error + .plan-submit {
@@ -469,7 +469,7 @@
   text-decoration: none;
 }
 .login-page .login-card.plan-card.plan-card--done .plan-manage:hover {
-  text-decoration: underline;
+  color: #6E7AF4;
 }
 
 @keyframes plan-spin {
