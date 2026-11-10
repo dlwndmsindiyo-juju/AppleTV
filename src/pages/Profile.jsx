@@ -13,6 +13,51 @@ import ProfileAvatar, { AVATAR_OPTIONS, sameAvatar, profileLook } from "../compo
 import ProfilePicker from "../components/profile/ProfilePicker"; // [추가] 프로필 고르기 · 추가
 import { ConfirmDialog, subscriptionSummary } from "../components/profile/AccountShared"; // [추가] 구독 · 지불 방법 (확인 팝업은 공용으로 옮김)
 import { AddressRegisterPopup } from "./Subscribe"; // [추가] 청구 주소 추가 · 편집 = 지불 방법 등록과 같은 팝업 디자인
+import { useMovieStore } from "../store/useMovieStore"; // [추가] 알림 설정한 콘텐츠 목록
+import { TMDB_IMG } from "../utils/tmdb";
+
+// [추가] 알림 설정한 콘텐츠 — 공개 예정 · 검색 결과에서 종(🔔)을 누른 작품 (최근에 설정한 순)
+// - 포스터를 누르면 상세 · [알림 해제] 를 누르면 목록에서 빠짐 (토스트는 store 에서)
+// - 예전에 설정해서 제목 정보가 없는 작품은 "작품 정보 없음" 으로
+const AlarmList = () => {
+  const alarms = useMovieStore((s) => s.alarms);
+  const alarmItems = useMovieStore((s) => s.alarmItems);
+  const onToggleAlarm = useMovieStore((s) => s.onToggleAlarm);
+  const list = alarms
+    .map((key) => {
+      const [type, id] = key.split("_");
+      return { key, type: type === "tv" ? "tv" : "movie", id, ...(alarmItems[key] || {}) };
+    })
+    .sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0));
+
+  if (list.length === 0) {
+    return <p className="account-alarm-empty">아직 알림을 설정한 콘텐츠가 없어요. 공개 예정 작품의 종 버튼을 눌러 보세요.</p>;
+  }
+
+  return (
+    <ul className="account-alarm-list">
+      {list.map((a) => {
+        const date = (a.date || "").replaceAll("-", ".");
+        return (
+          <li key={a.key} className="account-alarm-item">
+            <Link to={`/${a.type}/${a.id}`} className="account-alarm-link">
+              <span className="account-alarm-poster">
+                {a.poster_path && <img src={`${TMDB_IMG}/w185${a.poster_path}`} alt="" loading="lazy" />}
+              </span>
+              <span className="account-alarm-text">
+                <strong>{a.title || "작품 정보 없음"}</strong>
+                <span>{[a.type === "tv" ? "시리즈" : "영화", date && `${date} 공개`].filter(Boolean).join(" · ")}</span>
+              </span>
+            </Link>
+            <button type="button" className="account-alarm-off" onClick={() => onToggleAlarm(a.key)}>
+              알림 해제
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
 // 스타일: App.scss 맨 아래 "계정 설정" (.account-*)
 
 const CHANNEL_LABELS = { email: "이메일", sms: "문자 메시지", push: "앱 푸시 알림" };
@@ -578,6 +623,12 @@ export const Profile = () => {
                   alert={settings.sportAlert}
                   onChange={(v) => saveAlert("sportAlert", "경기 알림", v)}
                 />
+              </div>
+
+              {/* [추가] 알림 설정한 콘텐츠 */}
+              <div className="account-alert-group">
+                <Item title="알림 설정한 콘텐츠" desc="공개되면 알려드릴 작품이에요. 포스터를 누르면 작품 상세로 이동해요." />
+                <AlarmList />
               </div>
             </Section>
           </div>

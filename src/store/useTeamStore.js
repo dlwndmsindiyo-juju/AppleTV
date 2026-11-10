@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getTeamById } from "../data/sportTeams";
+import { showToast } from "../utils/toast"; // [추가] 팔로우 · 취소 토스트
 
 // 관심 구단 구독 상태 (스포츠 홈 슬라이드 + 구단 전체 페이지 + 스포츠 히어로에서 함께 사용)
 // persist: localStorage 에 자동 저장되어 새로고침해도 유지
@@ -14,9 +15,14 @@ export const useTeamStore = create(
       heroTeamId: null,
 
       // 구독 / 해제 (히어로로 고른 팀을 해제하면 처음 팔로우한 팀으로 돌아감)
+      // [추가] 팔로우 · 팔로우 취소 토스트 (스포츠 홈 · 구단 카드 · 히어로 · TV 관심구단 공통)
       toggleFavorite: (id) =>
         set((state) => {
           const following = state.favorites.includes(id);
+          const name = getTeamById(id)?.name || "구단";
+          showToast(following ? `${name} 팔로우를 취소했어요.` : `${name}을(를) 팔로우했어요. 관심 구단에서 볼 수 있어요.`, {
+            icon: following ? "star-off" : "star",
+          });
           return {
             favorites: following
               ? state.favorites.filter((v) => v !== id)

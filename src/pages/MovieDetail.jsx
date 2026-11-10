@@ -104,8 +104,10 @@ export const MovieDetail = ({ type: typeProp }) => {
     setVideoType('all');
     setSeason(null);
     setSortOrder('oldest');
-    setMyRating(0);
-    setRatingSaved(false);
+    // [수정] 예전에 남긴 평점이 있으면 그대로 보여 줌 (새로고침 · 다시 들어와도 유지)
+    const saved = useMovieStore.getState().myRatings?.[`${type}_${contentId}`]?.score || 0;
+    setMyRating(saved);
+    setRatingSaved(saved > 0);
     window.scrollTo(0, 0);
   }, [type, contentId, onFetchContentDetail]);
 
@@ -115,6 +117,7 @@ export const MovieDetail = ({ type: typeProp }) => {
 
   // 영화 / TV 필드 이름 차이 정리
   const title = item?.title || item?.name || '';
+  const savedScore = useMovieStore((s) => s.myRatings?.[`${type}_${contentId}`]?.score || 0); // [추가] 저장된 내 평점
   const releaseYear = (item?.release_date || item?.first_air_date)?.slice(0, 4);
   const runtime = detail?.runtime || detail?.episode_run_time?.[0];
 
@@ -374,6 +377,8 @@ export const MovieDetail = ({ type: typeProp }) => {
   // 평점 남기기
   const handleSubmitRating = () => {
     if (!myRating) return;
+    // [수정] 저장(localStorage) + 토스트 (처음: 남겼어요 · 다시: 수정했어요)
+    useMovieStore.getState().onSaveRating(`${type}_${contentId}`, myRating, title);
     setRatingSaved(true);
   };
 
@@ -509,10 +514,10 @@ export const MovieDetail = ({ type: typeProp }) => {
                 onClick={handleSubmitRating}
                 disabled={!myRating}
               >
-                {ratingSaved ? '평점 수정하기' : '평점 남기기'}
+                {savedScore ? '평점 수정하기' : '평점 남기기'}
               </button>
-              {ratingSaved && (
-                <p className="rating-done">{myRating}점으로 평가했어요.</p>
+              {ratingSaved && savedScore > 0 && (
+                <p className="rating-done">{savedScore}점으로 평가했어요.</p>
               )}
             </div>
           </div>

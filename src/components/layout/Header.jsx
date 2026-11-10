@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore, getProfiles, MAIN_PROFILE_ID } from "../../store/useAuthStore";
 import SubscribeGate from "./SubscribeGate"; // 로그인 전 안내 팝업 (재생: 구독 / 찜 등: 로그인)
+import StarIcon from "../sport/StarIcon"; // [추가] 관심 구단 메뉴 아이콘
 import { WishIcon } from "../wishlist/WishlistLayer"; // 위시리스트 하트 아이콘
 import ProfileAvatar, { profileLook } from "../profile/ProfileAvatar"; // 계정 설정에서 고른 프로필 아이콘
 
@@ -152,6 +153,10 @@ const Header = () => {
     } else {
       navigate("/"); // home.jsx로 이동
     }
+    // [추가] 토글을 누르면 언제나 맨 위 히어로부터 (이미 같은 홈이어도 · 새 페이지가 그려진 뒤에도 한 번 더)
+    const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    toTop();
+    requestAnimationFrame(() => requestAnimationFrame(toTop));
   };
 
   return (
@@ -230,6 +235,11 @@ const Header = () => {
                       <Link to="/wishlist" className="profile-menu-item" role="menuitem">
                         나의 목록
                         <WishIcon name="heart" className="profile-menu-icon" />
+                      </Link>
+                      {/* [추가] 관심 구단 */}
+                      <Link to="/my-teams" className="profile-menu-item" role="menuitem">
+                        관심 구단
+                        <span className="profile-menu-icon is-star" aria-hidden="true"><StarIcon filled size={18} /></span>
                       </Link>
                       <Link to="/profile" className="profile-menu-item" role="menuitem">
                         계정 설정
