@@ -4083,3 +4083,26 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
   }
 }
 
+
+// =====================================================================
+// [수정] 공개예정 "N월 공개예정" 표기와 종(알림) 버튼 사이가 너무 멀던 문제
+// - 표기 상자 폭을 고정(105 · 155)에서 글자 길이에 맞춤 → 종 버튼이 바로 옆 (사이 6)
+// - 휴대폰 · 태블릿 공통 · 전체 보기 격자(종만 보이는 칸)는 그대로
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  :is(main, div).member-home:not(.member-browse) .member-sc-slot--soon .member-sc-poster-actions {
+    justify-content: center;
+    align-items: center;
+    gap: 0.375rem;
+
+    .member-sc-month {
+      width: auto;
+      min-width: 0;
+    }
+
+    .member-sc-alarm {
+      flex-shrink: 0;
+      margin: 0;
+    }
+  }
+}
