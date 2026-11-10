@@ -160,6 +160,11 @@ const TvPreview = () => {
   };
   const screenTeam = teamTabId ? getTeamById(teamTabId) : null;
   const [query, setQuery] = useState(""); // [추가] 왼쪽 메뉴 검색창
+  useEffect(() => {
+    if (tab !== "search") {
+      setQuery("");
+    }
+  }, [tab]);
   const [scale, setScale] = useState(1);
   const [stageW, setStageW] = useState(TV_W);
   const [stageH, setStageH] = useState(TV_H);
@@ -329,15 +334,22 @@ const TvPreview = () => {
 
   // [수정] 검색: Enter → TV 검색 화면 (입력한 글자로 바로 검색)
   const [searchKey, setSearchKey] = useState(0);
-  const handleSearch = (e) => {
-    if (e.key !== "Enter" || e.nativeEvent.isComposing) return; // 한글 조합 중 Enter 무시
+  const openSearch = () => {
+    if (tab === "search") return;
     setSearchKey((k) => k + 1);
     setTab("search");
   };
-
+  const handleSearch = (e) => {
+    if (e.key !== "Enter" || e.nativeEvent.isComposing) return;
+    openSearch();
+  };
+  // TV 화면 종료 → 이전 페이지 또는 홈으로 이동
   const exit = () => {
-    if (window.history.length > 1) navigate(-1);
-    else navigate("/");
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -417,6 +429,7 @@ const TvPreview = () => {
                 aria-label="작품 · 인물 · 장르 검색"
                 enterKeyHint="search"
                 onChange={(e) => setQuery(e.target.value)}
+                onFocus={openSearch}
                 onKeyDown={handleSearch}
               />
             </label>
