@@ -812,6 +812,7 @@ $tv-type-shrink: (
 
 // 메뉴 글자
 .tv-side-item {
+  @include heading-h4;
   display: flex;
   align-items: center;
   gap: $space-lg;
@@ -842,10 +843,11 @@ $tv-type-shrink: (
     color: $tv-btn-primary-text;
   }
 
-  .tv-side-label,
-  .tv-side-logout {
+  .tv-side-label {
     @include heading-h4;
   }
+
+
 }
 
 // 메뉴 아이콘 칸 (30 × 28 · 아이콘 파일 그대로 · 가운데 정렬)
@@ -1105,8 +1107,8 @@ $tv-type-shrink: (
   left: calc(50% - 18.5rem); // 1920 기준 664 (가운데에서 296 왼쪽) · 화면이 넓어져도 같은 자리
   display: flex;
   align-items: center;
-  width: 632px;
-  height: 4.25rem;
+  width: 600px;
+  height: 4rem;
   padding: 0.375rem;
   border-radius: 2.125rem;
   background-color: $tv-header-bg;
@@ -1115,7 +1117,7 @@ $tv-type-shrink: (
 }
 
 .tv-sport .tv-header-tab {
-  @include tv-type(display-M-b);
+  @include tv-type(display-l-b);
   flex: 1;
   height: 3.5rem;
   padding: 0;
@@ -1151,7 +1153,7 @@ $tv-type-shrink: (
 }
 
 .tv-sport-title {
-  @include tv-type(display-l-b);
+  @include tv-type(display-TV-b);
   margin: 0 0 0.8125rem; // 25 = 13 + 카드 줄 위 여백 12
   padding: 0 5rem;
   color: $light-color-0;
