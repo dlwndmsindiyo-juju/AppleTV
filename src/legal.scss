@@ -14,7 +14,7 @@ $legal-sub: $dark-color-100;
 .legal-page {
   min-height: 100vh;
   padding-top: $header-height; // 고정 헤더 높이만큼
-  background-color: $light-color-0;
+  background-color: $light-color-100;
   color: $legal-text;
 
   :where(h1, h2, p, ol) {
@@ -29,7 +29,7 @@ $legal-sub: $dark-color-100;
   flex-direction: column;
   align-items: center;
   padding: 5.625rem $space-xl 5rem; // 90 · 80
-  background-color: $light-color-100;
+  background-color: $light-color-200;
   text-align: center;
 }
 
@@ -97,7 +97,7 @@ $legal-sub: $dark-color-100;
   gap: $space-lg;
   padding: $space-xl 1.75rem; // 24 · 28
   border-radius: $radius-card-sm;
-  background-color: $light-color-100;
+  background-color: $light-color-200;
 }
 
 .legal-summary-title {
