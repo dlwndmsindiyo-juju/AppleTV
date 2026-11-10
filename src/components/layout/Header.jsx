@@ -237,8 +237,13 @@ const Header = () => {
                         <strong className="profile-menu-name">
                           {getProfiles(user).find((p) => p.id === (currentProfileId || MAIN_PROFILE_ID))?.name || user.name || "Apple 사용자"}
                         </strong>
-                        {/* 계정 설정 > 프로필 (다른 프로필로 보기) */}
-                        <Link to="/profile#account-profile" className="profile-menu-switch" role="menuitem">
+                        {/* [수정] 처음 로그인할 때와 같은 프로필 선택 화면 ("누가 시청하나요?") → 고르면 보던 화면으로 */}
+                        <Link
+                          to="/login"
+                          state={{ from: `${location.pathname}${location.search}`, switchProfile: true }}
+                          className="profile-menu-switch"
+                          role="menuitem"
+                        >
                           프로필 전환
                         </Link>
                       </div>

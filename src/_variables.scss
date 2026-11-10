@@ -234,7 +234,12 @@ $font-family-base: "SF Pro", sans-serif;
 }
 
 @mixin display-xl-b {
-  @include type-style(4.75rem, 6rem, $font-weight-bold);
+  @include type-style(3.75rem, 6rem, $font-weight-bold);
+}
+
+// TV 타이틀
+@mixin display-TV-b {
+  @include type-style(2.2rem, 5rem, $font-weight-bold);
 }
 
 // Display L 34 / 41 · 메인 타이틀
