@@ -5,13 +5,15 @@ import { SPORT_SHORTS } from "../../data/sportShorts";
 
 import "swiper/css";
 import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
+import VideoPopup from "../common/VideoPopup"; // [추가] 재생: 전체 화면 팝업 (다른 재생 버튼과 같은 방식)
+import WatchPlayer from "../common/WatchPlayer"; // [추가] OTT · 경기 시청과 같은 플레이어
 
 // =====================================================================
 // 숏폼 (세로 카드 슬라이드)
 // - 데이터: data/sportShorts.js (정해진 경기 영상만 · 썸네일은 public/images/sport/shorts/)
 // - 가운데(활성) 카드만 밝게, 양옆 카드는 어둡게 / 좌우 끝 카드는 이너 밖으로 잘림
 // - 카드 안: Apple TV · MLS 배지, 소리, 재생, 좋아요 · 공유, 팀 · 제목 · 경기 · 길이, 진행 바
-// - 재생 버튼을 누르면 카드 안에서 바로 재생 (기본 음소거, 소리 버튼으로 켜고 끄기)
+// - [수정] 재생 버튼을 누르면 전체 화면 팝업에서 바로 소리와 함께 재생 (VideoPopup + WatchPlayer · 다른 재생 버튼과 통일)
 // - 아이콘: public/icons/shorts/ (logo_w.svg) · 좋아요/공유/소리는 색을 바꿀 수 있게 SVG 를 그대로 옮겨 씀
 // =====================================================================
 
@@ -70,6 +72,7 @@ const SportShorts = ({ title = "숏폼" }) => {
   const [playingId, setPlayingId] = useState(null);
   const [muted, setMuted] = useState(true);
   const [liked, setLiked] = useState({});
+  const [fullItem, setFullItem] = useState(null); // [추가] 전체 화면으로 재생 중인 숏폼
   const frames = useRef({});
 
   // 카드에 쓸 값 정리 (경기 · 길이)
@@ -157,7 +160,7 @@ const SportShorts = ({ title = "숏폼" }) => {
                     <button
                       type="button"
                       className="sport-sf-play"
-                      onClick={() => setPlayingId(playing ? null : item.id)}
+                      onClick={() => { setPlayingId(null); setFullItem(item); }} // [수정] 바로 전체 화면 재생
                       aria-label={playing ? `${item.title} 정지` : `${item.title} 재생`}
                     >
                       {playing ? <span aria-hidden="true">❚❚</span> : <img className="play-icon" src="/icons/play-b.svg" alt="" aria-hidden="true" />}
@@ -207,6 +210,11 @@ const SportShorts = ({ title = "숏폼" }) => {
           </Swiper>
         )}
       </div>
+
+      {/* [추가] 전체 화면 재생 팝업 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기) */}
+      <VideoPopup open={!!fullItem} onClose={() => setFullItem(null)} label={fullItem?.title || "숏폼"}>
+        {fullItem && <WatchPlayer videoKey={fullItem.videoId} title={fullItem.title} />}
+      </VideoPopup>
     </section>
   );
 };

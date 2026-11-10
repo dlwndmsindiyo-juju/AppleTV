@@ -74,7 +74,7 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
   const { wished, toggle } = useWish(type, item.id);
   const alarmKey = `${type}_${item.id}`;
   const alarmOn = useMovieStore((s) => s.alarms.includes(alarmKey));
-  const onToggleAlarm = useMovieStore((s) => s.onToggleAlarm);
+  const onToggleAlarmRaw = useMovieStore((s) => s.onToggleAlarm);
 
   const title = item.title || item.name;
   const path = detailPath(type, item.id);
@@ -82,6 +82,16 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
   const isNew = variant === "new";
   const month = monthLabel(item.release_date || item.first_air_date); // "11월 공개"
   const releaseLabel = month.endsWith("월 공개") ? `${month}예정` : month; // "11월 공개예정" (날짜 없으면 "공개 예정")
+  // [수정] 알림 켜기 · 끄기 — 계정 설정 "알림 설정한 콘텐츠" 목록에 보여 줄 정보도 같이 저장 (토스트는 store 에서)
+  const onToggleAlarm = (key) =>
+    onToggleAlarmRaw(key, {
+      type,
+      id: item.id,
+      title,
+      poster_path: item.poster_path,
+      backdrop_path: item.backdrop_path,
+      date: item.release_date || item.first_air_date || "",
+    });
   const meta = contentMeta(type, info, shortGenres(type, item.genre_ids));
   const overview = item.overview || info?.tagline || "작품 소개가 곧 공개됩니다.";
   const hoverMode = useMedia(HOVER_QUERY); // [추가] PC 만 호버 카드
@@ -116,16 +126,19 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
                 </button>
               </>
             ) : (
-              <button
-                type="button"
-                className={`member-sc-month${alarmOn ? " is-on" : ""}`}
-                aria-pressed={alarmOn}
-                aria-label={`${title} ${releaseLabel} · ${alarmOn ? "알림 끄기" : "알림 받기"}`}
-                onClick={() => onToggleAlarm(alarmKey)}
-              >
-                {releaseLabel}
-                <BellIcon on={alarmOn} />
-              </button>
+              // [수정] "N월 공개예정"은 누르는 버튼이 아니라 표기만 · 알림은 옆 종 버튼
+              <>
+                <span className="member-sc-month is-label">{releaseLabel}</span>
+                <button
+                  type="button"
+                  className={`member-sc-alarm${alarmOn ? " is-on" : ""}`}
+                  aria-pressed={alarmOn}
+                  aria-label={alarmOn ? `${title} 알림 끄기` : `${title} 알림 받기`}
+                  onClick={() => onToggleAlarm(alarmKey)}
+                >
+                  <BellIcon on={alarmOn} />
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -155,9 +168,8 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
         </>
       ) : (
         <>
-          <Link to={path} className="member-sc-release" aria-label={`${title} ${releaseLabel} · 상세 보기`}>
-            {releaseLabel}
-          </Link>
+          {/* [수정] 버튼(상세 이동)이 아니라 표기만 */}
+          <span className="member-sc-release is-label">{releaseLabel}</span>
           <button
             type="button"
             className={`member-sc-alarm${alarmOn ? " is-on" : ""}`}
@@ -180,18 +192,12 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
           <img className="member-sc-logo" src="/icons/shorts/logo_w.svg" alt="" aria-hidden="true" />
         </Link>
 
-        {/* [수정] 공개예정작: "N월 공개 🔔" — 누르면 공개 알림 켜기 / 끄기 */}
+        {/* [수정] 공개예정작: "N월 공개" — 버튼이 아니라 표기만 (알림은 마우스를 올리면 나오는 종 버튼) */}
         {!isNew && (
-          <button
-            type="button"
-            className={`member-sc-month${alarmOn ? " is-on" : ""}`}
-            aria-pressed={alarmOn}
-            aria-label={`${title} ${month} · ${alarmOn ? "알림 끄기" : "알림 받기"}`}
-            onClick={() => onToggleAlarm(alarmKey)}
-          >
+          <span className={`member-sc-month is-label${alarmOn ? " is-on" : ""}`}>
             {month}
-            <BellIcon on={alarmOn} />
-          </button>
+            {alarmOn && <BellIcon on />}
+          </span>
         )}
 
         {details}
