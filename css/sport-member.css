@@ -567,7 +567,7 @@ main.sport-home .sport-series-description {
     max-width: none;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home > section:not(.sport-hero):not(.sport-teams):not(.sport-league):not(.subscribe-cta):not(.device-guide) > .inner {
     width: min(350px, 100% - 40px);
     padding: 0;
@@ -904,7 +904,7 @@ main.sport-home.sport-home .sport-section-head {
     padding-bottom: 6rem;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home.sport-home {
     --sport-section-gap: 4rem;
     padding-bottom: 4rem;
@@ -995,7 +995,7 @@ section.sport-hero .sport-btn.secondary {
     line-height: 2.125rem;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   section.sport-hero .sport-hero-card {
     left: 1.25rem;
     right: auto;
@@ -1078,7 +1078,7 @@ section.sport-hero .sport-btn.secondary {
     padding: 2rem;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .sport-hero .sport-hero-card {
     left: 1.25rem;
     right: 1.25rem;
@@ -1571,7 +1571,7 @@ main.sport-home.sport-detail-page .sport-detail-back:hover {
     min-width: 80px;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home.sport-detail-page {
     padding-bottom: 6rem;
   }
@@ -1954,7 +1954,7 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
     letter-spacing: 0;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home.sport-standings-page {
     padding-bottom: 6rem;
   }
@@ -2343,7 +2343,7 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
     width: 200px;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .sport-shorts.sport-shortform .sport-sf-slide {
     width: 160px;
   }
@@ -2577,7 +2577,7 @@ section.sport-hero.sport-hero--team .sport-team-hero-chip:focus-visible {
     max-width: calc(100% - 5rem);
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   section.sport-hero.sport-hero--team .sport-team-hero-body {
     padding: 0 1.25rem;
     margin-top: -1.5rem;
@@ -3316,7 +3316,7 @@ main.sport-home.sport-live-page .sport-live-back-wrap {
     letter-spacing: 0;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home.sport-live-page {
     padding-bottom: 5rem;
   }
@@ -3527,7 +3527,7 @@ main.sport-home.sport-live-page .sport-subs-team img {
     height: 4rem;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home.sport-live-page .sport-lineup-head .sport-lineup-badge {
     width: 36px;
     height: 2.25rem;
@@ -3542,7 +3542,7 @@ main.sport-home.sport-live-page .sport-subs-team img {
   }
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   main.sport-home.sport-live-page .sport-live-tab {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
@@ -3590,7 +3590,7 @@ main.sport-home.sport-live-page .sport-subs-team img {
     font-family: inherit;
   }
 }
-@media (min-width: 396px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   main.sport-home.sport-live-page {
     padding-bottom: 7.5rem;
   }
@@ -3787,7 +3787,7 @@ main.sport-home.sport-live-page .sport-subs-team img {
     margin-top: 3.5rem;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home.sport-detail-page .sport-detail-layout {
     min-width: 0;
   }
@@ -4552,7 +4552,7 @@ main.sport-home.sport-live-page .sport-chat-form button:disabled {
     height: 2.75rem;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home.sport-live-page .sport-scoreboard {
     gap: 0.75rem;
   }
@@ -4696,7 +4696,7 @@ main.sport-home.sport-live-page .sport-chat-list li.is-mine .sport-chat-body p {
     letter-spacing: 0;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home.sport-live-page .sport-commentary .sport-timeline > .sport-tl-item {
     column-gap: 0.5rem;
   }
@@ -4740,7 +4740,7 @@ main.sport-home.sport-live-page .sport-chat-siren:focus-visible {
     margin-bottom: 4rem;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home.sport-live-page .sport-live-tabs {
     margin-bottom: 3rem;
   }
@@ -4754,7 +4754,7 @@ main.sport-home.sport-live-page .sport-chat-siren:focus-visible {
   }
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   main.sport-home.sport-live-page .sport-live-info-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
@@ -5082,7 +5082,7 @@ main.sport-home .sport-detail-info-meta .play-icon,
 main.sport-home .sport-detail-meta .play-icon {
   height: 0.5625rem;
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home .sport-detail-thumb .sport-detail-play {
     width: 40px;
     height: 2.5rem;
@@ -5303,7 +5303,7 @@ main.sport-home .sport-replay .swiper-button-prev {
     max-width: 80%;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home .sport-replay .sport-replay-slide {
     width: 72%;
     max-width: none;
@@ -5511,7 +5511,7 @@ main.sport-home .sport-series .swiper-button-prev {
     width: calc((100% - 72px) / 3.3);
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home .sport-hl-slide {
     width: 82%;
   }
@@ -5713,7 +5713,7 @@ main.sport-home .sport-live .swiper-button-prev {
     width: calc((100% - 24px) / 1.6);
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   main.sport-home .sport-lv-slide {
     width: 86%;
   }
@@ -5819,7 +5819,7 @@ main.sport-home .sport-live .swiper-button-prev {
     width: calc((100% - 32px) / 2.5);
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .sport-upcoming .sport-up-slide {
     width: 82%;
   }
@@ -5831,7 +5831,7 @@ main.sport-home .sport-live .swiper-button-prev {
     display: none;
   }
 }
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   main.sport-home {
     --sport-content-width: none;
   }
@@ -5848,7 +5848,7 @@ main.sport-home .sport-live .swiper-button-prev {
     left: 5%;
   }
 }
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   main.sport-home.sport-home .sport-teams .sport-team-slide {
     width: 401px;
   }
@@ -5865,7 +5865,7 @@ main.sport-home .sport-live .swiper-button-prev {
     width: 342px;
   }
 }
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   main.sport-home.sport-home section.sport-hero .sport-hero-card {
     top: auto;
     right: auto;

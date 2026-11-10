@@ -3076,3 +3076,15 @@ html.is-tv-touch .tv-end-track > * {
 .tv-side-search-btn:focus-visible .tv-side-search-icon {
   background-color: #171717;
 }
+
+.tv-side-search:has(input:focus-visible) {
+  box-shadow: none;
+  background-color: #FFFFFF;
+}
+.tv-side-search:has(input:focus-visible) .tv-side-search-icon {
+  background-color: #171717;
+}
+.tv-side-search:has(input:focus-visible) input,
+.tv-side-search:has(input:focus-visible) input::placeholder {
+  color: #171717;
+}

@@ -1456,7 +1456,7 @@
   animation: ai-progress-shine 2s ease-in-out infinite;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .ai-popup.ai-popup .ai-popup-title-logo {
     --ai-logo-size: 1.5rem !important;
   }
@@ -1495,7 +1495,7 @@
   height: 1.5rem;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .ai-popup.ai-popup .ai-popup-close .ai-popup-close-icon {
     width: 1.125rem;
     height: 1.125rem;
@@ -1613,7 +1613,7 @@
     padding: 2.5rem;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .ai-popup.ai-popup--results.ai-popup--results {
     padding: 2rem 1.5rem;
   }

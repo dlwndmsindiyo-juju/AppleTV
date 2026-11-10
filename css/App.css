@@ -1928,7 +1928,7 @@ header .inner nav .gnb-right ul .profile-menu-item .profile-menu-icon {
   background: #F5F5F5;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .movie-share-overlay {
     padding: 1rem;
   }
@@ -3933,7 +3933,7 @@ main.sport-home .sport-series-card h4 {
   margin: 0.75rem 0 0;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   .hero-swiper-container:not(.sport-hero-swiper) .hero-slide-item .hero-info {
     left: 5%;
     max-width: min(720px, 75%);
@@ -7475,7 +7475,7 @@ img.ui-icon.ui-icon-arrow {
   cursor: not-allowed;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .account-pay .account-pay-layout {
     flex-direction: column;
     gap: 1rem;
@@ -7753,7 +7753,7 @@ section.top10-section .top10-num-stop-end {
   stop-color: #F1F1F1;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   section.top10-section .top10-desc,
   .upcoming-section .upcoming-desc.upcoming-desc,
   .apple-originals .apple-originals-desc.apple-originals-desc {
@@ -7765,7 +7765,7 @@ section.top10-section .top10-num-stop-end {
     color: #C8C8C8;
   }
 }
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   section.top10-section .top10-title,
   .upcoming-section .upcoming-title.upcoming-title,
   .apple-originals .apple-originals-title.apple-originals-title {
@@ -7987,13 +7987,13 @@ main.landing-home .subscribe-cta {
   transform: translateX(-50%) skewX(6.2deg);
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   .subscribe-cta.subscribe-cta--tv .inner {
     padding-left: 5%;
     padding-right: 5%;
   }
 }
-@media (min-width: 396px) and (max-width: 1439px) {
+@media (min-width: 768px) and (max-width: 1439px) {
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
@@ -8803,7 +8803,7 @@ section.device-guide.device-guide--watch .watch-device img {
   color: #FFFFFF;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   .inner,
   .account-inner,
   .search-inner,
@@ -8834,7 +8834,7 @@ section.device-guide.device-guide--watch .watch-device img {
     padding-right: 0;
   }
 }
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   section.top10-section .top10-slide {
     width: 23.625rem;
   }
@@ -8961,7 +8961,7 @@ body.has-promo-banner .floating-actions {
     display: none;
   }
 }
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   .floating-btn {
     width: 70px;
     height: 4.375rem;
@@ -9067,7 +9067,7 @@ body.has-promo-banner .floating-actions {
   z-index: 1;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   header .inner {
     width: 100% !important;
     padding-left: 1.875rem !important;
@@ -9222,7 +9222,7 @@ body.has-promo-banner .floating-actions {
   pointer-events: none;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   .value-props.value-props {
     padding: 1.5rem 0;
   }
@@ -9302,7 +9302,7 @@ section.device-guide.device-guide--watch .watch-device-name {
   background-color: rgba(255, 255, 255, 0.28);
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   section.top10-section .top10-title,
   .upcoming-section .upcoming-title.upcoming-title,
   .apple-originals .apple-originals-title.apple-originals-title {
@@ -9376,7 +9376,7 @@ main.wish-page {
   pointer-events: auto;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .detail-back-bar.detail-back-bar {
     top: calc(4.5rem + 1rem);
     left: 1.25rem;
@@ -9659,7 +9659,7 @@ main.wish-page {
     animation: none;
   }
 }
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   .movie-detail-page.movie-detail-page {
     padding-top: calc(4.5rem + 1.4375rem);
     padding-bottom: 2.5rem;
@@ -10846,7 +10846,7 @@ main.wish-page {
   font-family: inherit;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .sub-select.sub-select--line .sub-select-trigger {
     min-height: 2.75rem;
   }
@@ -11032,7 +11032,7 @@ main.hero-revealed > :not(.hero-swiper-container):not(.sport-hero) {
     opacity: 1;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .skeleton-hero-body {
     left: 1.25rem;
     right: 1.25rem;
@@ -11096,7 +11096,7 @@ main.hero-revealed > :not(.hero-swiper-container):not(.sport-hero) {
   font-weight: 700;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   .movie-detail-page.movie-detail-page .player-box .genres.genres {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
@@ -11114,7 +11114,7 @@ main.hero-revealed > :not(.hero-swiper-container):not(.sport-hero) {
     color: #F5F5F5;
   }
 }
-@media (min-width: 396px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .movie-detail-page.movie-detail-page .player-box .overview.overview {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
@@ -11698,7 +11698,7 @@ a[data-age-blocked] :is(img, picture, video) {
   background-color: #6E7AF4;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .share-modal.age-gate-modal {
     width: 100%;
   }
@@ -11868,7 +11868,7 @@ a[data-age-blocked] :is(img, picture, video) {
   cursor: default;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .sub-date-pop {
     padding: 0.5rem 0.75rem 0.75rem;
   }

@@ -437,7 +437,7 @@
   pointer-events: none;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   :is(main, div).member-home .member-section,
   :is(main, div).member-home .member-section.band,
   :is(main, div).member-home .top10-section {
@@ -774,7 +774,7 @@
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   :is(main, div).member-home .rail-continue {
     --rail-col: calc((100% - 72px) / 4);
   }
@@ -900,7 +900,7 @@
   flex-shrink: 0;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   :is(main, div).member-home .rail-recommend {
     --rail-col: calc((100% - 96px) / 5);
     --nav-top: 50%;
@@ -1004,13 +1004,13 @@
   color: #FFFFFF;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   :is(main, div).member-home .rail-ai {
     --rail-col: calc((100% - 72px) / 4);
     --nav-top: 30%;
   }
 }
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   :is(main, div).member-home .member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
@@ -1041,7 +1041,7 @@
   white-space: nowrap;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   :is(main, div).member-home .rail-release {
     --rail-col: calc((100% - 72px) / 4);
     --nav-top: 50%;
@@ -1051,7 +1051,7 @@
   background-color: #171717;
 }
 
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   :is(main, div).member-home .rail-continue,
   :is(main, div).member-home .rail-wish {
     --rail-col: 342px;
@@ -1072,7 +1072,7 @@
     --rail-col: 342px;
   }
 }
-@media (min-width: 396px) {
+@media (min-width: 768px) {
   :is(main, div).member-home .member-head {
     margin-bottom: 3.75rem;
   }
@@ -1530,7 +1530,7 @@
   transition: color 0.2s ease;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   :is(main, div).member-home.member-browse .member-browse-grid.member-browse-grid--recommend,
   :is(main, div).member-home.member-browse .member-browse-grid.member-browse-grid:has(.member-sc-slot--static) {
     gap: 1rem 0.75rem;
@@ -1658,7 +1658,7 @@
   height: 1px;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .member-home .member-genre-card {
     padding: 1rem;
   }

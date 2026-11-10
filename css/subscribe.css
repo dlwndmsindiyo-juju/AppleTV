@@ -187,7 +187,7 @@
   cursor: default;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .login-page .login-card.plan-card {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -212,7 +212,7 @@
     grid-area: note;
   }
 }
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .login-page .login-card.plan-card {
     padding: 4.75rem 1.25rem 2rem;
   }
@@ -555,7 +555,7 @@
   color: #C8C8C8;
 }
 
-@media (max-width: 395px) {
+@media (max-width: 767px) {
   .login-page .login-card.plan-card.plan-card--processing, .login-page .login-card.plan-card.plan-card--done {
     padding-top: 4.75rem;
   }
