@@ -6302,3 +6302,54 @@ main.sport-home.sport-live-page .sport-chat-list {
     }
   }
 }
+// =====================================================================
+// [수정] 스포츠 홈 구독 배너(로그인 전 · SubscribeCTA type="sport") — 글자 · 아이콘을 메인 홈 배너와 똑같이
+// - 원인 ① 스포츠 화면 전체 글꼴("Sport SF Pro", 위 main.sport-home * 규칙)이 배너에도 들어가 같은 크기 변수여도 글자가 다르게 보였음
+//        ② 메인 홈은 제목 문단(.subscribe-title-desktop)이 display: contents · 휴대폰에서는 Heading/h2-B 문구로 바뀌는데
+//          스포츠는 그 규칙에서 빠져(:not(.subscribe-cta--sport)) 휴대폰에서도 Display/L-B(34) 그대로였음
+// - 배경 사진 · 문구 내용 · 배너 높이는 그대로
+// =====================================================================
+main.sport-home .subscribe-cta.subscribe-cta--sport {
+  &,
+  * {
+    font-family: $font-family-base; // 메인 홈과 같은 글꼴
+    letter-spacing: normal;
+  }
+
+  .subscribe-title-desktop {
+    display: contents; // 메인 홈과 같은 제목 구조
+  }
+
+  // 로고 아이콘: 메인 홈 배너와 같은 크기 (PC 73 × 56)
+  .subscribe-logo {
+    width: 73px;
+    height: 3.5rem;
+    object-fit: contain;
+    object-position: left center;
+  }
+}
+
+// 휴대폰: 메인 홈 배너와 같은 제목 크기(Heading/h2-B) · 로고(58 × 44) · 배너 높이
+@media (max-width: $breakpoint-mobile) {
+  main.sport-home .subscribe-cta.subscribe-cta--sport {
+    // [수정] 배너가 혼자 크게 나오던 원인: 위 "Sport 구독 배너 이미지" 규칙의 height: 420px 가
+    //        휴대폰 규칙(height: auto · 위아래 32 여백)보다 우선해 PC 높이 그대로였음 → 메인 홈처럼 글자 높이에 맞춤
+    .subscribe-banner {
+      height: auto;
+    }
+
+    .subscribe-title .subscribe-title-desktop span {
+      @include heading-h2-b;
+      display: inline;
+    }
+
+    .subscribe-title .subscribe-title-desktop span + span::before {
+      content: " ";
+    }
+
+    .subscribe-logo {
+      width: 58px;
+      height: 2.75rem;
+    }
+  }
+}

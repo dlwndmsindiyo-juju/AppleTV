@@ -6,6 +6,8 @@ import { useSportStore } from "../../store/useSportStore";
 import { SPORT_TEAMS } from "../../data/sportTeams";
 import { isLive, getScore, formatKickoff } from "../sport/sportUtils";
 import { getPresentationMatch, isSampleMatch } from "../sport/sportPresentation";
+import VideoPopup from "../common/VideoPopup"; // [추가] 경기 시청: 스포츠 히어로와 같은 전체 화면 재생
+import WatchPlayer from "../common/WatchPlayer";
 
 // 스포츠 화면 경로 / 경기 시청 경로 (라우터와 맞춰 주세요)
 const SPORT_PATH = "/sport";
@@ -144,8 +146,18 @@ const PromoBanner = () => {
 };
 
 // ===== 로그인 후 스포츠: LIVE 경기 배너 =====
+// - [수정] [경기 시청]: 라이브 상세로 이동하지 않고 바로 전체 화면으로 경기 영상 재생 (스포츠 히어로 [경기 시청]과 같은 영상 · 같은 플레이어)
+//   · 영상: MLS 하이라이트 클립 → 없으면 TheSportsDB 하이라이트 (라이브 상세 첫 영상과 같은 규칙)
+//   · 닫기: "← 뒤로" · Esc · 브라우저 뒤로가기
 const LiveContent = ({ match, tabIndex }) => {
   const live = isLive(match);
+  const clips = useSportStore((state) => state.liveClips);
+  const sdbVideos = useSportStore((state) => state.highlightList);
+  const fetchLiveClips = useSportStore((state) => state.onFetchLiveClips);
+  const fetchHighlightList = useSportStore((state) => state.onFetchHighlightList);
+  useEffect(() => { fetchLiveClips(); fetchHighlightList(); }, [fetchLiveClips, fetchHighlightList]);
+  const videoId = ((clips?.length > 0 ? clips : sdbVideos) || [])[0]?.id?.videoId;
+  const [playing, setPlaying] = useState(false);
   const score = getScore(match);
   const home = teamLabel(match.homeTeam);
   const away = teamLabel(match.awayTeam);
@@ -178,10 +190,11 @@ const LiveContent = ({ match, tabIndex }) => {
       </div>
 
       <div className="promo-banner-action">
-        <Link to={watchPath(match)} className="promo-banner-btn" tabIndex={tabIndex}>
+        {/* [수정] 바로 전체 화면 재생 (페이지 이동 없음) */}
+        <button type="button" className="promo-banner-btn" tabIndex={tabIndex} onClick={() => setPlaying(true)}>
           <img className="play-icon" src="/icons/play-w.svg" alt="" aria-hidden="true" />
           {live ? "경기 시청" : "경기 보기"}
-        </Link>
+        </button>
         <p className="promo-banner-note">
           {meta.map((text, i) => (
             <React.Fragment key={text}>
@@ -191,6 +204,15 @@ const LiveContent = ({ match, tabIndex }) => {
           ))}
         </p>
       </div>
+
+      {/* [추가] 전체 화면 경기 영상 */}
+      <VideoPopup open={playing} onClose={() => setPlaying(false)} label="경기 시청">
+        {videoId ? (
+          <WatchPlayer videoKey={videoId} title={`${home} vs ${away} 경기 시청`} />
+        ) : (
+          <p>영상을 불러오는 중입니다…</p>
+        )}
+      </VideoPopup>
     </>
   );
 };
