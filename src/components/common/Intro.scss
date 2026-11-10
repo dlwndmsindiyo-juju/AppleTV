@@ -52,7 +52,7 @@
     background: rgba(255, 255, 255, 0.2);
     border: none; // [수정] 테두리(스트로크) 없음
     color: #fff;
-    @include body-default-b; // [수정] 글자 body-default-b (예전 14px)
+    @include body-default-b; // [수정] 글자 body-default-b 
     display: inline-flex;
     align-items: center;
     gap: $space-sm;

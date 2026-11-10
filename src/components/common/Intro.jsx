@@ -15,9 +15,9 @@ import './Intro.scss'; // 스타일 파일
 //   · 휴대폰(767px 이하)은 가벼운 모바일 영상(intro-mobile.mp4 · 720p · 소리 없음 · 약 60KB)
 //   · 두 영상 모두 재생 정보를 파일 앞에 둠(faststart) → 다 받기 전에 바로 재생
 //   · 기기가 자동 재생을 "거부"했을 때(NotAllowedError)만 움직이는 이미지로 바꿈
-//     → 불러오는 중 잠깐 끊긴 경우(AbortError 등)는 다시 재생 (예전엔 이것도 실패로 보고 인트로가 바로 끝남)
+//     → 불러오는 중 잠깐 끊긴 경우(AbortError 등)는 다시 재생 
 //   · 4초가 지나도 재생이 시작되지 않으면 움직이는 이미지로 바꿈 (검정 화면에 멈추지 않게)
-//   · public/video/intro.webp 추가 (예전엔 파일이 없어 대체 화면 없이 바로 끝났음)
+//   · public/video/intro.webp 추가 
 const VIDEO_SRC = '/video/intro.mp4';
 const MOBILE_VIDEO_SRC = '/video/intro-mobile.mp4';
 const FALLBACK_IMAGE = '/video/intro.webp';
