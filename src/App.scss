@@ -12072,3 +12072,161 @@ main.hero-revealed>:not(.hero-swiper-container):not(.sport-hero) {
   outline: 0.125rem solid $primary-color-400;
   outline-offset: 0.125rem;
 }
+
+// =====================================================================
+// [추가] 계정 설정 → 알림 → 알림 설정한 콘텐츠 (pages/Profile.jsx AlarmList)
+// - 한 줄에 포스터(56 × 84) · 제목 · "영화 · 2026.12.05 공개" · 오른쪽 [알림 해제]
+// =====================================================================
+.account-alarm-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  margin: $space-lg 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-alarm-item {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+  padding: $space-sm $space-md $space-sm $space-sm;
+  border-radius: $radius-sm;
+  background-color: $light-color-100;
+}
+
+.account-alarm-link {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: $space-lg;
+  min-width: 0;
+  color: $dark-color-400;
+  text-decoration: none;
+
+  &:hover strong {
+    color: $primary-color-500;
+  }
+}
+
+.account-alarm-poster {
+  flex-shrink: 0;
+  width: 56px;
+  height: 5.25rem;
+  overflow: hidden;
+  border-radius: $radius-xs;
+  background-color: $light-color-300;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.account-alarm-text {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  min-width: 0;
+
+  strong {
+    @include body-default-b;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+  }
+
+  span {
+    @include body-small;
+    color: $dark-color-100;
+  }
+}
+
+.account-alarm-off {
+  @include body-small-b;
+  flex-shrink: 0;
+  height: 2.25rem;
+  padding: 0 $space-lg;
+  border: 0.0625rem solid $light-color-300;
+  border-radius: 62.4375rem;
+  background-color: $light-color-0;
+  color: $dark-color-400;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: $dark-color-400;
+    color: $light-color-0;
+  }
+}
+
+.account-alarm-empty {
+  @include body-default;
+  margin: $space-lg 0 0;
+  color: $dark-color-100;
+}
+
+
+// ============================================================
+// [추가] 관심 구단 페이지 (/my-teams) — 나의 목록(.wish-page) 틀 재사용
+// ============================================================
+.profile-menu .profile-menu-icon.is-star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fav-teams-page {
+  .fav-teams-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: $space-xl;
+    list-style: none;
+    margin: $space-5xl 0 0;
+    padding: 0;
+  }
+
+  .fav-teams-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-lg;
+  }
+
+  .fav-teams-more {
+    @include body-small-b;
+    display: inline-flex;
+    align-items: center;
+    margin-top: $space-3xl;
+    padding: $space-sm $space-xl;
+    border-radius: 999px;
+    background-color: $bg-surface-raised;
+    color: $text-primary;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $bg-surface;
+    }
+  }
+
+  .fav-teams-empty .fav-teams-more {
+    margin-top: 0;
+  }
+
+  @media (max-width: 1199px) {
+    .fav-teams-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 767px) {
+    .fav-teams-list {
+      grid-template-columns: minmax(0, 1fr);
+      gap: $space-md;
+    }
+  }
+}

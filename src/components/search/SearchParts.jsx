@@ -4,6 +4,7 @@ import { openShare } from "../../utils/share"; // [추가] 공유 팝업
 import React from "react";
 import { Link } from "react-router-dom";
 import VideoPopup from "../common/VideoPopup"; // [추가] 전체 화면 영상 팝업 공용
+import WatchPlayer from "../common/WatchPlayer"; // [추가] 재생 방식 통일
 import { AVAILABILITY, IMG, itemKey, useSearchStore } from "../../store/useSearchStore";
 
 // ---------- 아이콘 ----------
@@ -230,12 +231,8 @@ export const shareCurrentPage = (title) => openShare({ title, url: window.locati
 export const TrailerPopup = ({ videoKey, onClose }) => (
   <VideoPopup open onClose={onClose} label="예고편" className="search-popup">
     {videoKey ? (
-      <iframe
-        src={`https://www.youtube.com/embed/${videoKey}?autoplay=1`}
-        title="예고편"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-      />
+      // [수정] 재생 방식 통일: OTT 재생 · 경기 시청과 같은 플레이어 (휴대폰도 바로 재생)
+      <WatchPlayer videoKey={videoKey} title="예고편" />
     ) : (
       <p>재생할 수 있는 예고편이 없습니다.</p>
     )}
