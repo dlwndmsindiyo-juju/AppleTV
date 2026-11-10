@@ -209,7 +209,10 @@ const Login = () => {
   useEffect(() => {
     if (!authReady || enteredChecked.current) return;
     enteredChecked.current = true;
-    if (user) {
+    if (user && location.state?.switchProfile) {
+      // [추가] 헤더 프로필 메뉴 "프로필 전환": 로그인된 계정이면 바로 프로필 선택 화면 (고르면 보던 화면으로)
+      setStep("profile");
+    } else if (user) {
       // 로그인이 끝난 계정: 화면을 보여주지 않고 바로 이동
       if (isSubscribed(user)) navigate(from, { replace: true });
       else navigate("/subscribe", { replace: true, state: { from } });
