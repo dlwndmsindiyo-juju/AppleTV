@@ -86,7 +86,6 @@ export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
   useEffect(() => () => recRef.current?.abort?.(), []);
 
   // [추가] 결과 카드로 이동하면 결과 목록 안에서만 스크롤
-  // - 예전: 카드 onFocus 의 scrollIntoView 가 TV 화면 바깥 상자까지 밀어서 화면이 어긋나고 방향키가 엉뚱한 곳으로 갔음
   const scrollCardIntoGrid = (card) => {
     const grid = gridRef.current;
     if (!grid || !grid.contains(card)) return;
@@ -98,9 +97,7 @@ export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
   };
 
   // [추가] 검색 화면 방향키 — 왼쪽 메뉴 검색칸에서 들어와도 · 결과 목록이 스크롤돼도 리모컨으로 이동되게
-  // - 원인: ① 왼쪽 메뉴 검색칸(input)에 포커스가 남아 ← → 가 글자 이동으로만 쓰이고 ↑ ↓ 는 메뉴 맨 위로 튐
-  //         ② 결과 카드 포커스 때 scrollIntoView 가 TV 화면 전체를 밀어 위치 계산이 어긋남
-  // - 수정: 이 화면이 열려 있는 동안 방향키를 먼저 받아서 처리 (TvPreview 공용 처리보다 먼저 · 겹쳐서 두 번 움직이지 않게)
+  //  이 화면이 열려 있는 동안 방향키를 먼저 받아서 처리 (TvPreview 공용 처리보다 먼저 · 겹쳐서 두 번 움직이지 않게)
   useEffect(() => {
     const screen = screenRef.current;
     const firstKey = () => screen?.querySelector("[data-tv-autofocus]") || screen?.querySelector("button");
@@ -116,10 +113,10 @@ export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
       if (!screen || document.querySelector(".subscribe-gate, .ai-popup, .video-popup")) return; // 팝업에서는 팝업이 처리
       const a = document.activeElement;
 
-      // 왼쪽 메뉴 검색칸: (글자 끝에서) → 를 누르면 검색 화면 자판으로 · ↑ ↓ 는 메뉴 이동(공용 처리)
+      // 왼쪽 메뉴 검색칸: ↓ 또는 (글자 끝에서) → 를 누르면 검색 화면 자판으로
       if (a?.tagName === "INPUT" && a.closest(".tv-side-search")) {
         const atEnd = a.selectionStart === a.value.length && a.selectionEnd === a.value.length;
-        if (e.key === "ArrowRight" && atEnd) {
+        if (e.key === "ArrowDown" || (e.key === "ArrowRight" && atEnd)) {
           e.preventDefault();
           e.stopPropagation();
           firstKey()?.focus({ preventScroll: true });
