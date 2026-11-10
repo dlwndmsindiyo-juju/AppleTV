@@ -5,6 +5,7 @@
 //   대여·구매      → Apple TV 앱에서 보기(tv.apple.com 검색) + 보관함에 추가
 //   이용 불가      → 이용 가능 알림 받기 + 시청 가능한 유사 작품(아래 목록으로 이동)
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { usePlayableIds } from "../utils/youtubePlayable"; // [추가] 연령 제한 · 퍼가기 금지 예고편 빼기
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useMovieStore } from "../store/useMovieStore";
 import { toggleWish, useHeartStore, wishKey } from "../store/useHeartStore";
@@ -48,6 +49,8 @@ const SearchTitle = () => {
   const detail = entry?.detail;
   const avail = availability[key];
   const meta = useMetaText(detail, type);
+  // [추가] 재생할 수 있는 예고편만 (훅이라 아래 조건 return 보다 위에 둠)
+  const playable = usePlayableIds((detail?.videos?.results || []).filter((v) => v.site === "YouTube").map((v) => v.key));
 
   // 관련 작품 (추천 + 비슷한 작품, 겹치면 하나로)
   const relatedAll = useMemo(() => {
@@ -112,7 +115,7 @@ const SearchTitle = () => {
   const status = avail && avail !== "loading" ? avail : "none";
   const info = AVAILABILITY[status];
 
-  const youtube = (detail.videos?.results || []).filter((v) => v.site === "YouTube");
+  const youtube = (detail.videos?.results || []).filter((v) => v.site === "YouTube" && playable.has(v.key)); // [수정] 재생 가능한 영상만
   const trailer = youtube.find((v) => v.type === "Trailer") || youtube[0];
 
   const toggleWishItem = () =>

@@ -34,7 +34,7 @@ const NewRelease = () => {
           moreTo="/browse/new"
         />
 
-        <Rail className="rail-release rail-showcase" label="신규출시" desktopGap={28}>
+        <Rail className="rail-release rail-showcase" label="공개 예정" desktopGap={28}>
           {items.map((tv) => (
             <SwiperSlide key={`tv_${tv.id}`}>
               <ShowcaseCard item={tv} type="tv" variant="new" />
