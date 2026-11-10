@@ -11,6 +11,7 @@ import { TMDB_IMG } from "../../utils/tmdb";
 import { decodeHtml, ytThumb } from "../sport/sportUtils";
 import { TvHeader } from "./TvRows";
 import { ottItem, videoItem, matchItem, leagueItem } from "./tvDetailItems"; // [추가] 상세 페이지 항목
+import { findNext } from "./tvFocus"; // [추가] 검색 화면 방향키 이동
 
 // TV 검색 (1920 × 1080) — 위 메뉴에서 "검색" 을 고르면 나옴 · 스타일: TV.scss (.tv-search)
 // - 시안은 스포츠 화면이지만 전체 검색: 작품(영화 · 시리즈) + 경기 + 하이라이트
@@ -53,6 +54,8 @@ export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
   const [filter, setFilter] = useState("all");
   const [listening, setListening] = useState(false);
   const recRef = useRef(null);
+  const screenRef = useRef(null); // [추가] 검색 화면 (방향키 이동 범위 확인)
+  const gridRef = useRef(null); // [추가] 결과 목록 (카드로 이동하면 목록 안에서만 스크롤)
 
   // 하이라이트 (스포츠 홈과 같은 데이터)
   const highlightList = useSportStore((s) => s.highlightList);
@@ -81,6 +84,70 @@ export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
 
   // 음성 인식 정리
   useEffect(() => () => recRef.current?.abort?.(), []);
+
+  // [추가] 결과 카드로 이동하면 결과 목록 안에서만 스크롤
+  const scrollCardIntoGrid = (card) => {
+    const grid = gridRef.current;
+    if (!grid || !grid.contains(card)) return;
+    const g = grid.getBoundingClientRect();
+    const c = card.getBoundingClientRect();
+    const scale = g.height / grid.offsetHeight || 1; // TV 화면은 창 크기에 맞춰 줄여 보여 줌 (scale)
+    if (c.top < g.top) grid.scrollTop -= (g.top - c.top) / scale + 12;
+    else if (c.bottom > g.bottom) grid.scrollTop += (c.bottom - g.bottom) / scale + 12;
+  };
+
+  // [추가] 검색 화면 방향키 — 왼쪽 메뉴 검색칸에서 들어와도 · 결과 목록이 스크롤돼도 리모컨으로 이동되게
+  //  이 화면이 열려 있는 동안 방향키를 먼저 받아서 처리 (TvPreview 공용 처리보다 먼저 · 겹쳐서 두 번 움직이지 않게)
+  useEffect(() => {
+    const screen = screenRef.current;
+    const firstKey = () => screen?.querySelector("[data-tv-autofocus]") || screen?.querySelector("button");
+
+    // 들어올 때 검색칸 · 빈 곳에 포커스가 있으면 자판 첫 글자로
+    const frame = requestAnimationFrame(() => {
+      const a = document.activeElement;
+      if (!a || a === document.body || a.closest?.(".tv-side-search")) firstKey()?.focus({ preventScroll: true });
+    });
+
+    const onKey = (e) => {
+      if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) return;
+      if (!screen || document.querySelector(".subscribe-gate, .ai-popup, .video-popup")) return; // 팝업에서는 팝업이 처리
+      const a = document.activeElement;
+
+      // 왼쪽 메뉴 검색칸: ↓ 또는 (글자 끝에서) → 를 누르면 검색 화면 자판으로
+      if (a?.tagName === "INPUT" && a.closest(".tv-side-search")) {
+        const atEnd = a.selectionStart === a.value.length && a.selectionEnd === a.value.length;
+        if (e.key === "ArrowDown" || (e.key === "ArrowRight" && atEnd)) {
+          e.preventDefault();
+          e.stopPropagation();
+          firstKey()?.focus({ preventScroll: true });
+        }
+        return; // ← · 글자 중간의 → 는 글자 사이 이동 그대로
+      }
+
+      // 검색 화면 밖(왼쪽 메뉴 버튼 등)은 공용 처리 그대로
+      if (a && a !== document.body && !screen.contains(a)) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+      if (!a || a === document.body || a.tagName !== "BUTTON") {
+        firstKey()?.focus({ preventScroll: true });
+        return;
+      }
+      // 왼쪽 메뉴까지 포함해서 가장 가까운 버튼 (자판 맨 왼쪽에서 ← 를 누르면 메뉴로)
+      const root = screen.closest(".tv-preview") || screen;
+      const next = findNext(root, a, e.key);
+      if (!next) return;
+      next.focus({ preventScroll: true });
+      scrollCardIntoGrid(next);
+    };
+
+    window.addEventListener("keydown", onKey, true); // capture: TvPreview 공용 방향키(window bubble)보다 먼저
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("keydown", onKey, true);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const add = (ch) => setQuery((q) => q + ch);
   const removeOne = () => setQuery((q) => q.slice(0, -1));
@@ -195,7 +262,7 @@ export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
   const keys = keysFor(mode);
 
   return (
-    <main className="tv-screen tv-sport tv-search" style={{ "--tv-sport-bg": `url(${TV_SPORT_BG})` }}>
+    <main ref={screenRef} className="tv-screen tv-sport tv-search" style={{ "--tv-sport-bg": `url(${TV_SPORT_BG})` }}>
       <TvHeader active="검색" onMenu={onMenu} />
 
       <div className="tv-search-body">
@@ -276,13 +343,13 @@ export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
             </div>
           </div>
 
-          <div className="tv-search-grid">
+          <div className="tv-search-grid" ref={gridRef}>
             {cards.map((card) => (
               <button
                 type="button"
                 key={card.key}
                 className="tv-search-card"
-                onFocus={(e) => e.currentTarget.scrollIntoView({ block: "nearest" })}
+                onFocus={(e) => scrollCardIntoGrid(e.currentTarget)} // [수정] 결과 목록 안에서만 스크롤 (TV 화면 전체가 밀리지 않게)
                 onClick={() => open(card)}
               >
                 <span className="tv-search-thumb">
