@@ -74,7 +74,7 @@ const RecommendSection = () => {
       <div className="inner">
         {/* [수정] 시안 제목 · 전체 보기 */}
         <MemberSectionHead
-          title="Apple 추천"
+          title="Apple 오리지널"
           moreTo="/browse/recommend"
         />
 
