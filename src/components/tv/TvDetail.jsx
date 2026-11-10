@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { usePlayableIds, checkPlayable } from "../../utils/youtubePlayable"; // [추가] 연령 제한 · 퍼가기 금지 예고편 빼기
 import { useMovieStore } from "../../store/useMovieStore";
 import { useSportStore } from "../../store/useSportStore";
 import { useHeartStore, wishKey } from "../../store/useHeartStore";
@@ -281,10 +282,13 @@ const OttDetail = ({ item, onOpen }) => {
   const similar = (detail?.similar?.results || []).filter((r) => r.backdrop_path || r.poster_path).slice(0, 12);
 
   // 예고편 (YouTube · 한국어 → 영어)
+  // [수정] 재생할 수 있는 영상 중에서 예고편 고르기 (연령 제한 · 퍼가기 금지 빼기)
+  const ytAll = useMemo(() => (detail?.videos?.results || []).filter((v) => v.site === "YouTube"), [detail]);
+  const playableKeys = usePlayableIds(ytAll.map((v) => v.key));
   const trailer = useMemo(() => {
-    const yt = (detail?.videos?.results || []).filter((v) => v.site === "YouTube");
+    const yt = ytAll.filter((v) => playableKeys.has(v.key));
     return yt.find((v) => v.type === "Trailer") || yt.find((v) => v.type === "Teaser") || yt[0] || null;
-  }, [detail]);
+  }, [ytAll, playableKeys]);
 
   const watch = () => {
     if (!useAuthStore.getState().user) {
@@ -303,7 +307,9 @@ const OttDetail = ({ item, onOpen }) => {
     for (const r of similar.slice(0, 5)) {
       await fetchDetail(item.type, r.id);
       const d = useMovieStore.getState().contentDetails[`${item.type}_${r.id}`];
-      const yt = (d?.videos?.results || []).filter((v) => v.site === "YouTube");
+      const ytRaw = (d?.videos?.results || []).filter((v) => v.site === "YouTube");
+      const ok = await checkPlayable(ytRaw.map((x) => x.key)); // [추가] 재생 가능한 예고편만
+      const yt = ytRaw.filter((x) => ok.has(x.key));
       const v = yt.find((x) => x.type === "Trailer") || yt.find((x) => x.type === "Teaser") || yt[0];
       if (v && v.key !== current.id && !played.includes(v.key)) {
         const next = ottItem(r, item.type);

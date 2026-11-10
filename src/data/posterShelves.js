@@ -46,7 +46,7 @@ export const POSTER_SHELVES = {
     ],
   },
   "all-documentaries": {
-    title: "모든 다큐멘터리",
+    title: "다큐멘터리", // [수정] "모든 다큐멘터리" → "다큐멘터리" (Apple 다큐멘터리 섹션은 삭제)
     limit: 20,
     more: true,
     sources: [

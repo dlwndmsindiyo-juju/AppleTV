@@ -110,6 +110,14 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
     { title: "어떤 길이로 볼까요?", description: "시청할 수 있는 시간을 선택해 주세요.", options: DURATIONS, selected: [preferences.duration], onSelect: guard((v) => setSingle("duration", v), 2), columns: 2 },
   ];
 
+  // [추가] TV: 단계가 바뀌어 누르던 버튼이 사라지면(2 → 3단계) 포커스를 새 단계 첫 선택지로 → 방향키로 바로 이어서 이동
+  useEffect(() => {
+    if (!tv) return;
+    const dialog = dialogRef.current;
+    if (!dialog || (dialog.contains(document.activeElement) && document.activeElement !== dialog)) return;
+    const first = dialog.querySelector(".ai-popup-chip.is-selected") || dialog.querySelector(".ai-popup-chip");
+    first?.focus({ preventScroll: true });
+  }, [step, tv]);
   useEffect(() => {
     const dialog = dialogRef.current;
     const opener = document.activeElement;
@@ -136,20 +144,26 @@ export default function AiAssistantPopup({ initialTaste, onClose, onRecommend, r
     };
     dialog.addEventListener("keydown", trapFocus);
     // [추가] TV: 방향키로 팝업 안 버튼 사이 이동 (TV 화면의 방향키 이동은 팝업이 열려 있으면 멈춤)
+    // [수정] 마지막(3/3) 단계에서 방향키가 안 먹던 문제
+    // - 원인: 2단계 [다음 단계로] 버튼이 3단계에서 [바로 추천받기] 로 바뀌며 사라짐 → 포커스가 팝업 밖(body)으로 빠짐
+    //   → 팝업(dialog)에 단 keydown 이 더 이상 오지 않았음
+    // - 수정: 문서 전체에서 방향키를 받고 (팝업이 열려 있을 때만) · 화면에 안 보이는 버튼(.ai-popup-sr-only)은 건너뜀
+    const isVisibleBtn = (btn) => !btn.closest(".ai-popup-sr-only") && !btn.classList.contains("ai-popup-sr-only");
     const moveFocus = (event) => {
-      if (!tv || !["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) return;
+      if (!tv || !dialog.open || !["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) return;
       event.preventDefault();
-      const current = dialog.contains(document.activeElement) && document.activeElement.tagName === "BUTTON" ? document.activeElement : null;
-      const next = findNext(dialog, current, event.key);
+      const active = document.activeElement;
+      const current = dialog.contains(active) && active.tagName === "BUTTON" && isVisibleBtn(active) ? active : null;
+      const next = findNext(dialog, current, event.key, isVisibleBtn);
       if (next) {
         next.focus({ preventScroll: true });
         next.scrollIntoView({ block: "nearest" });
       }
     };
-    dialog.addEventListener("keydown", moveFocus);
+    document.addEventListener("keydown", moveFocus);
     return () => {
       dialog.removeEventListener("keydown", trapFocus);
-      dialog.removeEventListener("keydown", moveFocus);
+      document.removeEventListener("keydown", moveFocus);
       requestRef.current?.abort();
       detailRequestRef.current?.abort();
       dialog.close();
