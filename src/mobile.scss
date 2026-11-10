@@ -988,7 +988,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
 
   // ---------- 구독 CTA: 이미지 위에 텍스트 ----------
   .subscribe-cta {
-    padding: $space-xl 0 $space-4xl;
+    padding: $space-xl 0;
 
     .subscribe-banner {
       height: 18.75rem;
@@ -1002,7 +1002,10 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
     }
 
     .subscribe-title {
-      font-size: 1.0625rem;
+      span {
+        font-size: 1.0625rem;
+      }
+
     }
 
     .subscribe-btn {
@@ -2780,7 +2783,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     .member-section,
     section.top10-section,
     .subscribe-cta {
-      padding: $m-section-gap 0 0;
+      padding: $m-section-gap 0;
     }
 
     .member-section .member-head {
@@ -3053,7 +3056,6 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     --icon-scale: 0.5;
 
     height: auto;
-    padding: 6rem 0;
 
     .watch-logo-main {
       height: 2.8125rem; // 45

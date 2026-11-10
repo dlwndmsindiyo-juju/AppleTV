@@ -332,9 +332,8 @@ export const Profile = () => {
       setMessage(next.on ? `${name}을 켰어요.` : `${name}을 껐어요.`);
     } else if (!next.channels.length) {
       setMessage(`${name}을 받을 방식이 없어요. 하나 이상 골라 주세요.`);
-    } else {
-      setMessage(`${name} 받기 방식을 바꿨어요. (${next.channels.map((c) => CHANNEL_LABELS[c] || c).join(" · ")})`);
     }
+    // [삭제] 받기 방식(이메일 · 문자 · 앱 푸시)을 고를 때 뜨던 "받기 방식을 바꿨어요." 안내 — 체크 표시로 충분해서 띄우지 않음
   };
   // [추가] 모든 알림 한 번에 켜기 · 끄기
   const saveAllAlerts = async (on) => {
