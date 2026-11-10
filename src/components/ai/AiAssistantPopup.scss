@@ -1050,7 +1050,7 @@
   width: 24px;
   height: 24px;
 
-  // [수정] 아이콘 · 빛나는 효과는 AI 아이콘 공용 (AiLogo.jsx · AiLogo.scss) — 예전 별 그림 애니메이션은 뺌
+  // [수정] 아이콘 · 빛나는 효과는 AI 아이콘 공용 (AiLogo.jsx · AiLogo.scss) 
 }
 
 @media (max-width: 767px) {
@@ -1717,6 +1717,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ai-popup.ai-popup {
+
     .ai-popup-desc::before,
     .ai-popup-progress [role=progressbar]>span::after {
       animation: none;
@@ -2047,4 +2048,3 @@
     -webkit-box-orient: vertical;
   }
 }
-
