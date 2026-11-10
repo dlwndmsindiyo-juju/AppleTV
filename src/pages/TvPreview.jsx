@@ -160,6 +160,11 @@ const TvPreview = () => {
   };
   const screenTeam = teamTabId ? getTeamById(teamTabId) : null;
   const [query, setQuery] = useState(""); // [추가] 왼쪽 메뉴 검색창
+  useEffect(() => {
+    if (tab !== "search") {
+      setQuery("");
+    }
+  }, [tab]);
   const [scale, setScale] = useState(1);
   const [stageW, setStageW] = useState(TV_W);
   const [stageH, setStageH] = useState(TV_H);
@@ -329,12 +334,15 @@ const TvPreview = () => {
 
   // [수정] 검색: Enter → TV 검색 화면 (입력한 글자로 바로 검색)
   const [searchKey, setSearchKey] = useState(0);
-  const handleSearch = (e) => {
-    if (e.key !== "Enter" || e.nativeEvent.isComposing) return; // 한글 조합 중 Enter 무시
+  const openSearch = () => {
+    if (tab === "search") return;
     setSearchKey((k) => k + 1);
     setTab("search");
   };
-
+  const handleSearch = (e) => {
+    if (e.key !== "Enter" || e.nativeEvent.isComposing) return;
+    openSearch();
+  };
   const exit = () => {
     if (window.history.length > 1) navigate(-1);
     else navigate("/");
@@ -407,18 +415,19 @@ const TvPreview = () => {
 
           {/* [추가] 검색창 (시안: 회색 둥근 칸 + 검색 아이콘 + Search) · 좁은 메뉴에서는 숨김 */}
           {sideOpen && (
-          <label className="tv-side-search">
-            <span className="tv-side-search-icon" aria-hidden="true" />
-            <input
-              type="search"
-              value={query}
-              placeholder="Search"
-              aria-label="작품 · 인물 · 장르 검색"
-              enterKeyHint="search"
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleSearch}
-            />
-          </label>
+            <label className="tv-side-search">
+              <span className="tv-side-search-icon" aria-hidden="true" />
+              <input
+                type="search"
+                value={query}
+                placeholder="Search"
+                aria-label="작품 · 인물 · 장르 검색"
+                enterKeyHint="search"
+                onChange={(e) => setQuery(e.target.value)}
+                onFocus={openSearch}
+                onKeyDown={handleSearch}
+              />
+            </label>
           )}
 
           {/* [수정] 메뉴를 묶음으로 (시안: Library · Apps 처럼 제목 + 접기 화살표) */}
@@ -547,47 +556,47 @@ const TvPreview = () => {
           role="tabpanel"
           style={{ width: stageW, height: stageH, transform: `scale(${scale})` }}
         >
-            {tab === "terms" && <TvTerms onAgree={goLogin} onCancel={exit} />}
-            {tab === "login" && (
-              <TvKeyboard
-                key="login"
-                variant="login"
-                onCancel={() => setTab("terms")}
-                onSubmit={handleLogin}
-              />
-            )}
-            {tab === "network" && <TvKeyboard key="network" variant="account" networkError onSubmit={() => setTab("login")} />}
-            {tab === "profiles" && (
-              <TvProfiles
-                profiles={profiles}
-                current={currentProfileId}
-                max={PROFILE_MAX}
-                onPick={(id) => {
-                  onSelectProfile(id);
-                  setTab("home");
-                }}
-                onAdd={() => setTab("profile-add")}
-              />
-            )}
-            {/* [추가] 프로필 추가 → 끝나면 프로필 선택 화면으로 (추가한 프로필이 바로 보임) */}
-            {tab === "profile-add" && (
-              <TvProfileAdd
-                nameMax={PROFILE_NAME_MAX}
-                onCancel={() => setTab("profiles")}
-                onSave={async (v) => {
-                  const id = await onAddProfile(v);
-                  if (id) setTab("profiles");
-                  return Boolean(id);
-                }}
-              />
-            )}
-            {tab === "home" && <TvHome onMenu={setTab} onDetail={openDetail} onGenre={openGenre} />}
-            {genreId && <TvGenre key={genreId} id={genreId} onMenu={setTab} onDetail={openDetail} />}
-            {tab === "sport" && <TvSportHome onMenu={setTab} onDetail={openDetail} />}
-            {tab === "library" && <TvLibrary onMenu={setTab} onDetail={openDetail} />}
-            {tab === "detail" && detailItem && <TvDetail key={detailItem.key || detailItem.title} item={detailItem} onOpen={openDetail} onBack={closeDetail} />}
-            {tab === "search" && <TvSearch key={searchKey} onMenu={setTab} onDetail={openDetail} initialQuery={query.trim()} />}
-            {screenTeam && <TvTeam key={screenTeam.id} team={screenTeam} />}
+          {tab === "terms" && <TvTerms onAgree={goLogin} onCancel={exit} />}
+          {tab === "login" && (
+            <TvKeyboard
+              key="login"
+              variant="login"
+              onCancel={() => setTab("terms")}
+              onSubmit={handleLogin}
+            />
+          )}
+          {tab === "network" && <TvKeyboard key="network" variant="account" networkError onSubmit={() => setTab("login")} />}
+          {tab === "profiles" && (
+            <TvProfiles
+              profiles={profiles}
+              current={currentProfileId}
+              max={PROFILE_MAX}
+              onPick={(id) => {
+                onSelectProfile(id);
+                setTab("home");
+              }}
+              onAdd={() => setTab("profile-add")}
+            />
+          )}
+          {/* [추가] 프로필 추가 → 끝나면 프로필 선택 화면으로 (추가한 프로필이 바로 보임) */}
+          {tab === "profile-add" && (
+            <TvProfileAdd
+              nameMax={PROFILE_NAME_MAX}
+              onCancel={() => setTab("profiles")}
+              onSave={async (v) => {
+                const id = await onAddProfile(v);
+                if (id) setTab("profiles");
+                return Boolean(id);
+              }}
+            />
+          )}
+          {tab === "home" && <TvHome onMenu={setTab} onDetail={openDetail} onGenre={openGenre} />}
+          {genreId && <TvGenre key={genreId} id={genreId} onMenu={setTab} onDetail={openDetail} />}
+          {tab === "sport" && <TvSportHome onMenu={setTab} onDetail={openDetail} />}
+          {tab === "library" && <TvLibrary onMenu={setTab} onDetail={openDetail} />}
+          {tab === "detail" && detailItem && <TvDetail key={detailItem.key || detailItem.title} item={detailItem} onOpen={openDetail} onBack={closeDetail} />}
+          {tab === "search" && <TvSearch key={searchKey} onMenu={setTab} onDetail={openDetail} initialQuery={query.trim()} />}
+          {screenTeam && <TvTeam key={screenTeam.id} team={screenTeam} />}
         </div>
       </div>
 
