@@ -4,6 +4,7 @@ import { useSportStore } from "../../store/useSportStore";
 import { upcomingMatches, matchTitle, kickoffText } from "../../data/matchesData";
 import { SPORT_SERIES_DATA } from "../../data/mockSportSeries";
 import { SPORT_SHORTS } from "../../data/sportShorts";
+import { usePlayableIds } from "../../utils/youtubePlayable"; // [추가] 연령 제한 · 퍼가기 금지 영상 빼기
 import { decodeHtml, ytThumb } from "./sportUtils";
 import { REPLAY_LEAGUES, leagueThumb, playlistEmbedUrl, playlistWatchUrl } from "../../data/replayLeagues";
 import { LeagueCover } from "./SportReplay";
@@ -329,9 +330,15 @@ const SportDetail = () => {
     return undefined;
   }, [type, fetchHighlightList, fetchCategories, latestMatch]);
 
-  const items = useMemo(
+  const allItems = useMemo(
     () => (config ? config.buildItems({ highlightList, categories }) : []),
     [config, highlightList, categories]
+  );
+  // [추가] 사이트 안에서 재생할 수 없는 YouTube 영상(연령 제한 · 퍼가기 금지)은 목록에서 뺌 (영상 id 가 없는 카드는 그대로)
+  const playable = usePlayableIds(allItems.map((item) => item.videoId).filter(Boolean));
+  const items = useMemo(
+    () => allItems.filter((item) => !item.videoId || playable.has(item.videoId)),
+    [allItems, playable]
   );
 
 

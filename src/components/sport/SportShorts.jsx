@@ -2,6 +2,7 @@ import { openShare } from "../../utils/share"; // [추가] 공유 팝업
 import React, { useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SPORT_SHORTS } from "../../data/sportShorts";
+import { usePlayableIds } from "../../utils/youtubePlayable"; // [추가] 연령 제한 · 퍼가기 금지 영상 빼기 (데이터는 그대로)
 
 import "swiper/css";
 import SportSectionHead from "./SportSectionHead"; // [정리] 섹션 머리 공용
@@ -76,12 +77,16 @@ const SportShorts = ({ title = "숏폼" }) => {
   const frames = useRef({});
 
   // 카드에 쓸 값 정리 (경기 · 길이)
-  const items = useMemo(() => SPORT_SHORTS.map((v) => ({
-    ...v,
-    meta: [v.match, v.seconds ? formatDuration(v.seconds) : ""].filter(Boolean).join(" · "),
-    seconds: v.seconds || 30,
-    likeCount: v.likeCount || 0,
-  })), []);
+  // [수정] 재생할 수 없는 영상(연령 제한 · 퍼가기 금지)은 카드에서 뺌 — data/sportShorts.js 는 건드리지 않음
+  const playable = usePlayableIds(SPORT_SHORTS.map((v) => v.videoId).filter(Boolean));
+  const items = useMemo(() => SPORT_SHORTS
+    .filter((v) => !v.videoId || playable.has(v.videoId))
+    .map((v) => ({
+      ...v,
+      meta: [v.match, v.seconds ? formatDuration(v.seconds) : ""].filter(Boolean).join(" · "),
+      seconds: v.seconds || 30,
+      likeCount: v.likeCount || 0,
+    })), [playable]);
 
   // 소리 켜기 / 끄기 (재생 중인 영상에 바로 적용)
   const toggleSound = (id) => {

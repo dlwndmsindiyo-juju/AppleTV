@@ -45,7 +45,7 @@ const useShelfMap = (ids, enabled = true, limit) => {
   return map;
 };
 
-const SHELF_IDS = ["movie-top10", "all-movies", "series-top10", "all-series", "documentary", "all-documentaries", "kids"];
+const SHELF_IDS = ["movie-top10", "all-movies", "series-top10", "all-series", "all-documentaries", "kids"];
 
 const useTvHomeRows = () => {
   const appleOriginals = useMovieStore((s) => s.appleOriginals);
@@ -138,7 +138,7 @@ const useTvHomeRows = () => {
           shelfRow("series-top10"),
           shelfRow("all-series"),
           base.coming,
-          shelfRow("documentary"),
+          // [삭제] Apple 다큐멘터리 섹션 (다큐멘터리는 한 섹션만)
           shelfRow("all-documentaries"),
           genreRow,
           shelfRow("kids"),
