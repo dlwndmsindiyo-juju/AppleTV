@@ -841,7 +841,7 @@
     bottom: -0.375rem;
   }
   .subscribe-cta {
-    padding: 1.5rem 0 3rem;
+    padding: 1.5rem 0;
   }
   .subscribe-cta .subscribe-banner {
     height: 18.75rem;
@@ -852,7 +852,7 @@
     right: 5%;
     gap: 0.75rem;
   }
-  .subscribe-cta .subscribe-title {
+  .subscribe-cta .subscribe-title span {
     font-size: 1.0625rem;
   }
   .subscribe-cta .subscribe-btn {
@@ -2336,7 +2336,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   :is(main, div).member-home.member-home .member-section,
   :is(main, div).member-home.member-home section.top10-section,
   :is(main, div).member-home.member-home .subscribe-cta {
-    padding: 3.75rem 0 0;
+    padding: 3.75rem 0;
   }
   :is(main, div).member-home.member-home .member-section .member-head {
     margin: 0 0 1rem;
@@ -2546,7 +2546,6 @@ header .inner nav .gnb-right ul .search-icon-item {
   section.device-guide.device-guide--watch.device-guide--watch {
     --icon-scale: 0.5;
     height: auto;
-    padding: 6rem 0;
   }
   section.device-guide.device-guide--watch.device-guide--watch .watch-logo-main {
     height: 2.8125rem;
