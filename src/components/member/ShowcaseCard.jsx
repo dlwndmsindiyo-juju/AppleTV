@@ -66,7 +66,7 @@ const ShowcaseHover = ({ title, meta, overview, children }) => (
 // "2026-11-14" → "11월 공개" (시안: 01월 공개)
 const monthLabel = (date) => {
   const month = Number((date || "").split("-")[1]);
-  return month ? `${String(month).padStart(2, "0")}월 공개` : "공개 예정";
+  return month ? `${String(month).padStart(2, "0")}월 공개` : "공개";
 };
 
 const ShowcaseCard = ({ item, type, variant = "new" }) => {
@@ -81,7 +81,7 @@ const ShowcaseCard = ({ item, type, variant = "new" }) => {
   const thumb = img(item.backdrop_path, "w780") || img(item.poster_path, "w500");
   const isNew = variant === "new";
   const month = monthLabel(item.release_date || item.first_air_date); // "11월 공개"
-  const releaseLabel = month.endsWith("월 공개") ? `${month}예정` : month; // "11월 공개예정" (날짜 없으면 "공개 예정")
+  const releaseLabel = month.endsWith("월 공개") ? `${month}` : month; // "11월 공개예정" (날짜 없으면 "공개 예정")
   // [수정] 알림 켜기 · 끄기 — 계정 설정 "알림 설정한 콘텐츠" 목록에 보여 줄 정보도 같이 저장 (토스트는 store 에서)
   const onToggleAlarm = (key) =>
     onToggleAlarmRaw(key, {
