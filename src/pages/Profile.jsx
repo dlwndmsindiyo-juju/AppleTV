@@ -8,7 +8,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebase";
-import { useAuthStore, getSettings, ALERT_CHANNELS, getProfiles, MAIN_PROFILE_ID, getPayments, getBilling, BILLING_MAX_LENGTH } from "../store/useAuthStore";
+import { useAuthStore, getSettings, ALERT_CHANNELS, getProfiles, MAIN_PROFILE_ID, getPayments, getBilling, BILLING_MAX_LENGTH, PROFILE_NAME_MAX } from "../store/useAuthStore"; // [수정] PROFILE_NAME_MAX: 프로필 이름 변경
 import ProfileAvatar, { AVATAR_OPTIONS, sameAvatar, profileLook } from "../components/profile/ProfileAvatar";
 import ProfilePicker from "../components/profile/ProfilePicker"; // [추가] 프로필 고르기 · 추가
 import { ConfirmDialog, subscriptionSummary } from "../components/profile/AccountShared"; // [추가] 구독 · 지불 방법 (확인 팝업은 공용으로 옮김)
@@ -232,6 +232,51 @@ const BillingDialog = ({ initial, busy, onSave, onCancel }) => {
   );
 };
 
+// [추가] 프로필 이름 변경 팝업 — 청구 주소 팝업과 같은 디자인 (ConfirmDialog · .account-form · .account-field)
+// - 지금 보고 있는 프로필의 이름만 바꿈 · 최대 20자 · 빈 값 · 같은 이름이면 [저장] 비활성
+const ProfileNameDialog = ({ initial, busy, onSave, onCancel }) => {
+  const [name, setName] = useState(initial || "");
+  const inputRef = useRef(null);
+  const clean = name.trim();
+  // 팝업이 열리면 입력칸에 커서 (ConfirmDialog 가 취소 버튼에 주는 포커스보다 나중에)
+  useEffect(() => {
+    const t = setTimeout(() => {
+      inputRef.current?.focus();
+      inputRef.current?.select();
+    }, 0);
+    return () => clearTimeout(t);
+  }, []);
+  const ready = !!clean && clean !== (initial || "").trim();
+  return (
+    <ConfirmDialog
+      title="프로필 이름 변경"
+      desc={`헤더 · 프로필 선택 화면에 보이는 이름입니다. 최대 ${PROFILE_NAME_MAX}자까지 입력할 수 있습니다.`}
+      confirmLabel="저장"
+      busy={busy}
+      confirmDisabled={!ready}
+      onConfirm={() => ready && onSave(clean)}
+      onCancel={onCancel}
+    >
+      <div className="account-form">
+        <label className="account-field">
+          <span className="account-item-title">프로필 이름</span>
+          <input
+            type="text"
+            autoComplete="nickname"
+            maxLength={PROFILE_NAME_MAX}
+            value={name}
+            ref={inputRef}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && ready && !e.nativeEvent.isComposing) onSave(clean);
+            }}
+          />
+        </label>
+      </div>
+    </ConfirmDialog>
+  );
+};
+
 // =====================================================================
 export const Profile = () => {
   const navigate = useNavigate();
@@ -251,6 +296,7 @@ export const Profile = () => {
   const [providersOpen, setProvidersOpen] = useState(false);
   const [dialog, setDialog] = useState(null); // "logout" | "history" | null
   const [billingOpen, setBillingOpen] = useState(false); // [추가] 청구 주소 입력 팝업
+  const [nameOpen, setNameOpen] = useState(false); // [추가] 프로필 이름 변경 팝업
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState(""); // 저장 결과 안내 (화면 아래 토스트)
   const leavingRef = useRef(false); // 모든 브라우저 로그아웃 중: 로그인 화면으로 튀지 않고 홈으로
@@ -345,6 +391,15 @@ export const Profile = () => {
     else setMessage("알림 설정을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
   };
 
+  // [추가] 프로필 이름 저장 (지금 보고 있는 프로필 · 헤더 이름도 바로 바뀜)
+  const saveProfileName = async (name) => {
+    setBusy(true);
+    const ok = await onUpdateProfile(currentProfileId, { name });
+    setBusy(false);
+    if (ok) setNameOpen(false);
+    setMessage(ok ? "프로필 이름을 바꿨어요." : "프로필 이름을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
+  };
+
   // [수정] 프로필 아이콘은 지금 보고 있는 프로필에 저장 (프로필마다 다른 아이콘)
   const pickAvatar = async (opt) => {
     const ok = await onUpdateProfile(currentProfileId, { avatar: opt });
@@ -415,10 +470,16 @@ export const Profile = () => {
               <div className="account-profile">
                 <ProfileAvatar avatar={look.avatar} tone={look.tone} size="lg" />
                 <div className="account-profile-text">
-                  <strong>{user.name || "Apple 사용자"}</strong>
+                  <strong>{currentProfile?.name || user.name || "Apple 사용자"}</strong>{/* [수정] 지금 프로필 이름 */}
                   <span>{user.email}</span>
                 </div>
               </div>
+              {/* [추가] 프로필 이름 변경 */}
+              <Item title="프로필 이름" desc="현재 프로필의 이름을 변경할 수 있습니다.">
+                <button type="button" className="account-link" onClick={() => setNameOpen(true)}>
+                  프로필 이름 변경
+                </button>
+              </Item>
               <Item title="다른 프로필로 보기">
                 <ProfilePicker className="account-profile-picker" current={currentProfileId} onPick={pickProfile} />
               </Item>
