@@ -195,9 +195,10 @@ const AccountSubscription = () => {
             </div>
           )}
 
-          <a className="account-link" href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">
+          {/* [수정] 외부 새 창 → 사이트 안 /privacy */}
+          <Link className="account-link" to={PRIVACY_URL}>
             구독 및 개인정보 보호에 관하여
-          </a>
+          </Link>
         </div>
       </>
     );

@@ -22,6 +22,8 @@ const LegalPage = ({ page = "privacy" }) => {
         <p className="legal-eyebrow">Apple TV</p>
         <h1 className="legal-title">{data.title}</h1>
         <p className="legal-desc">{data.desc}</p>
+        {/* [수정] 세 정책 문서(개인정보 · 이용약관 · 환불)에서만 문서 링크 줄 */}
+        {LEGAL_LINKS.some((l) => l.key === page) && (
         <nav className="legal-links" aria-label="정책 문서">
           {LEGAL_LINKS.map((l) => (
             <Link
@@ -34,6 +36,7 @@ const LegalPage = ({ page = "privacy" }) => {
             </Link>
           ))}
         </nav>
+        )}
       </section>
 
       {/* 본문 */}
