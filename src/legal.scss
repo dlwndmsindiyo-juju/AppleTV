@@ -54,7 +54,7 @@ $legal-pad-answer: 1.25rem 1.5rem; // 펼친 내용 상자 안쪽
 // 화면
 // =====================================================================
 .legal-page {
-  min-height: 100vh;
+  // [수정] min-height: 100vh 뺌 — 항목이 적은 페이지(이용 가이드)는 목록 아래가 화면 끝까지 비어 보였음 → 내용 높이만큼 + 아래 80
   padding: $header-height 0 5rem; // 고정 헤더 · 아래 80
   background-color: $bg-page;
   color: $legal-color-body;
