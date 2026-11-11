@@ -104,6 +104,9 @@ export const filterPlayable = async (items = [], getId = (v) => v?.id?.videoId |
 
 // [화면용] 고정 데이터 · TMDB 예고편처럼 화면에서 가진 영상 id 목록을 걸러 씀
 // - 반환: 재생 가능한 id 의 Set (확인 중에는 이미 저장된 결과만 반영 · 모르는 영상은 일단 보여 줌)
+// - [수정] 같은 화면에서 작품만 바뀔 때(추천 콘텐츠 자동 재생 등) 이전 작품의 결과를 한 번 돌려주던 문제
+//   → 이전 작품의 영상 목록으로 걸러 "재생할 수 있는 영상이 없습니다"가 뜸
+//   → 결과에 목록 key 를 같이 저장하고, key 가 다르면 지금 목록 기준(initial)을 돌려줌
 export const usePlayableIds = (ids = []) => {
   const key = ids.filter(Boolean).join(",");
   const initial = useMemo(() => {
@@ -111,17 +114,16 @@ export const usePlayableIds = (ids = []) => {
     return new Set(ids.filter((id) => id && saved[id]?.ok !== false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
-  const [playable, setPlayable] = useState(initial);
+  const [checked, setChecked] = useState({ key, set: initial });
 
   useEffect(() => {
     let alive = true;
-    setPlayable(initial);
     if (!key) return undefined;
-    checkPlayable(key.split(",")).then((set) => alive && setPlayable(set));
+    checkPlayable(key.split(",")).then((set) => alive && setChecked({ key, set }));
     return () => {
       alive = false;
     };
-  }, [key, initial]);
+  }, [key]);
 
-  return playable;
+  return checked.key === key ? checked.set : initial;
 };
