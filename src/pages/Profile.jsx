@@ -233,8 +233,9 @@ const BillingDialog = ({ initial, busy, onSave, onCancel }) => {
 };
 
 // [추가] 프로필 이름 변경 팝업 — 청구 주소 팝업과 같은 디자인 (ConfirmDialog · .account-form · .account-field)
-// - 지금 보고 있는 프로필의 이름만 바꿈 · 최대 20자 · 빈 값 · 같은 이름이면 [저장] 비활성
-const ProfileNameDialog = ({ initial, busy, onSave, onCancel }) => {
+// - 최대 20자 · 빈 값 · 같은 이름이면 [저장] 비활성
+// - [추가] onDelete 를 넘기면(기본 프로필 제외) 입력칸 아래 "프로필 삭제" → 삭제 확인 팝업 · 기본 프로필은 이름 변경만
+const ProfileNameDialog = ({ initial, busy, onSave, onCancel, onDelete, anchor = null, title = "프로필 이름 변경" }) => {
   const [name, setName] = useState(initial || "");
   const inputRef = useRef(null);
   const clean = name.trim();
@@ -249,13 +250,14 @@ const ProfileNameDialog = ({ initial, busy, onSave, onCancel }) => {
   const ready = !!clean && clean !== (initial || "").trim();
   return (
     <ConfirmDialog
-      title="프로필 이름 변경"
-      desc={`헤더 · 프로필 선택 화면에 보이는 이름입니다. 최대 ${PROFILE_NAME_MAX}자까지 입력할 수 있습니다.`}
+      title={title}
+      desc={`최대 ${PROFILE_NAME_MAX}자까지 입력할 수 있습니다.`}
       confirmLabel="저장"
       busy={busy}
       confirmDisabled={!ready}
       onConfirm={() => ready && onSave(clean)}
       onCancel={onCancel}
+      anchor={anchor}
     >
       <div className="account-form">
         <label className="account-field">
@@ -272,6 +274,11 @@ const ProfileNameDialog = ({ initial, busy, onSave, onCancel }) => {
             }}
           />
         </label>
+        {onDelete && (
+          <button type="button" className="account-dialog-delete" onClick={onDelete} disabled={busy}>
+            프로필 삭제
+          </button>
+        )}
       </div>
     </ConfirmDialog>
   );
@@ -290,13 +297,20 @@ export const Profile = () => {
   const currentProfileId = useAuthStore((s) => s.currentProfileId) || MAIN_PROFILE_ID; // [수정] 지금 보고 있는 프로필
   const onSelectProfile = useAuthStore((s) => s.onSelectProfile);
   const onUpdateProfile = useAuthStore((s) => s.onUpdateProfile);
+  const onDeleteProfile = useAuthStore((s) => s.onDeleteProfile); // [추가] 프로필 삭제
   const onSaveBilling = useAuthStore((s) => s.onSaveBilling); // [추가] 청구 주소
 
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [providersOpen, setProvidersOpen] = useState(false);
-  const [dialog, setDialog] = useState(null); // "logout" | "history" | null
+  const [dialog, setDialog] = useState(null); // "logout" | "history" | "deleteProfile" | null
   const [billingOpen, setBillingOpen] = useState(false); // [추가] 청구 주소 입력 팝업
-  const [nameOpen, setNameOpen] = useState(false); // [추가] 프로필 이름 변경 팝업
+  const [editId, setEditId] = useState(null); // [수정] 이름 변경 · 삭제할 프로필 id (팝업 열림) — 연필 아이콘 · "프로필 이름 변경"
+  const [deleteId, setDeleteId] = useState(null); // [추가] 삭제 확인 팝업의 프로필 id
+  const [editAnchor, setEditAnchor] = useState(null); // [추가] 누른 연필 아이콘 위치 → 그 자리에 팝업
+  const openEdit = (id, rect = null) => {
+    setEditAnchor(rect);
+    setEditId(id);
+  };
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState(""); // 저장 결과 안내 (화면 아래 토스트)
   const leavingRef = useRef(false); // 모든 브라우저 로그아웃 중: 로그인 화면으로 튀지 않고 홈으로
@@ -391,12 +405,12 @@ export const Profile = () => {
     else setMessage("알림 설정을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
   };
 
-  // [추가] 프로필 이름 저장 (지금 보고 있는 프로필 · 헤더 이름도 바로 바뀜)
+  // [수정] 프로필 이름 저장 (고른 프로필 · 지금 프로필이면 헤더 이름도 바로 바뀜)
   const saveProfileName = async (name) => {
     setBusy(true);
-    const ok = await onUpdateProfile(currentProfileId, { name });
+    const ok = await onUpdateProfile(editId, { name });
     setBusy(false);
-    if (ok) setNameOpen(false);
+    if (ok) setEditId(null);
     setMessage(ok ? "프로필 이름을 바꿨어요." : "프로필 이름을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
   };
 
@@ -408,6 +422,16 @@ export const Profile = () => {
 
   const confirmDialog = async () => {
     setBusy(true);
+    // [추가] 프로필 삭제 → 지금 보던 프로필이면 기본 프로필로 자동 전환 (useAuthStore.onDeleteProfile)
+    if (dialog === "deleteProfile") {
+      const name = profiles.find((p) => p.id === deleteId)?.name || "";
+      const ok = await onDeleteProfile(deleteId);
+      setBusy(false);
+      setMessage(ok ? `${name} 프로필을 삭제했어요.` : "프로필을 삭제하지 못했어요. 잠시 후 다시 시도해 주세요.");
+      setDialog(null);
+      setDeleteId(null);
+      return;
+    }
     if (dialog === "logout") {
       leavingRef.current = true;
       const ok = await onLogoutEverywhere();
@@ -474,14 +498,10 @@ export const Profile = () => {
                   <span>{user.email}</span>
                 </div>
               </div>
-              {/* [추가] 프로필 이름 변경 */}
-              <Item title="프로필 이름" desc="현재 프로필의 이름을 변경할 수 있습니다.">
-                <button type="button" className="account-link" onClick={() => setNameOpen(true)}>
-                  프로필 이름 변경
-                </button>
-              </Item>
+              {/* [삭제] "프로필 이름 변경" 칸 — 프로필 이름 옆 연필 아이콘으로 대신함 */}
+              {/* [수정] 프로필 삭제 칸 없앰 → 아래 프로필 이름 옆 연필 아이콘 (이름 변경 · 삭제) */}
               <Item title="다른 프로필로 보기">
-                <ProfilePicker className="account-profile-picker" current={currentProfileId} onPick={pickProfile} />
+                <ProfilePicker className="account-profile-picker" current={currentProfileId} onPick={pickProfile} onEdit={openEdit} />
               </Item>
               <Item title="프로필 아이콘" desc="현재 프로필에 적용된 아이콘이 아닌 다른 아이콘을 선택하여 변경할 수 있습니다.">
                 <button
@@ -517,7 +537,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
- {/* ---------- [추가] 지불 방법 ---------- */}
+            {/* ---------- [추가] 지불 방법 ---------- */}
             {/* - 지불 유형 · 청구 주소 · 국가/지역 한 줄 (휴대폰은 위아래) · 청구 주소는 사용자가 입력한 값만 */}
             <Section id="account-payment">
               <div className="account-item-row">
@@ -549,7 +569,7 @@ export const Profile = () => {
               </div>
             </Section>
 
-              {/* ---------- [추가] 구독 ---------- */}
+            {/* ---------- [추가] 구독 ---------- */}
             <Section id="account-subscription">
               <Item title="구독을 확인 및 관리합니다." desc={subscriptionSummary(user)}>
                 <Link className="account-link" to="/profile/subscription">
@@ -558,7 +578,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
-           
+
             {/* ---------- 계정 액세스 ---------- */}
             <Section id="account-access">
               <Item
@@ -592,7 +612,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
-          
+
 
             {/* ---------- 재생 기록 ---------- */}
             <Section id="account-history">
@@ -711,6 +731,36 @@ export const Profile = () => {
           title="모든 브라우저에서 로그아웃할까요?"
           desc="이 브라우저에서 바로 로그아웃되고, 다른 브라우저는 다음에 사이트를 열 때 로그아웃됩니다."
           confirmLabel="로그아웃"
+          busy={busy}
+          onConfirm={confirmDialog}
+          onCancel={() => setDialog(null)}
+        />
+      )}
+      {/* [추가] 프로필 편집 (이름 변경 · 삭제) */}
+      {editId && profiles.some((p) => p.id === editId) && (
+        <ProfileNameDialog
+          key={editId}
+          title={editId === MAIN_PROFILE_ID ? "프로필 이름 변경" : "프로필 편집"} // [수정] 기본 프로필: 이름 변경만
+          initial={profiles.find((p) => p.id === editId)?.name || ""}
+          busy={busy}
+          onSave={saveProfileName}
+          onCancel={() => !busy && setEditId(null)}
+          onDelete={
+            editId === MAIN_PROFILE_ID
+              ? undefined
+              : () => {
+                setDeleteId(editId);
+                setEditId(null);
+                setDialog("deleteProfile");
+              }
+          }
+        />
+      )}
+      {dialog === "deleteProfile" && (
+        <ConfirmDialog
+          title={`'${profiles.find((p) => p.id === deleteId)?.name || ""}' 프로필을 삭제할까요?`}
+          desc="이 프로필의 이름 · 아이콘이 삭제되며 되돌릴 수 없습니다."
+          confirmLabel="삭제"
           busy={busy}
           onConfirm={confirmDialog}
           onCancel={() => setDialog(null)}

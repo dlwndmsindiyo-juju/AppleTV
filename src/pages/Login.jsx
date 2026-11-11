@@ -665,7 +665,7 @@ const Login = () => {
       {/* [추가] 1. 구독 안내 팝업 → 2. 구독 팝업 (닫으면 프로필 선택 화면 그대로 · 구독 완료 → 홈) */}
       {gateOpen && (
         <GateCard
-          title="구독 후 이용해주세요."
+          title="구독해야 이용 가능한 콘텐츠입니다." // [수정] 짧은 안내
           desc={WATCH_DESC}
           button="구독하기"
           onPrimary={() => {

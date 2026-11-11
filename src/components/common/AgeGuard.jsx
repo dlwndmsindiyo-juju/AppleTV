@@ -132,8 +132,6 @@ const AgeGuard = () => {
         <span className="age-gate-badge" aria-hidden="true">19</span>
         <h2 id="age-gate-title" className="age-gate-title">청소년 관람불가</h2>
         <p id="age-gate-desc" className="age-gate-desc">
-          이 콘텐츠는 청소년 관람불가 등급으로
-          <br />
           만 19세 미만은 이용할 수 없어요.
         </p>
         <button type="button" className="age-gate-ok" onClick={close} ref={okRef}>

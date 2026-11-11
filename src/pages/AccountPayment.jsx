@@ -312,6 +312,12 @@ export default function AccountPayment() {
     let entry = null;
 
     if (form.method === "card") {
+      // [추가] 이미 등록한 카드(같은 카드사 + 같은 마지막 4자리)는 다시 등록하지 않음
+      const newLast4 = digits(form.cardNumber).slice(-4);
+      if (payments.some((p) => (p.method || "card") === "card" && p.brand === form.brand && p.last4 === newLast4)) {
+        setMessage("이미 등록된 카드입니다. 다른 카드를 입력해 주세요.");
+        return;
+      }
       entry = {
         ...base,
         brand: form.brand,
