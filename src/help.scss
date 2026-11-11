@@ -54,7 +54,8 @@ $help-pad-answer: 1.25rem 1.5rem; // 펼친 내용 상자 안쪽
 // 화면
 // =====================================================================
 .help-page {
-  min-height: 100vh;
+  // [수정] 항목이 적은 페이지(이용 가이드): 푸터가 화면 맨 아래에 붙도록 (아래 "푸터를 화면 맨 아래로" 참고)
+  flex: 1 0 auto;
   padding: $header-height 0 5rem; // 고정 헤더 · 아래 80
   background-color: $bg-page;
   color: $help-color-body;
@@ -62,6 +63,22 @@ $help-pad-answer: 1.25rem 1.5rem; // 펼친 내용 상자 안쪽
   :where(h1, h2, p, ul) {
     margin: 0;
     padding: 0;
+  }
+}
+
+// [추가] 푸터를 화면 맨 아래로 — 내용이 화면보다 짧으면(이용 가이드) 푸터 아래가 비어 보이던 문제
+// - 이 페이지가 열려 있을 때만 #root 를 세로 flex 로 → 남는 높이는 이 페이지가 채우고 푸터는 항상 화면 맨 아래
+// - 내용이 화면보다 길면 지금과 똑같이 내용 다음에 푸터
+#root:has(.help-page) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  > .page-fade {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
   }
 }
 
