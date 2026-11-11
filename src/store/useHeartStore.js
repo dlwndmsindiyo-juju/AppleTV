@@ -446,11 +446,15 @@ export const useHeartStore = create((set, get) => ({
     const targets = groups.filter((g) => groupIds.includes(g.id) && g.id !== FIXED_GROUP.id);
     if (!sc.uid || targets.length === 0) return false;
     const ids = targets.map((g) => g.id);
-    const prevGroups = groups;
-    const prevItems = items;
+    // [수정] 되돌릴 때 필요한 것만 기억 — 지운 그룹 · 그 그룹이 붙어 있던 작품과 그 작품의 작업 번호
+    const touched = {}; // { 작품key: { removed: [지운 그룹 id], ver } }
     const nextItems = {};
     Object.entries(items).forEach(([k, it]) => {
-      nextItems[k] = it.groups.some((g) => ids.includes(g)) ? { ...it, groups: it.groups.filter((g) => !ids.includes(g)) } : it;
+      const removed = it.groups.filter((g) => ids.includes(g));
+      if (removed.length) {
+        touched[k] = { removed, ver: bumpVersion(sc, k, "groups") };
+        nextItems[k] = { ...it, groups: it.groups.filter((g) => !ids.includes(g)) };
+      } else nextItems[k] = it;
     });
     set({
       groups: groups.filter((g) => !ids.includes(g.id)),
@@ -464,8 +468,25 @@ export const useHeartStore = create((set, get) => ({
       return true;
     } catch (error) {
       console.error("그룹 삭제 실패:", error);
-      // [수정] 지금 연결일 때만 되돌림
-      if (isLive(sc)) set({ groups: prevGroups, items: prevItems, toast: { text: "그룹을 삭제하지 못했어요. 다시 시도해 주세요." } });
+      // [수정] 실패한 변경만 되돌림 (리뷰: 저장 실패 후 화면 복구)
+      //   · 예전: 시작할 때의 그룹 · 작품 전체로 덮어써서, 그 사이 담기 · 빼기 · 그룹 변경이 사라졌음
+      //   · 지금: 지금 연결(계정 · 프로필)이 그대로일 때만
+      //     - 지운 그룹만 다시 넣고 (그 사이 생긴 그룹은 그대로)
+      //     - 그 그룹이 붙어 있던 작품에만 다시 붙임 (그 사이 빠진 작품 · 그룹을 바꾼 작품은 건드리지 않음)
+      if (isLive(sc)) {
+        set((s) => {
+          const groupsNow = [...s.groups, ...targets.filter((t) => !s.groups.some((g) => g.id === t.id))].sort(
+            (a, b) => (a.order ?? 0) - (b.order ?? 0)
+          );
+          const itemsNow = { ...s.items };
+          Object.entries(touched).forEach(([k, { removed, ver }]) => {
+            const it = itemsNow[k];
+            if (!it || !isLatest(sc, k, ver, "groups")) return;
+            itemsNow[k] = { ...it, groups: [...it.groups, ...removed.filter((g) => !it.groups.includes(g))] };
+          });
+          return { groups: groupsNow, items: itemsNow, toast: { text: "그룹을 삭제하지 못했어요. 다시 시도해 주세요." } };
+        });
+      }
       return false;
     }
   },
