@@ -183,6 +183,20 @@ const Login = () => {
   const [step, setStep] = useState("select");
   const [gateOpen, setGateOpen] = useState(false); // [추가] 프로필 선택 화면 위 "구독 후 이용해주세요."
   const [subOpen, setSubOpen] = useState(false); // [추가] 그다음 구독 팝업
+  // [수정] 구독 전 계정: 프로필 선택 화면이 열리면 안내 팝업 없이 구독 플랜 팝업이 바로 자동으로 뜸
+  // - 뒤 배경은 로그인 · 프로필 화면 그대로 (홈 히어로 배경으로 넘어가지 않음)
+  // - 닫으면 프로필 선택 화면 그대로 · 구독 완료 → 보던 화면(없으면 홈)
+  const authUser = useAuthStore((s) => s.user);
+  const gateAutoRef = useRef(false);
+  useEffect(() => {
+    if (step !== "profile") {
+      gateAutoRef.current = false;
+      return;
+    }
+    if (gateAutoRef.current || !authUser || isSubscribed(authUser)) return;
+    gateAutoRef.current = true;
+    setSubOpen(true);
+  }, [step, authUser]);
   // [추가] 새 시안의 입력 상태
   const [confirmPassword, setConfirmPassword] = useState("");
   const [termsAgreed, setTermsAgreed] = useState(false);
@@ -245,7 +259,7 @@ const Login = () => {
   const backTo = () => resumePath() || from;
   const goNext = (u) => {
     if (isSubscribed(u)) navigate(backTo(), { replace: true });
-    else setGateOpen(true);
+    else setSubOpen(true); // [수정] 구독 전: 안내 팝업 대신 구독 플랜 팝업 바로
   };
 
   // 로그인 · 인증 완료: 이 기기에 계정 기억 → "인증 완료" 화면
@@ -254,13 +268,7 @@ const Login = () => {
     setPassword("");
     setCode("");
     clearMessages();
-    // [수정] 처음 가입한 계정(한 번도 구독 · 무료 체험을 한 적 없음)은 프로필 선택보다 구독 플랜이 먼저
-    const u = useAuthStore.getState().user;
-    if (u && !isSubscribed(u) && !u.trialUsed && !u.subscription) {
-      navigate("/subscribe", { replace: true, state: { from: backTo() } });
-      return;
-    }
-    // 그 밖에는 인증 완료 직후 프로필 선택 화면으로 이동
+    // 인증 완료 직후 프로필 선택 화면으로 이동 (구독 전 계정은 그 위에 구독 안내 팝업이 자동으로 뜸 · 아래 effect)
     setStep("profile");
   };
 

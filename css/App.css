@@ -3837,7 +3837,7 @@ main h2 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.75rem;
+  gap: 0.95rem;
   box-sizing: border-box;
 }
 .footer .footer-logo img {
@@ -10504,11 +10504,6 @@ main.wish-page {
 }
 
 .sub-select-option {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.25rem;
-  letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10526,6 +10521,13 @@ main.wish-page {
 }
 .sub-select-option:hover, .sub-select-option:focus-visible {
   background-color: #5865F2;
+}
+.sub-select-option span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
 }
 
 .sub-select-check {
@@ -12236,7 +12238,7 @@ html body .subscribe-gate-btn {
 .player-media .btn-trailer-toggle {
   position: absolute;
   bottom: 4rem;
-  left: 1rem;
+  left: 1.5rem;
   z-index: 3;
   display: flex;
   align-items: center;
@@ -12268,4 +12270,15 @@ html body .subscribe-gate-btn {
     width: 2.5rem;
     height: 2.5rem;
   }
+}
+.footer.footer .footer-business {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  color: #A3A3A3;
+  word-break: keep-all;
 }
