@@ -117,7 +117,9 @@ const LineupPanel = ({ teams }) => {
   const other = teams.find(({ team }) => team.id !== selected.team.id);
 
   return (
+    // [수정] PC: 왼쪽 라인업(경기장) · 오른쪽 후보선수를 한 줄에 나란히 (sport-member.scss · 태블릿 · 휴대폰은 위아래 그대로)
     <div className="sport-lineup">
+      <div className="sport-lineup-main">
       <div className="sport-lineup-team" key={selected.team.id}>
         <LineupHead team={selected.team} lineup={selected.lineup} />
         <Pitch team={selected.team} lineup={selected.lineup} />
@@ -125,7 +127,9 @@ const LineupPanel = ({ teams }) => {
       {other && (
         <LineupHead team={other.team} lineup={other.lineup} onSelect={() => setSelectedId(other.team.id)} />
       )}
+      </div>
 
+      <div className="sport-lineup-bench">
       <h3 className="sport-subs-title">후보선수</h3>
       <div className="sport-subs">
         {teams.map(({ team, lineup }) => (
@@ -142,6 +146,7 @@ const LineupPanel = ({ teams }) => {
             </ul>
           </div>
         ))}
+      </div>
       </div>
     </div>
   );
@@ -696,9 +701,23 @@ const SportLivePage = () => {
                     />
                   </div>
                 ) : (
-                  <p className="sport-live-chat-preview">
+                  // [수정] 닫힌 채팅의 입력 칸 모양: 누르면 채팅이 펼쳐지고 바로 입력할 수 있게 입력칸에 포커스
+                  <button
+                    type="button"
+                    className="sport-live-chat-preview"
+                    onClick={() => {
+                      setChatOpen(true);
+                      // 펼친 채팅이 그려진 뒤 입력칸으로 (로그인 전이면 입력칸이 꺼져 있어 안내 문구만 보임)
+                      requestAnimationFrame(() =>
+                        requestAnimationFrame(() => {
+                          const input = document.querySelector(".sport-live-chat-content .sport-chat-form input:not([disabled])");
+                          input?.focus({ preventScroll: true });
+                        })
+                      );
+                    }}
+                  >
                     실시간 채팅에 참여해보세요
-                  </p>
+                  </button>
                 )}
               </div>
 
