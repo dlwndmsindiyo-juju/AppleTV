@@ -10556,6 +10556,13 @@ main.wish-page {
   color: #E0E0E0;
   cursor: pointer;
 }
+.sub-check span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
 .sub-check input {
   appearance: none;
   -webkit-appearance: none;
@@ -12235,7 +12242,7 @@ html body .subscribe-gate-btn {
 
 .player-media .btn-trailer-toggle {
   position: absolute;
-  bottom: 4rem;
+  bottom: 1rem;
   left: 1rem;
   z-index: 3;
   display: flex;
