@@ -1,478 +1,346 @@
-// [추가] 푸터 메뉴 페이지 — 이용 가이드 · FAQ · 지원 (pages/HelpPage.jsx · 시안: Web PDF 3장 · 1920 기준)
-// - 밝은 화면: 위쪽 회색(Light/100) 영역 + 흰 본문 · 글자 Dark/400 · 보조 Dark/100 · 링크 · 번호 Primary/500
-// - 본문 폭 1040 가운데 (카드 320 × 3 · 사이 40)
-// - 글자: "Apple TV" Heading/h2-B · 큰 제목 Display/XL-B · 섹션 제목 Heading/h1-B · 카드 번호 Display/L-B
-//         카드 제목 Heading/h2-B · 질문 Heading/h2-B · 설명 · 답변 Body/large
+// [수정] 푸터 메뉴 페이지 — 이용 가이드 · 자주 묻는 질문 · 지원 (pages/HelpPage.jsx)
+// - 디자인: 시안(개인정보 처리방침 · 이용약관 · 환불안내 PC) · 푸터 주 메뉴 · 서브 메뉴 모두 같은 모양 (help.scss · legal.scss 같은 내용)
+//   뒤로 가기 → 제목 · 업데이트 날짜 · 리드 설명 · 문서 링크 → 설명 문단 → 목록 안내 → 펼침 목록 (첫 항목 열림)
+// - 배경은 사이트 기본 배경($bg-page) · 본문 폭 880 가운데 (PC · 태블릿 · 휴대폰 같은 배치)
+// - [수정] 글자 위계를 아래 "글자 위계" 배리어블(믹스인) · 색 배리어블로 한곳에서 정함 → 화면 규칙에서는 이 이름만 씀
 @use "./variables" as *;
 
-$help-width: 65rem; // 1040
-$help-text: $dark-color-400;
-$help-sub: $dark-color-100;
+// =====================================================================
+// 크기 · 색 배리어블
+// =====================================================================
+$help-width: 55rem; // 본문 폭 880
+$help-line: $dark-color-400; // 구분선
 
+// 글자 색 (밝을수록 중요)
+$help-color-title: $light-color-0; // 1. 큰 제목 · 펼침 항목 제목
+$help-color-lead: $light-color-400; // 2. 리드 설명 (제목 바로 아래)
+$help-color-body: $light-color-500; // 3. 설명 문단 · 펼친 내용
+$help-color-sub: $text-tertiary; // 4. 업데이트 날짜 · 목록 안내 (가장 낮은 단계)
+$help-color-link: $primary-color-200; // 문서 링크 · 뒤로 가기
+$help-color-link-on: $light-color-0; // 지금 보고 있는 문서
+
+// 간격
+$help-gap-head: 2.5rem; // 뒤로 가기 → 제목
+$help-gap-section: 3rem; // 링크 → 설명 문단 · 설명 문단 → 목록
+$help-pad-answer: 1.25rem 1.5rem; // 펼친 내용 상자 안쪽
+
+// =====================================================================
+// 글자 위계 (_variables.scss 글자 변수만 사용)
+//  1 제목      Display/L-B   34
+//  2 항목 제목  Heading/h3-B  20
+//  3 리드 설명  Body/large    17
+//  4 본문      Body/default  15 (설명 문단 · 펼친 내용 · 점 목록)
+//  5 링크      Body/large    17 (지금 문서 -B)
+//  6 보조      Body/small    13 (업데이트 날짜 · 목록 안내 · 뒤로 가기는 -B)
+// =====================================================================
+@mixin help-type-title { @include display-l-b; }
+@mixin help-type-item { @include heading-h3-b; }
+@mixin help-type-lead { @include body-large; }
+@mixin help-type-body { @include body-default; }
+@mixin help-type-link { @include body-large; }
+@mixin help-type-link-on { @include body-large-b; }
+@mixin help-type-sub { @include body-small; }
+@mixin help-type-back { @include body-default-b; }
+
+// 휴대폰: 한 단계씩 작게
+@mixin help-type-title-m { @include display-M-b; }
+@mixin help-type-item-m { @include body-large-b; }
+@mixin help-type-lead-m { @include body-default; }
+@mixin help-type-body-m { @include body-small; }
+@mixin help-type-link-m { @include body-default; }
+@mixin help-type-link-on-m { @include body-default-b; }
+
+// =====================================================================
+// 화면
+// =====================================================================
 .help-page {
   min-height: 100vh;
-  padding-top: $header-height; // 고정 헤더 높이만큼
-  background-color: $light-color-100;
-  color: $help-text;
+  padding: $header-height 0 5rem; // 고정 헤더 · 아래 80
+  background-color: $bg-page;
+  color: $help-color-body;
+
+  :where(h1, h2, p, ul) {
+    margin: 0;
+    padding: 0;
+  }
 }
 
-// ---------- 1. 위쪽 회색 영역 ----------
-.help-hero {
+// 사이트 기본 글꼴 — index.css 의 * { font-family: … monospace } 가 버튼 안 글자에 따로 붙지 않게
+.help-page,
+.help-page * {
+  font-family: $font-family-base;
+}
+
+.help-inner {
+  width: calc(100% - #{$space-xl * 2});
+  max-width: $help-width;
+  margin: 0 auto;
+}
+
+// ---------- 1. 뒤로 가기 ----------
+.help-backbar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 8.5rem $space-xl 6.5rem;
-  background: $light-color-200;
-  text-align: center;
-  margin-bottom: 1rem;
+  height: 2.75rem; // 44
 }
 
-.help-eyebrow {
-  @include heading-h2-b;
-  margin: 0;
-}
-
-.help-title {
-  @include display-xl-b;
-  margin: $space-xl 0 0;
-  padding: 0;
-  letter-spacing: -0.01em;
-}
-
-.help-desc {
-  @include body-large;
-  margin: $space-xl 0 0;
-  color: $help-sub;
-  word-break: keep-all;
-}
-
-// 세 페이지 링크 (이용 가이드 › · FAQ › · 지원 ›)
-.help-links {
-  display: flex;
-  justify-content: center;
-  gap: 14.5rem;
-  margin-top: 4rem;
-}
-
-.help-link {
-  @include body-large-b;
+.help-back {
+  @include help-type-back;
   display: inline-flex;
   align-items: center;
   gap: $space-sm;
-  color: $primary-color-200;
-  text-decoration: none;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $help-color-link;
+  cursor: pointer;
+  transition: color 0.2s ease;
 
   &:hover {
-    font-weight: 800;
-  }
-
-  // 지금 보고 있는 페이지
-  &.is-current {
-    color: $primary-color-500;
-    font-weight: 800;
+    color: $help-color-link-on;
   }
 
   &:focus-visible {
-    outline: 0.125rem solid $primary-color-500;
+    outline: 0.125rem solid $primary-color-300;
     outline-offset: 0.25rem;
     border-radius: $radius-xs;
   }
 }
 
-.help-link-arrow {
-  font-size: 1.25em;
+.help-back-arrow {
+  font-size: 1.25rem;
   line-height: 1;
+  transform: translateY(-0.0625rem);
 }
 
-// ---------- 본문 ----------
-.help-body {
-  max-width: calc(#{$help-width} + #{$space-xl} * 2);
-  margin: 0 auto;
-  padding: 7.5rem $space-xl 10rem;
+// ---------- 2. 제목 · 날짜 · 리드 · 링크 ----------
+.help-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: $help-gap-head;
+  text-align: center;
 }
 
-.help-section+.help-section {
-  margin-top: 11rem;
-}
-
-.help-section-title {
-  @include display-l-b;
-  margin: 0;
-  padding: 0;
+.help-title {
+  @include help-type-title;
+  color: $help-color-title;
   word-break: keep-all;
 }
 
-.help-section-desc {
-  @include body-large;
-  margin: $space-2xl 0 0;
-  color: $help-sub;
+.help-meta {
+  @include help-type-sub;
+  margin-top: $space-sm !important;
+  color: $help-color-sub;
 }
 
-// ---------- 2. 카드 3개 ----------
-.help-cards {
+.help-desc {
+  @include help-type-lead;
+  max-width: 40rem;
+  margin-top: $space-lg !important;
+  color: $help-color-lead;
+  word-break: keep-all;
+}
+
+.help-links {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2.5rem;
-  margin: $space-3xl 0 0;
-  padding: 0;
-  list-style: none;
+  grid-template-columns: repeat(3, minmax(0, 11.125rem)); // 칸 178
+  justify-content: center;
+  margin-top: $space-2xl;
 }
 
-.help-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  min-height: 18.75rem; // 300
-  padding: 2.25rem 1.5rem;
-  border: none;
-  border-radius: $radius-card-sm;
-  background-color: $light-color-200;
-  color: inherit;
-  font-family: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+.help-link {
+  @include help-type-link;
+  justify-self: center;
+  color: $help-color-link;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
 
   &:hover {
-    background-color: $light-color-200;
-    transform: translateY(-0.25rem);
-    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.06);
+    color: $help-color-link-on;
+  }
+
+  &.is-current {
+    @include help-type-link-on;
+    color: $help-color-link-on;
   }
 
   &:focus-visible {
-    outline: 0.125rem solid $primary-color-500;
+    outline: 0.125rem solid $primary-color-300;
     outline-offset: 0.25rem;
+    border-radius: 0.25rem;
   }
 }
 
-.help-card-num {
-  @include display-l-b;
-  color: $primary-color-500;
+// ---------- 3. 설명 문단 · 목록 안내 ----------
+.help-intro {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  margin-top: $help-gap-section;
 }
 
-.help-card-title {
-  @include heading-h2-b;
-  margin-top: $space-xl;
+.help-intro-text {
+  @include help-type-body;
+  color: $help-color-body;
   word-break: keep-all;
 }
 
-.help-card-desc {
-  @include body-large;
-  margin-top: $space-lg;
-  color: $help-sub;
+.help-hint {
+  @include help-type-sub;
+  margin-top: $help-gap-section !important;
+  color: $help-color-sub;
   word-break: keep-all;
 }
 
-// ---------- 3. 펼침 목록 ----------
+// ---------- 4. 펼침 목록 ----------
 .help-list {
-  margin: 2rem 0 0;
-  padding: 0;
+  margin-top: $space-md !important;
+  border-top: 0.0625rem solid $help-line;
   list-style: none;
 }
 
 .help-item {
-  scroll-margin-top: calc(#{$header-height} + #{$space-xl}); // 카드에서 이동할 때 헤더에 가리지 않게
-  border-bottom: 1px solid $light-color-200;
+  border-bottom: 0.0625rem solid $help-line;
+}
 
-  .help-question button {
+.help-question button {
+  @include help-type-item;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-lg;
+  width: 100%;
+  min-height: 3.8125rem; // 61
+  padding: $space-md 0;
+  border: none;
+  background: none;
+  color: $help-color-title;
+  text-align: left;
+  cursor: pointer;
+  word-break: keep-all;
 
-    span {
-      @include heading-h3-b;
-    }
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-300;
+    outline-offset: 0.125rem;
+    border-radius: 0.25rem;
   }
 }
 
-.help-question {
-  margin: 1rem 0;
-
-  button {
-    @include heading-h2-b;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: $space-xl;
-    width: 100%;
-    padding: 2rem 2rem;
-    border: none;
-    border-radius: $radius-card-sm;
-    background: none;
-    color: $help-text;
-    font-family: inherit;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-
-    &:focus-visible {
-      outline: 0.125rem solid $primary-color-500;
-      outline-offset: -0.125rem;
-    }
-  }
-}
-
-.help-item.is-open .help-question button {
-  padding-bottom: $space-lg;
-}
-
-// ∨ (닫힘) / ∧ (열림)
+// 펼침 화살표 (∨ · 열리면 ∧)
 .help-chevron {
   flex-shrink: 0;
   width: 0.625rem;
   height: 0.625rem;
-  margin-right: 0.25rem;
+  margin-right: 0.375rem;
   border-right: 0.125rem solid currentColor;
   border-bottom: 0.125rem solid currentColor;
-  transform: translateY(-25%) rotate(45deg);
-  transition: transform 0.25s ease;
+  transform: translateY(-0.1875rem) rotate(45deg);
+  transition: transform 0.2s ease;
 
-  .help-item.is-open & {
-    transform: translateY(25%) rotate(-135deg);
+  .is-open & {
+    transform: translateY(0.1875rem) rotate(-135deg);
   }
 }
 
+// 펼친 내용: 어두운 상자 안에 문단 · 점 목록
 .help-answer {
-  padding: 2.25rem 2.25rem;
-  animation: help-open 0.25s ease;
-  background: $light-color-200;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  margin-bottom: 1.25rem;
+  padding: $help-pad-answer;
+  border-radius: $radius-card-sm;
+  background-color: $bg-surface;
 
-  p {
-    @include body-large;
-    margin: 0;
-    color: $help-sub;
+  // [수정] 닫힌 항목은 숨김 — display: flex 가 hidden 속성을 덮어써서 닫혀 있어도 내용이 보이던 문제
+  &[hidden] {
+    display: none;
+  }
+}
+
+.help-answer-text {
+  @include help-type-body;
+  color: $help-color-body;
+  word-break: keep-all;
+}
+
+.help-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  list-style: none;
+
+  li {
+    @include help-type-body;
+    position: relative;
+    padding-left: $space-lg;
+    color: $help-color-body;
     word-break: keep-all;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0.55em;
+      left: 0.25rem;
+      width: 0.25rem;
+      height: 0.25rem;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
   }
 }
 
-@keyframes help-open {
-  from {
-    opacity: 0;
-    transform: translateY(-0.375rem);
+// ---------- 휴대폰: 같은 배치 · 글자 한 단계 작게 ----------
+@media (max-width: $breakpoint-mobile) {
+  .help-page {
+    padding-bottom: 3.5rem;
   }
 
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-// ---------- 태블릿 ----------
-@media (max-width: 1023px) {
   .help-hero {
-    padding: 5rem $space-xl 4rem;
+    padding-top: $space-2xl;
   }
 
   .help-title {
-    @include display-l-b;
-    font-size: 3.5rem;
-    line-height: 4.25rem;
-  }
-
-  .help-links {
-    gap: 5rem;
-    margin-top: 2.5rem;
-  }
-
-  .help-body {
-    padding: 5rem $space-xl 6rem;
-  }
-
-  .help-section+.help-section {
-    margin-top: 6rem;
-  }
-
-  .help-cards {
-    gap: $space-lg;
-  }
-
-  .help-card {
-    min-height: 15rem;
-    padding: 1.75rem 1.25rem;
-  }
-}
-
-// ---------- 휴대폰 ----------
-@media (max-width: 767px) {
-  .help-hero {
-    padding: 3.5rem $space-lg 3rem;
-  }
-
-  .help-eyebrow {
-    @include body-large-b;
-  }
-
-  .help-title {
-    @include heading-h1-b;
-    margin-top: $space-md;
+    @include help-type-title-m;
   }
 
   .help-desc {
-    @include body-default;
-    margin-top: $space-md;
+    @include help-type-lead-m;
   }
 
   .help-links {
-    gap: $space-2xl;
-    margin-top: $space-2xl;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    margin-top: $space-xl;
   }
 
   .help-link {
-    @include body-default-b;
+    @include help-type-link-m;
+
+    &.is-current {
+      @include help-type-link-on-m;
+    }
   }
 
-  .help-body {
-    padding: 3.5rem $space-lg 4.5rem;
+  .help-intro,
+  .help-hint {
+    margin-top: $space-2xl !important;
   }
 
-  .help-section+.help-section {
-    margin-top: 4rem;
-  }
-
-  .help-section-title {
-    @include display-M-b;
-  }
-
-  .help-section-desc {
-    @include body-default;
-    margin-top: $space-md;
-  }
-
-  .help-cards {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: $space-xs;
-    margin-top: $space-2xl;
-  }
-
-  .help-card {
-    min-height: 0;
-    padding: $space-xl;
-  }
-
-
-  .help-card-num {
-    @include display-M-b;
-  }
-
-  .help-card-title {
-    @include body-large-b;
-    margin-top: $space-md;
-    width: 100%;
-  }
-
-  .help-card-desc {
-    @include body-default;
-    margin-top: $space-sm;
-  }
-
-  .help-list {
-    margin-top: $space-2xl;
-  }
-
-  .help-item {
-    @include body-default-b;
+  .help-intro-text,
+  .help-answer-text,
+  .help-bullets li {
+    @include help-type-body-m;
   }
 
   .help-question button {
-    @include body-default-b;
-    padding: $space-md $space-xl;
+    @include help-type-item-m;
+    min-height: 3.25rem;
   }
 
   .help-answer {
-    padding: $space-md $space-xl;
-
-    p {
-      @include body-default;
-    }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .help-card,
-  .help-chevron,
-  .help-answer {
-    transition: none;
-    animation: none;
-  }
-}
-
-// =====================================================================
-// [추가] "← 돌아가기" (pages/HelpPage.jsx) — .help-body 맨 위 · 카드 섹션 제목 바로 위 왼쪽
-// - 아이콘: public/icons/nav/left-nav.svg (mask · 글자색과 같은 색)
-// - 글자 Body/default-B · $help-text · 마우스를 올리면 Primary/500 (위 .help-link 와 같은 보라)
-// - 누르면 푸터 메뉴를 누르기 전에 보던 페이지 · 스크롤 위치로 (주소로 바로 들어왔으면 홈)
-// =====================================================================
-// [수정] 버튼을 .help-body 맨 위에 넣음 (띄우지 않고 본문 흐름 안) → 왼쪽 줄은 카드 섹션과 자동으로 같음
-// - 간격: 히어로 → 버튼 = .help-body 위 여백 / 버튼 → "처음부터 차근차근." = 버튼 아래 여백 (아래 숫자만 조절)
-.help-body {
-  padding-top: $space-xl; // 히어로 → 버튼 (원래 7.5rem 은 아래 .help-back 의 margin-bottom 으로 나눔)
-}
-
-.help-back {
-  @include body-default-b;
-  margin: 0 0 4.25rem; // 버튼 → 섹션 제목 (24 + 버튼 28 + 68 = 원래 간격 120 그대로)
-  display: flex;
-  width: fit-content; // 글자 폭만큼만 (누르는 영역이 줄 전체로 넓어지지 않게)
-  align-items: center;
-  gap: $space-xs;
-  padding: $space-xs 0;
-  border: none;
-  border-radius: $radius-xs;
-  background: none;
-  color: $help-text;
-  cursor: pointer;
-  transition: color 0.2s ease, background-color 0.2s ease;
-
-  &:hover {
-    color: $primary-color-500;
-  }
-
-  &:focus-visible {
-    outline: 0.125rem solid $primary-color-500;
-    outline-offset: 0.125rem;
-  }
-}
-
-.help-back-icon {
-  flex-shrink: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  background-color: currentColor;
-  -webkit-mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
-  mask: url("/icons/nav/left-nav.svg") center / contain no-repeat;
-}
-
-// 태블릿: 원래 위 여백 5rem 유지
-@media (max-width: 1023px) {
-  .help-body {
-    padding-top: $space-xl;
-  }
-
-  .help-back {
-    margin-bottom: 1.75rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .help-body {
-    padding-top: $space-md;
-
-
-    .help-question button {
-      @include body-small-b;
-
-      span {
-        @include body-large-b;
-      }
-    }
-
-    .help-back {
-      @include body-small-b;
-      margin-bottom: 1rem; // 16 + 버튼 24 + 16 = 원래 3.5rem(56)
-    }
-
-    .help-back-icon {
-      width: 1rem;
-      height: 1rem;
-    }
+    padding: $space-md $space-lg;
   }
 }

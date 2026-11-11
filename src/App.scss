@@ -3847,7 +3847,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.75rem;
+    gap: 0.95rem;
     box-sizing: border-box;
   }
 
@@ -11128,11 +11128,6 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
   color: $light-color-300;
   cursor: pointer;
 
-  span {
-    @include body-default;
-
-  }
-
   input {
     appearance: none;
     -webkit-appearance: none;
@@ -12892,4 +12887,13 @@ html body .subscribe-gate-btn {
     width: 2.5rem;
     height: 2.5rem;
   }
+}
+
+// [추가] 푸터 사업자 정보 (components/layout/Footer.jsx · 저작권 아래) — Label/default · color/tertiary · 줄바꿈 허용
+.footer.footer .footer-business {
+  @include label-default;
+  margin: $space-sm 0 0;
+  padding: 0;
+  color: $text-tertiary;
+  word-break: keep-all;
 }

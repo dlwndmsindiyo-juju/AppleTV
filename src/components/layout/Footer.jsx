@@ -70,6 +70,11 @@ const Footer = () => {
           Copyright &copy; Apple Inc. 모든 권리 보유.
         </div>
 
+        {/* [추가] 5. 사업자 정보 */}
+        <p className="footer-business">
+          Apple Services Pte. Ltd. | 대표이사: Christopher John Jenkinson | 주소: Ang Mo Kio Street 64, Singapore 569086 | 전화: 080-333-4000 | 사업자등록번호: 251-84-00063 | 통신판매업신고번호: 제2024-서울강남-06040호 | 호스팅 서비스 제공: Apple Inc.
+        </p>
+
       </div>
     </footer>
   );
