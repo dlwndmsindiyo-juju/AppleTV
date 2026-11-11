@@ -1054,8 +1054,8 @@
 .tv-team-record {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-team-record {
@@ -1124,8 +1124,8 @@
 .tv-team-live {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-team-live {
@@ -1224,8 +1224,8 @@
 .tv-team-row-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-team-row-desc {
@@ -1323,8 +1323,8 @@
 .tv-team-card-desc {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-team-card-desc {
@@ -1347,8 +1347,8 @@
 .tv-team-card-meta {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-team-card-meta {
@@ -1467,8 +1467,8 @@
 .tv-end-watched figcaption {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-watched figcaption {
@@ -1617,8 +1617,8 @@
 .tv-end-btn-text {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-btn-text {
@@ -1654,8 +1654,8 @@
 .tv-end-info strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-info strong {
@@ -1673,8 +1673,8 @@
 .tv-end-info p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-info p {
@@ -1843,8 +1843,8 @@
 .tv-end-replay-team span:last-child {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-replay-team span:last-child {
@@ -1865,8 +1865,8 @@
 .tv-end-replay-date {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-replay-date {
@@ -1889,8 +1889,8 @@
 .tv-end-notice {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-notice {
@@ -1931,8 +1931,8 @@
 .tv-end-next-kind {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-next-kind {
@@ -1950,8 +1950,8 @@
 .tv-end-next-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-next-title {
@@ -1972,8 +1972,8 @@
 .tv-end-next-cancel {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-end-next-cancel {
@@ -2571,8 +2571,8 @@
 .tv-detail-notice {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-notice {
@@ -2605,8 +2605,8 @@
 .tv-detail-info strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-info strong {
@@ -2624,8 +2624,8 @@
 .tv-detail-info p {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-info p {
@@ -2654,8 +2654,8 @@
 .tv-detail-info dt {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-info dt {
@@ -2672,8 +2672,8 @@
 .tv-detail-info dd {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-info dd {
@@ -2717,8 +2717,8 @@
 .tv-detail-cast strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-cast strong {
@@ -2740,8 +2740,8 @@
 .tv-detail-cast span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-cast span {
@@ -2811,8 +2811,8 @@
 .tv-detail-standings-head span {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-standings-head span {
@@ -2830,8 +2830,8 @@
 .tv-detail-standings-row {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-standings-row {
@@ -2877,8 +2877,8 @@
 .tv-detail-standings-row.is-label {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
 }
 :where(.tv-preview.is-tablet .tv-preview-stage) .tv-detail-standings-row.is-label {

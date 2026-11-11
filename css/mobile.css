@@ -151,8 +151,8 @@
   .subscribe-gate-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
   }
   .subscribe-gate-desc {
@@ -531,8 +531,8 @@
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     margin-top: 0.75rem;
   }
@@ -713,8 +713,8 @@
   section.top10-section .top10-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
@@ -974,8 +974,8 @@
   :is(main, div).member-home .member-section .member-head .member-desc.member-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
@@ -1672,8 +1672,8 @@
     grid-area: name;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -1701,8 +1701,8 @@
   .login-page.login-page .login-card.plan-card .plan-section-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-weight: 700;
     margin: 2rem 0 0.75rem;
@@ -1914,8 +1914,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   section.top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
@@ -1967,8 +1967,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   :is(main, div).member-home .member-section .member-title.member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }

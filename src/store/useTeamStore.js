@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import { getTeamById } from "../data/sportTeams";
 import { showToast } from "../utils/toast"; // [추가] 팔로우 · 취소 토스트
 import { useAuthStore } from "./useAuthStore"; // [추가] 계정별 관심 구단 (로그인한 계정 uid)
+import { openSubscribeGate } from "../utils/subscribeGate"; // [추가] 로그인 전: 다른 아이콘과 같은 로그인 안내 팝업
 
 // 관심 구단 구독 상태 (스포츠 홈 슬라이드 + 구단 전체 페이지 + 스포츠 히어로에서 함께 사용)
 // persist: localStorage 에 자동 저장되어 새로고침해도 유지
@@ -34,7 +35,7 @@ export const useTeamStore = create(
       // [추가] 로그아웃 상태에서는 팔로우하지 않고 로그인 안내 토스트
       toggleFavorite: (id) => {
         if (!get().owner) {
-          showToast("로그인하면 관심 구단을 팔로우할 수 있어요.", { icon: "star-off" });
+          openSubscribeGate("account"); // [수정] 토스트 대신 다른 아이콘(찜 · 알림)과 같은 로그인 안내 팝업
           return;
         }
         set((state) => {

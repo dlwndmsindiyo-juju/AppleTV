@@ -187,7 +187,8 @@ const AccountSubscription = () => {
             <div className="account-item">
               <h3 className="account-item-title">관리</h3>
               {plans}
-              <button type="button" className="account-outline-btn account-outline-btn--danger" onClick={() => setDialog(true)}>
+              {/* [수정] 다크 UX: 구독 취소는 눈에 덜 띄게 (색 없는 글자 버튼 · 회색 글자) */}
+              <button type="button" className="account-quiet-btn" onClick={() => setDialog(true)}>
                 구독 취소
               </button>
               <p className="account-note">지금 취소해도 {sub.endDate}까지 구독한 서비스를 계속 이용할 수 있습니다.</p>

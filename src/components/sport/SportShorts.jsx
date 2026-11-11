@@ -1,4 +1,6 @@
 import { openShare } from "../../utils/share"; // [추가] 공유 팝업
+import { useAuthStore } from "../../store/useAuthStore"; // [추가] 로그인 전 좋아요 막기
+import { openSubscribeGate } from "../../utils/subscribeGate";
 import React, { useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SPORT_SHORTS } from "../../data/sportShorts";
@@ -95,7 +97,14 @@ const SportShorts = ({ title = "숏폼" }) => {
     if (playingId === id) sendPlayer(frames.current[id], next ? "mute" : "unMute");
   };
 
-  const toggleLike = (id) => setLiked((prev) => ({ ...prev, [id]: !prev[id] }));
+  // [수정] 로그인 전에는 좋아요를 막고 로그인 안내 팝업
+  const toggleLike = (id) => {
+    if (!useAuthStore.getState().user) {
+      openSubscribeGate("account");
+      return;
+    }
+    setLiked((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   // [수정] 공유 팝업 (components/common/ShareSheet.jsx)
   const share = (item) => {
