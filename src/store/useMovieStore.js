@@ -1,4 +1,13 @@
 import { showToast } from "../utils/toast"; // [추가] 공개 알림 켜기 · 끄기 토스트
+import { useAuthStore } from "./useAuthStore"; // [추가] 로그인 전에는 알림 · 평점 · 찜을 막음
+import { openSubscribeGate } from "../utils/subscribeGate"; // [추가] 로그인 안내 팝업
+
+// [추가] 로그인 전이면 로그인 안내 팝업을 띄우고 true (호출한 쪽은 바로 멈춤)
+const needLogin = () => {
+  if (useAuthStore.getState().user) return false;
+  openSubscribeGate("account");
+  return true;
+};
 import { create } from "zustand";
 import { fetchMoodRecommendations } from "./moodRecommendations.mjs";
 
@@ -353,6 +362,7 @@ export const useMovieStore = create((set, get) => ({
   // 내가 찜한 콘텐츠 (localStorage 에 유지)
   wishlist: loadLocal("wishlist"),
   onToggleWishlist: (item) => {
+    if (needLogin()) return; // [추가] 로그인 전에는 막음
     const { wishlist } = get();
     const exists = wishlist.some((w) => w.id === item.id && w.type === item.type);
     const next = exists
@@ -368,6 +378,7 @@ export const useMovieStore = create((set, get) => ({
   alarms: loadLocal("alarms"),
   alarmItems: loadLocalObject("alarmItems"),
   onToggleAlarm: (key, meta = null) => {
+    if (needLogin()) return; // [추가] 로그인 전에는 알림 설정을 막음 (모든 콘텐츠 공통 · 로그인 안내 팝업)
     const { alarms, alarmItems } = get();
     const on = !alarms.includes(key);
     const next = on ? [...alarms, key] : alarms.filter((k) => k !== key);
@@ -388,6 +399,7 @@ export const useMovieStore = create((set, get) => ({
   // - 처음 남기면 "평점을 남겼어요." · 다시 남기면 "평점을 수정했어요." 토스트
   myRatings: loadLocalObject("myRatings"),
   onSaveRating: (key, score, title = "") => {
+    if (needLogin()) return; // [추가] 로그인 전에는 막음
     const { myRatings } = get();
     const edited = Boolean(myRatings[key]);
     const next = { ...myRatings, [key]: { score, title, savedAt: Date.now() } };

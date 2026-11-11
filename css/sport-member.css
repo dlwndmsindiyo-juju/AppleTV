@@ -197,8 +197,8 @@ main.sport-home .sport-teams .sport-team-logo {
 main.sport-home .sport-teams .sport-team-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   font-family: inherit;
 }
@@ -711,8 +711,8 @@ main.sport-home .sport-series-description {
     height: 2rem;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
   }
   main.sport-home .sport-conferences > .inner {
@@ -1028,8 +1028,8 @@ section.sport-hero .sport-btn.secondary {
   section.sport-hero .sport-hero-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     gap: 0.5rem;
     margin-bottom: 0.75rem;
@@ -1714,8 +1714,8 @@ main.sport-home.sport-standings-page .sport-standings-block {
 main.sport-home.sport-standings-page .sport-standings-block-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   font-family: inherit;
   margin: 0 0 2rem;
@@ -1908,8 +1908,8 @@ main.sport-home.sport-standings-page .sport-player-rank {
 main.sport-home.sport-standings-page .sport-player-value {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -1979,8 +1979,8 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
   main.sport-home.sport-standings-page .sport-standings-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-family: inherit;
   }
@@ -2079,8 +2079,8 @@ main.sport-home.sport-standings-page .sport-detail-back:hover {
   main.sport-home.sport-standings-page .sport-player-photo--empty {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-family: inherit;
   }
@@ -2460,8 +2460,8 @@ section.sport-hero.sport-hero--team .sport-team-hero-name {
 section.sport-hero.sport-hero--team .sport-team-hero-record {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   font-family: inherit;
   margin: 1.25rem 0 0.625rem;
@@ -3047,8 +3047,8 @@ main.sport-home.sport-live-page .sport-stats {
 main.sport-home.sport-live-page .sport-stats-teams {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   font-family: inherit;
   display: flex;
@@ -3092,8 +3092,8 @@ main.sport-home.sport-live-page .sport-stats-values span {
 main.sport-home.sport-live-page .sport-stats-values b {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   color: #D5D5D5;
 }
@@ -3264,8 +3264,8 @@ main.sport-home.sport-live-page .sport-live-back-wrap {
   main.sport-home.sport-live-page .sport-pitch-photo.is-empty {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
   }
   main.sport-home.sport-live-page .sport-pitch-label {
@@ -3291,8 +3291,8 @@ main.sport-home.sport-live-page .sport-live-back-wrap {
   main.sport-home.sport-live-page .sport-subs-team {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     margin-bottom: 2.5rem;
     padding-left: 0;
@@ -3408,8 +3408,8 @@ main.sport-home.sport-live-page .sport-live-back-wrap {
   main.sport-home.sport-live-page .sport-subs-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     margin-top: 3rem;
     padding-bottom: 1rem;
@@ -3594,8 +3594,8 @@ main.sport-home.sport-live-page .sport-subs-team img {
   main.sport-home.sport-live-page .sport-pitch-label {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-family: inherit;
   }
@@ -3729,8 +3729,8 @@ main.sport-home.sport-live-page .sport-subs-team img {
   main.sport-home.sport-live-page .sport-pitch-photo.is-empty {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
   }
   main.sport-home.sport-live-page .sport-pitch-label {
@@ -4113,8 +4113,8 @@ main.sport-home.sport-live-page .sport-tl-half b:first-child {
 main.sport-home.sport-live-page .sport-tl-half span {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   color: #C8C8C8;
 }
@@ -4124,8 +4124,8 @@ main.sport-home.sport-live-page .sport-stats-head {
 main.sport-home.sport-live-page .sport-stats-head h3 {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   display: inline-block;
   margin: 0 0 0.75rem;
@@ -4574,8 +4574,8 @@ main.sport-home.sport-live-page .sport-chat-form button:disabled {
   main.sport-home.sport-live-page .sport-scoreboard-score b {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-family: inherit;
     width: 56px;
@@ -5239,8 +5239,8 @@ main.sport-home .sport-series .sport-series-card:hover .sport-series-thumb .spor
 .sport-league-cover strong {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  font-size: 2.25rem;
+  line-height: 3.5rem;
   letter-spacing: 0;
   font-family: inherit;
   word-break: keep-all;
@@ -6162,8 +6162,8 @@ main.sport-home .subscribe-cta.subscribe-cta--sport .subscribe-logo {
   main.sport-home.sport-live-page .sport-subs-col li {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-size: clamp(0.875rem, 3.6cqi, 1.25rem);
     gap: 0.5rem;
@@ -6249,8 +6249,8 @@ main.sport-home .subscribe-cta.subscribe-cta--sport .subscribe-logo {
   main.sport-home.sport-live-page .sport-live-panel .sport-stats-head p {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     margin-top: 0.25rem;
   }
@@ -6271,8 +6271,8 @@ main.sport-home .subscribe-cta.subscribe-cta--sport .subscribe-logo {
   main.sport-home.sport-live-page .sport-live-panel .sport-stats-side b {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.4rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
   }
 }

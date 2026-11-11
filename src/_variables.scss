@@ -281,11 +281,11 @@ $font-family-base: "SF Pro", sans-serif;
 
 // H3 20 / 25 · 콘텐츠 그룹 제목
 @mixin heading-h3 {
-  @include type-style(1rem, 1.4rem);
+  @include type-style(2.25rem, 3.5rem);
 }
 
 @mixin heading-h3-b {
-  @include type-style(1rem, 1.4rem, $font-weight-bold);
+  @include type-style(2.25rem, 3.5rem, $font-weight-bold);
 }
 
 // H4 17 / 22 · 카드와 모듈 제목

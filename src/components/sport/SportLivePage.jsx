@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { addDoc, collection, limit, onSnapshot, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { useAuthStore } from "../../store/useAuthStore";
+import { openSubscribeGate } from "../../utils/subscribeGate"; // [추가] 로그인 전 신고 아이콘 막기
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSportStore, playerPhotoKey } from "../../store/useSportStore";
 import { useTeamStore } from "../../store/useTeamStore";
@@ -465,7 +466,13 @@ const ChatPanel = ({ matchId, room, seed }) => {
                   className={`sport-chat-siren${alerts[m.id] ? " is-on" : ""}`}
                   aria-haspopup="dialog"
                   aria-label={alerts[m.id] ? `${m.user} 메시지 신고됨` : `${m.user} 메시지 신고`}
-                  onClick={() => (alerts[m.id] ? showToast("이미 신고한 메시지예요.") : setReportTarget(m))} // [수정] 바로 켜지 않고 신고 팝업 열기
+                  onClick={() =>
+                    !useAuthStore.getState().user
+                      ? openSubscribeGate("account") // [추가] 로그인 전에는 신고 막음
+                      : alerts[m.id]
+                        ? showToast("이미 신고한 메시지예요.")
+                        : setReportTarget(m)
+                  } // [수정] 바로 켜지 않고 신고 팝업 열기
                 >
                   <img src={ICON("siren-icon")} alt="" />
                 </button>

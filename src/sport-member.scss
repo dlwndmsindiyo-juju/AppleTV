@@ -6728,3 +6728,24 @@ main.sport-home.sport-live-page .sport-live-chat-card .sport-chat-form {
     height: 1rem;
   }
 }
+
+// [추가] 숏폼 좋아요: 누르면 숫자가 살짝 튀어 오르며 +1
+.sport-sf-like.is-on .sport-sf-count {
+  animation: sport-sf-count-pop 0.3s ease;
+}
+
+@keyframes sport-sf-count-pop {
+  0% {
+    transform: translateY(0.25rem);
+    opacity: 0.4;
+  }
+
+  60% {
+    transform: translateY(-0.125rem);
+    opacity: 1;
+  }
+
+  100% {
+    transform: none;
+  }
+}

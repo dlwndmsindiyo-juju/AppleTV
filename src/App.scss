@@ -6382,7 +6382,7 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: $space-lg;
+  gap: $space-sm;
   transition: opacity 0.2s ease;
   margin-bottom: $space-lg;
 
@@ -12566,4 +12566,59 @@ $sub-date-cell: 2.5rem; // 날짜 한 칸 (40)
   border: none;
   font-family: inherit;
   cursor: pointer;
+}
+
+// =====================================================================
+// [수정] 섹션 제목 통일 — 모든 홈 · 스포츠 섹션 제목을 Heading/h3-B (20 / 25 · Bold) 로
+// - 로그인 전 / 후 홈(.member-title · TOP 10 · 공개예정 · 오리지널스) · 스포츠 홈(.sport-section-title · 관심있는 구단)
+// - 화면 크기별 규칙(PC · 태블릿 · 휴대폰)이 여러 곳에 있어서, 클래스를 겹쳐 써 우선순위를 높여 한 번에 덮어씀
+// =====================================================================
+html body :is(.member-title.member-title.member-title.member-title,
+  .top10-title.top10-title.top10-title.top10-title,
+  .upcoming-title.upcoming-title.upcoming-title.upcoming-title,
+  .apple-originals-title.apple-originals-title.apple-originals-title.apple-originals-title,
+  .sport-section-title.sport-section-title.sport-section-title.sport-section-title,
+  .sport-teams-title.sport-teams-title.sport-teams-title.sport-teams-title) {
+  @include heading-h3-b;
+}
+
+// =====================================================================
+// [추가] 구독 관리 [구독 취소] — 다크 UX: 눈에 덜 띄게 (pages/AccountSubscription.jsx)
+// - 바탕 없음 · 글자 Body/small · Light/500(회색) · 마우스를 올리면 밑줄만
+// - 예전: 빨간 바탕 버튼(.account-outline-btn--danger)이라 [모든 요금제 보기] 보다 더 눈에 띄었음
+// =====================================================================
+.account-quiet-btn {
+  @include body-small-b;
+  display: inline-flex;
+  align-items: center;
+  height: auto;
+  margin-top: $space-sm;
+  padding: $space-xs 0;
+  border: none;
+  background: none;
+  color: $dark-color-100;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $light-color-400;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $light-color-500;
+    outline-offset: 0.125rem;
+    border-radius: 0.25rem;
+  }
+}
+
+// [추가] 섹션 제목 통일(Heading/h3-B) 에 빠져 있던 제목 더하기 — TV 에서도 시청하세요 · 검색 섹션 · 리그 순위 · 컨퍼런스
+html body :is(.watch-title.watch-title.watch-title.watch-title,
+  .search-block-title.search-block-title.search-block-title.search-block-title,
+  .search-section-title.search-section-title.search-section-title.search-section-title,
+  .sport-standings-block-title.sport-standings-block-title.sport-standings-block-title.sport-standings-block-title,
+  .sport-conference-title.sport-conference-title.sport-conference-title.sport-conference-title) {
+  @include heading-h3-b;
 }
