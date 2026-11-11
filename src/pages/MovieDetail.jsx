@@ -481,11 +481,11 @@ export const MovieDetail = ({ type: typeProp }) => {
                     />
                   )
                 )}
-                {/* [추가] 예고편 일시정지 · 재생 (영상 정가운데) */}
+                {/* [수정] 예고편 재생 · 일시정지 (영상 왼쪽 아래 고정) */}
                 {trailer && (
                   <button
                     type="button"
-                    className={`btn-trailer-toggle${trailerPaused ? ' is-paused' : ''}`} // [수정] 영상 정가운데
+                    className={`btn-trailer-toggle${trailerPaused ? ' is-paused' : ''}`}
                     onClick={toggleTrailer}
                     aria-label={trailerPaused ? '예고편 재생' : '예고편 일시정지'}
                     title={trailerPaused ? '재생' : '일시정지'}

@@ -10513,8 +10513,9 @@ $sub-logo-size: 3.5rem; // 로고 (그림자 포함 56)
 $sub-btn-height: 3.25rem; // 버튼 높이 (52)
 $sub-field-height: 4.375rem; // 입력 칸 높이 (70)
 $sub-field-radius: 0.25rem; // 입력 칸 모서리 (4)
-$sub-pop-width: 56.25rem; // [수정] 팝업 창 폭: 플랜 선택 · 지불 방법 등록 (내용 804 + 좌우 48)
-$sub-pop-width-narrow: 36rem; // [추가] 팝업 창 폭: 구독 확인 · 완료 (내용 480 + 좌우 48)
+// [수정] 플랜 선택(900) 과 구독 확인 · 완료(576) 창 크기 차이가 커서 둘 다 중간 크기(736)로 맞춤
+$sub-pop-width: 46rem; // 팝업 창 폭: 플랜 선택 · 지불 방법 등록
+$sub-pop-width-narrow: 46rem; // 팝업 창 폭: 구독 확인 · 완료 · 실패
 $sub-pop-pad: $space-4xl; // [추가] 팝업 창 안쪽 여백 (48)
 $sub-pop-surface: $dark-color-300; // [추가] 팝업(Dark/400) 위 카드 · 입력 칸 배경 (한 단계 밝게)
 
@@ -12822,6 +12823,7 @@ html body .subscribe-gate-btn {
 // [추가] 구독 플랜 [계속] 아래 "처음으로 돌아가기" — 눈에 덜 띄는 글자 버튼 (pages/Subscribe.jsx)
 .sub-exit-btn {
   @include body-small;
+  font-family: $font-family-base; // [수정] 다른 글자와 같은 글꼴
   display: block;
   margin: $space-lg auto 0;
   padding: $space-xs $space-sm;
@@ -12829,14 +12831,13 @@ html body .subscribe-gate-btn {
   border-radius: $radius-xs;
   background: none;
   color: $light-color-500;
-  font-family: inherit;
   cursor: pointer;
   transition: color 0.2s ease;
 
+  // [수정] 호버: 밑줄 대신 굵게 (Body/small → Body/small-B)
   &:hover {
+    @include body-small-b;
     color: $light-color-0;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
   }
 
   &:focus-visible {
@@ -12845,61 +12846,45 @@ html body .subscribe-gate-btn {
   }
 }
 
-// [수정] 작품 상세 위 예고편 일시정지 · 재생 버튼 (pages/MovieDetail.jsx) — 영상 정가운데 · 크게
-// - 멈춰 있을 때: 항상 보임 (YouTube 가운데 재생 버튼 위를 덮음)
-// - 재생 중: 영상 위에 마우스를 올리거나 키보드로 고를 때만 보임
+// [수정] 작품 상세 예고편 재생 · 일시정지 버튼 (pages/MovieDetail.jsx)
+// - 영상 칸 왼쪽 아래에 항상 고정 (전체보기 버튼과 같은 모양 · 크기)
 .player-media .btn-trailer-toggle {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  bottom: $space-5xl;
+  left: $space-lg;
   z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  // [수정] 배경 없이 아이콘만 · 크기는 YouTube 가운데 재생 버튼과 같게 (PC 96 · 태블릿 · 휴대폰은 화면 폭 따라 줄어듦)
-  width: clamp(3.5rem, 2.4rem + 3.6vw, 6rem);
-  height: clamp(3.5rem, 2.4rem + 3.6vw, 6rem);
-  transform: translate(-50%, -50%);
-  opacity: 0;
-
-  svg {
-    width: clamp(1.5rem, 1.05rem + 1.5vw, 2.5rem);
-    height: clamp(1.5rem, 1.05rem + 1.5vw, 2.5rem);
-    filter: drop-shadow(0 0.125rem 0.5rem rgba(0, 0, 0, 0.6)); // 밝은 장면에서도 보이게
-  }
-
-  &.is-paused,
-  &:focus-visible {
-    opacity: 1;
-  }
-
+  width: 2.75rem;
+  height: 2.75rem;
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: none; // [수정] 배경 없음
+  background-color: rgba(0, 0, 0, 0.55);
   color: $light-color-0;
   cursor: pointer;
-  transition: transform 0.2s ease,
-  opacity 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
 
   &:hover,
   &:focus-visible {
     outline: none;
-    transform: translate(-50%, -50%) scale(1.06);
-  }
-
-  &:focus-visible {
-    outline: 0.125rem solid $light-color-0;
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: scale(1.06);
   }
 }
 
-.player-media:hover .btn-trailer-toggle {
-  opacity: 1;
-}
-
-// 휴대폰: 조금 작게 · 마우스가 없으니 재생 중에도 흐리게 보임
+// 휴대폰: 여백만 조금 줄임
 @media (max-width: $breakpoint-mobile) {
   .player-media .btn-trailer-toggle {
-    opacity: 0.85; // [수정] 크기는 위 clamp 로 (화면 폭 따라)
+    bottom: $space-md;
+    left: $space-md;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }

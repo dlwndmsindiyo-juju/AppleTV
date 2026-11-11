@@ -82,6 +82,7 @@ const ExternalLink = ({ href, className = "auth-link", children }) => (
 const AUTH_PATHS = ["/login", "/subscribe"];
 const RESEND_SECONDS = 60;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const HANGUL_RE = /[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7A3]/; // [추가] 한글(자모 · 완성형) — 회원가입 이메일 · 비밀번호에 쓰면 막음
 
 const CODE_LENGTH = 6;
 
@@ -253,7 +254,13 @@ const Login = () => {
     setPassword("");
     setCode("");
     clearMessages();
-    // [수정] 인증 완료 직후 반드시 프로필 선택 화면으로 이동
+    // [수정] 처음 가입한 계정(한 번도 구독 · 무료 체험을 한 적 없음)은 프로필 선택보다 구독 플랜이 먼저
+    const u = useAuthStore.getState().user;
+    if (u && !isSubscribed(u) && !u.trialUsed && !u.subscription) {
+      navigate("/subscribe", { replace: true, state: { from: backTo() } });
+      return;
+    }
+    // 그 밖에는 인증 완료 직후 프로필 선택 화면으로 이동
     setStep("profile");
   };
 
@@ -304,8 +311,17 @@ const Login = () => {
     if (busy) return;
     clearMessages();
     const trimmed = email.trim();
+    // [추가] 한글이 들어간 이메일 · 비밀번호로는 가입할 수 없음 (영문 · 숫자 · 기호만)
+    if (HANGUL_RE.test(trimmed)) {
+      setErrorText("이메일에는 한글을 사용할 수 없습니다. 영문 · 숫자로 입력해 주세요.");
+      return;
+    }
     if (!EMAIL_RE.test(trimmed)) {
       setErrorText("이메일 형식을 확인해 주세요.");
+      return;
+    }
+    if (HANGUL_RE.test(password)) {
+      setErrorText("비밀번호에는 한글을 사용할 수 없습니다. 영문 · 숫자 · 기호로 입력해 주세요.");
       return;
     }
     if (password.length < 6) {
