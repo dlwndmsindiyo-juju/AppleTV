@@ -9,5 +9,5 @@ export const footerMainLinks = [
 export const footerSubLinks = [
     { label: "개인정보 처리방침", path: "/privacy" },
     { label: "이용 약관", path: "/terms" },
-    { label: "환불 안내", path: "/refund" },
+    { label: "판매 및 환불", path: "/refund" }, // [수정] 환불 안내 → 판매 및 환불 (페이지 제목과 같게)
 ];

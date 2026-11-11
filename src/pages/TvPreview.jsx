@@ -290,10 +290,10 @@ const TvPreview = () => {
           )
         : stage.querySelector("[data-tv-autofocus]") || stage.querySelector("button");
 
-      // [추가] TV 화면 맨 왼쪽에서 ← : 메뉴를 펼치고 지금 보는 메뉴(없으면 첫 메뉴)로
+      // [수정] TV 화면 맨 왼쪽에서 ← : 메뉴는 펼치지 않고 아이콘 메뉴(좁은 메뉴)의 지금 보는 아이콘(없으면 첫 아이콘)으로
+      // - 메뉴를 펼치는 건 메뉴 열기 아이콘(›)을 직접 눌렀을 때만 · 이미 펼쳐져 있으면 펼친 메뉴 그대로
       if (!inSide && next && side?.contains(next)) {
         if (current && stage.contains(current)) lastContentRef.current = current;
-        setSideOpen(true);
         requestAnimationFrame(() => {
           const item = side.querySelector(".tv-side-item.is-active") || side.querySelector(".tv-side-item");
           (item || next).focus({ preventScroll: true });
