@@ -11081,7 +11081,6 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
 }
 
 .sub-select-option {
-  @include body-default;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -11100,6 +11099,10 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
   &:hover,
   &:focus-visible {
     background-color: $primary-color-500;
+  }
+
+  span {
+    @include body-small;
   }
 }
 
@@ -12850,8 +12853,8 @@ html body .subscribe-gate-btn {
 // - 영상 칸 왼쪽 아래에 항상 고정 (전체보기 버튼과 같은 모양 · 크기)
 .player-media .btn-trailer-toggle {
   position: absolute;
-  bottom: $space-lg;
-  left: $space-lg;
+  bottom: $space-5xl;
+  left: $space-xl;
   z-index: 3;
   display: flex;
   align-items: center;
