@@ -2694,7 +2694,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     padding-right: 0;
   }
 
-  // ---------- 푸터 (이너 90% · 위아래 36 · 메뉴 → 로고 → 정책 → 저작권) ----------
+  // ---------- 푸터 (이너 90% · 위아래 36 · [수정] 로고 → 메뉴 → 정책 → 저작권 → 사업자 정보 · PC 와 같은 순서) ----------
   // [수정] 좌우는 다른 이너와 같은 화면 폭의 90% (예전: 좌우 64)
   .footer.footer.footer {
     padding: 0;
@@ -2705,8 +2705,9 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
       gap: $space-3xl;
     }
 
+    // [수정] 순서를 PC · 태블릿과 같게: 로고 → 메뉴 → 정책 → 저작권 → 사업자 정보
     .footer-main-menu {
-      order: 1;
+      order: 2;
       flex-wrap: nowrap;
       gap: $space-xl;
 
@@ -2716,7 +2717,7 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     }
 
     .footer-logo {
-      order: 2;
+      order: 1;
 
       img {
         height: 1.1875rem; // 19
@@ -2732,6 +2733,12 @@ $m-hero-inset: 10%; // 히어로 · 홍보 배너 글자 시작선 (시안 390 �
     .footer-copyright {
       order: 4;
       margin-top: -$space-md; // 정책 ↔ 저작권 24
+    }
+
+    // [추가] 사업자 정보: 저작권 바로 아래 (PC · 태블릿과 같은 자리)
+    .footer-business {
+      order: 5;
+      margin-top: -$space-xl; // 저작권 ↔ 사업자 정보 12
     }
   }
 

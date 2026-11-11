@@ -15,6 +15,7 @@ import { ConfirmDialog, subscriptionSummary } from "../components/profile/Accoun
 import { AddressRegisterPopup } from "./Subscribe"; // [추가] 청구 주소 추가 · 편집 = 지불 방법 등록과 같은 팝업 디자인
 import { useMovieStore } from "../store/useMovieStore"; // [추가] 알림 설정한 콘텐츠 목록
 import { TMDB_IMG } from "../utils/tmdb";
+import { showToast, toastIconFor } from "../utils/toast"; // [추가] 안내 → 공용 토스트
 
 // [추가] 알림 설정한 콘텐츠 — 공개 예정 · 검색 결과에서 종(🔔)을 누른 작품 (최근에 설정한 순)
 // - 포스터를 누르면 상세 · [알림 해제] 를 누르면 목록에서 빠짐 (토스트는 store 에서)
@@ -251,7 +252,7 @@ const ProfileNameDialog = ({ initial, busy, onSave, onCancel, onDelete, anchor =
   return (
     <ConfirmDialog
       title={title}
-      desc={`최대 ${PROFILE_NAME_MAX}자까지 입력할 수 있습니다.`}
+      desc={`헤더 · 프로필 선택 화면에 보이는 이름입니다. 최대 ${PROFILE_NAME_MAX}자까지 입력할 수 있습니다.`}
       confirmLabel="저장"
       busy={busy}
       confirmDisabled={!ready}
@@ -350,11 +351,12 @@ export const Profile = () => {
     el.scrollIntoView({ block: "start" });
   }, [authReady, hasUser, hash]);
 
-  // 안내 문구는 3초 뒤 사라짐
+  // [수정] 안내 문구 → 공용 토스트(utils/toast.js · 사이트 다른 알림과 같은 디자인 · 화면 아래 고정이라 스크롤해도 따라옴)
+  // - 예전 .account-toast 는 페이지 전환 애니메이션 안에 있어서 화면이 아니라 페이지 맨 아래에 붙어 있었음
   useEffect(() => {
     if (!message) return;
-    const t = setTimeout(() => setMessage(""), 3000);
-    return () => clearTimeout(t);
+    showToast(message, { icon: toastIconFor(message) });
+    setMessage("");
   }, [message]);
 
   if (!authReady) return <main className="account-page" />;
@@ -537,7 +539,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
-            {/* ---------- [추가] 지불 방법 ---------- */}
+ {/* ---------- [추가] 지불 방법 ---------- */}
             {/* - 지불 유형 · 청구 주소 · 국가/지역 한 줄 (휴대폰은 위아래) · 청구 주소는 사용자가 입력한 값만 */}
             <Section id="account-payment">
               <div className="account-item-row">
@@ -569,7 +571,7 @@ export const Profile = () => {
               </div>
             </Section>
 
-            {/* ---------- [추가] 구독 ---------- */}
+              {/* ---------- [추가] 구독 ---------- */}
             <Section id="account-subscription">
               <Item title="구독을 확인 및 관리합니다." desc={subscriptionSummary(user)}>
                 <Link className="account-link" to="/profile/subscription">
@@ -578,7 +580,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
-
+           
             {/* ---------- 계정 액세스 ---------- */}
             <Section id="account-access">
               <Item
@@ -612,7 +614,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
-
+          
 
             {/* ---------- 재생 기록 ---------- */}
             <Section id="account-history">
@@ -749,10 +751,10 @@ export const Profile = () => {
             editId === MAIN_PROFILE_ID
               ? undefined
               : () => {
-                setDeleteId(editId);
-                setEditId(null);
-                setDialog("deleteProfile");
-              }
+                  setDeleteId(editId);
+                  setEditId(null);
+                  setDialog("deleteProfile");
+                }
           }
         />
       )}
@@ -777,9 +779,7 @@ export const Profile = () => {
         />
       )}
 
-      <p className={`account-toast${message ? " is-show" : ""}`} role="status" aria-live="polite">
-        {message}
-      </p>
+      {/* [수정] 안내는 공용 토스트로 (위 effect) */}
     </main>
   );
 };

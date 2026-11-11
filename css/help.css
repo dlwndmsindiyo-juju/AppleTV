@@ -1,437 +1,29 @@
 .help-page {
   min-height: 100vh;
-  padding-top: 4.5rem;
-  background-color: #F5F5F5;
-  color: #2E2E2E;
+  padding: 4.5rem 0 5rem;
+  background-color: #171717;
+  color: #C8C8C8;
 }
-
-.help-hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8.5rem 1.5rem 6.5rem;
-  background: #EBEBEB;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.help-eyebrow {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.55rem;
-  letter-spacing: 0;
+.help-page :where(h1, h2, p, ul) {
   margin: 0;
-}
-
-.help-title {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 3.75rem;
-  line-height: 6rem;
-  letter-spacing: 0;
-  margin: 1.5rem 0 0;
   padding: 0;
-  letter-spacing: -0.01em;
 }
 
-.help-desc {
+.help-page,
+.help-page * {
   font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 1.0625rem;
-  line-height: 1.375rem;
-  letter-spacing: 0;
-  margin: 1.5rem 0 0;
-  color: #525252;
-  word-break: keep-all;
 }
 
-.help-links {
-  display: flex;
-  justify-content: center;
-  gap: 14.5rem;
-  margin-top: 4rem;
-}
-
-.help-link {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 1.0625rem;
-  line-height: 1.375rem;
-  letter-spacing: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #9AABF8;
-  text-decoration: none;
-}
-.help-link:hover {
-  font-weight: 800;
-}
-.help-link.is-current {
-  color: #5865F2;
-  font-weight: 800;
-}
-.help-link:focus-visible {
-  outline: 0.125rem solid #5865F2;
-  outline-offset: 0.25rem;
-  border-radius: 0.5rem;
-}
-
-.help-link-arrow {
-  font-size: 1.25em;
-  line-height: 1;
-}
-
-.help-body {
-  max-width: calc(65rem + 1.5rem * 2);
+.help-inner {
+  width: calc(100% - 3rem);
+  max-width: 55rem;
   margin: 0 auto;
-  padding: 7.5rem 1.5rem 10rem;
 }
 
-.help-section + .help-section {
-  margin-top: 11rem;
-}
-
-.help-section-title {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 2.125rem;
-  line-height: 2.5625rem;
-  letter-spacing: 0;
-  margin: 0;
-  padding: 0;
-  word-break: keep-all;
-}
-
-.help-section-desc {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 1.0625rem;
-  line-height: 1.375rem;
-  letter-spacing: 0;
-  margin: 2rem 0 0;
-  color: #525252;
-}
-
-.help-cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2.5rem;
-  margin: 2.25rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.help-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  min-height: 18.75rem;
-  padding: 2.25rem 1.5rem;
-  border: none;
-  border-radius: 0.75rem;
-  background-color: #EBEBEB;
-  color: inherit;
-  font-family: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-.help-card:hover {
-  background-color: #EBEBEB;
-  transform: translateY(-0.25rem);
-  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.06);
-}
-.help-card:focus-visible {
-  outline: 0.125rem solid #5865F2;
-  outline-offset: 0.25rem;
-}
-
-.help-card-num {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 2.125rem;
-  line-height: 2.5625rem;
-  letter-spacing: 0;
-  color: #5865F2;
-}
-
-.help-card-title {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.55rem;
-  letter-spacing: 0;
-  margin-top: 1.5rem;
-  word-break: keep-all;
-}
-
-.help-card-desc {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 1.0625rem;
-  line-height: 1.375rem;
-  letter-spacing: 0;
-  margin-top: 1rem;
-  color: #525252;
-  word-break: keep-all;
-}
-
-.help-list {
-  margin: 2rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.help-item {
-  scroll-margin-top: calc(4.5rem + 1.5rem);
-  border-bottom: 1px solid #EBEBEB;
-}
-.help-item .help-question button span {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 2.25rem;
-  line-height: 3.5rem;
-  letter-spacing: 0;
-}
-
-.help-question {
-  margin: 1rem 0;
-}
-.help-question button {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.55rem;
-  letter-spacing: 0;
+.help-backbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  width: 100%;
-  padding: 2rem 2rem;
-  border: none;
-  border-radius: 0.75rem;
-  background: none;
-  color: #2E2E2E;
-  font-family: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-.help-question button:focus-visible {
-  outline: 0.125rem solid #5865F2;
-  outline-offset: -0.125rem;
-}
-
-.help-item.is-open .help-question button {
-  padding-bottom: 1rem;
-}
-
-.help-chevron {
-  flex-shrink: 0;
-  width: 0.625rem;
-  height: 0.625rem;
-  margin-right: 0.25rem;
-  border-right: 0.125rem solid currentColor;
-  border-bottom: 0.125rem solid currentColor;
-  transform: translateY(-25%) rotate(45deg);
-  transition: transform 0.25s ease;
-}
-.help-item.is-open .help-chevron {
-  transform: translateY(25%) rotate(-135deg);
-}
-
-.help-answer {
-  padding: 2.25rem 2.25rem;
-  animation: help-open 0.25s ease;
-  background: #EBEBEB;
-}
-.help-answer p {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 1.0625rem;
-  line-height: 1.375rem;
-  letter-spacing: 0;
-  margin: 0;
-  color: #525252;
-  word-break: keep-all;
-}
-
-@keyframes help-open {
-  from {
-    opacity: 0;
-    transform: translateY(-0.375rem);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@media (max-width: 1023px) {
-  .help-hero {
-    padding: 5rem 1.5rem 4rem;
-  }
-  .help-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 2.125rem;
-    line-height: 2.5625rem;
-    letter-spacing: 0;
-    font-size: 3.5rem;
-    line-height: 4.25rem;
-  }
-  .help-links {
-    gap: 5rem;
-    margin-top: 2.5rem;
-  }
-  .help-body {
-    padding: 5rem 1.5rem 6rem;
-  }
-  .help-section + .help-section {
-    margin-top: 6rem;
-  }
-  .help-cards {
-    gap: 1rem;
-  }
-  .help-card {
-    min-height: 15rem;
-    padding: 1.75rem 1.25rem;
-  }
-}
-@media (max-width: 767px) {
-  .help-hero {
-    padding: 3.5rem 1rem 3rem;
-  }
-  .help-eyebrow {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 1.0625rem;
-    line-height: 1.375rem;
-    letter-spacing: 0;
-  }
-  .help-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 3rem;
-    line-height: 3.5rem;
-    letter-spacing: 0;
-    margin-top: 0.75rem;
-  }
-  .help-desc {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 0.9375rem;
-    line-height: 1.25rem;
-    letter-spacing: 0;
-    margin-top: 0.75rem;
-  }
-  .help-links {
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  .help-link {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 0.9375rem;
-    line-height: 1.25rem;
-    letter-spacing: 0;
-  }
-  .help-body {
-    padding: 3.5rem 1rem 4.5rem;
-  }
-  .help-section + .help-section {
-    margin-top: 4rem;
-  }
-  .help-section-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 1.65rem;
-    line-height: 2.125rem;
-    letter-spacing: 0;
-  }
-  .help-section-desc {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 0.9375rem;
-    line-height: 1.25rem;
-    letter-spacing: 0;
-    margin-top: 0.75rem;
-  }
-  .help-cards {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 0.25rem;
-    margin-top: 2rem;
-  }
-  .help-card {
-    min-height: 0;
-    padding: 1.5rem;
-  }
-  .help-card-num {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 1.65rem;
-    line-height: 2.125rem;
-    letter-spacing: 0;
-  }
-  .help-card-title {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 1.0625rem;
-    line-height: 1.375rem;
-    letter-spacing: 0;
-    margin-top: 0.75rem;
-    width: 100%;
-  }
-  .help-card-desc {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 0.9375rem;
-    line-height: 1.25rem;
-    letter-spacing: 0;
-    margin-top: 0.5rem;
-  }
-  .help-list {
-    margin-top: 2rem;
-  }
-  .help-item {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 0.9375rem;
-    line-height: 1.25rem;
-    letter-spacing: 0;
-  }
-  .help-question button {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 0.9375rem;
-    line-height: 1.25rem;
-    letter-spacing: 0;
-    padding: 0.75rem 1.5rem;
-  }
-  .help-answer {
-    padding: 0.75rem 1.5rem;
-  }
-  .help-answer p {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 0.9375rem;
-    line-height: 1.25rem;
-    letter-spacing: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .help-card,
-  .help-chevron,
-  .help-answer {
-    transition: none;
-    animation: none;
-  }
-}
-.help-body {
-  padding-top: 1.5rem;
+  height: 2.75rem;
 }
 
 .help-back {
@@ -440,72 +32,295 @@
   font-size: 0.9375rem;
   line-height: 1.25rem;
   letter-spacing: 0;
-  margin: 0 0 4.25rem;
-  display: flex;
-  width: fit-content;
+  display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0;
+  gap: 0.5rem;
+  padding: 0;
   border: none;
-  border-radius: 0.5rem;
   background: none;
-  color: #2E2E2E;
+  color: #9AABF8;
   cursor: pointer;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition: color 0.2s ease;
 }
 .help-back:hover {
-  color: #5865F2;
+  color: #FFFFFF;
 }
 .help-back:focus-visible {
-  outline: 0.125rem solid #5865F2;
+  outline: 0.125rem solid #8490F6;
+  outline-offset: 0.25rem;
+  border-radius: 0.5rem;
+}
+
+.help-back-arrow {
+  font-size: 1.25rem;
+  line-height: 1;
+  transform: translateY(-0.0625rem);
+}
+
+.help-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2.5rem;
+  text-align: center;
+}
+
+.help-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  word-break: keep-all;
+}
+
+.help-meta {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  margin-top: 0.5rem !important;
+  color: #A3A3A3;
+}
+
+.help-desc {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
+  letter-spacing: 0;
+  max-width: 40rem;
+  margin-top: 1rem !important;
+  color: #D5D5D5;
+  word-break: keep-all;
+}
+
+.help-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 11.125rem));
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.help-link {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
+  letter-spacing: 0;
+  justify-self: center;
+  color: #9AABF8;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+.help-link:hover {
+  color: #FFFFFF;
+}
+.help-link.is-current {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
+  letter-spacing: 0;
+  color: #FFFFFF;
+}
+.help-link:focus-visible {
+  outline: 0.125rem solid #8490F6;
+  outline-offset: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.help-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 3rem;
+}
+
+.help-intro-text {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  color: #C8C8C8;
+  word-break: keep-all;
+}
+
+.help-hint {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  margin-top: 3rem !important;
+  color: #A3A3A3;
+  word-break: keep-all;
+}
+
+.help-list {
+  margin-top: 0.75rem !important;
+  border-top: 0.0625rem solid #2E2E2E;
+  list-style: none;
+}
+
+.help-item {
+  border-bottom: 0.0625rem solid #2E2E2E;
+}
+
+.help-question button {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 3.8125rem;
+  padding: 0.75rem 0;
+  border: none;
+  background: none;
+  color: #FFFFFF;
+  text-align: left;
+  cursor: pointer;
+  word-break: keep-all;
+}
+.help-question button:focus-visible {
+  outline: 0.125rem solid #8490F6;
   outline-offset: 0.125rem;
+  border-radius: 0.25rem;
 }
 
-.help-back-icon {
+.help-chevron {
   flex-shrink: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  background-color: currentColor;
-  -webkit-mask: url("/icons/nav/left-nav.svg") center/contain no-repeat;
-  mask: url("/icons/nav/left-nav.svg") center/contain no-repeat;
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-right: 0.375rem;
+  border-right: 0.125rem solid currentColor;
+  border-bottom: 0.125rem solid currentColor;
+  transform: translateY(-0.1875rem) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.is-open .help-chevron {
+  transform: translateY(0.1875rem) rotate(-135deg);
 }
 
-@media (max-width: 1023px) {
-  .help-body {
-    padding-top: 1.5rem;
-  }
-  .help-back {
-    margin-bottom: 1.75rem;
-  }
+.help-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.75rem;
+  background-color: #1f1f1f;
 }
+
+.help-answer-text {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  color: #C8C8C8;
+  word-break: keep-all;
+}
+
+.help-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  list-style: none;
+}
+.help-bullets li {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  position: relative;
+  padding-left: 1rem;
+  color: #C8C8C8;
+  word-break: keep-all;
+}
+.help-bullets li::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: 0.25rem;
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
 @media (max-width: 767px) {
-  .help-body {
-    padding-top: 0.75rem;
+  .help-page {
+    padding-bottom: 3.5rem;
   }
-  .help-body .help-question button {
+  .help-hero {
+    padding-top: 2rem;
+  }
+  .help-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
+    font-size: 1.65rem;
+    line-height: 2.125rem;
+    letter-spacing: 0;
+  }
+  .help-desc {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+  }
+  .help-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+  .help-link {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+  }
+  .help-link.is-current {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+  }
+  .help-intro,
+  .help-hint {
+    margin-top: 2rem !important;
+  }
+  .help-intro-text,
+  .help-answer-text,
+  .help-bullets li {
+    font-family: "SF Pro", sans-serif;
+    font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
   }
-  .help-body .help-question button span {
+  .help-question button {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
     letter-spacing: 0;
+    min-height: 3.25rem;
   }
-  .help-body .help-back {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 0.8125rem;
-    line-height: 1.125rem;
-    letter-spacing: 0;
-    margin-bottom: 1rem;
-  }
-  .help-body .help-back-icon {
-    width: 1rem;
-    height: 1rem;
+  .help-answer {
+    padding: 0.75rem 1rem;
   }
 }
