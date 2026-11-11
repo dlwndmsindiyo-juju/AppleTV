@@ -111,7 +111,18 @@ const TvPreview = () => {
   // [추가] 상세에서 다른 상세(추천 · 하이라이트 등)로 넘어간 기록 — 뒤로 가면 하나씩 이전 상세로
   const [detailStack, setDetailStack] = useState([]);
   // [추가] 상세를 열기 전 보던 화면에서 고르고 있던 버튼 순서 (뒤로 오면 그 카드에 다시 포커스 · 줄도 그 자리로)
-  const returnFocusRef = useRef({}); // { 화면(tab): 버튼 순서 } — 홈 → 장르 → 상세처럼 여러 번 들어가도 화면마다 기억
+  const returnFocusRef = useRef({}); // { 화면(tab): { key, index } } — 홈 → 장르 → 상세처럼 여러 번 들어가도 화면마다 기억
+  // [수정] 돌아올 카드 기억: 카드의 data-tv-key(섹션 ID:작품 ID) 우선 · 없으면 버튼 순서
+  // - 순서만 기억하면 줄이 늦게 그려지거나 순서가 바뀔 때 다른 카드로 돌아갔음
+  const rememberFocus = (screen) => {
+    const stage = stageRef.current;
+    const el = document.activeElement;
+    const buttons = stage ? [...stage.querySelectorAll("button:not([disabled])")] : [];
+    returnFocusRef.current[screen] = {
+      key: el?.closest?.("[data-tv-key]")?.getAttribute("data-tv-key") || null,
+      index: buttons.indexOf(el),
+    };
+  };
   // [추가] AI 추천에서 연 상세: 뒤로 가면 AI 팝업을 보던 결과 그대로 다시 엶 (aiSnapshot · AiAssistantPopup)
   const detailFromAiRef = useRef(null);
   const openDetail = (item, aiSnapshot = null) => {
@@ -120,9 +131,7 @@ const TvPreview = () => {
       setDetailBack(tab);
       setDetailStack([]);
       detailFromAiRef.current = aiSnapshot;
-      const stage = stageRef.current;
-      const buttons = stage ? [...stage.querySelectorAll("button:not([disabled])")] : [];
-      if (!aiSnapshot) returnFocusRef.current[tab] = buttons.indexOf(document.activeElement); // 돌아갈 화면 · 버튼 순서
+      if (!aiSnapshot) rememberFocus(tab); // [수정] 돌아갈 화면 · 고르던 카드 (섹션 + 작품 ID · 없으면 버튼 순서)
     } else if (detailItem) {
       setDetailStack((st) => [...st, detailItem]);
     }
@@ -153,9 +162,7 @@ const TvPreview = () => {
   // [추가] 장르 화면 (tab: "genre:genre-sf") — 홈의 장르별 모음 카드 · Esc 로 홈(고르던 카드)으로
   const genreId = tab.startsWith("genre:") ? tab.slice(6) : null;
   const openGenre = (id) => {
-    const stage = stageRef.current;
-    const buttons = stage ? [...stage.querySelectorAll("button:not([disabled])")] : [];
-    returnFocusRef.current[tab] = buttons.indexOf(document.activeElement); // 돌아갈 화면 · 버튼 순서
+    rememberFocus(tab); // [수정] 돌아갈 화면 · 고르던 카드
     setTab(`genre:${id}`);
   };
   const screenTeam = teamTabId ? getTeamById(teamTabId) : null;
@@ -168,7 +175,10 @@ const TvPreview = () => {
   const [scale, setScale] = useState(1);
   const [stageW, setStageW] = useState(TV_W);
   const [stageH, setStageH] = useState(TV_H);
-  const [sideOpen, setSideOpen] = useState(true); // [추가] 왼쪽 메뉴 (기본 열림 · 화살표로 닫고 열기)
+  // [수정] 왼쪽 메뉴: 기본은 접힌 세로 아이콘 바 (콘텐츠 중심) · ← 로 메뉴에 들어가면 펼침 · → 로 보던 카드로 돌아오면 접힘
+  // - 펼친 메뉴는 TV 화면 위에 겹쳐서 열림 (TV 화면 · 글자를 통째로 줄이지 않음)
+  const [sideOpen, setSideOpen] = useState(false);
+  const lastContentRef = useRef(null); // [추가] TV 화면에서 마지막으로 고른 카드 · 버튼 (메뉴에서 → 로 돌아올 자리)
   const [playing, setPlaying] = useState(false); // [추가] 영상 재생 중에는 왼쪽 메뉴 숨김
   const previewRef = useRef(null);
   const areaRef = useRef(null);
@@ -213,7 +223,7 @@ const TvPreview = () => {
     if (isTouch) return undefined;
     const stage = stageRef.current;
     const target = tab !== "detail" ? returnFocusRef.current[tab] : null; // 그 화면으로 돌아왔을 때만
-    if (target == null || target < 0) {
+    if (!target || (!target.key && target.index < 0)) {
       const first = stage?.querySelector("[data-tv-autofocus]") || stage?.querySelector("button");
       first?.focus({ preventScroll: true });
       return undefined;
@@ -223,13 +233,18 @@ const TvPreview = () => {
     let timer = null;
     const restore = () => {
       const buttons = stage ? [...stage.querySelectorAll("button:not([disabled])")] : [];
-      if (buttons[target]) {
-        buttons[target].focus({ preventScroll: true });
-        buttons[target].scrollIntoView({ block: "nearest", inline: "nearest" }); // 카드 줄 · 화면을 그 카드 자리로
+      // [수정] 섹션 + 작품 ID 로 찾기 → 없으면 버튼 순서
+      const byKey = target.key
+        ? [...(stage?.querySelectorAll("[data-tv-key]") || [])].find((el) => el.getAttribute("data-tv-key") === target.key)
+        : null;
+      const el = byKey || (!target.key || tries >= 20 ? buttons[target.index] : null);
+      if (el) {
+        el.focus({ preventScroll: true });
+        el.scrollIntoView({ block: "nearest", inline: "nearest" }); // 카드 줄 · 화면을 그 카드 자리로
         return;
       }
       if (tries++ < 20) timer = setTimeout(restore, 100);
-      else (stage?.querySelector("[data-tv-autofocus]") || buttons[0])?.focus({ preventScroll: true });
+      else (buttons[target.index] || stage?.querySelector("[data-tv-autofocus]") || buttons[0])?.focus({ preventScroll: true });
     };
     timer = setTimeout(restore, 150); // 이미 받아 둔 줄(캐시)이 다시 그려진 뒤에 찾기 (줄 순서가 밀리지 않게)
     return () => clearTimeout(timer);
@@ -248,13 +263,65 @@ const TvPreview = () => {
       if (document.activeElement?.tagName === "INPUT" && (e.key === "ArrowLeft" || e.key === "ArrowRight")) return;
       e.preventDefault();
       const current = root.contains(document.activeElement) ? document.activeElement : null;
+      const side = root.querySelector(".tv-side");
+      const inSide = Boolean(current && side?.contains(current));
+
+      // [추가] 메뉴에서 → : 보던 카드(마지막으로 고른 TV 화면 버튼)로 돌아가고 메뉴는 접음
+      if (inSide && e.key === "ArrowRight" && current.tagName !== "INPUT") {
+        const back = lastContentRef.current?.isConnected ? lastContentRef.current : null;
+        const target = back || stage.querySelector("[data-tv-autofocus]") || stage.querySelector("button");
+        setSideOpen(false);
+        target?.focus({ preventScroll: true });
+        target?.scrollIntoView({ block: "nearest", inline: "nearest" });
+        return;
+      }
+
+      // [수정] 메뉴 안에서는 메뉴 안에서만 위아래로 (펼친 메뉴 뒤 TV 화면 버튼으로 새지 않게)
       const next = current
-        ? findNext(root, current, e.key)
+        ? findNext(
+            root,
+            current,
+            e.key,
+            inSide
+              ? (el) => side.contains(el)
+              : e.key === "ArrowUp" || e.key === "ArrowDown"
+                ? (el) => !side?.contains(el) // TV 화면 위아래 이동은 TV 화면 안에서만 (옆 메뉴 바로 새지 않게)
+                : null,
+          )
         : stage.querySelector("[data-tv-autofocus]") || stage.querySelector("button");
+
+      // [추가] TV 화면 맨 왼쪽에서 ← : 메뉴를 펼치고 지금 보는 메뉴(없으면 첫 메뉴)로
+      if (!inSide && next && side?.contains(next)) {
+        if (current && stage.contains(current)) lastContentRef.current = current;
+        setSideOpen(true);
+        requestAnimationFrame(() => {
+          const item = side.querySelector(".tv-side-item.is-active") || side.querySelector(".tv-side-item");
+          (item || next).focus({ preventScroll: true });
+          (item || next).scrollIntoView({ block: "nearest" });
+        });
+        return;
+      }
       next?.focus({ preventScroll: true });
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // [추가] TV 화면에서 고른 버튼 기억 (메뉴에서 → 로 돌아올 자리) · TV 화면을 마우스로 누르면 펼친 메뉴 접기
+  useEffect(() => {
+    const stage = stageRef.current;
+    const area = areaRef.current;
+    if (!stage) return undefined;
+    const onFocusIn = (e) => {
+      lastContentRef.current = e.target;
+    };
+    const onDown = () => setSideOpen(false);
+    stage.addEventListener("focusin", onFocusIn);
+    area?.addEventListener("pointerdown", onDown);
+    return () => {
+      stage.removeEventListener("focusin", onFocusIn);
+      area?.removeEventListener("pointerdown", onDown);
+    };
   }, []);
 
   // [추가] 장르 화면에서 Esc (리모컨 뒤로) → 홈 (장르 카드에 다시 포커스)
@@ -369,7 +436,7 @@ const TvPreview = () => {
           [수정] 닫으면 숨기지 않고 아이콘만 남은 좁은 메뉴(is-rail) — 방향키로 아이콘 · 열기 화살표까지 이동 가능
           - 글자는 .tv-side-label 로 감싸서 좁은 메뉴에서는 화면에서만 숨김 (화면 읽기 프로그램은 그대로 읽음) · TV.scss */}
       {showSide && (
-        <aside className={`tv-side${sideOpen ? "" : " is-rail"}`} aria-label="TV 화면 메뉴">
+        <aside className={`tv-side${sideOpen ? " is-open" : " is-rail"}`} aria-label="TV 화면 메뉴">
           <div className="tv-side-head">
             <img className="tv-side-logo" src="/icons/shorts/logo_w.svg" alt="Apple TV" />
 
@@ -554,7 +621,10 @@ const TvPreview = () => {
 
       {/* [삭제] 메뉴를 닫았을 때 TV 화면 위에 떠 있던 열기 화살표 → 좁은 메뉴(is-rail) 안의 화살표로 (방향키로 갈 수 있음) */}
 
-      <div className="tv-preview-area" ref={areaRef}>
+      {/* [수정] TV 화면: 왼쪽은 접힌 메뉴 바 자리 · 오른쪽은 안전 여백만큼 띄움 (실제 TV 에서 가장자리가 잘리지 않게)
+          - 실제 크기 계산은 안쪽 상자(.tv-preview-viewport) 기준 */}
+      <div className="tv-preview-area">
+        <div className="tv-preview-viewport" ref={areaRef}>
         <div
           className="tv-preview-stage"
           ref={stageRef}
@@ -602,6 +672,7 @@ const TvPreview = () => {
           {tab === "detail" && detailItem && <TvDetail key={detailItem.key || detailItem.title} item={detailItem} onOpen={openDetail} onBack={closeDetail} />}
           {tab === "search" && <TvSearch key={searchKey} onMenu={setTab} onDetail={openDetail} initialQuery={query.trim()} />}
           {screenTeam && <TvTeam key={screenTeam.id} team={screenTeam} />}
+        </div>
         </div>
       </div>
 
