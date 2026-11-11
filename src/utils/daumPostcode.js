@@ -3,10 +3,11 @@
 // - 스크립트를 처음 누를 때 한 번만 불러옴 (페이지를 열 때마다 받지 않음)
 // - openPostcode() → 사용자가 주소를 고르면 { sido, sigungu, road, postal, full } · 닫으면 null
 //   sido · sigungu 는 청구 주소 선택 상자(data/koreaRegions.js) 이름에 맞춰서 돌려줌
-// - 안내: https://postcode.map.daum.net/guide
+// - 안내: https://postcode.map.kakao.com/guide
 import { KOREA_REGIONS, SIDO_LIST } from "../data/koreaRegions";
 
-const SCRIPT_SRC = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+// [수정] t1.daumcdn.net 도메인 종료(2026-11-30) → 카카오 권장 주소 t1.kakaocdn.net 으로 변경 (경로 · 사용법은 그대로)
+const SCRIPT_SRC = "https://t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
 let loading = null;
 
 const loadScript = () => {

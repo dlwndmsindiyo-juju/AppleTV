@@ -163,7 +163,8 @@ const SubscribeGate = ({ onLogin } = {}) => {
   useEffect(() => {
     if (!gated) return undefined;
     const onClick = (e) => {
-      const el = e.target.closest?.(WATCH_SELECTOR) || (loggedOut ? guestLinkOf(e.target) : null);
+      // [수정] 로그인했지만 구독 전(새로고침해서 로그인이 이어진 경우 포함)도 로그인 전처럼 작품 · 인물 상세 링크를 막고 구독 안내
+      const el = e.target.closest?.(WATCH_SELECTOR) || guestLinkOf(e.target);
       if (!el || el.closest(".subscribe-gate")) return;
       e.preventDefault();
       e.stopPropagation();
@@ -174,18 +175,18 @@ const SubscribeGate = ({ onLogin } = {}) => {
     };
     document.addEventListener("click", onClick, true); // capture: 각 섹션의 onClick 보다 먼저
     return () => document.removeEventListener("click", onClick, true);
-  }, [gated, loggedOut]);
+  }, [gated]);
 
   // 감상 페이지 주소로 바로 들어온 경우 (새로고침 · 공유 링크)
   useEffect(() => {
-    if ((gated && isWatchRoute(pathname)) || (loggedOut && isGuestRoute(pathname))) {
+    if (gated && (isWatchRoute(pathname) || isGuestRoute(pathname))) { // [수정] 구독 전 계정도 상세 주소로 바로 들어오면 안내
       targetHref.current = "";
       setLeaveOnClose(true);
       setReason("watch");
     } else {
       setReason(null); // 페이지가 바뀌거나 로그인 · 구독하면 닫기
     }
-  }, [pathname, gated, loggedOut]);
+  }, [pathname, gated]);
 
   const close = useCallback(() => {
     setReason(null);
