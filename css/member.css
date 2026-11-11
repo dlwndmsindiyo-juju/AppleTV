@@ -131,8 +131,8 @@
 .member-home .member-card-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.25rem;
-  line-height: 1.5625rem;
+  font-size: 1rem;
+  line-height: 1.4rem;
   letter-spacing: 0;
   color: #FFFFFF;
   margin: 0;
@@ -1237,8 +1237,8 @@
 .member-home .member-sc-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   color: #F5F5F5;
   white-space: nowrap;
@@ -1665,8 +1665,8 @@
   .member-home .member-genre-name {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.3rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.55rem;
     letter-spacing: 0;
   }
 }
