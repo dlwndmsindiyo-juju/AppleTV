@@ -90,11 +90,6 @@
 }
 
 .help-links {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.25rem;
-  letter-spacing: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 11.125rem));
   justify-content: center;
