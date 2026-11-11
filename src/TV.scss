@@ -131,10 +131,13 @@ $tv-type-real-sizes: (
   @if map.has-key($tv-type-real-sizes, $name) {
     @return map.get($tv-type-real-sizes, $name);
   }
+
   $base: list.nth(tv-type-split($name), 1);
+
   @if map.has-key($tv-type-real-sizes, $base) {
     @return map.get($tv-type-real-sizes, $base);
   }
+
   @return map.get($tv-type-sizes, $base);
 }
 
@@ -144,7 +147,8 @@ $tv-type-real-sizes: (
   $lh: list.nth($v, 2);
   $next: math.max($fs * $k, math.min($fs, $tv-type-min)); // 원래 16 보다 작던 글자는 원래 크기보다 키우지 않음
   font-size: $next;
-  @if $lh != normal {
+
+  @if $lh !=normal {
     line-height: $lh * math.div($next, $fs);
   }
 }
@@ -152,7 +156,9 @@ $tv-type-real-sizes: (
 @mixin tv-type-size($name, $scale: false) {
   @if $scale {
     @include tv-type-scaled($name);
-  } @else {
+  }
+
+  @else {
     $base: list.nth(tv-type-split($name), 1);
     $v: map.get($tv-type-sizes, $base);
     font-size: list.nth($v, 1);
@@ -2349,18 +2355,18 @@ $tv-type-shrink: (
   height: 4.125rem;
   border-radius: $tv-btn-radius;
   overflow: hidden;
-  background-color: rgba($dark-color-200, 0.5);
+  background-color: $dark-color-200;
   backdrop-filter: blur(1.25rem);
   -webkit-backdrop-filter: blur(1.25rem);
 }
 
 .tv-search-filter {
-  @include tv-type(display-M-b);
+  @include tv-type(display-l-b);
   flex: 1;
   padding: 0;
   border: 0;
   background: transparent;
-  color: $dark-color-100;
+  color: $neutral-color-400;
   cursor: pointer;
 
   &+.tv-search-filter {

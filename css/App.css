@@ -10504,11 +10504,6 @@ main.wish-page {
 }
 
 .sub-select-option {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.25rem;
-  letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10526,6 +10521,13 @@ main.wish-page {
 }
 .sub-select-option:hover, .sub-select-option:focus-visible {
   background-color: #5865F2;
+}
+.sub-select-option span {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
 }
 
 .sub-select-check {
@@ -12235,8 +12237,8 @@ html body .subscribe-gate-btn {
 
 .player-media .btn-trailer-toggle {
   position: absolute;
-  bottom: 1rem;
-  left: 1rem;
+  bottom: 4rem;
+  left: 1.5rem;
   z-index: 3;
   display: flex;
   align-items: center;
