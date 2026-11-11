@@ -40,23 +40,6 @@ service cloud.firestore {
         && (!('sportAlert' in s) || validAlert(s.sportAlert));
     }
 
-    // [추가] 계정 설정: 지불 방법 [{ id, brand, last4 }] (카드사 · 끝 4자리만 · 최대 5개)
-    function validPayments(list) {
-      return list is list && list.size() <= 5;
-    }
-
-    // [추가] 계정 설정: 청구 주소 { name, address1, address2, postal, phone } (글자 · 칸마다 100자 이하)
-    function validBillingField(b, k) {
-      return !(k in b) || (b[k] is string && b[k].size() <= 100);
-    }
-
-    function validBilling(b) {
-      return b is map
-        && b.keys().hasOnly(['name', 'address1', 'address2', 'postal', 'phone'])
-        && validBillingField(b, 'name') && validBillingField(b, 'address1') && validBillingField(b, 'address2')
-        && validBillingField(b, 'postal') && validBillingField(b, 'phone');
-    }
-
     match /users/{uid} {
       allow read: if request.auth != null && request.auth.uid == uid;
 
@@ -78,12 +61,6 @@ service cloud.firestore {
             || validAvatar(request.resource.data.avatar))
         && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['settings'])
             || validSettings(request.resource.data.settings))
-        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['subscriptionCanceled'])
-            || request.resource.data.subscriptionCanceled is bool)
-        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['payments'])
-            || validPayments(request.resource.data.payments))
-        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['billing'])
-            || validBilling(request.resource.data.billing))
         && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['sessionsRevokedAt'])
             || request.resource.data.sessionsRevokedAt == request.time);
 
@@ -105,18 +82,28 @@ service cloud.firestore {
     }
 
     // [추가] 이어보기 시청 기록: users/{uid}/watchHistory/{movie_123} — 본인만
+    // - [수정] profileId(어느 프로필의 기록인지) 허용 — 프로필별로 서버에서 골라 받기 (useWatchStore)
     match /users/{uid}/watchHistory/{itemId} {
       allow read, delete: if request.auth != null && request.auth.uid == uid;
       allow create, update: if request.auth != null && request.auth.uid == uid
         && request.resource.data.keys().hasOnly(
              ['id', 'type', 'title', 'backdrop_path', 'poster_path', 'genre',
-              'season', 'episode', 'episodeName', 'videoKey', 'position', 'duration', 'updatedAt'])
+              'season', 'episode', 'episodeName', 'videoKey', 'position', 'duration', 'updatedAt',
+              'profileId'])
         && request.resource.data.type in ['movie', 'tv']
         && request.resource.data.title is string
         && request.resource.data.title.size() <= 200
         && request.resource.data.position is number
         && request.resource.data.duration is number
-        && request.resource.data.updatedAt == request.time;
+        && request.resource.data.updatedAt == request.time
+        && (!('profileId' in request.resource.data)
+            || (request.resource.data.profileId is string && request.resource.data.profileId.size() <= 64));
+
+      // [추가] 예전 기록 이관: profileId 하나만 채우는 수정 (updatedAt 은 그대로 → 최근 순서 유지)
+      allow update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['profileId'])
+        && request.resource.data.profileId is string
+        && request.resource.data.profileId.size() <= 64;
     }
 
     // 위시리스트 그룹: users/{uid}/wishGroups/{groupId} — 본인만 · 이름 30자

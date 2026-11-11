@@ -731,7 +731,7 @@ export const Profile = () => {
       {dialog === "logout" && (
         <ConfirmDialog
           title="모든 브라우저에서 로그아웃할까요?"
-          desc="이 브라우저에서 바로 로그아웃되고, 다른 브라우저는 다음에 사이트를 열 때 로그아웃됩니다."
+          desc="이 브라우저에서 바로 로그아웃되고, 지금 열려 있는 다른 브라우저도 이 사이트에서 로그아웃됩니다. 꺼져 있거나 인터넷에 연결되지 않은 브라우저는 다음에 사이트를 열 때 로그아웃됩니다."
           confirmLabel="로그아웃"
           busy={busy}
           onConfirm={confirmDialog}

@@ -8,7 +8,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, getDoc, setDoc, updateDoc, deleteField, Timestamp, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc, updateDoc, deleteField, Timestamp, serverTimestamp } from "firebase/firestore";
 import { httpsCallable } from "firebase/functions";
 import { clearWatchHistory } from "./useWatchStore"; // 이어보기 시청 기록 (users/{uid}/watchHistory)
 
@@ -273,6 +273,30 @@ const isSessionRevoked = async (fbUser, data) => {
     }
 };
 
+// [추가] 열려 있는 다른 브라우저도 "모든 브라우저에서 로그아웃"에 바로 반응 (리뷰 P2)
+// - 로그인해 있는 동안 users/{uid} 문서를 지켜보다가 sessionsRevokedAt 이 이 세션 로그인 시각보다 뒤면 이 브라우저도 로그아웃
+// - 주의: 화면(클라이언트)에서의 로그아웃일 뿐 서버의 로그인 토큰을 즉시 취소하는 보안 기능이 아님
+//   · 인터넷이 끊겨 있던 브라우저는 다음 접속 때(initAuth) 로그아웃
+//   · 즉시 차단이 필요하면 서버(Functions)에서 admin.auth().revokeRefreshTokens(uid) + 보호 자원의 토큰 시각 검사가 필요
+let revokeWatch = { uid: null, stop: null };
+const stopRevokeWatch = () => {
+    revokeWatch.stop?.();
+    revokeWatch = { uid: null, stop: null };
+};
+const startRevokeWatch = (fbUser, onRevoked) => {
+    if (revokeWatch.uid === fbUser.uid) return;
+    stopRevokeWatch();
+    const stop = onSnapshot(
+        doc(db, "users", fbUser.uid),
+        async (snap) => {
+            if (auth.currentUser?.uid !== fbUser.uid) return;
+            if (await isSessionRevoked(fbUser, snap.data())) onRevoked();
+        },
+        (err) => console.warn("세션 확인 연결 실패:", err.code)
+    );
+    revokeWatch = { uid: fbUser.uid, stop };
+};
+
 // 구글 팝업 로그인 진행 중에는 onAuthStateChanged 가 세션을 먼저 건드리지 않도록 막음
 let googleLoginInFlight = false;
 // 이메일 로그인 · 새 계정 만들기도 같은 이유로 막음 (새 계정이 생기자마자 로그아웃되어 "확인 중..."에서 멈추던 문제)
@@ -364,9 +388,15 @@ export const useAuthStore = create((set, get) => ({
     initAuth: () =>
         onAuthStateChanged(auth, async (fbUser) => {
             if (!fbUser) {
+                stopRevokeWatch(); // [추가]
                 set({ user: null, currentProfileId: null, pendingEmail: null, authReady: true });
                 return;
             }
+            // [추가] 로그인해 있는 동안 다른 브라우저의 "모든 브라우저에서 로그아웃"을 지켜봄 (구글 · 이메일 로그인 직후 포함)
+            startRevokeWatch(fbUser, async () => {
+                await signOut(auth).catch(() => { });
+                set({ user: null, currentProfileId: null, pendingEmail: null, authReady: true });
+            });
             if (googleLoginInFlight) return; // 방금 누른 구글 로그인은 onGoogleLogin 이 처리
             if (emailLoginInFlight) return; // 방금 누른 이메일 로그인 · 새 계정은 onEmailAuth 가 처리
             try {
@@ -680,7 +710,9 @@ export const useAuthStore = create((set, get) => ({
     },
 
     // 모든 브라우저에서 로그아웃: 기준 시각을 기록하고 이 브라우저도 로그아웃
-    // (다른 브라우저는 다음에 사이트를 열 때 initAuth 에서 로그아웃됨)
+    // - [수정] 열려 있는 다른 브라우저: users 문서 변경을 지켜보다 바로 로그아웃 (startRevokeWatch)
+    // - 꺼져 있거나 인터넷이 끊긴 브라우저: 다음에 사이트를 열 때 initAuth 에서 로그아웃
+    // - 서버 토큰을 즉시 취소하는 기능은 아님 (위 startRevokeWatch 주석 참고)
     onLogoutEverywhere: async () => {
         const fbUser = auth.currentUser;
         if (!fbUser) return false;

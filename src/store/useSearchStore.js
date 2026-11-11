@@ -38,7 +38,19 @@ export const AVAILABILITY = {
     status: "대한민국에서 현재 이용할 수 없습니다.",
     detail: "이 작품은 대한민국에 제공되지 않아 시청할 수 없습니다.",
   },
+  // [추가] 조회 실패(네트워크 · 401 · 429 등) — "이용 불가"와 구분 · 잠시 뒤 다시 확인 (리뷰 P2)
+  error: {
+    card: "이용 정보 확인 실패",
+    status: "이용 정보를 확인하지 못했어요.",
+    detail: "일시적인 오류일 수 있어요. 잠시 후 다시 확인해 주세요.",
+  },
 };
+
+// [추가] 이용 정보는 TMDB 제공사(JustWatch) 자료 기준 — 실제 이용 권한을 보장하지 않음
+export const AVAILABILITY_NOTE = "제공사 정보(TMDB · JustWatch) 기준이라 실제 이용 가능 여부와 다를 수 있어요.";
+
+// [추가] 조회에 실패한 작품은 이 시간이 지나면 다시 요청 (실패를 "이용 불가"로 굳히지 않음)
+const AVAILABILITY_RETRY_MS = 60 * 1000;
 
 // 작품 key: "movie_123" / "tv_456"
 export const itemKey = (type, id) => `${type}_${id}`;
@@ -209,13 +221,22 @@ export const useSearchStore = create((set, get) => ({
   },
 
   // ---------- 대한민국 이용 방법 ----------
-  availability: {}, // { "movie_1": "subscription" | "rent" | "none" | "loading" }
-  onLoadAvailability: async (items) => {
-    const { availability } = get();
+  // - [수정] 상태: loading(확인 중) · subscription / rent(이용 가능) · none(이용 불가) · error(조회 실패)
+  //   · error 는 1분이 지나거나 [다시 확인](force)을 누르면 다시 요청 · 검색 필터의 "숨기기"는 none 만 숨김
+  availability: {}, // { "movie_1": "subscription" | "rent" | "none" | "error" | "loading" }
+  availabilityErrorAt: {}, // [추가] { "movie_1": 실패한 시각(ms) }
+  onLoadAvailability: async (items, { force = false } = {}) => {
+    const { availability, availabilityErrorAt } = get();
+    const now = Date.now();
     const todo = (items || [])
       .filter((it) => it && (it.media_type === "movie" || it.media_type === "tv"))
       .map((it) => ({ type: it.media_type, id: it.id }))
-      .filter(({ type, id }) => !availability[itemKey(type, id)]);
+      .filter(({ type, id }) => {
+        const k = itemKey(type, id);
+        const v = availability[k];
+        if (!v) return true;
+        return v === "error" && (force || now - (availabilityErrorAt[k] || 0) > AVAILABILITY_RETRY_MS);
+      });
     if (!todo.length) return;
 
     // 요청 중 표시 (중복 요청 방지)
@@ -228,13 +249,18 @@ export const useSearchStore = create((set, get) => ({
 
     await runLimited(
       todo.map(({ type, id }) => async () => {
-        let value = "none";
+        const k = itemKey(type, id);
         try {
-          value = availabilityFromProviders(await tmdb(`/${type}/${id}/watch/providers`));
-        } catch {
-          value = "none";
+          const value = availabilityFromProviders(await tmdb(`/${type}/${id}/watch/providers`));
+          set((state) => ({ availability: { ...state.availability, [k]: value } }));
+        } catch (error) {
+          // [수정] 조회 실패는 "이용 불가"(none)가 아니라 error — 시각을 남겨 잠시 뒤 다시 요청
+          console.error("이용 정보 조회 실패:", k, error?.message);
+          set((state) => ({
+            availability: { ...state.availability, [k]: "error" },
+            availabilityErrorAt: { ...state.availabilityErrorAt, [k]: Date.now() },
+          }));
         }
-        set((state) => ({ availability: { ...state.availability, [itemKey(type, id)]: value } }));
       })
     );
   },

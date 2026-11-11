@@ -9,6 +9,12 @@
 //   · 그 밖의 그룹은 사용자가 [새 그룹 만들기]로 추가하고, 위시리스트 왼쪽 메뉴에서 삭제
 // - 하트 → 담기 → "어떤 그룹에 추가할까요?" 팝업 → 그룹 체크 → [추가하기] → "OO에 추가되었어요" 토스트
 //   · [수정] 체크는 팝업 안에서만 고르고(pickerDraft) [추가하기]를 눌러야 저장
+// - [수정] 프로필 · 계정이 바뀌는 중에도 저장이 엉뚱한 곳으로 가지 않게 (리뷰 P1)
+//   · 저장 작업은 시작할 때의 계정(uid) · 프로필(pid) · 연결 번호(connGen)를 고정해서 씀 (await 뒤에 다시 읽지 않음)
+//   · 저장이 끝난 뒤 화면 갱신 · 실패 되돌리기는 "지금 연결이 시작 때와 같고 · 그 작품의 마지막 작업일 때"만
+//   · 같은 작품의 담기 → 빼기 → 그룹 변경은 순서대로 실행 (응답 순서가 뒤바뀌어 빠진 작품이 되살아나지 않게)
+// - [수정] 예전 찜 목록 이관: 저장에 성공한 것만 이 브라우저에서 지우고, 실패한 것은 남겨 다음 접속 때 다시 시도 (리뷰 P1)
+//   · 정책: 이 브라우저의 예전 찜 목록은 이 브라우저에서 처음 로그인한 계정의 첫 프로필로 옮김 → 옮긴 뒤 토스트로 알림
 import { create } from "zustand";
 import {
   collection,
@@ -110,13 +116,6 @@ const readLegacy = () => {
     return [];
   }
 };
-const clearLegacy = () => {
-  try {
-    localStorage.removeItem("wishlist");
-  } catch {
-    /* 무시 */
-  }
-};
 
 // 작품 상세(장르 · 줄거리)를 TMDB 에서 받아 카드에 쓸 정보로 정리
 const fetchDetail = async (type, id) => {
@@ -140,6 +139,45 @@ const fetchDetail = async (type, id) => {
 
 let unsubs = [];
 
+// ---------- [추가] 연결 번호 · 작품별 작업 순서 (리뷰 P1) ----------
+// - onConnect 때마다 connGen 이 올라감 → 예전 연결에서 시작한 작업은 화면을 건드리지 않음
+let connGen = 0;
+const keyQueues = new Map(); // "연결번호:작품key" → 마지막 작업 Promise
+const keyVersions = new Map(); // "연결번호:작품key#exist|#groups" → 마지막 작업 번호 (담기·빼기 / 그룹 변경 따로)
+const qKey = (sc, key) => `${sc.gen}:${key}`;
+// 작업 시작 시점의 계정 · 프로필 · 연결 번호 고정
+const scopeOf = (get) => {
+  const { uid, pid } = get();
+  return { uid, pid, pre: prefixOf(pid), gen: connGen };
+};
+const isLive = (sc) => sc.gen === connGen;
+// kind: "exist"(담기 · 빼기) / "groups"(그룹 변경) — 그룹 변경이 담기 실패 되돌리기를 막지 않게 따로 셈
+const versionOf = (sc, key, kind) => keyVersions.get(`${qKey(sc, key)}#${kind}`) || 0;
+const bumpVersion = (sc, key, kind = "exist") => {
+  const v = versionOf(sc, key, kind) + 1;
+  keyVersions.set(`${qKey(sc, key)}#${kind}`, v);
+  return v;
+};
+// 지금 연결이 그대로이고 이 작품의 마지막 작업일 때만 true
+const isLatest = (sc, key, v, kind = "exist") => isLive(sc) && versionOf(sc, key, kind) === v;
+// 같은 작품의 저장 작업은 앞 작업이 끝난 뒤 실행 (앞 작업 실패와 상관없이)
+const queueKey = (sc, key, task) => {
+  const prev = keyQueues.get(qKey(sc, key)) || Promise.resolve();
+  const next = prev.catch(() => {}).then(task);
+  keyQueues.set(qKey(sc, key), next.catch(() => {}));
+  return next;
+};
+
+// [추가] 예전 찜 목록 일부만 남기기 (이관에 실패한 것)
+const writeLegacy = (list) => {
+  try {
+    if (list.length) localStorage.setItem("wishlist", JSON.stringify(list));
+    else localStorage.removeItem("wishlist");
+  } catch {
+    /* 무시 */
+  }
+};
+
 export const useHeartStore = create((set, get) => ({
   uid: null,
   pid: "main", // [추가] 지금 연결된 프로필
@@ -160,6 +198,10 @@ export const useHeartStore = create((set, get) => ({
     if (get().uid === uid && get().pid === profile) return;
     unsubs.forEach((u) => u());
     unsubs = [];
+    // [추가] 새 연결 — 예전 연결에서 진행 중인 작업은 끝나도 화면을 바꾸지 않음
+    connGen += 1;
+    keyQueues.clear();
+    keyVersions.clear();
     set({ uid, pid: profile, ready: false, items: {}, groups: [], pickerKey: null, pickerDraft: [], newGroupOpen: false, toast: null });
     if (!uid) return;
     const pre = prefixOf(profile);
@@ -226,14 +268,36 @@ export const useHeartStore = create((set, get) => ({
         set({ items, ready: true });
 
         // 처음 한 번: 이 브라우저에 남은 예전 찜 목록 옮기기 (첫 프로필만)
-        if (firstItems && !pre) {
+        // - [수정] 저장 결과를 모두 기다린 뒤, 성공한 것만 지우고 실패한 것은 남김 (다음 접속 때 다시 시도)
+        if (firstItems) {
           firstItems = false;
-          const legacy = readLegacy();
+          const legacy = !pre ? readLegacy() : [];
           if (legacy.length) {
-            legacy.forEach((w) =>
-              get().onAdd({ id: w.id, type: w.type, title: w.title || w.name, poster_path: w.poster_path }, { silent: true })
-            );
-            clearLegacy();
+            const sc = scopeOf(get);
+            (async () => {
+              const results = await Promise.all(
+                legacy.map(async (w) => {
+                  if (!w?.id) return { w, ok: true }; // 깨진 항목은 버림
+                  const key = await get().onAdd(
+                    { id: w.id, type: w.type, title: w.title || w.name, poster_path: w.poster_path },
+                    { silent: true, scope: sc }
+                  );
+                  return { w, ok: Boolean(key) };
+                })
+              );
+              const failed = results.filter((r) => !r.ok).map((r) => r.w);
+              writeLegacy(failed);
+              const moved = results.length - failed.length;
+              if (isLive(sc) && moved > 0) {
+                set({
+                  toast: {
+                    text: failed.length
+                      ? `이 브라우저에 저장돼 있던 찜 ${moved}개를 옮겼어요. ${failed.length}개는 다음 접속 때 다시 옮길게요.`
+                      : `이 브라우저에 저장돼 있던 찜 ${moved}개를 이 계정으로 옮겼어요.`,
+                  },
+                });
+              }
+            })();
           }
         }
       })
@@ -244,12 +308,15 @@ export const useHeartStore = create((set, get) => ({
 
   // ---------- 담기 / 빼기 ----------
   // content: { id, type, title|name, poster_path, backdrop_path?, genre_ids?, overview? }
-  onAdd: async (content, { silent = false } = {}) => {
-    const { uid, items } = get();
-    if (!uid || !content?.id) return null;
+  // - [수정] scope: 시작할 때의 계정 · 프로필 · 연결 번호 (이관처럼 부르는 쪽에서 고정해 넘길 수 있음)
+  onAdd: async (content, { silent = false, scope } = {}) => {
+    const sc = scope || scopeOf(get);
+    if (!sc.uid || !content?.id || !isLive(sc)) return null;
+    const { items } = get();
     const type = content.type === "tv" ? "tv" : "movie";
     const key = wishKey(type, content.id);
     if (items[key]) return key;
+    const ver = bumpVersion(sc, key);
 
     const base = {
       id: content.id,
@@ -266,38 +333,46 @@ export const useHeartStore = create((set, get) => ({
     if (!silent) set({ pickerKey: key, pickerDraft: [], pickerNew: true });
 
     try {
-      const detail = await fetchDetail(type, content.id);
-      await setDoc(doc(itemsCol(uid), prefixOf(get().pid) + key), {
-        ...base,
-        ...Object.fromEntries(Object.entries(detail).filter(([, v]) => v)),
-        addedAt: serverTimestamp(),
+      // [수정] 저장 경로는 시작 때 고정한 계정 · 프로필 (sc) · 같은 작품 작업은 순서대로
+      await queueKey(sc, key, async () => {
+        const detail = await fetchDetail(type, content.id);
+        await setDoc(doc(itemsCol(sc.uid), sc.pre + key), {
+          ...base,
+          ...Object.fromEntries(Object.entries(detail).filter(([, v]) => v)),
+          addedAt: serverTimestamp(),
+        });
       });
     } catch (error) {
       console.error("위시리스트 담기 실패:", error);
-      set((s) => {
-        const next = { ...s.items };
-        delete next[key];
-        return { items: next, pickerKey: null };
-      });
+      // [수정] 지금 연결 · 마지막 작업일 때만 되돌림 (다른 프로필의 같은 작품을 지우지 않게)
+      if (isLatest(sc, key, ver)) {
+        set((s) => {
+          const next = { ...s.items };
+          delete next[key];
+          return { items: next, pickerKey: s.pickerKey === key ? null : s.pickerKey };
+        });
+      }
       return null;
     }
     return key;
   },
 
   onRemove: async (key) => {
-    const { uid, items } = get();
-    if (!uid || !items[key]) return;
+    const sc = scopeOf(get);
+    const { items } = get();
+    if (!sc.uid || !items[key]) return;
     const prev = items[key];
+    const ver = bumpVersion(sc, key);
     set((s) => {
       const next = { ...s.items };
       delete next[key];
       return { items: next, toast: { text: "위시리스트에서 삭제했어요." } };
     });
     try {
-      await deleteDoc(doc(itemsCol(uid), prefixOf(get().pid) + key));
+      await queueKey(sc, key, () => deleteDoc(doc(itemsCol(sc.uid), sc.pre + key)));
     } catch (error) {
       console.error("위시리스트 삭제 실패:", error);
-      set((s) => ({ items: { ...s.items, [key]: prev } }));
+      if (isLatest(sc, key, ver)) set((s) => ({ items: { ...s.items, [key]: prev } }));
     }
   },
 
@@ -311,9 +386,12 @@ export const useHeartStore = create((set, get) => ({
 
   // ---------- 그룹 ----------
   onToggleGroup: async (key, groupId) => {
-    const { uid, items, groups } = get();
+    const sc = scopeOf(get);
+    const { items, groups } = get();
     const item = items[key];
-    if (!uid || !item) return;
+    if (!sc.uid || !item) return;
+    const ver = bumpVersion(sc, key, "groups");
+    const existVer = versionOf(sc, key, "exist");
     const inGroup = item.groups.includes(groupId);
     const nextGroups = inGroup ? item.groups.filter((g) => g !== groupId) : [...item.groups, groupId];
     const group = groups.find((g) => g.id === groupId);
@@ -325,23 +403,28 @@ export const useHeartStore = create((set, get) => ({
         : { text: `${group?.name || "그룹"} 모음에 추가되었어요.`, groupId },
     }));
     try {
-      await updateDoc(doc(itemsCol(uid), prefixOf(get().pid) + key), { groups: nextGroups });
+      await queueKey(sc, key, () => updateDoc(doc(itemsCol(sc.uid), sc.pre + key), { groups: nextGroups }));
     } catch (error) {
       console.error("그룹 변경 실패:", error);
-      set((s) => ({ items: { ...s.items, [key]: item } }));
+      // 그룹만 되돌림 (그 사이 빠졌거나 · 담기가 실패했으면 그대로)
+      if (isLatest(sc, key, ver, "groups") && versionOf(sc, key, "exist") === existVer && get().items[key]) {
+        set((s) => ({ items: { ...s.items, [key]: { ...s.items[key], groups: item.groups } } }));
+      }
     }
   },
 
   onCreateGroup: async (name, icon) => {
-    const { uid, groups, pickerKey } = get();
+    const sc = scopeOf(get);
+    const { groups, pickerKey } = get();
     const clean = name.trim().slice(0, GROUP_NAME_MAX);
-    if (!uid || !clean) return null;
-    const auto = doc(groupsCol(uid)); // 새 id 만들기
+    if (!sc.uid || !clean) return null;
+    const auto = doc(groupsCol(sc.uid)); // 새 id 만들기
     const gid = auto.id;
-    const ref = doc(groupsCol(uid), prefixOf(get().pid) + gid);
+    const ref = doc(groupsCol(sc.uid), sc.pre + gid);
     const order = groups.reduce((m, g) => Math.max(m, g.order ?? 0), 0) + 1;
     try {
       await setDoc(ref, { name: clean, icon, order, createdAt: serverTimestamp() });
+      if (!isLive(sc)) return gid; // [추가] 그 사이 프로필이 바뀌면 화면은 그대로
       set((s) => ({
         newGroupOpen: false,
         groups: s.groups.some((g) => g.id === gid) ? s.groups : [...s.groups, { id: gid, name: clean, icon, order }],
@@ -358,9 +441,10 @@ export const useHeartStore = create((set, get) => ({
 
   // [추가] 그룹 삭제 (여러 개 한 번에 · 선택 삭제) — "나중에 볼 작품"은 삭제 불가 · 담긴 작품은 "전체"에 그대로
   onDeleteGroups: async (groupIds = []) => {
-    const { uid, pid, groups, items } = get();
+    const sc = scopeOf(get);
+    const { groups, items } = get();
     const targets = groups.filter((g) => groupIds.includes(g.id) && g.id !== FIXED_GROUP.id);
-    if (!uid || targets.length === 0) return false;
+    if (!sc.uid || targets.length === 0) return false;
     const ids = targets.map((g) => g.id);
     const prevGroups = groups;
     const prevItems = items;
@@ -376,11 +460,12 @@ export const useHeartStore = create((set, get) => ({
       },
     });
     try {
-      await purgeGroups(uid, prefixOf(pid), ids, Object.values(items).map((it) => ({ id: it.key, groups: it.groups })));
+      await purgeGroups(sc.uid, sc.pre, ids, Object.values(items).map((it) => ({ id: it.key, groups: it.groups })));
       return true;
     } catch (error) {
       console.error("그룹 삭제 실패:", error);
-      set({ groups: prevGroups, items: prevItems, toast: { text: "그룹을 삭제하지 못했어요. 다시 시도해 주세요." } });
+      // [수정] 지금 연결일 때만 되돌림
+      if (isLive(sc)) set({ groups: prevGroups, items: prevItems, toast: { text: "그룹을 삭제하지 못했어요. 다시 시도해 주세요." } });
       return false;
     }
   },
@@ -397,10 +482,11 @@ export const useHeartStore = create((set, get) => ({
     })),
   // [추가] [추가하기] — 체크한 그룹을 한 번에 저장하고 팝업 닫기
   onApplyPicker: async () => {
-    const { uid, items, groups, pickerKey, pickerDraft, pickerNew } = get();
+    const sc = scopeOf(get);
+    const { items, groups, pickerKey, pickerDraft, pickerNew } = get();
     const item = items[pickerKey];
     set({ pickerKey: null, pickerDraft: [], pickerNew: false });
-    if (!uid || !item) return;
+    if (!sc.uid || !item) return;
     const nextGroups = groups.map((g) => g.id).filter((id) => pickerDraft.includes(id));
     const added = nextGroups.filter((id) => !item.groups.includes(id));
     const same = nextGroups.length === item.groups.length && added.length === 0;
@@ -414,11 +500,16 @@ export const useHeartStore = create((set, get) => ({
           : { text: "그룹을 변경했어요." },
     }));
     if (same) return;
+    const ver = bumpVersion(sc, pickerKey, "groups");
+    const existVer = versionOf(sc, pickerKey, "exist");
     try {
-      await updateDoc(doc(itemsCol(uid), prefixOf(get().pid) + pickerKey), { groups: nextGroups });
+      // [수정] 방금 담은 작품이면 담기 저장이 끝난 뒤 그룹 저장 (순서 보장)
+      await queueKey(sc, pickerKey, () => updateDoc(doc(itemsCol(sc.uid), sc.pre + pickerKey), { groups: nextGroups }));
     } catch (error) {
       console.error("그룹 변경 실패:", error);
-      set((s) => ({ items: { ...s.items, [pickerKey]: item } }));
+      if (isLatest(sc, pickerKey, ver, "groups") && versionOf(sc, pickerKey, "exist") === existVer && get().items[pickerKey]) {
+        set((s) => ({ items: { ...s.items, [pickerKey]: { ...s.items[pickerKey], groups: item.groups } } }));
+      }
     }
   },
   onOpenNewGroup: () => set({ newGroupOpen: true }),

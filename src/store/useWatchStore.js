@@ -5,8 +5,16 @@
 //     season, episode, episodeName,   ← 시리즈만 (영화는 null)
 //     videoKey,                       ← 마지막으로 재생한 영상 (같은 영상이면 이어서 재생)
 //     position, duration,             ← 본 위치 · 전체 길이 (초)
-//     updatedAt }                     ← 마지막으로 본 시각 (최근 순 정렬)
+//     updatedAt,                      ← 마지막으로 본 시각 (최근 순 정렬)
+//     profileId }                     ← [추가] 어느 프로필의 기록인지 (서버에서 프로필별로 골라 받기)
 // - 재생 위치는 상세 페이지 재생 팝업(WatchPlayer)이 몇 초마다 저장
+// - [수정] 다른 프로필 기록이 많으면 이어보기가 빠지던 문제 (리뷰 P2)
+//   · 예전: 계정 전체 최신 150개를 받은 뒤 프로필로 걸러서, 다른 프로필 기록 150개 뒤에 있는 기록은 안 보였음
+//   · 지금: where(profileId == 지금 프로필) → orderBy(updatedAt desc) → limit(30) 으로 서버에서 프로필 것만 받음
+//     (복합 인덱스 필요: watchHistory · profileId ASC + updatedAt DESC)
+//   · profileId 가 없는 예전 기록: 접속할 때 문서 id 로 프로필을 알아내 profileId 를 채움(이관)
+//     → 이관 전 · 실패 시에도 예전 방식 결과를 합쳐 보여줌 (이어보기가 비지 않게)
+//   · 인덱스가 아직 없으면(쿼리 오류) 예전 방식으로만 동작
 import { useEffect } from "react";
 import { create } from "zustand";
 import {
@@ -19,6 +27,7 @@ import {
   query,
   serverTimestamp,
   setDoc,
+  where,
   writeBatch,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
@@ -26,11 +35,13 @@ import { useAuthStore } from "./useAuthStore";
 
 export const WATCH_DONE_RATIO = 0.95; // 이만큼 보면 다 본 작품 → 이어보기에서 빠짐
 const HISTORY_LIMIT = 30;
-const FETCH_LIMIT = 150; // [추가] 프로필 여러 개의 기록이 한 컬렉션에 있어서 넉넉히 받아 프로필 것만 남김
+const FETCH_LIMIT = 150; // 예전 기록(profileId 없음)용 — 계정 전체 최신 기록을 받아 프로필 것만 남김
 
 // [추가] 프로필별 시청 기록 — 문서 id 앞에 "{프로필 id}__" (첫 프로필 "main" 은 예전처럼 접두어 없음)
 const prefixOf = (pid) => (!pid || pid === "main" ? "" : `${pid}__`);
 const ownDoc = (id, pid) => (prefixOf(pid) ? id.startsWith(prefixOf(pid)) : !id.includes("__"));
+// [추가] 문서 id 로 프로필 알아내기 (예전 기록 이관용) — "B__movie_1" → "B" · "movie_1" → "main"
+const profileOfDoc = (id) => (id.includes("__") ? id.split("__")[0] : "main");
 
 export const watchKey = (type, id) => `${type === "tv" ? "tv" : "movie"}_${id}`;
 
@@ -58,6 +69,39 @@ export const clearWatchHistory = async (uid, pid = "main") => {
 };
 
 let unsubscribe = null;
+const backfilled = new Set(); // [추가] 이번 실행에서 이관을 끝낸 계정
+
+// [추가] profileId 가 없는 예전 기록에 profileId 채우기 (계정당 한 번 · 실패해도 화면은 예전 방식으로 보임)
+// - 보안 규칙이 profileId 만 추가하는 수정을 허용해야 함 (updatedAt 은 그대로 → 최근 순서가 바뀌지 않음)
+const backfillProfileIds = async (uid) => {
+  if (backfilled.has(uid)) return;
+  backfilled.add(uid);
+  try {
+    const snap = await getDocs(historyRef(uid));
+    const todo = (snap.docs || []).filter((d) => !d.data().profileId);
+    for (let i = 0; i < todo.length; i += 450) {
+      const batch = writeBatch(db);
+      todo.slice(i, i + 450).forEach((d) => batch.update(d.ref, { profileId: profileOfDoc(d.id) }));
+      await batch.commit();
+    }
+  } catch (error) {
+    backfilled.delete(uid); // 다음 접속 때 다시 시도
+    console.warn("시청 기록 profileId 이관 실패 (보안 규칙 확인):", error?.code || error?.message);
+  }
+};
+
+// [추가] 두 결과 합치기 — 같은 작품은 하나 · 최근 순 · 30개
+const mergeHistory = (lists) => {
+  const map = new Map();
+  lists.flat().forEach((h) => {
+    const k = watchKey(h.type, h.id);
+    const t = (x) => x?.updatedAt?.toMillis?.() ?? 0;
+    if (!map.has(k) || t(h) > t(map.get(k))) map.set(k, h);
+  });
+  return [...map.values()]
+    .sort((a, b) => (b.updatedAt?.toMillis?.() ?? 0) - (a.updatedAt?.toMillis?.() ?? 0))
+    .slice(0, HISTORY_LIMIT);
+};
 
 export const useWatchStore = create((set, get) => ({
   uid: null,
@@ -78,20 +122,55 @@ export const useWatchStore = create((set, get) => ({
       return;
     }
     set({ uid, pid: profile, status: "loading", items: [] });
-    unsubscribe = onSnapshot(
-      query(historyRef(uid), orderBy("updatedAt", "desc"), limit(FETCH_LIMIT)),
-      (snap) => {
-        const items = snap.docs
-          .filter((d) => ownDoc(d.id, profile))
-          .slice(0, HISTORY_LIMIT)
-          .map((d) => d.data({ serverTimestamps: "estimate" }));
-        set({ status: "ready", items });
-      },
-      (error) => {
-        console.error("시청 기록 불러오기 실패:", error);
-        set({ status: "error" });
-      }
+
+    // [수정] 두 갈래로 받아 합침
+    //   ① 새 방식: 이 프로필 기록만 서버에서 (profileId)
+    //   ② 예전 방식: profileId 가 없는 예전 기록 (이관이 끝나면 비게 됨)
+    const parts = { scoped: null, legacy: null };
+    let scopedFailed = false;
+    const publish = () => {
+      if (parts.legacy === null || (parts.scoped === null && !scopedFailed)) return; // 둘 다 받은 뒤
+      set({ status: "ready", items: mergeHistory([parts.scoped || [], parts.legacy]) });
+    };
+    const unsubs = [];
+    unsubs.push(
+      onSnapshot(
+        query(historyRef(uid), where("profileId", "==", profile), orderBy("updatedAt", "desc"), limit(HISTORY_LIMIT)),
+        (snap) => {
+          parts.scoped = snap.docs.map((d) => d.data({ serverTimestamps: "estimate" }));
+          publish();
+        },
+        (error) => {
+          // 복합 인덱스가 아직 없거나 규칙 문제 → 예전 방식만으로 보여줌
+          console.warn("프로필별 시청 기록 쿼리 실패 → 예전 방식으로 표시:", error?.code || error?.message);
+          scopedFailed = true;
+          publish();
+        }
+      )
     );
+    unsubs.push(
+      onSnapshot(
+        query(historyRef(uid), orderBy("updatedAt", "desc"), limit(FETCH_LIMIT)),
+        (snap) => {
+          parts.legacy = snap.docs
+            .filter((d) => ownDoc(d.id, profile))
+            .map((d) => d.data({ serverTimestamps: "estimate" }))
+            // 새 방식이 동작하면 profileId 가 있는 기록은 ①에서 받으므로 여기선 예전 기록만
+            .filter((h) => scopedFailed || !h.profileId);
+          publish();
+        },
+        (error) => {
+          console.error("시청 기록 불러오기 실패:", error);
+          if (scopedFailed) set({ status: "error" });
+          else {
+            parts.legacy = [];
+            publish();
+          }
+        }
+      )
+    );
+    unsubscribe = () => unsubs.forEach((u) => u());
+    backfillProfileIds(uid);
   },
 
   // 작품의 시청 기록 하나 (없으면 undefined)
@@ -116,9 +195,10 @@ export const useWatchStore = create((set, get) => ({
       position: Math.max(0, Math.round(entry.position)),
       duration: Math.round(entry.duration),
       updatedAt: serverTimestamp(),
+      profileId: get().pid || "main", // [추가] 프로필별 조회용
     };
     try {
-      await setDoc(doc(db, "users", uid, "watchHistory", prefixOf(get().pid) + watchKey(type, entry.id)), data);
+      await setDoc(doc(db, "users", uid, "watchHistory", prefixOf(data.profileId) + watchKey(type, entry.id)), data);
     } catch (error) {
       console.error("시청 기록 저장 실패:", error);
     }
