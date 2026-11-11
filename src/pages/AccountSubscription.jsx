@@ -8,6 +8,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { useAuthStore, PROFILE_MAX } from "../store/useAuthStore";
+import { showToast, toastIconFor } from "../utils/toast"; // [추가] 안내 → 공용 토스트
 import { AccountSubPage, AccountIcon, ConfirmDialog, PLAN_INFO, getSubscriptionState } from "../components/profile/AccountShared";
 import { PRIVACY_URL } from "../data/appleLinks";
 
@@ -71,10 +72,12 @@ const AccountSubscription = () => {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
+  // [수정] 안내 문구 → 공용 토스트(utils/toast.js · 사이트 다른 알림과 같은 디자인 · 화면 아래 고정이라 스크롤해도 따라옴)
+  // - 예전 .account-toast 는 페이지 전환 애니메이션 안에 있어서 화면이 아니라 페이지 맨 아래에 붙어 있었음
   useEffect(() => {
     if (!message) return;
-    const t = setTimeout(() => setMessage(""), 3000);
-    return () => clearTimeout(t);
+    showToast(message, { icon: toastIconFor(message) });
+    setMessage("");
   }, [message]);
 
   if (!authReady) return <main className="account-page" />;
@@ -219,9 +222,7 @@ const AccountSubscription = () => {
         />
       )}
 
-      <p className={`account-toast${message ? " is-show" : ""}`} role="status" aria-live="polite">
-        {message}
-      </p>
+      {/* [수정] 안내는 공용 토스트로 (위 effect) */}
     </AccountSubPage>
   );
 };
