@@ -253,11 +253,11 @@ $font-family-base: "SF Pro", sans-serif;
 
 // Display M 28 / 34 · 주요 섹션 강조
 @mixin display-M {
-  @include type-style(1.75rem, 2.125rem);
+  @include type-style(1.65rem, 2.125rem);
 }
 
 @mixin display-M-b {
-  @include type-style(1.75rem, 2.125rem, $font-weight-bold);
+  @include type-style(1.65rem, 2.125rem, $font-weight-bold);
 }
 
 // ---------- Heading ----------
