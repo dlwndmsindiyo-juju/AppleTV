@@ -868,14 +868,14 @@ $tv-type-shrink: (
 // [추가] 로그인 전: 프로필 자리에 "로그인" 글자 버튼 (메뉴 글자와 같은 17 / 19)
 .tv-side-login {
   flex-shrink: 0;
-  height: 2.5rem;
-  padding: 0 $space-lg;
+  height: 2rem;
+  padding: 0 $space-sm;
   border: none;
   border-radius: 62.4375rem;
   background-color: $tv-btn-secondary-bg;
   color: $text-primary;
   font-family: $font-family-base;
-  font-size: 1.0625rem;
+  font-size: 1rem;
   font-weight: $font-weight-regular;
   line-height: 1.1875rem;
   letter-spacing: -0.025rem;
