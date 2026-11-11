@@ -9,7 +9,7 @@ import { usePlayableIds } from "../utils/youtubePlayable"; // [추가] 연령 �
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useMovieStore } from "../store/useMovieStore";
 import { toggleWish, useHeartStore, wishKey } from "../store/useHeartStore";
-import { AVAILABILITY, IMG, itemKey, useSearchStore } from "../store/useSearchStore";
+import { AVAILABILITY, AVAILABILITY_NOTE, IMG, itemKey, useSearchStore } from "../store/useSearchStore";
 import { detailPath } from "./MovieDetail";
 import {
   BackLink,
@@ -112,8 +112,10 @@ const SearchTitle = () => {
   const title = detail.title || detail.name;
   const originalTitle = detail.original_title || detail.original_name;
   const image = detail.backdrop_path || detail.poster_path;
+  // [수정] 조회 실패(error)는 이용 불가로 보지 않음 · 확인 중이면 버튼은 "이용 불가"와 같은 모양
   const status = avail && avail !== "loading" ? avail : "none";
-  const info = AVAILABILITY[status];
+  const info = AVAILABILITY[status] || AVAILABILITY.none;
+  const retryAvailability = () => onLoadAvailability([{ media_type: type, id: contentId }], { force: true });
 
   const youtube = (detail.videos?.results || []).filter((v) => v.site === "YouTube" && playable.has(v.key)); // [수정] 재생 가능한 영상만
   const trailer = youtube.find((v) => v.type === "Trailer") || youtube[0];
@@ -204,7 +206,7 @@ const SearchTitle = () => {
     );
   }
 
-  const relatedTitle = status === "none" ? "지금 시청할 수 있는 유사 작품" : "관련 콘텐츠";
+  const relatedTitle = status === "none" || status === "error" ? "지금 시청할 수 있는 유사 작품" : "관련 콘텐츠";
   // 관련 작품에서 다시 이 페이지로 돌아올 때
   const relatedBackTo = { path: location.pathname, label: `${title} 페이지로 돌아가기`, state: { backTo } };
 
@@ -224,9 +226,17 @@ const SearchTitle = () => {
             <p className="search-detail-meta">{meta}</p>
             {detail.overview && <p className="search-detail-desc">{detail.overview}</p>}
 
-            <div className="search-avail-box">
+            <div className={`search-avail-box${avail === "error" ? " is-error" : ""}`}>
               <strong>{avail === "loading" || !avail ? "이용 정보를 확인하는 중입니다." : info.status}</strong>
               {avail && avail !== "loading" && <span>{info.detail}</span>}
+              {/* [추가] 조회 실패면 다시 확인 */}
+              {avail === "error" && (
+                <button type="button" className="search-avail-retry" onClick={retryAvailability}>
+                  다시 확인
+                </button>
+              )}
+              {/* [추가] 제공사 정보는 실제 이용 권한을 보장하지 않음 */}
+              <small className="search-avail-note">{AVAILABILITY_NOTE}</small>
             </div>
 
             <div className="search-actions">{actions}</div>

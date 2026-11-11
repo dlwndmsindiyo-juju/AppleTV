@@ -657,6 +657,26 @@ $search-content: math.div($inner-width * (100% - $desktop-gutter * 2), 100%); //
   }
 }
 
+// [추가] 조회 실패 [다시 확인] · 제공사 정보 안내
+.search-avail-retry {
+  @include label-default-b;
+  align-self: flex-start;
+  margin-top: $space-xs;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $text-primary;
+  text-decoration: underline;
+  text-underline-offset: 0.1875rem;
+  cursor: pointer;
+}
+
+.search-avail-note {
+  @include label-default;
+  margin-top: $space-xs;
+  color: $text-tertiary;
+}
+
 .search-actions {
   display: flex;
   flex-wrap: wrap;
