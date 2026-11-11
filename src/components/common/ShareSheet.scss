@@ -49,7 +49,7 @@
   height: 2.25rem; // 36
 
   h2 {
-    @include heading-h3-b;
+    @include display-M-b;
     margin: 0;
     padding: 0;
     color: $light-color-0;
@@ -170,7 +170,7 @@
   @include body-large-b;
   flex-shrink: 0;
   width: 8.5rem; // 136
-  height: 2.75rem; // 44
+  height: 2.5rem; // 44
   padding: 0;
   border: none;
   border-radius: 62.4375rem;

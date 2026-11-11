@@ -2,7 +2,8 @@
 // [추가] 계정 설정 하위 화면 공용 (구독 관리 · 지불 방법)
 // - 화면 틀: "계정 설정" 제목 + "‹ 뒤로" (계정 설정의 그 섹션으로) · 스타일 App.scss (.account-*)
 // - 구독 상태 · 요금제 · 날짜 글자 (Profile.jsx · AccountSubscription.jsx 공용)
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react"; // [수정] useLayoutEffect · useState: 누른 자리에 팝업
+import { createPortal } from "react-dom"; // [추가] 확인 팝업을 body 에 바로 그림
 import { Link } from "react-router-dom";
 import { isSubscribed } from "../../store/useAuthStore";
 
@@ -125,8 +126,27 @@ export const AccountIcon = ({ name }) => {
 
 // 확인 팝업 (모든 브라우저에서 로그아웃 · 재생 기록 지우기 · 구독 취소 · 지불 방법 추가)
 // [이동] Profile.jsx → 공용 · children: 팝업 안 입력 칸 (지불 방법 추가)
-export const ConfirmDialog = ({ title, desc, confirmLabel, busy, onConfirm, onCancel, confirmDisabled = false, children }) => {
+// [추가] anchor: 누른 버튼의 getBoundingClientRect() — 넘기면 화면 가운데 대신 그 버튼 바로 아래(공간이 없으면 위)에 뜸
+export const ConfirmDialog = ({ title, desc, confirmLabel, busy, onConfirm, onCancel, confirmDisabled = false, anchor = null, children }) => {
   const cancelRef = useRef(null);
+  const boxRef = useRef(null);
+  const [pos, setPos] = useState(null); // { top, left } · null = 화면 가운데
+
+  // [추가] 누른 자리 기준 위치 (화면 밖으로 나가지 않게 16px 안쪽으로 맞춤)
+  useLayoutEffect(() => {
+    if (!anchor || !boxRef.current) return;
+    const gap = 8;
+    const edge = 16;
+    const { offsetWidth: w, offsetHeight: h } = boxRef.current;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    let top = anchor.bottom + gap;
+    if (top + h > vh - edge && anchor.top - gap - h >= edge) top = anchor.top - gap - h; // 아래 공간이 없으면 위로
+    top = Math.max(edge, Math.min(top, vh - h - edge));
+    let left = anchor.left + anchor.width / 2 - w / 2;
+    left = Math.max(edge, Math.min(left, vw - w - edge));
+    setPos({ top, left });
+  }, [anchor]);
   const latest = useRef({ busy, onCancel });
   latest.current = { busy, onCancel };
 
@@ -143,9 +163,22 @@ export const ConfirmDialog = ({ title, desc, confirmLabel, busy, onConfirm, onCa
     };
   }, []);
 
-  return (
-    <div className="account-dialog-backdrop" onMouseDown={(e) => e.target === e.currentTarget && !busy && onCancel()}>
-      <div className="account-dialog" role="alertdialog" aria-modal="true" aria-labelledby="account-dialog-title">
+  // [수정] body 에 바로 그림 (createPortal)
+  // - 페이지 전환 애니메이션(.page-fade)의 transform 안에 있으면 position: fixed 가 화면이 아니라 페이지 전체 기준이 되어
+  //   스크롤한 자리에서 누르면 팝업이 페이지 아래쪽(보이지 않는 곳)에 뜸 → 이제 항상 지금 보고 있는 화면 가운데
+  return createPortal(
+    <div
+      className={`account-dialog-backdrop${anchor ? " is-anchored" : ""}`}
+      onMouseDown={(e) => e.target === e.currentTarget && !busy && onCancel()}
+    >
+      <div
+        ref={boxRef}
+        className="account-dialog"
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="account-dialog-title"
+        style={anchor ? (pos ? { top: pos.top, left: pos.left } : { visibility: "hidden" }) : undefined}
+      >
         <h2 id="account-dialog-title" className="account-dialog-title">{title}</h2>
         {desc && <p className="account-dialog-desc">{desc}</p>}
         {children}
@@ -158,6 +191,7 @@ export const ConfirmDialog = ({ title, desc, confirmLabel, busy, onConfirm, onCa
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };

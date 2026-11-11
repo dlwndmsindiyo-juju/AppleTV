@@ -187,7 +187,7 @@ header .inner nav .gnb-right ul .header-login-btn {
   gap: 0.375rem;
   height: 2rem;
   padding: 0 0.75rem;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   background-color: #5865F2;
   color: #FFFFFF;
   white-space: nowrap;
@@ -414,7 +414,7 @@ header .inner nav .gnb-right ul .profile-menu-divider {
 .login-page .login-card .login-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
@@ -656,7 +656,7 @@ header .inner nav .gnb-right ul .profile-menu-divider {
 .login-page .login-card.login-card--signin .login-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
@@ -914,7 +914,7 @@ header .inner nav .gnb-right ul .profile-menu-divider {
 .hero-swiper-container .hero-slide-item .hero-info .hero-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   font-size: 4rem;
@@ -2268,8 +2268,8 @@ header .inner nav .gnb-right ul .profile-menu-divider {
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  height: 3rem;
-  padding: 0 2.25rem;
+  height: 2.75rem;
+  padding: 0 2rem;
   border-radius: 624.9375rem;
   background-color: #F5F5F5;
   color: #171717;
@@ -3024,7 +3024,7 @@ body.has-promo-banner .footer {
 .sport-promo .sport-promo-placeholder {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
@@ -3095,7 +3095,7 @@ body.has-promo-banner .footer {
 .sport-team-card .sport-team-add {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   flex-shrink: 0;
@@ -3211,7 +3211,7 @@ body.has-promo-banner .footer {
 .sport-teams .sport-teams-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
@@ -4470,7 +4470,7 @@ main.sport-home .sport-series-card h4 {
   justify-content: center;
   gap: 0.375rem;
   width: 100%;
-  height: 3rem;
+  height: 2.75rem;
   padding: 0 1rem;
   border: none;
   border-radius: 0.5rem;
@@ -4599,8 +4599,8 @@ main.sport-home .sport-series-card h4 {
 .plan-opt-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -4642,8 +4642,8 @@ main.sport-home .sport-series-card h4 {
 .plan-benefit-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   margin: 2.25rem 0 1.5rem;
   color: #FFFFFF;
@@ -4874,8 +4874,8 @@ header .inner nav .gnb-right ul .profile-box > span,
 .subscribe-gate-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   margin: 0 0 0.5rem;
   padding-top: 0;
@@ -4909,7 +4909,7 @@ header .inner nav .gnb-right ul .profile-box > span,
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 3rem;
+  height: 2.75rem;
   border: none;
   border-radius: 0.5rem;
   background-color: #5865F2;
@@ -5725,7 +5725,7 @@ img.ui-icon.ui-icon-arrow {
   font-size: 0.9375rem;
   line-height: 1.25rem;
   letter-spacing: 0;
-  height: 3rem;
+  height: 2.75rem;
   padding: 0 1.5rem;
   border: none;
   border-radius: 0.625rem;
@@ -6263,7 +6263,7 @@ img.ui-icon.ui-icon-arrow {
 .account-section-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   margin: 0 0 2rem;
@@ -6532,8 +6532,8 @@ img.ui-icon.ui-icon-arrow {
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
 .account-avatar-option .profile-avatar {
-  width: 52px;
-  height: 3.25rem;
+  width: 3rem;
+  height: 3rem;
 }
 .account-avatar-option:hover {
   transform: scale(1.05);
@@ -6597,7 +6597,7 @@ img.ui-icon.ui-icon-arrow {
   max-width: 420px;
   padding: 2rem;
   border-radius: 1.5rem;
-  background-color: #FFFFFF;
+  background-color: #2E2E2E;
   color: #171717;
   box-sizing: border-box;
   animation: login-step-in 0.25s ease both;
@@ -6610,6 +6610,7 @@ img.ui-icon.ui-icon-arrow {
   line-height: 1.5625rem;
   letter-spacing: 0;
   margin-bottom: 0.5rem;
+  color: #FFFFFF;
 }
 
 .account-dialog-desc {
@@ -6618,7 +6619,7 @@ img.ui-icon.ui-icon-arrow {
   font-size: 0.9375rem;
   line-height: 1.25rem;
   letter-spacing: 0;
-  color: #525252;
+  color: #C8C8C8;
   word-break: keep-all;
 }
 
@@ -6638,7 +6639,7 @@ img.ui-icon.ui-icon-arrow {
   height: 2.75rem;
   border: none;
   border-radius: 0.5rem;
-  background-color: #5865F2;
+  background-color: #6E7AF4;
   color: #FFFFFF;
   cursor: pointer;
   transition: background-color 0.2s ease, opacity 0.2s ease;
@@ -6690,8 +6691,8 @@ img.ui-icon.ui-icon-arrow {
 .account-sub-heading {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   color: #2E2E2E;
   margin: 2.25rem 0 1.5rem;
@@ -7029,8 +7030,8 @@ img.ui-icon.ui-icon-arrow {
   color: #171717;
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   cursor: pointer;
 }
@@ -7179,8 +7180,8 @@ img.ui-icon.ui-icon-arrow {
   margin: 0;
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   color: #171717;
 }
@@ -7197,8 +7198,8 @@ img.ui-icon.ui-icon-arrow {
   color: #525252;
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   cursor: pointer;
 }
@@ -7455,8 +7456,8 @@ img.ui-icon.ui-icon-arrow {
   display: block;
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   color: #171717;
 }
@@ -7908,7 +7909,7 @@ section.top10-section .top10-num-stop-end {
   justify-content: center;
   gap: 0.375rem;
   min-width: 120px;
-  height: 2.625rem;
+  height: 2.5rem;
   padding: 0 1.5rem;
   border-radius: 62.4375rem;
   box-sizing: border-box;
@@ -8073,7 +8074,7 @@ main.landing-home .subscribe-cta {
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
@@ -8249,7 +8250,7 @@ section.device-guide.device-guide--watch .watch-mobile {
 section.device-guide.device-guide--watch .watch-subtitle {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   padding-top: 0;
@@ -8644,7 +8645,7 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-card.auth-card--login .auth-login-btn {
   width: 100%;
   max-width: 428px;
-  height: 3rem;
+  height: 2.75rem;
   border-radius: 62.4375rem;
 }
 .auth-card.auth-card--login .auth-login-error,
@@ -9798,7 +9799,7 @@ main.wish-page {
   .movie-detail-page.movie-detail-page .rating-section .rating-header h3 {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
     color: #FFFFFF;
@@ -9845,8 +9846,8 @@ main.wish-page {
     font-size: 1.0625rem;
     line-height: 1.375rem;
     letter-spacing: 0;
-    width: 11.25rem;
-    height: 3.875rem;
+    width: 10rem;
+    height: 3.25rem;
     padding: 0;
     margin: 1rem 0;
   }
@@ -9951,7 +9952,7 @@ main.wish-page {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: min(100%, 56.25rem);
+  width: min(100%, 46rem);
   max-height: 100%;
   overflow: hidden;
   border-radius: 1.5rem;
@@ -10006,7 +10007,7 @@ main.wish-page {
 .sub-pop--confirm,
 .sub-pop--done,
 .sub-pop--fail {
-  width: min(100%, 36rem);
+  width: min(100%, 46rem);
 }
 
 .sub-pop-inner {
@@ -10629,8 +10630,8 @@ main.wish-page {
 .sub-confirm-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   margin-bottom: 1.5rem;
   color: #FFFFFF;
@@ -10666,8 +10667,8 @@ main.wish-page {
 .sub-confirm-app-name {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -10716,8 +10717,8 @@ main.wish-page {
 .sub-confirm-price {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   color: #FFFFFF;
 }
@@ -11960,4 +11961,311 @@ a[data-age-blocked] :is(img, picture, video) {
   border: none;
   font-family: inherit;
   cursor: pointer;
+}
+
+html body :is(.member-title.member-title.member-title.member-title,
+.top10-title.top10-title.top10-title.top10-title,
+.upcoming-title.upcoming-title.upcoming-title.upcoming-title,
+.apple-originals-title.apple-originals-title.apple-originals-title.apple-originals-title,
+.sport-section-title.sport-section-title.sport-section-title.sport-section-title,
+.sport-teams-title.sport-teams-title.sport-teams-title.sport-teams-title) {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1rem + 1.4vw, 2.25rem);
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.account-quiet-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: center;
+  height: auto;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0;
+  border: none;
+  background: none;
+  color: #C8C8C8;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.account-quiet-btn:hover {
+  color: #D5D5D5;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.account-quiet-btn:focus-visible {
+  outline: 0.125rem solid #C8C8C8;
+  outline-offset: 0.125rem;
+  border-radius: 0.25rem;
+}
+
+html body :is(.watch-title.watch-title.watch-title.watch-title,
+.search-block-title.search-block-title.search-block-title.search-block-title,
+.search-section-title.search-section-title.search-section-title.search-section-title,
+.sport-standings-block-title.sport-standings-block-title.sport-standings-block-title.sport-standings-block-title) {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1rem + 1.4vw, 2.25rem);
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+html body .sport-conference-title.sport-conference-title.sport-conference-title.sport-conference-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
+  letter-spacing: 0;
+}
+
+.account-dialog .account-form {
+  margin-top: 1.5rem;
+}
+
+.account-dialog .account-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.account-dialog .account-field .account-item-title {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  color: #F5F5F5;
+}
+.account-dialog .account-field input {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
+  letter-spacing: 0;
+  height: 2.75rem;
+  padding: 0 0.75rem;
+  border: 1px solid #D5D5D5;
+  border-radius: 0.5rem;
+  background-color: #F5F5F5;
+  color: #171717;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.account-dialog .account-field input:focus {
+  border-color: #5865F2;
+  background-color: #FFFFFF;
+}
+
+.profile-picker-name-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.profile-picker-edit {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.5rem;
+  background-color: #3A3A3A;
+  -webkit-mask: url("/icons/pen-icon.svg") center/contain no-repeat;
+  mask: url("/icons/pen-icon.svg") center/contain no-repeat;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.profile-picker-edit:hover {
+  background-color: #5865F2;
+}
+.profile-picker-edit:focus-visible {
+  outline: 0.125rem solid #5865F2;
+  outline-offset: 0.125rem;
+}
+
+.account-dialog-delete {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  margin-top: 1rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #C8C8C8;
+  cursor: pointer;
+}
+.account-dialog-delete:hover:not(:disabled) {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+}
+.account-dialog-delete:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.account-dialog-backdrop.is-anchored {
+  display: block;
+  padding: 0;
+}
+.account-dialog-backdrop.is-anchored .account-dialog {
+  position: fixed;
+  width: min(420px, 100vw - 2rem);
+  margin: 0;
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.25);
+}
+
+.wish-card-menu .wish-menu {
+  top: calc(100% + 0.5rem);
+  width: 13.75rem;
+  min-width: 0;
+  padding: 0.5rem;
+  border-radius: 1.25rem;
+  background-color: #1f1f1f;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+  animation: profile-menu-in 0.18s ease both;
+}
+.wish-card-menu .wish-menu li + li .wish-menu-item {
+  border-top: none;
+}
+.wish-card-menu .wish-menu li:last-child {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 0.0625rem solid #2E2E2E;
+}
+.wish-card-menu .wish-menu .wish-menu-item {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  height: 2.875rem;
+  padding: 0 0.75rem;
+  border-radius: 0.75rem;
+  color: #FFFFFF;
+  box-sizing: border-box;
+  transition: background-color 0.15s ease;
+}
+.wish-card-menu .wish-menu .wish-menu-item .wish-icon {
+  font-size: 1.25rem;
+  color: #FFFFFF;
+}
+.wish-card-menu .wish-menu .wish-menu-item:hover, .wish-card-menu .wish-menu .wish-menu-item:focus-visible {
+  background-color: #3A3A3A;
+  outline: none;
+}
+.wish-card-menu .wish-menu .wish-menu-item.is-danger {
+  color: #ff453a;
+}
+
+html body .subscribe-gate-card {
+  max-width: min(420px, 100%);
+  padding: clamp(1.25rem, 1rem + 1.2vw, 2rem) clamp(1rem, 0.75rem + 1vw, 1.5rem) clamp(1rem, 0.75rem + 1vw, 1.5rem);
+}
+
+html body .subscribe-gate-logo {
+  width: clamp(3rem, 2.5rem + 1.6vw, 4rem);
+  height: clamp(2.5rem, 2.1rem + 1.2vw, 3.25rem);
+  margin-bottom: clamp(0.75rem, 0.6rem + 0.5vw, 1rem);
+}
+html body .subscribe-gate-logo img {
+  height: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+}
+
+html body .subscribe-gate-title {
+  font-size: clamp(1rem, 0.9rem + 0.45vw, 1.25rem);
+  line-height: 1.4;
+  margin-bottom: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
+  word-break: keep-all;
+}
+
+html body .subscribe-gate-desc {
+  font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
+  line-height: 1.4;
+}
+
+html body .subscribe-gate-btn {
+  height: clamp(2.5rem, 2.35rem + 0.4vw, 2.75rem);
+  font-size: clamp(0.875rem, 0.84rem + 0.15vw, 0.9375rem);
+}
+
+.sub-exit-btn {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  font-family: "SF Pro", sans-serif;
+  display: block;
+  margin: 1rem auto 0;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: none;
+  color: #C8C8C8;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.sub-exit-btn:hover {
+  font-family: "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  color: #FFFFFF;
+}
+.sub-exit-btn:focus-visible {
+  outline: 0.125rem solid #8490F6;
+  outline-offset: 0.125rem;
+}
+
+.player-media .btn-trailer-toggle {
+  position: absolute;
+  bottom: 4rem;
+  left: 1rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.55);
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.player-media .btn-trailer-toggle svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.player-media .btn-trailer-toggle:hover, .player-media .btn-trailer-toggle:focus-visible {
+  outline: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: scale(1.06);
+}
+
+@media (max-width: 767px) {
+  .player-media .btn-trailer-toggle {
+    bottom: 0.75rem;
+    left: 0.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }

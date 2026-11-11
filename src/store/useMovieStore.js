@@ -1,4 +1,13 @@
 import { showToast } from "../utils/toast"; // [추가] 공개 알림 켜기 · 끄기 토스트
+import { useAuthStore } from "./useAuthStore"; // [추가] 로그인 전에는 알림 · 평점 · 찜을 막음
+import { openSubscribeGate } from "../utils/subscribeGate"; // [추가] 로그인 안내 팝업
+
+// [추가] 로그인 전이면 로그인 안내 팝업을 띄우고 true (호출한 쪽은 바로 멈춤)
+const needLogin = () => {
+  if (useAuthStore.getState().user) return false;
+  openSubscribeGate("account");
+  return true;
+};
 import { create } from "zustand";
 import { fetchMoodRecommendations } from "./moodRecommendations.mjs";
 
@@ -353,6 +362,7 @@ export const useMovieStore = create((set, get) => ({
   // 내가 찜한 콘텐츠 (localStorage 에 유지)
   wishlist: loadLocal("wishlist"),
   onToggleWishlist: (item) => {
+    if (needLogin()) return; // [추가] 로그인 전에는 막음
     const { wishlist } = get();
     const exists = wishlist.some((w) => w.id === item.id && w.type === item.type);
     const next = exists
@@ -365,17 +375,19 @@ export const useMovieStore = create((set, get) => ({
   // 공개 알림 설정 (키: "tv_123" / "movie_456")
   // - [추가] meta: { title, poster_path, backdrop_path, date } — 계정 설정 "알림 설정한 콘텐츠" 목록에 보여 줄 정보 (alarmItems)
   // - [추가] 켜고 끌 때 토스트 ("…공개 알림을 설정했어요." / "…알림을 해제했어요.")
-  alarms: loadLocal("alarms"),
-  alarmItems: loadLocalObject("alarmItems"),
+  // [수정] 계정마다 따로 저장 · 로그아웃하면 빈 값 (아래 syncAccountData)
+  alarms: [],
+  alarmItems: {},
   onToggleAlarm: (key, meta = null) => {
+    if (needLogin()) return; // [추가] 로그인 전에는 알림 설정을 막음 (모든 콘텐츠 공통 · 로그인 안내 팝업)
     const { alarms, alarmItems } = get();
     const on = !alarms.includes(key);
     const next = on ? [...alarms, key] : alarms.filter((k) => k !== key);
     const items = { ...alarmItems };
     if (on) items[key] = { ...(items[key] || {}), ...(meta || {}), addedAt: Date.now() };
     else delete items[key];
-    saveLocal("alarms", next);
-    saveLocal("alarmItems", items);
+    saveAccount("alarms", next); // [수정] 계정별 저장
+    saveAccount("alarmItems", items);
     set({ alarms: next, alarmItems: items });
     const name = meta?.title || items[key]?.title || alarmItems[key]?.title;
     showToast(
@@ -386,12 +398,13 @@ export const useMovieStore = create((set, get) => ({
 
   // [추가] 내가 남긴 평점 (키: "movie_123" / "tv_456" → { score, title, savedAt }) · localStorage 에 유지
   // - 처음 남기면 "평점을 남겼어요." · 다시 남기면 "평점을 수정했어요." 토스트
-  myRatings: loadLocalObject("myRatings"),
+  myRatings: {}, // [수정] 계정마다 따로 · 로그아웃하면 빈 값
   onSaveRating: (key, score, title = "") => {
+    if (needLogin()) return; // [추가] 로그인 전에는 막음
     const { myRatings } = get();
     const edited = Boolean(myRatings[key]);
     const next = { ...myRatings, [key]: { score, title, savedAt: Date.now() } };
-    saveLocal("myRatings", next);
+    saveAccount("myRatings", next); // [수정] 계정별 저장
     set({ myRatings: next });
     showToast(
       edited ? `평점을 ${score}점으로 수정했어요.` : `${title ? `'${title}'에 ` : ""}${score}점 평점을 남겼어요.`,
@@ -426,4 +439,58 @@ function saveLocal(key, value) {
     // 저장 실패는 무시 (사생활 보호 모드 등)
   }
 }
+
+// =====================================================================
+// [추가] 알림 설정 · 내 평점은 계정마다 따로 (localStorage "alarms:{uid}" 등)
+// - 로그아웃하면 화면에서 바로 비움 → 종 · 별점 아이콘이 로그인 전처럼 꺼진 상태 (누르면 로그인 안내)
+// - 다시 로그인하면 그 계정 값이 그대로 돌아옴 · 다른 계정에는 보이지 않음
+// - 예전(계정 구분 없이 저장한 값)은 처음 로그인한 계정으로 한 번 옮기고 지움
+// - 찜(하트)은 useHeartStore 가 계정 · 프로필별로 따로 관리 (로그아웃하면 이미 비워짐)
+// =====================================================================
+const ACCOUNT_FIELDS = { alarms: [], alarmItems: {}, myRatings: {} };
+let accountOwner = null;
+
+function readAccount(field, uid) {
+  const empty = ACCOUNT_FIELDS[field];
+  const parse = (raw) => {
+    const v = JSON.parse(raw);
+    if (Array.isArray(empty)) return Array.isArray(v) ? v : empty;
+    return v && typeof v === "object" && !Array.isArray(v) ? v : empty;
+  };
+  try {
+    const own = localStorage.getItem(`${field}:${uid}`);
+    if (own !== null) return parse(own);
+    const legacy = localStorage.getItem(field);
+    if (legacy === null) return empty;
+    const value = parse(legacy);
+    localStorage.setItem(`${field}:${uid}`, JSON.stringify(value));
+    localStorage.removeItem(field);
+    return value;
+  } catch {
+    return empty;
+  }
+}
+
+function saveAccount(field, value) {
+  if (!accountOwner) return;
+  saveLocal(`${field}:${accountOwner}`, value);
+}
+
+const syncAccountData = (uid) => {
+  if (uid === accountOwner && uid) return;
+  accountOwner = uid || null;
+  if (!accountOwner) {
+    useMovieStore.setState({ alarms: [], alarmItems: {}, myRatings: {} });
+    return;
+  }
+  useMovieStore.setState({
+    alarms: readAccount("alarms", accountOwner),
+    alarmItems: readAccount("alarmItems", accountOwner),
+    myRatings: readAccount("myRatings", accountOwner),
+  });
+};
+syncAccountData(useAuthStore.getState().user?.uid);
+useAuthStore.subscribe((state, prev) => {
+  if (state.user?.uid !== prev?.user?.uid) syncAccountData(state.user?.uid);
+});
 

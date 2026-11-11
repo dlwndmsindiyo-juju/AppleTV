@@ -253,11 +253,11 @@ $font-family-base: "SF Pro", sans-serif;
 
 // Display M 28 / 34 · 주요 섹션 강조
 @mixin display-M {
-  @include type-style(1.75rem, 2.125rem);
+  @include type-style(1.65rem, 2.125rem);
 }
 
 @mixin display-M-b {
-  @include type-style(1.75rem, 2.125rem, $font-weight-bold);
+  @include type-style(1.65rem, 2.125rem, $font-weight-bold);
 }
 
 // ---------- Heading ----------
@@ -276,16 +276,23 @@ $font-family-base: "SF Pro", sans-serif;
 }
 
 @mixin heading-h2-b {
-  @include type-style(1.3rem, 1.75rem, $font-weight-bold);
+  @include type-style(1.2rem, 1.55rem, $font-weight-bold);
 }
 
 // H3 20 / 25 · 콘텐츠 그룹 제목
+// [수정] 원래 크기(20 / 25)로 되돌림 — 36 으로 바꾸면 팝업 · 구독 플랜 · 스포츠 등 h3 를 쓰는 모든 글자가 커짐
 @mixin heading-h3 {
   @include type-style(1.25rem, 1.5625rem);
 }
 
 @mixin heading-h3-b {
   @include type-style(1.25rem, 1.5625rem, $font-weight-bold);
+}
+
+// [추가] 섹션 제목 전용 (홈 · 스포츠 · 검색 섹션 제목만 · App.scss "섹션 제목 통일")
+// - PC 36 / 56 → 화면이 좁아질수록 자연스럽게 줄어 휴대폰 약 20
+@mixin heading-section-b {
+  @include type-style(clamp(1.25rem, 1rem + 1.4vw, 2.25rem), 1.5, $font-weight-bold);
 }
 
 // H4 17 / 22 · 카드와 모듈 제목
