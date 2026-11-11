@@ -36,8 +36,8 @@
 .share-head h2 {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25rem;
-  line-height: 1.5625rem;
+  font-size: 1.65rem;
+  line-height: 2.125rem;
   letter-spacing: 0;
   margin: 0;
   padding: 0;
@@ -163,7 +163,7 @@
   letter-spacing: 0;
   flex-shrink: 0;
   width: 8.5rem;
-  height: 2.75rem;
+  height: 2.5rem;
   padding: 0;
   border: none;
   border-radius: 62.4375rem;

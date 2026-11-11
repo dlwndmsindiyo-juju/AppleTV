@@ -89,15 +89,75 @@ $tv-type-sizes: (
   body-large: (1.0625rem, 1.375rem),
   heading-h3: (1.25rem, 1.5625rem),
   heading-h2: (1.375rem, 1.75rem),
-  display-M: (1.75rem, 2.125rem),
+  display-M: (1.65rem, 2.125rem),
   display-l: (2.125rem, 2.5625rem),
 );
 
-@mixin tv-type-size($name) {
+// [수정] TV 글자 축소 — 섹션 제목(행 제목)만 빼고 TV 화면 안 글자 전부
+// - 60% 는 너무 작아서 80% 로 · 아무리 작아도 16px($tv-type-min) 아래로는 안 내려감
+// - 태블릿 · 휴대폰(is-tablet · is-phone): 줄이지 않음($tv-type-scale-touch: 1) → 원래 큰 글자 그대로
+//   (TV 화면을 통째로 줄여 보여 주는 기기라 더 줄이면 작게 느껴짐)
+// - 줄 높이도 같은 비율 · 굵기 · 색은 원래 변수 그대로
+// - 섹션 제목: tv-type($name, $scale: false) (.tv-sport-title · .tv-team-row-title · .tv-end-row-title)
+// - 크기 조절은 아래 세 값만 바꾸면 됨 (1 = 원래 크기)
+$tv-type-scale: 0.8; // TV · PC
+$tv-type-scale-touch: 1; // 태블릿 · 휴대폰
+$tv-type-min: 1rem; // 최소 16px
+
+// _variables.scss 글자 변수와 같은 값 (굵게(-b)만 크기가 다른 변수는 따로)
+// [수정] 올려 주신 _variables.scss 값에 맞춤 (display-M 1.65 · heading-h2-b 1.2/1.55 · heading-h3 1.25/1.5625)
+// - _variables.scss 글자 크기를 바꾸면 여기도 같이 바꿔 주세요 (Sass 는 믹스인 안 값을 읽을 수 없음)
+$tv-type-real-sizes: (
+  display-xl: (4rem, 6rem),
+  display-xl-b: (3.75rem, 6rem),
+  display-TV-b: (2.2rem, 5rem),
+  display-l: (2.125rem, 2.5625rem),
+  display-M: (1.75rem, 2.125rem),
+  heading-h1: (3rem, 3.5rem),
+  heading-h2: (1.2rem, 1.5rem),
+  heading-h2-b: (1.2rem, 1.55rem),
+  heading-h3: (1.25rem, 1.5625rem),
+  heading-h4: (1.0625rem, 1.375rem),
+  heading-h5: (1rem, 1.3125rem),
+  body-large: (1.0625rem, 1.375rem),
+  body-default: (0.9375rem, 1.25rem),
+  body-small: (0.8125rem, 1.125rem),
+  label-default: (0.75rem, 1rem),
+  caption-default: (0.6875rem, 0.8125rem),
+  caption-small: (0.5625rem, normal),
+);
+
+@function tv-type-lookup($name) {
+  @if map.has-key($tv-type-real-sizes, $name) {
+    @return map.get($tv-type-real-sizes, $name);
+  }
   $base: list.nth(tv-type-split($name), 1);
-  $v: map.get($tv-type-sizes, $base);
-  font-size: list.nth($v, 1);
-  line-height: list.nth($v, 2);
+  @if map.has-key($tv-type-real-sizes, $base) {
+    @return map.get($tv-type-real-sizes, $base);
+  }
+  @return map.get($tv-type-sizes, $base);
+}
+
+@mixin tv-type-scaled($name, $k: $tv-type-scale) {
+  $v: tv-type-lookup($name);
+  $fs: list.nth($v, 1);
+  $lh: list.nth($v, 2);
+  $next: math.max($fs * $k, math.min($fs, $tv-type-min)); // 원래 16 보다 작던 글자는 원래 크기보다 키우지 않음
+  font-size: $next;
+  @if $lh != normal {
+    line-height: $lh * math.div($next, $fs);
+  }
+}
+
+@mixin tv-type-size($name, $scale: false) {
+  @if $scale {
+    @include tv-type-scaled($name);
+  } @else {
+    $base: list.nth(tv-type-split($name), 1);
+    $v: map.get($tv-type-sizes, $base);
+    font-size: list.nth($v, 1);
+    line-height: list.nth($v, 2);
+  }
 }
 
 // [수정] TV 글자 — 3m 거리 가이드 (1920 기준 · 실제 TV 에서 검증 필요)
@@ -106,16 +166,17 @@ $tv-type-sizes: (
 // - 그래서 TV 화면 안에서는 20 보다 작은 글자 변수를 쓰지 않음 → Heading/h3(20) 으로 올림 (굵기 -b 는 그대로)
 // - 카드 제목(tv-card-title 32) → Display/M(28) · Medium
 // - tv-type($name, false): 바꾸지 않고 그 변수 그대로 (왼쪽 메뉴처럼 TV 화면 밖 · 이미 가이드 크기로 고른 변수)
+// [수정] 글자가 너무 커서 한 단계씩 낮춤 — 섹션 · 대표 · 상세 제목(display-l 이상 · heading-h1)은 그대로
+// - 본문 · 설명 · 빈 화면 문구(display-M 28) → Heading/h2 22 · 카드 제목 → Heading/h2 22 (Medium)
+// - 20 이하 글자: 16 보다 작은 것만 Heading/h5 16 으로 올림 (17 · 20 은 원래 변수 그대로)
 $tv-type-shrink: (
-  tv-card-title: display-M,
-  heading-h4: heading-h3,
-  body-large: heading-h3,
-  heading-h5: heading-h3,
-  body-default: heading-h3,
-  body-small: heading-h3,
-  label-default: heading-h3,
-  caption-default: heading-h3,
-  caption-small: heading-h3,
+  tv-card-title: heading-h2,
+  display-M: heading-h2,
+  body-default: heading-h5,
+  body-small: heading-h5,
+  label-default: heading-h5,
+  caption-default: heading-h5,
+  caption-small: heading-h5,
 );
 
 @function tv-type-shrunk($name) {
@@ -140,7 +201,7 @@ $tv-type-shrink: (
   @return $next;
 }
 
-@mixin tv-type($name, $shrink: true) {
+@mixin tv-type($name, $shrink: true, $scale: true) {
   $source: $name;
 
   @if $shrink {
@@ -148,6 +209,11 @@ $tv-type-shrink: (
   }
 
   @include meta.apply(meta.get-mixin($name));
+
+  // [수정] 80% 축소 (섹션 제목 제외)
+  @if $scale {
+    @include tv-type-scaled($name);
+  }
 
   // 카드 제목(tv-card-title)은 Medium 굵기 그대로
   @if $shrink and $source =="tv-card-title" {
@@ -157,14 +223,25 @@ $tv-type-shrink: (
   $tablet: tv-type-bump($name, $tv-type-step-tablet);
   $phone: tv-type-bump($name, $tv-type-step-phone);
 
-  // 큰 변수의 글자 크기 · 줄 높이만 (굵기 · 색 등 원래 규칙은 그대로)
-  @if $tablet !=$name {
+  // [추가] 축소하는 글자: 태블릿 · 휴대폰은 항상 따로 크기를 적음 (PC 축소 크기를 물려받지 않게)
+  @if $scale {
+    :where(.tv-preview.is-tablet .tv-preview-stage) & {
+      @include tv-type-scaled($tablet, $tv-type-scale-touch);
+    }
+
+    :where(.tv-preview.is-phone .tv-preview-stage) & {
+      @include tv-type-scaled($phone, $tv-type-scale-touch);
+    }
+  }
+
+  // 줄이지 않는 글자(섹션 제목): 큰 변수의 글자 크기 · 줄 높이만 (굵기 · 색 등 원래 규칙은 그대로)
+  @if not $scale and $tablet !=$name {
     :where(.tv-preview.is-tablet .tv-preview-stage) & {
       @include tv-type-size($tablet);
     }
   }
 
-  @if $phone !=$name {
+  @if not $scale and $phone !=$name {
     :where(.tv-preview.is-phone .tv-preview-stage) & {
       @include tv-type-size($phone);
     }
@@ -582,7 +659,7 @@ $tv-type-shrink: (
 
   // [공백]: 90 × 40 · Heading/h3-B · Dark/900 · 흰 배경
   .tv-key-space {
-    @include tv-type(display-M-b, false); // [수정] TV 가이드 버튼 24~28 → Display/M-B 28
+    @include tv-type(heading-h2-b, false); // [수정] 글자 한 단계 낮춤 → Heading/h2-B 22
     width: 90px;
     height: 3.2rem;
     margin-right: 1.75rem;
@@ -1152,7 +1229,7 @@ $tv-type-shrink: (
 }
 
 .tv-sport-title {
-  @include tv-type(display-TV-b);
+  @include tv-type(display-TV-b, $scale: false); // [수정] 섹션 제목은 60% 축소에서 제외
   margin: 0 0 0.8125rem; // 25 = 13 + 카드 줄 위 여백 12
   padding: 0 $tv-pad-x;
   color: $light-color-0;
@@ -1204,7 +1281,7 @@ $tv-type-shrink: (
 }
 
 .tv-sport-card-title {
-  @include tv-type(display-M, false); // [수정] TV 가이드 카드 제목 24~28 → Display/M 28 (Medium)
+  @include tv-type(heading-h2, false); // [수정] 카드 제목 한 단계 낮춤 → Heading/h2 22
   font-weight: $font-weight-medium;
   max-width: 100%;
   color: $tv-card-title-color;
@@ -1370,7 +1447,7 @@ $tv-type-shrink: (
   border-radius: 624.9375rem;
   background: $light-color-100;
   color: $text-inverse;
-  @include tv-type(heading-h2-b, false); // [수정] TV 가이드 버튼 → Heading/h2-B 22 (버튼 폭 안에 들어가게)
+  @include tv-type(heading-h3-b, false); // [수정] 버튼 한 단계 낮춤 → Heading/h3-B 20
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
@@ -1393,7 +1470,7 @@ $tv-type-shrink: (
 
 // LIVE — PC 라이브 카드 표시와 같은 크기 (14 · 위아래 8 · 좌우 15)
 .tv-team-live {
-  @include tv-type(heading-h3-b, false); // [수정] TV 가이드 정보 20~24 → Heading/h3-B 20
+  @include tv-type(body-large-b, false); // [수정] 정보 한 단계 낮춤 → Body/large-B 17
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -1447,7 +1524,7 @@ $tv-type-shrink: (
 }
 
 .tv-team-row-title {
-  @include tv-type(display-l-b);
+  @include tv-type(display-l-b, $scale: false); // [수정] 섹션 제목은 60% 축소에서 제외
   display: flex;
   align-items: center;
   gap: $space-sm;
@@ -1529,7 +1606,7 @@ $tv-type-shrink: (
 }
 
 .tv-team-card-title {
-  @include tv-type(display-M-b, false); // [수정] TV 가이드 카드 제목 → Display/M-B 28
+  @include tv-type(heading-h2-b, false); // [수정] 카드 제목 한 단계 낮춤 → Heading/h2-B 22
   color: $light-color-0;
   white-space: nowrap;
   overflow: hidden;
@@ -1538,7 +1615,7 @@ $tv-type-shrink: (
 }
 
 .tv-team-card-desc {
-  @include tv-type(heading-h3, false); // [수정] TV 가이드 → Heading/h3 20 (작은 회색 글자 없이)
+  @include tv-type(body-large, false); // [수정] 한 단계 낮춤 → Body/large 17
   display: -webkit-box;
   overflow: hidden;
   color: $light-color-500;
@@ -1548,7 +1625,7 @@ $tv-type-shrink: (
 }
 
 .tv-team-card-meta {
-  @include tv-type(heading-h3, false); // [수정] TV 가이드 정보 20~24 → Heading/h3 20
+  @include tv-type(body-large, false); // [수정] 정보 한 단계 낮춤 → Body/large 17
   display: inline-flex;
   height: 20px;
   align-items: center;
@@ -1727,7 +1804,7 @@ $tv-type-shrink: (
 .tv-end-action-label {
   margin-top: 0.75rem;
   color: $dark-color-200;
-  @include tv-type(heading-h2, false); // [수정] TV 가이드 버튼 이름 → Heading/h2 22 (Medium)
+  @include tv-type(heading-h3, false); // [수정] 버튼 이름 한 단계 낮춤 → Heading/h3 20
   font-weight: $font-weight-medium;
   white-space: nowrap;
 }
@@ -1833,7 +1910,7 @@ $tv-type-shrink: (
 
 // 다른 TV 섹션 제목과 같음 (Display/L-B · Light/0)
 .tv-end-row-title {
-  @include tv-type(display-l-b);
+  @include tv-type(display-l-b, $scale: false); // [수정] 섹션 제목은 60% 축소에서 제외
   margin: 0;
   padding: 0 4.125rem;
   color: $light-color-0;
@@ -2169,7 +2246,7 @@ $tv-type-shrink: (
   border-radius: $radius-xs;
   background: transparent;
   color: $light-color-0;
-  @include tv-type(display-M, false); // [수정] TV 가이드 버튼 → Display/M 28 (Medium)
+  @include tv-type(heading-h2, false); // [수정] 버튼 한 단계 낮춤 → Heading/h2 22
   font-weight: $font-weight-medium;
   cursor: pointer;
 
@@ -2366,7 +2443,7 @@ $tv-type-shrink: (
 }
 
 .tv-search-card-title {
-  @include tv-type(display-M, false); // [수정] TV 가이드 카드 제목 → Display/M 28 (Medium)
+  @include tv-type(heading-h2, false); // [수정] 카드 제목 한 단계 낮춤 → Heading/h2 22
   font-weight: $font-weight-medium;
   max-width: 100%;
   color: $tv-card-title-color;
@@ -2499,7 +2576,7 @@ $tv-type-shrink: (
 .tv-detail-subtitle {
   margin: 1.5rem 0 0;
   color: $light-color-0;
-  @include tv-type(display-M, false); // [수정] TV 가이드 본문 24~28 → Display/M 28
+  @include tv-type(heading-h2, false); // [수정] 본문 한 단계 낮춤 → Heading/h2 22
 }
 
 .tv-detail-desc {
@@ -2507,7 +2584,7 @@ $tv-type-shrink: (
   margin: 1.875rem 0 0;
   overflow: hidden;
   color: $light-color-0;
-  @include tv-type(display-M, false); // [수정] TV 가이드 본문 24~28 → Display/M 28
+  @include tv-type(heading-h2, false); // [수정] 본문 한 단계 낮춤 → Heading/h2 22
   font-weight: 450;
   word-break: keep-all;
   -webkit-line-clamp: 3;
@@ -3118,7 +3195,7 @@ html.is-tv-touch .tv-end-track {
 
 // 접힌 메뉴: TV 헤더 메뉴 바(홈 · 스포츠 …)처럼 둥근 검은 바를 세로로 · 화면을 내려도 같은 자리
 .tv-side.is-rail {
-  top: 50%;
+  top: var(--tv-safe-y); // [수정] 가운데 → 맨 위 (TV 화면 윗선에 맞춤) · TV 화면을 내려도 이 자리에 고정
   left: var(--tv-rail-gap);
   width: var(--tv-rail-w);
   height: auto;
@@ -3129,7 +3206,7 @@ html.is-tv-touch .tv-end-track {
   backdrop-filter: blur(1.875rem);
   -webkit-backdrop-filter: blur(1.875rem);
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.4);
-  transform: translateY(-50%);
+  // [삭제] transform: translateY(-50%) — 세로 가운데 맞춤 없앰
   scrollbar-width: none;
 
   &::-webkit-scrollbar {

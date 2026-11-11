@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom"; // [수정] Link: 결제 방법 안내
 import { useAuthStore, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
 import { AccountSubPage, ConfirmDialog, CARD_BRANDS, CARD_BRAND_ICONS } from "../components/profile/AccountShared";
 import { PAYMENT_URL } from "../data/appleLinks";
@@ -312,6 +312,12 @@ export default function AccountPayment() {
     let entry = null;
 
     if (form.method === "card") {
+      // [추가] 이미 등록한 카드(같은 카드사 + 같은 마지막 4자리)는 다시 등록하지 않음
+      const newLast4 = digits(form.cardNumber).slice(-4);
+      if (payments.some((p) => (p.method || "card") === "card" && p.brand === form.brand && p.last4 === newLast4)) {
+        setMessage("이미 등록된 카드입니다. 다른 카드를 입력해 주세요.");
+        return;
+      }
       entry = {
         ...base,
         brand: form.brand,
@@ -388,14 +394,10 @@ export default function AccountPayment() {
           <p className="account-item-desc">
             위에서부터 결제 우선순위가 적용됩니다. 실제 Apple 계정의 결제 수단은
             이 화면에서 변경되지 않습니다.{" "}
-            <a
-              className="account-link"
-              href={PAYMENT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            {/* [수정] 외부 새 창 → 사이트 안 /payment-help */}
+            <Link className="account-link" to={PAYMENT_URL}>
               더 알아보기
-            </a>
+            </Link>
           </p>
         </div>
 

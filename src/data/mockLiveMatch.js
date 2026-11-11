@@ -118,13 +118,7 @@ export const LIVE_MATCH = {
 
   // 채팅 (minutesAgo: 몇 분 전 / likes: 인기순 정렬용 / team: 프로필 뱃지)
   chatRoom: { title: "메이저 리그", users: 9927, messages: 1616 },
-  chat: [
-    // [수정] 예시 채팅은 일부만 남김 (나머지는 실제로 입력한 채팅이 시간순으로 쌓임)
-    { id: 1, user: "땃쥐", team: "toronto", text: "야르야르야르야르렁~~~~~~~~~~~", minutesAgo: 8, likes: 12 },
-    { id: 3, user: "오렌지렌지", team: "toronto", text: "시즌 시작하고 첫승 ㄱㄱㄱ", minutesAgo: 9, likes: 54 },
-    { id: 4, user: "dodw22", team: "nashville", text: "똑바로 좀 해라 좀.", minutesAgo: 10, likes: 7 },
-    { id: 7, user: "ektha3848", team: "toronto", text: "할 수 있음 ㄹㅇ 할 수 있다ㅏㅏ고", minutesAgo: 13, likes: 41 },
-  ],
+  chat: [], // [수정] 예시 채팅 삭제 → 사용자가 입력한 채팅(Firestore)만 표시
 };
 
 // [수정] 토론토 선수 이름 → 맡은 포지션 (이름 대신 "등번호 + 포지션"으로 표시)

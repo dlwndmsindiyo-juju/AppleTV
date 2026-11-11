@@ -152,6 +152,16 @@ export const MovieDetail = ({ type: typeProp }) => {
   // - 요소 전체 화면을 지원하지 않는 브라우저(아이폰 Safari 등)는 재생 팝업으로 대신 크게 보기
   const mediaRef = useRef(null);
   const [isFull, setIsFull] = useState(false);
+  // [추가] 위 예고편 일시정지 · 다시 재생 (YouTube iframe API 메시지 · enablejsapi=1)
+  const trailerRef = useRef(null);
+  const [trailerPaused, setTrailerPaused] = useState(false);
+  const toggleTrailer = () => {
+    const win = trailerRef.current?.contentWindow;
+    if (!win) return;
+    const next = !trailerPaused;
+    win.postMessage(JSON.stringify({ event: 'command', func: next ? 'pauseVideo' : 'playVideo', args: [] }), '*');
+    setTrailerPaused(next);
+  };
   useEffect(() => {
     const onChange = () => {
       const el = document.fullscreenElement || document.webkitFullscreenElement;
@@ -396,9 +406,49 @@ export const MovieDetail = ({ type: typeProp }) => {
 
   // [수정] TV: 고른 시즌 번호 그대로 "시즌 N" (시즌 정보가 없으면 글자 자체를 안 보여줌)
   // 영화: 영상 종류 + 개수 (예전 그대로)
+  // [수정] 영화: 회차처럼 나누지 않음 → 위 글자 없음
   const listLabel = isTv
     ? (seasons.length > 0 && currentSeason !== null ? `시즌 ${currentSeason}` : '')
-    : `${videoType === 'all' ? '전체 영상' : VIDEO_TYPE_LABEL[videoType] || videoType} ${episodeList.length}`;
+    : '';
+
+  // [추가] 영화(한 편짜리)는 회차처럼 나누지 않음 (관련 영상 1화 · 2화 … 로 나누면 시리즈처럼 헷갈려서)
+  // - 본편: 재생하기와 같음 (보던 곳이 있으면 이어서)
+  // - [수정] 예고편 · 티저 · 비하인드: TMDB 영상 종류(Trailer · Teaser · Behind the Scenes → 없으면 Featurette)에서 하나씩
+  //   (이미 받아 둔 videos · 연령 제한 · 퍼가기 금지 영상은 뺀 목록 · 같은 영상은 한 번만)
+  const pickVideo = (types, used) => youtubeVideos.find((v) => types.includes(v.type) && !used.has(v.key));
+  const extraVideos = (() => {
+    const used = new Set();
+    return [
+      ['trailer', '예고편', ['Trailer']],
+      ['teaser', '티저', ['Teaser']],
+      ['behind', '비하인드', ['Behind the Scenes', 'Featurette']],
+    ]
+      .map(([id, label, types]) => {
+        const v = pickVideo(types, used);
+        if (!v) return null;
+        used.add(v.key);
+        return {
+          id,
+          label,
+          name: v.name,
+          thumb: `https://img.youtube.com/vi/${v.key}/mqdefault.jpg`,
+          meta: formatDate(v.published_at),
+          onPlay: () => openPlayer(v.key),
+        };
+      })
+      .filter(Boolean);
+  })();
+  const movieItems = [
+    {
+      id: 'feature',
+      label: '본편',
+      name: title,
+      thumb: item?.backdrop_path ? `${IMG}/w300${item.backdrop_path}` : item?.poster_path ? `${IMG}/w300${item.poster_path}` : null,
+      meta: [runtime && `${runtime}분`, releaseYear].filter(Boolean).join(' · '),
+      onPlay: playFromHistory,
+    },
+    ...extraVideos, // [수정] 예고편 · 티저 · 비하인드
+  ].filter(Boolean);
 
   return (
     <section className={`sub-page movie-detail-page movie-detail-page--${type}`}>
@@ -416,7 +466,9 @@ export const MovieDetail = ({ type: typeProp }) => {
                 {trailer ? (
                   <iframe
                     key={trailer.key}
-                    src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&loop=1&controls=0&playlist=${trailer.key}`}
+                    ref={trailerRef}
+                    onLoad={() => setTrailerPaused(false)} // [추가] 새 예고편은 재생 상태로 시작
+                    src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&loop=1&controls=0&playlist=${trailer.key}&enablejsapi=1`}
                     title={`${title} 예고편`}
                     allow="autoplay; encrypted-media"
                     allowFullScreen
@@ -428,6 +480,27 @@ export const MovieDetail = ({ type: typeProp }) => {
                       alt={title}
                     />
                   )
+                )}
+                {/* [수정] 예고편 재생 · 일시정지 (영상 왼쪽 아래 고정) */}
+                {trailer && (
+                  <button
+                    type="button"
+                    className={`btn-trailer-toggle${trailerPaused ? ' is-paused' : ''}`}
+                    onClick={toggleTrailer}
+                    aria-label={trailerPaused ? '예고편 재생' : '예고편 일시정지'}
+                    title={trailerPaused ? '재생' : '일시정지'}
+                  >
+                    {trailerPaused ? (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" />
+                      </svg>
+                    ) : (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <rect x="6" y="5" width="4" height="14" rx="1" />
+                        <rect x="14" y="5" width="4" height="14" rx="1" />
+                      </svg>
+                    )}
+                  </button>
                 )}
                 {/* [추가] 전체보기 버튼 (영상 칸 오른쪽 아래) */}
                 <button
@@ -538,7 +611,7 @@ export const MovieDetail = ({ type: typeProp }) => {
           <aside className="right-section">
             <div className="tabs">
               {[
-                ['episodes', '에피소드'],
+                ['episodes', isTv ? '에피소드' : '영상'], // [수정] 영화는 회차가 없어서 "영상"
                 ['cast', '등장인물'],
                 ['similar', '추천콘텐츠'],
               ].map(([key, label]) => (
@@ -556,6 +629,8 @@ export const MovieDetail = ({ type: typeProp }) => {
             {activeTab === 'episodes' && (
               <>
                 {/* [수정] 기본 select → 지불 방법 선택 상자와 같은 목록 (목록은 아래 내용 위에 덮임 · 상자 대신 아래 선) */}
+                {/* [수정] 영화: 본편 · 예고편 두 개뿐이라 유형 · 정렬 상자 없음 */}
+                {isTv && (
                 <div className="filter-bar">
                   {isTv ? (
                     <SelectDropdown
@@ -591,12 +666,13 @@ export const MovieDetail = ({ type: typeProp }) => {
                     ]}
                   />
                 </div>
+                )}
 
                 {listLabel && <p className="season-label">{listLabel}</p>}
 
                 <div className="list-container">
-                  {episodeList.length === 0 ? (
-                    <p className="empty-content">{isTv ? '회차 정보가 없습니다.' : '관련 영상이 없습니다.'}</p>
+                  {isTv && episodeList.length === 0 ? (
+                    <p className="empty-content">회차 정보가 없습니다.</p>
                   ) : isTv ? (
                     episodeList.map((ep) => (
                       <button
@@ -624,26 +700,21 @@ export const MovieDetail = ({ type: typeProp }) => {
                       </button>
                     ))
                   ) : (
-                    episodeList.map((v, i) => (
+                    // [수정] 영화: 본편 · 예고편
+                    movieItems.map((v) => (
                       <button
                         key={v.id}
                         className="episode-card"
-                        onClick={() => openPlayer(v.key)}
+                        onClick={v.onPlay}
                       >
                         <div className="thumb">
-                          <img
-                            src={`https://img.youtube.com/vi/${v.key}/mqdefault.jpg`}
-                            alt={v.name}
-                            loading="lazy"
-                          />
+                          {v.thumb && <img src={v.thumb} alt={v.name} loading="lazy" />}
                           <span className="thumb-play"><img className="play-icon" src="/icons/play-w.svg" alt="" aria-hidden="true" /></span>
                         </div>
                         <div className="info">
-                          <span className="ep-num">{i + 1}화</span>
+                          <span className="ep-num">{v.label}</span>
                           <span className="ep-title">{v.name}</span>
-                          <span className="runtime">
-                            {VIDEO_TYPE_LABEL[v.type] || v.type} · {formatDate(v.published_at)}
-                          </span>
+                          {v.meta && <span className="runtime">{v.meta}</span>}
                         </div>
                       </button>
                     ))
