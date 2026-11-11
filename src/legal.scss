@@ -218,3 +218,28 @@ $legal-sub: $dark-color-100;
     margin-top: $space-4xl !important;
   }
 }
+
+// [추가] 돌아가기 버튼 (모양은 help.scss 의 .help-back) — 본문 위 여백을 나눠 원래 간격 유지
+.legal-body {
+  padding-top: $space-xl;
+}
+
+.legal-back {
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 1023px) {
+  .legal-back {
+    margin-bottom: $space-xl;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .legal-body {
+    padding-top: $space-lg;
+  }
+
+  .legal-back {
+    margin-bottom: $space-lg;
+  }
+}
