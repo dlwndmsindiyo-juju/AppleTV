@@ -70,6 +70,9 @@ export const clearWatchHistory = async (uid, pid = "main") => {
 
 let unsubscribe = null;
 const backfilled = new Set(); // [추가] 이번 실행에서 이관을 끝낸 계정
+// [추가] 배포된 보안 규칙이 profileId 를 아직 허용하지 않으면(예전 규칙) 이번 실행 동안은 profileId 없이 저장
+// - 규칙(firestore.rules)을 배포하기 전에도 이어보기 저장이 거부되지 않게
+let profileIdRejected = false;
 
 // [추가] profileId 가 없는 예전 기록에 profileId 채우기 (계정당 한 번 · 실패해도 화면은 예전 방식으로 보임)
 // - 보안 규칙이 profileId 만 추가하는 수정을 허용해야 함 (updatedAt 은 그대로 → 최근 순서가 바뀌지 않음)
@@ -195,11 +198,25 @@ export const useWatchStore = create((set, get) => ({
       position: Math.max(0, Math.round(entry.position)),
       duration: Math.round(entry.duration),
       updatedAt: serverTimestamp(),
-      profileId: get().pid || "main", // [추가] 프로필별 조회용
     };
+    const pid = get().pid || "main";
+    const ref = doc(db, "users", uid, "watchHistory", prefixOf(pid) + watchKey(type, entry.id));
     try {
-      await setDoc(doc(db, "users", uid, "watchHistory", prefixOf(data.profileId) + watchKey(type, entry.id)), data);
+      // [추가] profileId: 프로필별 조회용 (예전 규칙이 거부한 적이 있으면 빼고 저장)
+      await setDoc(ref, profileIdRejected ? data : { ...data, profileId: pid });
     } catch (error) {
+      // [추가] 예전 규칙(profileId 미허용) → profileId 없이 한 번 더 저장 · 이후에도 빼고 저장
+      if (error?.code === "permission-denied" && !profileIdRejected) {
+        profileIdRejected = true;
+        console.warn("보안 규칙이 profileId 를 허용하지 않아 예전 방식으로 저장합니다 (firestore.rules 배포 필요).");
+        try {
+          await setDoc(ref, data);
+          return;
+        } catch (retryError) {
+          console.error("시청 기록 저장 실패:", retryError);
+          return;
+        }
+      }
       console.error("시청 기록 저장 실패:", error);
     }
   },

@@ -1351,17 +1351,6 @@ header {
         -webkit-mask: url("/icons/full-screen.svg") center / contain no-repeat;
         mask: url("/icons/full-screen.svg") center / contain no-repeat;
       }
-
-      // 전체 화면일 때: 화면 가득 · 영상 비율 유지 (남는 곳은 검정)
-      &.is-full {
-        aspect-ratio: auto;
-        background-color: #000000;
-
-        iframe,
-        img {
-          object-fit: contain;
-        }
-      }
     }
 
     // 하단 검정 정보 바
@@ -12601,13 +12590,15 @@ html body :is(.member-title.member-title.member-title.member-title,
   padding: $space-xs 0;
   border: none;
   background: none;
-  color: $dark-color-100;
+  color: $light-color-500;
   text-decoration: none;
   cursor: pointer;
   transition: color 0.2s ease;
 
   &:hover {
-    @include body-small-b;
+    color: $light-color-400;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   &:focus-visible {
