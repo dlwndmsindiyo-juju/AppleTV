@@ -416,6 +416,7 @@ main.sport-home {
   .sport-replay-name {
     @include heading-h4-b;
     font-family: inherit;
+    margin-top: $space-sm;
   }
 
   .sport-replay-date {
