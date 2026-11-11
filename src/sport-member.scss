@@ -1027,8 +1027,8 @@ section.sport-hero {
 
   .sport-btn {
     @include body-default-b;
-    height: 3.75rem;
-    padding: 0 2.5rem;
+    height: 3.25rem; // [수정] CTA 조금 작게 60 → 52
+    padding: 0 2rem;
   }
 
   .sport-btn.primary {
@@ -2581,7 +2581,7 @@ section.sport-hero.sport-hero--team {
   .sport-team-hero-record {
     @include heading-h3;
     font-family: inherit;
-    margin: 1.25rem 0 1.5rem;
+    margin: 1.25rem 0 0.625rem;
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 0.0625rem 0.5rem rgba(0, 0, 0, 0.2);
   }
@@ -2915,7 +2915,7 @@ main.sport-home.sport-live-page {
   .sport-lineup-head {
     display: flex;
     align-items: center;
-    gap: $space-xl;
+    gap: $space-lg;
     margin: $space-4xl 0;
 
     img {
@@ -4070,8 +4070,8 @@ main.sport-home.sport-live-page {
     border-radius: 50%;
 
     img {
-      width: 100%;
-      height: 100%;
+      width: 68%;
+      height: 68%;
       object-fit: contain;
     }
   }
@@ -5510,7 +5510,7 @@ main.sport-home .sport-replay {
 
     // 모바일: 카드 1장 + 다음 카드 살짝 (손가락으로 넘김 · 화살표 숨김)
     .sport-replay-slide {
-      width: clamp(260px, 52vw, 360px);
+     width: clamp(260px, 52vw, 360px);
       max-width: none;
     }
 
@@ -5958,7 +5958,7 @@ main.sport-home {
   // 모바일: 카드 1장 + 다음 장 일부 · 손가락으로 넘김
   @media (max-width: $breakpoint-mobile) {
     .sport-lv-slide {
-      width: clamp(280px, 55vw, 380px);
+       width: clamp(280px, 55vw, 380px);
     }
 
     .sport-live {
@@ -6086,7 +6086,7 @@ main.sport-home {
 @media (max-width: $breakpoint-mobile) {
   .sport-upcoming {
     .sport-up-slide {
-      width: clamp(280px, 52vw, 360px);
+       width: clamp(280px, 52vw, 360px);
     }
 
     .sport-up-logo {
@@ -6309,7 +6309,6 @@ main.sport-home.sport-live-page .sport-chat-list {
     }
   }
 }
-
 // =====================================================================
 // [수정] 스포츠 홈 구독 배너(로그인 전 · SubscribeCTA type="sport") — 글자 · 아이콘을 메인 홈 배너와 똑같이
 // - 원인 ① 스포츠 화면 전체 글꼴("Sport SF Pro", 위 main.sport-home * 규칙)이 배너에도 들어가 같은 크기 변수여도 글자가 다르게 보였음
@@ -6318,7 +6317,6 @@ main.sport-home.sport-live-page .sport-chat-list {
 // - 배경 사진 · 문구 내용 · 배너 높이는 그대로
 // =====================================================================
 main.sport-home .subscribe-cta.subscribe-cta--sport {
-
   &,
   * {
     font-family: $font-family-base; // 메인 홈과 같은 글꼴
@@ -6341,7 +6339,6 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 // 휴대폰: 메인 홈 배너와 같은 제목 크기(Heading/h2-B) · 로고(58 × 44) · 배너 높이
 @media (max-width: $breakpoint-mobile) {
   main.sport-home .subscribe-cta.subscribe-cta--sport {
-
     // [수정] 배너가 혼자 크게 나오던 원인: 위 "Sport 구독 배너 이미지" 규칙의 height: 420px 가
     //        휴대폰 규칙(height: auto · 위아래 32 여백)보다 우선해 PC 높이 그대로였음 → 메인 홈처럼 글자 높이에 맞춤
     .subscribe-banner {
@@ -6353,7 +6350,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
       display: inline;
     }
 
-    .subscribe-title .subscribe-title-desktop span+span::before {
+    .subscribe-title .subscribe-title-desktop span + span::before {
       content: " ";
     }
 
@@ -6435,7 +6432,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 
     // 오른쪽 내용: 칸 폭 가득 · 조금 작게
     // [수정] 처음 크기로 되돌림: 내용 85% · 칸 폭 가득
-    .sport-live-tabs-section>.inner.sport-live-panel {
+    .sport-live-tabs-section > .inner.sport-live-panel {
       width: 100%;
       max-width: none;
       margin: 0;
@@ -6641,7 +6638,6 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 
     // [추가] 잘 안 보이던 글자 → 글자 변수를 한두 단계 크게 (보이는 크기 ≈ 변수 × 0.85)
     .sport-live-panel {
-
       // 기록 · 중계 위 제목 (메이저 리그 사커 … · 날짜)
       .sport-stats-head {
         h3 {
@@ -6678,7 +6674,6 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 // =====================================================================
 @media (min-width: calc(#{$breakpoint-tablet} + 1px)) {
   main.sport-home.sport-live-page {
-
     .sport-stats,
     .sport-commentary {
       flex-direction: row; // [수정] 중계 기본 규칙(세로 column)을 덮어씀 → 스코어보드 왼쪽 · 타임라인 오른쪽
@@ -6702,5 +6697,34 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
       width: 100%;
       max-width: none;
     }
+  }
+}
+
+// =====================================================================
+// [수정] 라이브 채팅 입력칸 — 펼치기 전 "실시간 채팅에 참여해보세요" 칸과 비슷한 크기로
+// - 예전: 높이 64 · 큰 글자(Body/large) · 보내기 버튼 48 → 너무 컸음
+// - 지금: 높이 44 · 모서리 20 · 글자 Body/small · 보내기 버튼 32 · 좌우 12 띄움 (미리보기 칸과 같은 자리)
+// =====================================================================
+main.sport-home.sport-live-page .sport-live-chat-card .sport-chat-form {
+  height: 2.75rem;
+  margin: $space-sm 12px 14px;
+  padding: 0 0.375rem 0 14px;
+  border-radius: 20px;
+  background: $sport-opacity-w;
+  box-shadow: none;
+
+  input {
+    @include body-small;
+    font-family: inherit;
+  }
+
+  button {
+    width: 32px;
+    height: 2rem;
+  }
+
+  button img {
+    width: 14px;
+    height: 1rem;
   }
 }

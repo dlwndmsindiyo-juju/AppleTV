@@ -414,7 +414,7 @@ header .inner nav .gnb-right ul .profile-menu-divider {
 .login-page .login-card .login-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
@@ -656,7 +656,7 @@ header .inner nav .gnb-right ul .profile-menu-divider {
 .login-page .login-card.login-card--signin .login-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
@@ -914,7 +914,7 @@ header .inner nav .gnb-right ul .profile-menu-divider {
 .hero-swiper-container .hero-slide-item .hero-info .hero-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   font-size: 4rem;
@@ -2268,8 +2268,8 @@ header .inner nav .gnb-right ul .profile-menu-divider {
   letter-spacing: 0;
   display: inline-flex;
   align-items: center;
-  height: 3rem;
-  padding: 0 2.25rem;
+  height: 2.75rem;
+  padding: 0 2rem;
   border-radius: 624.9375rem;
   background-color: #F5F5F5;
   color: #171717;
@@ -3024,7 +3024,7 @@ body.has-promo-banner .footer {
 .sport-promo .sport-promo-placeholder {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   color: #A3A3A3;
@@ -3095,7 +3095,7 @@ body.has-promo-banner .footer {
 .sport-team-card .sport-team-add {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   flex-shrink: 0;
@@ -3211,7 +3211,7 @@ body.has-promo-banner .footer {
 .sport-teams .sport-teams-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   font-weight: 700;
@@ -4470,7 +4470,7 @@ main.sport-home .sport-series-card h4 {
   justify-content: center;
   gap: 0.375rem;
   width: 100%;
-  height: 3rem;
+  height: 2.75rem;
   padding: 0 1rem;
   border: none;
   border-radius: 0.5rem;
@@ -4909,7 +4909,7 @@ header .inner nav .gnb-right ul .profile-box > span,
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 3rem;
+  height: 2.75rem;
   border: none;
   border-radius: 0.5rem;
   background-color: #5865F2;
@@ -5725,7 +5725,7 @@ img.ui-icon.ui-icon-arrow {
   font-size: 0.9375rem;
   line-height: 1.25rem;
   letter-spacing: 0;
-  height: 3rem;
+  height: 2.75rem;
   padding: 0 1.5rem;
   border: none;
   border-radius: 0.625rem;
@@ -6263,7 +6263,7 @@ img.ui-icon.ui-icon-arrow {
 .account-section-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   margin: 0 0 2rem;
@@ -7908,7 +7908,7 @@ section.top10-section .top10-num-stop-end {
   justify-content: center;
   gap: 0.375rem;
   min-width: 120px;
-  height: 2.625rem;
+  height: 2.5rem;
   padding: 0 1.5rem;
   border-radius: 62.4375rem;
   box-sizing: border-box;
@@ -8073,7 +8073,7 @@ main.landing-home .subscribe-cta {
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
@@ -8249,7 +8249,7 @@ section.device-guide.device-guide--watch .watch-mobile {
 section.device-guide.device-guide--watch .watch-subtitle {
   font-family: "SF Pro", sans-serif;
   font-weight: 400;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 2.125rem;
   letter-spacing: 0;
   padding-top: 0;
@@ -8644,7 +8644,7 @@ section.device-guide.device-guide--watch .watch-device img {
 .auth-card.auth-card--login .auth-login-btn {
   width: 100%;
   max-width: 428px;
-  height: 3rem;
+  height: 2.75rem;
   border-radius: 62.4375rem;
 }
 .auth-card.auth-card--login .auth-login-error,
@@ -9798,7 +9798,7 @@ main.wish-page {
   .movie-detail-page.movie-detail-page .rating-section .rating-header h3 {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
     color: #FFFFFF;
@@ -9845,8 +9845,8 @@ main.wish-page {
     font-size: 1.0625rem;
     line-height: 1.375rem;
     letter-spacing: 0;
-    width: 11.25rem;
-    height: 3.875rem;
+    width: 10rem;
+    height: 3.25rem;
     padding: 0;
     margin: 1rem 0;
   }
