@@ -117,6 +117,9 @@ const writeRecent = (uid, list) => {
 
 let searchToken = 0; // 빠르게 바뀐 이전 검색 결과는 버림
 
+// [추가] 관심 인물 작업 번호 ("uid:인물id" → 마지막 작업) — 실패 되돌리기는 마지막 작업일 때만
+const personOps = new Map();
+
 export const useSearchStore = create((set, get) => ({
   // ---------- 장르 이름 (id → 한글) ----------
   genres: { movie: {}, tv: {} },
@@ -317,25 +320,40 @@ export const useSearchStore = create((set, get) => ({
 
   // ---------- 관심 인물 (Firestore 계정) ----------
   // users/{uid}.favoritePeople = [인물 id, ...]
+  // - [수정] 실패하면 "그 인물 하나"만 되돌림 (리뷰: 저장 실패 후 화면 복구)
+  //   · 예전: 시작할 때의 목록 전체로 덮어써서, 그 사이 다른 인물 변경 · 계정 전환이 있으면 지금 화면을 덮었음
+  //   · 지금: 시작한 계정(uid)이 그대로이고 · 그 인물의 마지막 작업일 때만 그 인물만 원래대로
   onToggleFavoritePerson: async (personId) => {
     const fbUser = auth.currentUser;
     const user = useAuthStore.getState().user;
     if (!fbUser || !user) return false;
+    const uid = fbUser.uid;
 
     const list = user.favoritePeople || [];
     const following = list.includes(personId);
     const next = following ? list.filter((v) => v !== personId) : [...list, personId];
+    const opKey = `${uid}:${personId}`;
+    const ver = (personOps.get(opKey) || 0) + 1;
+    personOps.set(opKey, ver);
 
     // 화면 먼저 바꾸고 저장 (실패하면 되돌림)
     useAuthStore.setState({ user: { ...user, favoritePeople: next } });
     try {
-      await updateDoc(doc(db, "users", fbUser.uid), {
+      await updateDoc(doc(db, "users", uid), {
         favoritePeople: following ? arrayRemove(personId) : arrayUnion(personId),
       });
       return true;
     } catch (error) {
       console.error("관심 인물 저장 실패:", error);
-      useAuthStore.setState({ user: { ...useAuthStore.getState().user, favoritePeople: list } });
+      const cur = useAuthStore.getState().user;
+      const sameAccount = auth.currentUser?.uid === uid && cur?.uid === uid;
+      if (sameAccount && personOps.get(opKey) === ver) {
+        const curList = cur.favoritePeople || [];
+        const restored = following
+          ? curList.includes(personId) ? curList : [...curList, personId] // 빼기 실패 → 다시 넣기
+          : curList.filter((v) => v !== personId); // 넣기 실패 → 다시 빼기
+        useAuthStore.setState({ user: { ...cur, favoritePeople: restored } });
+      }
       return false;
     }
   },

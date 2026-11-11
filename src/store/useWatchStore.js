@@ -129,11 +129,15 @@ export const useWatchStore = create((set, get) => ({
     // [수정] 두 갈래로 받아 합침
     //   ① 새 방식: 이 프로필 기록만 서버에서 (profileId)
     //   ② 예전 방식: profileId 가 없는 예전 기록 (이관이 끝나면 비게 됨)
+    // - [수정] 예전 방식 결과는 받은 그대로 두고, 합치는 시점(publish)에 거름
+    //   · 예전: 예전 방식 결과가 먼저 오면 그때 profileId 있는 기록을 빼 버림 → 그 뒤 ① 이 실패하면 목록이 빔
     const parts = { scoped: null, legacy: null };
     let scopedFailed = false;
     const publish = () => {
       if (parts.legacy === null || (parts.scoped === null && !scopedFailed)) return; // 둘 다 받은 뒤
-      set({ status: "ready", items: mergeHistory([parts.scoped || [], parts.legacy]) });
+      // ① 이 동작하면 profileId 있는 기록은 ① 에서 받으므로 예전 결과에서는 profileId 없는 것만 · 실패했으면 전부
+      const legacy = scopedFailed ? parts.legacy : parts.legacy.filter((h) => !h.profileId);
+      set({ status: "ready", items: mergeHistory([scopedFailed ? [] : parts.scoped || [], legacy]) });
     };
     const unsubs = [];
     unsubs.push(
@@ -157,9 +161,7 @@ export const useWatchStore = create((set, get) => ({
         (snap) => {
           parts.legacy = snap.docs
             .filter((d) => ownDoc(d.id, profile))
-            .map((d) => d.data({ serverTimestamps: "estimate" }))
-            // 새 방식이 동작하면 profileId 가 있는 기록은 ①에서 받으므로 여기선 예전 기록만
-            .filter((h) => scopedFailed || !h.profileId);
+            .map((d) => d.data({ serverTimestamps: "estimate" })); // [수정] 여기서는 거르지 않음 (publish 에서)
           publish();
         },
         (error) => {
