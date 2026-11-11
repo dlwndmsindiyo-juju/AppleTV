@@ -18,8 +18,8 @@
 .help-eyebrow {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   margin: 0;
 }
@@ -161,8 +161,8 @@
 .help-card-title {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   margin-top: 1.5rem;
   word-break: keep-all;
@@ -192,8 +192,8 @@
 .help-item .help-question button span {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.25rem;
-  line-height: 1.5625rem;
+  font-size: 1rem;
+  line-height: 1.4rem;
   letter-spacing: 0;
 }
 
@@ -203,8 +203,8 @@
 .help-question button {
   font-family: "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1.75rem;
+  font-size: 1.2rem;
+  line-height: 1.55rem;
   letter-spacing: 0;
   display: flex;
   align-items: center;
