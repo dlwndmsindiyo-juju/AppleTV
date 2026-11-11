@@ -314,7 +314,7 @@ export const useMovieStore = create((set, get) => ({
     try {
       const res = await fetch(
         `https://api.themoviedb.org/3/${type}/${id}?api_key=${TMDB_KEY}&language=ko-KR` +
-          `&append_to_response=credits,similar,images,videos` +
+          `&append_to_response=credits,similar,images,videos,${type === "movie" ? "release_dates" : "content_ratings"}` + // [추가] 등급 (TV 상세 연도 · 등급 · 장르 · 시간)
           `&include_image_language=ko,en,null&include_video_language=ko,en,null`,
       );
       if (!res.ok) throw new Error(`TMDB ${type} 상세 HTTP ${res.status}`);
