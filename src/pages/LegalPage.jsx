@@ -3,7 +3,7 @@
 // - 시안(개인정보 처리방침 · 이용약관 · 환불안내 PC) 디자인 · 스타일: legal.scss · 데이터: data/legalData.js
 //   1. "‹ 뒤로 가기" 띠 (푸터를 누르기 전 보던 페이지 · 스크롤 위치로)
 //   2. 가운데 제목 · 설명 · 세 문서 링크 (세 정책 문서에서만)
-//   3. 안내 한 줄 + 펼침 목록 (첫 항목 열림 · 여러 개 함께 열 수 있음)
+//   3. 안내 한 줄 + 펼침 목록 (처음엔 모두 닫힘 · 여러 개 함께 열 수 있음)
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LEGAL_LINKS, LEGAL_PAGES } from "../data/legalData";
@@ -42,12 +42,29 @@ const useGoBack = () => {
 
 // links: [{ key, label, path }] (없으면 링크 줄 없음) · current: 지금 문서 key
 // items: [{ title, body }] · pageKey: 문서가 바뀌면 펼침 상태 · 스크롤 처음으로
-const DocView = ({ pageKey, title, desc, links = null, current, intro, items = [] }) => {
+// [추가] 글 묶음: 글 한 개 또는 [문단, { list: [항목 …] }, …] → 문단 · 점 목록
+const Blocks = ({ value, className }) => {
+  const blocks = Array.isArray(value) ? value : [value];
+  return blocks.map((b, i) =>
+    typeof b === "string" ? (
+      <p key={i} className={className}>{b}</p>
+    ) : (
+      <ul key={i} className="legal-bullets">
+        {b.list.map((t) => (
+          <li key={t}>{t}</li>
+        ))}
+      </ul>
+    ),
+  );
+};
+
+// [수정] meta: 제목 아래 작은 글(업데이트 날짜 등) · intro: 링크 아래 설명 문단(배열 가능) · hint: 목록 바로 위 안내 한 줄
+const DocView = ({ pageKey, title, meta, desc, links = null, current, intro, hint, items = [] }) => {
   const { goBack, returnTo } = useGoBack();
-  const [openSet, setOpenSet] = useState(() => new Set([0]));
+  const [openSet, setOpenSet] = useState(() => new Set()); // [수정] 처음에는 모두 닫힘
 
   useEffect(() => {
-    setOpenSet(new Set([0]));
+    setOpenSet(new Set()); // [수정] 문서를 바꿔도 모두 닫힘
     window.scrollTo(0, 0);
   }, [pageKey]);
 
@@ -76,6 +93,7 @@ const DocView = ({ pageKey, title, desc, links = null, current, intro, items = [
         {/* [수정] header 태그 대신 div — 사이트 헤더 규칙(App.scss header { position: fixed … })이 붙어 위로 겹치던 문제 */}
         <div className="legal-hero">
           <h1 className="legal-title">{title}</h1>
+          {meta && <p className="legal-meta">{meta}</p>}
           {desc && <p className="legal-desc">{desc}</p>}
           {links && (
             <nav className="legal-links" aria-label="문서 메뉴">
@@ -95,7 +113,13 @@ const DocView = ({ pageKey, title, desc, links = null, current, intro, items = [
         </div>
 
         {/* 3. 안내 + 펼침 목록 */}
-        {intro && <p className="legal-intro">{intro}</p>}
+        {/* [수정] 설명 문단(본문) → 목록 위 안내(작은 글) 순서로 위계 구분 */}
+        {intro && (
+          <div className="legal-intro">
+            <Blocks value={intro} className="legal-intro-text" />
+          </div>
+        )}
+        {hint && <p className="legal-hint">{hint}</p>}
         <ul className="legal-list">
           {items.map((item, i) => {
             const open = openSet.has(i);
@@ -109,7 +133,7 @@ const DocView = ({ pageKey, title, desc, links = null, current, intro, items = [
                   </button>
                 </h2>
                 <div className="legal-answer" id={`${id}-a`} role="region" aria-labelledby={`${id}-q`} hidden={!open}>
-                  <p>{item.body}</p>
+                  <Blocks value={item.body} className="legal-answer-text" />
                 </div>
               </li>
             );
@@ -131,7 +155,9 @@ const LegalPage = ({ page = "privacy" }) => {
       desc={data.desc}
       links={isPolicy ? LEGAL_LINKS : null}
       current={page}
-      intro={data.intro || DEFAULT_INTRO}
+      meta={data.meta}
+      intro={data.intro} // [수정] 설명 문단 (개인정보 · 이용 약관 · 판매 및 환불)
+      hint={DEFAULT_INTRO} // 목록 위 안내 한 줄
       items={data.sections}
     />
   );
