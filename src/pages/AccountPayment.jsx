@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom"; // [수정] Link: 결제 방법 안내
 import { useAuthStore, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
 import { AccountSubPage, ConfirmDialog, CARD_BRANDS, CARD_BRAND_ICONS } from "../components/profile/AccountShared";
 import { PAYMENT_URL } from "../data/appleLinks";
@@ -388,14 +388,10 @@ export default function AccountPayment() {
           <p className="account-item-desc">
             위에서부터 결제 우선순위가 적용됩니다. 실제 Apple 계정의 결제 수단은
             이 화면에서 변경되지 않습니다.{" "}
-            <a
-              className="account-link"
-              href={PAYMENT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            {/* [수정] 외부 새 창 → 사이트 안 /payment-help */}
+            <Link className="account-link" to={PAYMENT_URL}>
               더 알아보기
-            </a>
+            </Link>
           </p>
         </div>
 
