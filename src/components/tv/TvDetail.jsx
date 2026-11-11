@@ -276,7 +276,23 @@ const OttDetail = ({ item, onOpen }) => {
 
   const typeLabel = item.type === "tv" ? "시리즈" : "영화";
   const genres = (detail?.genres || []).map((g) => g.name);
-  const subtitle = [typeLabel, ...genres.slice(0, 2), year(detail?.release_date || detail?.first_air_date)].filter(Boolean).join(" · ");
+  // [수정] TV 가이드 순서: 연도 · 등급 · 장르 · 시간 (시청을 고를 때 필요한 정보만)
+  const krRating =
+    item.type === "tv"
+      ? (detail?.content_ratings?.results || []).find((r) => r.iso_3166_1 === "KR")?.rating
+      : (detail?.release_dates?.results || []).find((r) => r.iso_3166_1 === "KR")?.release_dates?.find((d) => d.certification)?.certification;
+  const ratingLabel = krRating ? (/^\d+$/.test(krRating) ? `${krRating}세` : krRating) : "";
+  const runMin = item.type === "tv" ? detail?.episode_run_time?.[0] : detail?.runtime;
+  const runLabel = runMin
+    ? item.type === "tv"
+      ? `회당 ${runMin}분`
+      : runMin >= 60
+        ? `${Math.floor(runMin / 60)}시간${runMin % 60 ? ` ${runMin % 60}분` : ""}`
+        : `${runMin}분`
+    : "";
+  const subtitle = [year(detail?.release_date || detail?.first_air_date), ratingLabel, ...genres.slice(0, 2), runLabel || typeLabel]
+    .filter(Boolean)
+    .join(" · ");
   const bg = detail?.backdrop_path ? `${TMDB_IMG}/original${detail.backdrop_path}` : item.image;
   const cast = (detail?.credits?.cast || []).filter((c) => c.profile_path).slice(0, 15);
   const similar = (detail?.similar?.results || []).filter((r) => r.backdrop_path || r.poster_path).slice(0, 12);
@@ -339,8 +355,9 @@ const OttDetail = ({ item, onOpen }) => {
   };
 
   const actions = [
-    { key: "watch", label: "시청하기", onClick: watch, icon: <PlayIcon /> },
-    { key: "interest", label: "관심 콘텐츠", onClick: toggleWish, pressed: wished, icon: <PlusIcon on={wished} /> },
+    // [수정] TV 가이드: 주 버튼은 실제 동작 이름 (작품 상세는 예고편이 재생됨) · 찜 · 정보는 보조
+    { key: "watch", label: "예고편 보기", onClick: watch, icon: <PlayIcon /> },
+    { key: "interest", label: wished ? "찜 해제" : "찜하기", onClick: toggleWish, pressed: wished, icon: <PlusIcon on={wished} /> },
     { key: "info", label: "작품 정보", onClick: () => setInfoOpen((v) => !v), pressed: infoOpen, icon: <InfoIcon /> },
   ];
 

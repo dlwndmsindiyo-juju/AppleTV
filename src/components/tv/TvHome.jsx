@@ -117,12 +117,13 @@ const useTvHomeRows = () => {
     };
 
     const base = {
-      continue: { id: "continue", title: "멈춘 순간부터 다시", items: continueRow },
-      wishlist: { id: "wishlist", title: "마음에 담아둔 이야기", items: wishRow },
-      top10: { id: "top10", title: "지금 가장 주목받는 작품", items: top10.map((tv) => card(tv, "tv")) },
-      recommend: { id: "recommend", title: "Apple이 모두에게 추천하는 작품", items: recommend.map((m) => card(m)) },
-      new: { id: "new", title: "지금, 새로운 작품을 만나보세요", items: newRelease.map((tv) => card(tv, "tv")) },
-      coming: { id: "coming", title: "기대해도 좋을 새로운 이야기", items: coming.map((m) => card(m, "movie")) },
+      // [수정] TV 가이드: 반복해서 찾는 섹션은 기능을 바로 알 수 있는 짧은 이름 (웹 홈의 감성 문구는 그대로)
+      continue: { id: "continue", title: "이어보기", items: continueRow },
+      wishlist: { id: "wishlist", title: "찜한 작품", items: wishRow },
+      top10: { id: "top10", title: "지금 인기 있는 작품", items: top10.map((tv) => card(tv, "tv")) },
+      recommend: { id: "recommend", title: "추천 작품", items: recommend.map((m) => card(m)) },
+      new: { id: "new", title: "새로 공개된 작품", items: newRelease.map((tv) => card(tv, "tv")) },
+      coming: { id: "coming", title: "공개 예정", items: coming.map((m) => card(m, "movie")) },
     };
 
     // [수정] 로그인: 웹 로그인 후 메인과 같은 순서 / 로그인 전: 기존 6줄
