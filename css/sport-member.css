@@ -2464,7 +2464,7 @@ section.sport-hero.sport-hero--team .sport-team-hero-record {
   line-height: 1.5625rem;
   letter-spacing: 0;
   font-family: inherit;
-  margin: 1.25rem 0 0.625rem;
+  margin: 1.25rem 0 1.5rem;
   color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 0.0625rem 0.5rem rgba(0, 0, 0, 0.2);
 }
@@ -2778,7 +2778,7 @@ main.sport-home.sport-live-page .sport-lineup-team {
 main.sport-home.sport-live-page .sport-lineup-head {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   margin: 3rem 0;
 }
 main.sport-home.sport-live-page .sport-lineup-head img {
