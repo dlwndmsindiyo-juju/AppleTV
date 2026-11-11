@@ -4,7 +4,8 @@ import { footerMainLinks, footerSubLinks } from '../../data/footerData';
 
 // [추가] 도움말 페이지(이용 가이드 · FAQ · 지원)에서 "돌아가기"로 돌아올 곳 = 푸터 메뉴를 누를 때 보던 페이지 + 스크롤 위치
 // - 이미 도움말 페이지 안이면 처음 들어오기 전 페이지를 그대로 넘김 (도움말끼리 오가도 돌아갈 곳은 그대로)
-const HELP_PATHS = ['/guide', '/faq', '/support'];
+// [수정] 정책 페이지(개인정보 · 이용약관 · 환불)도 같은 방식 — 서로 오가도 처음 보던 페이지는 그대로
+const HELP_PATHS = ['/guide', '/faq', '/support', '/privacy', '/terms', '/refund'];
 
 const Footer = () => {
   const location = useLocation();
@@ -49,7 +50,16 @@ const Footer = () => {
           {footerSubLinks.map((item, index) => (
             <li key={index}>
               {/* [수정] 사이트 안 정책 페이지(/privacy · /terms)는 새로고침 없이 이동 · 바깥 주소는 그대로 */}
-              {item.path.startsWith('/') ? <Link to={item.path}>{item.label}</Link> : <a href={item.path}>{item.label}</a>}
+              {/* [수정] 보던 페이지 · 스크롤 위치를 넘김 → 정책 페이지 "돌아가기" */}
+              {item.path.startsWith('/') ? (
+                <Link
+                  to={item.path}
+                  state={{ returnTo }}
+                  onClick={() => { if (returnTo && !inHelp) returnTo.scrollY = window.scrollY; }}
+                >
+                  {item.label}
+                </Link>
+              ) : <a href={item.path}>{item.label}</a>}
             </li>
           ))}
           <li className="footer-region">대한민국 · 한국어</li>

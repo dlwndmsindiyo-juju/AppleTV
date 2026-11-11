@@ -104,7 +104,7 @@
   .auth-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
@@ -151,8 +151,8 @@
   .subscribe-gate-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
   }
   .subscribe-gate-desc {
@@ -261,7 +261,7 @@
   .wish-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
@@ -313,7 +313,7 @@
   .account-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
     padding-bottom: 1rem;
@@ -348,8 +348,8 @@
   .account-section-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.55rem;
     letter-spacing: 0;
     margin-bottom: 1rem;
   }
@@ -505,8 +505,8 @@
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.55rem;
     letter-spacing: 0;
   }
 }
@@ -531,8 +531,8 @@
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     margin-top: 0.75rem;
   }
@@ -575,7 +575,7 @@
   section.device-guide.device-guide--watch .watch-subtitle {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
@@ -599,7 +599,7 @@
   section.device-guide.device-guide--watch .watch-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
     margin-top: 1rem;
@@ -624,8 +624,8 @@
   section.device-guide.device-guide--watch .watch-subtitle {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.55rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-link {
@@ -662,7 +662,7 @@
   .auth-card.auth-card--login .auth-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
@@ -682,8 +682,8 @@
   .auth-card.auth-card--login .auth-code-box {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.55rem;
     letter-spacing: 0;
     width: auto;
     flex: 1 1 0;
@@ -713,8 +713,8 @@
   section.top10-section .top10-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
@@ -828,7 +828,7 @@
   .top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
     padding-right: 1.25rem;
@@ -974,8 +974,8 @@
   :is(main, div).member-home .member-section .member-head .member-desc.member-desc {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
@@ -1192,7 +1192,7 @@
   .movie-detail-page .player-box .title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
     font-weight: 700;
@@ -1223,8 +1223,8 @@
   .movie-detail-page .player-box .title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -1399,8 +1399,8 @@
   .sport-teams .sport-teams-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -1434,7 +1434,7 @@
   .sport-teams-page .sport-teams-page-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
     font-weight: 700;
@@ -1580,8 +1580,8 @@
   .login-page.login-page .login-card.login-card .login-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
     letter-spacing: 0;
     margin: 1.25rem 0 0.625rem;
     font-size: 1.5rem;
@@ -1672,8 +1672,8 @@
     grid-area: name;
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-weight: 700;
   }
@@ -1701,8 +1701,8 @@
   .login-page.login-page .login-card.plan-card .plan-section-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     font-weight: 700;
     margin: 2rem 0 0.75rem;
@@ -1914,8 +1914,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   section.top10-section .top10-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
@@ -1937,7 +1937,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
     color: #FFFFFF;
@@ -1967,8 +1967,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   :is(main, div).member-home .member-section .member-title.member-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
+    font-size: 2.25rem;
+    line-height: 3.5rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
@@ -2619,7 +2619,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   .ai-banner .ai-banner-title {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
@@ -2824,8 +2824,8 @@ header .inner nav .gnb-right ul .search-icon-item {
   .movie-detail-page.movie-detail-page .rating-section .rating-header h3 {
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.55rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
@@ -3065,8 +3065,8 @@ header .inner nav .gnb-right ul .search-icon-item {
     display: inline;
     font-family: "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: 1.2rem;
+    line-height: 1.55rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }

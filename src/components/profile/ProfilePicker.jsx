@@ -9,7 +9,9 @@ import { useAuthStore, getProfiles, PROFILE_MAX, PROFILE_NAME_MAX } from "../../
 import ProfileAvatar, { AVATAR_OPTIONS, sameAvatar, toneOf } from "./ProfileAvatar";
 
 // onPick(id): 프로필을 골랐을 때 · current: 지금 프로필 id (계정 설정에서 표시)
-const ProfilePicker = ({ onPick, current: currentProp = null, className = "" }) => {
+// [추가] onEdit(id, rect): 넘기면(계정 설정) 모든 프로필 이름 옆에 연필 아이콘 → 편집 팝업
+//   (기본 프로필은 이름 변경만 · 나머지는 이름 변경 + 삭제 — pages/Profile.jsx)
+const ProfilePicker = ({ onPick, onEdit, current: currentProp = null, className = "" }) => {
   const user = useAuthStore((s) => s.user);
   // [추가] current 를 넘기지 않으면(로그인 "누가 시청하나요?") 마지막으로 쓴 프로필을 선택된 프로필로 표시
   const storeCurrent = useAuthStore((s) => s.currentProfileId);
@@ -59,7 +61,28 @@ const ProfilePicker = ({ onPick, current: currentProp = null, className = "" }) 
               <span className="profile-picker-avatar" aria-hidden="true">
                 <ProfileAvatar avatar={p.avatar} tone={toneOf(i)} size="sm" />
               </span>
-              <span className="profile-picker-name">{p.name}</span>
+              {/* [수정] 이름 + 연필(편집) — 버튼 안이라 span(role=button) · 누르면 프로필 선택 대신 편집 */}
+              <span className="profile-picker-name-row">
+                <span className="profile-picker-name">{p.name}</span>
+                {onEdit && ( // [수정] 기본 프로필에도 연필 (이름 변경만)
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    className="profile-picker-edit"
+                    aria-label={`${p.name} 프로필 편집`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEdit(p.id, e.currentTarget.getBoundingClientRect()); // [수정] 누른 자리 → 그 자리에 팝업
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key !== "Enter" && e.key !== " ") return;
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onEdit(p.id, e.currentTarget.getBoundingClientRect());
+                    }}
+                  />
+                )}
+              </span>
               {/* [추가] 선택된 프로필: 이름 강조 + "사용 중" */}
               {current === p.id && <span className="profile-picker-current">사용 중</span>}
             </button>
