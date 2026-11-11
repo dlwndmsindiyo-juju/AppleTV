@@ -1,245 +1,234 @@
-// [추가] 푸터 정책 링크 페이지 — 개인정보 처리방침 · 이용약관 · 환불안내 (pages/LegalPage.jsx · 시안 1920)
-// - FAQ(help.scss) 와 같은 밝은 화면: 위쪽 회색(Light/100) + 흰 본문 · 글자 Dark/400 · 보조 Dark/100
-// - 문서 링크: 지금 문서 Primary/500 · 나머지 Primary/200
-// - 본문 폭 1040 가운데 · 요약 상자 Light/100
-// - 글자: "Apple TV" Heading/h2-B · 큰 제목 Heading/h1-B · 설명 · 링크 Body/large(-B)
-//         요약 제목 Body/large-B · 요약 설명 Body/default · 조항 제목 Heading/h2-B · 조항 내용 Body/large · 안내 Body/default
-// - 태블릿 · 휴대폰도 같은 배치 (세 링크 한 줄 · 상자 · 조항 순서 그대로) — 글자 · 간격만 한 단계씩 작게
+// [수정] 푸터 메뉴 페이지 — 개인정보 처리방침 · 이용약관 · 환불안내 · 안내 페이지 (pages/LegalPage.jsx)
+// - 시안(개인정보 처리방침 · 이용약관 · 환불안내 PC) 디자인으로 다시 씀 · 푸터 주 메뉴 · 서브 메뉴 모두 같은 디자인
+//   뒤로 가기 띠 → 가운데 제목 · 설명 · 문서 링크 3개 → 안내 한 줄 → 펼침 목록 (첫 항목 열림)
+// - 배치 · 간격 · 글자 크기는 시안 그대로 · 배경만 사이트 기본 배경($bg-page) · 글자 색만 어두운 배경에 맞춤
+// - 본문 폭 880 가운데 (PC · 태블릿 · 휴대폰 같은 배치 · 좁으면 좌우 여백만)
+// - 예전 밝은 화면(회색 히어로 · 카드 · 요약 상자 · 돌아가기 버튼) 규칙은 뺌
+//
+// 시안(1920) 기준
+//  - 뒤로 가기 띠: 높이 44 · 위쪽 회색 띠 → $bg-surface · 글자 Body/large-B · 파랑
+//  - 제목 Display/L-B(34) · 설명 Body/default(15) · 문서 링크 Body/small(13) 파랑 · 링크 칸 178
+//  - 안내 Body/default · 목록 줄 높이 61 · 항목 제목 Body/large-B(17) · 펼친 내용 Body/default · 구분선
 @use "./variables" as *;
 
-$legal-width: 65rem; // 1040
-$legal-text: $dark-color-400;
-$legal-sub: $dark-color-100;
+$legal-width: 55rem; // 880
+$legal-line: $dark-color-400; // 구분선 (시안 Light/300 → 어두운 배경)
 
 .legal-page {
   min-height: 100vh;
-  padding-top: $header-height; // 고정 헤더 높이만큼
-  background-color: $light-color-100;
-  color: $legal-text;
+  padding: $header-height 0 5rem; // 고정 헤더 · 아래 80
+  background-color: $bg-page;
+  color: $text-primary;
 
-  :where(h1, h2, p, ol) {
+  :where(h1, h2, p, ul) {
     margin: 0;
     padding: 0;
   }
+
+  :where(button) {
+    font-family: $font-family-base;
+  }
 }
 
-// ---------- 위쪽 회색 영역 ----------
-.legal-hero {
+// [수정] 사이트 기본 글꼴 — index.css 의 * { font-family: … monospace } 가 버튼 안 글자(span)에 따로 붙어
+// 다른 글꼴로 보이던 문제 → 이 페이지 안 모든 글자는 SF Pro
+.legal-page,
+.legal-page * {
+  font-family: $font-family-base;
+}
+
+.legal-inner {
+  width: calc(100% - #{$space-xl * 2});
+  max-width: $legal-width;
+  margin: 0 auto;
+}
+
+// ---------- 1. 뒤로 가기 띠 ----------
+.legal-backbar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 5.625rem $space-xl 5rem; // 90 · 80
-  background-color: $light-color-200;
-  text-align: center;
+  height: 2.75rem; // 44
+  background-color: $bg-surface;
 }
 
-.legal-eyebrow {
-  @include heading-h2-b;
-}
-
-.legal-title {
-  @include heading-h1-b;
-  margin-top: $space-xl !important;
-  letter-spacing: -0.01em;
-  word-break: keep-all;
-}
-
-.legal-desc {
-  @include body-large;
-  margin-top: $space-xl !important;
-  color: $legal-sub;
-  word-break: keep-all;
-}
-
-// 세 문서 링크 — 한 줄 3칸 (칸 288 · 가운데 정렬)
-.legal-links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 18rem));
-  justify-content: center;
-  margin-top: $space-xl;
-}
-
-.legal-link {
+.legal-back {
   @include body-large-b;
-  justify-self: center;
-  color: $primary-color-200;
-  text-decoration: none;
-  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $primary-color-300;
+  cursor: pointer;
   transition: color 0.2s ease;
 
   &:hover {
-    color: $primary-color-400;
-  }
-
-  &.is-current {
-    color: $primary-color-500;
+    color: $primary-color-200;
   }
 
   &:focus-visible {
-    outline: 0.125rem solid $primary-color-500;
+    outline: 0.125rem solid $primary-color-300;
     outline-offset: 0.25rem;
     border-radius: $radius-xs;
   }
 }
 
-// ---------- 본문 ----------
-.legal-body {
-  box-sizing: content-box;
-  max-width: $legal-width;
-  margin: 0 auto;
-  padding: 5rem $space-xl 6.25rem; // 80 · 100
+.legal-back-arrow {
+  font-size: 1.25rem;
+  line-height: 1;
+  transform: translateY(-0.0625rem);
 }
 
-// Apple 공식 문서 요약 상자
-.legal-summary {
+// ---------- 2. 제목 · 설명 · 링크 ----------
+.legal-hero {
   display: flex;
   flex-direction: column;
-  gap: $space-lg;
-  padding: $space-xl 1.75rem; // 24 · 28
-  border-radius: $radius-card-sm;
-  background-color: $light-color-200;
+  align-items: center;
+  padding-top: 2.5rem; // 띠 → 제목 40
+  text-align: center;
 }
 
-.legal-summary-title {
-  @include body-large-b;
-}
-
-.legal-summary-desc {
-  @include body-default;
-  color: $legal-sub;
+.legal-title {
+  @include display-l-b;
+  color: $light-color-0;
   word-break: keep-all;
 }
 
-// 조항 (1. ~ 6.)
-.legal-sections {
+.legal-desc {
+  @include body-default;
+  margin-top: $space-lg !important;
+  color: $text-secondary;
+  word-break: keep-all;
+}
+
+.legal-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 11.125rem)); // 칸 178
+  justify-content: center;
+  margin-top: $space-lg;
+}
+
+.legal-link {
+  @include body-small;
+  justify-self: center;
+  color: $primary-color-300;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $primary-color-200;
+  }
+
+  &.is-current {
+    @include body-small-b;
+    color: $primary-color-200;
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-300;
+    outline-offset: 0.25rem;
+    border-radius: 0.25rem;
+  }
+}
+
+// ---------- 3. 안내 + 펼침 목록 ----------
+.legal-intro {
+  @include body-default;
+  margin-top: 3.125rem !important; // 링크 → 안내 50
+  color: $text-secondary;
+  word-break: keep-all;
+}
+
+.legal-list {
+  margin-top: $space-lg !important;
+  border-top: 0.0625rem solid $legal-line;
   list-style: none;
 }
 
-.legal-section {
-  margin-top: $space-4xl; // 48 (상자 · 앞 조항과 사이)
+.legal-item {
+  border-bottom: 0.0625rem solid $legal-line;
 }
 
-.legal-section-title {
-  @include heading-h2-b;
+.legal-question button {
+  @include body-large-b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-lg;
+  width: 100%;
+  min-height: 3.8125rem; // 61
+  padding: $space-md 0;
+  border: none;
+  background: none;
+  color: $light-color-0;
+  text-align: left;
+  cursor: pointer;
   word-break: keep-all;
-}
 
-.legal-section-body {
-  @include body-large;
-  margin-top: $space-lg !important;
-  word-break: keep-all;
-}
-
-.legal-footnote {
-  @include body-default;
-  margin-top: $space-5xl !important; // 64
-  color: $legal-sub;
-  word-break: keep-all;
-}
-
-// ---------- 태블릿 (1024 이하): 같은 배치 · 간격만 줄임 ----------
-@media (max-width: $breakpoint-tablet) {
-  .legal-hero {
-    padding: 4.5rem $space-xl 4rem;
-  }
-
-  .legal-links {
-    grid-template-columns: repeat(3, minmax(0, 14rem));
-  }
-
-  .legal-body {
-    padding: 4rem $space-2xl 5rem;
+  &:focus-visible {
+    outline: 0.125rem solid $primary-color-300;
+    outline-offset: 0.125rem;
+    border-radius: 0.25rem;
   }
 }
 
-// ---------- 휴대폰 (767 이하): 같은 배치 · 글자 한 단계 작게 ----------
+// 펼침 화살표 (∨ · 열리면 ∧)
+.legal-chevron {
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-right: 0.375rem;
+  border-right: 0.125rem solid currentColor;
+  border-bottom: 0.125rem solid currentColor;
+  transform: translateY(-0.1875rem) rotate(45deg);
+  transition: transform 0.2s ease;
+
+  .is-open & {
+    transform: translateY(0.1875rem) rotate(-135deg);
+  }
+}
+
+.legal-answer {
+  padding-bottom: 1.25rem;
+
+  p {
+    @include body-default;
+    color: $light-color-300;
+    word-break: keep-all;
+  }
+}
+
+// ---------- 휴대폰: 같은 배치 · 링크 칸만 좁게 ----------
 @media (max-width: $breakpoint-mobile) {
-  .legal-hero {
-    padding: 3.5rem $space-lg 3rem;
+  .legal-page {
+    padding-bottom: 3.5rem;
   }
 
-  .legal-eyebrow {
-    @include body-large-b;
+  .legal-hero {
+    padding-top: $space-2xl;
   }
 
   .legal-title {
     @include display-M-b;
-    margin-top: $space-md !important;
   }
 
-  .legal-desc {
-    @include body-default;
-    margin-top: $space-md !important;
-  }
-
-  // 세 링크 한 줄 그대로 (칸만 화면 폭에 맞게)
   .legal-links {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 100%;
-    margin-top: $space-xl;
   }
 
-  .legal-link {
-    @include body-small-b;
+  .legal-intro {
+    margin-top: $space-2xl !important;
   }
 
-  .legal-body {
-    padding: $space-2xl $space-lg 3.5rem;
-  }
-
-  .legal-summary {
-    gap: $space-sm;
-    padding: $space-lg 1.125rem;
-  }
-
-  .legal-summary-title {
+  .legal-question button {
     @include body-default-b;
+    min-height: 3.25rem;
   }
 
-  .legal-summary-desc {
+  .legal-answer p {
     @include body-small;
-  }
-
-  .legal-section {
-    margin-top: $space-2xl;
-  }
-
-  .legal-section-title {
-    @include heading-h3-b;
-  }
-
-  .legal-section-body {
-    @include body-default;
-    margin-top: $space-sm !important;
-  }
-
-  .legal-footnote {
-    @include body-small;
-    margin-top: $space-4xl !important;
-  }
-}
-
-// [추가] 돌아가기 버튼 (모양은 help.scss 의 .help-back) — 본문 위 여백을 나눠 원래 간격 유지
-.legal-body {
-  padding-top: $space-xl;
-}
-
-.legal-back {
-  margin-bottom: 3rem;
-}
-
-@media (max-width: 1023px) {
-  .legal-back {
-    margin-bottom: $space-xl;
-  }
-}
-
-@media (max-width: $breakpoint-mobile) {
-  .legal-body {
-    padding-top: $space-lg;
-  }
-
-  .legal-back {
-    margin-bottom: $space-lg;
   }
 }
