@@ -6283,7 +6283,7 @@ img.ui-icon.ui-icon-arrow {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0.5rem;
   transition: opacity 0.2s ease;
   margin-bottom: 1rem;
 }

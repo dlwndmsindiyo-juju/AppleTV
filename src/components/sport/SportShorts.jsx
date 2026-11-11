@@ -1,7 +1,7 @@
 import { openShare } from "../../utils/share"; // [추가] 공유 팝업
 import { useAuthStore } from "../../store/useAuthStore"; // [추가] 로그인 전 좋아요 막기
 import { openSubscribeGate } from "../../utils/subscribeGate";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SPORT_SHORTS } from "../../data/sportShorts";
 import { usePlayableIds } from "../../utils/youtubePlayable"; // [추가] 연령 제한 · 퍼가기 금지 영상 빼기 (데이터는 그대로)
@@ -98,16 +98,43 @@ const SportShorts = ({ title = "숏폼" }) => {
   };
 
   // [수정] 로그인 전에는 좋아요를 막고 로그인 안내 팝업
+  // [추가] 로그인 후 누른 좋아요는 계정마다 이 브라우저에 저장 (새로고침해도 유지) · 누르면 숫자 +1
+  const uid = useAuthStore((s) => s.user?.uid);
+  const likeKey = uid ? `shortLikes:${uid}` : null;
+  useEffect(() => {
+    if (!likeKey) {
+      setLiked({});
+      return;
+    }
+    try {
+      setLiked(JSON.parse(localStorage.getItem(likeKey) || "{}"));
+    } catch {
+      setLiked({});
+    }
+  }, [likeKey]);
   const toggleLike = (id) => {
     if (!useAuthStore.getState().user) {
       openSubscribeGate("account");
       return;
     }
-    setLiked((prev) => ({ ...prev, [id]: !prev[id] }));
+    setLiked((prev) => {
+      const next = { ...prev, [id]: !prev[id] };
+      if (!next[id]) delete next[id];
+      try {
+        if (likeKey) localStorage.setItem(likeKey, JSON.stringify(next));
+      } catch {
+        /* 저장 못 해도 화면에서는 반영 */
+      }
+      return next;
+    });
   };
 
-  // [수정] 공유 팝업 (components/common/ShareSheet.jsx)
+  // [수정] 공유 팝업 (components/common/ShareSheet.jsx) · [추가] 로그인 전에는 막고 로그인 안내 팝업
   const share = (item) => {
+    if (!useAuthStore.getState().user) {
+      openSubscribeGate("account");
+      return;
+    }
     const url = item.videoId ? `https://www.youtube.com/shorts/${item.videoId}` : window.location.href;
     openShare({ title: item.title, url });
   };
@@ -191,7 +218,10 @@ const SportShorts = ({ title = "숏폼" }) => {
                         aria-label="좋아요"
                       >
                         <LikeIcon on={isLiked} />
-                        <span className="sport-sf-count">{formatCount(item.likeCount + (isLiked ? 1 : 0))}</span>
+                        {/* [수정] 누르면 숫자가 바로 +1 (큰 숫자도 1 단위로 보이게: 좋아요를 누른 카드는 정확한 숫자 · 예 5,201) */}
+                        <span className="sport-sf-count" key={isLiked ? "on" : "off"}>
+                          {isLiked ? (item.likeCount + 1).toLocaleString("ko-KR") : formatCount(item.likeCount)}
+                        </span>
                       </button>
                       <button
                         type="button"
