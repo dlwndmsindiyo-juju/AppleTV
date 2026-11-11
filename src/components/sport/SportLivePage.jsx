@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { addDoc, collection, limit, onSnapshot, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { useAuthStore } from "../../store/useAuthStore";
+import { openSubscribeGate } from "../../utils/subscribeGate"; // [추가] 로그인 전 신고 아이콘 막기
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSportStore, playerPhotoKey } from "../../store/useSportStore";
 import { useTeamStore } from "../../store/useTeamStore";
@@ -117,7 +118,9 @@ const LineupPanel = ({ teams }) => {
   const other = teams.find(({ team }) => team.id !== selected.team.id);
 
   return (
+    // [수정] PC: 왼쪽 라인업(경기장) · 오른쪽 후보선수를 한 줄에 나란히 (sport-member.scss · 태블릿 · 휴대폰은 위아래 그대로)
     <div className="sport-lineup">
+      <div className="sport-lineup-main">
       <div className="sport-lineup-team" key={selected.team.id}>
         <LineupHead team={selected.team} lineup={selected.lineup} />
         <Pitch team={selected.team} lineup={selected.lineup} />
@@ -125,7 +128,9 @@ const LineupPanel = ({ teams }) => {
       {other && (
         <LineupHead team={other.team} lineup={other.lineup} onSelect={() => setSelectedId(other.team.id)} />
       )}
+      </div>
 
+      <div className="sport-lineup-bench">
       <h3 className="sport-subs-title">후보선수</h3>
       <div className="sport-subs">
         {teams.map(({ team, lineup }) => (
@@ -142,6 +147,7 @@ const LineupPanel = ({ teams }) => {
             </ul>
           </div>
         ))}
+      </div>
       </div>
     </div>
   );
@@ -206,7 +212,11 @@ const EventBody = ({ event }) => {
 
 const CommentaryPanel = ({ events, left, right, score }) => (
   <div className="sport-commentary">
+    {/* [수정] PC: 왼쪽 스코어보드 / 오른쪽 중계 타임라인 (기록 탭과 같은 배치 · 태블릿 · 휴대폰은 위아래 그대로) */}
+    <div className="sport-commentary-aside">
     <Scoreboard left={left} right={right} score={score} />
+    </div>
+    <div className="sport-commentary-main">
     {events.length === 0 && <EmptyPanel text="아직 중계 기록이 없습니다." />}
     <ol className="sport-timeline">
       {events.map((event, index) => {
@@ -228,6 +238,7 @@ const CommentaryPanel = ({ events, left, right, score }) => (
         );
       })}
     </ol>
+    </div>
   </div>
 );
 
@@ -235,11 +246,15 @@ const CommentaryPanel = ({ events, left, right, score }) => (
 // 왼쪽 팀: 빨간 막대(오른쪽부터 채움) / 오른쪽 팀: 흰 막대(왼쪽부터 채움)
 const StatsPanel = ({ match, stats, left, right, score }) => (
   <div className="sport-stats">
+    {/* [수정] PC: 왼쪽 경기 제목 · 날짜 · 스코어보드 / 오른쪽 기록 (sport-member.scss · 태블릿 · 휴대폰은 위아래 그대로) */}
+    <div className="sport-stats-aside">
     <div className="sport-stats-head">
       <h3>{match.title}</h3>
       <p>{match.date}</p>
     </div>
     <Scoreboard left={left} right={right} score={score} />
+    </div>
+    <div className="sport-stats-main">
     {stats.length === 0 && <EmptyPanel text="경기 기록이 아직 없습니다." />}
     <ul className="sport-stats-list">
       {stats.map((row) => {
@@ -262,6 +277,7 @@ const StatsPanel = ({ match, stats, left, right, score }) => (
         );
       })}
     </ul>
+    </div>
   </div>
 );
 
@@ -450,7 +466,13 @@ const ChatPanel = ({ matchId, room, seed }) => {
                   className={`sport-chat-siren${alerts[m.id] ? " is-on" : ""}`}
                   aria-haspopup="dialog"
                   aria-label={alerts[m.id] ? `${m.user} 메시지 신고됨` : `${m.user} 메시지 신고`}
-                  onClick={() => (alerts[m.id] ? showToast("이미 신고한 메시지예요.") : setReportTarget(m))} // [수정] 바로 켜지 않고 신고 팝업 열기
+                  onClick={() =>
+                    !useAuthStore.getState().user
+                      ? openSubscribeGate("account") // [추가] 로그인 전에는 신고 막음
+                      : alerts[m.id]
+                        ? showToast("이미 신고한 메시지예요.")
+                        : setReportTarget(m)
+                  } // [수정] 바로 켜지 않고 신고 팝업 열기
                 >
                   <img src={ICON("siren-icon")} alt="" />
                 </button>
@@ -696,9 +718,23 @@ const SportLivePage = () => {
                     />
                   </div>
                 ) : (
-                  <p className="sport-live-chat-preview">
+                  // [수정] 닫힌 채팅의 입력 칸 모양: 누르면 채팅이 펼쳐지고 바로 입력할 수 있게 입력칸에 포커스
+                  <button
+                    type="button"
+                    className="sport-live-chat-preview"
+                    onClick={() => {
+                      setChatOpen(true);
+                      // 펼친 채팅이 그려진 뒤 입력칸으로 (로그인 전이면 입력칸이 꺼져 있어 안내 문구만 보임)
+                      requestAnimationFrame(() =>
+                        requestAnimationFrame(() => {
+                          const input = document.querySelector(".sport-live-chat-content .sport-chat-form input:not([disabled])");
+                          input?.focus({ preventScroll: true });
+                        })
+                      );
+                    }}
+                  >
                     실시간 채팅에 참여해보세요
-                  </p>
+                  </button>
                 )}
               </div>
 

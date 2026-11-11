@@ -114,6 +114,10 @@ function App() {
               <Route path="/privacy" element={<LegalPage page="privacy" />} />
               <Route path="/terms" element={<LegalPage page="terms" />} />
               <Route path="/refund" element={<LegalPage page="refund" />} />
+              {/* [추가] 예전 외부 링크 → 사이트 안 안내 페이지 (같은 디자인) */}
+              <Route path="/identity" element={<LegalPage page="identity" />} />
+              <Route path="/payment-help" element={<LegalPage page="payment-help" />} />
+              <Route path="/account-recovery" element={<LegalPage page="account-recovery" />} />
 
               {/* [추가] TV 디자인 미리보기 (/tv/:id 상세와 다른 주소) */}
               <Route path="/tv" element={<TvPreview />} />

@@ -47,27 +47,26 @@ const guestLinkOf = (target) => {
   }
 };
 
+// [수정] 안내 글을 짧게 — 제목 한 줄만 (긴 설명 문장은 뺌)
 const TEXT = {
   watch: {
-    title: "구독 후 이용해주세요.",
+    title: "구독해야 이용 가능한 콘텐츠입니다.",
     button: "구독하기",
   },
   account: {
-    title: "로그인 후 이용해주세요.",
-    desc: "찜 · 관심 인물 같은 기능은 Apple 계정으로 로그인하면 이용할 수 있어요.",
+    title: "로그인 후 이용 바랍니다.",
     button: "로그인",
   },
   // [추가] AI 작품 추천 (로그인 전)
   ai: {
-    title: "구독 후 이용해주세요.",
-    desc: "AI 작품 추천은 Apple TV를 구독하면 이용할 수 있어요.",
+    title: "구독해야 이용 가능한 서비스입니다.",
     button: "계정 만들기",
   },
 };
 
 // [추가] 구독 전(로그인함) 계정에 보여줄 글
 const MEMBER_TEXT = {
-  title: "구독 후 이용해주세요.",
+  title: "구독해야 이용 가능한 콘텐츠입니다.",
   button: "구독하기",
 };
 
@@ -99,7 +98,7 @@ export const GateCard = ({ title, desc, button, onPrimary, onClose }) => {
         role="dialog"
         aria-modal="true"
         aria-labelledby="subscribe-gate-title"
-        aria-describedby="subscribe-gate-desc"
+        aria-describedby={desc ? "subscribe-gate-desc" : undefined}
       >
         <div className="subscribe-gate-logo" aria-hidden="true">
           <img src="/icons/header-icon.svg" alt="" />
@@ -107,9 +106,12 @@ export const GateCard = ({ title, desc, button, onPrimary, onClose }) => {
         <h2 className="subscribe-gate-title" id="subscribe-gate-title">
           {title}
         </h2>
-        <p className="subscribe-gate-desc" id="subscribe-gate-desc">
-          {desc}
-        </p>
+        {/* [수정] 설명은 있을 때만 (지금은 제목 한 줄만 씀) */}
+        {desc && (
+          <p className="subscribe-gate-desc" id="subscribe-gate-desc">
+            {desc}
+          </p>
+        )}
         <div className="subscribe-gate-actions">
           <button ref={primaryRef} type="button" className="subscribe-gate-btn" onClick={onPrimary}>
             {button}
@@ -124,7 +126,7 @@ export const GateCard = ({ title, desc, button, onPrimary, onClose }) => {
   );
 };
 
-export const WATCH_DESC = "Apple TV를 구독하면 모든 작품을 바로 시청할 수 있어요.";
+export const WATCH_DESC = ""; // [수정] 긴 설명 문장 뺌 (제목 한 줄만)
 
 // onLogin: [추가] 로그인 버튼을 눌렀을 때 웹 로그인 페이지 대신 할 일 (TV 미리보기: TV 로그인 화면으로)
 const SubscribeGate = ({ onLogin } = {}) => {
@@ -213,10 +215,8 @@ const SubscribeGate = ({ onLogin } = {}) => {
 
   const member = Boolean(user); // 로그인함(구독 전)
   const text = member ? { ...TEXT.watch, ...MEMBER_TEXT } : TEXT[reason];
-  const watchDesc = pathname.startsWith("/sport")
-    ? "Apple TV를 구독하면 경기 라이브 · 하이라이트 · 다시보기를 모두 시청할 수 있어요."
-    : WATCH_DESC;
-  const desc = reason === "ai" ? TEXT.ai.desc : reason === "watch" ? watchDesc : text.desc;
+  // [수정] 설명 문장 없이 제목 한 줄만
+  const desc = "";
 
   const goNext = () => {
     setReason(null);

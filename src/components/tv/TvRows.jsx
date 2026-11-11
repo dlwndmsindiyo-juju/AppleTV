@@ -5,8 +5,8 @@ import { useAuthStore } from "../../store/useAuthStore";
 // TV 화면 공통 (홈 · 스포츠) — 스타일: TV.scss (.tv-sport · 이름은 스포츠 시안에서 시작해 그대로 사용)
 // - TvHeader     : 로고 + 홈 · 스포츠 · 보관함 · 검색 (선택한 메뉴 강조 · 홈 ↔ 스포츠 이동)
 // - TvBrowseScreen: 헤더 + 섹션 줄 (웹과 같은 데이터를 TV 카드로)
-//   · 리모컨 포커스가 있는 줄 560 × 315 / 나머지 줄 410 × 230 · 아래 카드 제목
-//   · 카드에 포커스가 오면 그 줄이 active 가 되고, 화면 안에 보이도록 위아래 · 옆으로 이동
+//   · [수정] TV 가이드: 줄 크기는 그대로(480 × 270) · 고른 카드만 4% 커지고 흰 테두리 (줄 전체가 커지던 방식은 뺌)
+//   · 카드에 포커스가 오면 화면 안에 보이도록 위아래 · 옆으로 이동
 // - 방향키 이동은 미리보기(TvPreview.jsx)의 리모컨 처리 그대로 사용
 
 // 이미지가 없거나 못 불러오면 숨기고 어두운 빈 칸만 보이게
@@ -75,6 +75,7 @@ export const TvBrowseScreen = ({ menu, onMenu, rows, bg, onItem, empty = "콘텐
                   type="button"
                   key={item.id}
                   className="tv-sport-card"
+                  data-tv-key={`${row.id}:${item.id}`} // [추가] 상세에서 돌아올 때 이 카드로 (섹션 + 작품 ID)
                   data-tv-autofocus={rowIndex === 0 && i === 0 ? true : undefined}
                   onFocus={handleFocus(row.id)}
                   onClick={() => onItem?.(row.id, item)}

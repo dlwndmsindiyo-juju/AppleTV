@@ -74,19 +74,15 @@ const WishlistSection = () => {
   // [수정] 저장한 작품이 없으면(첫 로그인 · 모두 뺀 경우) 추천 작품(Apple 오리지널)을 채우지 않고 안내 문구만
   const items = wishlist.slice(0, 10);
 
+  // [수정] 담은 작품이 없으면 이어보기처럼 섹션 자체를 숨김 (안내 문구 없음 · 불러오는 동안도 숨김)
+  if (!ready || items.length === 0) return null;
+
   return (
     <section className="member-section band member-wishlist">
       <div className="inner">
-        <MemberSectionHead title="나의 목록" desc="관심 있는 작품을 모아두고 언제든 다시 만나보세요." moreTo={items.length > 0 ? "/wishlist" : undefined} /> {/* [수정] 담은 작품이 있을 때만 전체 보기 */}
+        <MemberSectionHead title="나의 목록" desc="관심 있는 작품을 모아두고 언제든 다시 만나보세요." moreTo="/wishlist" />
 
-        {items.length === 0 ? (
-          // [추가] 담은 작품이 없을 때 안내 (불러오는 동안은 비워 둠 · 문구가 잠깐 보였다 사라지지 않게)
-          ready && (
-            <p className="member-empty member-wl-empty">
-              아직 나의 목록에 담은 작품이 없어요.
-            </p>
-          )
-        ) : isPhone ? (
+        {isPhone ? (
           // 휴대폰: 세로 3줄 목록
           <ul className="member-wl-list" aria-label="마음에 담아둔 이야기">
             {items.slice(0, 3).map((item) => (

@@ -16,14 +16,13 @@ import { resumePath } from "../utils/resumeIntent"; // [추가] 구독 후 하�
 import { openPostcode } from "../utils/daumPostcode"; // [추가] 도로명 주소 검색 팝업
 import React, { createContext, useContext, useEffect, useId, useMemo, useRef, useState } from "react"; // [수정] useMemo: 생년월일 데이트 피커
 import { createPortal } from "react-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; // [수정] Link: 안내 페이지
 import { useAuthStore, isSubscribed, getPayments, PAYMENT_MAX } from "../store/useAuthStore";
 import { KOREA_REGIONS, SIDO_LIST } from "../data/koreaRegions";
-import { PRIVACY_URL } from "../data/appleLinks";
+import { IDENTITY_URL, TERMS_URL } from "../data/appleLinks"; // [수정] 사이트 안 안내 페이지
 import { CARD_BRANDS } from "../components/profile/AccountShared"; // [추가] 카드사 (계정 설정 지불 방법에 카드사 로고로 보임)
 
 const AUTH_PATHS = ["/login", "/subscribe"];
-const TERMS_URL = "https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html";
 const DAY_MS = 24 * 60 * 60 * 1000;
 const TRIAL_DAYS = 7; // useAuthStore 의 무료 체험 기간과 같음
 
@@ -686,6 +685,12 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
       });
       return;
     }
+    // [추가] 이미 등록한 카드(같은 카드사 + 같은 마지막 4자리)는 다시 등록하지 않음
+    const newLast4 = digits(form.cardNumber).slice(-4);
+    if (payments.some((p) => (p.method || "card") === "card" && p.brand === form.brand && p.last4 === newLast4)) {
+      setError("이미 등록된 카드입니다. 다른 카드를 입력해 주세요.");
+      return;
+    }
     if (!cardOnly && !codeSent) {
       setCodeSent(true);
       return;
@@ -757,7 +762,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
             <section className="sub-section">
               <h2 className="sub-section-title">신원 확인</h2>
               <p className="sub-section-desc">결제수단 등록을 위해 본인 확인이 필요합니다. 이동통신사에 등록된 정보와 동일하게 입력해 주세요.</p>
-              <a className="sub-small-link" href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">본인 확인에 대해 알아보기</a>
+              <Link className="sub-small-link" to={IDENTITY_URL}>본인 확인에 대해 알아보기</Link>
               <Field label="이름" invalid={bad("idName")}>
                 <input className="sub-field-input" autoComplete="name" placeholder="이동통신사에 등록된 이름" maxLength={30}
                   value={form.idName} onChange={(e) => set("idName")(e.target.value)} />
@@ -788,7 +793,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
                   <Check key={t.key} checked={form.terms[t.key]} onChange={setTerm(t.key)}>{t.label}</Check>
                 ))}
               </div>
-              <a className="sub-small-link" href={TERMS_URL} target="_blank" rel="noopener noreferrer">약관 상세 보기</a>
+              <Link className="sub-small-link" to={TERMS_URL}>약관 상세 보기</Link>
             </section>
 
             <p className="sub-note">아래 &apos;확인 코드 보내기&apos;를 누르면 입력한 휴대폰으로 본인 확인 코드가 전송됩니다.</p>
@@ -834,6 +839,7 @@ export const SubscribePopup = ({ onClose, onDone }) => {
   const [step, setStep] = useState("plans");
   const [plan, setPlan] = useState("monthly");
   const [busy, setBusy] = useState(false);
+  const navigate = useNavigate(); // [추가] 처음으로 돌아가기
 
   if (!user || (isSubscribed(user) && step !== "done")) return null;
 
@@ -844,6 +850,11 @@ export const SubscribePopup = ({ onClose, onDone }) => {
   const billStart = trial ? addDays(today, TRIAL_DAYS) : today;
   const payments = getPayments(user);
   const close = onClose;
+  // [추가] 구독하지 않고 나가기 → 팝업 닫고 메인 홈으로
+  const goHome = () => {
+    onClose?.();
+    navigate("/", { replace: true });
+  };
 
   // 플랜 → (지불 방법이 없으면) 지불 방법 등록 → 구독 확인
   const nextFromPlans = () => setStep(payments.length > 0 ? "confirm" : "payment");
@@ -887,6 +898,10 @@ export const SubscribePopup = ({ onClose, onDone }) => {
 
           <button type="button" className="sub-btn" onClick={nextFromPlans}>
             {trial ? "무료 체험 계속" : "계속"}
+          </button>
+          {/* [추가] 구독하지 않고 빠져나가기 */}
+          <button type="button" className="sub-exit-btn" onClick={goHome}>
+            처음으로 돌아가기
           </button>
         </div>
       </>
