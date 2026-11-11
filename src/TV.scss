@@ -2169,7 +2169,7 @@ $tv-type-shrink: (
 }
 
 .tv-search-mode {
-  @include tv-type(display-M-b);
+  @include tv-type(display-l-b, $scale: false); // [수정] abc · ABC · #+- 글자가 작아서 한 단계 크게(Display/L-B 34) · 80% 축소 제외
   flex: 1;
   padding: 0;
   border: 0;
