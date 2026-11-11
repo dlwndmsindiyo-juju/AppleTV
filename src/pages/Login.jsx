@@ -9,7 +9,7 @@
 // - 새 Apple 계정 만들기: 이메일 + 비밀번호(6자 이상) → 인증 완료 → 프로필 선택 → 플랜 선택
 // - 로그인이 끝난 계정이 /login 으로 다시 들어오면 화면을 보여주지 않고 바로 이동
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; // [수정] Link: 안내 페이지로 사이트 안 이동
 import { sendPasswordResetEmail, setPersistence, browserLocalPersistence, browserSessionPersistence } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import {
@@ -19,7 +19,7 @@ import {
   saveLastAccount,
   clearLastAccount,
 } from "../store/useAuthStore";
-import { MANAGE_URL } from "../data/appleLinks";
+import { MANAGE_URL, PRIVACY_URL, RECOVER_URL, TERMS_URL } from "../data/appleLinks"; // [수정] 사이트 안 안내 페이지 주소
 import ProfilePicker from "../components/profile/ProfilePicker"; // [추가] 프로필 고르기 · 추가
 import { SubscribePopup } from "./Subscribe"; // [추가] 구독 팝업
 import { resumePath } from "../utils/resumeIntent"; // [추가] 로그인 · 구독 후 하던 화면으로 돌아가기
@@ -31,8 +31,8 @@ import { GateCard, WATCH_DESC } from "../components/layout/SubscribeGate"; // [�
 // =====================================================================
 // 외부(Apple 공식) 링크 — 주소가 바뀌면 여기만 수정
 const APPLE_LINKS = {
-  privacy: "https://www.apple.com/kr/legal/privacy/",
-  recover: "https://iforgot.apple.com/",
+  privacy: PRIVACY_URL, // [수정] 외부 → /privacy
+  recover: RECOVER_URL, // [수정] 외부 → /account-recovery
   watch: "https://tv.apple.com/kr",
   manage: MANAGE_URL, // 무료 체험 안내(TrialWelcome)와 같은 구독 관리 주소
 };
@@ -82,6 +82,7 @@ const ExternalLink = ({ href, className = "auth-link", children }) => (
 const AUTH_PATHS = ["/login", "/subscribe"];
 const RESEND_SECONDS = 60;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const HANGUL_RE = /[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7A3]/; // [추가] 한글(자모 · 완성형) — 회원가입 이메일 · 비밀번호에 쓰면 막음
 
 const CODE_LENGTH = 6;
 
@@ -253,7 +254,13 @@ const Login = () => {
     setPassword("");
     setCode("");
     clearMessages();
-    // [수정] 인증 완료 직후 반드시 프로필 선택 화면으로 이동
+    // [수정] 처음 가입한 계정(한 번도 구독 · 무료 체험을 한 적 없음)은 프로필 선택보다 구독 플랜이 먼저
+    const u = useAuthStore.getState().user;
+    if (u && !isSubscribed(u) && !u.trialUsed && !u.subscription) {
+      navigate("/subscribe", { replace: true, state: { from: backTo() } });
+      return;
+    }
+    // 그 밖에는 인증 완료 직후 프로필 선택 화면으로 이동
     setStep("profile");
   };
 
@@ -304,8 +311,17 @@ const Login = () => {
     if (busy) return;
     clearMessages();
     const trimmed = email.trim();
+    // [추가] 한글이 들어간 이메일 · 비밀번호로는 가입할 수 없음 (영문 · 숫자 · 기호만)
+    if (HANGUL_RE.test(trimmed)) {
+      setErrorText("이메일에는 한글을 사용할 수 없습니다. 영문 · 숫자로 입력해 주세요.");
+      return;
+    }
     if (!EMAIL_RE.test(trimmed)) {
       setErrorText("이메일 형식을 확인해 주세요.");
+      return;
+    }
+    if (HANGUL_RE.test(password)) {
+      setErrorText("비밀번호에는 한글을 사용할 수 없습니다. 영문 · 숫자 · 기호로 입력해 주세요.");
       return;
     }
     if (password.length < 6) {
@@ -468,7 +484,7 @@ const Login = () => {
         <div className="auth-divider"><span>아직 계정이 없으신가요?</span></div>
         <button type="button" className="auth-btn auth-btn--secondary" onClick={goSignup}>회원가입</button>
         {messages}
-        <p className="auth-legal"><a href="https://www.apple.com/kr/legal/internet-services/itunes/kr/terms.html" target="_blank" rel="noreferrer">이용약관</a> <span>및</span> <a href={APPLE_LINKS.privacy} target="_blank" rel="noreferrer">개인정보 처리방침</a></p>
+        <p className="auth-legal"><Link to={TERMS_URL}>이용약관</Link> <span>및</span> <Link to={APPLE_LINKS.privacy}>개인정보 처리방침</Link></p>
       </div>
     </>;
   }
@@ -631,9 +647,10 @@ const Login = () => {
         </div>
         <div className="auth-login-links">
           <div className="auth-login-links-row">
-            <ExternalLink href={APPLE_LINKS.recover} className="auth-login-link">
+            {/* [수정] 외부 새 창 → 사이트 안 계정 복구 안내 */}
+            <Link to={APPLE_LINKS.recover} className="auth-login-link">
               문제가 있나요?
-            </ExternalLink>
+            </Link>
             <button type="button" className="auth-login-link" onClick={() => navigate("/", { replace: true })}>
               나중에
             </button>
@@ -664,7 +681,7 @@ const Login = () => {
       {/* [추가] 1. 구독 안내 팝업 → 2. 구독 팝업 (닫으면 프로필 선택 화면 그대로 · 구독 완료 → 홈) */}
       {gateOpen && (
         <GateCard
-          title="구독 후 이용해주세요."
+          title="구독해야 이용 가능한 콘텐츠입니다." // [수정] 짧은 안내
           desc={WATCH_DESC}
           button="구독하기"
           onPrimary={() => {

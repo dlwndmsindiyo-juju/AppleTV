@@ -1,6 +1,8 @@
 import { useState } from "react";
 import AiAssistantLink from "./AiAssistantLink";
 import AiLogo from "./AiLogo"; // [수정] AI 아이콘 공용 (빛나며 움직임)
+import { useAuthStore } from "../../store/useAuthStore"; // [추가] 로그인 여부
+import { openSubscribeGate } from "../../utils/subscribeGate"; // [추가] 로그인 전: 구독 안내 팝업
 import bannerBg from "./assets/ai-promo-bg.jpg"; // [수정] 배경 이미지는 import 로 (Vite 가 빌드 경로를 붙여 줌 · 팝업 아이콘과 같은 방식)
 
 // [수정] AI 어시스트 홍보 배너 (로그인 전 메인 · 시안: AI 어시스트_홍보배너 1920 × 210)
@@ -13,6 +15,7 @@ const MOODS = ["힘든", "슬픈", "즐거운", "화난"];
 
 const AiAssistantPromo = () => {
   const [mood, setMood] = useState(null);
+  const user = useAuthStore((s) => s.user); // [추가]
 
   return (
     <section className="ai-banner">
@@ -50,10 +53,18 @@ const AiAssistantPromo = () => {
                   ))}
                 </ul>
 
-                <AiAssistantLink initialTaste={mood} className="ai-banner-btn">
-                  취향 더 반영하기
-                  <img className="ai-banner-btn-icon" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
-                </AiAssistantLink>
+                {/* [수정] 로그인 전: AI 팝업 대신 바로 구독 안내 팝업 (모양은 같은 버튼) */}
+                {user ? (
+                  <AiAssistantLink initialTaste={mood} className="ai-banner-btn">
+                    취향 더 반영하기
+                    <img className="ai-banner-btn-icon" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
+                  </AiAssistantLink>
+                ) : (
+                  <button type="button" className="ai-banner-btn" onClick={() => openSubscribeGate("watch")}>
+                    취향 더 반영하기
+                    <img className="ai-banner-btn-icon" src="/icons/nav/right-nav.svg" alt="" aria-hidden="true" />
+                  </button>
+                )}
               </div>
             </div>
           </div>

@@ -127,15 +127,20 @@ export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
       // 검색 화면 밖(왼쪽 메뉴 버튼 등)은 공용 처리 그대로
       if (a && a !== document.body && !screen.contains(a)) return;
 
-      e.preventDefault();
-      e.stopPropagation();
       if (!a || a === document.body || a.tagName !== "BUTTON") {
+        e.preventDefault();
+        e.stopPropagation();
         firstKey()?.focus({ preventScroll: true });
         return;
       }
       // 왼쪽 메뉴까지 포함해서 가장 가까운 버튼 (자판 맨 왼쪽에서 ← 를 누르면 메뉴로)
       const root = screen.closest(".tv-preview") || screen;
-      const next = findNext(root, a, e.key);
+      const vertical = e.key === "ArrowUp" || e.key === "ArrowDown";
+      const next = findNext(root, a, e.key, vertical ? (el) => !el.closest(".tv-side") : null); // [수정] 위아래는 검색 화면 안에서만
+      // [수정] 왼쪽 메뉴로 가는 ← 는 공용 처리(TvPreview)에 맡김 → 메뉴를 펼치고 보던 메뉴로
+      if (next?.closest(".tv-side")) return;
+      e.preventDefault();
+      e.stopPropagation();
       if (!next) return;
       next.focus({ preventScroll: true });
       scrollCardIntoGrid(next);
@@ -349,6 +354,7 @@ export const TvSearch = ({ onMenu, onDetail, initialQuery = "" }) => {
                 type="button"
                 key={card.key}
                 className="tv-search-card"
+                data-tv-key={card.key} // [추가] 상세에서 돌아올 때 이 카드로
                 onFocus={(e) => scrollCardIntoGrid(e.currentTarget)} // [수정] 결과 목록 안에서만 스크롤 (TV 화면 전체가 밀리지 않게)
                 onClick={() => open(card)}
               >
