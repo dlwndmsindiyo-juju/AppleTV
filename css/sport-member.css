@@ -402,6 +402,7 @@ main.sport-home .sport-replay-name {
   line-height: 1.375rem;
   letter-spacing: 0;
   font-family: inherit;
+  margin-top: 0.5rem;
 }
 main.sport-home .sport-replay-date {
   font-family: "SF Pro", sans-serif;
