@@ -211,7 +211,11 @@ const EventBody = ({ event }) => {
 
 const CommentaryPanel = ({ events, left, right, score }) => (
   <div className="sport-commentary">
+    {/* [수정] PC: 왼쪽 스코어보드 / 오른쪽 중계 타임라인 (기록 탭과 같은 배치 · 태블릿 · 휴대폰은 위아래 그대로) */}
+    <div className="sport-commentary-aside">
     <Scoreboard left={left} right={right} score={score} />
+    </div>
+    <div className="sport-commentary-main">
     {events.length === 0 && <EmptyPanel text="아직 중계 기록이 없습니다." />}
     <ol className="sport-timeline">
       {events.map((event, index) => {
@@ -233,6 +237,7 @@ const CommentaryPanel = ({ events, left, right, score }) => (
         );
       })}
     </ol>
+    </div>
   </div>
 );
 
@@ -240,11 +245,15 @@ const CommentaryPanel = ({ events, left, right, score }) => (
 // 왼쪽 팀: 빨간 막대(오른쪽부터 채움) / 오른쪽 팀: 흰 막대(왼쪽부터 채움)
 const StatsPanel = ({ match, stats, left, right, score }) => (
   <div className="sport-stats">
+    {/* [수정] PC: 왼쪽 경기 제목 · 날짜 · 스코어보드 / 오른쪽 기록 (sport-member.scss · 태블릿 · 휴대폰은 위아래 그대로) */}
+    <div className="sport-stats-aside">
     <div className="sport-stats-head">
       <h3>{match.title}</h3>
       <p>{match.date}</p>
     </div>
     <Scoreboard left={left} right={right} score={score} />
+    </div>
+    <div className="sport-stats-main">
     {stats.length === 0 && <EmptyPanel text="경기 기록이 아직 없습니다." />}
     <ul className="sport-stats-list">
       {stats.map((row) => {
@@ -267,6 +276,7 @@ const StatsPanel = ({ match, stats, left, right, score }) => (
         );
       })}
     </ul>
+    </div>
   </div>
 );
 
