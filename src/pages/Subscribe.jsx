@@ -685,6 +685,12 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
       });
       return;
     }
+    // [추가] 이미 등록한 카드(같은 카드사 + 같은 마지막 4자리)는 다시 등록하지 않음
+    const newLast4 = digits(form.cardNumber).slice(-4);
+    if (payments.some((p) => (p.method || "card") === "card" && p.brand === form.brand && p.last4 === newLast4)) {
+      setError("이미 등록된 카드입니다. 다른 카드를 입력해 주세요.");
+      return;
+    }
     if (!cardOnly && !codeSent) {
       setCodeSent(true);
       return;
@@ -833,6 +839,7 @@ export const SubscribePopup = ({ onClose, onDone }) => {
   const [step, setStep] = useState("plans");
   const [plan, setPlan] = useState("monthly");
   const [busy, setBusy] = useState(false);
+  const navigate = useNavigate(); // [추가] 처음으로 돌아가기
 
   if (!user || (isSubscribed(user) && step !== "done")) return null;
 
@@ -843,6 +850,11 @@ export const SubscribePopup = ({ onClose, onDone }) => {
   const billStart = trial ? addDays(today, TRIAL_DAYS) : today;
   const payments = getPayments(user);
   const close = onClose;
+  // [추가] 구독하지 않고 나가기 → 팝업 닫고 메인 홈으로
+  const goHome = () => {
+    onClose?.();
+    navigate("/", { replace: true });
+  };
 
   // 플랜 → (지불 방법이 없으면) 지불 방법 등록 → 구독 확인
   const nextFromPlans = () => setStep(payments.length > 0 ? "confirm" : "payment");
@@ -886,6 +898,10 @@ export const SubscribePopup = ({ onClose, onDone }) => {
 
           <button type="button" className="sub-btn" onClick={nextFromPlans}>
             {trial ? "무료 체험 계속" : "계속"}
+          </button>
+          {/* [추가] 구독하지 않고 빠져나가기 */}
+          <button type="button" className="sub-exit-btn" onClick={goHome}>
+            처음으로 돌아가기
           </button>
         </div>
       </>

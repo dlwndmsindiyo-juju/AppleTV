@@ -105,7 +105,7 @@ $tv-type-scale-touch: 1; // 태블릿 · 휴대폰
 $tv-type-min: 1rem; // 최소 16px
 
 // _variables.scss 글자 변수와 같은 값 (굵게(-b)만 크기가 다른 변수는 따로)
-// [수정] 올려 주신 _variables.scss 값에 맞춤 (display-M 1.65 · heading-h2-b 1.2/1.55 · heading-h3 2.25/3.5)
+// [수정] 올려 주신 _variables.scss 값에 맞춤 (display-M 1.65 · heading-h2-b 1.2/1.55 · heading-h3 1.25/1.5625)
 // - _variables.scss 글자 크기를 바꾸면 여기도 같이 바꿔 주세요 (Sass 는 믹스인 안 값을 읽을 수 없음)
 $tv-type-real-sizes: (
   display-xl: (4rem, 6rem),
@@ -116,7 +116,7 @@ $tv-type-real-sizes: (
   heading-h1: (3rem, 3.5rem),
   heading-h2: (1.2rem, 1.5rem),
   heading-h2-b: (1.2rem, 1.55rem),
-  heading-h3: (2.25rem, 3.5rem),
+  heading-h3: (1.25rem, 1.5625rem),
   heading-h4: (1.0625rem, 1.375rem),
   heading-h5: (1rem, 1.3125rem),
   body-large: (1.0625rem, 1.375rem),
