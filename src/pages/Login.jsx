@@ -321,7 +321,7 @@ const Login = () => {
     const trimmed = email.trim();
     // [추가] 한글이 들어간 이메일 · 비밀번호로는 가입할 수 없음 (영문 · 숫자 · 기호만)
     if (HANGUL_RE.test(trimmed)) {
-      setErrorText("이메일에는 한글을 사용할 수 없습니다. 영문 · 숫자로 입력해 주세요.");
+      setErrorText("영문 · 숫자로만 입력해 주세요.");
       return;
     }
     if (!EMAIL_RE.test(trimmed)) {
@@ -329,7 +329,7 @@ const Login = () => {
       return;
     }
     if (HANGUL_RE.test(password)) {
-      setErrorText("비밀번호에는 한글을 사용할 수 없습니다. 영문 · 숫자 · 기호로 입력해 주세요.");
+      setErrorText("영문 · 숫자 · 기호로 입력해 주세요.");
       return;
     }
     if (password.length < 6) {
