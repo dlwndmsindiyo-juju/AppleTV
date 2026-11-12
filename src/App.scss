@@ -2677,6 +2677,7 @@ header {
   }
 
   .live-team {
+    @include heading-h4-b;
     color: $text-primary;
     white-space: nowrap;
     overflow: hidden;
@@ -11117,6 +11118,10 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
   gap: $space-md;
   color: $light-color-300;
   cursor: pointer;
+
+  span {
+    @include body-small;
+  }
 
   input {
     appearance: none;
