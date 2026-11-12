@@ -10433,12 +10433,13 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
         .ep-num,
         .runtime {
           @include label-default;
-          color: $light-color-0;
+          color: $light-color-500;
         }
 
         .ep-title {
           @include body-small;
-          color: $light-color-0;
+          color: $light-color-100;
+          margin: 0.25rem 0;
         }
       }
     }

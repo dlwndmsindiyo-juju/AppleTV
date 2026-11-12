@@ -1,3 +1,4 @@
+@import url("https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/AppleSDGothicNeo.css");
 @media (max-width: 767px) {
   header .inner {
     padding: 0.875rem 2.5rem;
@@ -10,7 +11,7 @@
     font-size: 1rem;
   }
   header .inner nav .gnb-right ul {
-    gap: 0.75rem;
+    gap: 0.25rem;
   }
   header .inner nav .gnb-right ul .search-box {
     width: 141px;
@@ -46,7 +47,7 @@
     padding-right: 0;
   }
   .top10-section .top10-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 2.125rem;
     line-height: 2.5625rem;
@@ -76,7 +77,7 @@
     gap: 1.5rem;
   }
   .promo-banner .promo-banner-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -102,14 +103,14 @@
     padding: 0 1rem;
   }
   .auth-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
   .auth-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -127,7 +128,7 @@
     padding: 1.25rem 3rem 1.25rem 1.25rem;
   }
   .plan-opt-name {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -149,14 +150,14 @@
     padding: 1.5rem 1.25rem 1.25rem;
   }
   .subscribe-gate-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.25rem;
-    line-height: 3.5rem;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
   }
   .subscribe-gate-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -179,7 +180,7 @@
     padding-bottom: 4rem;
   }
   .wish-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 2.125rem;
     line-height: 2.5625rem;
@@ -217,7 +218,7 @@
     border-radius: 1.75rem;
   }
   .wish-tab strong {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -259,14 +260,14 @@
     width: calc(100% - 2.5rem);
   }
   .wish-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
   .wish-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -285,7 +286,7 @@
     padding: 0.75rem 1rem;
   }
   .wish-toast p {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -311,7 +312,7 @@
     padding-top: calc(4.5rem + 1.5rem);
   }
   .account-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;
@@ -329,7 +330,7 @@
     gap: 0.125rem;
   }
   .account-nav-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -346,7 +347,7 @@
     padding: 2rem 0;
   }
   .account-section-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.2rem;
     line-height: 1.55rem;
@@ -360,7 +361,7 @@
     gap: 0.25rem;
   }
   .account-item-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -370,21 +371,21 @@
   .account-toggle,
   .account-check,
   .account-address {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
   }
   .account-note {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
     letter-spacing: 0;
   }
   .account-profile-text strong {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -409,7 +410,7 @@
 }
 @media (max-width: 767px) {
   .member-home .member-continue .member-empty {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -420,7 +421,7 @@
 }
 @media (max-width: 767px) {
   section.top10-section .top10-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -433,7 +434,7 @@
 }
 @media (max-width: 767px) {
   section.top10-section .top10-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -461,7 +462,7 @@
 }
 @media (max-width: 767px) {
   .hero-swiper-container .hero-slide-item .hero-info .hero-chip {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -470,7 +471,7 @@
     padding: 0 0.5rem;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-play {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 500;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -503,7 +504,7 @@
     left: 6%;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.2rem;
     line-height: 1.55rem;
@@ -529,10 +530,10 @@
     height: 2.75rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.25rem;
-    line-height: 3.5rem;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     margin-top: 0.75rem;
   }
@@ -566,14 +567,14 @@
     height: 3rem;
   }
   section.device-guide.device-guide--watch .watch-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 2.125rem;
     line-height: 2.5625rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-subtitle {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;
@@ -597,7 +598,7 @@
     height: 2.5rem;
   }
   section.device-guide.device-guide--watch .watch-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;
@@ -605,7 +606,7 @@
     margin-top: 1rem;
   }
   section.device-guide.device-guide--watch .watch-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -622,14 +623,14 @@
     margin-top: 2rem;
   }
   section.device-guide.device-guide--watch .watch-subtitle {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.2rem;
     line-height: 1.55rem;
     letter-spacing: 0;
   }
   section.device-guide.device-guide--watch .watch-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -660,14 +661,14 @@
     padding: 4.75rem 1.25rem 2rem;
   }
   .auth-card.auth-card--login .auth-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
   .auth-card.auth-card--login .auth-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -680,7 +681,7 @@
     gap: 0.375rem;
   }
   .auth-card.auth-card--login .auth-code-box {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.2rem;
     line-height: 1.55rem;
@@ -700,7 +701,7 @@
 }
 @media (max-width: 767px) {
   section.top10-section .top10-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 2.125rem;
     line-height: 2.5625rem;
@@ -711,23 +712,23 @@
     word-break: keep-all;
   }
   section.top10-section .top10-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.25rem;
-    line-height: 3.5rem;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-chip.hero-chip {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-overview.hero-overview {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -735,7 +736,7 @@
     color: #FFFFFF;
   }
   .hero-swiper-container .hero-slide-item .hero-info .hero-play.hero-play {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 500;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -826,7 +827,7 @@
     padding-right: 0;
   }
   .top10-section .top10-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.65rem;
     line-height: 2.125rem;
@@ -918,7 +919,7 @@
     flex-shrink: 0;
   }
   :is(main, div).member-home .member-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 2.125rem;
     line-height: 2.5625rem;
@@ -961,7 +962,7 @@
 }
 @media (max-width: 767px) {
   :is(main, div).member-home .member-section .member-title.member-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 2.125rem;
     line-height: 2.5625rem;
@@ -972,16 +973,16 @@
     word-break: keep-all;
   }
   :is(main, div).member-home .member-section .member-head .member-desc.member-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.25rem;
-    line-height: 3.5rem;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #C8C8C8;
     word-break: keep-all;
   }
   :is(main, div).member-home .member-continue .member-cw-time {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -989,7 +990,7 @@
     color: #C8C8C8;
   }
   :is(main, div).member-home .member-continue .member-cw-card .member-card-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -997,7 +998,7 @@
     color: #C8C8C8;
   }
   :is(main, div).member-home .member-continue .member-cw-card .member-card-meta {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1005,7 +1006,7 @@
     color: #C8C8C8;
   }
   :is(main, div).member-home .member-continue .member-cw-card .member-card-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1013,7 +1014,7 @@
     color: #C8C8C8;
   }
   :is(main, div).member-home .member-wishlist .member-wl-name {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -1021,7 +1022,7 @@
     color: #C8C8C8;
   }
   :is(main, div).member-home .member-wishlist .member-wl-meta {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1054,7 +1055,7 @@
     margin-right: 0;
   }
   :is(main, div).member-home .member-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 3rem;
     line-height: 3.5rem;
@@ -1063,7 +1064,7 @@
     line-height: 2.125rem;
   }
   :is(main, div).member-home .member-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1094,7 +1095,7 @@
     text-align: center;
   }
   :is(main, div).member-home .member-mood .member-notice p {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1104,7 +1105,7 @@
     align-self: center;
     height: 2.5rem;
     padding: 0 1.5rem;
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1118,7 +1119,7 @@
     gap: 0.125rem;
   }
   :is(main, div).member-home .member-mood .member-card-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1126,7 +1127,7 @@
   }
   :is(main, div).member-home .member-mood .member-card-meta,
   :is(main, div).member-home .member-mood .member-card-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -1139,7 +1140,7 @@
     margin-bottom: 0.5rem;
   }
   :is(main, div).member-home .member-recommend .member-card-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1148,7 +1149,7 @@
   :is(main, div).member-home .member-recommend .member-card-meta,
   :is(main, div).member-home .member-recommend .member-card-strong,
   :is(main, div).member-home .member-recommend .member-card-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -1190,7 +1191,7 @@
     padding-right: 2.5rem;
   }
   .movie-detail-page .player-box .title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.65rem;
     line-height: 2.125rem;
@@ -1221,7 +1222,7 @@
     max-height: 2.75rem;
   }
   .movie-detail-page .player-box .title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.2rem;
     line-height: 1.5rem;
@@ -1229,7 +1230,7 @@
     font-weight: 700;
   }
   .movie-detail-page .player-box .original-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1249,14 +1250,14 @@
     padding: 0;
   }
   .movie-detail-page .rating-section .rating-header h3 {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
     letter-spacing: 0;
   }
   .movie-detail-page .rating-section .rating-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1270,7 +1271,7 @@
     padding: 1rem;
   }
   .movie-detail-page .right-section .tabs .tab-btn {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1280,7 +1281,7 @@
     gap: 0.5rem;
   }
   .movie-detail-page .right-section .season-label {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1319,7 +1320,7 @@
     padding-right: 2.5rem;
   }
   .sport-teams-page .sport-teams-page-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 2.125rem;
     line-height: 2.5625rem;
@@ -1350,14 +1351,14 @@
     border-radius: 0.5rem;
   }
   .sport-team-card .sport-team-name {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
     letter-spacing: 0;
   }
   .sport-team-card .sport-team-meta {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -1376,7 +1377,7 @@
     flex-shrink: 0;
   }
   .sport-team-filter button {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1397,7 +1398,7 @@
     gap: 0.5rem;
   }
   .sport-teams .sport-teams-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.2rem;
     line-height: 1.5rem;
@@ -1406,7 +1407,7 @@
   }
   .sport-teams .sport-teams-desc,
   .sport-teams .sport-teams-count {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1416,7 +1417,7 @@
     width: 260px;
   }
   .sport-teams .sport-team-more {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1432,7 +1433,7 @@
     padding: 1.5rem 0 2rem;
   }
   .sport-teams-page .sport-teams-page-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.65rem;
     line-height: 2.125rem;
@@ -1440,7 +1441,7 @@
     font-weight: 700;
   }
   .sport-teams-page .sport-teams-page-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1456,7 +1457,7 @@
     margin-top: 2rem;
   }
   .sport-teams-page .sport-team-group-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -1470,7 +1471,7 @@
 }
 @media (max-width: 767px) {
   .promo-banner.is-live .live-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -1492,7 +1493,7 @@
     gap: 0.75rem;
   }
   .promo-banner.is-live .live-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1509,7 +1510,7 @@
     letter-spacing: 0;
   }
   .promo-banner.is-live .promo-banner-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -1521,7 +1522,7 @@
     -webkit-box-orient: vertical;
   }
   .promo-banner.is-live .promo-banner-btn {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1531,7 +1532,7 @@
     padding: 0 0.875rem;
   }
   .promo-banner.is-live .promo-banner-note {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -1578,7 +1579,7 @@
     background-color: #D5D5D5;
   }
   .login-page.login-page .login-card.login-card .login-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.2rem;
     line-height: 1.5rem;
@@ -1590,7 +1591,7 @@
     word-break: keep-all;
   }
   .login-page.login-page .login-card.login-card .login-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1605,7 +1606,7 @@
   }
   .login-page.login-page .login-card.login-card .login-form .login-btn,
   .login-page.login-page .login-card.login-card .plan-submit {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1619,7 +1620,7 @@
     font-weight: 400;
   }
   .login-page.login-page .login-card.login-card--signin .login-form .input-field input {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1670,16 +1671,16 @@
   }
   .login-page.login-page .login-card.plan-card .plan-option .plan-name {
     grid-area: name;
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.25rem;
-    line-height: 3.5rem;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     font-weight: 700;
   }
   .login-page.login-page .login-card.plan-card .plan-option .plan-price {
     grid-area: price;
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1687,7 +1688,7 @@
   }
   .login-page.login-page .login-card.plan-card .plan-option .plan-note {
     grid-area: note;
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -1699,10 +1700,10 @@
     align-self: center;
   }
   .login-page.login-page .login-card.plan-card .plan-section-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
-    font-size: 2.25rem;
-    line-height: 3.5rem;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     font-weight: 700;
     margin: 2rem 0 0.75rem;
@@ -1717,7 +1718,7 @@
     border-radius: 1.25rem;
   }
   .login-page.login-page .login-card.plan-card .plan-benefit strong {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1725,7 +1726,7 @@
     font-weight: 700;
   }
   .login-page.login-page .login-card.plan-card .plan-benefit span {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1750,7 +1751,7 @@
     font-weight: 400;
   }
   .login-page.login-page .login-card.plan-card.plan-card--processing .login-desc, .login-page.login-page .login-card.plan-card.plan-card--done .login-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -1782,7 +1783,7 @@
     gap: 1.5rem;
   }
   .login-page.login-page .login-card.plan-card .plan-option .plan-name {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -1806,7 +1807,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 @media (max-width: 767px) {
   header .inner nav .gnb-right ul {
-    gap: 0.5rem;
+    gap: 0.25rem;
   }
 }
 @media (max-width: 1194px) {
@@ -1867,7 +1868,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     width: 48px;
   }
   :is(main, div).member-home .member-wl-name {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1891,7 +1892,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   :is(main, div).member-home .member-rc-play,
   :is(main, div).member-home .member-rc-rate {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -1912,15 +1913,15 @@ header .inner nav .gnb-right ul .search-icon-item {
 }
 @media (max-width: 767px) {
   section.top10-section .top10-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.25rem;
-    line-height: 3.5rem;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   section.top10-section .top10-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.3125rem;
@@ -1935,7 +1936,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: 3.5rem;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;
@@ -1943,7 +1944,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #FFFFFF;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-btn {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -1954,7 +1955,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #FFFFFF;
   }
   .subscribe-cta.subscribe-cta--tv .subscribe-note {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -1965,15 +1966,15 @@ header .inner nav .gnb-right ul .search-icon-item {
     --rail-col: 130px;
   }
   :is(main, div).member-home .member-section .member-title.member-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.25rem;
-    line-height: 3.5rem;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
     letter-spacing: 0;
     color: #FFFFFF;
   }
   :is(main, div).member-home .member-section .member-head .member-desc.member-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.3125rem;
@@ -1981,7 +1982,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #C8C8C8;
   }
   :is(main, div).member-home .member-continue .member-cw-card .member-card-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1989,7 +1990,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #FFFFFF;
   }
   :is(main, div).member-home .member-continue .member-cw-card .member-card-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -2021,7 +2022,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     aspect-ratio: auto;
   }
   :is(main, div).member-home .member-wishlist .member-wl-name {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -2042,7 +2043,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   :is(main, div).member-home .member-recommend .member-rc-play,
   :is(main, div).member-home .member-recommend .member-rc-rate {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -2075,7 +2076,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     display: none;
   }
   :is(main, div).member-home .member-mood .member-chips .member-chip.member-chip {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2086,7 +2087,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #FFFFFF;
   }
   :is(main, div).member-home .member-mood .member-ai-tagline {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2098,7 +2099,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #C8C8C8;
   }
   :is(main, div).member-home .member-mood .member-ai-card .member-card-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -2106,7 +2107,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #C8C8C8;
   }
   :is(main, div).member-home .member-mood .member-ai-card .member-card-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -2116,7 +2117,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 }
 @media (max-width: 767px) {
   header .inner nav .gnb-right ul .header-login-btn.header-login-btn {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -2124,8 +2125,8 @@ header .inner nav .gnb-right ul .search-icon-item {
     box-sizing: border-box;
     justify-content: center;
     gap: 0;
-    width: 40px;
-    height: 2rem;
+    width: 2.65rem;
+    height: 1.65rem;
     padding: 0 0.5rem;
     color: #FFFFFF;
   }
@@ -2281,7 +2282,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     gap: 2.25rem;
   }
   .footer.footer.footer .footer-main-menu {
-    order: 1;
+    order: 2;
     flex-wrap: nowrap;
     gap: 1.5rem;
   }
@@ -2289,7 +2290,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     white-space: nowrap;
   }
   .footer.footer.footer .footer-logo {
-    order: 2;
+    order: 1;
   }
   .footer.footer.footer .footer-logo img {
     height: 1.1875rem;
@@ -2301,6 +2302,10 @@ header .inner nav .gnb-right ul .search-icon-item {
   .footer.footer.footer .footer-copyright {
     order: 4;
     margin-top: -0.75rem;
+  }
+  .footer.footer.footer .footer-business {
+    order: 5;
+    margin-top: -1.5rem;
   }
   :is(main, div).member-home.member-home .hero-swiper-container.movie-home-hero {
     height: 33.75rem;
@@ -2432,7 +2437,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     text-align: left;
   }
   :is(main, div).member-home.member-home .member-mood .member-notice.member-notice p {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2489,7 +2494,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: 0.875rem;
   }
   :is(main, div).member-home.member-home .member-sc-slot--soon .member-sc-poster-actions .member-sc-month {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 500;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2563,7 +2568,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     display: none;
   }
   section.device-guide.device-guide--watch.device-guide--watch .watch-subtitle-mobile {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2617,7 +2622,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: 2.375rem;
   }
   .ai-banner .ai-banner-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;
@@ -2635,7 +2640,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 }
 @media (min-width: 768px) and (max-width: 1194px) {
   header .inner nav .gnb-center-toggle button {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -2646,7 +2651,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 }
 @media (max-width: 767px) {
   header .inner nav .gnb-center-toggle button {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -2712,7 +2717,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     margin-bottom: 0.25rem;
   }
   .account-back {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2720,7 +2725,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     gap: 0.25rem;
   }
   .account-sub-heading {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1rem;
     line-height: 1.3125rem;
@@ -2736,7 +2741,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   .account-sub-canceled,
   .account-plan-name,
   .account-pay .account-pay-brand {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -2744,7 +2749,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   .account-sub-facts li,
   .account-plan-price {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2755,7 +2760,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: 1.125rem;
   }
   .account-plan-tag {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -2771,7 +2776,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   .account-fill-btn,
   .account-outline-btn {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2788,7 +2793,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     gap: 1rem;
   }
   .movie-detail-page.movie-detail-page .player-box .original-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.3125rem;
@@ -2797,7 +2802,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   .movie-detail-page.movie-detail-page .player-box .genres,
   .movie-detail-page.movie-detail-page .player-box .overview {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2814,7 +2819,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: 1rem;
   }
   .movie-detail-page.movie-detail-page .player-box .btn-play {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -2822,7 +2827,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #171717;
   }
   .movie-detail-page.movie-detail-page .rating-section .rating-header h3 {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.2rem;
     line-height: 1.55rem;
@@ -2830,7 +2835,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #FFFFFF;
   }
   .movie-detail-page.movie-detail-page .rating-section .rating-header .score-display {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -2846,7 +2851,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #525252;
   }
   .movie-detail-page.movie-detail-page .rating-section .rating-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -2861,7 +2866,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: 1.75rem;
   }
   .movie-detail-page.movie-detail-page .rating-section .star-picker .star-item .label {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2869,7 +2874,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #FFFFFF;
   }
   .movie-detail-page.movie-detail-page .rating-section .btn-submit-rating {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -2879,7 +2884,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     padding: 0;
   }
   .movie-detail-page.movie-detail-page .right-section .tabs .tab-btn {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1rem;
     line-height: 1.3125rem;
@@ -2890,7 +2895,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #FFFFFF;
   }
   .movie-detail-page.movie-detail-page .right-section .filter-bar select {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -2899,7 +2904,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #171717;
   }
   .movie-detail-page.movie-detail-page .right-section .season-label {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -2908,7 +2913,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   .movie-detail-page.movie-detail-page .right-section .episode-card .info .ep-num,
   .movie-detail-page.movie-detail-page .right-section .episode-card .info .runtime {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -2916,7 +2921,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #FFFFFF;
   }
   .movie-detail-page.movie-detail-page .right-section .episode-card .info .ep-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -2944,7 +2949,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   :is(main, div).member-home .rail-release.rail-showcase .member-sc-slot--soon .member-sc-month,
   :is(main, div).member-home .rail-release.rail-showcase .member-sc-slot--soon .member-sc-poster-actions .member-sc-month {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -3063,7 +3068,7 @@ header .inner nav .gnb-right ul .search-icon-item {
   }
   .subscribe-cta--tv:not(.subscribe-cta--sport) .subscribe-title-mobile {
     display: inline;
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.2rem;
     line-height: 1.55rem;
@@ -3094,7 +3099,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     margin-bottom: 2.25rem;
   }
   .sub-pop-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -3107,7 +3112,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     margin: 2rem 0 1rem;
   }
   .sub-benefits li {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -3137,7 +3142,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     gap: 2rem;
   }
   :is(main, div).member-home.member-browse .member-browse-genre-title.member-browse-genre-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -3149,7 +3154,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     gap: 1rem 0.75rem;
   }
   :is(main, div).member-home.member-browse .member-browse-poster-title.member-browse-poster-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -3167,7 +3172,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     display: none;
   }
   .promo-banner:not(.is-live) .promo-banner-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -3253,7 +3258,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     text-align: center;
   }
   .sport-teams-page .sport-team-card.sport-team-card .sport-team-name {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -3288,7 +3293,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     height: 2.5rem;
   }
   .sport-teams-page .sport-team-card.sport-team-card .sport-team-name {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -3349,7 +3354,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 }
 @media (max-width: 767px) {
   .movie-detail-page.movie-detail-page .player-box .genres.genres {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.6875rem;
     line-height: 0.8125rem;
@@ -3357,7 +3362,7 @@ header .inner nav .gnb-right ul .search-icon-item {
     color: #C8C8C8;
   }
   .movie-detail-page.movie-detail-page .player-box .overview.overview {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;

@@ -1,3 +1,4 @@
+@import url("https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/AppleSDGothicNeo.css");
 .auth-page:has(.auth-card--login) {
   min-height: 100dvh;
   padding: 3rem 1.25rem;
@@ -42,7 +43,7 @@
   filter: none;
 }
 .auth-page .auth-card.auth-card--login .auth-title {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
   font-size: 2.125rem;
   line-height: 2.5625rem;
@@ -53,7 +54,7 @@
   overflow-wrap: break-word;
 }
 .auth-page .auth-card.auth-card--login .auth-desc {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.25rem;
@@ -116,7 +117,7 @@
   color: #fff;
   border: none;
   border-radius: 999rem;
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
   font-size: 1.0625rem;
   line-height: 1.375rem;
@@ -265,7 +266,7 @@
     height: 4.5rem;
   }
   .auth-page .auth-card.auth-card--login .auth-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;

@@ -1,4 +1,5 @@
 @use "sass:color"; // [추가] 호버 색 계산용 — @use 는 파일 맨 위에 있어야 함
+@import url('https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/AppleSDGothicNeo.css'); //웹폰트
 // =====================================================================
 // Apple TV Redesign — STYLE GUIDE 1.0 (Foundations · Desktop / TV 1920)
 // 구조: Primitive(원본 값) → Semantic(역할) → Component(실제 사용처)
@@ -216,7 +217,7 @@ $font-weight-regular: 400; // Regular · 기본 정보와 편안하게 읽는 �
 $font-weight-bold: 700; // Bold · 제목이나 강조가 필요한 핵심 표현
 $font-weight-medium: 500; // Medium · body-small-m 용 (SF Pro Medium)
 
-$font-family-base: "SF Pro", sans-serif;
+$font-family-base: "Apple SD Gothic Neo", "SF Pro", sans-serif;
 
 // 공통 타이포 믹스인 (크기 · 행간 · 굵기)
 @mixin type-style($size, $line-height, $weight: $font-weight-regular) {

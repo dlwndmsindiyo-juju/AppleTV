@@ -350,10 +350,10 @@ $tv-type-shrink: (
 
 // 설명: Display/M · Light/0
 .tv-screen .tv-desc {
-  @include tv-type(display-M);
+  @include tv-type(display-l);
   max-width: 860px;
   margin: 0;
-  color: $light-color-0;
+  color: $light-color-300;
   word-break: keep-all;
   // [삭제] line-height 2.525rem → 글자 변수 줄 높이 그대로 (TV 글자 60%)
 }
@@ -897,7 +897,7 @@ $tv-type-shrink: (
   @include heading-h4;
   display: flex;
   align-items: center;
-  gap: $space-lg;
+  gap: $space-xl;
   width: 100%;
   min-height: 2.75rem;
   padding: 0 $space-md;
@@ -951,8 +951,9 @@ $tv-type-shrink: (
 // [추가] 로그인 전: 프로필 자리에 "로그인" 글자 버튼 (메뉴 글자와 같은 17 / 19)
 .tv-side-login {
   flex-shrink: 0;
-  height: 2.5rem;
+  height: 2.15rem;
   padding: 0 $space-lg;
+  margin-bottom: $space-md;
   border: none;
   border-radius: 62.4375rem;
   background-color: $tv-btn-secondary-bg;
@@ -1199,7 +1200,7 @@ $tv-type-shrink: (
 }
 
 .tv-sport .tv-header-tab {
-  @include tv-type(display-l-b);
+  @include tv-type(display-l);
   flex: 1;
   height: 3.5rem;
   padding: 0;
@@ -1612,7 +1613,7 @@ $tv-type-shrink: (
 }
 
 .tv-team-card-title {
-  @include tv-type(heading-h2-b, false); // [수정] 카드 제목 한 단계 낮춤 → Heading/h2-B 22
+  @include tv-type(heading-h3, false); // [수정] 카드 제목 한 단계 낮춤 → Heading/h2-B 22
   color: $light-color-0;
   white-space: nowrap;
   overflow: hidden;
@@ -1637,7 +1638,7 @@ $tv-type-shrink: (
   align-items: center;
   gap: 0.375rem;
   margin-top: 0.375rem;
-  color: $light-color-0;
+  color: $light-color-200;
 
   img {
     width: 8px;
@@ -3167,7 +3168,7 @@ html.is-tv-touch .tv-end-track {
 // - 실제 TV 는 화면 가장자리가 잘려 보일 수 있어서(오버스캔) TV 화면 폭을 조금 줄임
 // - 펼친 메뉴는 TV 화면 위에 겹쳐서 열림 → 메뉴를 열어도 TV 화면 · 글자 크기는 그대로
 .tv-preview {
-  --tv-rail-w: 4.25rem; // 접힌 메뉴 바 폭 (68)
+  --tv-rail-w: 6.5rem; // 접힌 메뉴 바 폭 (68)
   --tv-rail-gap: 1rem; // 메뉴 바 바깥 띄움 (16)
   --tv-safe-x: clamp(1rem, 2.5vw, 3rem); // 오른쪽 안전 여백
   --tv-safe-y: clamp(0.5rem, 2vh, 1.5rem); // 위아래 안전 여백
@@ -3250,7 +3251,7 @@ html.is-tv-touch .tv-end-track {
 
   // 아이콘 칸: 둥근 알약 (헤더 메뉴 바의 메뉴처럼) · 아이콘은 작게(20)
   .tv-side-item {
-    width: 3.25rem;
+    width: 2.75rem;
     min-height: 2.75rem;
     border-radius: 1.375rem;
 
