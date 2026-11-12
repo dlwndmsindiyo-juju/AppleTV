@@ -1133,7 +1133,7 @@ section.sport-hero {
   .sport-teams .sport-team-list,
   .sport-league .sport-league-list,
   .sport-highlights .sport-highlight-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .sport-replay .sport-replay-list {
@@ -1199,6 +1199,7 @@ section.sport-hero {
   .sport-notify .sport-notify-btn {
     width: 100%;
   }
+
 }
 
 // =====================================================================

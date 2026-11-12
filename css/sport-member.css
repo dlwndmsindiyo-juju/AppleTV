@@ -415,7 +415,7 @@ main.sport-home .sport-replay-date {
 }
 main.sport-home .sport-highlight-list {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--sport-card-gap);
   overflow: visible;
   padding-bottom: 0;
@@ -1074,7 +1074,7 @@ section.sport-hero .sport-btn.secondary {
   .sport-teams .sport-team-list,
   .sport-league .sport-league-list,
   .sport-highlights .sport-highlight-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
   .sport-replay .sport-replay-list {
     grid-template-columns: repeat(3, 1fr);
