@@ -804,7 +804,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
                   <input className="sub-field-input" inputMode="numeric" autoComplete="one-time-code" placeholder="6자리 숫자"
                     value={code} onChange={(e) => setCode(digits(e.target.value).slice(0, 6))} autoFocus />
                 </Field>
-                <p className="sub-note">가상의 확인 코드를 입력해주시면 확인으로 처리됩니다. (데모 화면: 6자리 숫자를 입력하면 확인됩니다)</p>
+                <p className="sub-note">가상의 확인 코드를 입력해주시면 확인으로 처리됩니다.</p>
               </section>
             )}
           </>)}

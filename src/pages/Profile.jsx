@@ -252,7 +252,7 @@ const ProfileNameDialog = ({ initial, busy, onSave, onCancel, onDelete, anchor =
   return (
     <ConfirmDialog
       title={title}
-      desc={`헤더 · 프로필 선택 화면에 보이는 이름입니다. 최대 ${PROFILE_NAME_MAX}자까지 입력할 수 있습니다.`}
+      desc={`최대 ${PROFILE_NAME_MAX}자까지 입력할 수 있습니다.`}
       confirmLabel="저장"
       busy={busy}
       confirmDisabled={!ready}
@@ -539,7 +539,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
- {/* ---------- [추가] 지불 방법 ---------- */}
+            {/* ---------- [추가] 지불 방법 ---------- */}
             {/* - 지불 유형 · 청구 주소 · 국가/지역 한 줄 (휴대폰은 위아래) · 청구 주소는 사용자가 입력한 값만 */}
             <Section id="account-payment">
               <div className="account-item-row">
@@ -571,7 +571,7 @@ export const Profile = () => {
               </div>
             </Section>
 
-              {/* ---------- [추가] 구독 ---------- */}
+            {/* ---------- [추가] 구독 ---------- */}
             <Section id="account-subscription">
               <Item title="구독을 확인 및 관리합니다." desc={subscriptionSummary(user)}>
                 <Link className="account-link" to="/profile/subscription">
@@ -580,7 +580,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
-           
+
             {/* ---------- 계정 액세스 ---------- */}
             <Section id="account-access">
               <Item
@@ -614,7 +614,7 @@ export const Profile = () => {
               </Item>
             </Section>
 
-          
+
 
             {/* ---------- 재생 기록 ---------- */}
             <Section id="account-history">
@@ -751,10 +751,10 @@ export const Profile = () => {
             editId === MAIN_PROFILE_ID
               ? undefined
               : () => {
-                  setDeleteId(editId);
-                  setEditId(null);
-                  setDialog("deleteProfile");
-                }
+                setDeleteId(editId);
+                setEditId(null);
+                setDialog("deleteProfile");
+              }
           }
         />
       )}
