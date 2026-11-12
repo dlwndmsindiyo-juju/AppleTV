@@ -19,7 +19,6 @@ main.sport-home {
   --sport-content-width: 1720px;
   --sport-card-gap: 1.5rem;
   padding-top: $header-height;
-  background: $bg-page;
   color: $text-primary;
   font-family: "Sport SF Pro", "SF Pro", system-ui, sans-serif;
 
@@ -5511,7 +5510,7 @@ main.sport-home .sport-replay {
 
     // 모바일: 카드 1장 + 다음 카드 살짝 (손가락으로 넘김 · 화살표 숨김)
     .sport-replay-slide {
-     width: clamp(260px, 52vw, 360px);
+      width: clamp(260px, 52vw, 360px);
       max-width: none;
     }
 
@@ -5959,7 +5958,7 @@ main.sport-home {
   // 모바일: 카드 1장 + 다음 장 일부 · 손가락으로 넘김
   @media (max-width: $breakpoint-mobile) {
     .sport-lv-slide {
-       width: clamp(280px, 55vw, 380px);
+      width: clamp(280px, 55vw, 380px);
     }
 
     .sport-live {
@@ -6087,7 +6086,7 @@ main.sport-home {
 @media (max-width: $breakpoint-mobile) {
   .sport-upcoming {
     .sport-up-slide {
-       width: clamp(280px, 52vw, 360px);
+      width: clamp(280px, 52vw, 360px);
     }
 
     .sport-up-logo {
@@ -6310,6 +6309,7 @@ main.sport-home.sport-live-page .sport-chat-list {
     }
   }
 }
+
 // =====================================================================
 // [수정] 스포츠 홈 구독 배너(로그인 전 · SubscribeCTA type="sport") — 글자 · 아이콘을 메인 홈 배너와 똑같이
 // - 원인 ① 스포츠 화면 전체 글꼴("Sport SF Pro", 위 main.sport-home * 규칙)이 배너에도 들어가 같은 크기 변수여도 글자가 다르게 보였음
@@ -6318,6 +6318,7 @@ main.sport-home.sport-live-page .sport-chat-list {
 // - 배경 사진 · 문구 내용 · 배너 높이는 그대로
 // =====================================================================
 main.sport-home .subscribe-cta.subscribe-cta--sport {
+
   &,
   * {
     font-family: $font-family-base; // 메인 홈과 같은 글꼴
@@ -6340,6 +6341,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 // 휴대폰: 메인 홈 배너와 같은 제목 크기(Heading/h2-B) · 로고(58 × 44) · 배너 높이
 @media (max-width: $breakpoint-mobile) {
   main.sport-home .subscribe-cta.subscribe-cta--sport {
+
     // [수정] 배너가 혼자 크게 나오던 원인: 위 "Sport 구독 배너 이미지" 규칙의 height: 420px 가
     //        휴대폰 규칙(height: auto · 위아래 32 여백)보다 우선해 PC 높이 그대로였음 → 메인 홈처럼 글자 높이에 맞춤
     .subscribe-banner {
@@ -6351,7 +6353,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
       display: inline;
     }
 
-    .subscribe-title .subscribe-title-desktop span + span::before {
+    .subscribe-title .subscribe-title-desktop span+span::before {
       content: " ";
     }
 
@@ -6433,7 +6435,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 
     // 오른쪽 내용: 칸 폭 가득 · 조금 작게
     // [수정] 처음 크기로 되돌림: 내용 85% · 칸 폭 가득
-    .sport-live-tabs-section > .inner.sport-live-panel {
+    .sport-live-tabs-section>.inner.sport-live-panel {
       width: 100%;
       max-width: none;
       margin: 0;
@@ -6639,6 +6641,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 
     // [추가] 잘 안 보이던 글자 → 글자 변수를 한두 단계 크게 (보이는 크기 ≈ 변수 × 0.85)
     .sport-live-panel {
+
       // 기록 · 중계 위 제목 (메이저 리그 사커 … · 날짜)
       .sport-stats-head {
         h3 {
@@ -6675,6 +6678,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 // =====================================================================
 @media (min-width: calc(#{$breakpoint-tablet} + 1px)) {
   main.sport-home.sport-live-page {
+
     .sport-stats,
     .sport-commentary {
       flex-direction: row; // [수정] 중계 기본 규칙(세로 column)을 덮어씀 → 스코어보드 왼쪽 · 타임라인 오른쪽

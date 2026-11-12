@@ -1130,7 +1130,6 @@ header {
 
 // ===== 인기 영화 TOP 10 =====
 .top10-section {
-  background-color: $bg-page;
   padding: 2.5rem 0 3.5rem;
 
   .inner {
@@ -2318,7 +2317,6 @@ header {
     height: 25.9375rem;
     border-radius: $radius-lg;
     overflow: hidden;
-    background-color: $bg-surface;
     border: 0.0625rem solid $dark-color-300;
   }
 

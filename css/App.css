@@ -973,7 +973,6 @@ header .inner nav .gnb-right ul .profile-menu-divider {
 }
 
 .top10-section {
-  background-color: #171717;
   padding: 2.5rem 0 3.5rem;
 }
 .top10-section .inner {
@@ -1191,14 +1190,6 @@ header .inner nav .gnb-right ul .profile-menu-divider {
   background-color: currentColor;
   -webkit-mask: url("/icons/full-screen.svg") center/contain no-repeat;
   mask: url("/icons/full-screen.svg") center/contain no-repeat;
-}
-.movie-detail-page .player-box .player-media.is-full {
-  aspect-ratio: auto;
-  background-color: #000000;
-}
-.movie-detail-page .player-box .player-media.is-full iframe,
-.movie-detail-page .player-box .player-media.is-full img {
-  object-fit: contain;
 }
 .movie-detail-page .player-box .player-info {
   display: flex;
@@ -2203,7 +2194,6 @@ header .inner nav .gnb-right ul .profile-menu-divider {
   height: 25.9375rem;
   border-radius: 1.5rem;
   overflow: hidden;
-  background-color: #1f1f1f;
   border: 0.0625rem solid #3A3A3A;
 }
 .subscribe-cta .subscribe-bg {
