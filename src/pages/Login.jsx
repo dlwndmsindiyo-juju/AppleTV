@@ -606,9 +606,7 @@ const Login = () => {
       <>
         <AuthHead title="인증번호를 보냈습니다." />
         <p className="auth-desc">
-          {shownEmail} 으로 6자리 인증번호를 보냈습니다.
-          <br />
-          메일함에서 확인 후 아래에 입력하세요.
+          가상의 인증번호로 6자리 인증번호를 입력해주세요.
         </p>
         <form className="auth-form auth-login-form" onSubmit={handleCodeSubmit} noValidate>
           <CodeInput value={code} onChange={setCode} onComplete={submitCode} disabled={busy} />
