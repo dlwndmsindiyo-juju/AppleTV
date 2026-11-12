@@ -1,5 +1,6 @@
+@import url("https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/AppleSDGothicNeo.css");
 .help-page {
-  min-height: 100vh;
+  flex: 1 0 auto;
   padding: 4.5rem 0 5rem;
   background-color: #171717;
   color: #C8C8C8;
@@ -9,9 +10,21 @@
   padding: 0;
 }
 
+#root:has(.help-page) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+#root:has(.help-page) > .page-fade {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+
 .help-page,
 .help-page * {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
 }
 
 .help-inner {
@@ -27,7 +40,7 @@
 }
 
 .help-back {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
   font-size: 0.9375rem;
   line-height: 1.25rem;
@@ -66,7 +79,7 @@
 }
 
 .help-title {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
   font-size: 2.125rem;
   line-height: 2.5625rem;
@@ -76,7 +89,7 @@
 }
 
 .help-meta {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.8125rem;
   line-height: 1.125rem;
@@ -86,7 +99,7 @@
 }
 
 .help-desc {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 1.0625rem;
   line-height: 1.375rem;
@@ -105,7 +118,7 @@
 }
 
 .help-link {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 1.0625rem;
   line-height: 1.375rem;
@@ -120,7 +133,7 @@
   color: #FFFFFF;
 }
 .help-link.is-current {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
   font-size: 1.0625rem;
   line-height: 1.375rem;
@@ -141,7 +154,7 @@
 }
 
 .help-intro-text {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.25rem;
@@ -151,7 +164,7 @@
 }
 
 .help-hint {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.8125rem;
   line-height: 1.125rem;
@@ -172,7 +185,7 @@
 }
 
 .help-question button {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
   font-size: 1.25rem;
   line-height: 1.5625rem;
@@ -220,9 +233,12 @@
   border-radius: 0.75rem;
   background-color: #1f1f1f;
 }
+.help-answer[hidden] {
+  display: none;
+}
 
 .help-answer-text {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.25rem;
@@ -238,7 +254,7 @@
   list-style: none;
 }
 .help-bullets li {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.25rem;
@@ -267,14 +283,14 @@
     padding-top: 2rem;
   }
   .help-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
   }
   .help-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -286,14 +302,14 @@
     margin-top: 1.5rem;
   }
   .help-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
     letter-spacing: 0;
   }
   .help-link.is-current {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -306,14 +322,14 @@
   .help-intro-text,
   .help-answer-text,
   .help-bullets li {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
   }
   .help-question button {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;

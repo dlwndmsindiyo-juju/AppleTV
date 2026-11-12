@@ -1,3 +1,4 @@
+@import url("https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/AppleSDGothicNeo.css");
 .ai-popup {
   --ai-primary: #5865f2;
   --ai-subtle: #c8c8c8;
@@ -1542,7 +1543,7 @@
   padding: 1rem 0;
 }
 .ai-popup.ai-popup--results.ai-popup--results .ai-popup-result-heading .ai-popup-detail-link {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
   font-size: 1.0625rem;
   line-height: 1.375rem;
@@ -1550,7 +1551,7 @@
   color: #FFFFFF;
 }
 .ai-popup.ai-popup--results.ai-popup--results .ai-popup-result-genre {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.6875rem;
   line-height: 0.8125rem;
@@ -1562,7 +1563,7 @@
   margin-top: 0.25rem;
 }
 .ai-popup.ai-popup--results.ai-popup--results .ai-popup-result-overview {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.6875rem;
   line-height: 0.8125rem;
@@ -1578,7 +1579,7 @@
   padding-top: 2rem;
 }
 .ai-popup.ai-popup--results.ai-popup--results .ai-popup-expand {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
   font-size: 0.8125rem;
   line-height: 1.125rem;
@@ -1595,7 +1596,7 @@
   width: 100%;
 }
 .ai-popup.ai-popup--results.ai-popup--results .ai-popup-last {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.8125rem;
   line-height: 1.125rem;
@@ -1640,7 +1641,7 @@
     padding: 0.75rem 0;
   }
   .ai-popup.ai-popup--results.ai-popup--results .ai-popup-result-heading .ai-popup-detail-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
@@ -1652,7 +1653,7 @@
     padding: 1.5rem 1.25rem;
   }
   .ai-popup.ai-popup--results.ai-popup--results .ai-popup-title-row h2 {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.375rem;
@@ -1678,7 +1679,7 @@
     flex-basis: 5rem;
   }
   .ai-popup.ai-popup--results.ai-popup--results .ai-popup-result-heading .ai-popup-detail-link {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1686,7 +1687,7 @@
   }
   .ai-popup.ai-popup--results.ai-popup--results .ai-popup-result-genre,
   .ai-popup.ai-popup--results.ai-popup--results .ai-popup-result-overview {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.5625rem;
     line-height: normal;
