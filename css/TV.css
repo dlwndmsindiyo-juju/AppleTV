@@ -3697,3 +3697,30 @@ html.is-tv-touch .tv-end-track > * {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.tv-preview {
+  --tv-zoom: 1;
+  --tv-inner-w: 97%;
+  --tv-inner-pad: max(0px, calc((100% - var(--tv-inner-w)) / 2));
+}
+
+.tv-preview-area {
+  padding-left: calc(var(--tv-inner-pad) + var(--tv-rail-w) + var(--tv-rail-gap) * 2);
+  padding-right: calc(var(--tv-inner-pad) + var(--tv-safe-x));
+}
+
+.tv-preview:not(:has(.tv-side)) .tv-preview-area {
+  padding-left: calc(var(--tv-inner-pad) + var(--tv-safe-x));
+}
+
+.tv-preview.is-side-open .tv-preview-area {
+  padding-left: calc(var(--tv-inner-pad) + var(--tv-side-w) + var(--tv-rail-gap));
+}
+
+.tv-side.is-rail {
+  left: calc(var(--tv-inner-pad) + var(--tv-rail-gap));
+}
+
+.tv-side.is-open {
+  left: var(--tv-inner-pad);
+}
