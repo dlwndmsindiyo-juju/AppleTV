@@ -3480,8 +3480,15 @@ html.is-tv-touch .tv-end-track {
 // =====================================================================
 .tv-preview {
   --tv-zoom: 1;
-  --tv-inner-w: 97%;
+  --tv-inner-w: 97%; // [수정] 1700 → 창 폭의 85% (보내 주신 화면 기준 약 2180) · 창 크기에 따라 같은 비율
   --tv-inner-pad: max(0px, calc((100% - var(--tv-inner-w)) / 2));
+}
+
+// 창이 좁으면(1400 이하) 양옆을 비우지 않고 꽉 채움
+@media (max-width: 1400px) {
+  .tv-preview {
+    --tv-inner-w: 100%;
+  }
 }
 
 // TV 화면 자리: 이너 안쪽 + 접힌 메뉴 바 자리
@@ -3505,4 +3512,73 @@ html.is-tv-touch .tv-end-track {
 
 .tv-side.is-open {
   left: var(--tv-inner-pad);
+}
+
+// =====================================================================
+// [추가] 왼쪽 메뉴 아이콘 크기 — 접었을 때 · 펼쳤을 때 같은 크기로 · 한 단계 크게
+// - 아이콘 28 (예전: 접힘 20 · 펼침 22) · 검색 아이콘 22 · 메뉴 열기(›) 28 · 프로필 44
+// - 접힌 메뉴 칸은 아이콘이 커진 만큼 넓힘 (칸 56 · 메뉴 바 폭은 그대로 6.5rem)
+// =====================================================================
+.tv-preview {
+  --tv-side-icon: 1.75rem; // 메뉴 아이콘 (접힘 · 펼침 공통)
+  --tv-side-search-icon: 1.375rem; // 검색 아이콘
+}
+
+.tv-side.is-rail,
+.tv-side.is-open {
+  .tv-side-icon {
+    width: var(--tv-side-icon);
+    height: var(--tv-side-icon);
+
+    img,
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .tv-side-search-icon {
+    width: var(--tv-side-search-icon);
+    height: var(--tv-side-search-icon);
+  }
+
+  .tv-side-profile {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .tv-side-toggle {
+    width: 2.75rem;
+    height: 2.75rem;
+
+    img {
+      width: var(--tv-side-icon);
+      height: var(--tv-side-icon);
+    }
+  }
+}
+
+// 접힌 메뉴: 아이콘 칸(알약)도 크게
+.tv-side.is-rail {
+  .tv-side-item {
+    width: 3.5rem;
+    min-height: 3.5rem;
+    border-radius: 1.75rem;
+  }
+
+  .tv-side-menu,
+  .tv-side-group-body {
+    gap: $space-xs;
+  }
+}
+
+// 펼친 메뉴: 줄 높이를 아이콘에 맞춤
+.tv-side.is-open {
+  .tv-side-item {
+    min-height: 3.25rem;
+  }
+
+  .tv-side-logout {
+    padding-left: calc(#{$space-sm} + var(--tv-side-icon) + #{$space-md});
+  }
 }
