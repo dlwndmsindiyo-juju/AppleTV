@@ -3471,3 +3471,38 @@ html.is-tv-touch .tv-end-track {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+// =====================================================================
+// [수정] TV 이너 1700 — 왼쪽 메뉴(접힌 · 펼친) + TV 화면을 함께 가로 1700 안에 넣고 가운데 정렬
+// - 화면이 꽉 차 답답해서 창이 1700 보다 넓으면 양옆을 비움 (메뉴 · 아이콘 크기는 그대로 · 자리만 안쪽으로)
+// - --tv-inner-pad: 양옆 빈 폭 = (창 폭 - 1700) ÷ 2 · 창이 1700 이하면 0 (지금과 같음)
+// - --tv-zoom: 화면 안 글자 · 카드 크기 비율 (1 = 그대로 · pages/TvPreview.jsx 가 읽음)
+// =====================================================================
+.tv-preview {
+  --tv-zoom: 1;
+  --tv-inner-w: 97%;
+  --tv-inner-pad: max(0px, calc((100% - var(--tv-inner-w)) / 2));
+}
+
+// TV 화면 자리: 이너 안쪽 + 접힌 메뉴 바 자리
+.tv-preview-area {
+  padding-left: calc(var(--tv-inner-pad) + var(--tv-rail-w) + var(--tv-rail-gap) * 2);
+  padding-right: calc(var(--tv-inner-pad) + var(--tv-safe-x));
+}
+
+.tv-preview:not(:has(.tv-side)) .tv-preview-area {
+  padding-left: calc(var(--tv-inner-pad) + var(--tv-safe-x));
+}
+
+.tv-preview.is-side-open .tv-preview-area {
+  padding-left: calc(var(--tv-inner-pad) + var(--tv-side-w) + var(--tv-rail-gap));
+}
+
+// 메뉴도 이너 왼쪽 끝으로
+.tv-side.is-rail {
+  left: calc(var(--tv-inner-pad) + var(--tv-rail-gap));
+}
+
+.tv-side.is-open {
+  left: var(--tv-inner-pad);
+}
