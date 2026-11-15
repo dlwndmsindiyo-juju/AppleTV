@@ -1,5 +1,6 @@
 import { openShare } from "../../utils/share"; // [추가] 공유 팝업
-import { useAuthStore } from "../../store/useAuthStore"; // [추가] 로그인 전 좋아요 막기
+import { useAuthStore, useSettings } from "../../store/useAuthStore"; // [추가] 로그인 전 좋아요 막기 · [추가] 계정 설정 "추천 항목 재생"
+import AutoNext from "../common/AutoNext"; // [추가] 끝나면 "다음 숏폼 · 5초 후 재생" (지금 재생 · 취소)
 import { openSubscribeGate } from "../../utils/subscribeGate";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -76,6 +77,8 @@ const SportShorts = ({ title = "숏폼" }) => {
   const [muted, setMuted] = useState(true);
   const [liked, setLiked] = useState({});
   const [fullItem, setFullItem] = useState(null); // [추가] 전체 화면으로 재생 중인 숏폼
+  const [fullEnded, setFullEnded] = useState(false); // [추가] 전체 화면 숏폼이 끝남 → 다음 숏폼 안내
+  const settings = useSettings();
   const frames = useRef({});
 
   // 카드에 쓸 값 정리 (경기 · 길이)
@@ -256,8 +259,25 @@ const SportShorts = ({ title = "숏폼" }) => {
       </div>
 
       {/* [추가] 전체 화면 재생 팝업 ("← 뒤로" · Esc · 브라우저 뒤로가기로 닫기) */}
-      <VideoPopup open={!!fullItem} onClose={() => setFullItem(null)} label={fullItem?.title || "숏폼"}>
-        {fullItem && <WatchPlayer videoKey={fullItem.videoId} title={fullItem.title} />}
+      {/* [추가] 끝나면 목록의 다음 숏폼 안내 (계정 설정 "추천 항목 재생") — 지금 재생 · 5초 뒤 → 다음 숏폼 */}
+      <VideoPopup open={!!fullItem} onClose={() => { setFullItem(null); setFullEnded(false); }} label={fullItem?.title || "숏폼"}>
+        {fullItem && (
+          <WatchPlayer key={fullItem.videoId} videoKey={fullItem.videoId} title={fullItem.title} onEnded={() => setFullEnded(true)} />
+        )}
+        {(() => {
+          if (!fullItem || !fullEnded || !settings.autoplayRecommend) return null;
+          const nextItem = items[items.findIndex((v) => v.id === fullItem.id) + 1];
+          if (!nextItem?.videoId) return null;
+          return (
+            <AutoNext
+              kind="다음 숏폼"
+              title={nextItem.title}
+              image={nextItem.thumb}
+              onPlay={() => { setFullEnded(false); setFullItem(nextItem); }}
+              onCancel={() => setFullEnded(false)}
+            />
+          );
+        })()}
       </VideoPopup>
     </section>
   );
