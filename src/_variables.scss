@@ -409,6 +409,9 @@ $shorts-detail-upnext-height: 17.5rem; // [추가] UP NEXT 목록 높이 (넘치
 $shorts-detail-card-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.45);
 $shorts-detail-card-width-mobile: 16.5rem; // [추가] 휴대폰 세로 카드 폭 (양옆 이전 · 다음 버튼 자리를 남김)
 $shorts-detail-nav-size-mobile: 2.5rem; // [추가] 휴대폰 이전 · 다음 동그라미
+$shorts-detail-ctrl-size: 2.75rem; // [추가] 카드 재생 · 일시정지 / 전체보기 버튼 (작품 상세 버튼과 같은 크기)
+$shorts-detail-ctrl-bg: rgba(0, 0, 0, 0.55); // [추가] 위 버튼 배경 (작품 상세와 같음)
+$shorts-detail-ctrl-bg-hover: rgba(0, 0, 0, 0.8);
 
 // 데스크톱(PC · 1025px 이상): 본문 좌우 여백 5% 씩 → 콘텐츠 폭 화면의 90% (1920 기준 96px · 콘텐츠 1728)
 // - [수정] 예전 값 12.5% (콘텐츠 75% · 1440)

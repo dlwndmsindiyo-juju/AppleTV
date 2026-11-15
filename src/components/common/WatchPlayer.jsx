@@ -8,6 +8,8 @@
 //   · 터치 기기는 소리 있는 영상의 자동 재생을 막아 YouTube 재생 버튼이 다시 뜸
 //   → 소리를 끈 채 바로 재생하고, 화면 위 [소리 켜기] 버튼을 누르면 소리가 켜짐 (누른 동작이라 기기가 허용)
 //   · PC 는 예전처럼 소리와 함께 바로 재생
+// - [추가] 재생 버튼을 한 번 더 누르지 않아도 되게: 소리 있는 자동 재생을 브라우저가 막으면(1.5초 안에 시작 안 함)
+//   소리를 끈 채 다시 재생하고 [소리 켜기] 버튼을 보여줌 (숏폼 · 다시보기 · 작품 재생 팝업 공통)
 import React, { useEffect, useRef, useState } from "react";
 import { loadYouTubeApi } from "./youtubeApi"; // [정리] YouTube API 불러오기 공용
 
@@ -31,6 +33,7 @@ const WatchPlayer = ({ videoKey, startAt = 0, onProgress, onEnded, title = "영�
   useEffect(() => {
     let player = null;
     let timer = null;
+    let autoTimer = null; // [추가]
     let cancelled = false;
     const wrap = wrapRef.current;
 
@@ -67,6 +70,18 @@ const WatchPlayer = ({ videoKey, startAt = 0, onProgress, onEnded, title = "영�
                 setMuted(true);
               }
               e.target.playVideo(); // 자동 재생이 늦거나 막혀도 한 번 더 시작
+              // [추가] 소리 있는 자동 재생이 막혔으면 소리 끄고 재생
+              autoTimer = setTimeout(() => {
+                try {
+                  const s = e.target.getPlayerState?.();
+                  if (cancelled || s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING || s === YT.PlayerState.ENDED) return;
+                  e.target.mute();
+                  e.target.playVideo();
+                  setMuted(true);
+                } catch {
+                  // 플레이어가 사라진 경우 무시
+                }
+              }, 1500);
             },
             onStateChange: (e) => {
               clearInterval(timer);
@@ -85,6 +100,7 @@ const WatchPlayer = ({ videoKey, startAt = 0, onProgress, onEnded, title = "영�
     return () => {
       cancelled = true;
       clearInterval(timer);
+      clearTimeout(autoTimer);
       playerRef.current = null;
       setMuted(false);
       report(); // 팝업을 닫을 때 마지막 위치 저장
