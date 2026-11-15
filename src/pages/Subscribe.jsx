@@ -6,7 +6,7 @@
 //   · Esc · 배경 누르면 닫힘 (지불 방법 입력 중에는 배경 눌러도 안 닫힘 · 구독 완료 화면은 홈으로)
 // - [추가] 지불 방법 등록 화면은 계정 설정 [지불 방법 추가] 에서도 같은 팝업으로 씀 (<PaymentRegisterPopup />)
 // - 위 왼쪽 "‹" 뒤로 · 오른쪽 "×" 닫기: 플랜 선택 · 지불 방법 등록 화면에만 (시안)
-// - 로고: public/icons/login-logo.svg (로그인 화면과 같은 로고)
+// - 로고: public/icons/subscribe-logo.svg (로그인 화면과 같은 로고)
 // - 등록된 지불 방법이 이미 있으면 지불 방법 등록은 건너뜀
 // - 저장: 카드는 카드 종류 + 마지막 4자리만 · 청구 주소는 입력한 이름 · 주소 · 우편번호만
 //   (카드번호 전체 · 유효기간 · 비밀번호 · 신원 확인 · 통신사 정보는 저장하지 않음)
@@ -215,9 +215,10 @@ const SubNav = ({ onBack, onClose }) => (
 );
 
 // 로고 + 제목 + 설명
+// - [수정] 구독 플랜 아이콘: public/icons/subscribe-logo.svg (구독 팝업 · 구독 확인 · 연장 · 계정 설정 구독 모두 같은 아이콘)
 const SubHead = ({ title, desc }) => (
   <div className="sub-pop-head">
-    <img className="sub-pop-logo" src="/icons/login-logo.svg" alt="Apple TV" />
+    <img className="sub-pop-logo" src="/icons/subscribe-logo.svg" alt="Apple TV" />
     <h1 className="sub-pop-title">{title}</h1>
     {desc && <p className="sub-pop-desc">{desc}</p>}
   </div>
@@ -804,7 +805,7 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
                   <input className="sub-field-input" inputMode="numeric" autoComplete="one-time-code" placeholder="6자리 숫자"
                     value={code} onChange={(e) => setCode(digits(e.target.value).slice(0, 6))} autoFocus />
                 </Field>
-                <p className="sub-note">입력한 휴대폰 번호로 확인 코드를 보냈어요. (데모 화면: 6자리 숫자를 입력하면 확인됩니다)</p>
+                <p className="sub-note">가상의 확인 코드를 입력해주시면 확인으로 처리됩니다.</p>
               </section>
             )}
           </>)}
@@ -831,13 +832,23 @@ const PaymentForm = ({ onBack, onClose, onSaved, onBusyChange, cardOnly = false 
 // [추가] 구독 팝업 (지금 화면 위에 뜸)
 // - onClose: 닫기 · 플랜 화면의 뒤로 / onDone: 구독 완료 → [홈으로 돌아가기]
 // =====================================================================
+// [추가] 구독 기간이 끝난 계정(예전에 구독 · 체험한 적 있음)인지 — 처음 구독하는 계정과 구분
+const RENEW_DAYS = { monthly: 30, yearly: 365 }; // useAuthStore PLAN_DAYS 와 같은 값
+const isExpiredSubscriber = (u) => Boolean(u?.subscription) && !isSubscribed(u);
+const lastPlanOf = (u) => (PLANS[u?.subscription?.plan] ? u.subscription.plan : "monthly");
+
+// - [수정] 구독 기간이 끝난 계정은 플랜 선택 대신 "구독을 연장할까요?" 부터 (step: "renew")
+//   · [구독 연장하기] → 플랜 선택 없이 가상 결제로: (지불 방법이 없으면 카드 등록) → 결제 확인 [결제하기] → "구독이 연장되었어요"
+//   · 가상 결제: 실제로 돈이 나가지 않음 · 등록된 카드(카드사 + 마지막 4자리)만 보여줌
+//   · 로그인 후 자동 팝업 · 재생 버튼 구독 안내 · /subscribe 모두 이 팝업을 쓰므로 한 곳에서 처리
 export const SubscribePopup = ({ onClose, onDone }) => {
   const user = useAuthStore((s) => s.user);
   const onStartTrial = useAuthStore((s) => s.onStartTrial);
 
-  // step: "plans" | "payment" | "confirm" | "done" | "fail"
-  const [step, setStep] = useState("plans");
-  const [plan, setPlan] = useState("monthly");
+  // step: "renew" | "plans" | "payment" | "confirm" | "done" | "fail"
+  const [step, setStep] = useState(() => (isExpiredSubscriber(useAuthStore.getState().user) ? "renew" : "plans"));
+  const [plan, setPlan] = useState(() => lastPlanOf(useAuthStore.getState().user));
+  const [renewing, setRenewing] = useState(false); // [추가] 연장으로 진행 중 (완료 문구)
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate(); // [추가] 처음으로 돌아가기
 
@@ -859,17 +870,69 @@ export const SubscribePopup = ({ onClose, onDone }) => {
   // 플랜 → (지불 방법이 없으면) 지불 방법 등록 → 구독 확인
   const nextFromPlans = () => setStep(payments.length > 0 ? "confirm" : "payment");
 
-  const handleConfirm = async () => {
+  const handleConfirm = async (planKey = plan) => {
     if (busy) return;
     setBusy(true);
-    const data = await onStartTrial(plan);
+    const data = await onStartTrial(planKey);
     setBusy(false);
     setStep(data ? "done" : "fail");
+  };
+
+  // [추가] 이전 플랜으로 연장 → 가상 결제 (지불 방법이 없으면 카드 등록 → 결제 확인)
+  const renew = () => {
+    setPlan(lastPlanOf(user));
+    setRenewing(true);
+    setStep(payments.length > 0 ? "confirm" : "payment");
   };
 
   const dismiss = () => (step === "done" ? onDone() : onClose());
 
   let content = null;
+
+  // ---------- 0. [추가] 구독 연장 (구독 기간이 끝난 계정) ----------
+  if (step === "renew") {
+    const last = lastPlanOf(user);
+    const lp = PLANS[last];
+    const ended = user.subscription?.expiresAt?.toMillis ? new Date(user.subscription.expiresAt.toMillis()) : null;
+    const until = addDays(today, RENEW_DAYS[last] - 1);
+    content = (
+      <>
+        <SubNav onBack={close} onClose={close} />
+        <div className="sub-pop-inner sub-pop-inner--narrow sub-pop-center">
+          <SubHead
+            title="구독을 연장할까요?"
+            desc={`${ended ? `${fmtKo(ended)}에 ` : ""}구독 기간이 끝났어요. 이전에 이용하던 플랜으로 이어서 즐겨보세요.`}
+          />
+
+          <div className="sub-confirm-card">
+            <div className="sub-confirm-app">
+              <img className="sub-confirm-logo" src="/icons/subscribe-logo.svg" alt="" aria-hidden="true" />
+              <div className="sub-confirm-app-text">
+                <strong className="sub-confirm-app-name">Apple TV</strong>
+                <span className="sub-confirm-plan">{lp.name}</span>
+                <span className="sub-confirm-share">가족 공유 가능</span>
+              </div>
+            </div>
+            <div className="sub-confirm-terms">
+              <div className="sub-confirm-row">
+                <strong className="sub-confirm-price">{lp.price}</strong>
+                <span className="sub-confirm-date">{fmtKo(today)}부터</span>
+              </div>
+            </div>
+            <p className="sub-confirm-fine">
+              연장하면 {fmtDot(today)} – {fmtDot(until)} 동안 이용할 수 있어요.
+              <br />
+              취소할 때까지 {lp.renew}으로 자동 갱신되며, 계정 설정에서 구독을 관리할 수 있습니다.
+            </p>
+          </div>
+
+          <button type="button" className="sub-btn" onClick={renew}>
+            구독 연장하기
+          </button>
+        </div>
+      </>
+    );
+  }
 
   // ---------- 1. Apple TV 구독하기 ----------
   if (step === "plans") {
@@ -911,7 +974,7 @@ export const SubscribePopup = ({ onClose, onDone }) => {
   // ---------- 2. 지불 방법 등록 ----------
   if (step === "payment") {
     content = (
-      <PaymentForm onBack={() => setStep("plans")} onClose={close} onSaved={() => setStep("confirm")} onBusyChange={setBusy} />
+      <PaymentForm onBack={() => setStep(renewing ? "renew" : "plans")} onClose={close} onSaved={() => setStep("confirm")} onBusyChange={setBusy} />
     );
   }
 
@@ -919,11 +982,12 @@ export const SubscribePopup = ({ onClose, onDone }) => {
   if (step === "confirm") {
     content = (
       <div className="sub-pop-inner sub-pop-inner--narrow sub-pop-center">
-        <h1 className="sub-confirm-title">구독 확인</h1>
+        {/* [수정] 연장이면 가상 결제 확인 */}
+        <h1 className="sub-confirm-title">{renewing ? "결제 확인" : "구독 확인"}</h1>
 
         <div className="sub-confirm-card">
           <div className="sub-confirm-app">
-            <img className="sub-confirm-logo" src="/icons/login-logo.svg" alt="" aria-hidden="true" />
+            <img className="sub-confirm-logo" src="/icons/subscribe-logo.svg" alt="" aria-hidden="true" />
             <div className="sub-confirm-app-text">
               <strong className="sub-confirm-app-name">Apple TV</strong>
               <span className="sub-confirm-plan">{p.name}</span>
@@ -942,6 +1006,15 @@ export const SubscribePopup = ({ onClose, onDone }) => {
               <strong className="sub-confirm-price">{p.price}</strong>
               <span className="sub-confirm-date">{fmtKo(billStart)}부터</span>
             </div>
+            {/* [추가] 연장: 결제할 카드 (카드사 + 마지막 4자리만) */}
+            {renewing && payments[0] && (
+              <div className="sub-confirm-row">
+                <strong className="sub-confirm-label">결제 수단</strong>
+                <span className="sub-confirm-date">
+                  {payments[0].brand} ···· {payments[0].last4}
+                </span>
+              </div>
+            )}
           </div>
 
           <p className="sub-confirm-fine">
@@ -951,11 +1024,18 @@ export const SubscribePopup = ({ onClose, onDone }) => {
               : `취소할 때까지 ${p.renew}으로 자동 갱신됩니다.`}
             <br />
             계정 설정에서 구독을 관리할 수 있습니다.
+            {renewing && (
+              <>
+                <br />
+                가상 결제로 실제 금액은 청구되지 않습니다.
+              </>
+            )}
           </p>
         </div>
 
-        <button type="button" className="sub-btn" onClick={handleConfirm} disabled={busy}>
-          {busy ? "처리 중..." : "확인"}
+        {/* [수정] onClick 에 이벤트가 플랜으로 넘어가지 않게 감쌈 */}
+        <button type="button" className="sub-btn" onClick={() => handleConfirm()} disabled={busy}>
+          {busy ? (renewing ? "결제 중..." : "처리 중...") : renewing ? `${p.price} 결제하기` : "확인"}
         </button>
       </div>
     );
@@ -974,7 +1054,7 @@ export const SubscribePopup = ({ onClose, onDone }) => {
           <circle className="sub-done-check-circle" cx="25" cy="25" r="25" />
           <path className="sub-done-check-mark" d="M15.5 25.5l6.5 6.5 12.5-13" pathLength="1" />
         </svg>
-        <h1 className="sub-done-title">구독이 완료되었어요</h1>
+        <h1 className="sub-done-title">{renewing ? "구독이 연장되었어요" : "구독이 완료되었어요"}</h1>
         <p className="sub-done-desc">Apple TV를 바로 즐겨보세요.</p>
 
         <div className="sub-done-box">
@@ -1001,8 +1081,8 @@ export const SubscribePopup = ({ onClose, onDone }) => {
         <button type="button" className="sub-btn" onClick={() => setStep("confirm")}>
           다시 시도
         </button>
-        <button type="button" className="sub-text-btn" onClick={() => setStep("plans")}>
-          플랜으로 돌아가기
+        <button type="button" className="sub-text-btn" onClick={() => setStep(renewing ? "renew" : "plans")}>
+          {renewing ? "연장 화면으로 돌아가기" : "플랜으로 돌아가기"}
         </button>
       </div>
     );

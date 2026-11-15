@@ -1,63 +1,112 @@
+@import url("https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/AppleSDGothicNeo.css");
 .legal-page {
-  min-height: 100vh;
-  padding-top: 4.5rem;
-  background-color: #F5F5F5;
-  color: #2E2E2E;
+  padding: 4.5rem 0 5rem;
+  background-color: #171717;
+  color: #C8C8C8;
 }
-.legal-page :where(h1, h2, p, ol) {
+.legal-page :where(h1, h2, p, ul) {
   margin: 0;
   padding: 0;
+}
+
+.legal-page,
+.legal-page * {
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
+}
+
+.legal-inner {
+  width: calc(100% - 3rem);
+  max-width: 55rem;
+  margin: 0 auto;
+}
+
+.legal-backbar {
+  display: flex;
+  align-items: center;
+  height: 2.75rem;
+}
+
+.legal-back {
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #9AABF8;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.legal-back:hover {
+  color: #FFFFFF;
+}
+.legal-back:focus-visible {
+  outline: 0.125rem solid #8490F6;
+  outline-offset: 0.25rem;
+  border-radius: 0.5rem;
+}
+
+.legal-back-arrow {
+  font-size: 1.25rem;
+  line-height: 1;
+  transform: translateY(-0.0625rem);
 }
 
 .legal-hero {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5.625rem 1.5rem 5rem;
-  background-color: #EBEBEB;
+  padding-top: 2.5rem;
   text-align: center;
 }
 
-.legal-eyebrow {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.55rem;
-  letter-spacing: 0;
-}
-
 .legal-title {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
-  font-size: 3rem;
-  line-height: 3.5rem;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
   letter-spacing: 0;
-  margin-top: 1.5rem !important;
-  letter-spacing: -0.01em;
+  color: #FFFFFF;
   word-break: keep-all;
 }
 
+.legal-meta {
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  margin-top: 0.5rem !important;
+  color: #A3A3A3;
+}
+
 .legal-desc {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 1.0625rem;
   line-height: 1.375rem;
   letter-spacing: 0;
-  margin-top: 1.5rem !important;
-  color: #525252;
+  max-width: 40rem;
+  margin-top: 1rem !important;
+  color: #D5D5D5;
   word-break: keep-all;
 }
 
 .legal-links {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 18rem));
+  grid-template-columns: repeat(3, minmax(0, 11.125rem));
   justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
 .legal-link {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
+  font-weight: 400;
   font-size: 1.0625rem;
   line-height: 1.375rem;
   letter-spacing: 0;
@@ -68,126 +117,171 @@
   transition: color 0.2s ease;
 }
 .legal-link:hover {
-  color: #6E7AF4;
+  color: #FFFFFF;
 }
 .legal-link.is-current {
-  color: #5865F2;
-}
-.legal-link:focus-visible {
-  outline: 0.125rem solid #5865F2;
-  outline-offset: 0.25rem;
-  border-radius: 0.5rem;
-}
-
-.legal-body {
-  box-sizing: content-box;
-  max-width: 65rem;
-  margin: 0 auto;
-  padding: 5rem 1.5rem 6.25rem;
-}
-
-.legal-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.5rem 1.75rem;
-  border-radius: 0.75rem;
-  background-color: #EBEBEB;
-}
-
-.legal-summary-title {
-  font-family: "SF Pro", sans-serif;
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 700;
   font-size: 1.0625rem;
   line-height: 1.375rem;
   letter-spacing: 0;
+  color: #FFFFFF;
+}
+.legal-link:focus-visible {
+  outline: 0.125rem solid #8490F6;
+  outline-offset: 0.25rem;
+  border-radius: 0.25rem;
 }
 
-.legal-summary-desc {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.25rem;
-  letter-spacing: 0;
-  color: #525252;
-  word-break: keep-all;
-}
-
-.legal-sections {
-  list-style: none;
-}
-
-.legal-section {
+.legal-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-top: 3rem;
 }
 
-.legal-section-title {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.55rem;
-  letter-spacing: 0;
-  word-break: keep-all;
-}
-
-.legal-section-body {
-  font-family: "SF Pro", sans-serif;
-  font-weight: 400;
-  font-size: 1.0625rem;
-  line-height: 1.375rem;
-  letter-spacing: 0;
-  margin-top: 1rem !important;
-  word-break: keep-all;
-}
-
-.legal-footnote {
-  font-family: "SF Pro", sans-serif;
+.legal-intro-text {
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.25rem;
   letter-spacing: 0;
-  margin-top: 4rem !important;
-  color: #525252;
+  color: #C8C8C8;
   word-break: keep-all;
 }
 
-@media (max-width: 1024px) {
-  .legal-hero {
-    padding: 4.5rem 1.5rem 4rem;
-  }
-  .legal-links {
-    grid-template-columns: repeat(3, minmax(0, 14rem));
-  }
-  .legal-body {
-    padding: 4rem 2rem 5rem;
-  }
+.legal-hint {
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  letter-spacing: 0;
+  margin-top: 3rem !important;
+  color: #A3A3A3;
+  word-break: keep-all;
 }
+
+.legal-list {
+  margin-top: 0.75rem !important;
+  border-top: 0.0625rem solid #2E2E2E;
+  list-style: none;
+}
+
+.legal-item {
+  border-bottom: 0.0625rem solid #2E2E2E;
+}
+
+.legal-question button {
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 3.8125rem;
+  padding: 0.75rem 0;
+  border: none;
+  background: none;
+  color: #FFFFFF;
+  text-align: left;
+  cursor: pointer;
+  word-break: keep-all;
+}
+.legal-question button:focus-visible {
+  outline: 0.125rem solid #8490F6;
+  outline-offset: 0.125rem;
+  border-radius: 0.25rem;
+}
+
+.legal-chevron {
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-right: 0.375rem;
+  border-right: 0.125rem solid currentColor;
+  border-bottom: 0.125rem solid currentColor;
+  transform: translateY(-0.1875rem) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.is-open .legal-chevron {
+  transform: translateY(0.1875rem) rotate(-135deg);
+}
+
+.legal-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.75rem;
+  background-color: #1f1f1f;
+}
+.legal-answer[hidden] {
+  display: none;
+}
+
+.legal-answer-text {
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  color: #C8C8C8;
+  word-break: keep-all;
+}
+
+.legal-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  list-style: none;
+}
+.legal-bullets li {
+  font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  position: relative;
+  padding-left: 1rem;
+  color: #C8C8C8;
+  word-break: keep-all;
+}
+.legal-bullets li::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: 0.25rem;
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
 @media (max-width: 767px) {
-  .legal-hero {
-    padding: 3.5rem 1rem 3rem;
+  .legal-page {
+    padding-bottom: 3.5rem;
   }
-  .legal-eyebrow {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 1.0625rem;
-    line-height: 1.375rem;
-    letter-spacing: 0;
+  .legal-hero {
+    padding-top: 2rem;
   }
   .legal-title {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 1.65rem;
     line-height: 2.125rem;
     letter-spacing: 0;
-    margin-top: 0.75rem !important;
   }
   .legal-desc {
-    font-family: "SF Pro", sans-serif;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.9375rem;
     line-height: 1.25rem;
     letter-spacing: 0;
-    margin-top: 0.75rem !important;
   }
   .legal-links {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -195,57 +289,41 @@
     margin-top: 1.5rem;
   }
   .legal-link {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 700;
-    font-size: 0.8125rem;
-    line-height: 1.125rem;
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
     letter-spacing: 0;
   }
-  .legal-body {
-    padding: 2rem 1rem 3.5rem;
-  }
-  .legal-summary {
-    gap: 0.5rem;
-    padding: 1rem 1.125rem;
-  }
-  .legal-summary-title {
-    font-family: "SF Pro", sans-serif;
+  .legal-link.is-current {
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
     font-size: 0.9375rem;
     line-height: 1.25rem;
     letter-spacing: 0;
   }
-  .legal-summary-desc {
-    font-family: "SF Pro", sans-serif;
+  .legal-intro,
+  .legal-hint {
+    margin-top: 2rem !important;
+  }
+  .legal-intro-text,
+  .legal-answer-text,
+  .legal-bullets li {
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 400;
     font-size: 0.8125rem;
     line-height: 1.125rem;
     letter-spacing: 0;
   }
-  .legal-section {
-    margin-top: 2rem;
-  }
-  .legal-section-title {
-    font-family: "SF Pro", sans-serif;
+  .legal-question button {
+    font-family: "Apple SD Gothic Neo", "SF Pro", sans-serif;
     font-weight: 700;
-    font-size: 2.25rem;
-    line-height: 3.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.375rem;
     letter-spacing: 0;
+    min-height: 3.25rem;
   }
-  .legal-section-body {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 0.9375rem;
-    line-height: 1.25rem;
-    letter-spacing: 0;
-    margin-top: 0.5rem !important;
-  }
-  .legal-footnote {
-    font-family: "SF Pro", sans-serif;
-    font-weight: 400;
-    font-size: 0.8125rem;
-    line-height: 1.125rem;
-    letter-spacing: 0;
-    margin-top: 3rem !important;
+  .legal-answer {
+    padding: 0.75rem 1rem;
   }
 }
