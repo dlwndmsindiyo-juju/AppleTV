@@ -6923,6 +6923,48 @@ main.sport-home.sport-live-page .sport-live-chat-card .sport-chat-form {
     justify-content: center;
   }
 
+  // [추가] 카드 오른쪽 위: 소리 · 재생/일시정지 · 전체보기 (작품 상세 재생 · 전체보기 버튼과 같은 동그라미)
+  .ssd-top-actions {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+  }
+
+  .ssd-ctrl-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $shorts-detail-ctrl-size;
+    height: $shorts-detail-ctrl-size;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: $shorts-detail-ctrl-bg;
+    color: $light-color-0;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    &:hover,
+    &:focus-visible {
+      outline: none;
+      background-color: $shorts-detail-ctrl-bg-hover;
+      transform: scale(1.06);
+    }
+  }
+
+  .ssd-full-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: currentColor;
+    -webkit-mask: url("/icons/full-screen.svg") center / contain no-repeat;
+    mask: url("/icons/full-screen.svg") center / contain no-repeat;
+  }
+
   // 가운데 재생 · (재생 중) 일시정지 표시
   .ssd-play {
     position: absolute;
@@ -7055,6 +7097,30 @@ main.sport-home.sport-live-page .sport-live-chat-card .sport-chat-form {
       background: $light-color-0;
       transform-origin: left center;
       transition: transform 0.25s linear;
+    }
+  }
+
+  // [추가] 끝나면 "다음 숏폼" 안내 — 좁은 세로 카드 안에 맞게 세로로 쌓음 (썸네일 숨김)
+  .ssd-auto-next {
+    left: $space-sm;
+    right: $space-sm;
+    bottom: $space-lg;
+    z-index: 4;
+    width: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: $space-md;
+
+    .auto-next-thumb {
+      display: none;
+    }
+
+    .auto-next-actions {
+      flex-direction: row;
+
+      .auto-next-btn {
+        flex: 1;
+      }
     }
   }
 
@@ -7302,6 +7368,18 @@ main.sport-home.sport-live-page .sport-live-chat-card .sport-chat-form {
     .ssd-play {
       width: calc(#{$shorts-detail-play-size} * 0.8);
       height: calc(#{$shorts-detail-play-size} * 0.8);
+    }
+
+    // [추가] 재생 · 일시정지 / 전체보기 버튼 조금 작게
+    .ssd-ctrl-btn {
+      width: calc(#{$shorts-detail-ctrl-size} * 0.8);
+      height: calc(#{$shorts-detail-ctrl-size} * 0.8);
+
+      svg,
+      .ssd-full-icon {
+        width: 1rem;
+        height: 1rem;
+      }
     }
 
     .ssd-info {
