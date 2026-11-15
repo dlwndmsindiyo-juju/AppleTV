@@ -358,16 +358,37 @@ export const MovieDetail = ({ type: typeProp }) => {
   // - 다음 에피소드 재생: 시리즈 회차를 보던 중이면 같은 시즌의 다음 회차
   // - 추천 항목 재생: 다음 회차가 없거나(영화 · 예고편 · 마지막 회차) 위 토글이 꺼져 있으면 추천 콘텐츠 첫 번째
   // - 둘 다 꺼져 있으면 끝난 화면 그대로
+  // [수정] 시리즈는 "다른 작품"이 아니라 이 시리즈의 다음 에피소드로 (리뷰: 지금 재생을 누르니 다른 콘텐츠가 나옴)
+  //   · 회차를 보던 중 → 같은 시즌 다음 회차 → 시즌 마지막이면 다음 시즌 1화
+  //   · [재생하기]로 예고편 · 이어보기를 보던 중(회차 정보 없음) → 보던 회차의 다음, 없으면 지금 시즌 1화
+  //   · 추천 콘텐츠(다른 작품)는 영화이거나 · 시리즈의 마지막 회차까지 본 뒤에만
+  const nextEpisodeOf = async () => {
+    const seasonNo = playing?.season ?? currentSeason;
+    if (seasonNo === null || seasonNo === undefined) return null;
+    const listOf = async (s) => {
+      if (!episodes[`${contentId}_${s}`]) await onFetchEpisode(contentId, s).catch(() => {});
+      return useMovieStore.getState().episodes[`${contentId}_${s}`] || [];
+    };
+    const list = await listOf(seasonNo);
+    if (!playing?.episode) return list.find((e) => e.episode_number === 1) || list[0] || null;
+    const same = list.find((e) => e.episode_number === playing.episode + 1);
+    if (same) return same;
+    const nextSeason = seasons.find((s) => s.season_number === seasonNo + 1);
+    if (!nextSeason) return null;
+    const nextList = await listOf(nextSeason.season_number);
+    return nextList.find((e) => e.episode_number === 1) || nextList[0] || null;
+  };
+
   const handleEnded = async () => {
     if (!playing || playing.key === 'none') return;
     const token = endedRef.current;
-    if (settings.autoplayNext && isTv && playing.episode) {
-      const list = episodes[`${contentId}_${playing.season}`] || [];
-      const ep = list.find((e) => e.episode_number === playing.episode + 1);
+    if (settings.autoplayNext && isTv) {
+      const ep = await nextEpisodeOf();
+      if (endedRef.current !== token) return;
       if (ep) {
         setUpNext({
           kind: '다음 에피소드',
-          title: `${ep.episode_number}화 · ${ep.name}`,
+          title: `${ep.season_number !== (playing.season ?? currentSeason) ? `시즌 ${ep.season_number} · ` : ''}${ep.episode_number}화 · ${ep.name}`,
           image: ep.still_path || item?.backdrop_path ? `${IMG}/w300${ep.still_path || item.backdrop_path}` : '',
           run: () => handlePlayEpisode(ep),
         });
