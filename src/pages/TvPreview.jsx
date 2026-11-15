@@ -197,7 +197,10 @@ const TvPreview = () => {
       const { width, height } = area.getBoundingClientRect();
       // [수정] 1920 × 1080 이 창 안에 다 들어가는 비율로 맞추고, 남는 쪽(가로 또는 세로)은 화면을 늘려서 채움
       // → 창 전체를 빈틈없이 채우면서도 TV 화면이 1920 × 1080 보다 작아지지 않아 글자 · 버튼이 겹치지 않음
-      const s = Math.min(width / TV_W, height / TV_H);
+      // [추가] 전체 축소 비율 — TV.scss 의 --tv-zoom (예: 0.85 → 화면 안 모든 글자 · 카드 · 헤더가 85% 크기)
+      // TV 화면을 더 넓은 가상 화면(1920 ÷ 0.85)으로 그린 뒤 창에 맞춰 줄이는 방식이라 겹치거나 잘리지 않음
+      const zoom = parseFloat(getComputedStyle(area).getPropertyValue("--tv-zoom")) || 1;
+      const s = Math.min(width / TV_W, height / TV_H) * zoom;
       setScale(s);
       setStageW(width / s);
       setStageH(height / s);
