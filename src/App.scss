@@ -7504,6 +7504,7 @@ img.ui-icon.ui-icon-arrow {
   span {
     @include body-default;
     color: $dark-color-100;
+    margin: 0 0.2rem 0 0;
   }
 }
 
