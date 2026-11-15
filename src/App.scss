@@ -6862,7 +6862,7 @@ img.ui-icon.ui-icon-arrow {
 .account-fill-btn,
 .account-outline-btn {
   @include body-default-b;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 2.75rem;
@@ -7504,6 +7504,7 @@ img.ui-icon.ui-icon-arrow {
   span {
     @include body-default;
     color: $dark-color-100;
+    margin: 0 0.2rem 0 0;
   }
 }
 
@@ -8759,7 +8760,7 @@ section.device-guide.device-guide--watch {
 .profile-picker-current {
   @include caption-default;
   margin-top: -$space-sm;
-  padding: 0.125rem $space-sm;
+  padding: $space-xs $space-sm;
   border-radius: 62.4375rem;
   background-color: $primary-color-500;
   color: $light-color-0;
@@ -12586,7 +12587,7 @@ html body :is(.member-title.member-title.member-title.member-title,
 // - 예전: 빨간 바탕 버튼(.account-outline-btn--danger)이라 [모든 요금제 보기] 보다 더 눈에 띄었음
 // =====================================================================
 .account-quiet-btn {
-  @include body-small;
+  @include body-small-b;
   display: inline-flex;
   align-items: center;
   height: auto;
@@ -12600,14 +12601,11 @@ html body :is(.member-title.member-title.member-title.member-title,
   transition: color 0.2s ease;
 
   &:hover {
-    color: $light-color-400;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    @include body-small-b;
+    color: $dark-color-100;
   }
 
   &:focus-visible {
-    outline: 0.125rem solid $light-color-500;
-    outline-offset: 0.125rem;
     border-radius: 0.25rem;
   }
 }

@@ -13,6 +13,7 @@ import WatchPlayer from "../common/WatchPlayer"; // [추가] 영상이 끝난 �
 import AutoNext from "../common/AutoNext"; // [추가] 끝나면 "5초 후 다음 영상"
 import { useSettings } from "../../store/useAuthStore"; // [추가] 계정 설정 "추천 항목 재생"
 import { SportBack } from "./SportBack";
+import SportShortsDetail from "./SportShortsDetail"; // [추가] 숏폼 상세 전용 화면 (세로 카드 + 정보 + UP NEXT)
 
 // =====================================================================
 // 스포츠 상세 (하나의 컴포넌트로 3개 상세 사용)
@@ -21,6 +22,7 @@ import { SportBack } from "./SportBack";
 //   /sport/highlights  → 하이라이트 상세    (SportHighlights "전체 보기" · 카드)
 //   /sport/series      → 추천 시리즈 상세   (SportSeries 카드 · data/mockSportSeries.js 의 youtubeUrl 영상)
 //   /sport/shorts      → 숏폼 상세         (SportShorts "전체 보기" · data/sportShorts.js)
+//                        → [수정] 화면은 SportShortsDetail (세로 카드 + 오른쪽 정보 · UP NEXT · 양옆 이전/다음)
 //   ?id=영상ID(경기ID) 로 오른쪽 목록 중 선택된 항목을 지정 (없으면 첫 번째)
 // 구조: 왼쪽 큰 화면(영상 플레이어 / 카운트다운) + 아래 정보, 오른쪽 목록
 // =====================================================================
@@ -139,6 +141,7 @@ const DETAIL_CONFIG = {
         const length = short.seconds ? `${Math.floor(short.seconds / 60)}:${String(short.seconds % 60).padStart(2, "0")}` : "";
         const meta = [short.match, length].filter(Boolean).join(" · ");
         return {
+          ...short, // [추가] 숏폼 상세 화면에서 쓰는 원래 값 (tag · match · likeCount · seconds · desc)
           id: short.id,
           videoId: short.videoId || "",
           title: short.title,
@@ -279,7 +282,7 @@ const SportDetail = () => {
 
     const frame = requestAnimationFrame(() => {
       const section = document.querySelector(
-        `main.sport-detail-page--${type} .sport-detail-layout`
+        `main.sport-detail-page--${type} .sport-detail-layout, main.sport-detail-page--${type} .sport-shorts-detail` // [추가] 숏폼 상세
       );
 
       if (!section) return;
@@ -359,6 +362,9 @@ const SportDetail = () => {
 
           {!current ? (
             <p className="sport-empty">{config.empty}</p>
+          ) : type === "shorts" ? (
+            // [추가] 숏폼 상세: 세로 카드 + 오른쪽 정보 · UP NEXT
+            <SportShortsDetail items={items} current={current} onSelect={select} />
           ) : (
             <div className="sport-detail-layout">
               {/* 왼쪽: 큰 화면 + 정보 */}
