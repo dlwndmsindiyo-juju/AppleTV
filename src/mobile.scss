@@ -39,7 +39,7 @@ $trial-gap-mobile: $space-5xl; // 64px (무료 체험 안내 모바일 · 예전
       }
 
       .gnb-right ul {
-        gap: $space-md;
+        gap: $space-xs;
 
         .search-box {
           width: 141px; // 시안 검색창 폭
@@ -2081,7 +2081,7 @@ header .inner nav .gnb-right ul .search-icon-item {
 
 @media (max-width: $breakpoint-mobile) {
   header .inner nav .gnb-right ul {
-    gap: $space-sm; // 검색 아이콘 ↔ 프로필 사이 8px (가운데 토글과 겹치지 않게 오른쪽 묶음을 좁힘)
+    gap: $space-xs; // 검색 아이콘 ↔ 프로필 사이 8px (가운데 토글과 겹치지 않게 오른쪽 묶음을 좁힘)
   }
 }
 
@@ -2464,8 +2464,8 @@ header .inner nav .gnb-right ul .search-icon-item {
     box-sizing: border-box;
     justify-content: center;
     gap: 0;
-    width: 40px;
-    height: 2rem;
+    width: 2.65rem;
+    height: 1.65rem;
     padding: 0 0.5rem;
     color: $light-color-0;
 

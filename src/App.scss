@@ -1130,7 +1130,6 @@ header {
 
 // ===== 인기 영화 TOP 10 =====
 .top10-section {
-  background-color: $bg-page;
   padding: 2.5rem 0 3.5rem;
 
   .inner {
@@ -1350,17 +1349,6 @@ header {
         background-color: currentColor;
         -webkit-mask: url("/icons/full-screen.svg") center / contain no-repeat;
         mask: url("/icons/full-screen.svg") center / contain no-repeat;
-      }
-
-      // 전체 화면일 때: 화면 가득 · 영상 비율 유지 (남는 곳은 검정)
-      &.is-full {
-        aspect-ratio: auto;
-        background-color: #000000;
-
-        iframe,
-        img {
-          object-fit: contain;
-        }
       }
     }
 
@@ -2329,7 +2317,6 @@ header {
     height: 25.9375rem;
     border-radius: $radius-lg;
     overflow: hidden;
-    background-color: $bg-surface;
     border: 0.0625rem solid $dark-color-300;
   }
 
@@ -2690,6 +2677,7 @@ header {
   }
 
   .live-team {
+    @include heading-h4-b;
     color: $text-primary;
     white-space: nowrap;
     overflow: hidden;
@@ -3510,7 +3498,7 @@ body.has-promo-banner .footer {
 
   .sport-team-list {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: $space-xl;
     list-style: none;
     margin: 0;
@@ -6874,7 +6862,7 @@ img.ui-icon.ui-icon-arrow {
 .account-fill-btn,
 .account-outline-btn {
   @include body-default-b;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 2.75rem;
@@ -7516,6 +7504,7 @@ img.ui-icon.ui-icon-arrow {
   span {
     @include body-default;
     color: $dark-color-100;
+    margin: 0 0.2rem 0 0;
   }
 }
 
@@ -8771,7 +8760,7 @@ section.device-guide.device-guide--watch {
 .profile-picker-current {
   @include caption-default;
   margin-top: -$space-sm;
-  padding: 0.125rem $space-sm;
+  padding: $space-xs $space-sm;
   border-radius: 62.4375rem;
   background-color: $primary-color-500;
   color: $light-color-0;
@@ -10445,12 +10434,13 @@ $ai-banner-content-width: 1150px; // 시안: 글자 시작(386) ~ 상자 끝(153
         .ep-num,
         .runtime {
           @include label-default;
-          color: $light-color-0;
+          color: $light-color-500;
         }
 
         .ep-title {
           @include body-small;
-          color: $light-color-0;
+          color: $light-color-100;
+          margin: 0.25rem 0;
         }
       }
     }
@@ -11130,6 +11120,10 @@ $sub-select-list-max: 15rem; // 목록 최대 높이 (넘치면 목록 안에서
   gap: $space-md;
   color: $light-color-300;
   cursor: pointer;
+
+  span {
+    @include body-small;
+  }
 
   input {
     appearance: none;
@@ -12593,7 +12587,7 @@ html body :is(.member-title.member-title.member-title.member-title,
 // - 예전: 빨간 바탕 버튼(.account-outline-btn--danger)이라 [모든 요금제 보기] 보다 더 눈에 띄었음
 // =====================================================================
 .account-quiet-btn {
-  @include body-small;
+  @include body-small-b;
   display: inline-flex;
   align-items: center;
   height: auto;
@@ -12607,14 +12601,11 @@ html body :is(.member-title.member-title.member-title.member-title,
   transition: color 0.2s ease;
 
   &:hover {
-    color: $light-color-400;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    @include body-small-b;
+    color: $dark-color-100;
   }
 
   &:focus-visible {
-    outline: 0.125rem solid $light-color-500;
-    outline-offset: 0.125rem;
     border-radius: 0.25rem;
   }
 }

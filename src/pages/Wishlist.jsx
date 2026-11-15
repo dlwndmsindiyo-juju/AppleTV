@@ -86,6 +86,21 @@ const SortMenu = ({ value, onChange }) => {
 const CardMenu = ({ item }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const [menuStyle, setMenuStyle] = useState(null); // [추가] 화면 밖으로 나가지 않게 맞춘 메뉴 위치
+
+  // [추가] 메뉴 위치 — 기본은 ••• 오른쪽 끝에 맞춤 · 왼쪽 열 카드(휴대폰)처럼 화면 왼쪽 밖으로 나가면 화면 안쪽(16px)으로 밀어 넣음
+  // - 폭도 화면보다 넓지 않게 (최대 220 · 화면 폭 - 32)
+  const openMenu = () => {
+    const wrap = ref.current;
+    if (!wrap) return setOpen(true);
+    const r = wrap.getBoundingClientRect();
+    const vw = document.documentElement.clientWidth;
+    const edge = 16;
+    const width = Math.min(220, vw - edge * 2);
+    const left = Math.min(Math.max(r.right - width, edge), vw - edge - width);
+    setMenuStyle({ left: left - r.left, right: "auto", width });
+    setOpen(true);
+  };
   const { onOpenPicker, onRemove } = useHeartStore();
 
   useEffect(() => {
@@ -114,12 +129,12 @@ const CardMenu = ({ item }) => {
         aria-label={`${item.title} 더보기`}
         aria-haspopup="menu"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => (open ? setOpen(false) : openMenu())}
       >
         <WishIcon name="more" />
       </button>
       {open && (
-        <ul className="wish-menu wish-menu--right" role="menu">
+        <ul className="wish-menu wish-menu--right" role="menu" style={menuStyle || undefined}>
           <li>
             <button
               type="button"
