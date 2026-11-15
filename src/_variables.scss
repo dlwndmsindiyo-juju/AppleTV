@@ -396,6 +396,20 @@ $breakpoint-mobile: 767px; // 모바일 (mobile.scss 에서 사용)
 $tablet-gutter: 13%;
 $tablet-edge: 2.5rem; // 헤더·푸터·스포츠 섹션 좌우 여백
 
+// [추가] 숏폼 상세 (/sport/shorts · SportShortsDetail · sport-member.scss "숏폼 상세")
+$shorts-detail-card-width: clamp(17.5rem, 22vw, 22.75rem); // 세로 카드 폭 (시안 364)
+$shorts-detail-card-ratio: 9 / 16; // 세로 카드 비율
+$shorts-detail-info-width: 33rem; // 오른쪽 정보 최대 폭 (카드와의 간격 포함 · 설명 한 문장이 한 줄에 들어가게)
+$shorts-detail-gap: 4.375rem; // 카드 ↔ 오른쪽 정보 (시안 70)
+$shorts-detail-nav-size: 4.375rem; // 이전 · 다음 동그라미 (시안 70)
+$shorts-detail-nav-icon: 1.75rem; // 이전 · 다음 화살표
+$shorts-detail-play-size: 4.5rem; // 카드 가운데 재생 (시안 72)
+$shorts-detail-upnext-thumb: 5.3125rem; // UP NEXT 썸네일 폭 (시안 85 · 16:10)
+$shorts-detail-upnext-height: 17.5rem; // [추가] UP NEXT 목록 높이 (넘치면 스크롤 · 약 3.5개)
+$shorts-detail-card-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.45);
+$shorts-detail-card-width-mobile: 16.5rem; // [추가] 휴대폰 세로 카드 폭 (양옆 이전 · 다음 버튼 자리를 남김)
+$shorts-detail-nav-size-mobile: 2.5rem; // [추가] 휴대폰 이전 · 다음 동그라미
+
 // 데스크톱(PC · 1025px 이상): 본문 좌우 여백 5% 씩 → 콘텐츠 폭 화면의 90% (1920 기준 96px · 콘텐츠 1728)
 // - [수정] 예전 값 12.5% (콘텐츠 75% · 1440)
 $desktop-gutter: 5%;
