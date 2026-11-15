@@ -4,6 +4,9 @@ import { openShare } from "../../utils/share";
 import { openSubscribeGate } from "../../utils/subscribeGate";
 import { useAuthStore, useSettings } from "../../store/useAuthStore";
 import { loadYouTubeApi } from "../common/youtubeApi";
+import AutoNext from "../common/AutoNext"; // [추가] 끝나면 "다음 숏폼 · N초 후 재생" (지금 재생 · 취소)
+import VideoPopup from "../common/VideoPopup"; // [추가] 전체보기: 작품 상세와 같은 재생 팝업
+import WatchPlayer from "../common/WatchPlayer";
 
 // =====================================================================
 // [추가] 숏폼 상세 (/sport/shorts) — 세로 카드 하나 + 오른쪽 정보 · UP NEXT · 양옆 이전 / 다음
@@ -12,7 +15,12 @@ import { loadYouTubeApi } from "../common/youtubeApi";
 // - 카드: 홈 숏폼 카드와 같은 구성 (Apple TV · MLS / 소리 · 재생 · 좋아요 · 공유 · 팀 · 제목 · 경기 / 진행 바)
 //   · 재생 버튼 → 카드 안에서 바로 재생 (YouTube 컨트롤 없이) · 재생 중 카드를 누르면 일시정지 / 다시 재생
 //   · 진행 바: 실제 재생 위치 (YouTube API)
-//   · 끝나면 계정 설정 "추천 항목 재생" 이 켜져 있을 때 다음 숏폼을 이어서 재생
+//   · [수정] 끝나면 계정 설정 "추천 항목 재생" 이 켜져 있을 때 카드 위에 "다음 숏폼 · 5초 후 재생" 안내
+//     → 지금 재생 / 시간이 다 되면 다음 숏폼 재생 · 취소하면 그대로
+//   · [추가] 작품 상세와 같은 재생 · 일시정지 버튼 + 전체보기 버튼 (카드 오른쪽 위 · 같은 동그라미 모양)
+//     → 전체보기: 작품 상세 [전체보기]와 같은 재생 팝업 (화면 가득 · 하단 재생바 · 보던 위치부터 · 끝나면 다음 숏폼 안내)
+//   · [추가] 재생 버튼 한 번으로 바로 재생: YouTube 스크립트를 미리 불러 두고,
+//     소리 있는 자동 재생이 막히면 소리를 끈 채 재생 (오른쪽 위 소리 버튼으로 켜기)
 // - 이전 / 다음: 양옆 동그라미 버튼 · 키보드 ← → · UP NEXT 목록
 //   · [수정] UP NEXT: 메인 숏폼 데이터 전체를 지금 숏폼 다음 순서부터(끝나면 처음으로) 보여주고 스크롤
 // - [수정] [전체 경기 보기] 위 설명 문구는 모든 숏폼이 같은 문구 (SHORTS_DESC)
@@ -92,7 +100,9 @@ const PauseIcon = () => (
 // ---------------------------------------------------------------------
 // 카드 안 YouTube 플레이어 (컨트롤 없이 · 진행 위치를 알려줌)
 // ---------------------------------------------------------------------
-const useShortPlayer = ({ videoId, active, muted, onEnded }) => {
+const useShortPlayer = ({ videoId, active, muted, onEnded, onAutoMuted }) => {
+  const autoMutedRef = useRef(onAutoMuted);
+  autoMutedRef.current = onAutoMuted;
   const hostRef = useRef(null);
   const playerRef = useRef(null);
   const endedRef = useRef(onEnded);
@@ -105,6 +115,7 @@ const useShortPlayer = ({ videoId, active, muted, onEnded }) => {
     if (!active || !videoId) return undefined;
     let cancelled = false;
     let timer = null;
+    let autoTimer = null;
     let player = null;
     const wrap = hostRef.current;
     setState({ paused: false, progress: 0, duration: 0 });
@@ -125,6 +136,18 @@ const useShortPlayer = ({ videoId, active, muted, onEnded }) => {
               e.target.getIframe()?.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
               if (mutedRef.current) e.target.mute();
               e.target.playVideo();
+              // [추가] 소리 있는 자동 재생이 막혔으면 소리 끄고 재생
+              autoTimer = setTimeout(() => {
+                try {
+                  const s = e.target.getPlayerState?.();
+                  if (cancelled || s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING || s === YT.PlayerState.ENDED) return;
+                  e.target.mute();
+                  e.target.playVideo();
+                  autoMutedRef.current?.();
+                } catch {
+                  // 무시
+                }
+              }, 1500);
             },
             onStateChange: (e) => {
               if (e.data === YT.PlayerState.PLAYING) setState((s) => ({ ...s, paused: false }));
@@ -152,6 +175,7 @@ const useShortPlayer = ({ videoId, active, muted, onEnded }) => {
     return () => {
       cancelled = true;
       clearInterval(timer);
+      clearTimeout(autoTimer);
       playerRef.current = null;
       try {
         player?.destroy?.();
@@ -203,11 +227,20 @@ const SportShortsDetail = ({ items, current, onSelect }) => {
 
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(isTouchDevice);
+  const [ended, setEnded] = useState(false); // [추가] 끝남 → 다음 숏폼 안내
+  const [full, setFull] = useState(null); // [추가] 전체보기 팝업 { item, startAt }
+  const [fullEnded, setFullEnded] = useState(false);
   const autoRef = useRef(false); // 다음 숏폼으로 넘어가면서 바로 재생할지
+
+  // [추가] YouTube 스크립트를 미리 불러 둠 → 재생 버튼을 누르자마자 플레이어 생성 (누른 동작이 유효할 때 재생)
+  useEffect(() => {
+    loadYouTubeApi().catch(() => {});
+  }, []);
 
   // 다른 숏폼으로 바뀌면: 자동 이어보기면 바로 재생 · 아니면 썸네일부터
   useEffect(() => {
     setPlaying(autoRef.current);
+    setEnded(false);
     autoRef.current = false;
     upNextRef.current?.scrollTo?.({ top: 0 }); // [추가] UP NEXT 는 바로 다음 숏폼부터 보이게
   }, [current.id]);
@@ -225,10 +258,21 @@ const SportShortsDetail = ({ items, current, onSelect }) => {
     videoId: current.videoId,
     active: playing,
     muted,
-    onEnded: () => {
-      if (settings.autoplayRecommend && next) go(next, { autoplay: true });
-    },
+    onEnded: () => setEnded(true),
+    onAutoMuted: () => setMuted(true),
   });
+  const showUpNext = ended && playing && settings.autoplayRecommend && Boolean(next);
+
+  // [추가] 전체보기: 카드 영상은 멈추고 같은 위치부터 재생 팝업으로
+  const openFull = () => {
+    const startAt = playing && player.duration ? Math.floor(player.progress * player.duration) : 0;
+    setPlaying(false);
+    setEnded(false);
+    setFullEnded(false);
+    setFull({ item: current, startAt: startAt >= Math.floor(player.duration || 0) ? 0 : startAt });
+  };
+  const fullIndex = full ? items.findIndex((v) => v.id === full.item.id) : -1;
+  const fullNext = fullIndex >= 0 ? items[fullIndex + 1] : null;
 
   // 키보드 ← → 로 이전 / 다음 (입력창에 있을 때는 그대로)
   useEffect(() => {
@@ -325,15 +369,52 @@ const SportShortsDetail = ({ items, current, onSelect }) => {
             </span>
             MLS
           </span>
-          <button
-            type="button"
-            className="ssd-icon-btn ssd-sound"
-            onClick={() => setMuted((m) => !m)}
-            aria-label={muted ? "소리 켜기" : "소리 끄기"}
-            aria-pressed={!muted}
-          >
-            <SoundIcon muted={muted} />
-          </button>
+          <div className="ssd-top-actions">
+            <button
+              type="button"
+              className="ssd-icon-btn ssd-sound"
+              onClick={() => setMuted((m) => !m)}
+              aria-label={muted ? "소리 켜기" : "소리 끄기"}
+              aria-pressed={!muted}
+            >
+              <SoundIcon muted={muted} />
+            </button>
+            {/* [추가] 재생 · 일시정지 (작품 상세와 같은 버튼) */}
+            {current.videoId && (
+              <button
+                type="button"
+                className="ssd-ctrl-btn"
+                data-gate="watch"
+                onClick={() => (playing ? player.togglePause() : setPlaying(true))}
+                aria-label={playing && !player.paused ? "일시정지" : "재생"}
+                title={playing && !player.paused ? "일시정지" : "재생"}
+              >
+                {playing && !player.paused ? (
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <rect x="6" y="5" width="4" height="14" rx="1" />
+                    <rect x="14" y="5" width="4" height="14" rx="1" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" />
+                  </svg>
+                )}
+              </button>
+            )}
+            {/* [추가] 전체보기 (작품 상세와 같은 버튼 · 같은 재생 팝업) */}
+            {current.videoId && (
+              <button
+                type="button"
+                className="ssd-ctrl-btn"
+                data-gate="watch"
+                onClick={openFull}
+                aria-label="전체 화면으로 재생"
+                title="전체보기"
+              >
+                <span className="ssd-full-icon" aria-hidden="true" />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* 가운데 재생 (재생 전 · 일시정지 중) */}
@@ -381,11 +462,56 @@ const SportShortsDetail = ({ items, current, onSelect }) => {
           {meta && <span className="ssd-card-meta">{meta}</span>}
         </div>
 
+        {/* [추가] 끝나면 다음 숏폼 안내 (5초 후 재생 · 지금 재생 · 취소) */}
+        {showUpNext && (
+          <AutoNext
+            className="auto-next--inline ssd-auto-next"
+            kind="다음 숏폼"
+            title={next.title}
+            image={next.thumb}
+            onPlay={() => go(next, { autoplay: true })}
+            onCancel={() => setEnded(false)}
+          />
+        )}
+
         {/* 진행 바 */}
         <span className="ssd-progress" aria-hidden="true">
           <span style={{ transform: `scaleX(${playing ? player.progress : 0})` }} />
         </span>
       </article>
+
+      {/* [추가] 전체보기 재생 팝업 — 작품 상세와 같은 팝업 (닫기 · Esc · 뒤로가기) · 끝나면 다음 숏폼 안내 */}
+      <VideoPopup
+        open={Boolean(full)}
+        onClose={() => {
+          setFull(null);
+          setFullEnded(false);
+        }}
+        label={full?.item.title || "숏폼"}
+      >
+        {full && (
+          <WatchPlayer
+            key={full.item.videoId}
+            videoKey={full.item.videoId}
+            startAt={full.startAt}
+            title={full.item.title}
+            onEnded={() => setFullEnded(true)}
+          />
+        )}
+        {full && fullEnded && settings.autoplayRecommend && fullNext?.videoId && (
+          <AutoNext
+            kind="다음 숏폼"
+            title={fullNext.title}
+            image={fullNext.thumb}
+            onPlay={() => {
+              setFullEnded(false);
+              setFull({ item: fullNext, startAt: 0 });
+              onSelect(fullNext.id); // 팝업을 닫으면 상세도 그 숏폼
+            }}
+            onCancel={() => setFullEnded(false)}
+          />
+        )}
+      </VideoPopup>
 
       {/* 오른쪽 정보 */}
       <div className="ssd-info">
