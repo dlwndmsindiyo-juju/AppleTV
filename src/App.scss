@@ -8759,7 +8759,7 @@ section.device-guide.device-guide--watch {
 .profile-picker-current {
   @include caption-default;
   margin-top: -$space-sm;
-  padding: 0.125rem $space-sm;
+  padding: $space-xs $space-sm;
   border-radius: 62.4375rem;
   background-color: $primary-color-500;
   color: $light-color-0;
