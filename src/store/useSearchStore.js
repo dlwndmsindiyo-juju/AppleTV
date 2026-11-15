@@ -38,7 +38,19 @@ export const AVAILABILITY = {
     status: "대한민국에서 현재 이용할 수 없습니다.",
     detail: "이 작품은 대한민국에 제공되지 않아 시청할 수 없습니다.",
   },
+  // [추가] 조회 실패(네트워크 · 401 · 429 등) — "이용 불가"와 구분 · 잠시 뒤 다시 확인 (리뷰 P2)
+  error: {
+    card: "이용 정보 확인 실패",
+    status: "이용 정보를 확인하지 못했어요.",
+    detail: "일시적인 오류일 수 있어요. 잠시 후 다시 확인해 주세요.",
+  },
 };
+
+// [추가] 이용 정보는 TMDB 제공사(JustWatch) 자료 기준 — 실제 이용 권한을 보장하지 않음
+export const AVAILABILITY_NOTE = "제공사 정보(TMDB · JustWatch) 기준이라 실제 이용 가능 여부와 다를 수 있어요.";
+
+// [추가] 조회에 실패한 작품은 이 시간이 지나면 다시 요청 (실패를 "이용 불가"로 굳히지 않음)
+const AVAILABILITY_RETRY_MS = 60 * 1000;
 
 // 작품 key: "movie_123" / "tv_456"
 export const itemKey = (type, id) => `${type}_${id}`;
@@ -104,6 +116,9 @@ const writeRecent = (uid, list) => {
 };
 
 let searchToken = 0; // 빠르게 바뀐 이전 검색 결과는 버림
+
+// [추가] 관심 인물 작업 번호 ("uid:인물id" → 마지막 작업) — 실패 되돌리기는 마지막 작업일 때만
+const personOps = new Map();
 
 export const useSearchStore = create((set, get) => ({
   // ---------- 장르 이름 (id → 한글) ----------
@@ -209,13 +224,22 @@ export const useSearchStore = create((set, get) => ({
   },
 
   // ---------- 대한민국 이용 방법 ----------
-  availability: {}, // { "movie_1": "subscription" | "rent" | "none" | "loading" }
-  onLoadAvailability: async (items) => {
-    const { availability } = get();
+  // - [수정] 상태: loading(확인 중) · subscription / rent(이용 가능) · none(이용 불가) · error(조회 실패)
+  //   · error 는 1분이 지나거나 [다시 확인](force)을 누르면 다시 요청 · 검색 필터의 "숨기기"는 none 만 숨김
+  availability: {}, // { "movie_1": "subscription" | "rent" | "none" | "error" | "loading" }
+  availabilityErrorAt: {}, // [추가] { "movie_1": 실패한 시각(ms) }
+  onLoadAvailability: async (items, { force = false } = {}) => {
+    const { availability, availabilityErrorAt } = get();
+    const now = Date.now();
     const todo = (items || [])
       .filter((it) => it && (it.media_type === "movie" || it.media_type === "tv"))
       .map((it) => ({ type: it.media_type, id: it.id }))
-      .filter(({ type, id }) => !availability[itemKey(type, id)]);
+      .filter(({ type, id }) => {
+        const k = itemKey(type, id);
+        const v = availability[k];
+        if (!v) return true;
+        return v === "error" && (force || now - (availabilityErrorAt[k] || 0) > AVAILABILITY_RETRY_MS);
+      });
     if (!todo.length) return;
 
     // 요청 중 표시 (중복 요청 방지)
@@ -228,13 +252,18 @@ export const useSearchStore = create((set, get) => ({
 
     await runLimited(
       todo.map(({ type, id }) => async () => {
-        let value = "none";
+        const k = itemKey(type, id);
         try {
-          value = availabilityFromProviders(await tmdb(`/${type}/${id}/watch/providers`));
-        } catch {
-          value = "none";
+          const value = availabilityFromProviders(await tmdb(`/${type}/${id}/watch/providers`));
+          set((state) => ({ availability: { ...state.availability, [k]: value } }));
+        } catch (error) {
+          // [수정] 조회 실패는 "이용 불가"(none)가 아니라 error — 시각을 남겨 잠시 뒤 다시 요청
+          console.error("이용 정보 조회 실패:", k, error?.message);
+          set((state) => ({
+            availability: { ...state.availability, [k]: "error" },
+            availabilityErrorAt: { ...state.availabilityErrorAt, [k]: Date.now() },
+          }));
         }
-        set((state) => ({ availability: { ...state.availability, [itemKey(type, id)]: value } }));
       })
     );
   },
@@ -291,25 +320,40 @@ export const useSearchStore = create((set, get) => ({
 
   // ---------- 관심 인물 (Firestore 계정) ----------
   // users/{uid}.favoritePeople = [인물 id, ...]
+  // - [수정] 실패하면 "그 인물 하나"만 되돌림 (리뷰: 저장 실패 후 화면 복구)
+  //   · 예전: 시작할 때의 목록 전체로 덮어써서, 그 사이 다른 인물 변경 · 계정 전환이 있으면 지금 화면을 덮었음
+  //   · 지금: 시작한 계정(uid)이 그대로이고 · 그 인물의 마지막 작업일 때만 그 인물만 원래대로
   onToggleFavoritePerson: async (personId) => {
     const fbUser = auth.currentUser;
     const user = useAuthStore.getState().user;
     if (!fbUser || !user) return false;
+    const uid = fbUser.uid;
 
     const list = user.favoritePeople || [];
     const following = list.includes(personId);
     const next = following ? list.filter((v) => v !== personId) : [...list, personId];
+    const opKey = `${uid}:${personId}`;
+    const ver = (personOps.get(opKey) || 0) + 1;
+    personOps.set(opKey, ver);
 
     // 화면 먼저 바꾸고 저장 (실패하면 되돌림)
     useAuthStore.setState({ user: { ...user, favoritePeople: next } });
     try {
-      await updateDoc(doc(db, "users", fbUser.uid), {
+      await updateDoc(doc(db, "users", uid), {
         favoritePeople: following ? arrayRemove(personId) : arrayUnion(personId),
       });
       return true;
     } catch (error) {
       console.error("관심 인물 저장 실패:", error);
-      useAuthStore.setState({ user: { ...useAuthStore.getState().user, favoritePeople: list } });
+      const cur = useAuthStore.getState().user;
+      const sameAccount = auth.currentUser?.uid === uid && cur?.uid === uid;
+      if (sameAccount && personOps.get(opKey) === ver) {
+        const curList = cur.favoritePeople || [];
+        const restored = following
+          ? curList.includes(personId) ? curList : [...curList, personId] // 빼기 실패 → 다시 넣기
+          : curList.filter((v) => v !== personId); // 넣기 실패 → 다시 빼기
+        useAuthStore.setState({ user: { ...cur, favoritePeople: restored } });
+      }
       return false;
     }
   },

@@ -77,8 +77,9 @@ export const useMetaText = (item, type) => {
 export const useAvailability = (type, id) =>
   useSearchStore((s) => s.availability[itemKey(type, id)]);
 
+// - [수정] 조회 실패(error)는 "이용 정보 확인 실패" (예전: "이용 불가"로 표시)
 export const availabilityText = (value) =>
-  value && value !== "loading" ? AVAILABILITY[value].card : "이용 정보 확인 중";
+  value && value !== "loading" ? AVAILABILITY[value]?.card || "이용 정보 확인 중" : "이용 정보 확인 중";
 
 // [수정] 작품을 누르면 영화 상세 페이지로 통일 (/movie/:id · /tv/:id → MovieDetail)
 const titlePath = (type, id) => `/${type === "tv" ? "tv" : "movie"}/${id}`;

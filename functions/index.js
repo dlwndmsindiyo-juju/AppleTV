@@ -22,6 +22,20 @@ const requireAuth = (req) => {
     return req.auth;
 };
 
+// ---------------------------------------------------------------------
+// [수정] 인증 코드 발송 · 검증을 트랜잭션으로 (리뷰 P2 · 실제 이메일 인증을 켜기 전에 필요)
+// - 예전: 재전송 간격 확인 → 저장, 시도 횟수 확인 → 증가, 성공 → 삭제가 각각 따로 실행
+//   → 동시에 요청하면 60초 · 5회 제한을 넘거나, 검증 중 재전송된 새 코드가 지워질 수 있었음
+// - 지금: 읽기와 쓰기를 한 트랜잭션에서 처리 (동시에 바뀌면 Firestore 가 트랜잭션을 다시 실행)
+//   · 발송: 60초 간격 확인 + 새 코드 저장 + 메일 작업(mail 문서) 생성을 한 번에 → 코드만 바뀌고 메일이 안 가는 일 없음
+//   · 검증: 만료 · 시도 횟수 · 코드 비교 · 실패 횟수 증가 · 성공 시 인증 기록 + 코드 삭제를 한 번에
+//     → 실패 횟수는 트랜잭션을 정상 커밋한 뒤 바깥에서 오류를 던짐 (안에서 throw 하면 증가가 취소됨)
+//   · 코드마다 version 을 둬서, 검증하는 사이 재전송으로 바뀐 새 코드는 이전 검증이 지우지 않음
+//     (트랜잭션이 같은 문서를 다시 읽어 확인하므로 이전 코드 기준의 삭제는 커밋되지 않음)
+// - 메일 발송: "Trigger Email from Firestore" 확장이 mail 문서를 보고 보냄 (outbox)
+//   · 확장이 실패를 mail 문서의 delivery.state = "ERROR" 로 남김 → 사용자는 60초 뒤 [재전송]으로 새 코드 · 새 메일
+// ---------------------------------------------------------------------
+
 // 1) 6자리 코드 생성 + 메일 발송
 exports.sendVerificationCode = onCall({ region: REGION }, async (req) => {
     const { uid, token } = requireAuth(req);
@@ -29,32 +43,41 @@ exports.sendVerificationCode = onCall({ region: REGION }, async (req) => {
     if (!email) throw new HttpsError("failed-precondition", "이메일 정보가 없는 계정입니다.");
 
     const ref = db.doc(`emailCodes/${uid}`);
-    const snap = await ref.get();
-    const now = Date.now();
+    const mailRef = db.collection("mail").doc(); // 메일 작업 id 를 먼저 만들어 트랜잭션 안에서 생성
 
-    if (snap.exists && now - snap.data().sentAt < RESEND_MS) {
-        const wait = Math.ceil((RESEND_MS - (now - snap.data().sentAt)) / 1000);
-        throw new HttpsError("resource-exhausted", `${wait}초 후에 다시 요청해주세요.`);
+    // 트랜잭션은 충돌하면 다시 실행되므로, 코드도 실행할 때마다 새로 만듦 (마지막으로 커밋된 것만 남음)
+    const result = await db.runTransaction(async (tx) => {
+        const snap = await tx.get(ref);
+        const now = Date.now();
+        if (snap.exists && now - snap.data().sentAt < RESEND_MS) {
+            return { wait: Math.ceil((RESEND_MS - (now - snap.data().sentAt)) / 1000) };
+        }
+
+        const code = String(crypto.randomInt(0, 1000000)).padStart(6, "0");
+        tx.set(ref, {
+            hash: hashCode(uid, code), // 코드 원문은 저장하지 않음
+            version: crypto.randomUUID(), // [추가] 코드 버전
+            sentAt: now,
+            expiresAt: now + CODE_TTL_MS,
+            attempts: 0,
+        });
+        // [수정] 메일 작업도 같은 트랜잭션에서 생성 (outbox)
+        tx.create(mailRef, {
+            to: email,
+            message: {
+                subject: "[Apple TV] 인증번호 안내",
+                text: `인증번호: ${code}\n5분 안에 입력해주세요.`,
+                html: `<p>인증번호</p><p style="font-size:28px;font-weight:700;letter-spacing:6px">${code}</p><p>5분 안에 입력해주세요.</p>`,
+            },
+            uid,
+            createdAt: FieldValue.serverTimestamp(),
+        });
+        return { ok: true };
+    });
+
+    if (result.wait) {
+        throw new HttpsError("resource-exhausted", `${result.wait}초 후에 다시 요청해주세요.`);
     }
-
-    const code = String(crypto.randomInt(0, 1000000)).padStart(6, "0");
-    await ref.set({
-        hash: hashCode(uid, code), // 코드 원문은 저장하지 않음
-        sentAt: now,
-        expiresAt: now + CODE_TTL_MS,
-        attempts: 0,
-    });
-
-    // Firebase "Trigger Email from Firestore" 확장 프로그램이 mail 컬렉션을 감시해 발송
-    await db.collection("mail").add({
-        to: email,
-        message: {
-            subject: "[Apple TV] 인증번호 안내",
-            text: `인증번호: ${code}\n5분 안에 입력해주세요.`,
-            html: `<p>인증번호</p><p style="font-size:28px;font-weight:700;letter-spacing:6px">${code}</p><p>5분 안에 입력해주세요.</p>`,
-        },
-    });
-
     return { ok: true };
 });
 
@@ -67,36 +90,49 @@ exports.verifyVerificationCode = onCall({ region: REGION }, async (req) => {
     }
 
     const ref = db.doc(`emailCodes/${uid}`);
-    const snap = await ref.get();
-    if (!snap.exists) {
+    const userRef = db.doc(`users/${uid}`);
+
+    // 트랜잭션 안에서는 throw 하지 않고 결과만 돌려줌 → 실패 횟수 증가가 커밋된 뒤 바깥에서 오류
+    const result = await db.runTransaction(async (tx) => {
+        const snap = await tx.get(ref);
+        if (!snap.exists) return { error: "missing" };
+
+        const d = snap.data();
+        if (Date.now() > d.expiresAt) return { error: "expired" };
+        if (d.attempts >= MAX_ATTEMPTS) return { error: "locked" };
+
+        const given = Buffer.from(hashCode(uid, code));
+        const saved = Buffer.from(d.hash);
+        const match = given.length === saved.length && crypto.timingSafeEqual(given, saved);
+
+        if (!match) {
+            // 읽은 값 기준으로 증가 → 동시에 들어온 실패도 트랜잭션 재실행으로 하나씩 셈
+            tx.update(ref, { attempts: d.attempts + 1 });
+            return { error: "wrong" };
+        }
+
+        // 성공: 인증 기록 + 코드 삭제(소비)를 한 번에 — 이 트랜잭션이 읽은 그 코드(version)일 때만 커밋됨
+        tx.set(
+            userRef,
+            { emailCodeVerified: true, emailVerifiedAt: FieldValue.serverTimestamp() },
+            { merge: true }
+        );
+        tx.delete(ref);
+        return { ok: true };
+    });
+
+    if (result.error === "missing") {
         throw new HttpsError("failed-precondition", "인증번호를 먼저 요청해주세요.");
     }
-
-    const d = snap.data();
-    if (Date.now() > d.expiresAt) {
+    if (result.error === "expired") {
         throw new HttpsError("failed-precondition", "인증번호가 만료되었습니다. 재전송해주세요.");
     }
-    if (d.attempts >= MAX_ATTEMPTS) {
-        throw new HttpsError(
-            "resource-exhausted",
-            "시도 횟수를 초과했습니다. 인증번호를 재전송해주세요."
-        );
+    if (result.error === "locked") {
+        throw new HttpsError("resource-exhausted", "시도 횟수를 초과했습니다. 인증번호를 재전송해주세요.");
     }
-
-    const given = Buffer.from(hashCode(uid, code));
-    const saved = Buffer.from(d.hash);
-    const match = given.length === saved.length && crypto.timingSafeEqual(given, saved);
-
-    if (!match) {
-        await ref.update({ attempts: FieldValue.increment(1) });
+    if (result.error === "wrong") {
         throw new HttpsError("invalid-argument", "인증번호가 올바르지 않습니다.");
     }
-
-    await db.doc(`users/${uid}`).set(
-        { emailCodeVerified: true, emailVerifiedAt: FieldValue.serverTimestamp() },
-        { merge: true }
-    );
-    await ref.delete();
     return { ok: true };
 });
 

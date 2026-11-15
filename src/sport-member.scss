@@ -19,7 +19,6 @@ main.sport-home {
   --sport-content-width: 1720px;
   --sport-card-gap: 1.5rem;
   padding-top: $header-height;
-  background: $bg-page;
   color: $text-primary;
   font-family: "Sport SF Pro", "SF Pro", system-ui, sans-serif;
 
@@ -1134,7 +1133,7 @@ section.sport-hero {
   .sport-teams .sport-team-list,
   .sport-league .sport-league-list,
   .sport-highlights .sport-highlight-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .sport-replay .sport-replay-list {
@@ -1200,6 +1199,7 @@ section.sport-hero {
   .sport-notify .sport-notify-btn {
     width: 100%;
   }
+
 }
 
 // =====================================================================
@@ -5511,7 +5511,7 @@ main.sport-home .sport-replay {
 
     // 모바일: 카드 1장 + 다음 카드 살짝 (손가락으로 넘김 · 화살표 숨김)
     .sport-replay-slide {
-     width: clamp(260px, 52vw, 360px);
+      width: clamp(260px, 52vw, 360px);
       max-width: none;
     }
 
@@ -5959,7 +5959,7 @@ main.sport-home {
   // 모바일: 카드 1장 + 다음 장 일부 · 손가락으로 넘김
   @media (max-width: $breakpoint-mobile) {
     .sport-lv-slide {
-       width: clamp(280px, 55vw, 380px);
+      width: clamp(280px, 55vw, 380px);
     }
 
     .sport-live {
@@ -6087,7 +6087,7 @@ main.sport-home {
 @media (max-width: $breakpoint-mobile) {
   .sport-upcoming {
     .sport-up-slide {
-       width: clamp(280px, 52vw, 360px);
+      width: clamp(280px, 52vw, 360px);
     }
 
     .sport-up-logo {
@@ -6310,6 +6310,7 @@ main.sport-home.sport-live-page .sport-chat-list {
     }
   }
 }
+
 // =====================================================================
 // [수정] 스포츠 홈 구독 배너(로그인 전 · SubscribeCTA type="sport") — 글자 · 아이콘을 메인 홈 배너와 똑같이
 // - 원인 ① 스포츠 화면 전체 글꼴("Sport SF Pro", 위 main.sport-home * 규칙)이 배너에도 들어가 같은 크기 변수여도 글자가 다르게 보였음
@@ -6318,6 +6319,7 @@ main.sport-home.sport-live-page .sport-chat-list {
 // - 배경 사진 · 문구 내용 · 배너 높이는 그대로
 // =====================================================================
 main.sport-home .subscribe-cta.subscribe-cta--sport {
+
   &,
   * {
     font-family: $font-family-base; // 메인 홈과 같은 글꼴
@@ -6340,6 +6342,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 // 휴대폰: 메인 홈 배너와 같은 제목 크기(Heading/h2-B) · 로고(58 × 44) · 배너 높이
 @media (max-width: $breakpoint-mobile) {
   main.sport-home .subscribe-cta.subscribe-cta--sport {
+
     // [수정] 배너가 혼자 크게 나오던 원인: 위 "Sport 구독 배너 이미지" 규칙의 height: 420px 가
     //        휴대폰 규칙(height: auto · 위아래 32 여백)보다 우선해 PC 높이 그대로였음 → 메인 홈처럼 글자 높이에 맞춤
     .subscribe-banner {
@@ -6351,7 +6354,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
       display: inline;
     }
 
-    .subscribe-title .subscribe-title-desktop span + span::before {
+    .subscribe-title .subscribe-title-desktop span+span::before {
       content: " ";
     }
 
@@ -6433,7 +6436,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 
     // 오른쪽 내용: 칸 폭 가득 · 조금 작게
     // [수정] 처음 크기로 되돌림: 내용 85% · 칸 폭 가득
-    .sport-live-tabs-section > .inner.sport-live-panel {
+    .sport-live-tabs-section>.inner.sport-live-panel {
       width: 100%;
       max-width: none;
       margin: 0;
@@ -6639,6 +6642,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 
     // [추가] 잘 안 보이던 글자 → 글자 변수를 한두 단계 크게 (보이는 크기 ≈ 변수 × 0.85)
     .sport-live-panel {
+
       // 기록 · 중계 위 제목 (메이저 리그 사커 … · 날짜)
       .sport-stats-head {
         h3 {
@@ -6675,6 +6679,7 @@ main.sport-home .subscribe-cta.subscribe-cta--sport {
 // =====================================================================
 @media (min-width: calc(#{$breakpoint-tablet} + 1px)) {
   main.sport-home.sport-live-page {
+
     .sport-stats,
     .sport-commentary {
       flex-direction: row; // [수정] 중계 기본 규칙(세로 column)을 덮어씀 → 스코어보드 왼쪽 · 타임라인 오른쪽
@@ -6748,5 +6753,575 @@ main.sport-home.sport-live-page .sport-live-chat-card .sport-chat-form {
 
   100% {
     transform: none;
+  }
+}
+
+// =====================================================================
+// [추가] 숏폼 상세 (/sport/shorts · components/sport/SportShortsDetail.jsx)
+// - 가운데: 세로 카드(홈 숏폼 카드와 같은 구성) + 오른쪽 정보 · UP NEXT / 양옆 끝: 이전 · 다음 동그라미
+// - 크기는 _variables.scss $shorts-detail-* · 태블릿(1024 이하) · 휴대폰(767 이하)은 아래 미디어 쿼리
+// =====================================================================
+.sport-shorts-detail {
+  display: grid;
+  grid-template-columns: $shorts-detail-nav-size minmax(0, 1fr) $shorts-detail-card-width minmax(0, $shorts-detail-info-width) minmax(0, 1fr) $shorts-detail-nav-size;
+  align-items: center;
+  padding: $space-5xl 0;
+  color: $text-primary;
+
+  // ---------- 이전 · 다음 ----------
+  .ssd-nav {
+    display: grid;
+    place-items: center;
+    width: $shorts-detail-nav-size;
+    height: $shorts-detail-nav-size;
+    padding: 0;
+    border: 0.0625rem solid rgba($light-color-0, 0.08);
+    border-radius: 50%;
+    background: $bg-surface;
+    color: $text-primary;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+
+    svg {
+      width: $shorts-detail-nav-icon;
+      height: $shorts-detail-nav-icon;
+    }
+
+    &:hover:not(:disabled) {
+      background: $bg-surface-hover;
+      transform: scale(1.04);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.1875rem;
+    }
+
+    &--prev {
+      grid-column: 1;
+    }
+
+    &--next {
+      grid-column: 6;
+      grid-row: 1;
+    }
+  }
+
+  // ---------- 세로 카드 ----------
+  .ssd-card {
+    grid-column: 3;
+    grid-row: 1;
+    position: relative;
+    width: 100%;
+    aspect-ratio: $shorts-detail-card-ratio;
+    border-radius: $radius-card;
+    overflow: hidden;
+    background: $bg-surface-hover;
+    box-shadow: $shorts-detail-card-shadow;
+    isolation: isolate;
+  }
+
+  .ssd-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+
+    // YouTube iframe 이 카드를 가득 채우도록
+    &--video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: none;
+    }
+  }
+
+  // 재생 중 카드 전체 누르기 → 일시정지 / 다시 재생
+  .ssd-tap {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .ssd-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 22%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.85) 100%);
+  }
+
+  .ssd-top {
+    position: absolute;
+    top: $space-lg;
+    left: $space-lg;
+    right: $space-md;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ssd-brand {
+    @include body-small-b;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    color: $light-color-100;
+  }
+
+  .ssd-logo {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: $dark-color-900;
+
+    img {
+      width: 1.125rem;
+      height: auto;
+      display: block;
+    }
+  }
+
+  .ssd-icon-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-xxs;
+    padding: $space-xs;
+    border: 0;
+    background: transparent;
+    color: $text-primary;
+    cursor: pointer;
+    filter: drop-shadow(0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.5));
+
+    &:focus-visible {
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.125rem;
+      border-radius: 0.375rem;
+    }
+  }
+
+  .ssd-sound {
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+  }
+
+  // 가운데 재생 · (재생 중) 일시정지 표시
+  .ssd-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: $shorts-detail-play-size;
+    height: $shorts-detail-play-size;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba($light-color-0, 0.75);
+    color: $text-inverse;
+    cursor: pointer;
+    backdrop-filter: blur(0.375rem);
+    transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+
+    .play-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-left: 0.1875rem;
+    }
+
+    svg {
+      width: 1.625rem;
+      height: 1.625rem;
+    }
+
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.06);
+      background: $light-color-0;
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.1875rem;
+    }
+
+    // 재생 중에는 마우스를 올렸을 때만 일시정지 표시 (누르기는 카드 전체)
+    &--pause {
+      pointer-events: none;
+      opacity: 0;
+    }
+  }
+
+  .ssd-card:hover .ssd-play--pause {
+    opacity: 1;
+  }
+
+  .ssd-side {
+    position: absolute;
+    right: $space-sm;
+    bottom: 5.5rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-sm;
+  }
+
+  .ssd-like {
+    svg {
+      width: 2.25rem;
+      height: 1.375rem;
+    }
+
+    &.is-on {
+      color: $sports-color;
+    }
+  }
+
+  .ssd-share svg {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .ssd-count {
+    @include caption-default;
+    color: $text-primary;
+  }
+
+  .ssd-card-info {
+    position: absolute;
+    left: $space-lg;
+    right: 3.5rem;
+    bottom: $space-xl;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    min-width: 0;
+  }
+
+  .ssd-tag {
+    @include caption-default-b;
+    letter-spacing: 0.04em;
+    color: $light-color-500;
+    text-transform: uppercase;
+  }
+
+  .ssd-card-title {
+    @include heading-h3-b;
+    margin: 0;
+    color: $light-color-0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ssd-card-meta {
+    @include caption-default;
+    color: $light-color-500;
+  }
+
+  .ssd-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    height: 0.1875rem;
+    background: rgba($light-color-0, 0.25);
+
+    span {
+      display: block;
+      height: 100%;
+      background: $light-color-0;
+      transform-origin: left center;
+      transition: transform 0.25s linear;
+    }
+  }
+
+  // ---------- 오른쪽 정보 ----------
+  .ssd-info {
+    grid-column: 4;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: $shorts-detail-gap;
+    min-width: 0;
+  }
+
+  .ssd-title {
+    @include display-l-b;
+    margin: 0;
+    color: $text-primary;
+    word-break: keep-all;
+  }
+
+  .ssd-meta {
+    @include label-default;
+    margin: $space-sm 0 0;
+    color: $text-tertiary;
+  }
+
+  .ssd-desc {
+    @include body-default;
+    margin: $space-lg 0 0;
+    color: $text-secondary;
+    word-break: keep-all;
+  }
+
+  .ssd-full-btn {
+    @include label-default-b;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    margin-top: $space-xl;
+    padding: $space-sm $space-lg;
+    border-radius: $radius-pill;
+    background: $light-color-0;
+    color: $text-inverse;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+
+    .play-icon {
+      width: 0.625rem;
+      height: 0.625rem;
+    }
+
+    &:hover {
+      background: $light-color-300;
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.1875rem;
+    }
+  }
+
+  // ---------- UP NEXT ----------
+  .ssd-upnext {
+    align-self: stretch;
+    margin-top: $space-xl;
+    padding-top: $space-xl;
+    border-top: 0.0625rem solid rgba($light-color-0, 0.12);
+  }
+
+  .ssd-upnext-label {
+    @include caption-default-b;
+    margin: 0 0 $space-md;
+    letter-spacing: 0.08em;
+    color: $text-secondary;
+  }
+
+  // [수정] 메인 숏폼 전체 · 넘치면 스크롤 (얇은 스크롤바)
+  .ssd-upnext-list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    max-height: $shorts-detail-upnext-height;
+    margin: 0;
+    padding: 0 $space-sm 0 0;
+    list-style: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba($light-color-0, 0.25) transparent;
+
+    &::-webkit-scrollbar {
+      width: 0.25rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 0.125rem;
+      background: rgba($light-color-0, 0.25);
+    }
+  }
+
+  .ssd-upnext-item {
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
+    width: 100%;
+    padding: $space-sm 0;
+    border: 0;
+    border-radius: $radius-card-sm;
+    background: transparent;
+    color: $text-primary;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover .ssd-upnext-thumb img {
+      transform: scale(1.05);
+    }
+
+    &:hover .ssd-upnext-arrow {
+      transform: translateX(0.1875rem);
+      color: $text-primary;
+    }
+
+    &:focus-visible {
+      outline: 0.125rem solid $light-color-0;
+      outline-offset: 0.125rem;
+    }
+  }
+
+  .ssd-upnext-thumb {
+    flex-shrink: 0;
+    width: $shorts-detail-upnext-thumb;
+    aspect-ratio: 16 / 10;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    background: $bg-surface-hover;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  .ssd-upnext-text {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xxs;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ssd-upnext-kind {
+    @include caption-small-b;
+    color: $text-secondary;
+  }
+
+  .ssd-upnext-title {
+    @include heading-h5-b;
+    color: $text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ssd-upnext-arrow {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: $text-secondary;
+    transition: transform 0.2s ease, color 0.2s ease;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+// =====================================================================
+// [추가] 숏폼 상세 — 태블릿 · 휴대폰 (스포츠는 이 파일에서 PC · 태블릿 · 모바일을 함께 다룸)
+// =====================================================================
+@media (max-width: $breakpoint-tablet) {
+  .sport-shorts-detail {
+    grid-template-columns: calc(#{$shorts-detail-nav-size} * 0.75) minmax(0, 1fr) clamp(15rem, 30vw, 18rem) minmax(0, $shorts-detail-info-width) minmax(0, 1fr) calc(#{$shorts-detail-nav-size} * 0.75);
+
+    .ssd-nav {
+      width: calc(#{$shorts-detail-nav-size} * 0.75);
+      height: calc(#{$shorts-detail-nav-size} * 0.75);
+    }
+
+    .ssd-info {
+      margin-left: $space-2xl;
+    }
+
+    .ssd-title {
+      @include display-M-b;
+    }
+  }
+}
+
+// 휴대폰: 카드 위 · 정보 아래
+// - [수정] 카드를 조금 줄이고(16.5rem) 양옆에 이전 · 다음 동그라미 → 눌러서 넘기기
+@media (max-width: $breakpoint-mobile) {
+  .sport-shorts-detail {
+    grid-template-columns: $shorts-detail-nav-size-mobile minmax(0, 1fr) $shorts-detail-nav-size-mobile;
+    column-gap: $space-sm;
+    row-gap: $space-xl;
+    padding: $space-xl 0 $space-4xl;
+
+    .ssd-nav {
+      width: $shorts-detail-nav-size-mobile;
+      height: $shorts-detail-nav-size-mobile;
+
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      &--prev {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      &--next {
+        grid-column: 3;
+        grid-row: 1;
+      }
+    }
+
+    .ssd-card {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: center;
+      width: min(100%, #{$shorts-detail-card-width-mobile});
+    }
+
+    // 카드가 작아져 카드 안 제목은 한 단계 작게
+    .ssd-card-title {
+      @include heading-h5-b;
+    }
+
+    .ssd-play {
+      width: calc(#{$shorts-detail-play-size} * 0.8);
+      height: calc(#{$shorts-detail-play-size} * 0.8);
+    }
+
+    .ssd-info {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      margin-left: 0;
+    }
+
+    .ssd-title {
+      @include heading-h3-b;
+    }
+
+    .ssd-desc {
+      @include body-small;
+    }
+
+    // [추가] UP NEXT 목록 끝까지 스크롤하면 이어서 페이지가 위 / 아래로 스크롤 (목록 안에 갇히지 않게)
+    .ssd-upnext-list {
+      overscroll-behavior: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 }

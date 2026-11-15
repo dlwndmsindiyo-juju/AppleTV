@@ -147,11 +147,9 @@ export const MovieDetail = ({ type: typeProp }) => {
     logoList.find((l) => l.iso_639_1 === 'ko') ||
     logoList.find((l) => l.iso_639_1 === 'en') ||
     logoList[0];
-  // [추가] 전체보기 — 위 영상(예고편 · 이미지) 칸을 화면 가득 (브라우저 전체 화면) · 다시 누르거나 Esc 로 원래대로
-  // - 아이콘: public/icons/full-screen.svg (mask 로 써서 파일 색과 상관없이 흰색) · [수정] 버튼 위치: 영상 칸 오른쪽 위
-  // - 요소 전체 화면을 지원하지 않는 브라우저(아이폰 Safari 등)는 재생 팝업으로 대신 크게 보기
-  const mediaRef = useRef(null);
-  const [isFull, setIsFull] = useState(false);
+  // [수정] 전체보기 — [재생하기]와 똑같이 재생 팝업으로 (화면 가득 · 하단 재생바 · 이어보기 위치)
+  // - 예전: 위 미리보기 예고편 칸만 브라우저 전체 화면 → 소리 없음 · 재생바 없음 (미리보기용 영상이라 controls=0)
+  // - 아이콘: public/icons/full-screen.svg (mask 로 써서 파일 색과 상관없이 흰색) · 버튼 위치: 영상 칸 오른쪽 위
   // [추가] 위 예고편 일시정지 · 다시 재생 (YouTube iframe API 메시지 · enablejsapi=1)
   const trailerRef = useRef(null);
   const [trailerPaused, setTrailerPaused] = useState(false);
@@ -161,29 +159,6 @@ export const MovieDetail = ({ type: typeProp }) => {
     const next = !trailerPaused;
     win.postMessage(JSON.stringify({ event: 'command', func: next ? 'pauseVideo' : 'playVideo', args: [] }), '*');
     setTrailerPaused(next);
-  };
-  useEffect(() => {
-    const onChange = () => {
-      const el = document.fullscreenElement || document.webkitFullscreenElement;
-      setIsFull(Boolean(el) && el === mediaRef.current);
-    };
-    document.addEventListener('fullscreenchange', onChange);
-    document.addEventListener('webkitfullscreenchange', onChange);
-    return () => {
-      document.removeEventListener('fullscreenchange', onChange);
-      document.removeEventListener('webkitfullscreenchange', onChange);
-    };
-  }, []);
-  const toggleFull = () => {
-    const el = mediaRef.current;
-    if (!el) return;
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-      (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
-      return;
-    }
-    const request = el.requestFullscreen || el.webkitRequestFullscreen;
-    if (request) request.call(el);
-    else playFromHistory();
   };
 
   // [추가] 제목 아래 정보 배지 줄 (InfoBadges · 홈 히어로와 같은 모양)
@@ -356,12 +331,36 @@ export const MovieDetail = ({ type: typeProp }) => {
     });
   };
 
+  // [추가] 추천 콘텐츠 중 재생할 수 있는 영상이 있는 첫 작품 (앞에서부터 최대 6개 확인)
+  // - [수정] 예전: 추천 첫 작품으로 바로 이동 → 그 작품에 영상이 없거나 막혀 있으면 "재생할 수 있는 영상이 없습니다"
+  // - 상세 정보(영상 목록)를 미리 받아 YouTube 재생 가능 여부까지 확인 · 미성년자 계정은 청소년 관람불가 작품 건너뜀
+  const findPlayableNext = async () => {
+    const minor = isMinorUser(useAuthStore.getState().user);
+    for (const m of similar.slice(0, 6)) {
+      await onFetchContentDetail(type, m.id);
+      const d = useMovieStore.getState().contentDetails[`${type}_${m.id}`];
+      const keys = (d?.videos?.results || []).filter((v) => v.site === 'YouTube').map((v) => v.key);
+      if (!keys.length) continue;
+      const ok = await checkPlayable(keys);
+      if (!keys.some((k) => ok.has(k))) continue;
+      if (minor && (await fetchIsAdult(type, m.id))) continue;
+      return m;
+    }
+    return null;
+  };
+  // 영상이 끝난 뒤 다른 작품으로 넘어가거나 팝업을 닫았으면 늦게 찾은 결과는 버림
+  const endedRef = useRef(0);
+  useEffect(() => {
+    endedRef.current += 1;
+  }, [contentId, playing?.key]);
+
   // [추가] 영상이 끝났을 때 자동 재생 (계정 설정 토글)
   // - 다음 에피소드 재생: 시리즈 회차를 보던 중이면 같은 시즌의 다음 회차
   // - 추천 항목 재생: 다음 회차가 없거나(영화 · 예고편 · 마지막 회차) 위 토글이 꺼져 있으면 추천 콘텐츠 첫 번째
   // - 둘 다 꺼져 있으면 끝난 화면 그대로
-  const handleEnded = () => {
+  const handleEnded = async () => {
     if (!playing || playing.key === 'none') return;
+    const token = endedRef.current;
     if (settings.autoplayNext && isTv && playing.episode) {
       const list = episodes[`${contentId}_${playing.season}`] || [];
       const ep = list.find((e) => e.episode_number === playing.episode + 1);
@@ -375,19 +374,19 @@ export const MovieDetail = ({ type: typeProp }) => {
         return;
       }
     }
-    const next = similar[0];
-    if (settings.autoplayRecommend && next) {
-      setUpNext({
-        kind: '추천 콘텐츠',
-        title: next.title || next.name,
-        image: next.backdrop_path ? `${IMG}/w300${next.backdrop_path}` : `${IMG}/w342${next.poster_path}`,
-        // 그 작품 상세로 가서 바로 재생 (?play=1 · 검색 "지금 보기" 와 같은 방식)
-        run: () => {
-          setPlaying(null);
-          navigate(`${detailPath(type, next.id)}?play=1`);
-        },
-      });
-    }
+    if (!settings.autoplayRecommend) return;
+    const next = await findPlayableNext(); // [수정] 재생할 영상이 있는 추천 작품만
+    if (!next || endedRef.current !== token) return;
+    setUpNext({
+      kind: '추천 콘텐츠',
+      title: next.title || next.name,
+      image: next.backdrop_path ? `${IMG}/w300${next.backdrop_path}` : `${IMG}/w342${next.poster_path}`,
+      // 그 작품 상세로 가서 바로 재생 (?play=1 · 검색 "지금 보기" 와 같은 방식)
+      run: () => {
+        setPlaying(null);
+        navigate(`${detailPath(type, next.id)}?play=1`);
+      },
+    });
   };
 
   const runUpNext = () => {
@@ -462,7 +461,7 @@ export const MovieDetail = ({ type: typeProp }) => {
           <div className="left-section">
             <div className="player-box">
               {/* 상단 미디어 (트레일러 또는 배경 이미지) */}
-              <div className={`player-media${isFull ? ' is-full' : ''}`} ref={mediaRef}>
+              <div className="player-media">
                 {trailer ? (
                   <iframe
                     key={trailer.key}
@@ -502,13 +501,13 @@ export const MovieDetail = ({ type: typeProp }) => {
                     )}
                   </button>
                 )}
-                {/* [추가] 전체보기 버튼 (영상 칸 오른쪽 아래) */}
+                {/* [수정] 전체보기 버튼 — [재생하기]와 같은 재생 팝업 (재생바 · 이어보기) */}
                 <button
                   type="button"
                   className="btn-fullscreen"
-                  onClick={toggleFull}
-                  aria-label={isFull ? '전체 화면 닫기' : '전체 화면으로 보기'}
-                  title={isFull ? '전체 화면 닫기' : '전체보기'}
+                  onClick={playFromHistory}
+                  aria-label="전체 화면으로 재생"
+                  title="전체보기"
                 >
                   <span className="btn-fullscreen-icon" aria-hidden="true" />
                 </button>
